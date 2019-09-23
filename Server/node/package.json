@@ -1,0 +1,23 @@
+{
+  "name": "buildit",
+  "version": "0.0.1",
+  "description": "BuildIT for IARE",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flozender/BuildIT.git"
+  },
+  "author": "Tayeeb, Abubakar, Krishna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flozender/BuildIT/issues"
+  },
+  "homepage": "https://github.com/flozender/BuildIT#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1"
+  }
+}
