@@ -23,7 +23,7 @@ app.use('/', express.static(__dirname + '/'));
 app.get('/', async (req, res) => {
     res.render('home');
 });
-app.get('/', async (req, res) => {
+app.get('/index', async (req, res) => {
   res.redirect('home');
 });
 app.get('/about', async (req, res) => {
