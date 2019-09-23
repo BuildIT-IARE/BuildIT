@@ -24,7 +24,10 @@ app.get('/', async (req, res) => {
     res.render('home');
 });
 app.get('/index', async (req, res) => {
-  res.redirect('home');
+  res.render('home');
+});
+app.get('/home', async (req, res) => {
+  res.render('home');
 });
 app.get('/about', async (req, res) => {
   res.render('about');
