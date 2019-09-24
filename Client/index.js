@@ -32,8 +32,8 @@ app.get('/home', async (req, res) => {
 app.get('/about', async (req, res) => {
   res.render('about');
 });
-app.get('/blog', async (req, res) => {
-  res.render('blog');
+app.get('/contest', async (req, res) => {
+  res.render('contest');
 });
 app.get('/portfolio', async (req, res) => {
   res.render('portfolio');
