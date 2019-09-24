@@ -4,6 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const request = require('request');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
 // INIT
 const app = express();
