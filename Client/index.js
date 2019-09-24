@@ -49,5 +49,8 @@ app.get('/contest-start', async (req, res) => {
 app.get('/questions', async (req, res) => {
   res.render('questions');
 });
+app.get('/questions_expanded', async (req, res) => {
+  res.render('questions_expanded');
+});
 app.listen(process.env.PORT || 3000);
 console.log('PORT: ', process.env.PORT, 'Or 3000');
