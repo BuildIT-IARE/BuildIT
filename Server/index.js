@@ -39,8 +39,7 @@ app.post('/testPost', async (req, res) => {
 
 app.post('/login', async(req, res) => {
 console.log("Login by ", req.body.username);
-res.send(`Hello, ${req.body.username} `)
-
+res.send(`Hello, ${req.body.username} `);
 });
 
 
