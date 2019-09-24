@@ -35,17 +35,10 @@ app.get('/about', async (req, res) => {
 app.get('/contest', async (req, res) => {
   res.render('contest');
 });
-<<<<<<< HEAD
-app.get('/blog-single', async (req, res) => {
-  res.render('blog-single');
-});
-=======
-
 app.get('/blog-single', async (req, res) => {
   res.render('blog-single');
 });
 
->>>>>>> 96637bb0b96b397034af1b097aafc54a426fe3b1
 app.get('/contact', async (req, res) => {
   res.render('contact');
 });
