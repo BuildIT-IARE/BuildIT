@@ -35,13 +35,19 @@ app.get('/about', async (req, res) => {
 app.get('/contest', async (req, res) => {
   res.render('contest');
 });
+
 app.get('/blog-single', async (req, res) => {
   res.render('blog-single');
 });
+
 app.get('/contact', async (req, res) => {
   res.render('contact');
 });
-
-
+app.get('/contest-start', async (req, res) => {
+  res.render('contest-start');
+});
+app.get('/questions', async (req, res) => {
+  res.render('questions');
+});
 app.listen(process.env.PORT || 3000);
 console.log('PORT: ', process.env.PORT, 'Or 3000');
