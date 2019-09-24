@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const request = require('request');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const apiAddress = 'https://api.judge0.com/';
+console.log("Using API from url", apiAddress);
 
 // INIT
 const app = express();
@@ -18,8 +20,61 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
+// MONGOOSE SCHEMA
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var userSchema = new Schema({
+  rollno: String,
+  password: String,
+  name: String,
+  contests: [{
+    contestId: String,
+    submissions: [{submissionId: String}],
+    results: [{status: String}]
+  }]
+
+});
+
+var contestSchema = new Schema({
+  contestId: String,
+  contestName: String,
+  contestDate: String,
+  contestDuration: Number,
+  contestStartTime: String,
+  questions: [{
+    questionId: String,
+    questionName: String,
+    questionDescriptionText: String, 
+    questionInputText: String,
+    questionOutputText: String,
+    questionExampleInput: String,
+    questionExampleOutput: String,
+    questionHiddenInput1: String,
+    questionHiddenInput2: String,
+    questionHiddenInput3: String,
+    questionHiddenOutput1: String,
+    questionHiddenOutput2: String,
+    questionHiddenOutput3: String,
+    questionExplanation: String
+  }]
+});
+
+var allContestSchema = new Schema({
+  contestId: String,
+  contestName: String
+});
+
+var user = mongoose.model('User', userSchema);
+var contest = mongoose.model('Contest', contestSchema);
+var allContest = mongoose.model('AllContest', allContestSchema);
+
 
 // CODE STARTS HERE
+
+
+
+
 
 
 // Examples
