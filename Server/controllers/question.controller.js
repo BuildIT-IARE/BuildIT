@@ -58,7 +58,7 @@ exports.findAll = (req, res) => {
 
 // Find a single question with a questionId
 exports.findOne = (req, res) => {
-    Question.findById(req.params.questionId)
+    Question.find({questionId: req.params.questionId})
     .then(question => {
         if(!question) {
             return res.status(404).send({
@@ -87,7 +87,7 @@ exports.update = (req, res) => {
     }
 
     // Find note and update it with the request body
-    Note.findByIdAndUpdate(req.params.questionId, {
+    Question.findOneAndUpdate({questionId: req.params.questionId}, {$set:{
         questionId: req.body.questionId,
         questionName: req.body.questionName,
         questionDescriptionText: req.body.questionDescriptionText, 
@@ -102,7 +102,12 @@ exports.update = (req, res) => {
         questionHiddenOutput2: req.body.questionHiddenOutput2,
         questionHiddenOutput3: req.body.questionHiddenOutput3,
         questionExplanation: req.body.questionExplanation
-      }, {new: true})
+      }}, {new: true}, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+        console.log(doc);
+      })
     .then(note => {
         if(!note) {
             return res.status(404).send({
@@ -124,7 +129,7 @@ exports.update = (req, res) => {
 
 // Delete a question with the specified questionId in the request
 exports.delete = (req, res) => {
-    Question.findByIdAndRemove(req.params.questionId)
+    Question.findOneAndRemove({questionId: req.params.questionId})
     .then(note => {
         if(!note) {
             return res.status(404).send({

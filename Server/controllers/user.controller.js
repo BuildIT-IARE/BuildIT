@@ -14,7 +14,7 @@ exports.findAll = (req, res) => {
 
 // Find a single user with a username
 exports.findOne = (req, res) => {
-    User.findById(req.params.username)
+    User.find({username: req.params.username})
     .then(user => {
         if(!user) {
             return res.status(404).send({

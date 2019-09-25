@@ -28,7 +28,7 @@ exports.create = (req, res) => {
         },
         {
             questionId: req.body.questionId2,
-            questionName: req.body.questionName3
+            questionName: req.body.questionName2
         },
         {
             questionId: req.body.questionId3,
@@ -85,7 +85,7 @@ exports.create = (req, res) => {
     ]
       });
 
-    // Save Note in the database
+    // SaveContest in the database
     contest.save()
     .then(data => {
         res.send(data);
@@ -110,22 +110,22 @@ exports.findAll = (req, res) => {
 
 // Find a single contest with a contestId
 exports.findOne = (req, res) => {
-    Contest.findById(req.params.contestId)
+    Contest.find({contestId: req.params.contestId})
     .then(contest => {
         if(!contest) {
             return res.status(404).send({
-                message: "Note not found with id " + req.params.contestId
+                message: "Contest not found with id " + req.params.contestId
             });            
         }
-        res.send(note);
+        res.send(contest);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Note not found with id " + req.params.contestId
+                message: "Contest not found with id " + req.params.contestId
             });                
         }
         return res.status(500).send({
-            message: "Error retrieving note with id " + req.params.contestId
+            message: "Error retrieving contest with id " + req.params.contestId
         });
     });
 };
@@ -137,9 +137,9 @@ exports.update = (req, res) => {
             message: "content can not be empty"
         });
     }
-
-    // Find note and update it with the request body
-    Note.findByIdAndUpdate(req.params.contestId, {
+    console.log(req.body);
+    // Findcontest and update it with the request body
+   Contest.findOneAndUpdate({contestId: req.params.contestId}, {$set:{
         contestId: req.body.contestId,
         contestName: req.body.contestName,
         contestDate: req.body.contestDate,
@@ -151,7 +151,7 @@ exports.update = (req, res) => {
         },
         {
             questionId: req.body.questionId2,
-            questionName: req.body.questionName3
+            questionName: req.body.questionName2
         },
         {
             questionId: req.body.questionId3,
@@ -205,14 +205,19 @@ exports.update = (req, res) => {
             questionId: req.body.questionId15,
             questionName: req.body.questionName15
         }]
-      }, {new: true})
-    .then(note => {
-        if(!note) {
+      }}, {new: true}, (err, doc) => {
+          if(err){
+              console.log("Error Occured");
+          }
+          console.log(doc);
+      })
+    .then(contest => {
+        if(!contest) {
             return res.status(404).send({
                 message: "Contest not found with id " + req.params.contestId
             });
         }
-        res.send(note);
+        res.send(contest);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -227,9 +232,9 @@ exports.update = (req, res) => {
 
 // Delete a contest with the specified contestId in the request
 exports.delete = (req, res) => {
-    Contest.findByIdAndRemove(req.params.contestId)
-    .then(note => {
-        if(!note) {
+    Contest.findOneAndRemove({contestId: req.params.contestId})
+    .then(contest => {
+        if(!contest) {
             return res.status(404).send({
                 message: "contest not found with id " + req.params.contestId
             });
@@ -242,7 +247,7 @@ exports.delete = (req, res) => {
             });                
         }
         return res.status(500).send({
-            message: "Could not delete note with id " + req.params.contestId
+            message: "Could not deletecontest with id " + req.params.contestId
         });
     });
 };

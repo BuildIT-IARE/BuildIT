@@ -7,12 +7,12 @@ var contestSchema = new Schema({
     contestId: String,
     contestName: String,
     contestDate: String,
-    contestDuration: Number,
+    contestDuration: String,
     contestStartTime: String,
     questions: [{
       questionId: String,
       questionName: String
     }]
-  });
+  }, {strict: false});
 
 module.exports = mongoose.model('Contest', contestSchema);
