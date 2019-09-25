@@ -35,7 +35,6 @@ app.get('/about', async (req, res) => {
 app.get('/contest', async (req, res) => {
   res.render('contest');
 });
-
 app.get('/blog-single', async (req, res) => {
   res.render('blog-single');
 });
