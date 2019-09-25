@@ -78,9 +78,26 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <p>Institute of Aeronautical Engineering (IARE) is ranked 139 in Engineering category as per National Institutional Ranking Framework (NIRF) - 2019, Ministry of Human Resource Development (MHRD), Govt. of India.</p>
-        <p> <b><font size = "6">Why we developed BuildIT</font> </b></p>
-        <p>We had only one end goal in mind, to create an online learning, assessment and evaluation platform, focused on helping students clear initial screening tests of campus recruiters in an automated way.</p>
+        <h3 class="section-title">Easy Fibonacci</h3>
+        <div class = "font-tertiary text-white" style= "font-size: 5px">
+            <p>The Fibonacci sequence F0,F1,… is a special infinite sequence of non-negative integers, where F0=0, F1=1 and for each integer n≥2, Fn=Fn−1+Fn−2.<br>
+  
+            Consider the sequence D of the last decimal digits of the first N Fibonacci numbers, i.e. D=(F0%10,F1%10,…,FN−1%10). Now, you should perform the following process:<br>
+            
+            1) Let D=(D1,D2,…,Dl).<br>
+            2) If l=1, the process ends.<br>
+            3) Create a new sequence E=(D2,D4,…,D2⌊l/2⌋). In other words, E is the sequence created by removing all odd-indexed elements from D.<br>
+            4) Change D to E.<br>
+            5) When this process terminates, the sequence D contains only one number. You have to find this number.<br>
+        </div>
+        <div>
+              <ul>
+                <h6><b>Input:</b></h6>
+                <li>The first line of the input contains a single integer T denoting the number of test cases. The description of T test cases follows.</li>
+                <li>The first and only line of each test case contains a single integer N.</li>
+              </ul>
+
+        </div>
       </div>
       <div class="col-md-4 text-center drag-lg-top">
         <!-- <div class="shadow-down mb-4">
@@ -95,7 +112,7 @@
 <!-- /about -->
 
 <!-- Work Process -->
-<section class="section">
+<!--<section class="section">
   <div class="container">
     <div class="row justify-content-around">
       <div class="col-lg-12 text-center">
@@ -120,7 +137,7 @@
       </div>
     </div>
   </div>
-</section>
+</section>-->
 <!-- ./Work Process -->
 
 <!-- team -->
@@ -163,7 +180,7 @@
 <!-- /team -->
 
 <!-- clients -->
-<section class="section">
+<!--<section class="section">
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
@@ -197,10 +214,10 @@
       </div>
     </div>
   </div>
-</section>
+</section>-->
 <!-- /clients -->
 <!-- footer -->
-<footer class="bg-dark footer-section">
+<!--<footer class="bg-dark footer-section">-->
   <!-- <div class="section">
     <div class="container">
       <div class="row">
@@ -219,14 +236,15 @@
       </div>
     </div>
   </div> -->
-  <div class="border-top text-center border-dark py-5">
+  <!--<div class="border-top text-center border-dark py-5">
     <p class="mb-0 text-light">Copyright ©<script>
         var CurrentYear = new Date().getFullYear()
         document.write(CurrentYear)
       </script> Institute of Aeronautical Engineering</p>
   </div>
-</footer>
+</footer>-->
 <!-- /footer -->
+<% include ../views/partials/footer %>
 
 <!-- jQuery -->
 <script src="plugins/jQuery/jquery.min.js"></script>
