@@ -54,5 +54,8 @@ app.get('/questions_expanded', async (req, res) => {
 app.get('/login', async (req, res) => {
   res.render('login');
 });
+app.get('/contest', async (req, res) => {
+  res.render('contest');
+});
 app.listen(process.env.PORT || 3000);
 console.log('PORT: ', process.env.PORT, 'Or 3000');
