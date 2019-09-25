@@ -2,9 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
-const request = require('request');
+const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const request = require('request');
 const jwt = require('jsonwebtoken');
+
+// API Address
 const apiAddress = 'https://api.judge0.com/';
 console.log("Using API from url", apiAddress);
 
@@ -20,61 +23,34 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
-// MONGOOSE SCHEMA
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
-var userSchema = new Schema({
-  rollno: String,
-  password: String,
-  name: String,
-  contests: [{
-    contestId: String,
-    submissions: [{submissionId: String}],
-    results: [{status: String}]
-  }]
-
-});
-
-var contestSchema = new Schema({
-  contestId: String,
-  contestName: String,
-  contestDate: String,
-  contestDuration: Number,
-  contestStartTime: String,
-  questions: [{
-    questionId: String,
-    questionName: String,
-    questionDescriptionText: String, 
-    questionInputText: String,
-    questionOutputText: String,
-    questionExampleInput: String,
-    questionExampleOutput: String,
-    questionHiddenInput1: String,
-    questionHiddenInput2: String,
-    questionHiddenInput3: String,
-    questionHiddenOutput1: String,
-    questionHiddenOutput2: String,
-    questionHiddenOutput3: String,
-    questionExplanation: String
-  }]
-});
-
-var allContestSchema = new Schema({
-  contestId: String,
-  contestName: String
-});
-
-var user = mongoose.model('User', userSchema);
-var contest = mongoose.model('Contest', contestSchema);
-var allContest = mongoose.model('AllContest', allContestSchema);
 
 
 // CODE STARTS HERE
 
+mongoose.Promise = global.Promise;
+dbConfig = {
+  url: 'mongodb://localhost:27017/BuildIT'
+}
+// Connecting to the database
+mongoose.connect(dbConfig.url, {
+    useNewUrlParser: true
+}).then(() => {
+    console.log("Successfully connected to the database");    
+}).catch(err => {
+    console.log('Could not connect to the database. Exiting now...', err);
+    process.exit();
+});
+
+// Require allcontest routes
+// require('./routes/allcontest.routes.js')(app);
 
 
-
+// Require contest routes
+require('./routes/contest.route.js')(app);
+// Require user routes
+require('./routes/user.route.js')(app);
+// Require question routes
+require('./routes/question.route.js')(app);
 
 
 // Examples
@@ -100,4 +76,4 @@ res.send(`Hello, ${req.body.username} `);
 
 
 
-app.listen(4321,()=>console.log('Server @ port 4321'));
+app.listen(5000,()=>console.log('Server @ port 5000'));
