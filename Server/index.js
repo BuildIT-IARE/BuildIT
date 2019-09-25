@@ -67,11 +67,33 @@ app.post('/testPost', async (req, res) => {
     res.json(req.body);
 });
   
-// Routes
+// Imports
+const users = require('./controllers/user.controller.js');
+const User = require('./models/user.model.js');
 
+// Main Routes
 app.post('/login', async(req, res) => {
-console.log("Login by ", req.body.username);
-res.send(`Hello, ${req.body.username} `);
+  let username = req.body.username;
+  let password = req.body.password;
+
+  User.find({username: username})
+    .then(user => {
+        if(!user) {
+            return res.status(404).send({
+                message: "User not found with id " + username
+            });            
+        }
+        res.send(user);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + username
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving user with id " + username
+        });
+    });
 });
 
 
