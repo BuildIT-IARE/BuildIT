@@ -77,27 +77,76 @@
     <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <button class = "button"><a href= "contest" ><span>Back to Contests</span></a></button></a><br><br>
+        <button class = "button"><a href= "questions" style="color:white" ><span>Back to Questions</span></a></button></a><br><br>
         <h3 class="section-title">Easy Fibonacci</h3>
-        <div class = "font-tertiary text-white" style= "font-size: 5px">
-            <p>The Fibonacci sequence F0,F1,… is a special infinite sequence of non-negative integers, where F0=0, F1=1 and for each integer n≥2, Fn=Fn−1+Fn−2.<br>
+        <div class = "font-tertiary text-white">
+            <p class="cars-text">The Fibonacci sequence F0,F1,… is a special infinite sequence of non-negative integers, where F0=0, F1=1 and for each integer n≥2, Fn=Fn−1+Fn−2.<br>
   
-            Consider the sequence D of the last decimal digits of the first N Fibonacci numbers, i.e. D=(F0%10,F1%10,…,FN−1%10). Now, you should perform the following process:<br>
+            Consider the sequence D of the last decimal digits of the first N Fibonacci numbers,<br>i.e. D=(F0%10,F1%10,…,FN−1%10). Now, you should perform the following process:<br>
             
             1) Let D=(D1,D2,…,Dl).<br>
             2) If l=1, the process ends.<br>
             3) Create a new sequence E=(D2,D4,…,D2⌊l/2⌋). In other words, E is the sequence created by removing all odd-indexed elements from D.<br>
             4) Change D to E.<br>
             5) When this process terminates, the sequence D contains only one number. You have to find this number.<br>
+            </p>
         </div>
         <div>
-              <ul>
+              
                 <h6><b>Input:</b></h6>
+                <blockquote>
                 <li>The first line of the input contains a single integer T denoting the number of test cases. The description of T test cases follows.</li>
                 <li>The first and only line of each test case contains a single integer N.</li>
-              </ul>
+                </blockquote>
+
 
         </div>
+        <div>
+              
+            <h6><b>Output:</b></h6>
+            <blockquote>
+            <li> For each test case, print a single line containing one integer ― the last remaining number.</li>
+            </blockquote>
+            
+
+    </div>
+    <div>
+              
+        <h6><b>Constraints:</b></h6>
+        <blockquote>
+        <li>1 ≤T ≤10<sup>5</sup></li>
+        <li>1 ≤N≤ 10<sup>18</sup></li>
+        </blockquote>
+        
+
+</div>
+<div>
+              
+    <h5><b>Subtasks:</b></h5>
+    <div><h6><b>Subtask-1:</b></h6>
+    <blockquote>
+      <li>1≤T≤10<sup>5</sup></li>
+      <li>1≤N≤10<sup>7</sup></li>
+    </blockquote>
+    </div>
+    <h6><b>Subtask-2</b></h6>
+    <blockquote>
+    <li>The first line of the input contains a single integer T denoting the number of test cases. The description of T test cases follows.</li>
+    <li>The first and only line of each test case contains a single integer N.</li>
+    </blockquote>
+    
+
+</div>
+<div>
+              
+    <h6><b>Input:</b></h6>
+    <blockquote>
+    <li>The first line of the input contains a single integer T denoting the number of test cases. The description of T test cases follows.</li>
+    <li>The first and only line of each test case contains a single integer N.</li>
+    </blockquote>
+    
+
+</div>
       </div>
       <div class="col-md-4 text-center drag-lg-top">
         <!-- <div class="shadow-down mb-4">
@@ -109,75 +158,6 @@
     </div>
   </div>
 </section>
-<!-- /about -->
-
-<!-- Work Process -->
-<!--<section class="section">
-  <div class="container">
-    <div class="row justify-content-around">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-title">Work Process</h2>
-      </div>
-      <div class="col-lg-3 col-md-4 text-center hover-shadow pt-3">
-        <div class="">
-          <img src="images/icons/plan.png" class="mb-4" alt="icon">
-          <h4 class="mb-4">Read and Evaluate</h4>
-          <p>Go through the contest and it's questions, analyze the situtation.</p>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-4 text-center hover-shadow pt-3">
-        <img src="images/icons/design.png" class="mb-4" alt="icon">
-        <h4 class="mb-4">Design and Develop</h4>
-        <p>Design the best possible solution using the most efficient algorithms. There is <i>always</i> a faster way to do it!</p>
-      </div>
-      <div class="col-lg-3 col-md-4 text-center hover-shadow pt-3">
-        <img src="images/icons/print.png" class="mb-4" alt="icon">
-        <h4 class="mb-4">Get Results</h4>
-        <p>Code out your solution in your favorite language, BuildIT now supports <b>over 40+ languages</b>! Enchance your programming skills in no time. </p>
-      </div>
-    </div>
-  </div>
-</section>-->
-<!-- ./Work Process -->
-
-<!-- team -->
-<!-- <section class="section bg-cover" data-background="images/backgrounds/team-bg.png">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h2 class="section-title">My Team</h2>
-      </div>
-      <div class="col-md-4 col-sm-6 mb-4 mb-md-0">
-        <div class="card text-center">
-          <img src="images/team/member-1.png" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">Jack Schenziwe</h4>
-            <p class="text-light font-secondary">Project Manager</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 mb-4 mb-md-0">
-        <div class="card text-center">
-          <img src="images/team/member-2.png" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">Jack Schenziwe</h4>
-            <p class="text-light font-secondary">Project Manager</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 mb-4 mb-md-0">
-        <div class="card text-center">
-          <img src="images/team/member-3.png" class="card-img-top">
-          <div class="card-body">
-            <h4 class="card-title">Jack Schenziwe</h4>
-            <p class="text-light font-secondary">Project Manager</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-<!-- /team -->
 
 <!-- clients -->
 <!--<section class="section">

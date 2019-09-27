@@ -764,11 +764,12 @@ textarea.form-control {
 
 blockquote {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px 10px;
   background: #eaeaea;
   border-left: 2px solid #41228e;
   font-style: italic;
-  font-size: 22px;
+  font-family: Verdana;
+  font-size: 18px;
 }
 
 .content * {
@@ -911,10 +912,10 @@ blockquote {
   background-color: #454fd4;
   border: none;
   color: white;
-  text-align: center;
-  font-size: 20 px;
-  padding: 20px;
-  width: 130px;
+  /* text-align: center; */
+  font-size:  px;
+  padding: 5px;
+  width: 120px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
@@ -924,7 +925,7 @@ blockquote {
   cursor: pointer;
   display: inline-block;
   position: relative;
-  transition: 0.5s;
+  transition: 1s;
 }
 
 .button span:after {
