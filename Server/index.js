@@ -16,9 +16,11 @@ const app = express();
 app.options('*', cors());
 app.use(
   bodyParser.urlencoded({
-    extended: false
+    extended: true
   })
 );
+
+
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
@@ -41,8 +43,9 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-// Require allcontest routes
-// require('./routes/allcontest.routes.js')(app);
+// Imports
+const users = require('./controllers/user.controller.js');
+const User = require('./models/user.model.js');
 
 
 // Require contest routes
@@ -51,6 +54,10 @@ require('./routes/contest.route.js')(app);
 require('./routes/user.route.js')(app);
 // Require question routes
 require('./routes/question.route.js')(app);
+// Require submission routes
+require('./routes/submission.route.js')(app);
+// Require participation routes
+require('./routes/participation.route.js')(app);
 
 
 // Examples
@@ -66,35 +73,31 @@ app.post('/testPost', async (req, res) => {
     console.log(req.body);
     res.json(req.body);
 });
-  
-// Imports
-const users = require('./controllers/user.controller.js');
-const User = require('./models/user.model.js');
 
 // Main Routes
-app.post('/login', async(req, res) => {
-  let username = req.body.username;
-  let password = req.body.password;
+// app.post('/login', async(req, res) => {
+//   let username = req.body.username;
+//   let password = req.body.password;
 
-  User.find({username: username})
-    .then(user => {
-        if(!user) {
-            return res.status(404).send({
-                message: "User not found with id " + username
-            });            
-        }
-        res.send(user);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "User not found with id " + username
-            });                
-        }
-        return res.status(500).send({
-            message: "Error retrieving user with id " + username
-        });
-    });
-});
+//   User.find({username: username})
+//     .then(user => {
+//         if(!user) {
+//             return res.status(404).send({
+//                 message: "User not found with id " + username
+//             });            
+//         }
+//         res.send(user);
+//     }).catch(err => {
+//         if(err.kind === 'ObjectId') {
+//             return res.status(404).send({
+//                 message: "User not found with id " + username
+//             });                
+//         }
+//         return res.status(500).send({
+//             message: "Error retrieving user with id " + username
+//         });
+//     });
+// });
 
 
 

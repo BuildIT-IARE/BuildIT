@@ -1,3 +1,5 @@
+let middleware = require('../util/middleware.js');
+
 module.exports = (app) => {
     const users = require('../controllers/user.controller.js');
 
@@ -5,12 +7,13 @@ module.exports = (app) => {
     // app.post('/users', users.create);
 
     // Retrieve all users
-    app.get('/users', users.findAll);
+    app.get('/users', middleware.checkToken, users.findAll);
 
     // Retrieve a single user with userId
     app.get('/users/:username', users.findOne);
 
-    // Update a user with userId
+    app.post('/login', users.checkPass);
+    // // Update a user with userId
     // app.put('/users/:username', users.update);
 
     // Delete a user with userId

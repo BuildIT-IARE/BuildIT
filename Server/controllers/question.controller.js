@@ -19,18 +19,26 @@ exports.create = (req, res) => {
     const question = new Question({
     questionId: req.body.questionId,
     questionName: req.body.questionName,
+    contestId: req.body.contestId,
     questionDescriptionText: req.body.questionDescriptionText, 
     questionInputText: req.body.questionInputText,
     questionOutputText: req.body.questionOutputText,
-    questionExampleInput: req.body.questionExampleInput,
-    questionExampleOutput: req.body.questionExampleOutput,
+    questionExampleInput1: req.body.questionExampleInput1,
+    questionExampleOutput1: req.body.questionExampleOutput1,
+    questionExampleInput2: req.body.questionExampleInput2,
+    questionExampleOutput2: req.body.questionExampleOutput2,
+    questionExampleInput3: req.body.questionExampleInput3,
+    questionExampleOutput3: req.body.questionExampleOutput3,
     questionHiddenInput1: req.body.questionHiddenInput1,
     questionHiddenInput2: req.body.questionHiddenInput2,
     questionHiddenInput3: req.body.questionHiddenInput3,
     questionHiddenOutput1: req.body.questionHiddenOutput1,
     questionHiddenOutput2: req.body.questionHiddenOutput2,
     questionHiddenOutput3: req.body.questionHiddenOutput3,
-    questionExplanation: req.body.questionExplanation
+    questionExplanation: req.body.questionExplanation,
+    author: req.body.author,
+    editorial: req.body.editorial,
+    difficulty: req.body.difficulty
     });
 
     // Save Note in the database
@@ -90,18 +98,26 @@ exports.update = (req, res) => {
     Question.findOneAndUpdate({questionId: req.params.questionId}, {$set:{
         questionId: req.body.questionId,
         questionName: req.body.questionName,
+        contestId: req.body.contestId,
         questionDescriptionText: req.body.questionDescriptionText, 
         questionInputText: req.body.questionInputText,
         questionOutputText: req.body.questionOutputText,
-        questionExampleInput: req.body.questionExampleInput,
-        questionExampleOutput: req.body.questionExampleOutput,
+        questionExampleInput1: req.body.questionExampleInput1,
+        questionExampleOutput1: req.body.questionExampleOutput1,
+        questionExampleInput2: req.body.questionExampleInput2,
+        questionExampleOutput2: req.body.questionExampleOutput2,
+        questionExampleInput3: req.body.questionExampleInput3,
+        questionExampleOutput3: req.body.questionExampleOutput3,
         questionHiddenInput1: req.body.questionHiddenInput1,
         questionHiddenInput2: req.body.questionHiddenInput2,
         questionHiddenInput3: req.body.questionHiddenInput3,
         questionHiddenOutput1: req.body.questionHiddenOutput1,
         questionHiddenOutput2: req.body.questionHiddenOutput2,
         questionHiddenOutput3: req.body.questionHiddenOutput3,
-        questionExplanation: req.body.questionExplanation
+        questionExplanation: req.body.questionExplanation,
+        author: req.body.author,
+        editorial: req.body.editorial,
+        difficulty: req.body.difficulty
       }}, {new: true}, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");

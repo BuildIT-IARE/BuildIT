@@ -8,11 +8,7 @@ var contestSchema = new Schema({
     contestName: String,
     contestDate: String,
     contestDuration: String,
-    contestStartTime: String,
-    questions: [{
-      questionId: String,
-      questionName: String
-    }]
-  }, {strict: false});
+    contestStartTime: String
+  });
 
 module.exports = mongoose.model('Contest', contestSchema);

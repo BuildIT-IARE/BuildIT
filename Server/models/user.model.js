@@ -7,12 +7,8 @@ var userSchema = new Schema({
     username: String,
     password: String,
     name: String,
-    contests: [{
-      contestId: String,
-      submissions: [{submissionId: String}],
-      results: [{status: String}]
-    }],
-    admin: Boolean
+    admin: Boolean,
+    totalScore: String
 });
 
 module.exports = mongoose.model('User', userSchema);

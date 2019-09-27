@@ -21,68 +21,7 @@ exports.create = (req, res) => {
         contestName: req.body.contestName,
         contestDate: req.body.contestDate,
         contestDuration: req.body.contestDuration,
-        contestStartTime: req.body.contestStartTime,
-        questions: [{
-            questionId: req.body.questionId1,
-            questionName: req.body.questionName1
-        },
-        {
-            questionId: req.body.questionId2,
-            questionName: req.body.questionName2
-        },
-        {
-            questionId: req.body.questionId3,
-            questionName: req.body.questionName3
-        },
-        {
-            questionId: req.body.questionId4,
-            questionName: req.body.questionName4
-        },
-        {
-            questionId: req.body.questionId5,
-            questionName: req.body.questionName5
-        },
-        {
-            questionId: req.body.questionId6,
-            questionName: req.body.questionName6
-        },
-        {
-            questionId: req.body.questionId7,
-            questionName: req.body.questionName7
-        },
-        {
-            questionId: req.body.questionId8,
-            questionName: req.body.questionName8
-        },
-        {
-            questionId: req.body.questionId9,
-            questionName: req.body.questionName9
-        },
-        {
-            questionId: req.body.questionId10,
-            questionName: req.body.questionName10
-        },
-        {
-            questionId: req.body.questionId11,
-            questionName: req.body.questionName11
-        },
-        {
-            questionId: req.body.questionId12,
-            questionName: req.body.questionName12
-        },
-        {
-            questionId: req.body.questionId13,
-            questionName: req.body.questionName13
-        },
-        {
-            questionId: req.body.questionId14,
-            questionName: req.body.questionName14
-        },
-        {
-            questionId: req.body.questionId15,
-            questionName: req.body.questionName15
-        }
-    ]
+        contestStartTime: req.body.contestStartTime
       });
 
     // SaveContest in the database
@@ -144,68 +83,8 @@ exports.update = (req, res) => {
         contestName: req.body.contestName,
         contestDate: req.body.contestDate,
         contestDuration: req.body.contestDuration,
-        contestStartTime: req.body.contestStartTime,
-        questions: [{
-            questionId: req.body.questionId1,
-            questionName: req.body.questionName1
-        },
-        {
-            questionId: req.body.questionId2,
-            questionName: req.body.questionName2
-        },
-        {
-            questionId: req.body.questionId3,
-            questionName: req.body.questionName3
-        },
-        {
-            questionId: req.body.questionId4,
-            questionName: req.body.questionName4
-        },
-        {
-            questionId: req.body.questionId5,
-            questionName: req.body.questionName5
-        },
-        {
-            questionId: req.body.questionId6,
-            questionName: req.body.questionName6
-        },
-        {
-            questionId: req.body.questionId7,
-            questionName: req.body.questionName7
-        },
-        {
-            questionId: req.body.questionId8,
-            questionName: req.body.questionName8
-        },
-        {
-            questionId: req.body.questionId9,
-            questionName: req.body.questionName9
-        },
-        {
-            questionId: req.body.questionId10,
-            questionName: req.body.questionName10
-        },
-        {
-            questionId: req.body.questionId11,
-            questionName: req.body.questionName11
-        },
-        {
-            questionId: req.body.questionId12,
-            questionName: req.body.questionName12
-        },
-        {
-            questionId: req.body.questionId13,
-            questionName: req.body.questionName13
-        },
-        {
-            questionId: req.body.questionId14,
-            questionName: req.body.questionName14
-        },
-        {
-            questionId: req.body.questionId15,
-            questionName: req.body.questionName15
-        }]
-      }}, {new: true}, (err, doc) => {
+        contestStartTime: req.body.contestStartTime
+        }}, {new: true}, (err, doc) => {
           if(err){
               console.log("Error Occured");
           }
