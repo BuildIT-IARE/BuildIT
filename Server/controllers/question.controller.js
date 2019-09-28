@@ -100,6 +100,7 @@ exports.getTestCases = (req, callback) => {
         // console.log(h1);
         // h2 = Base64.encode(h1);
         testcases = {
+            contestId: question.contestId,
             HI1: question.questionHiddenInput1,
             HI2: question.questionHiddenInput2,
             HI3: question.questionHiddenInput3,
