@@ -8,9 +8,9 @@ var submissionSchema = new Schema({
     username: String,
     languageId: String,
     sourceCode: String,
-    score: String,
-    result: String,
-    submissionToken: String,
+    score: Number,
+    result: Array,
+    submissionToken: Array,
     submissionTime: String
 });
 

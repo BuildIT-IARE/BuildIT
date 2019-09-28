@@ -1,41 +1,35 @@
 const Submission = require('../models/submission.model.js');
 
 
-// Create and Save a new contest
-exports.create = (req, res) => {
+// Create and Save a new submission
+exports.create = (req, result, callback) => {
     // Validate request
-    if(!req.body.submissionToken) {
-        return res.status(400).send({
-            message: "Submission token can not be empty"
-        });
+    if(!result.submissionToken) {
+        return callback("Submission token can not be empty", null);
     }
 
-    if(!req.body.username) {
-        return res.status(400).send({
-            message: "username can not be empty"
-        });
+    if(!result.username) {
+        return callback("username can not be empty", null);
     }
  
     // Create a Submission
     const submission = new Submission({
-        questionId: req.body.questionId,
-        username: req.body.username,
-        languageId: req.body.languageId,
-        sourceCode: req.body.sourceCode,
-        result: req.body.result,
-        score: req.body.score,
-        submissionToken: req.body.submissionToken,
+        questionId: result.questionId,
+        username: result.username,
+        languageId: result.languageId,
+        sourceCode: result.sourceCode,
+        result: result.result,
+        score: result.score,
+        submissionToken: result.submissionToken,
         submissionTime: String(Date.now())
       });
 
     // SaveReg in the database
     submission.save()
     .then(data => {
-        res.send(data);
+        return callback(null, data);
     }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while Registering."
-        });
+        return callback("Error occurred while Submitting.", null);
     });
 };
 

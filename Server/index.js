@@ -49,9 +49,9 @@ mongoose.connect(dbConfig.url, {
 // Imports
 const users = require('./controllers/user.controller.js');
 const submissions = require('./controllers/submission.controller.js');
-const question = require('./controllers/question.controller.js');
-const participation = require('./controllers/participation.controller.js');
-const contest = require('./controllers/contest.controller.js');
+const questions = require('./controllers/question.controller.js');
+const participations = require('./controllers/participation.controller.js');
+const contests = require('./controllers/contest.controller.js');
 
 
 
@@ -89,7 +89,7 @@ app.get('/logout', async (req, res) => {
 });
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
-  question.getTestCases(req, (err, testcases) => {
+  questions.getTestCases(req, (err, testcases) => {
     if (err){
         res.status(404).send({message: "Question not found with id " + req.body.questionId});
     } else {
@@ -123,8 +123,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
           source_code: req.body.source_code,
           language_id: req.body.language_id,
           stdin: testcases.HI3,
-          expected_output: testcases.HO3,
-          base64_encoded: true
+          expected_output: testcases.HO3
         },
         json: true,
         url: apiAddress + '/submissions'
@@ -135,26 +134,87 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
         if (err) {
           res.send(err);
         }
-        result.test1 = body.token;
+        result.token1 = body.token;
+
         request(options2, function (err, response, body) {
-          if (err) {
-            res.send(err);
-          }
-          result.test2 = body.token;
-          request(options3, function (err, response, body) {
             if (err) {
               res.send(err);
             }
-            result.test3 = body.token;
-            console.log(result);
+            result.token2 = body.token;
 
+          request(options3, function (err, response, body) {
+              if (err) {
+                res.send(err);
+              }
+              result.token3 = body.token;
+              option1 = {
+                url: apiAddress + '/submissions/' + result.token1,
+                method: 'get'
+              }
+              option2 = {
+                url: apiAddress + '/submissions/' + result.token2,
+                method: 'get'
+              }
+              option3 = {
+                url: apiAddress + '/submissions/' + result.token3,
+                method: 'get'
+              }
+              
+              request(option1, function (err, response, body) {
+                if (err) {
+                  res.send(err);
+                }
+                let data = JSON.parse(body);
+      
+                let resp = data.status.description;
+                result.response1 = resp;
+      
+                request(option2, function (err, response, body) {
+                  if (err) {
+                    res.send(err);
+                  }
+                  let data = JSON.parse(body);
+        
+                  let resp = data.status.description;
+                  result.response2 = resp;
+      
+                  request(option3, function (err, response, body) {
+                    if (err) {
+                      res.send(err);
+                    }
+                    let data = JSON.parse(body);
+          
+                    let resp = data.status.description;
+                    result.response3 = resp;
+                    // End of chain
+                    result.languageId = req.body.language_id;
+                    result.questionId = req.body.questionId;
+                    result.username = req.decoded.username;
+                    result.sourceCode = req.body.source_code;
+                    result.submissionToken = [result.token1, result.token2, result.token3];
+                    result.result = [result.response1, result.response2, result.response3];
+                    if (result.response1 === "Accepted" && result.response2 === "Accepted" && result.response3 === "Accepted"){
+                    result.score = 100;
+                    } else {
+                    result.score = 0;
+                    }
 
+                    submissions.create(req, result, (err, sub) => {
+                      if (err){
+                        res.send(err);
+                      } else {
+                        res.send(sub);
+                      }
+                    });
+
+                  });
+                });
+              });
 
           });  
         });
       });
-
-
+         
     }
   });
 });
