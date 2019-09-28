@@ -1,5 +1,6 @@
 const Submission = require('../models/submission.model.js');
 
+
 // Create and Save a new contest
 exports.create = (req, res) => {
     // Validate request
@@ -14,7 +15,7 @@ exports.create = (req, res) => {
             message: "username can not be empty"
         });
     }
-
+ 
     // Create a Submission
     const submission = new Submission({
         questionId: req.body.questionId,

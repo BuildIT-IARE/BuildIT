@@ -21,7 +21,8 @@ exports.create = (req, res) => {
         contestName: req.body.contestName,
         contestDate: req.body.contestDate,
         contestDuration: req.body.contestDuration,
-        contestStartTime: req.body.contestStartTime
+        contestStartTime: req.body.contestStartTime,
+        published: req.body.published
       });
 
     // SaveContest in the database
@@ -83,7 +84,8 @@ exports.update = (req, res) => {
         contestName: req.body.contestName,
         contestDate: req.body.contestDate,
         contestDuration: req.body.contestDuration,
-        contestStartTime: req.body.contestStartTime
+        contestStartTime: req.body.contestStartTime,
+        published: req.body.published
         }}, {new: true}, (err, doc) => {
           if(err){
               console.log("Error Occured");
@@ -108,6 +110,79 @@ exports.update = (req, res) => {
         });
     });
 };
+
+// Publish contest
+exports.publish = (req, res) => {
+    if(!req.body.contestId) {
+        return res.status(400).send({
+            message: "content can not be empty"
+        });
+    }
+
+    // Find contest and update it with the request body
+    Contest.findOneAndUpdate({contestId: req.params.contestId}, {$set:{
+        published: "true"
+      }}, {new: true}, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+        console.log(doc);
+      })
+    .then(contest => {
+        if(!contest) {
+            return res.status(404).send({
+                message: "Contest not found with id " + req.params.contestId
+            });
+        }
+        res.send(contest);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Contest not found with id " + req.params.contestId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error updating Contest with id " + req.params.contestId
+        });
+    });
+};
+
+// Archive contest
+exports.archive = (req, res) => {
+    if(!req.body.contestId) {
+        return res.status(400).send({
+            message: "content can not be empty"
+        });
+    }
+
+    // Find contest and update it with the request body
+    Contest.findOneAndUpdate({contestId: req.params.contestId}, {$set:{
+        published: "false"
+      }}, {new: true}, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+        console.log(doc);
+      })
+    .then(contest => {
+        if(!contest) {
+            return res.status(404).send({
+                message: "Contest not found with id " + req.params.contestId
+            });
+        }
+        res.send(contest);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Contest not found with id " + req.params.contestId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error updating Contest with id " + req.params.contestId
+        });
+    });
+};
+
 
 // Delete a contest with the specified contestId in the request
 exports.delete = (req, res) => {

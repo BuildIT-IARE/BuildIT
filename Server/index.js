@@ -5,7 +5,8 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const request = require('request');
-const jwt = require('jsonwebtoken');
+
+let middleware = require('./util/middleware.js');
 
 // API Address
 const apiAddress = 'https://api.judge0.com/';
@@ -30,6 +31,8 @@ app.use(cookieParser());
 // CODE STARTS HERE
 
 mongoose.Promise = global.Promise;
+mongoose.set('useUnifiedTopology', true);
+
 dbConfig = {
   url: 'mongodb://localhost:27017/BuildIT'
 }
@@ -45,7 +48,11 @@ mongoose.connect(dbConfig.url, {
 
 // Imports
 const users = require('./controllers/user.controller.js');
-const User = require('./models/user.model.js');
+const submissions = require('./controllers/submission.controller.js');
+const question = require('./controllers/question.controller.js');
+const participation = require('./controllers/participation.controller.js');
+const contest = require('./controllers/contest.controller.js');
+
 
 
 // Require contest routes
@@ -75,30 +82,81 @@ app.post('/testPost', async (req, res) => {
 });
 
 // Main Routes
-// app.post('/login', async(req, res) => {
-//   let username = req.body.username;
-//   let password = req.body.password;
 
-//   User.find({username: username})
-//     .then(user => {
-//         if(!user) {
-//             return res.status(404).send({
-//                 message: "User not found with id " + username
-//             });            
-//         }
-//         res.send(user);
-//     }).catch(err => {
-//         if(err.kind === 'ObjectId') {
-//             return res.status(404).send({
-//                 message: "User not found with id " + username
-//             });                
-//         }
-//         return res.status(500).send({
-//             message: "Error retrieving user with id " + username
-//         });
-//     });
-// });
+app.get('/logout', async (req, res) => {
+    res.clearCookie('token');
+    res.send("Add redirect here");
+});
+
+app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
+  question.getTestCases(req, (err, testcases) => {
+    if (err){
+        res.status(404).send({message: "Question not found with id " + req.body.questionId});
+    } else {
+      let options1 = {
+        method: 'post',
+        body: {
+          source_code: req.body.source_code,
+          language_id: req.body.language_id,
+          stdin: testcases.HI1,
+          expected_output: testcases.HO1
+        },
+        json: true,
+        url: apiAddress + '/submissions'
+      };
+
+      let options2 = {
+        method: 'post',
+        body: {
+          source_code: req.body.source_code,
+          language_id: req.body.language_id,
+          stdin: testcases.HI2,
+          expected_output: testcases.HO2
+        },
+        json: true,
+        url: apiAddress + '/submissions'
+      };
+
+      let options3 = {
+        method: 'post',
+        body: {
+          source_code: req.body.source_code,
+          language_id: req.body.language_id,
+          stdin: testcases.HI3,
+          expected_output: testcases.HO3,
+          base64_encoded: true
+        },
+        json: true,
+        url: apiAddress + '/submissions'
+      };
+      
+      let result = {};
+      request(options1, function (err, response, body) {
+        if (err) {
+          res.send(err);
+        }
+        result.test1 = body.token;
+        request(options2, function (err, response, body) {
+          if (err) {
+            res.send(err);
+          }
+          result.test2 = body.token;
+          request(options3, function (err, response, body) {
+            if (err) {
+              res.send(err);
+            }
+            result.test3 = body.token;
+            console.log(result);
 
 
+
+          });  
+        });
+      });
+
+
+    }
+  });
+});
 
 app.listen(5000,()=>console.log('Server @ port 5000'));

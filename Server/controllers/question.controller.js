@@ -1,5 +1,5 @@
 const Question = require('../models/question.model.js');
-
+// const Base64 = require('js-base64').Base64;
 // Create and Save a new question
 exports.create = (req, res) => {
     // Validate request
@@ -38,10 +38,11 @@ exports.create = (req, res) => {
     questionExplanation: req.body.questionExplanation,
     author: req.body.author,
     editorial: req.body.editorial,
-    difficulty: req.body.difficulty
+    difficulty: req.body.difficulty,
+    published: req.body.published
     });
 
-    // Save Note in the database
+    // Save Question in the database
     question.save()
     .then(data => {
         res.send(data);
@@ -70,21 +71,51 @@ exports.findOne = (req, res) => {
     .then(question => {
         if(!question) {
             return res.status(404).send({
-                message: "Note not found with id " + req.params.questionId
+                message: "Question not found with id " + req.params.questionId
             });            
         }
-        res.send(note);
+        res.send(question);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Note not found with id " + req.params.questionId
+                message: "Question not found with id " + req.params.questionId
             });                
         }
         return res.status(500).send({
-            message: "Error retrieving note with id " + req.params.questionId
+            message: "Error retrieving question with id " + req.params.questionId
         });
     });
 };
+
+// Find testcases with questionId
+exports.getTestCases = (req, callback) => {
+    Question.find({questionId: req.body.questionId})
+    .then(question => {
+        if(!question) {
+            return callback("Couldn't find question", null);            
+        }
+        question = question[0];
+        // let h1 = question.questionHiddenInput1.toString();
+        // console.log("h1");
+        // console.log(h1);
+        // h2 = Base64.encode(h1);
+        testcases = {
+            HI1: question.questionHiddenInput1,
+            HI2: question.questionHiddenInput2,
+            HI3: question.questionHiddenInput3,
+            HO1: question.questionHiddenOutput1,
+            HO2: question.questionHiddenOutput2,
+            HO3: question.questionHiddenOutput3
+        }
+        return callback(null, testcases);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return callback("Couldn't find question, caught exception", null);                 
+        }
+        return callback("Error retrieving data", null);        
+    });
+};
+
 
 // Update a question identified by the questionId in the request
 exports.update = (req, res) => {
@@ -94,7 +125,7 @@ exports.update = (req, res) => {
         });
     }
 
-    // Find note and update it with the request body
+    // Find question and update it with the request body
     Question.findOneAndUpdate({questionId: req.params.questionId}, {$set:{
         questionId: req.body.questionId,
         questionName: req.body.questionName,
@@ -117,20 +148,93 @@ exports.update = (req, res) => {
         questionExplanation: req.body.questionExplanation,
         author: req.body.author,
         editorial: req.body.editorial,
-        difficulty: req.body.difficulty
+        difficulty: req.body.difficulty,
+        published: req.body.published
       }}, {new: true}, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
         }
         console.log(doc);
       })
-    .then(note => {
-        if(!note) {
+    .then(question => {
+        if(!question) {
             return res.status(404).send({
                 message: "Question not found with id " + req.params.questionId
             });
         }
-        res.send(note);
+        res.send(question);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Question not found with id " + req.params.questionId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error updating Question with id " + req.params.questionId
+        });
+    });
+};
+
+// Publish question
+exports.publish = (req, res) => {
+    if(!req.body.questionId) {
+        return res.status(400).send({
+            message: "content can not be empty"
+        });
+    }
+
+    // Find question and update it with the request body
+    Question.findOneAndUpdate({questionId: req.params.questionId}, {$set:{
+        published: "true"
+      }}, {new: true}, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+        console.log(doc);
+      })
+    .then(question => {
+        if(!question) {
+            return res.status(404).send({
+                message: "Question not found with id " + req.params.questionId
+            });
+        }
+        res.send(question);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Question not found with id " + req.params.questionId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error updating Question with id " + req.params.questionId
+        });
+    });
+};
+
+// Archive question
+exports.archive = (req, res) => {
+    if(!req.body.questionId) {
+        return res.status(400).send({
+            message: "content can not be empty"
+        });
+    }
+
+    // Find question and update it with the request body
+    Question.findOneAndUpdate({questionId: req.params.questionId}, {$set:{
+        published: "false"
+      }}, {new: true}, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+        console.log(doc);
+      })
+    .then(question => {
+        if(!question) {
+            return res.status(404).send({
+                message: "Question not found with id " + req.params.questionId
+            });
+        }
+        res.send(question);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -146,8 +250,8 @@ exports.update = (req, res) => {
 // Delete a question with the specified questionId in the request
 exports.delete = (req, res) => {
     Question.findOneAndRemove({questionId: req.params.questionId})
-    .then(note => {
-        if(!note) {
+    .then(question => {
+        if(!question) {
             return res.status(404).send({
                 message: "question not found with id " + req.params.questionId
             });
@@ -160,7 +264,28 @@ exports.delete = (req, res) => {
             });                
         }
         return res.status(500).send({
-            message: "Could not delete note with id " + req.params.questionId
+            message: "Could not delete question with id " + req.params.questionId
+        });
+    });
+};
+
+exports.findAllContest = (req, res) => {
+    Question.find({contestId: req.params.contestId})
+    .then(question => {
+        if(!question) {
+            return res.status(404).send({
+                message: "Question not found with id " + req.params.questionId
+            });            
+        }
+        res.send(question);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Question not found with id " + req.params.questionId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving question with id " + req.params.questionId
         });
     });
 };

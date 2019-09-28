@@ -8,7 +8,8 @@ var contestSchema = new Schema({
     contestName: String,
     contestDate: String,
     contestDuration: String,
-    contestStartTime: String
+    contestStartTime: String,
+    published: String,
   });
 
 module.exports = mongoose.model('Contest', contestSchema);

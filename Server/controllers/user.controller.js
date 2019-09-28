@@ -51,7 +51,9 @@ exports.create = (req, res) => {
     // Create a user
     const user = new User({
         username: req.body.username, 
-        password: req.body.password
+        password: req.body.password,
+        name: req.body.name,
+        admin: req.body.admin
     });
 
     // Save user in the database
@@ -69,14 +71,14 @@ exports.create = (req, res) => {
 
 // Update a user identified by the username in the request
 exports.update = (req, res) => {
-    if(!req.body.username) {
+    if(!req.body.username || !req.body.password) {
         return res.status(400).send({
             message: "User content can not be empty"
         });
     }
 
     // Find user and update it with the request body
-    User.findOneAndUpdate({username: req.params.username} , {$set:{
+    User.findOneAndUpdate({username: req.body.username} , {$set:{
         username: req.body.username,
         password: req.body.password
     }}, {new: true}, (err, doc) => {
@@ -115,6 +117,7 @@ exports.checkPass = (req, res) => {
         }
         if(user[0].password === req.body.password){
             // Login successful
+            console.log(user[0]);
             let token = jwt.sign(
                 {
                     username: user[0].username,
@@ -124,11 +127,8 @@ exports.checkPass = (req, res) => {
                 {expiresIn: '24h'}
             );
             // return the JWT token for the future API calls
-            res.json({
-            success: true,
-            message: 'Authentication successful!',
-            token: token
-            });
+            res.cookie('token',token);
+            res.send("Add redirect here");
         }
     }).catch(err => {
         if(err.kind === 'ObjectId') {

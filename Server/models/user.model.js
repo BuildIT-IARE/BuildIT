@@ -7,7 +7,7 @@ var userSchema = new Schema({
     username: String,
     password: String,
     name: String,
-    admin: Boolean,
+    admin: String,
     totalScore: String
 });
 
