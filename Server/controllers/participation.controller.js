@@ -21,7 +21,7 @@ exports.create = (req, res) => {
         userId: req.body.userId,
         contestId: req.body.contestId,
         participationTime: String(Date.now()),
-        acceptedSubmissions: 0
+        submissionResults: []
       });
 
     // SaveReg in the database
@@ -36,16 +36,14 @@ exports.create = (req, res) => {
 };
 
 // add sol to participation
-exports.acceptSubmission = (req, res) => {
+exports.acceptSubmission = (sub, callback) => {
     if(!req.body.participationId) {
-        return res.status(400).send({
-            message: "id can not be empty"
-        });
+        return callback("id can not be empty", null);
     }
 
     // Find participation and update it with the request body
-    Participation.findOneAndUpdate({participationId: req.params.participationId}, {$inc:{
-        acceptedSubmissions: 1
+    Participation.findOneAndUpdate({participationId: req.body.participationId}, {$push:{
+        acceptedSubmissions: { questionId: sub.questionId, score: sub.score}
       }}, {new: true}, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
@@ -54,20 +52,14 @@ exports.acceptSubmission = (req, res) => {
       })
     .then(participation => {
         if(!participation) {
-            return res.status(404).send({
-                message: "Participation not found with id " + req.params.participationId
-            });
+            return callback("Participation not found with Id ", null);
         }
-        res.send(participation);
+        return callback(null, participation);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Participation not found with id " + req.params.participationId
-            });                
+            return callback("Participation not found with Id ", null);    
         }
-        return res.status(500).send({
-            message: "Error updating Participation with id " + req.params.participationId
-        });
+        return callback("Error updating Participation with Id ", null);
     });
 };
 
