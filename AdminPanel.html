@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BuildIt Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+      html, body {
+      min-height: 100%;
+      }
+      body, input {     
+      margin: 0;
+      outline: none;
+      font-family: "open sans";
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+      }
+      h1, h4 {
+      font-weight: 400;
+      }
+      h4 {
+      margin: 22px 0 4px;
+      }
+      h5 {
+      text-transform: uppercase;
+      color: #095484;
+      }
+      .main-block {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3px;
+      }
+      form {
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 2px 5px #ccc; 
+      background:aqua;
+      font-family: "open sans";
+      }
+      input {
+      width: calc(100% - 10px);
+      padding: 5px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      vertical-align: middle;
+      }
+      textarea {
+      width: 80%;
+      position: relative;
+      }
+      input:hover, textarea:hover {
+      outline: none;
+      border: 1px solid #095484;
+      }
+      th, td {
+      width: 15%;
+      padding: 15px 0;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+      vertical-align: unset;
+      line-height: 18px;
+      font-weight: 400;
+      word-break: break-all;
+      }
+      .question, .comments {
+      margin: 30px;
+      font-weight: bold;
+      }
+      .name_question{
+          width: 80%;
+          margin-left: 2%;
+          border-radius: 10px;
+      }
+      .radius_text{
+          border-radius: 10px;
+      }
+      }
+    </style>
+  </head>
+  <body >
+      
+    <div class="main-block">
+      <form action="/">
+         <center><img src = "Buildit.png"></center><br>
+         <center><h2>Admin Panel to edit the Questions of the BuildIT.</h2></center>
+    </div><br><br>
+    <div class = "name_question">
+        <form>
+        <p class = "comments">Name of the question:</p>
+        <input type ="text"></input>
+        </form>
+        <div class = "radius_text">
+        <p class="comments">Question:</p>
+        <textarea rows = "30"></textarea>
+        <p class="comments"><b>Input:</b></p>
+        <textarea rows = "10"></textarea>
+        <p class="comments"><b>Output:</b></p>
+        <textarea rows = "10"></textarea>
+        <p class="comments">Constraints:</p>
+        <textarea rows = "10"></textarea> 
+        <p class="comments">subtaks:</p>
+        <textarea rows = "10"></textarea>
+        <p class="comments">Example Input:</p>
+        <textarea rows = "10"></textarea>
+        <p class="comments">Example Output:</p>
+        <textarea rows = "10"></textarea>
+        </div>
+    </div>
+    </div>
+</div>
+  </body>
+</html>

@@ -46,31 +46,23 @@ var layoutConfig = {
             }
         }, {
             type: "column",
-            content: [{
-                type: "stack",
-                content: [{
-                    type: "component",
-                    componentName: "stdin",
-                    title: "STDIN",
-                    isClosable: false,
-                    componentState: {
-                        readOnly: false
-                    }
-                }]
-            }, {
+            // content: [{
+            //     type: "stack",
+            //     content: [{
+            //         type: "component",
+            //         componentName: "stdin",
+            //         title: "STDIN",
+            //         isClosable: false,
+            //         componentState: {
+            //             readOnly: false
+            //         }
+            //     }]
+            // }, {
                 type: "stack",
                 content: [{
                         type: "component",
                         componentName: "stdout",
                         title: "STDOUT",
-                        isClosable: false,
-                        componentState: {
-                            readOnly: true
-                        }
-                    }, {
-                        type: "component",
-                        componentName: "stderr",
-                        title: "STDERR",
                         isClosable: false,
                         componentState: {
                             readOnly: true
@@ -513,7 +505,6 @@ $(document).ready(function () {
 
     require(["vs/editor/editor.main"], function () {
         layout = new GoldenLayout(layoutConfig, $("#site-content"));
-
         layout.registerComponent("source", function (container, state) {
             sourceEditor = monaco.editor.create(container.getElement()[0], {
                 automaticLayout: true,
