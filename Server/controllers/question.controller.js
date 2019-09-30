@@ -1,4 +1,6 @@
 const Question = require('../models/question.model.js');
+const Contest = require('../models/contest.model.js');
+
 // const Base64 = require('js-base64').Base64;
 // Create and Save a new question
 exports.create = (req, res) => {
@@ -94,27 +96,36 @@ exports.getTestCases = (req, callback) => {
         if(!question) {
             return callback("Couldn't find question", null);            
         }
-        question = question[0];
-        // let h1 = question.questionHiddenInput1.toString();
-        // console.log("h1");
-        // console.log(h1);
-        // h2 = Base64.encode(h1);
-        testcases = {
-            contestId: question.contestId,
-            HI1: question.questionHiddenInput1,
-            HI2: question.questionHiddenInput2,
-            HI3: question.questionHiddenInput3,
-            HO1: question.questionHiddenOutput1,
-            HO2: question.questionHiddenOutput2,
-            HO3: question.questionHiddenOutput3
-        }
-        return callback(null, testcases);
+        Contest.find({contestId: question.contestId, contestDate: Date.now()})
+        .then(contest => {
+            question = question[0];
+            // let h1 = question.questionHiddenInput1.toString();
+            // console.log("h1");
+            // console.log(h1);
+            // h2 = Base64.encode(h1);
+            testcases = {
+                contestId: question.contestId,
+                HI1: question.questionHiddenInput1,
+                HI2: question.questionHiddenInput2,
+                HI3: question.questionHiddenInput3,
+                HO1: question.questionHiddenOutput1,
+                HO2: question.questionHiddenOutput2,
+                HO3: question.questionHiddenOutput3
+            }
+            return callback(null, testcases);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return callback("Couldn't find question, caught exception", null);                 
         }
         return callback("Error retrieving data", null);        
     });
+        }).catch(err => {
+            if(err.kind === 'ObjectId') {
+                return callback("Couldn't find question, caught exception", null);                 
+            }
+            return callback("Error retrieving data", null); 
+        });
+        
 };
 
 

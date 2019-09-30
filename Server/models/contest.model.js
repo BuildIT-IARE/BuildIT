@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var contestSchema = new Schema({
     contestId: String,
     contestName: String,
-    contestDate: String,
+    contestDate: Date,
     contestDuration: String,
     contestStartTime: String,
     published: String,
