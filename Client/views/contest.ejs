@@ -28,37 +28,7 @@
 
 <body>
   
-
-<!--<header class="navigation fixed-top">
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand font-tertiary h3" href="index"><img src="images/logo.png" alt="Myself"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
-      aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse text-center" id="navigation">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="index">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="about">about</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="blog">Blog</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="portfolio">Portfolio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="contact">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</header>-->
-  <% include ../views/partials/header %>
+<% include ../views/partials/header %>
 
 <!-- page title -->
 <section class="page-title bg-primary position-relative">
@@ -77,124 +47,22 @@
 <section class="section">
   <div class="container">
     <div class="row">
+      <% for(let i = 0; i < data.length; i++){ %>
         <div class="col-lg-4 col-sm-6 mb-4">
           <article class="card shadow">
-            <img class="rounded card-img-top" src="images/blog/post-5.jpg" alt="post-thumb">
+            <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>">
             <div class="card-body">
-              <h4 class="card-title"><a class="text-dark" href="questions">Sample Contest 1</a>
+              <h4 class="card-title"><a class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
               </h4>
-              <p class="cars-text">SPTST1</p>
-              <a href="questions" class="btn btn-xs btn-primary">Read More</a>
+              <p class="cars-text"><%= data[i].contestId %></p>
+              <a href="contests/<%= data[i].contestId %>" class="btn btn-xs btn-primary">Participate</a>
             </div>
           </article>
         </div>
-      <div class="col-lg-4 col-sm-6 mb-4">
-        <article class="card shadow">
-          <img class="rounded card-img-top" src="images/blog/post-2.jpg" alt="post-thumb">
-          <div class="card-body">
-            <h4 class="card-title"><a class="text-dark" href="blog-single">Amazon increase income 1.5 Million</a>
-            </h4>
-            <p class="cars-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="questions" class="btn btn-xs btn-primary">Read More</a>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-4 col-sm-6 mb-4">
-        <article class="card shadow">
-          <img class="rounded card-img-top" src="images/blog/post-3.jpg" alt="post-thumb">
-          <div class="card-body">
-            <h4 class="card-title"><a class="text-dark" href="blog-single">Amazon increase income 1.5 Million</a>
-            </h4>
-            <p class="cars-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="blog-single" class="btn btn-xs btn-primary">Read More</a>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-4 col-sm-6 mb-4">
-        <article class="card shadow">
-          <img class="rounded card-img-top" src="images/blog/post-4.jpg" alt="post-thumb">
-          <div class="card-body">
-            <h4 class="card-title"><a class="text-dark" href="blog-single">Amazon increase income 1.5 Million</a>
-            </h4>
-            <p class="cars-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="blog-single" class="btn btn-xs btn-primary">Read More</a>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-4 col-sm-6 mb-4">
-        <article class="card shadow">
-          <img class="rounded card-img-top" src="images/blog/post-5.jpg" alt="post-thumb">
-          <div class="card-body">
-            <h4 class="card-title"><a class="text-dark" href="blog-single">Amazon increase income 1.5 Million</a>
-            </h4>
-            <p class="cars-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="blog-single" class="btn btn-xs btn-primary">Read More</a>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-4 col-sm-6 mb-4">
-        <article class="card shadow">
-          <img class="rounded card-img-top" src="images/blog/post-2.jpg" alt="post-thumb">
-          <div class="card-body">
-            <h4 class="card-title"><a class="text-dark" href="blog-single">Amazon increase income 1.5 Million</a>
-            </h4>
-            <p class="cars-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="blog-single" class="btn btn-xs btn-primary">Read More</a>
-          </div>
-        </article>
-      </div>
+        <% } %>
     </div>
   </div>
 </section>
-<!-- /blog -->
-
-<!-- clients -->
-<!-- <section class="section bg-light">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h2 class="section-title">My Clients</h2>
-      </div>
-    </div> -->
-    <!-- <div class="row">
-      <div class="col-12">
-        <div class="client-logo-slider d-flex align-items-center">
-          <a href="#" class="text-center d-block outline-0 p-4"><img class="d-unset img-fluid"
-              src="images/clients-logo/client-logo-1.png" alt="client-logo"></a>
-          <a href="#" class="text-center d-block outline-0 p-4"><img class="d-unset img-fluid"
-              src="images/clients-logo/client-logo-2.png" alt="client-logo"></a>
-          <a href="#" class="text-center d-block outline-0 p-4"><img class="d-unset img-fluid"
-              src="images/clients-logo/client-logo-3.png" alt="client-logo"></a>
-          <a href="#" class="text-center d-block outline-0 p-4"><img class="d-unset img-fluid"
-              src="images/clients-logo/client-logo-4.png" alt="client-logo"></a>
-          <a href="#" class="text-center d-block outline-0 p-4"><img class="d-unset img-fluid"
-              src="images/clients-logo/client-logo-5.png" alt="client-logo"></a>
-          <a href="#" class="text-center d-block outline-0 p-4"><img class="d-unset img-fluid"
-              src="images/clients-logo/client-logo-1.png" alt="client-logo"></a>
-          <a href="#" class="text-center d-block outline-0 p-4"><img class="d-unset img-fluid"
-              src="images/clients-logo/client-logo-2.png" alt="client-logo"></a>
-          <a href="#" class="text-center d-block outline-0 p-4"><img class="d-unset img-fluid"
-              src="images/clients-logo/client-logo-3.png" alt="client-logo"></a>
-          <a href="#" class="text-center d-block outline-0 p-4"><img class="d-unset img-fluid"
-              src="images/clients-logo/client-logo-4.png" alt="client-logo"></a>
-          <a href="#" class="text-center d-block outline-0 p-4"><img class="d-unset img-fluid"
-              src="images/clients-logo/client-logo-5.png" alt="client-logo"></a>
-        </div>
-      </div>
-    </div> -->
-  </div>
-</section>
-<!-- /clients -->
 
 
 <!-- footer -->

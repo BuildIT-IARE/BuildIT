@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const request = require('request');
 const cookieParser = require('cookie-parser');
 
+let serverRoute = 'http://localhost:5000';
+
 const app = express();
 app.options('*', cors());
 app.use(
@@ -13,7 +15,7 @@ app.use(
   })
 );
 
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 app.set('view engine', 'ejs');
@@ -32,33 +34,62 @@ app.get('/home', async (req, res) => {
 app.get('/about', async (req, res) => {
   res.render('about');
 });
-app.get('/contest', async (req, res) => {
-  res.render('contest');
-});
-app.get('/blog-single', async (req, res) => {
-  res.render('blog-single');
-});
 
 app.get('/contact', async (req, res) => {
   res.render('contact');
 });
-app.get('/contest-start', async (req, res) => {
-  res.render('contest-start');
-});
-app.get('/questions', async (req, res) => {
-  res.render('questions');
-});
-app.get('/questions_expanded', async (req, res) => {
-  res.render('questions_expanded');
-});
+
 app.get('/login', async (req, res) => {
   res.render('login');
 });
-app.get('/contest', async (req, res) => {
-  res.render('contest');
-});
+
 app.get('/admin', async (req, res) => {
   res.render('AdminPanel');
 });
-app.listen(process.env.PORT || 3000);
-console.log('PORT: ', process.env.PORT, 'Or 3000');
+
+app.get('/contest', async (req, res) => {
+  let options = {
+    url : serverRoute + '/contests',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    // console.log(body);
+    res.render('contest', {data: body});
+  });
+});
+
+app.get('/contests/:contestId', async (req, res) => {
+  let options = {
+    url : serverRoute + '/questions/contests/'+req.params.contestId,
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    res.render('questions', {data: body});
+  });
+});
+
+app.get('/contests/questions/:questionId', async (req, res) => {
+  let options = {
+    url : serverRoute + '/questions/'+req.params.questionId,
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    res.render('questiondesc', {data: body});
+  });
+});
+
+
+app.listen(3000);
+console.log('Server @ port 3000');

@@ -295,9 +295,9 @@ input[type= password]:focus {
 
   
       <!-- Login Form -->
-      <form>
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Roll Number">
-        <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password">
+      <form action = 'http://localhost:5000/login' method = 'POST'>
+        <input type="text" id="login" class="fadeIn second" name="username" placeholder="Roll Number">
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
         <input type="submit" class="fadeIn fourth" value="Log In">
       </form>
   

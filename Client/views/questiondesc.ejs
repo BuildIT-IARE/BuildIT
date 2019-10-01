@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <title>BuildIT</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+  <!-- slick slider -->
+  <link rel="stylesheet" href="plugins/slick/slick.css">
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
+
+  <!-- Main Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
+  
+  <!--Favicon-->
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+</head>
+
+<body>
+
+<!-- <% include ../views/partials/header %> -->
+
+<!-- about -->
+<section class="section pt-5">
+    <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <button class = "button"><a href= "questions" style="color:white" ><span>Back to Questions</span></a></button></a><br><br>
+        <h3 class="section-title">Easy Fibonacci</h3>
+        <div class = "font-tertiary text-white">
+            <p class="cars-text">The Fibonacci sequence F0,F1,… is a special infinite sequence of non-negative integers, where F0=0, F1=1 and for each integer n≥2, Fn=Fn−1+Fn−2.<br>
+  
+            Consider the sequence D of the last decimal digits of the first N Fibonacci numbers,<br>i.e. D=(F0%10,F1%10,…,FN−1%10). Now, you should perform the following process:<br>
+            
+            1) Let D=(D1,D2,…,Dl).<br>
+            2) If l=1, the process ends.<br>
+            3) Create a new sequence E=(D2,D4,…,D2⌊l/2⌋). In other words, E is the sequence created by removing all odd-indexed elements from D.<br>
+            4) Change D to E.<br>
+            5) When this process terminates, the sequence D contains only one number. You have to find this number.<br>
+            </p>
+        </div>
+        <div>
+          <h6><b>Input:</b></h6>
+          <blockquote>
+            <li>The first line of the input contains a single integer T denoting the number of test cases. The description of T test cases follows.</li>
+            <li>The first and only line of each test case contains a single integer N.</li>
+          </blockquote>
+        </div>
+        <div>
+          <h6><b>Output:</b></h6>
+            <blockquote>
+            <li> For each test case, print a single line containing one integer ― the last remaining number.</li>
+            </blockquote>
+        </div>
+        <div>    
+          <h6><b>Constraints:</b></h6>
+          <blockquote>
+            <li>1 ≤T ≤10<sup>5</sup></li>
+            <li>1 ≤N≤ 10<sup>18</sup></li>
+        </blockquote>
+        </div>
+        <div>
+          <h5><b>Subtasks:</b></h5>
+          <div><h6><b>Subtask-1:</b></h6>
+          <blockquote>
+            <li>1≤T≤10<sup>5</sup></li>
+            <li>1≤N≤10<sup>7</sup></li>
+          </blockquote>
+        </div>
+
+        <h6><b>Subtask-2:<br> </b> 
+          <blockquote>Original Constraints</blockquote>
+        </h6>
+      </div>
+      <div>       
+    <h6><b>Example Input:</b></h6><br>
+    6<br>
+    9<br>
+</div><br>
+<div>
+              
+  <h6><b>Example Output:</b></h6><br>3<br>
+</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- jQuery -->
+<script src="plugins/jQuery/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+<!-- slick slider -->
+<script src="plugins/slick/slick.min.js"></script>
+<!-- filter -->
+<script src="plugins/shuffle/shuffle.min.js"></script>
+
+<!-- Main Script -->
+<script src="js/script.js"></script>
+
+</body>
+</html>

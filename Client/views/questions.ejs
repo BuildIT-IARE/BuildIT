@@ -28,36 +28,6 @@
 
 <body>
   
-
-<!--<header class="navigation fixed-top">
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand font-tertiary h3" href="index"><img src="images/logo.png" alt="Myself"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
-      aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse text-center" id="navigation">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="index">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="about">about</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="blog">Blog</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="portfolio">Portfolio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="contact">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</header>-->
   <% include ../views/partials/header %>
 
 <!-- page title -->
@@ -65,7 +35,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h1 class="text-white font-tertiary">SPTST1</h1>
+        <h1 class="text-white font-tertiary"><%= data[0].contestId %></h1>
       </div>
     </div>
   </div>
@@ -76,10 +46,16 @@
 <section class="section">
   <div class="container">
     <div class="row">
+      <% for (let i = 0; i < data.length; i++ ){ %>
       <div class="col-lg-12">
-        <div class="font-tertiary mb-5">QUESTION 1
-            <h3 class="font-tertiary mb-5"><a href = "questions_expanded" style ="color:red"> What should be the proper purpose of UI and UX design?</a></h3>
+        <div class="font-tertiary mb-5"><%= data[i].questionId %>
+            <h3 class="font-tertiary mb-5"><a href = "questions/<%= data[i].questionId %>"> <%= data[i].questionName %></a></h3>
         </div>  
+      </div>
+      <% } %>
+    </div>
+  </div>
+</section>
 
 <!-- jQuery -->
 <script src="plugins/jQuery/jquery.min.js"></script>
