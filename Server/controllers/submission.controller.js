@@ -46,7 +46,7 @@ exports.findAll = (req, res) => {
 };
 
 exports.findUser = (req, res) => {
-    Submission.find({username: req.params.username})
+    Submission.find({username: req.params.username, questionId: req.params.questionId})
     .then(submission => {
         res.send(submission);
     }).catch(err => {

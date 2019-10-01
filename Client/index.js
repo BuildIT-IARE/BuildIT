@@ -4,6 +4,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const request = require('request');
 const cookieParser = require('cookie-parser');
+var path = require('path');
+
 
 let serverRoute = 'http://localhost:5000';
 
@@ -22,6 +24,9 @@ app.set('view engine', 'ejs');
 app.use(cookieParser());
 
 app.use('/', express.static(__dirname + '/'));
+app.use('/ide', express.static(path.resolve('../IDE')));
+
+
 app.use('/contests', express.static(__dirname + '/'));
 app.use('/contests/questions', express.static(__dirname + '/'));
 
@@ -50,6 +55,11 @@ app.get('/login', async (req, res) => {
 app.get('/admin', async (req, res) => {
   res.render('AdminPanel');
 });
+
+app.get('/ide', async (req, res) => {
+  res.sendFile(path.resolve('../IDE/index.html'));
+});
+
 
 app.get('/contest', async (req, res) => {
   let options = {
@@ -93,6 +103,7 @@ app.get('/contests/questions/:questionId', async (req, res) => {
     res.render('questiondesc', {data: body});
   });
 });
+
 
 
 app.listen(3000);
