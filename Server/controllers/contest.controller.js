@@ -22,6 +22,7 @@ exports.create = (req, res) => {
         contestDate: req.body.contestDate,
         contestDuration: req.body.contestDuration,
         contestStartTime: req.body.contestStartTime,
+        contestEndTime: req.body.contestEndTime,
         published: req.body.published
       });
 
@@ -70,6 +71,28 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Find a single contest with a contestId for checking duration
+exports.getDuration = (req, callback) => {
+    Contest.find({contestId: req.body.contestId})
+    .then(contest => {
+        if(!contest) {
+            return callback("Contest not found ", null);         
+        }
+        let durationData = {
+            startTime: contest.contestStartTime,
+            endTime: contest.contestEndTime,
+            duration: contest.contestDuration,
+            date: contest.contestDate
+        }
+        return callback(null, durationData);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return callback("Contest not found", null);               
+        }
+        return callback("Error retrieving contest", null);         
+
+    });
+};
 // Update a contest identified by the contestId in the request
 exports.update = (req, res) => {
     if(!req.body.contestId) {
@@ -85,6 +108,7 @@ exports.update = (req, res) => {
         contestDate: req.body.contestDate,
         contestDuration: req.body.contestDuration,
         contestStartTime: req.body.contestStartTime,
+        contestEndTime: req.body.contestEndTime,
         published: req.body.published
         }}, {new: true}, (err, doc) => {
           if(err){
