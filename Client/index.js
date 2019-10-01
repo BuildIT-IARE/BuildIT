@@ -57,5 +57,8 @@ app.get('/login', async (req, res) => {
 app.get('/contest', async (req, res) => {
   res.render('contest');
 });
+app.get('/admin', async (req, res) => {
+  res.render('AdminPanel');
+});
 app.listen(process.env.PORT || 3000);
 console.log('PORT: ', process.env.PORT, 'Or 3000');
