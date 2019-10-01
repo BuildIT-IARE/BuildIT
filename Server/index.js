@@ -92,10 +92,24 @@ app.get('/logout', async (req, res) => {
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   contests.getDuration(req, (err, duration) => {
+    console.log(duration);
     let date = new Date();
     let today = date.toLocaleDateString();
-    let currentTime = `${date.getHours()}${date.getMinutes()}`;
-    currentTime = eval(currentTime);    
+    let day = today.slice(0, 2);
+    let month = today.slice(3, 5);
+    let year = today.slice(6, 10);
+    today = `${year}-${month}-${day}`;
+    console.log(today);
+    let minutes = date.getMinutes();
+    let hours = date.getHours();
+    if (hours < 10){
+      hours = '0'+String(hours);
+    }
+    if (minutes < 10){
+      minutes = '0'+String(minutes);
+    }
+    let currentTime = `${hours}${minutes}`;
+    currentTime = eval(currentTime);  
    
     if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
       accepted = true
