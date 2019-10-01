@@ -36,7 +36,7 @@ mongoose.set('useUnifiedTopology', true);
 dbConfig = {
   url: 'mongodb://localhost:27017/BuildIT'
 }
-Connecting to the database
+// Connecting to the database
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
 }).then(() => {
