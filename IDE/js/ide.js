@@ -357,71 +357,6 @@ function fetchSubmission(submission_token) {
         error: handleRunError
     });
 }
-function submit() {
-    if (sourceEditor.getValue().trim() === "") {
-        showError("Error", "Source code can't be empty!");
-        return;
-    } else {
-        // $submitBtn.addClass("loading");
-    }
-
-    document.getElementById("stdout-dot").hidden = true;
-    document.getElementById("stderr-dot").hidden = true;
-    document.getElementById("compile-output-dot").hidden = true;
-    document.getElementById("sandbox-message-dot").hidden = true;
-
-    stdoutEditor.setValue("");
-    stderrEditor.setValue("");
-    compileOutputEditor.setValue("");
-    sandboxMessageEditor.setValue("");
-
-    // var sourceValue = encode(sourceEditor.getValue());
-    var sourceValue = sourceEditor.getValue();
-
-    // var stdinValue = encode(stdinEditor.getValue());
-    var stdinValue = stdinEditor.getValue();
-
-    var languageId = $selectLanguage.val();
-
-    if (languageId === "44") {
-        sourceValue = sourceEditor.getValue();
-    }
-
-    var data = {
-        source_code: sourceValue,
-        language_id: languageId,
-        stdinValue: stdinValue
-    };
-
-    timeStart = performance.now();
-    $.ajax({
-        url: "http://localhost:5000/testPost",
-        type: "POST",
-        async: true,
-        contentType: "application/json",
-        data: JSON.stringify(data),
-        success: function (data, textStatus, jqXHR) {
-            console.log(`Program submitted`);
-        },
-        error: handleRunError
-    });
-}
-
-function fetchSubmission(submission_token) {
-    $.ajax({
-        url: apiUrl + "/submissions/" + submission_token + "?base64_encoded=true",
-        type: "GET",
-        async: true,
-        success: function (data, textStatus, jqXHR) {
-            if (data.status.id <= 2) { // In Queue or Processing
-                setTimeout(fetchSubmission.bind(null, submission_token), check_timeout);
-                return;
-            }
-            handleResult(data);
-        },
-        error: handleRunError
-    });
-}
 
 function changeEditorLanguage() {
     monaco.editor.setModelLanguage(sourceEditor.getModel(), $selectLanguage.find(":selected").attr("mode"));
@@ -466,10 +401,6 @@ $(document).ready(function () {
     $runBtn = $("#run-btn");
     $runBtn.click(function (e) {
         run();
-    });
-    $submitBtn = $("#submit-btn");
-    $submitBtn.click(function (e){
-        submit();
     });
 
     $statusLine = $("#status-line");
