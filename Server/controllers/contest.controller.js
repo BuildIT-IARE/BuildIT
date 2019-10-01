@@ -78,6 +78,7 @@ exports.getDuration = (req, callback) => {
         if(!contest) {
             return callback("Contest not found ", null);         
         }
+        contest = contest[0]
         let durationData = {
             startTime: contest.contestStartTime,
             endTime: contest.contestEndTime,

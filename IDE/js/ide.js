@@ -360,8 +360,10 @@ function submit() {
     compileOutputEditor.setValue("");
     sandboxMessageEditor.setValue("");
 
-    var sourceValue = encode(sourceEditor.getValue());
-    var stdinValue = encode(stdinEditor.getValue());
+    // var sourceValue = encode(sourceEditor.getValue());
+    // var stdinValue = encode(stdinEditor.getValue());
+    var sourceValue = sourceEditor.getValue();
+    var stdinValue = stdinEditor.getValue();
     var languageId = $selectLanguage.val();
 
     if (languageId === "44") {
