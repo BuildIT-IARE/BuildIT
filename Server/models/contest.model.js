@@ -9,7 +9,8 @@ var contestSchema = new Schema({
     contestDate: String,
     contestDuration: String,
     contestStartTime: String,
-    published: String,
+    contestEndTime: String,
+    published: String
   });
 
 module.exports = mongoose.model('Contest', contestSchema);

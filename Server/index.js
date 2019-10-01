@@ -91,137 +91,153 @@ app.get('/logout', async (req, res) => {
 });
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
-  questions.getTestCases(req, (err, testcases) => {
-    if (err){
-        res.status(404).send({message: "Question not found with id " + req.body.questionId});
+  contests.getDuration(req, (err, duration) => {
+    let date = new Date();
+    let today = date.toLocaleDateString();
+    let currentTime = `${date.getHours()}${date.getMinutes()}`;
+    currentTime = eval(currentTime);    
+   
+    if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
+      accepted = true
     } else {
-      let options1 = {
-        method: 'post',
-        body: {
-          source_code: req.body.source_code,
-          language_id: req.body.language_id,
-          stdin: testcases.HI1,
-          expected_output: testcases.HO1
-        },
-        json: true,
-        url: apiAddress + '/submissions'
-      };
-
-      let options2 = {
-        method: 'post',
-        body: {
-          source_code: req.body.source_code,
-          language_id: req.body.language_id,
-          stdin: testcases.HI2,
-          expected_output: testcases.HO2
-        },
-        json: true,
-        url: apiAddress + '/submissions'
-      };
-
-      let options3 = {
-        method: 'post',
-        body: {
-          source_code: req.body.source_code,
-          language_id: req.body.language_id,
-          stdin: testcases.HI3,
-          expected_output: testcases.HO3
-        },
-        json: true,
-        url: apiAddress + '/submissions'
-      };
-      
-      let result = {
-        contestId: testcases.contestId
-      };
-      setTimeout(()=>{
-        request(options1, function (err, response, body) {
-          if (err) {
-            res.send(err);
-          }
-          result.token1 = body.token;
-  
-          request(options2, function (err, response, body) {
+      accepted = false
+    }
+    if (accepted) {
+      questions.getTestCases(req, (err, testcases) => {
+        if (err){
+            res.status(404).send({message: "Question not found with id " + req.body.questionId});
+        } else {
+          let options1 = {
+            method: 'post',
+            body: {
+              source_code: req.body.source_code,
+              language_id: req.body.language_id,
+              stdin: testcases.HI1,
+              expected_output: testcases.HO1
+            },
+            json: true,
+            url: apiAddress + '/submissions'
+          };
+    
+          let options2 = {
+            method: 'post',
+            body: {
+              source_code: req.body.source_code,
+              language_id: req.body.language_id,
+              stdin: testcases.HI2,
+              expected_output: testcases.HO2
+            },
+            json: true,
+            url: apiAddress + '/submissions'
+          };
+    
+          let options3 = {
+            method: 'post',
+            body: {
+              source_code: req.body.source_code,
+              language_id: req.body.language_id,
+              stdin: testcases.HI3,
+              expected_output: testcases.HO3
+            },
+            json: true,
+            url: apiAddress + '/submissions'
+          };
+          
+          let result = {
+            contestId: testcases.contestId
+          };
+          setTimeout(()=>{
+            request(options1, function (err, response, body) {
               if (err) {
                 res.send(err);
               }
-              result.token2 = body.token;
-  
-            request(options3, function (err, response, body) {
-                if (err) {
-                  res.send(err);
-                }
-                result.token3 = body.token;
-                option1 = {
-                  url: apiAddress + '/submissions/' + result.token1,
-                  method: 'get'
-                }
-                option2 = {
-                  url: apiAddress + '/submissions/' + result.token2,
-                  method: 'get'
-                }
-                option3 = {
-                  url: apiAddress + '/submissions/' + result.token3,
-                  method: 'get'
-                }
-                
-                request(option1, function (err, response, body) {
+              result.token1 = body.token;
+      
+              request(options2, function (err, response, body) {
                   if (err) {
                     res.send(err);
                   }
-                  let data = JSON.parse(body);
-        
-                  let resp = data.status.description;
-                  result.response1 = resp;
-        
-                  request(option2, function (err, response, body) {
+                  result.token2 = body.token;
+      
+                request(options3, function (err, response, body) {
                     if (err) {
                       res.send(err);
                     }
-                    let data = JSON.parse(body);
-          
-                    let resp = data.status.description;
-                    result.response2 = resp;
-        
-                    request(option3, function (err, response, body) {
+                    result.token3 = body.token;
+                    option1 = {
+                      url: apiAddress + '/submissions/' + result.token1,
+                      method: 'get'
+                    }
+                    option2 = {
+                      url: apiAddress + '/submissions/' + result.token2,
+                      method: 'get'
+                    }
+                    option3 = {
+                      url: apiAddress + '/submissions/' + result.token3,
+                      method: 'get'
+                    }
+                    
+                    request(option1, function (err, response, body) {
                       if (err) {
                         res.send(err);
                       }
                       let data = JSON.parse(body);
             
                       let resp = data.status.description;
-                      result.response3 = resp;
-                      // End of chain
-                      result.languageId = req.body.language_id;
-                      result.questionId = req.body.questionId;
-                      result.username = req.decoded.username;
-                      result.sourceCode = req.body.source_code;
-                      result.submissionToken = [result.token1, result.token2, result.token3];
-                      result.result = [result.response1, result.response2, result.response3];
-                      if (result.response1 === "Accepted" && result.response2 === "Accepted" && result.response3 === "Accepted"){
-                      result.score = 100;
-                      } else {
-                      result.score = 0;
-                      }
-  
-                      submissions.create(req, result, (err, sub) => {
-                        if (err){
+                      result.response1 = resp;
+            
+                      request(option2, function (err, response, body) {
+                        if (err) {
                           res.send(err);
-                        } else {
-                          // Add score to profile
-                          let participationId = result.username + result.contestId;
-                          res.send(sub);
                         }
+                        let data = JSON.parse(body);
+              
+                        let resp = data.status.description;
+                        result.response2 = resp;
+            
+                        request(option3, function (err, response, body) {
+                          if (err) {
+                            res.send(err);
+                          }
+                          let data = JSON.parse(body);
+                
+                          let resp = data.status.description;
+                          result.response3 = resp;
+                          // End of chain
+                          result.languageId = req.body.language_id;
+                          result.questionId = req.body.questionId;
+                          result.username = req.decoded.username;
+                          result.sourceCode = req.body.source_code;
+                          result.submissionToken = [result.token1, result.token2, result.token3];
+                          result.result = [result.response1, result.response2, result.response3];
+                          if (result.response1 === "Accepted" && result.response2 === "Accepted" && result.response3 === "Accepted"){
+                          result.score = 100;
+                          } else {
+                          result.score = 0;
+                          }
+      
+                          submissions.create(req, result, (err, sub) => {
+                            if (err){
+                              res.send(err);
+                            } else {
+                              // Add score to profile
+                              let participationId = result.username + result.contestId;
+                              res.send(sub);
+                            }
+                          });
+      
+                        });
                       });
-  
                     });
-                  });
-                });
-  
-            });  
-          });
-        });
-      }, 5000);
+                });  
+              });
+            });
+          }, 5000);
+        }
+      
+      });
+    } else {
+      res.send({success: false, message: "Contest has expired"});
     }
   });
 });
