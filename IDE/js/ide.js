@@ -20,6 +20,8 @@ var currentLanguageId;
 var $selectLanguage;
 var $insertTemplateBtn;
 var $runBtn;
+var $submitBtn;
+
 var $statusLine;
 
 var timeStart;
@@ -331,7 +333,6 @@ function run() {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function (data, textStatus, jqXHR) {
-            console.log(`Your submission token is: ${data.token}`);
             if (wait == true) {
                 handleResult(data);
             } else {
@@ -341,7 +342,56 @@ function run() {
         error: handleRunError
     });
 }
+function submit() {
+    if (sourceEditor.getValue().trim() === "") {
+        showError("Error", "Source code can't be empty!");
+        return;
+    } else {
+        $submitBtn.addClass("loading");
+    }
 
+    document.getElementById("stdout-dot").hidden = true;
+    document.getElementById("stderr-dot").hidden = true;
+    document.getElementById("compile-output-dot").hidden = true;
+    document.getElementById("sandbox-message-dot").hidden = true;
+
+    stdoutEditor.setValue("");
+    stderrEditor.setValue("");
+    compileOutputEditor.setValue("");
+    sandboxMessageEditor.setValue("");
+
+    var sourceValue = encode(sourceEditor.getValue());
+    var stdinValue = encode(stdinEditor.getValue());
+    var languageId = $selectLanguage.val();
+
+    if (languageId === "44") {
+        sourceValue = sourceEditor.getValue();
+    }
+
+    var data = {
+        source_code: sourceValue,
+        language_id: languageId,
+        stdin: stdinValue
+    };
+
+    timeStart = performance.now();
+    $.ajax({
+        url: 'http://localhost:5000/testPost',
+        type: "POST",
+        async: true,
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, textStatus, jqXHR) {
+            
+            if (wait == true) {
+                handleResult(data);
+            } else {
+                setTimeout(fetchSubmission.bind(null, data.token), check_timeout);
+            }
+        },
+        error: handleRunError
+    });
+}
 function fetchSubmission(submission_token) {
     $.ajax({
         url: apiUrl + "/submissions/" + submission_token + "?base64_encoded=true",
@@ -401,6 +451,10 @@ $(document).ready(function () {
     $runBtn = $("#run-btn");
     $runBtn.click(function (e) {
         run();
+    });
+    $submitBtn = $("#submit-btn");
+    $submitBtn.click(function (e) {
+        submit();
     });
 
     $statusLine = $("#status-line");
