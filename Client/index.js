@@ -20,7 +20,11 @@ app.use(bodyParser.json());
 app.use(cors());
 app.set('view engine', 'ejs');
 app.use(cookieParser());
+
 app.use('/', express.static(__dirname + '/'));
+app.use('/contests', express.static(__dirname + '/'));
+app.use('/contests/questions', express.static(__dirname + '/'));
+
 
 app.get('/', async (req, res) => {
     res.render('home');
