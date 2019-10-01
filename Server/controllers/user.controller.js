@@ -117,7 +117,7 @@ exports.checkPass = (req, res) => {
         }
         if(user[0].password === req.body.password){
             // Login successful
-            console.log(user[0]);
+            // console.log(user[0]);
             let token = jwt.sign(
                 {
                     username: user[0].username,
