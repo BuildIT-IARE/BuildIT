@@ -36,15 +36,15 @@ mongoose.set('useUnifiedTopology', true);
 dbConfig = {
   url: 'mongodb://localhost:27017/BuildIT'
 }
-// Connecting to the database
-// mongoose.connect(dbConfig.url, {
-//     useNewUrlParser: true
-// }).then(() => {
-//     console.log("Successfully connected to the database");    
-// }).catch(err => {
-//     console.log('Could not connect to the database. Exiting now...', err);
-//     process.exit();
-// });
+Connecting to the database
+mongoose.connect(dbConfig.url, {
+    useNewUrlParser: true
+}).then(() => {
+    console.log("Successfully connected to the database");    
+}).catch(err => {
+    console.log('Could not connect to the database. Exiting now...', err);
+    process.exit();
+});
 
 // Imports
 const users = require('./controllers/user.controller.js');
