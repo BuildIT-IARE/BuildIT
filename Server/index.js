@@ -8,6 +8,8 @@ const request = require('request');
 
 let middleware = require('./util/middleware.js');
 
+
+let homepage = 'http://localhost:3000/';
 // API Address
 const apiAddress = 'https://api.judge0.com/';
 console.log("Using API from url", apiAddress);
@@ -85,7 +87,7 @@ app.post('/testPost', async (req, res) => {
 
 app.get('/logout', async (req, res) => {
     res.clearCookie('token');
-    res.send("Add redirect here");
+    res.redirect(homepage);
 });
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
