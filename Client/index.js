@@ -70,9 +70,11 @@ app.get('/contest', async (req, res) => {
     },
     json: true
   }
+  
   request(options, function(err, response, body){
-    // console.log(body);
+    // console.log(body);  
     res.render('contest', {data: body});
+    
   });
 });
 
@@ -85,7 +87,9 @@ app.get('/contests/:contestId', async (req, res) => {
     },
     json: true
   }
+
   request(options, function(err, response, body){
+    res.cookie('contestId',req.params.contestId);
     res.render('questions', {data: body});
   });
 });
@@ -100,6 +104,7 @@ app.get('/contests/questions/:questionId', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
+    res.cookie('questionId',req.params.questionId);
     res.render('questiondesc', {data: body});
   });
 });
