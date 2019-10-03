@@ -91,7 +91,9 @@ app.get('/logout', async (req, res) => {
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   contests.getDuration(req, (err, duration) => {
-    
+    if (err){
+      res.send({success: false, message: "Error occured"});
+    }
     let date = new Date();
     let today = date.toLocaleDateString();
     let day = today.slice(0, 2);
