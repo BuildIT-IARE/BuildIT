@@ -86,18 +86,31 @@ app.get('/contest', async (req, res) => {
 });
 
 app.get('/contests/:contestId', async (req, res) => {
-  let options = {
-    url : serverRoute + '/questions/contests/'+req.params.contestId,
-    method: 'get',
+  // Add participation
+  let options1 = {
+    url : serverRoute + '/participations',
+    method: 'post',
     headers: {
       'authorization': req.cookies.token
     },
+    body: {
+      contestId: req.params.contestId 
+    },
     json: true
   }
-
-  request(options, function(err, response, body){
-    res.cookie('contestId',req.params.contestId);
-    res.render('questions', {data: body});
+  request(options1, function(err, response, body){
+    let options = {
+      url : serverRoute + '/questions/contests/'+req.params.contestId,
+      method: 'get',
+      headers: {
+        'authorization': req.cookies.token
+      },
+      json: true
+    }
+    request(options, function(err, response, body){
+      res.cookie('contestId',req.params.contestId);
+      res.render('questions', {data: body});
+    });
   });
 });
 
