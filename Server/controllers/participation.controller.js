@@ -21,7 +21,8 @@ exports.create = (req, res) => {
         userId: req.body.userId,
         contestId: req.body.contestId,
         participationTime: String(Date.now()),
-        submissionResults: []
+        submissionResults: [],
+        // validTill: validity
       });
 
     // SaveReg in the database
