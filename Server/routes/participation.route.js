@@ -7,8 +7,8 @@ module.exports = (app) => {
     app.post('/participations', middleware.checkToken, participation.create);
 
     // Retrieve all participations
-    app.get('/participations', middleware.checkTokenAdmin, participation.findAll);
+    // app.get('/participations', middleware.checkTokenAdmin, participation.findAll);
 
     // Retrieve all participations
-    app.get('/participations/:contestId/:username', middleware.checkToken, participation.findUser);
+    app.get('/participations/:contestId', middleware.checkToken, participation.findUser);
 }

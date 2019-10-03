@@ -5,12 +5,6 @@ module.exports = (app) => {
 
     // Create a new contest
     app.post('/contests', middleware.checkTokenAdmin, contests.create);
-    
-    // Publish Question
-    app.post('/contests/:contestId/publish', middleware.checkTokenAdmin, contests.publish);
-
-    // Archive Question
-    app.post('/contests/:contestId/archive', middleware.checkTokenAdmin, contests.archive);
 
     // Retrieve all contests
     app.get('/contests', middleware.checkToken, contests.findAll);

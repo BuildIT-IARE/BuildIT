@@ -25,8 +25,7 @@ var questionSchema = new Schema({
     questionExplanation: String,
     author: String,
     editorial: String,
-    difficulty: String,
-    published: String
+    difficulty: String
 });
 
 module.exports = mongoose.model('Question', questionSchema);

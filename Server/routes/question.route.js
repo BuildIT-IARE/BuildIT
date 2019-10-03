@@ -6,14 +6,8 @@ module.exports = (app) => {
     // Create a new question
     app.post('/questions', middleware.checkTokenAdmin, questions.create);
 
-    // Publish Question
-    app.post('/questions/:questionId/publish', middleware.checkTokenAdmin, questions.publish);
-
-    // Archive Question
-    app.post('/questions/:questionId/archive', middleware.checkTokenAdmin, questions.archive);
-
     // Retrieve all questions
-    app.get('/questions', middleware.checkToken, questions.findAll);
+    app.get('/questions', middleware.checkTokenAdmin, questions.findAll);
 
     // Retrieve a single question with questionId
     app.get('/questions/:questionId', middleware.checkToken, questions.findOne);
