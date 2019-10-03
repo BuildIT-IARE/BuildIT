@@ -90,7 +90,7 @@
       margin-top: 20px;
       text-align: center;
       }
-      button {
+      .submit {
       width: 150px;
       padding: 10px;
       border: none;
@@ -100,7 +100,7 @@
       color: #fff;
       cursor: pointer;
       }
-      button:hover {
+      .submit:hover {
       background: #0666a3;
       }
       @media (min-width: 568px) {
@@ -108,10 +108,49 @@
       word-break: keep-all;
       }
       }
+      .button {
+  border-radius: 4px;
+  background-color: #454fd4;
+  border: none;
+  color: white;
+  /* text-align: center; */
+  font-size:  px;
+  padding: 5px;
+  width: 120px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 1s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: "relative";
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
     </style>
   </head>
   <body>
-    <div class="main-block">
+      <center><button class = "button"><a href= "admin" style="color:white" ><span>Contest Admin Panel</span></a></button></a><br><br></center>
+    <div class="main-block"></div>
       <form action="http://localhost:5000/questions" method = "POST">
         <h1>BuildIt Questions Admin Panel</h1>
         <h4>Question ID</h4>
@@ -161,7 +200,7 @@
         <p class="comments">Published</p>
         <textarea name="published" rows="10"></textarea>
         <div class="btn-block">
-          <button type="submit" href="/">Send</button>
+          <button class= "submit" type="submit" href="/">Send</button>
         </div>
       </form>
     </div>

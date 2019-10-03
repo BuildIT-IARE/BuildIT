@@ -458,7 +458,7 @@ textarea.form-control {
 }
 
 .hero-area {
-  padding: 300px 0 200px;
+  padding: 200px 0 25px;
   position: relative;
 }
 
@@ -728,7 +728,7 @@ textarea.form-control {
 /* /testimonial */
 /* footer */
 .footer-section {
-  padding-top: 200px;
+  padding-top: 10px;
 }
 
 .section-on-footer {
@@ -786,7 +786,7 @@ blockquote {
 }
 
 .page-title-alt {
-  padding: 350px 0 70px;
+  padding: 200px 0 70px;
 }
 
 .border-thick {
