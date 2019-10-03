@@ -23,72 +23,7 @@
   <!--Favicon-->
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-  <script>
-    
-    var countDownDatetemp = document.getElementById("div1").value;
-    countDownDatetemp = countDownDatetemp.slice(4, countDownDatetemp.length);
-    var countDownDate = new Date(countDownDatetemp).getTime();
 
-
-    // Update the count down every 1 second
-    var x = setInterval(function() {
-    
-      // Get today's date and time
-      var now = new Date().getTime();
-        
-      // Find the distance between now and the count down date
-      var distance = countDownDate - now;
-        
-      // Time calculations for days, hours, minutes and seconds
-      
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-      // Output the result in an element with id="demo"
-      document.getElementById("demo").innerHTML =hours + "h "
-      + minutes + "m " + seconds + "s ";
-        
-      // If the count down is over, write some text 
-      if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("demo").innerHTML = "Time Up";
-      }
-    }, 1000);
-    </script>
-            <script>
-              // Set the date we're counting down to
-              var countDownDatetemp = document.getElementById("div1").value;
-              countDownDatetemp = countDownDatetemp.slice(4, countDownDatetemp.length);
-              var countDownDate = new Date(countDownDatetemp).getTime();
-              // var participation = new Date("Oct 3, 2019 10:50:25").getTime();
-              
-              // Update the count down every 1 second
-              var x = setInterval(function() {
-              
-                // Get today's date and time
-                var now = new Date().getTime();
-                  
-                // Find the distance between now and the count down date
-                var distance = countDownDate - now;
-                  
-                // Time calculations for days, hours, minutes and seconds
-                
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                  
-                // Output the result in an element with id="demo"
-                document.getElementById("demo1").innerHTML =hours + "h "
-                + minutes + "m " + seconds + "s ";
-                  
-                // If the count down is over, write some text 
-                if (distance < 0) {
-                  clearInterval(x);
-                  document.getElementById("demo1").innerHTML = "Time Up";
-                }
-              }, 1000);
-              </script>
               
 </head>
 
@@ -112,7 +47,72 @@
 <!-- /page title -->
 <div id="div1" style="display: none;"><%= datatimer[0].validTill %></div>
 <div id="div2" style="display: none;"><%= datatimer[0].contestId %></div>
+<script>
+    
+  var countDownDatetemp = document.getElementById("div1").innerHTML;
+  countDownDatetemp = countDownDatetemp.slice(4, countDownDatetemp.length);
+  var countDownDate = new Date(countDownDatetemp).getTime();
 
+
+  // Update the count down every 1 second
+  var x = setInterval(function() {
+  
+    // Get today's date and time
+    var now = new Date().getTime();
+      
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+      
+    // Time calculations for days, hours, minutes and seconds
+    
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+    // Output the result in an element with id="demo"
+    document.getElementById("demo").innerHTML =hours + "h "
+    + minutes + "m " + seconds + "s ";
+      
+    // If the count down is over, write some text 
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("demo").innerHTML = "Time Up";
+    }
+  }, 1000);
+</script>
+<script>
+            // Set the date we're counting down to
+            var countDownDatetemp = document.getElementById("div1").innerHTML;
+            countDownDatetemp = countDownDatetemp.slice(4, countDownDatetemp.length);
+            var countDownDate = new Date(countDownDatetemp).getTime();
+            // var participation = new Date("Oct 3, 2019 10:50:25").getTime();
+            
+            // Update the count down every 1 second
+            var x = setInterval(function() {
+            
+              // Get today's date and time
+              var now = new Date().getTime();
+                
+              // Find the distance between now and the count down date
+              var distance = countDownDate - now;
+                
+              // Time calculations for days, hours, minutes and seconds
+              
+              var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+              var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+              // Output the result in an element with id="demo"
+              document.getElementById("demo1").innerHTML =hours + "h "
+              + minutes + "m " + seconds + "s ";
+                
+              // If the count down is over, write some text 
+              if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo1").innerHTML = "Time Up";
+              }
+            }, 1000);
+</script>
 <section class="section">
   <div class="container">
     <div class="row">
