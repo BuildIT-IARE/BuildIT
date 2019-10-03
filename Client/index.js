@@ -52,11 +52,11 @@ app.get('/login', async (req, res) => {
   res.render('login');
 });
 
-app.get('/questionadmin', async (req, res) => {
-  res.render('questionAdminPanel');
+app.get('/admin/add/question', async (req, res) => {
+  res.render('questionadd');
 });
-app.get('/contestadmin', async (req, res) => {
-  res.render('contestAdminPanel');
+app.get('/admin/add/contest', async (req, res) => {
+  res.render('contestadd');
 });
 app.get('/admin', async (req, res) => {
   res.render('admin');
