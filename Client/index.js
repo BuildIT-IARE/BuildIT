@@ -58,6 +58,15 @@ app.get('/admin/add/question', async (req, res) => {
 app.get('/admin/add/contest', async (req, res) => {
   res.render('contestadd');
 });
+app.get('/admin/update/question', async (req, res) => {
+  res.render('updatequestion');
+});
+app.get('/admin/update/contest', async (req, res) => {
+  res.render('updatecontest');
+});
+app.get('/admin/update', async (req, res) => {
+  res.render('updateadmin');
+});
 app.get('/admin', async (req, res) => {
   res.render('admin');
 });

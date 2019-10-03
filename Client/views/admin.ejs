@@ -23,52 +23,16 @@
       word-break: keep-all;
       }
       }
-      .button {
-  border-radius: 4px;
-  background-color: #454fd4;
-  border: none;
-  color: white;
-  /* text-align: center; */
-  font-size:  px;
-  padding: 5px;
-  width: 120px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 1s;
-}
-
-.button span:after {
-  content: '\00bb';
-  position: "relative";
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-
-.button:hover span {
-  padding-right: 25px;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
     </style>
   </head>
   <body>
-      <br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br>
       <center><h4>Contest Admin Panel</h4></center><br>
       <center><a href= "http://localhost:3000/admin/add/contest" style="color:white" ><button class = "go">Go!</button></a><br><br></center>
       <center><h4> Question Admin Panel</h4></center><br>
       <center><a href= "http://localhost:3000/admin/add/question" style="color:white" ><button class = "go">Go!</button></a><br><br></center>
+      <center><h4> Want to update Contests/Questions Instead?</h4></center><br>
+      <center><a href= "http://localhost:3000/admin/update" style="color:white" ><button class = "go">Click Here</button></a><br><br></center>
     </div>
   </body>
 </html>
