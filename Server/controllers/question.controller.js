@@ -38,8 +38,7 @@ exports.create = (req, res) => {
     questionExplanation: req.body.questionExplanation,
     author: req.body.author,
     editorial: req.body.editorial,
-    difficulty: req.body.difficulty,
-    published: req.body.published
+    difficulty: req.body.difficulty
     });
 
     // Save Question in the database
@@ -149,8 +148,7 @@ exports.update = (req, res) => {
         questionExplanation: req.body.questionExplanation,
         author: req.body.author,
         editorial: req.body.editorial,
-        difficulty: req.body.difficulty,
-        published: req.body.published
+        difficulty: req.body.difficulty
       }}, {new: true}, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
@@ -176,77 +174,7 @@ exports.update = (req, res) => {
     });
 };
 
-// Publish question
-exports.publish = (req, res) => {
-    if(!req.body.questionId) {
-        return res.status(400).send({
-            message: "content can not be empty"
-        });
-    }
 
-    // Find question and update it with the request body
-    Question.findOneAndUpdate({questionId: req.params.questionId}, {$set:{
-        published: "true"
-      }}, {new: true}, (err, doc) => {
-        if (err) {
-            console.log("Something wrong when updating data!");
-        }
-        console.log(doc);
-      })
-    .then(question => {
-        if(!question) {
-            return res.status(404).send({
-                message: "Question not found with id " + req.params.questionId
-            });
-        }
-        res.send(question);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Question not found with id " + req.params.questionId
-            });                
-        }
-        return res.status(500).send({
-            message: "Error updating Question with id " + req.params.questionId
-        });
-    });
-};
-
-// Archive question
-exports.archive = (req, res) => {
-    if(!req.body.questionId) {
-        return res.status(400).send({
-            message: "content can not be empty"
-        });
-    }
-
-    // Find question and update it with the request body
-    Question.findOneAndUpdate({questionId: req.params.questionId}, {$set:{
-        published: "false"
-      }}, {new: true}, (err, doc) => {
-        if (err) {
-            console.log("Something wrong when updating data!");
-        }
-        console.log(doc);
-      })
-    .then(question => {
-        if(!question) {
-            return res.status(404).send({
-                message: "Question not found with id " + req.params.questionId
-            });
-        }
-        res.send(question);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Question not found with id " + req.params.questionId
-            });                
-        }
-        return res.status(500).send({
-            message: "Error updating Question with id " + req.params.questionId
-        });
-    });
-};
 
 // Delete a question with the specified questionId in the request
 exports.delete = (req, res) => {

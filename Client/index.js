@@ -109,6 +109,8 @@ app.get('/contests/:contestId', async (req, res) => {
     }
     request(options, function(err, response, body){
       res.cookie('contestId',req.params.contestId);
+      // Add options and req here
+
       res.render('questions', {data: body});
     });
   });

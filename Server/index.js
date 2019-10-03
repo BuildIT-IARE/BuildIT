@@ -92,8 +92,9 @@ app.get('/logout', async (req, res) => {
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   contests.getDuration(req, (err, duration) => {
     if (err){
-      res.send({success: false, message: "Error occured"});
+      res.send(err);
     }
+
     let date = new Date();
     let today = date.toLocaleDateString();
     let day = today.slice(0, 2);
@@ -242,7 +243,6 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                               res.send(sub);
                             }
                           });
-      
                         });
                       });
                     });
@@ -254,7 +254,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
       
       });
     } else {
-      res.send({success: false, message: "Contest window not open."});
+      res.send({success: false, message: "Contest window not open"});
     }
   });
 });

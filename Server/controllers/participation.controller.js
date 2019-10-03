@@ -4,8 +4,9 @@ const contests = require('./contest.controller.js');
 var moment = require('moment');
 // Create and Save a new participation
 exports.create = (req, res) => {
+    req.body.username = req.decoded.username;
     // Validate request
-    if(!req.body.userId) {
+    if(!req.body.username) {
         return res.status(400).send({
             message: "user Id can not be empty"
         });
@@ -17,7 +18,7 @@ exports.create = (req, res) => {
         });
     }
     
-    Participation.find({participationId: req.body.userId + req.body.contestId})
+    Participation.find({participationId: req.body.username + req.body.contestId})
     .then(participation => {
         if (participation.length === 0){
             contests.getDuration(req, (err, duration) => {
@@ -31,8 +32,8 @@ exports.create = (req, res) => {
         
                 // Create a Participation
                 const participation = new Participation({
-                    participationId: req.body.userId + req.body.contestId,
-                    userId: req.body.userId,
+                    participationId: req.body.username + req.body.contestId,
+                    username: req.body.username,
                     contestId: req.body.contestId,
                     participationTime: date,
                     submissionResults: [],
@@ -103,7 +104,7 @@ exports.findAll = (req, res) => {
 
 // Retrieve and return all participation details.
 exports.findUser = (req, res) => {
-    Participation.find({participationId: req.params.username + req.params.contestId})
+    Participation.find({participationId: req.decoded.username + req.params.contestId})
     .then(participation => {
         res.send(participation);
     }).catch(err => {
