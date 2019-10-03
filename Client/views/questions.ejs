@@ -24,10 +24,12 @@
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
   <script>
-    // Set the date we're counting down to
-    var countDownDate = new Date("Oct 3 2019 12:00:25").getTime();
-    var participation = new Date("Oct 3, 2019 10:50:25").getTime();
     
+    var countDownDatetemp = document.getElementById("div1").value;
+    countDownDatetemp = countDownDatetemp.slice(4, countDownDatetemp.length);
+    var countDownDate = new Date(countDownDatetemp).getTime();
+
+
     // Update the count down every 1 second
     var x = setInterval(function() {
     
@@ -56,7 +58,9 @@
     </script>
             <script>
               // Set the date we're counting down to
-              var countDownDate = new Date("Oct 3 2019 12:00:25").getTime();
+              var countDownDatetemp = document.getElementById("div1").value;
+              countDownDatetemp = countDownDatetemp.slice(4, countDownDatetemp.length);
+              var countDownDate = new Date(countDownDatetemp).getTime();
               // var participation = new Date("Oct 3, 2019 10:50:25").getTime();
               
               // Update the count down every 1 second
@@ -90,6 +94,8 @@
 
 <body>
   
+
+
   <% include ../views/partials/header %>
 
 <!-- page title -->
@@ -104,6 +110,8 @@
 
 </section>
 <!-- /page title -->
+<div id="div1" style="display: none;"><%= datatimer[0].validTill %></div>
+<div id="div2" style="display: none;"><%= datatimer[0].contestId %></div>
 
 <section class="section">
   <div class="container">
