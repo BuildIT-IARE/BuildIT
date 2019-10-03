@@ -230,6 +230,9 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                           result.result = [result.response1, result.response2, result.response3];
                           if (result.response1 === "Accepted" && result.response2 === "Accepted" && result.response3 === "Accepted"){
                           result.score = 100;
+                              // Add score to profile
+                              let participationId = result.username + result.contestId;
+                              
                           } else {
                           result.score = 0;
                           }
@@ -238,8 +241,6 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                             if (err){
                               res.send(err);
                             } else {
-                              // Add score to profile
-                              let participationId = result.username + result.contestId;
                               res.send(sub);
                             }
                           });

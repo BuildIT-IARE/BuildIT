@@ -109,9 +109,17 @@ app.get('/contests/:contestId', async (req, res) => {
     }
     request(options, function(err, response, body){
       res.cookie('contestId',req.params.contestId);
-      // Add options and req here
-
-      res.render('questions', {data: body});
+        let options3 ={
+          url: serverRoute + '/participations/' + req.params.contestId,
+          method: 'get',
+          headers: {
+            'authorization': req.cookies.token
+          },
+          json: true
+       }
+      request(options3, function(err, response, bodytimer){
+        res.render('questions', {data: body, datatimer: bodytimer});
+      });
     });
   });
 });
