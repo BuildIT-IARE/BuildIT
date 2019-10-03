@@ -36,7 +36,7 @@
     <div class="row">
       <div class="col-md-8">
         <button class = "button"><a href= "http://localhost:3000/contests/<%= data[0].contestId %>" style="color:white" ><span>Back to Questions</span></a></button></a><br><br>
-        <h3 class="section-title"><%= data[0].questionName %> - <%= data[0].questionId %></h3>
+        <h3 class="section-title"><%= data[0].questionName %> - #<%= data[0].questionId %></h3>
         
         <div class = "font-tertiary text-white">
             <p class="cars-text"><%= data[0].questionDescriptionText %>
@@ -46,11 +46,11 @@
             <% } %>
         </div>
         <% if(data[0].questionInputText !== undefined ) { %>
-      <div class="col-md-8">          
+      <div>          
             <h4><b>Input:</b></h4>
-            <!-- <blockquote> -->
+            <blockquote>
               <li><%= data[0].questionInputText %></li>
-            <!-- </blockquote> -->
+            </blockquote>
           </div>
           <% } %>
           <% if(data[0].questionOutputText !== undefined ) { %>
@@ -103,6 +103,10 @@
           </blockquote>
         </div>
         <% } %>
+<<<<<<< HEAD
+=======
+        <button class = "button" position = "right"><a href= "http://localhost:3000/ide/<%= data[0].questionId %>" style="color:white" ><span>Go to IDE</span></a></button></a>
+>>>>>>> 43d7dd52788ac2b1ca7cb2fed4848517d5b93fdd
     </div>
   </div>
 </section>
