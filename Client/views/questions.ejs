@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>BuildIT</title>
+  <title id = "demo1"></title>
 
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +23,69 @@
   <!--Favicon-->
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-  
+  <script>
+    // Set the date we're counting down to
+    var countDownDate = new Date("Oct 3 2019 12:00:25").getTime();
+    var participation = new Date("Oct 3, 2019 10:50:25").getTime();
+    
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+    
+      // Get today's date and time
+      var now = new Date().getTime();
+        
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+        
+      // Time calculations for days, hours, minutes and seconds
+      
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+      // Output the result in an element with id="demo"
+      document.getElementById("demo").innerHTML =hours + "h "
+      + minutes + "m " + seconds + "s ";
+        
+      // If the count down is over, write some text 
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "Time Up";
+      }
+    }, 1000);
+    </script>
+            <script>
+              // Set the date we're counting down to
+              var countDownDate = new Date("Oct 3 2019 12:00:25").getTime();
+              // var participation = new Date("Oct 3, 2019 10:50:25").getTime();
+              
+              // Update the count down every 1 second
+              var x = setInterval(function() {
+              
+                // Get today's date and time
+                var now = new Date().getTime();
+                  
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+                  
+                // Time calculations for days, hours, minutes and seconds
+                
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                  
+                // Output the result in an element with id="demo"
+                document.getElementById("demo1").innerHTML =hours + "h "
+                + minutes + "m " + seconds + "s ";
+                  
+                // If the count down is over, write some text 
+                if (distance < 0) {
+                  clearInterval(x);
+                  document.getElementById("demo1").innerHTML = "Time Up";
+                }
+              }, 1000);
+              </script>
+              
 </head>
 
 <body>
@@ -35,7 +97,9 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h1 class="text-white font-tertiary"><%= data[0].contestId %></h1>
+        <h1 class="text-white font-tertiary" id="demo"></h1>
+
+
       </div>
     </div>
   </div>
