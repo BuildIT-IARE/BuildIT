@@ -69,7 +69,7 @@ exports.acceptSubmission = (sub, callback) => {
 
     // Find participation and update it with the request body
     Participation.findOneAndUpdate({participationId: req.body.participationId}, {$push:{
-        acceptedSubmissions: { questionId: sub.questionId, score: sub.score}
+        submissionResults: { questionId: sub.questionId, score: sub.score}
       }}, {new: true}, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
@@ -92,6 +92,18 @@ exports.acceptSubmission = (sub, callback) => {
 // Retrieve and return all participations from the database.
 exports.findAll = (req, res) => {
     Participation.find()
+    .then(participation => {
+        res.send(participation);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving participation."
+        });
+    });
+};
+
+// Retrieve and return all participation details.
+exports.findUser = (req, res) => {
+    Participation.find({participationId: req.params.username + req.params.contestId})
     .then(participation => {
         res.send(participation);
     }).catch(err => {
