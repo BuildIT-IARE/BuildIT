@@ -77,7 +77,6 @@ app.get('/testGet', async (req, res) => {
 });
 
 app.post('/testPost', async (req, res) => {
-    // req.body.userId = req.cookies.userId;
     console.log('request body');
     console.log(req.body);
     res.json(req.body);
@@ -253,7 +252,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
       
       });
     } else {
-      res.send({success: false, message: "Contest has expired"});
+      res.send({success: false, message: "Contest window not open."});
     }
   });
 });

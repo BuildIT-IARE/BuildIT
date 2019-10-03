@@ -59,7 +59,8 @@ app.get('/contestadmin', async (req, res) => {
   res.render('contestAdminPanel');
 });
 
-app.get('/ide', async (req, res) => {
+app.get('/ide/:questionId', async (req, res) => {
+  let questionId = req.params.questionId;
   res.sendFile(path.resolve('../IDE/index.html'));
 });
 
@@ -107,11 +108,9 @@ app.get('/contests/questions/:questionId', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
-    res.cookie('questionId',req.params.questionId);
     res.render('questiondesc', {data: body});
   });
 });
-
 
 
 app.listen(3000);
