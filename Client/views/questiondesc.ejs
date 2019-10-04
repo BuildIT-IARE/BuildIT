@@ -25,6 +25,45 @@
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
 </head>
+<style>
+.button1 {
+  border-radius: 4px;
+  background-color: #454fd4;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size:  15px;
+  padding: 5px;
+  width: 110px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button1 span {
+  cursor: pointer;
+  display: inline-block;
+  transition: 1s;
+}
+
+.button1 span:after {
+  content: '\21B6';
+  opacity: 0;
+  top: 50px;
+  right: 20px;
+  transition: 0.3s;
+}
+
+.button1:hover span {
+  padding-right: 20px;
+}
+
+.button1:hover span:after {
+  opacity: 1;
+  right: 0;
+  padding-bottom:20px;  
+}
+</style>
 
 <body>
 
@@ -35,7 +74,7 @@
     <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <button class = "button"><a href= "http://localhost:3000/contests/<%= data[0].contestId %>" style="color:white" ><span>Back to Questions</span></a></button></a><br><br>
+        <button class = "button1"><a href= "http://localhost:3000/contests/<%= data[0].contestId %>" style="color:white" ><span>Back to Questions</span></a></button></a><br><br>
         <h3 class="section-title"><%= data[0].questionName %> - #<%= data[0].questionId %></h3>
         
         <div class = "font-tertiary text-white">
