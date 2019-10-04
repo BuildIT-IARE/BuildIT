@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 
 var participationSchema = new Schema({
     participationId: String,
-    userId: String,
+    username: String,
     contestId: String,
     participationTime: String,
     submissionResults: Array,

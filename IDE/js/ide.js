@@ -1,4 +1,5 @@
 var apiUrl = localStorageGetItem("api-url") || "https://api.judge0.com";
+var serverUrl = "http://localhost:5000";
 var wait = localStorageGetItem("wait") || false;
 var pbUrl = "https://pb.judge0.com";
 var check_timeout = 200;
@@ -141,9 +142,18 @@ function handleError(jqXHR, textStatus, errorThrown) {
     showError(`${jqXHR.statusText} (${jqXHR.status})`, `<pre>${JSON.stringify(jqXHR, null, 4)}</pre>`);
 }
 
+function handleError2(jqXHR, textStatus, errorThrown) {
+    showError(`${"Error"} (${jqXHR.status})`, `<pre>${jqXHR.responseJSON.message}</pre>`);
+}
+
 function handleRunError(jqXHR, textStatus, errorThrown) {
     handleError(jqXHR, textStatus, errorThrown);
     $runBtn.removeClass("loading");
+}
+
+function handleRunError2(jqXHR, textStatus, errorThrown) {
+    handleError2(jqXHR, textStatus, errorThrown);
+    $submitBtn.removeClass("loading");
 }
 
 function handleResult(data) {
@@ -200,6 +210,73 @@ function handleResult(data) {
     }
 
     $runBtn.removeClass("loading");
+}
+
+function handleResult2(data) {
+    timeEnd = performance.now();
+
+    var status = data.score;
+    
+    var stdout;
+
+    if (status === 100){
+        stdout = "All testcases satisfied, score: 100";
+    } else if (status === 50){
+        stdout = "Not all testcases were satisfied, score: 50";
+    } else if (status === 25){
+        stdout = "Not all testcases were satisfied, score: 25";
+    } else {
+        stdout = "No testcases were satisfied, score: 0";
+    }
+    // var stderr = decode(data.stderr);
+    // var compile_output = decode(data.compile_output);
+    // var sandbox_message = decode(data.message);
+    // var memory = (data.memory === null ? "-" : data.memory + "KB");
+    
+    var time = data.submissionTime;
+
+    $statusLine.html(`${status}, ${time}`);
+
+    if (blinkStatusLine) {
+        $statusLine.addClass("blink");
+        setTimeout(function() {
+            blinkStatusLine = false;
+            localStorageSetItem("blink", "false");
+            $statusLine.removeClass("blink");
+        }, 3000);
+    }
+
+    stdoutEditor.setValue(stdout);
+    // stderrEditor.setValue(stderr);
+    // compileOutputEditor.setValue(compile_output);
+    // sandboxMessageEditor.setValue(sandbox_message);
+
+    if (stdout !== "") {
+        var dot = document.getElementById("stdout-dot");
+        if (!dot.parentElement.classList.contains("lm_active")) {
+            dot.hidden = false;
+        }
+    }
+    // if (stderr !== "") {
+    //     var dot = document.getElementById("stderr-dot");
+    //     if (!dot.parentElement.classList.contains("lm_active")) {
+    //         dot.hidden = false;
+    //     }
+    // }
+    // if (compile_output !== "") {
+    //     var dot = document.getElementById("compile-output-dot");
+    //     if (!dot.parentElement.classList.contains("lm_active")) {
+    //         dot.hidden = false;
+    //     }
+    // }
+    // if (sandbox_message !== "") {
+    //     var dot = document.getElementById("sandbox-message-dot");
+    //     if (!dot.parentElement.classList.contains("lm_active")) {
+    //         dot.hidden = false;
+    //     }
+    // }
+
+    $submitBtn.removeClass("loading");
 }
 
 function getIdFromURI() {
@@ -342,6 +419,18 @@ function run() {
         error: handleRunError
     });
 }
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) != -1) return c.substring(name.length,c.length);
+    }
+    return "";
+ }
+ 
 function submit() {
     if (sourceEditor.getValue().trim() === "") {
         showError("Error", "Source code can't be empty!");
@@ -369,29 +458,29 @@ function submit() {
     if (languageId === "44") {
         sourceValue = sourceEditor.getValue();
     }
+    let windowUrl = window.location.href;
 
     var data = {
         source_code: sourceValue,
         language_id: languageId,
-        stdin: stdinValue
+        stdin: stdinValue,
+        contestId: getCookie('contestId'),
+        questionId: windowUrl.slice(serverUrl.length+5, windowUrl.length)
     };
-
     timeStart = performance.now();
     $.ajax({
-        url: 'http://localhost:5000/testPost',
+        url: serverUrl+'/validateSubmission',
         type: "POST",
         async: true,
         contentType: "application/json",
         data: JSON.stringify(data),
-        success: function (data, textStatus, jqXHR) {
-            
-            if (wait == true) {
-                handleResult(data);
-            } else {
-                setTimeout(fetchSubmission.bind(null, data.token), check_timeout);
-            }
+        headers: {
+            'authorization': getCookie('token')
         },
-        error: handleRunError
+        success: function (data, textStatus, jqXHR) {
+            handleResult2(data);
+        },
+        error: handleRunError2
     });
 }
 function fetchSubmission(submission_token) {
@@ -410,6 +499,21 @@ function fetchSubmission(submission_token) {
     });
 }
 
+function fetchSubmission2(submission_token) {
+    $.ajax({
+        url: serverUrl + "/submissions/" + submission_token + "?base64_encoded=true",
+        type: "GET",
+        async: true,
+        success: function (data, textStatus, jqXHR) {
+            if (data.status.id <= 2) { // In Queue or Processing
+                setTimeout(fetchSubmission.bind(null, submission_token), check_timeout);
+                return;
+            }
+            handleResult(data);
+        },
+        error: handleRunError
+    });
+}
 function changeEditorLanguage() {
     monaco.editor.setModelLanguage(sourceEditor.getModel(), $selectLanguage.find(":selected").attr("mode"));
     currentLanguageId = parseInt($selectLanguage.val());
@@ -423,7 +527,9 @@ function insertTemplate() {
 }
 
 function loadRandomLanguage() {
-    $selectLanguage.dropdown("set selected", Math.floor(Math.random() * $selectLanguage[0].length));
+    // $selectLanguage.dropdown("set selected", Math.floor(Math.random() * $selectLanguage[0].length));
+    $selectLanguage.dropdown("set selected", 34);
+    
     insertTemplate();
 }
 
@@ -432,7 +538,6 @@ $(window).resize(function() {
 });
 
 $(document).ready(function () {
-    console.log("Hey, Judge0 IDE is open-sourced: https://github.com/judge0/ide. Have fun!");
 
     $selectLanguage = $("#select-language");
     $selectLanguage.change(function (e) {

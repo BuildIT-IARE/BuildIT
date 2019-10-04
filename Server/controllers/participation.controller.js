@@ -64,18 +64,15 @@ exports.create = (req, res) => {
 
 // add sol to participation
 exports.acceptSubmission = (sub, callback) => {
-    if(!req.body.participationId) {
-        return callback("id can not be empty", null);
-    }
 
     // Find participation and update it with the request body
-    Participation.findOneAndUpdate({participationId: req.body.participationId}, {$push:{
+    Participation.findOneAndUpdate({participationId: sub.participationId}, {$addToSet:{
         submissionResults: { questionId: sub.questionId, score: sub.score}
       }}, {new: true}, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
         }
-        console.log(doc);
+        // console.log(doc);
       })
     .then(participation => {
         if(!participation) {
@@ -111,5 +108,20 @@ exports.findUser = (req, res) => {
         res.status(500).send({
             message: err.message || "Some error occurred while retrieving participation."
         });
+    });
+};
+
+exports.findUserTime = (result, callback) => {
+    Participation.find({participationId: result.participationId})
+    .then(participation => {
+        if(!participation){
+            return callback("Couldn't find participation", null);
+        }
+        return callback(null, participation);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return callback("Couldn't find participation, caught exception", null);                 
+        }
+        return callback("Error retrieving data", null);
     });
 };

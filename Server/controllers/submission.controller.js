@@ -1,4 +1,5 @@
 const Submission = require('../models/submission.model.js');
+var moment = require('moment');
 
 
 // Create and Save a new submission
@@ -11,7 +12,7 @@ exports.create = (req, result, callback) => {
     if(!result.username) {
         return callback("username can not be empty", null);
     }
- 
+    let date = moment();
     // Create a Submission
     const submission = new Submission({
         questionId: result.questionId,
@@ -21,7 +22,7 @@ exports.create = (req, result, callback) => {
         result: result.result,
         score: result.score,
         submissionToken: result.submissionToken,
-        submissionTime: String(Date.now())
+        submissionTime: moment()
       });
 
     // SaveReg in the database
