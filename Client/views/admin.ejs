@@ -5,7 +5,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <style>
-      .go {
+       .submit {
       width: 150px;
       padding: 10px;
       border: none;
@@ -15,7 +15,7 @@
       color: #fff;
       cursor: pointer;
       }
-      .go:hover {
+      .submit:hover {
       background: #0666a3;
       }
       @media (min-width: 568px) {
@@ -26,13 +26,18 @@
     </style>
   </head>
   <body>
-      <br><br><br><br><br><br><br><br>
+
+    <center><h4>Not logged in?</h4><a href= "http://localhost:3000/login" style="color:white" ><button class = "submit">Login Here!</button></a></center><br><br>
+    <div>
+      <br>
       <center><h4>Contest Admin Panel</h4></center><br>
-      <center><a href= "http://localhost:3000/admin/add/contest" style="color:white" ><button class = "go">Go!</button></a><br><br></center>
+      <center><a href= "http://localhost:3000/admin/add/contest" style="color:white" ><button class = "submit">Go!</button></a></center><br><br>
       <center><h4> Question Admin Panel</h4></center><br>
-      <center><a href= "http://localhost:3000/admin/add/question" style="color:white" ><button class = "go">Go!</button></a><br><br></center>
-      <center><h4> Want to update Contests/Questions Instead?</h4></center><br>
-      <center><a href= "http://localhost:3000/admin/update" style="color:white" ><button class = "go">Click Here</button></a><br><br></center>
+      <center><a href= "http://localhost:3000/admin/add/question" style="color:white" ><button class = "submit">Go!</button></a></center><br><br>
+      <center><h4> See the results:</h4></center><br><br>
+      <center><a href= "http://localhost:3000/admin/results" style="color:white" ><button class = "submit">Here!</button></a><br><br></center>
+      <center><h4> Want to update Contests/Questions Instead?</h4></center><br><br>
+      <center><a href= "http://localhost:3000/admin/update" style="color:white" ><button class = "submit">Click Here</button></a><br><br></center>
     </div>
   </body>
 </html>

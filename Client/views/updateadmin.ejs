@@ -23,14 +23,29 @@
       word-break: keep-all;
       }
       }
+       h4{
+        color: #000;
+        font-family: "Playfair Display", serif;
+        line-height: 1.2;
+}
+
+        h4, .h4 {
+         font-size: 22px;
+}
+
     </style>
-   </head>
-  <body>
+    <script>
+    $(document).ready(function(){
+    $(this).scrollTop(0);
+});
+    </script>
+    </head>
+    <body>
       <br><br><br><br><br><br><br><br>
       <center><h4>Update Contests</h4></center><br>
-      <center><a href= "http://localhost:3000/admin/update/contest" style="color:white" ><button class = "go">Go!</button></a></center><br><br>
+      <center><a href="http://localhost:3000/admin/update/contest" style="color:white" ><button class="go">Go!</button></a></center><br><br>
       <center><h4>Update Questions</h4></center><br>
-      <center><a href= "http://localhost:3000/admin/update/question" style="color:white" ><button class = "go">Go!</button></a></center><br><br>
+      <center><a href="http://localhost:3000/admin/update/question" style="color:white" ><button class="go">Go!</button></a></center><br><br>
     </div>
   </body>
 </html>
