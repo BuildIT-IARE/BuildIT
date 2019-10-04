@@ -938,7 +938,7 @@ blockquote {
 }
 
 .button:hover span {
-  padding-right: 25px;
+  padding-left: 25px;
 }
 
 .button:hover span:after {
