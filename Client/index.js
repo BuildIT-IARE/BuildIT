@@ -178,6 +178,11 @@ app.get('/contests/:contestId', async (req, res) => {
   });
 });
 
+app.get('/logout', async (req, res) => {
+  res.clearCookie('token');
+  res.redirect('/home');
+});
+
 app.get('/contests/questions/:questionId', async (req, res) => {
   let options = {
     url : serverRoute + '/questions/'+req.params.questionId,

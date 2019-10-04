@@ -306,4 +306,10 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   });
 });
 
+app.get('/testGet', async (req, res) => {
+  console.log("Tested Get");
+  res.json({status: "working"});
+
+});
+
 app.listen(5000,()=>console.log('Server @ port 5000'));
