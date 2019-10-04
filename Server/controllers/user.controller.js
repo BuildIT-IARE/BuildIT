@@ -3,7 +3,7 @@ const User = require('../models/user.model.js');
 let jwt = require('jsonwebtoken');
 let config = require('../util/config');
 
-let clientAddress = 'http://localhost:3000/';
+let clientAddress = 'http://localhost:3000';
 
 // Retrieve and return all users from the database.
 exports.findAll = (req, res) => {
@@ -128,7 +128,11 @@ exports.checkPass = (req, res) => {
             );
             // return the JWT token for the future API calls
             res.cookie('token',token);
-            res.redirect(clientAddress);
+            if(user[0].admin){
+                res.redirect(clientAddress+'/admin');
+            } else{
+                res.redirect(clientAddress);
+            }
         }
     }).catch(err => {
         if(err.kind === 'ObjectId') {
