@@ -67,6 +67,9 @@ app.get('/admin/update/contest', async (req, res) => {
 app.get('/admin/update', async (req, res) => {
   res.render('updateadmin');
 });
+app.get('/admin/results', async (req, res) => {
+  res.render('results');
+});
 app.get('/admin', async (req, res) => {
   res.render('admin');
 });
