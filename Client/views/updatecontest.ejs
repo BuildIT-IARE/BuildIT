@@ -151,26 +151,24 @@
   <body>
       <center><button class = "button"><a href= "http://localhost:3000/admin/update/question" style="color:white" ><span>Question Admin Panel</span></a></button></a><br><br></center>
     <div class="main-block">
-      <form action="http://localhost:5000/questions" method = "POST">
-        <h1>Update Contest Details</h1>
-        <h4>Contest ID</h4>
-        <textarea name="contestId" rows = "5"></textarea>
-        <p class="comments">Contest Name</p>
-        <textarea name="contestName" rows="5"></textarea>
-        <p class="comments">Contest Date</p>
-        <textarea name="contestDate" rows="5"></textarea>
-        <p class="comments">Contest Duration</p>
-        <textarea name="contestDuration" rows="5"></textarea>
-        <p class="comments">Contest Start Time</p>
-        <textarea name="contestStartTime" rows="5"></textarea>
-        <p class="comments">Contest End Time</p>
-        <textarea name="contestEndTime" rows="5"></textarea>
-        <p class="comments">Published</p>
-        <textarea name="published" rows="5"></textarea>
-        <div class="btn-block">
-          <button  class= "submit" type="submit" href="/">Send</button>
-        </div>
-      </form>
+        <form action="http://localhost:5000/contests" method = "POST">
+          <h1>BuildIt Contest Admin Panel</h1>
+          <h4>Contest ID</h4>
+          <textarea name="contestId" rows = "5"></textarea>
+          <p class="comments">Contest Name</p>
+          <textarea name="contestName" rows="5"></textarea>
+          <p class="comments">Contest Date</p>
+          <input name="contestDate" type="date"></textarea>
+          <p class="comments">Contest Duration</p>
+          <textarea name="contestDuration" rows="5"></textarea>
+          <p class="comments">Contest Start Time</p>
+          <textarea name="contestStartTime" rows="5"></textarea>
+          <p class="comments">Contest End Time</p>
+          <textarea name="contestEndTime" rows="5"></textarea>
+          <div class="btn-block">
+            <button  class= "submit" type="submit" href="/">Send</button>
+          </div>
+        </form>
     </div>
   </body>
 </html>
