@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Course Evaluation Survey</title>
+    <title>Add New Questions</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
       html, body {
@@ -155,12 +155,12 @@
         <h1>BuildIt Questions Admin Panel</h1>
         <h4>Question ID</h4>
         <input name="questionId" type="text"/>
-        <h4>Question</h4>
-        <textarea rows = "40"></textarea>
+        <h4>Question Name</h4>
+        <input name="questionName" type="text"/>
         <h4>Contest ID</h4>
-        <textarea name="contestId" rows = "5"></textarea>
+        <input name="contestId" type="text"/>
         <p class="comments">Description</p>
-        <textarea name="questionDescriptionText" rows="10"></textarea>
+        <textarea name="questionDescriptionText" rows="30"></textarea>
         <p class="comments">Input</p>
         <textarea name="questionInputText" rows="10"></textarea>
         <p class="comments">Output</p>
@@ -174,19 +174,19 @@
         <p class="comments">Example Output 2:</p>
         <textarea name="questionExampleOutput2" rows="10"></textarea>
         <p class="comments">Example Input 3:</p>
-        <textarea name="questionExampleInput3 rows="10"></textarea>
+        <textarea name="questionExampleInput3" rows="10"></textarea>
         <p class="comments">Example Output 3:</p>
         <textarea name="questionExampleOutput3" rows="10"></textarea>
         <p class="comments">Hidden Input 1:</p>
         <textarea name="questionHiddenInput1" rows="10"></textarea>
-        <p class="comments">Hidden Input 2:</p>
-        <textarea name="questionHiddenInput2" rows="10"></textarea>
-        <p class="comments">Hidden Input 3:</p>
-        <textarea name="questionHiddenInput3" rows="10"></textarea>
         <p class="comments">Hidden Output 1:</p>
         <textarea name="questionHiddenOutput1" rows="10"></textarea>
+        <p class="comments">Hidden Input 2:</p>
+        <textarea name="questionHiddenInput2" rows="10"></textarea>
         <p class="comments">Hidden Output 2:</p>
         <textarea name="questionHiddenOutput2" rows="10"></textarea>
+        <p class="comments">Hidden Input 3:</p>
+        <textarea name="questionHiddenInput3" rows="10"></textarea>
         <p class="comments">Hidden Output 3:</p>
         <textarea name="questionhiddenOutput3" rows="10"></textarea>
         <p class="comments">Explanation</p>
@@ -195,10 +195,8 @@
         <textarea name="author" rows="10"></textarea>
         <p class="comments">Editorial:</p>
         <textarea name="editorial" rows="10"></textarea>
-        <p class="comments">Difficuty</p>
+        <p class="comments">Difficulty</p>
         <textarea name="difficulty" rows="10"></textarea>
-        <p class="comments">Published</p>
-        <textarea name="published" rows="10"></textarea>
         <div class="btn-block">
           <button class= "submit" type="submit" href="/">Send</button>
         </div>

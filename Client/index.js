@@ -110,7 +110,9 @@ app.get('/contests/:contestId', async (req, res) => {
     },
     json: true
   }
+
   request(options1, function(err, response, body){
+
     let options = {
       url : serverRoute + '/questions/contests/'+req.params.contestId,
       method: 'get',
@@ -119,6 +121,7 @@ app.get('/contests/:contestId', async (req, res) => {
       },
       json: true
     }
+    // Get questions for contest
     request(options, function(err, response, body){
       res.cookie('contestId',req.params.contestId);
         let options3 ={
@@ -129,7 +132,51 @@ app.get('/contests/:contestId', async (req, res) => {
           },
           json: true
        }
+      // get participation details
       request(options3, function(err, response, bodytimer){
+        // console.log(JSON.stringify(bodytimer, null, 4));
+        // console.log(JSON.stringify(body, null, 4));
+        bodytimer = bodytimer[0];
+        let questions = [];
+        let scores = [];
+        for (let i = 0; i < body.length; i++){
+          questions[i] = body[i].questionId;
+        }
+        for (let i = 0; i < questions.length; i++){
+          let maxScore = 0;
+          for(let j = 0; j < bodytimer.submissionResults.length; j++){
+            if (bodytimer.submissionResults[j].questionId === questions[i]){
+              if (maxScore < bodytimer.submissionResults[j].score){
+                maxScore = bodytimer.submissionResults[j].score;
+              }
+            }
+          }
+          scores[i] = maxScore;
+        }
+        for (let i = 0; i < body.length; i++){
+          for(let j = 0; j < questions.length; j++){
+            if (body[i].questionId === questions[j]){
+              body[i].score = scores[j];
+            }
+          }
+        }
+        for (let i = 0; i < body.length; i++){
+          if (body[i].score === 100){
+            body[i].color = "green";
+          } else if (body[i].score === 50 || body[i].score === 25){
+            body[i].color = "orange";
+          } else{
+            body[i].color = "red";
+          }
+        }
+        // <% for (let j = 0; j < datatimer.questions.length; j++){ if (data.questionId[i] === datatimer.questions[j]){ %>
+        console.log(questions);
+        console.log(scores);
+        console.log(body);
+
+
+        // bodytimer.questions = questions;
+        // bodytimer.scores = scores;
         res.render('questions', {data: body, datatimer: bodytimer});
       });
     });

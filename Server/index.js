@@ -198,6 +198,9 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                           res.status(404).send({message: err});
                         }
                         result.token3 = body.token;
+                        setTimeout(()=>{
+
+                        },5000);
                         option1 = {
                           url: apiAddress + '/submissions/' + result.token1,
                           method: 'get'
@@ -284,11 +287,11 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                           });
                         });
                     });  
-                    }, 2000);
+                    }, 3000);
                   });
-                  }, 2000);
+                  }, 3000);
                 });
-              }, 2000);
+              }, 3000);
             } else {
               res.status(403).send({message: "Your test duration has expired"});
             }
