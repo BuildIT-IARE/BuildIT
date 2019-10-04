@@ -169,14 +169,6 @@ app.get('/contests/:contestId', async (req, res) => {
             body[i].color = "red";
           }
         }
-        // <% for (let j = 0; j < datatimer.questions.length; j++){ if (data.questionId[i] === datatimer.questions[j]){ %>
-        console.log(questions);
-        console.log(scores);
-        console.log(body);
-
-
-        // bodytimer.questions = questions;
-        // bodytimer.scores = scores;
         res.render('questions', {data: body, datatimer: bodytimer});
       });
     });

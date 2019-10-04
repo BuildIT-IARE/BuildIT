@@ -198,9 +198,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                           res.status(404).send({message: err});
                         }
                         result.token3 = body.token;
-                        setTimeout(()=>{
 
-                        },5000);
                         option1 = {
                           url: apiAddress + '/submissions/' + result.token1,
                           method: 'get'
@@ -213,7 +211,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                           url: apiAddress + '/submissions/' + result.token3,
                           method: 'get'
                         }
-                        
+                        setTimeout(()=>{
                         request(option1, function (err, response, body) {
                           if (err) {
                           res.status(404).send({message: err});
@@ -222,7 +220,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                 
                           let resp = data.status.description;
                           result.response1 = resp;
-                
+                          setTimeout(()=>{
                           request(option2, function (err, response, body) {
                             if (err) {
                               res.status(404).send({message: err});
@@ -231,7 +229,8 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                   
                             let resp = data.status.description;
                             result.response2 = resp;
-                
+
+                            setTimeout(()=>{
                             request(option3, function (err, response, body) {
                               if (err) {
                                 res.status(404).send({message: err});
@@ -284,8 +283,11 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                                 });
                               });
                             });
+                            }, 3000);
                           });
+                          }, 3000);
                         });
+                        }, 3000);
                     });  
                     }, 3000);
                   });
