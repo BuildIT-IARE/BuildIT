@@ -102,44 +102,30 @@
             <% } %>
         <% if(data[0].questionExampleInput1 !== undefined && data[0].questionExampleInput2 !== undefined && data[0].questionExampleInput3 !== undefined) { %>
         <div>
-          <h4><b>Sample Input:</b></h4>
-          <blockquote>
-            <p>Input 1</p>
-            <li><%= data[0].questionExampleInput1 %></li>
-            <p>Input 2</p>
-            <li><%= data[0].questionExampleInput2 %></li>
-            <p>Input 3</p>
-            <li><%= data[0].questionExampleInput3 %></li>
-          </blockquote>
-        </div>
+          <h4><b>Sample Input:</b></h4><br>
+            <pre style="font-size: 18px"><%= data[0].questionExampleInput1 %></pre>
+            <pre style="font-size: 18px"><%= data[0].questionExampleInput2 %></pre>
+            <pre style="font-size: 18px"><%= data[0].questionExampleInput3 %></pre>
+          </div>
         <% } %>
         <% if(data[0].questionExampleOutput1 !== undefined && data[0].questionExampleOutput2 !== undefined && data[0].questionExampleOutput3 !== undefined) { %>
           <div>
             <h4><b>Sample Output :</b></h4>
-            <blockquote>
-              <p>Output 1</p>
-              <li><%= data[0].questionExampleOutput1 %></li>
-              <p>Output 2</p>
-              <li><%= data[0].questionExampleOutput2 %></li>
-              <p>Output 3</p>
-              <li><%= data[0].questionExampleOutput3 %></li>
-            </blockquote>
+            <pre style="font-size: 18px"><%= data[0].questionExampleOutput1 %></pre>
+            <pre style="font-size: 18px"><%= data[0].questionExampleOutput2 %></pre>
+            <pre style="font-size: 18px"><%= data[0].questionExampleOutput3 %></pre>
           </div>
           <% } %>
           <% if (data[0].questionExplanation !== undefined) { %>
           <div>    
           <h4><b>Explanation:</b></h4>
-          <blockquote>
-            <p><%= data[0].questionExplanation %></p>
-        </blockquote>
+          <p class="cars-text"><%= data[0].questionExplanation %></p>
         </div>
         <% } %>
         <% if (data[0].author !== undefined) { %>
         <div>
           <h4><b>Author:</b></h4>
-          <blockquote>
-            <p><%= data[0].author %></p>
-          </blockquote>
+          <p class="cars-text"><%= data[0].author %></p>
         </div>
         <% } %>
         <button class = "button" position = "right"><a href= "http://localhost:3000/ide/<%= data[0].questionId %>" style="color:white" ><span>Go to IDE</span></a></button></a>
