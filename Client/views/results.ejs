@@ -199,9 +199,9 @@
       <div class="dropdown">
             <button class="dropdown__button">See the results of all the contests here!</button>
             <div class="dropdown__menu">
-              <a href="http://localhost:3000/admin/contestname/table">Contest 1</a>
-              <a href="#">Contest 2</a>
-              <a href="#">Contest 3</a>
+              <% for (let i = 0; i < data.length; i++){ %>
+              <a href="http://localhost:3000/admin/<%= data[i].contestId %>/table"><%= data[i].contestName %></a>
+              <% } %>
             </div>
       </div>
           

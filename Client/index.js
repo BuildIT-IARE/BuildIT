@@ -68,11 +68,24 @@ app.get('/admin/update', async (req, res) => {
   res.render('updateadmin');
 });
 app.get('/admin/results', async (req, res) => {
-  res.render('results');
+  let options = {
+    url : serverRoute + '/contests',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+
+  request(options, function(err, response, body){
+    res.render('results', {data: body});
+  });
 });
-app.get('/admin/contestname/table', async (req, res) => {
+
+app.get('/admin/:contestId/table', async (req, res) => {
   res.render('table');
 });
+
 app.get('/admin', async (req, res) => {
   res.render('admin');
 });
@@ -166,10 +179,12 @@ app.get('/contests/:contestId', async (req, res) => {
         for (let i = 0; i < body.length; i++){
           if (body[i].score === 100){
             body[i].color = "green";
-          } else if (body[i].score === 50 || body[i].score === 25){
+          } else if (body[i].score === 50){
             body[i].color = "orange";
-          } else{
+          } else if (body[i].score === 25) {
             body[i].color = "red";
+          } else {
+            body[i].color = "black";
           }
         }
         res.render('questions', {data: body, datatimer: bodytimer});

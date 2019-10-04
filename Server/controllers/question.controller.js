@@ -218,3 +218,18 @@ exports.findAllContest = (req, res) => {
         });
     });
 };
+
+exports.getAllQuestions = (req, callback) => {
+    Question.find({contestId: req.cookies.contestId})
+    .then(question => {
+        if(!question) {
+            return callback("Questions not found ", null);
+        }
+        return callback(null, question);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return callback("Questions not found ", null);
+        }
+        return callback("Error retrieving questions", null);
+    });
+};

@@ -306,10 +306,69 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   });
 });
 
-app.get('/testGet', async (req, res) => {
-  console.log("Tested Get");
-  res.json({status: "working"});
+app.get('/getScores', middleware.checkToken, async (req, res) => {
+  let username = req.decoded.username;
+  // let contestId = req.cookies.contestId || req.body.contestId;
+  let contestId = req.body.contestId;
+  let result = {}
+  let finalScores = {}
+  let allQuestions = []
+  let scores = []
+  req.cookies.contestId = contestId;
+  result.participationId =  username + contestId;
+  questions.getAllQuestions(req, (err, question) => {
+    if (err){
+      res.send(err);
+    }
+    for (let i = 0; i < question.length; i++){
+      allQuestions[i] = question[i].questionId;
+    }
+    participations.findUserTime(result, (err, participation) => {
+      if (err){
+        res.send(err);
+      }
+      if (participation.length !== 0){
+        participation = participation[0];
+      for (let i = 0; i < allQuestions.length; i++){
+        let maxScore = 0;
+        for(let j = 0; j < participation.submissionResults.length; j++){
+          if (participation.submissionResults[j].questionId === allQuestions[i]){
+            if (maxScore < participation.submissionResults[j].score){
+              maxScore = participation.submissionResults[j].score;
+            }
+          }
+        }
+        scores[i] = maxScore;
+      }
+      for (let i = 0; i < allQuestions.length; i++){
+        finalScores[allQuestions[i]] = {
+          questionId: allQuestions[i],
+          score: scores[i]
+          }
+        if (scores[i] === 100){
+          finalScores[allQuestions[i]].color = "green";
+        } else if(score[i] === 50){
+          finalScores[allQuestions[i]].color = "orange";
+        } else if( scores[i] === 25) {
+          finalScores[allQuestions[i]].color = "red";
+        } else {
+          finalScores[allQuestions[i]].color = "black";
+        }
+      }
+      } else {
+        for (let i = 0; i < allQuestions.length; i++){
+          finalScores[allQuestions[i]] = {
+            questionId: allQuestions[i],
+            score: 0,
+            color: "black"
+          }
+        }
+      }
+      res.send(finalScores);
+    });
+  });
 
+  // res.end();
 });
 
 app.listen(5000,()=>console.log('Server @ port 5000'));
