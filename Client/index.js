@@ -32,20 +32,20 @@ app.use('/contests/questions', express.static(__dirname + '/'));
 
 
 app.get('/', async (req, res) => {
-    res.render('home');
+  res.render('home', {imgUsername: req.cookies.username});
 });
 app.get('/index', async (req, res) => {
-  res.render('home');
+  res.render('home', {imgUsername: req.cookies.username});
 });
 app.get('/home', async (req, res) => {
-  res.render('home');
+  res.render('home', {imgUsername: req.cookies.username});
 });
 app.get('/about', async (req, res) => {
-  res.render('about');
+  res.render('about', {imgUsername: req.cookies.username});
 });
 
 app.get('/contact', async (req, res) => {
-  res.render('contact');
+  res.render('contact', {imgUsername: req.cookies.username});
 });
 
 app.get('/login', async (req, res) => {
@@ -108,7 +108,7 @@ app.get('/contest', async (req, res) => {
   
   request(options, function(err, response, body){
     // console.log(body);  
-    res.render('contest', {data: body});
+    res.render('contest', {imgUsername: req.cookies.username, data: body});
     
   });
 });
@@ -187,7 +187,7 @@ app.get('/contests/:contestId', async (req, res) => {
             body[i].color = "black";
           }
         }
-        res.render('questions', {data: body, datatimer: bodytimer});
+        res.render('questions', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
       });
     });
   });
@@ -195,7 +195,13 @@ app.get('/contests/:contestId', async (req, res) => {
 
 app.get('/logout', async (req, res) => {
   res.clearCookie('token');
+  res.clearCookie('username');
+  res.clearCookie('contestId');
   res.redirect('/home');
+});
+
+app.get('/error', async (req, res) => {
+  res.render('error', {imgUsername: req.cookies.username});
 });
 
 app.get('/contests/questions/:questionId', async (req, res) => {
@@ -208,7 +214,7 @@ app.get('/contests/questions/:questionId', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
-    res.render('questiondesc', {data: body});
+    res.render('questiondesc', {imgUsername: req.cookies.username, data: body});
   });
 });
 

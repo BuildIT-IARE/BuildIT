@@ -67,14 +67,17 @@
 
 <body>
 
-<!-- <% include ../views/partials/header %> -->
-
+<script>
+function close_window() {
+    close();
+}
+</script>
 <!-- about -->
 <section class="section pt-5">
     <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <button class = "button1"><a href= "http://localhost:3000/contests/<%= data[0].contestId %>" style="color:white" ><span>Back to Questions</span></a></button></a><br><br>
+        <button onclick="close()" class = "button1" ><a href="javascript:close_window();"><span style="color:white" >Back to Questions</span></a></button><br><br>
         <h3 class="section-title"><%= data[0].questionName %> - #<%= data[0].questionId %></h3>
         
         <div class = "font-tertiary text-white">
@@ -128,7 +131,7 @@
           <p class="cars-text"><%= data[0].author %></p>
         </div>
         <% } %>
-        <button class = "button" position = "right"><a href= "http://localhost:3000/ide/<%= data[0].questionId %>" style="color:white" ><span>Go to IDE</span></a></button></a>
+        <button class = "button" position = "right"><a href= "http://localhost:3000/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><span>Go to IDE</span></a></button></a>
     </div>
   </div>
 </section>

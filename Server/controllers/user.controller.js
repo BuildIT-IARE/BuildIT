@@ -128,6 +128,7 @@ exports.checkPass = (req, res) => {
             );
             // return the JWT token for the future API calls
             res.cookie('token',token);
+            res.cookie('username', user[0].username);
             if(user[0].admin){
                 res.redirect(clientAddress+'/admin');
             } else{

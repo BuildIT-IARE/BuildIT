@@ -21,13 +21,24 @@
         <li class="nav-item">
           <a class="nav-link" href="/contact">Contact</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-        </li>
+
+      <% if (imgUsername){ %>
         <li class="nav-item">
             <a class="nav-link" href="/logout">Logout</a>
         </li>
+      <% } else { %>  
+        <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+        </li>
+      <% } %>  
+
       </ul>
+      <% if (imgUsername !== undefined){ %>
+      <div class="nav-item">
+            <img height = "160px" width="135px" src="http://13.233.239.42/iare/images/cse/<%= imgUsername %>.jpg" class="nav-link" >
+            <span style="color: white" class="nav-item"><b><%= imgUsername %></b></span>
+      </div>
+      <% } %>
     </div>
   </nav>
 </header>
