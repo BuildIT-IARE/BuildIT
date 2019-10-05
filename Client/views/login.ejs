@@ -49,7 +49,7 @@ a {
 button {
 	border-radius: 20px;
 	border: 1px solid ;
-	background-color: #2bfdff;
+	background-color: red;
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -58,6 +58,7 @@ button {
 	text-transform: uppercase;
 	transition: transform 80ms ease-in;
 }
+
 
 button:active {
 	transform: scale(0.95);
@@ -249,7 +250,7 @@ footer i {
 }
 
 footer a {
-    color: #3c97bf;
+	background:#41228e;
     text-decoration: none;
 }
     </style>
@@ -258,29 +259,33 @@ footer a {
         <div class="container" id="container">
           <div class="form-container sign-up-container">
             <form action="#">
-              <h1>Create Account</h1>
+			  <h1>Create Account</h1>
+			  <p></p>
               <input type="text" placeholder="Name" />
               <input type="email" placeholder="Email" />
-              <input type="password" placeholder="Password" />
+			  <input type="password" placeholder="Password" />
+			  <p></p>
               <button>Sign Up</button>
             </form>
           </div>
           <div class="form-container sign-in-container">
             <form action="#">
-              <h1>Sign In</h1>
+			  <h1>Sign In</h1>
+			  <p></p>
               <input type="text" placeholder="Roll Number" />
               <input type="password" placeholder="Password" />
               <a href="#">Forgot your password?</a>
-              <button>Sign In</button>
+			  <button>Sign In</button>
+			  
             </form>
           </div>
           <div class="overlay-container">
             <div class="overlay">
               <div class="overlay-panel overlay-left">
                 <h1>Welcome Back!</h1>
-                <p>To keep connected with us please login with your personal info</p>
-                <button class="ghost" id="signIn">Sign In</button>
-              </div>
+                <p></p>
+				<button class="ghost" id="signIn">Sign In</button>	
+			</div>
               <div class="overlay-panel overlay-right">
                 <h1>Hello, Friend!</h1>
                 <p>Enter your personal details and start journey with us</p>
