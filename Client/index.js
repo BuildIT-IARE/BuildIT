@@ -44,8 +44,8 @@ app.get('/about', async (req, res) => {
   res.render('about', {imgUsername: req.cookies.username});
 });
 
-app.get('/contact', async (req, res) => {
-  res.render('contact', {imgUsername: req.cookies.username});
+app.get('/profile', async (req, res) => {
+  res.render('profile', {imgUsername: req.cookies.username});
 });
 
 app.get('/login', async (req, res) => {
