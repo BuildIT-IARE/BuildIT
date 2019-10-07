@@ -15,8 +15,8 @@ module.exports = (app) => {
     // Login Route
     app.post('/login', users.checkPass);
 
-    // Update a user with userId
-    app.put('/users', middleware.checkTokenAdmin, users.update);
+    // // Update a user with userId
+    // app.put('/users', middleware.checkTokenAdmin, users.update);
 
     // Delete a user with userId
     // app.delete('/users/:username', users.delete);

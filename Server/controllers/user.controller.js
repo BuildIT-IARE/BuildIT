@@ -42,9 +42,9 @@ exports.findOne = (req, res) => {
 // Create and Save a new user
 exports.create = (req, res) => {
     // Validate request
-    if(!req.body.username || !req.body.password) {
+    if(!req.body.email || !req.body.username || !req.body.password) {
         return res.status(400).send({
-            message: "username and password can not be empty"
+            message: "email, username and password can not be empty"
         });
     }
 
@@ -53,7 +53,7 @@ exports.create = (req, res) => {
         username: req.body.username, 
         password: req.body.password,
         name: req.body.name,
-        admin: req.body.admin
+        email: req.body.email
     });
 
     // Save user in the database
