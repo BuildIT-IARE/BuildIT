@@ -12,7 +12,7 @@
 		<!-- <link rel="stylesheet" type="text/css" href="css/normalize.css" />
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="css/component.css" /> -->
-		<script src="js/modernizr.custom.js"></script>
+		<script src="/adminjs/modernizr.custom.js"></script>
 		<style>
 			 html, body {
       min-height: 100%;
@@ -652,25 +652,27 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 								<li>
 									<a class="gn-icon gn-icon-download" >Manage Contests</a>
 									<ul class="gn-submenu">
-										<li><a class="gn-icon gn-icon-illustrator" href="contestadd.html">Add Contests</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="contestupdate.html">Update Contests</a></li>
+										<li><a class="gn-icon gn-icon-illustrator" href="http://localhost:3000/admin/add/contest">Add Contests</a></li>
+										<li><a class="gn-icon gn-icon-photoshop" href="http://localhost:3000/admin/update/contest">Update Contests</a></li>
+										<li><a class="gn-icon gn-icon-photoshop" href="http://localhost:3000/admin/update/contest">Delete Contests</a></li>
 									</ul>
 								</li>
 								<li>
 									<a class="gn-icon gn-icon-download" >Manage Questions</a>
 									<ul class="gn-submenu">
-										<li><a class="gn-icon gn-icon-illustrator" href="questionadd.html">Add Questions</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="questionupdate.html">Update Questions</a></li>
+										<li><a class="gn-icon gn-icon-illustrator" href="http://localhost:3000/admin/add/question">Add Questions</a></li>
+										<li><a class="gn-icon gn-icon-photoshop" href="http://localhost:3000/admin/update/question">Update Questions</a></li>
+										<li><a class="gn-icon gn-icon-photoshop" href="http://localhost:3000/admin/update/question">Delete Questions</a></li>
 									</ul>
 								</li>
 								<li><a class="gn-icon gn-icon-cog" >Manage users</a></li>
-								<li><a class="gn-icon gn-icon-help">Results</a></li>
+								<li><a class="gn-icon gn-icon-help" href="http://localhost:3000/admin/results">Results</a></li>
 								
 							</ul>
 						</div><!-- /gn-scroller -->
 					</nav>
 				</li>
-				<li><a href="questionadd.html">Refresh</a></li>
+				<li><a href="http://localhost:3000/admin/add/question">Refresh</a></li>
 				<li><a class="codrops-icon codrops-icon-prev" href="http://localhost:3000/"><span>Home</span></a></li>
 				
 			</ul>
@@ -730,8 +732,8 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
       </form>
     </div>
 		</div><!-- /container -->
-		<script src="js/classie.js"></script>
-		<script src="js/gnmenu.js"></script>
+		<script src="/adminjs/classie.js"></script>
+		<script src="/adminjs/gnmenu.js"></script>
 		<script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
