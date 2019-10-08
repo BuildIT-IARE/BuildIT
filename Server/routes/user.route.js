@@ -4,7 +4,7 @@ module.exports = (app) => {
     const users = require('../controllers/user.controller.js');
 
     // Create a new user
-    app.post('/users', middleware.checkTokenAdmin, users.create);
+    app.post('/signup', users.create);
 
     // Retrieve all users
     app.get('/users', middleware.checkToken, users.findAll);
@@ -14,6 +14,12 @@ module.exports = (app) => {
 
     // Login Route
     app.post('/login', users.checkPass);
+
+	// // confirm token 
+    // app.post('/confirmation', userController.confirmationPost);
+    
+    // // Resend token
+    // app.post('/resend', userController.resendTokenPost);
 
     // // Update a user with userId
     // app.put('/users', middleware.checkTokenAdmin, users.update);
