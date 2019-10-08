@@ -7,10 +7,13 @@ module.exports = (app) => {
     app.post('/signup', users.create);
 
     // Retrieve all users
-    app.get('/users', middleware.checkTokenAdmin, users.findAll);
+    app.get('/admin/users', middleware.checkTokenAdmin, users.findAll);
 
     // Retrieve a single user with userId
-    app.get('/users/:username', middleware.checkTokenAdmin, users.findOne);
+    app.get('/admin/users/:username', middleware.checkTokenAdmin, users.findOne);
+
+    // Retrieve a single user with userId public
+    app.get('/users/:username', middleware.checkToken, users.findOnePublic);
 
     // Login Route
     app.post('/login', users.checkPass);

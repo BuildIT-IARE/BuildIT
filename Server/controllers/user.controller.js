@@ -44,6 +44,34 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Find a single user with a username
+exports.findOnePublic = (req, res) => {
+    User.find({username: req.params.username})
+    .then(user => {
+        if(!user) {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.username
+            });            
+        }
+        user = user[0];
+        let sendUser = {
+            username: user.username,
+            name: user.name, 
+            email: user.email
+        }
+        res.send(sendUser);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.username
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving user with id " + req.params.username
+        });
+    });
+};
+
 // Create and Save a new user
 exports.create = (req, res) => {
     // Validate request
@@ -174,8 +202,9 @@ exports.checkPass = (req, res) => {
                 message: "User not found with id " + req.body.username
             });            
         }
-        if(user[0].password === req.body.password && user[0].isVerified === true){
-            // Login successful
+        if(user[0].password === req.body.password){
+            if(user[0].isVerified === true){
+                            // Login successful
             let token = jwt.sign(
                 {
                     username: user[0].username,
@@ -200,11 +229,18 @@ exports.checkPass = (req, res) => {
                     message: "Auth successful"
                 });
             }
-            
         } else {
             res.send({
                 success: false, 
                 message: "Please verify account to continue."
+            });
+        }
+
+            
+        } else {
+            res.send({
+                success: false, 
+                message: "Incorrect password entered."
             })
         }
     }).catch(err => {
