@@ -45,7 +45,18 @@ app.get('/about', async (req, res) => {
 });
 
 app.get('/profile', async (req, res) => {
-  res.render('profile', {imgUsername: req.cookies.username});
+  let options = {
+    url : serverRoute + '/users/' + req.cookies.username.toLowerCase(),
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    res.render('profile', {data: body, imgUsername: req.cookies.username});
+  });
+
 });
 
 app.get('/login', async (req, res) => {

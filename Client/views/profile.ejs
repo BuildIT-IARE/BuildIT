@@ -123,8 +123,7 @@
     color: #0062cc;
 }
 </style> 
-<body>
-    
+<body>  
 <header>
         <nav class="navbar navbar-expand-lg navbar-dark">
           <a class="navbar-brand font-tertiary h3" href="/index"> <img src="../../images/logo.png"> <img src="../../images/logotext.png"></a>
@@ -157,121 +156,51 @@
                   <a class="nav-link" href="/login">Login</a>
               </li>
             <% } %>  
-      
             </ul>
-            <% if (imgUsername !== undefined){ %>
-            <div class="nav-item">
-                  <img height = "160px" width="135px" src="http://13.233.239.42/iare/images/cse/<%= imgUsername %>.jpg" class="nav-link" >
-                  <span style="color: white" class="nav-item"><b><%= imgUsername %></b></span>
-            </div>
-            <% } %>
           </div>
         </nav>
-      </header>
+      </header> 
     <div class="container emp-profile">
     <form method="post">
         <div class="row">
             <div class="col-md-4">
-                <div class="profile-img">
-                    <img src="http://13.233.239.42/iare/images/cse/17951A0593.jpg" alt=""/>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="profile-head">
-                            <h5>
-                                Tayeeb Hasan
-                            </h5>
-                            <h6>
-                                Blockchain Developer
-                            </h6>
-                            
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-work">
-                    <p>WORK LINK</p>
-                    <a href="">Website Link</a><br/>
-                    <a href="">Bootsnipp Profile</a><br/>
-                    <a href="">Bootply Profile</a>
-                    <p>SKILLS</p>
-                    <a href="">Web Designer</a><br/>
-                    <a href="">Web Developer</a><br/>
-                    <a href="">WordPress</a><br/>
-                    <a href="">WooCommerce</a><br/>
-                    <a href="">PHP, .Net</a><br/>
-                </div>
+                    <% if (imgUsername !== undefined){ %>
+                        <div class="profile-img">
+                              <img height = "160px" width="135px" src="http://13.233.239.42/iare/images/cse/<%= imgUsername %>.jpg" class="nav-link" >
+                              <span style="color: white" class="nav-item"><b><%= imgUsername %></b></span>
+                        </div>
+                    <% } %>
             </div>
             <div class="col-md-8">
-                <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>User Id</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>flozender</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Name</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>Tayeeb Hasan</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Email</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>tayeeb.hasan@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Phone</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>123 456 7890</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Profession</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>Blockchanin, Web Developer</p>
-                                    </div>
-                                </div>
-                    </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Availability</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>6 months</p>
-                                    </div>
-                                </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Your Bio</label><br/>
-                                <p>Your detail description</p>
-                            </div>
+                    <div class="col-md-10">
+                        <br><br>
+                        <br><br>
+                        <br>
+                        <div class="tab-content profile-tab" id="myTabContent">
+                                             <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Username</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><%= data.username %></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Name</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><%= data.name %></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Email</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><%= data.email %></p>
+                                                </div>
+                                            </div>
                         </div>
                     </div>
                 </div>
