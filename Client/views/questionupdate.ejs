@@ -14,7 +14,7 @@
 		<link rel="stylesheet" type="text/css" href="css/component.css" /> -->
 		<script src="js/modernizr.custom.js"></script>
 		<style>
-			 html, body {
+			html, body {
       min-height: 100%;
       }
       body, input { 
@@ -664,70 +664,70 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 									</ul>
 								</li>
 								<li><a class="gn-icon gn-icon-cog" >Manage users</a></li>
-								<li><a class="gn-icon gn-icon-help">Results</a></li>
+                                <li><a class="gn-icon gn-icon-help" href="results.html">Results</a></li>
 								
 							</ul>
 						</div><!-- /gn-scroller -->
 					</nav>
 				</li>
-				<li><a href="questionadd.html">Refresh</a></li>
+				<li><a href="questionupdate.html">Refresh</a></li>
 				<li><a class="codrops-icon codrops-icon-prev" href="http://localhost:3000/"><span>Home</span></a></li>
 				
 			</ul>
 			<header>
-				<h1>Manage Questions<span>Add Questions</span></h1>	
+				<h1>Manage Questions<span>Update Questions</span></h1>	
 			</header> 
 			<div class="main-block"></div>
-      <form action="http://localhost:5000/questions" method = "POST">
-        
-        <h4>Question ID</h4>
-        <input name="questionId" type="text"/>
-        <h4>Question Name</h4>
-        <input name="questionName" type="text"/>
-        <h4>Contest ID</h4>
-        <input name="contestId" type="text"/>
-        <p class="comments">Description</p>
-        <textarea name="questionDescriptionText" rows="30"></textarea>
-        <p class="comments">Input</p>
-        <textarea name="questionInputText" rows="10"></textarea>
-        <p class="comments">Output</p>
-        <textarea name="questionOutputText" rows="10"></textarea>
-        <p class="comments">Example Input 1:</p>
-        <textarea name="questionExampleInput1" rows="10"></textarea>
-        <p class="comments">Example Output 1:</p>
-        <textarea name="questionExampleOutput1" rows="10"></textarea>
-        <p class="comments">Example Input 2:</p>
-        <textarea name="questionExampleInput2" rows="10"></textarea>
-        <p class="comments">Example Output 2:</p>
-        <textarea name="questionExampleOutput2" rows="10"></textarea>
-        <p class="comments">Example Input 3:</p>
-        <textarea name="questionExampleInput3" rows="10"></textarea>
-        <p class="comments">Example Output 3:</p>
-        <textarea name="questionExampleOutput3" rows="10"></textarea>
-        <p class="comments">Hidden Input 1:</p>
-        <textarea name="questionHiddenInput1" rows="10"></textarea>
-        <p class="comments">Hidden Output 1:</p>
-        <textarea name="questionHiddenOutput1" rows="10"></textarea>
-        <p class="comments">Hidden Input 2:</p>
-        <textarea name="questionHiddenInput2" rows="10"></textarea>
-        <p class="comments">Hidden Output 2:</p>
-        <textarea name="questionHiddenOutput2" rows="10"></textarea>
-        <p class="comments">Hidden Input 3:</p>
-        <textarea name="questionHiddenInput3" rows="10"></textarea>
-        <p class="comments">Hidden Output 3:</p>
-        <textarea name="questionHiddenOutput3" rows="10"></textarea>
-        <p class="comments">Explanation</p>
-        <textarea name="questionExplanation" rows="30"></textarea>
-        <p class="comments">Author:</p>
-        <textarea name="author" rows="10"></textarea>
-        <p class="comments">Editorial:</p>
-        <textarea name="editorial" rows="10"></textarea>
-        <p class="comments">Difficulty</p>
-        <textarea name="difficulty" rows="10"></textarea>
-        <div class="btn-block">
-          <button class= "submit" type="submit" href="/">Send</button>
-        </div>
-      </form>
+    <form action="http://localhost:5000/questions" method = "POST">
+      
+      <h4>Question ID</h4>
+      <input name="questionId" type="text"/>
+      <h4>Question Name</h4>
+      <input name="questionName" type="text"/>
+      <h4>Contest ID</h4>
+      <input name="contestId" type="text"/>
+      <p class="comments">Description</p>
+      <textarea name="questionDescriptionText" rows="30"></textarea>
+      <p class="comments">Input</p>
+      <textarea name="questionInputText" rows="10"></textarea>
+      <p class="comments">Output</p>
+      <textarea name="questionOutputText" rows="10"></textarea>
+      <p class="comments">Example Input 1:</p>
+      <textarea name="questionExampleInput1" rows="10"></textarea>
+      <p class="comments">Example Output 1:</p>
+      <textarea name="questionExampleOutput1" rows="10"></textarea>
+      <p class="comments">Example Input 2:</p>
+      <textarea name="questionExampleInput2" rows="10"></textarea>
+      <p class="comments">Example Output 2:</p>
+      <textarea name="questionExampleOutput2" rows="10"></textarea>
+      <p class="comments">Example Input 3:</p>
+      <textarea name="questionExampleInput3" rows="10"></textarea>
+      <p class="comments">Example Output 3:</p>
+      <textarea name="questionExampleOutput3" rows="10"></textarea>
+      <p class="comments">Hidden Input 1:</p>
+      <textarea name="questionHiddenInput1" rows="10"></textarea>
+      <p class="comments">Hidden Output 1:</p>
+      <textarea name="questionHiddenOutput1" rows="10"></textarea>
+      <p class="comments">Hidden Input 2:</p>
+      <textarea name="questionHiddenInput2" rows="10"></textarea>
+      <p class="comments">Hidden Output 2:</p>
+      <textarea name="questionHiddenOutput2" rows="10"></textarea>
+      <p class="comments">Hidden Input 3:</p>
+      <textarea name="questionHiddenInput3" rows="10"></textarea>
+      <p class="comments">Hidden Output 3:</p>
+      <textarea name="questionhiddenOutput3" rows="10"></textarea>
+      <p class="comments">Explanation</p>
+      <textarea name="questionExplanation" rows="30"></textarea>
+      <p class="comments">Author:</p>
+      <textarea name="author" rows="10"></textarea>
+      <p class="comments">Editorial:</p>
+      <textarea name="editorial" rows="10"></textarea>
+      <p class="comments">Difficulty</p>
+      <textarea name="difficulty" rows="10"></textarea>
+      <div class="btn-block">
+        <button class= "submit" type="submit" href="/">Send</button>
+      </div>
+    </form>
     </div>
 		</div><!-- /container -->
 		<script src="js/classie.js"></script>
