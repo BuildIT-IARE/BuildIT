@@ -18,8 +18,15 @@ let checkToken = (req, res, next) => {
           message: 'Token is not valid'
         });
       } else {
-        req.decoded = decoded;
-        next();
+        if(decoded.isVerified || decoded.admin){
+          req.decoded = decoded;
+          next();
+        } else {
+          return res.json({
+            success: false, 
+            message: 'Please verify your account to continue'
+          });
+        }
       }
     });
   } else {

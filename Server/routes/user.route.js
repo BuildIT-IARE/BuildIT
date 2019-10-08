@@ -7,19 +7,16 @@ module.exports = (app) => {
     app.post('/signup', users.create);
 
     // Retrieve all users
-    app.get('/users', middleware.checkToken, users.findAll);
+    app.get('/users', middleware.checkTokenAdmin, users.findAll);
 
     // Retrieve a single user with userId
-    app.get('/users/:username', middleware.checkToken, users.findOne);
+    app.get('/users/:username', middleware.checkTokenAdmin, users.findOne);
 
     // Login Route
     app.post('/login', users.checkPass);
 
-	// // confirm token 
-    // app.post('/confirmation', userController.confirmationPost);
-    
-    // // Resend token
-    // app.post('/resend', userController.resendTokenPost);
+    // Verify Route
+    app.get('/verify', users.checkToken);
 
     // // Update a user with userId
     // app.put('/users', middleware.checkTokenAdmin, users.update);

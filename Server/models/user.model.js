@@ -8,13 +8,14 @@ mongoose.set('useCreateIndex', true);
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-    username: {type: String, uppercase: true, unique: true, required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true},
+    username: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true},
     password: String,
     name: String,
     email: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], index: true},
     admin: String,
     totalScore: {type: Number, default: 0},
     isVerified: {type: Boolean, default: false},
+    verifyToken: String,
     passwordResetToken: String,
     passwordResetExpires: Date
 }, {timestamps: true});
