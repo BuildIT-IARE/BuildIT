@@ -70,13 +70,13 @@ app.get('/admin/add/contest', async (req, res) => {
   res.render('contestadd');
 });
 app.get('/admin/update/question', async (req, res) => {
-  res.render('updatequestion');
+  res.render('questionupdate');
 });
 app.get('/admin/update/contest', async (req, res) => {
-  res.render('updatecontest');
+  res.render('contestupdate');
 });
-app.get('/admin/update', async (req, res) => {
-  res.render('updateadmin');
+app.get('/admin/manageusers', async (req, res) => {
+  res.render('manageusers');
 });
 app.get('/admin/results', async (req, res) => {
   let options = {
