@@ -100,7 +100,7 @@ app.get('/admin/:contestId/table', async (req, res) => {
 });
 
 app.get('/admin', async (req, res) => {
-  res.render('admin');
+  res.render('questionadd');
 });
 
 app.get('/ide/:questionId', async (req, res) => {

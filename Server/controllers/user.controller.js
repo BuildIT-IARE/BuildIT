@@ -170,9 +170,8 @@ exports.update = (req, res) => {
         password: req.body.password
     }}, {new: true}, (err, doc) => {
         if(err){
-            console.log("Error Occured");
+            console.log(err);
         }
-        console.log(doc);
     })
     .then(user => {
         if(!user) {
@@ -197,7 +196,7 @@ exports.update = (req, res) => {
 exports.checkPass = (req, res) => {
     User.find({username: req.body.username})
     .then(user => {
-        if(!user) {
+        if(user.length === 0) {
             return res.status(404).send({
                 message: "User not found with id " + req.body.username
             });            
@@ -278,7 +277,6 @@ exports.checkToken = (req, res) => {
                 });
             }
         }).catch(err => {
-            console.log("Caught", err, "ok");
             if(err){
                 console.log(err);
             }
