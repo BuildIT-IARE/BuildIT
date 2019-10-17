@@ -62,9 +62,7 @@ app.get('/profile', async (req, res) => {
 app.get('/login', async (req, res) => {
   res.render('login');
 });
-app.get('/admin', async (req, res) => {
-  res.render('admin');
-});
+
 app.get('/admin/add/question', async (req, res) => {
   res.render('questionadd');
 });
@@ -100,7 +98,7 @@ app.get('/admin/:contestId/table', async (req, res) => {
 });
 
 app.get('/admin', async (req, res) => {
-  res.render('questionadd');
+  res.render('contestadd');
 });
 
 app.get('/ide/:questionId', async (req, res) => {
