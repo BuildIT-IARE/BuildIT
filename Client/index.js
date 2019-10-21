@@ -238,7 +238,16 @@ app.post('/login_', async (req, res) => {
     },
     json: true
   }
-  
+  request(options, function(err, response, body){
+    console.log(body);
+        // if (body.success){
+        //   body.message = "Sign up successful, Account verification has been sent to your email";
+        // } else {
+        //   body.message = "Registration Failed";
+        // }
+        // res.render('error', {data: body, imgUsername: req.cookies.username})
+
+  });
 });
 
 app.get('/logout', async (req, res) => {
