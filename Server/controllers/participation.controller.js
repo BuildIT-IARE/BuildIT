@@ -41,7 +41,7 @@ exports.create = (req, res) => {
                     submissionResults: [],
                     validTill: endTime
                 });
-                // Save Registration in the database
+                // Save participation in the database
                 participation.save()
                 .then(data => {
                     res.send(data);
@@ -68,27 +68,66 @@ exports.create = (req, res) => {
 
 // add sol to participation
 exports.acceptSubmission = (sub, callback) => {
-
+    // Change here
     // Find participation and update it with the request body
-    Participation.findOneAndUpdate({participationId: sub.participationId}, {$addToSet:{
-        submissionResults: { questionId: sub.questionId, score: sub.score}
-      }}, {new: true}, (err, doc) => {
-        if (err) {
-            console.log("Something wrong when updating data!");
-        }
-        // console.log(doc);
-      })
+    Participation.find({participationId: sub.participationId})
     .then(participation => {
-        if(!participation) {
-            return callback("Participation not found with Id ", null);
-        }
-        return callback(null, participation);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return callback("Participation not found with Id ", null);    
-        }
-        return callback("Error updating Participation with Id ", null);
-    });
+        // Check prev sub
+            updated = false
+            for (let i = 0; i < participation.submissionResults.length; i++){
+                if (participation.submissionResults[i].questionId === sub.questionId){
+                    if (participation.submissionResults[i].score < sub.score){
+                        // Update higher score
+                        updated = true;
+                        Participation.findOneAndUpdate({participationId: sub.participationId}, {$set:{
+                            submissionResults: { questionId: sub.questionId, score: sub.score}
+                          }}, {new: true}, (err, doc) => {
+                            if (err) {
+                                console.log("Something wrong when updating data!");
+                            }
+                            // console.log(doc);
+                          })
+                        .then(participation => {
+                            if(!participation) {
+                                return callback("Participation not found with Id ", null);
+                            }
+                            return callback(null, participation);
+                        }).catch(err => {
+                            if(err.kind === 'ObjectId') {
+                                return callback("Participation not found with Id ", null);    
+                            }
+                            return callback("Error updating Participation with Id ", null);
+                        });
+                    }
+                }
+            }
+            if (!updated){
+                Participation.findOneAndUpdate({participationId: sub.participationId}, {$set:{
+                    submissionResults: { questionId: sub.questionId, score: sub.score}
+                  }}, {new: true}, (err, doc) => {
+                    if (err) {
+                        console.log("Something wrong when updating data!");
+                    }
+                    // console.log(doc);
+                  })
+                .then(participation => {
+                    if(!participation) {
+                        return callback("Participation not found with Id ", null);
+                    }
+                    return callback(null, participation);
+                }).catch(err => {
+                    if(err.kind === 'ObjectId') {
+                        return callback("Participation not found with Id ", null);    
+                    }
+                    return callback("Error updating Participation with Id ", null);
+                });
+            }
+            }).catch(err => {
+                res.status(500).send({
+                    success: false,
+                    message: err.message || "Some error occurred while retrieving participation."
+                });
+            });    
 };
 
 // Retrieve and return all participations from the database.
@@ -104,9 +143,22 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Retrieve and return all participation details.
+// Retrieve and return all participation details for user in contest.
 exports.findUser = (req, res) => {
     Participation.find({participationId: req.decoded.username + req.params.contestId})
+    .then(participation => {
+        res.send(participation);
+    }).catch(err => {
+        res.status(500).send({
+            success: false,
+            message: err.message || "Some error occurred while retrieving participation."
+        });
+    });
+};
+
+// Retrieve and return all participation details.
+exports.findContestPart = (req, res) => {
+    Participation.find({contestId: req.params.contestId})
     .then(participation => {
         res.send(participation);
     }).catch(err => {
