@@ -107,8 +107,6 @@ exports.create = (req, res) => {
     // Gen token & send email here
     async function mail(user) {
 
-
-        
         var readHTMLFile = async function(path, callback) {
             fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
                 if (err) {
