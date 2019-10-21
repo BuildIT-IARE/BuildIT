@@ -8,12 +8,14 @@ exports.create = (req, res) => {
     // Validate request
     if(!req.body.username) {
         return res.status(400).send({
+            success: false,
             message: "user Id can not be empty"
         });
     }
 
     if(!req.body.contestId) {
         return res.status(400).send({
+            success: false,
             message: "contest Id can not be empty"
         });
     }
@@ -45,6 +47,7 @@ exports.create = (req, res) => {
                     res.send(data);
                 }).catch(err => {
                     res.status(500).send({
+                        success: false,
                         message: err.message || "Some error occurred while Registering."
                     });
                 });
@@ -55,6 +58,7 @@ exports.create = (req, res) => {
         }
     }).catch(err => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while retrieving participation."
         });
     });
@@ -94,6 +98,7 @@ exports.findAll = (req, res) => {
         res.send(participation);
     }).catch(err => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while retrieving participation."
         });
     });
@@ -106,6 +111,7 @@ exports.findUser = (req, res) => {
         res.send(participation);
     }).catch(err => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while retrieving participation."
         });
     });

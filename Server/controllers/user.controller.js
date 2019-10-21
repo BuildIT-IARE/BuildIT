@@ -103,15 +103,21 @@ exports.create = (req, res) => {
     // Save user in the database
     user.save()
     .then(data => {
+        data.success = true;
         res.send(data);
         mail(user).catch(console.error);    
     }).catch(err => {
-        res.status(500).send({
-            success: false,
-            message: err.message || "Some error occurred while creating the user."
-        });
+        err.success = false;
+        err.message1 = err.message;
+        err.message = "";
+        if (err.message1.includes('username')){
+            err.message = err.message + 'Username is already taken. \n';
+        }
+        if (err.message1.includes('email')){
+            err.message = err.message + 'Email is already taken. \n';
+        }
+        res.status(500).send(err);
     });
-
 
     // Gen token & send email here
     async function mail(user) {
