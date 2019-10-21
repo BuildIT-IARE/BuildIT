@@ -6,7 +6,7 @@
 <body>
 
 <div class="w3-container">
-  <h2>Contest Id - <%= data[0].contestId %> </h2>
+  <h2>Contest Id - <%= datap[0].contestId %> </h2>
 
   <table class="w3-table w3-striped">
     <tr>
@@ -17,20 +17,25 @@
         <th><%= dataq[i].questionId %></th>
       <% } %>
     </tr>
-<% for(let i=0; i < datap.length; i++){ %>    
-    <tr>
-      <td><%= datap[i].participationId %></td>
-      <td><%= datap[i].participationTime %></td>
-      <td><%= datap[i].username %></td>
-      <% for (let j = 0; j < datap[i].submissionResults; j++ ){ %>
-        <% for (let k = 0; k < dataq.length; k++) { %>
-          <% if (dataq[k].questionId === datap[i].submissionResults[j].questionId) %>
-            <td><%= datap[i].submissionResults[j].score %></td>
+  <% for(let i=0; i < datap.length; i++){ %>    
+      <tr>
+        <td><%= datap[i].participationId %></td>
+        <td><%= datap[i].participationTime %></td>
+        <td><%= datap[i].username %></td>
+        <% if (datap[i].submissionResults.length !== 0){ %>
+          <% for (let j = 0; j < datap[i].submissionResults.length -1 ; j++ ){ %>
+            <% let done = 0; let k = 0; %>
+            <% while (done < dataq.length-1) { %>
+              <% if (dataq[k].questionId === datap[i].submissionResults[j].questionId) { %>
+                <% done++ %>
+                <td><%= datap[i].submissionResults[j].score %></td>
+              <% } %>
+              <% k++ %>
+            <% } %>
           <% } %>
         <% } %>
-      <% } %>
-    </tr>
-<% } %>
+      </tr>
+  <% } %>
   </table>
 </div>
 

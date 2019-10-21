@@ -121,15 +121,15 @@ app.post('/admin/results/contest', async (req, res) => {
     }
 
     request(options, function(err, response, bodyquestion){
+
+      console.log(bodyparticipation);
+
       res.render('results', {datap: bodyparticipation, dataq: bodyquestion });
     });
     
   });
 });
 
-app.get('/admin/:contestId/table', async (req, res) => {
-  res.render('table');
-});
 
 app.get('/admin', async (req, res) => {
   res.render('contestadd');
@@ -263,7 +263,7 @@ app.post('/signup_', async (req, res) => {
 });
 app.post('/login_', async (req, res) => {
   let options = {
-    url : serverRoute + '/signup',
+    url : serverRoute + '/login',
     method: 'post',
     body: {
       username: req.body.username,
@@ -276,10 +276,10 @@ app.post('/login_', async (req, res) => {
       res.cookie("token", body.token);
       res.cookie("username", body.username);
         if (body.admin){
-          res.render('admin');
+          res.redirect('admin');
         }
         else{
-          res.render('home', {imgUsername: req.cookies.username});
+          res.render('temp', {imgUsername: req.cookies.username});
         }
     } else {
       res.render('error', {data: body, imgUsername: req.cookies.username})
