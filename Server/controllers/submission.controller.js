@@ -41,6 +41,7 @@ exports.findAll = (req, res) => {
         res.send(submission);
     }).catch(err => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while retrieving submission."
         });
     });
@@ -52,6 +53,7 @@ exports.findUser = (req, res) => {
         res.send(submission);
     }).catch(err => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while retrieving submission."
         });
     });

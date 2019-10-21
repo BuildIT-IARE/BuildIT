@@ -5,12 +5,14 @@ exports.create = (req, res) => {
     // Validate request
     if(!req.body.contestId) {
         return res.status(400).send({
+            success: false,
             message: "ContestId can not be empty"
         });
     }
 
     if(!req.body.contestName) {
         return res.status(400).send({
+            success: false,
             message: "Contestname can not be empty"
         });
     }
@@ -31,6 +33,7 @@ exports.create = (req, res) => {
         res.send(data);
     }).catch(err => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while creating the Contest."
         });
     });
@@ -54,6 +57,7 @@ exports.findOne = (req, res) => {
     .then(contest => {
         if(!contest) {
             return res.status(404).send({
+                success: false,
                 message: "Contest not found with id " + req.params.contestId
             });            
         }
@@ -61,10 +65,12 @@ exports.findOne = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
+                success: false,
                 message: "Contest not found with id " + req.params.contestId
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Error retrieving contest with id " + req.params.contestId
         });
     });
@@ -97,6 +103,7 @@ exports.getDuration = (req, callback) => {
 exports.update = (req, res) => {
     if(!req.body.contestId) {
         return res.status(400).send({
+            success: false,
             message: "content can not be empty"
         });
     }
@@ -118,6 +125,7 @@ exports.update = (req, res) => {
     .then(contest => {
         if(!contest) {
             return res.status(404).send({
+                success: false,
                 message: "Contest not found with id " + req.params.contestId
             });
         }
@@ -125,10 +133,12 @@ exports.update = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
+                success: false,
                 message: "Contest not found with id " + req.params.contestId
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Error updating Contest with id " + req.params.contestId
         });
     });
@@ -142,6 +152,7 @@ exports.delete = (req, res) => {
     .then(contest => {
         if(!contest) {
             return res.status(404).send({
+                success: false,
                 message: "contest not found with id " + req.params.contestId
             });
         }
@@ -149,10 +160,12 @@ exports.delete = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
+                success: false,
                 message: "contest not found with id " + req.params.contestId
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Could not deletecontest with id " + req.params.contestId
         });
     });

@@ -5,12 +5,14 @@ exports.create = (req, res) => {
     // Validate request
     if(!req.body.questionId) {
         return res.status(400).send({
+            success: false,
             message: "QuestionId can not be empty"
         });
     }
 
     if(!req.body.questionName) {
         return res.status(400).send({
+            success: false,
             message: "Question name can not be empty"
         });
     }
@@ -47,6 +49,7 @@ exports.create = (req, res) => {
         res.send(data);
     }).catch(err => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while creating the Question."
         });
     });
@@ -59,6 +62,7 @@ exports.findAll = (req, res) => {
         res.send(questions);
     }).catch(err => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while retrieving questions."
         });
     });
@@ -70,6 +74,7 @@ exports.findOne = (req, res) => {
     .then(question => {
         if(!question) {
             return res.status(404).send({
+                success: false,
                 message: "Question not found with id " + req.params.questionId
             });            
         }
@@ -77,10 +82,12 @@ exports.findOne = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
+                success: false,
                 message: "Question not found with id " + req.params.questionId
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Error retrieving question with id " + req.params.questionId
         });
     });
@@ -121,6 +128,7 @@ exports.getTestCases = (req, callback) => {
 exports.update = (req, res) => {
     if(!req.body.questionId) {
         return res.status(400).send({
+            success: false,
             message: "content can not be empty"
         });
     }
@@ -158,6 +166,7 @@ exports.update = (req, res) => {
     .then(question => {
         if(!question) {
             return res.status(404).send({
+                success: false,
                 message: "Question not found with id " + req.params.questionId
             });
         }
@@ -165,10 +174,12 @@ exports.update = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
+                success: false,
                 message: "Question not found with id " + req.params.questionId
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Error updating Question with id " + req.params.questionId
         });
     });
@@ -182,6 +193,7 @@ exports.delete = (req, res) => {
     .then(question => {
         if(!question) {
             return res.status(404).send({
+                success: false,
                 message: "question not found with id " + req.params.questionId
             });
         }
@@ -189,10 +201,12 @@ exports.delete = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
+                success: false,
                 message: "question not found with id " + req.params.questionId
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Could not delete question with id " + req.params.questionId
         });
     });
@@ -203,6 +217,7 @@ exports.findAllContest = (req, res) => {
     .then(question => {
         if(!question) {
             return res.status(404).send({
+                success: false,
                 message: "Question not found with id " + req.params.questionId
             });            
         }
@@ -210,10 +225,12 @@ exports.findAllContest = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
+                success: false,
                 message: "Question not found with id " + req.params.questionId
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Error retrieving question with id " + req.params.questionId
         });
     });
