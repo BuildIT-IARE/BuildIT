@@ -221,7 +221,7 @@ exports.checkPass = (req, res) => {
         }
         if(user[0].password === req.body.password){
             if(user[0].isVerified === true){
-                            // Login successful
+                // Login successful
             let token = jwt.sign(
                 {
                     username: user[0].username,
@@ -232,17 +232,19 @@ exports.checkPass = (req, res) => {
                 {expiresIn: '24h'}
             );
             // return the JWT token for the future API calls
-            res.cookie('token',token);
-            res.cookie('username', user[0].username.toUpperCase());
             if(user[0].admin){
                 res.send({
                     success: true,
                     admin: true,
+                    token: token,
+                    username: user[0].username.toUpperCase(),
                     message: "Auth successful"
                 });
             } else{
                 res.send({
-                    success: true, 
+                    success: true,
+                    token: token,
+                    username: user[0].username.toUpperCase(), 
                     message: "Auth successful"
                 });
             }
@@ -252,7 +254,6 @@ exports.checkPass = (req, res) => {
                 message: "Please verify account to continue."
             });
         }
-
             
         } else {
             res.send({
