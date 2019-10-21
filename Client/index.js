@@ -228,6 +228,18 @@ app.post('/signup_', async (req, res) => {
 
   });
 });
+app.post('/login_', async (req, res) => {
+  let options = {
+    url : serverRoute + '/signup',
+    method: 'post',
+    body: {
+      username: req.body.username,
+      password: req.body.password
+    },
+    json: true
+  }
+  
+});
 
 app.get('/logout', async (req, res) => {
   res.clearCookie('token');
