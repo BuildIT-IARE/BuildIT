@@ -158,7 +158,7 @@ exports.findUser = (req, res) => {
 
 // Retrieve and return all participation details.
 exports.findContestPart = (req, res) => {
-    Participation.find({contestId: req.params.contestId})
+    Participation.find({contestId: req.body.contestId})
     .then(participation => {
         res.send(participation);
     }).catch(err => {
