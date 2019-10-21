@@ -231,6 +231,9 @@ exports.checkPass = (req, res) => {
                 config.secret,
                 {expiresIn: '24h'}
             );
+            res.cookie('token', token);
+            res.cookie('username', user[0].username.toUpperCase());
+
             // return the JWT token for the future API calls
             if(user[0].admin){
                 res.send({
