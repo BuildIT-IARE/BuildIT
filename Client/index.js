@@ -8,7 +8,7 @@ var path = require('path');
 
 
 let serverRoute = 'http://localhost:5000';
-
+let clientRoute = 'http://localhost:3000';
 const app = express();
 app.options('*', cors());
 app.use(
@@ -78,6 +78,7 @@ app.get('/admin/update/contest', async (req, res) => {
 app.get('/admin/manageusers', async (req, res) => {
   res.render('manageusers');
 });
+
 app.get('/admin/results', async (req, res) => {
   let options = {
     url : serverRoute + '/contests',
@@ -89,7 +90,40 @@ app.get('/admin/results', async (req, res) => {
   }
 
   request(options, function(err, response, body){
-    res.render('results', {data: body});
+    body.url = clientRoute + '/admin/results/contest';
+    body.method = "POST";
+    res.render('dropdown', {data: body});
+  });
+});
+
+app.post('/admin/results/contest', async (req, res) => {
+  let options = {
+    url : serverRoute + '/participations/all',
+    method: 'post',
+    body: {
+      contestId: req.body.contestId
+    },
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+
+  request(options, function(err, response, bodyparticipation){
+
+    let options = {
+      url : serverRoute + '/questions/contests/'+ req.body.contestId,
+      method: 'get',
+      headers: {
+        'authorization': req.cookies.token
+      },
+      json: true
+    }
+
+    request(options, function(err, response, bodyquestion){
+      res.render('results', {datap: bodyparticipation, dataq: bodyquestion });
+    });
+    
   });
 });
 
