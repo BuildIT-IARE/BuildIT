@@ -252,10 +252,39 @@ app.post('/signup_', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
+    console.log(body);
         if (body.success){
           body.message = "Sign up successful, Account verification has been sent to your email";
         } 
+
         res.render('error', {data: body, imgUsername: req.cookies.username})
+
+  });
+});
+app.post('/login_', async (req, res) => {
+  let options = {
+    url : serverRoute + '/signup',
+    method: 'post',
+    body: {
+      username: req.body.username,
+      password: req.body.password
+    },
+    json: true
+  }
+  request(options, function(err, response, body){      
+    if (body.success){
+      res.cookie("token", body.token);
+      res.cookie("username", body.username);
+        if (body.admin){
+          res.render('admin');
+        }
+        else{
+          res.render('home', {imgUsername: req.cookies.username});
+        }
+    } else {
+      res.render('error', {data: body, imgUsername: req.cookies.username})
+      }
+        
 
   });
 });
