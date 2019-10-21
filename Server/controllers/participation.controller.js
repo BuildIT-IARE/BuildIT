@@ -73,7 +73,11 @@ exports.acceptSubmission = (sub, callback) => {
     Participation.find({participationId: sub.participationId})
     .then(participation => {
         // Check prev sub
+            console.log("Found participation");
+            console.log(participation);
+            participation = participation[0];
             updated = false
+            if (participation.submissionResults.length !== 0){
             for (let i = 0; i < participation.submissionResults.length; i++){
                 if (participation.submissionResults[i].questionId === sub.questionId){
                     if (participation.submissionResults[i].score < sub.score){
@@ -101,6 +105,7 @@ exports.acceptSubmission = (sub, callback) => {
                     }
                 }
             }
+        }
             if (!updated){
                 Participation.findOneAndUpdate({participationId: sub.participationId}, {$set:{
                     submissionResults: { questionId: sub.questionId, score: sub.score}
@@ -123,6 +128,7 @@ exports.acceptSubmission = (sub, callback) => {
                 });
             }
             }).catch(err => {
+                console.log(err);
                 res.status(500).send({
                     success: false,
                     message: err.message || "Some error occurred while retrieving participation."
@@ -158,7 +164,7 @@ exports.findUser = (req, res) => {
 
 // Retrieve and return all participation details.
 exports.findContestPart = (req, res) => {
-    Participation.find({contestId: req.params.contestId})
+    Participation.find({contestId: req.body.contestId})
     .then(participation => {
         res.send(participation);
     }).catch(err => {

@@ -8,7 +8,7 @@ var path = require('path');
 
 
 let serverRoute = 'http://localhost:5000';
-
+let clientRoute = 'http://localhost:3000';
 const app = express();
 app.options('*', cors());
 app.use(
@@ -78,6 +78,7 @@ app.get('/admin/update/contest', async (req, res) => {
 app.get('/admin/manageusers', async (req, res) => {
   res.render('manageusers');
 });
+
 app.get('/admin/results', async (req, res) => {
   let options = {
     url : serverRoute + '/contests',
@@ -89,13 +90,46 @@ app.get('/admin/results', async (req, res) => {
   }
 
   request(options, function(err, response, body){
-    res.render('results', {data: body});
+    body.url = clientRoute + '/admin/results/contest';
+    body.method = "POST";
+    res.render('dropdown', {data: body});
   });
 });
 
-app.get('/admin/:contestId/table', async (req, res) => {
-  res.render('table');
+app.post('/admin/results/contest', async (req, res) => {
+  let options = {
+    url : serverRoute + '/participations/all',
+    method: 'post',
+    body: {
+      contestId: req.body.contestId
+    },
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+
+  request(options, function(err, response, bodyparticipation){
+
+    let options = {
+      url : serverRoute + '/questions/contests/'+ req.body.contestId,
+      method: 'get',
+      headers: {
+        'authorization': req.cookies.token
+      },
+      json: true
+    }
+
+    request(options, function(err, response, bodyquestion){
+
+      console.log(bodyparticipation);
+
+      res.render('results', {datap: bodyparticipation, dataq: bodyquestion });
+    });
+    
+  });
 });
+
 
 app.get('/admin', async (req, res) => {
   res.render('contestadd');
@@ -229,7 +263,7 @@ app.post('/signup_', async (req, res) => {
 });
 app.post('/login_', async (req, res) => {
   let options = {
-    url : serverRoute + '/signup',
+    url : serverRoute + '/login',
     method: 'post',
     body: {
       username: req.body.username,
@@ -242,10 +276,10 @@ app.post('/login_', async (req, res) => {
       res.cookie("token", body.token);
       res.cookie("username", body.username);
         if (body.admin){
-          res.render('admin');
+          res.redirect('admin');
         }
         else{
-          res.render('home', {imgUsername: req.cookies.username});
+          res.render('temp', {imgUsername: req.cookies.username});
         }
     } else {
       res.render('error', {data: body, imgUsername: req.cookies.username})

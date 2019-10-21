@@ -107,9 +107,8 @@ exports.update = (req, res) => {
             message: "content can not be empty"
         });
     }
-    console.log(req.body);
     // Findcontest and update it with the request body
-   Contest.findOneAndUpdate({contestId: req.params.contestId}, {$set:{
+   Contest.findOneAndUpdate({contestId: req.body.contestId}, {$set:{
         contestId: req.body.contestId,
         contestName: req.body.contestName,
         contestDate: req.body.contestDate,
@@ -120,13 +119,12 @@ exports.update = (req, res) => {
           if(err){
               console.log("Error Occured");
           }
-          console.log(doc);
       })
     .then(contest => {
         if(!contest) {
             return res.status(404).send({
                 success: false,
-                message: "Contest not found with id " + req.params.contestId
+                message: "Contest not found with id " + req.body.contestId
             });
         }
         res.send(contest);
@@ -134,12 +132,12 @@ exports.update = (req, res) => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
                 success: false,
-                message: "Contest not found with id " + req.params.contestId
+                message: "Contest not found with id " + req.body.contestId
             });                
         }
         return res.status(500).send({
             success: false,
-            message: "Error updating Contest with id " + req.params.contestId
+            message: "Error updating Contest with id " + req.body.contestId
         });
     });
 };

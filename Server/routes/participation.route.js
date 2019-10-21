@@ -9,8 +9,8 @@ module.exports = (app) => {
     // Retrieve all participations
     app.get('/participations', middleware.checkTokenAdmin, participation.findAll);
     
-    // Retrieve all participations per contest
-    app.get('/participations/all/:contestId', middleware.checkToken, participation.findContestPart);
+    // Retrieve all participations per contestId in body
+    app.post('/participations/all', middleware.checkToken, participation.findContestPart);
 
     // Retrieve all participations for user in a contest
     app.get('/participations/:contestId', middleware.checkToken, participation.findUser);
