@@ -219,7 +219,7 @@ app.post('/signup_', async (req, res) => {
   }
   request(options, function(err, response, body){
     console.log(body);
-        if (body.verifyToken){
+        if (body.success){
           body.message = "Sign up successful, Account verification has been sent to your email";
         } else {
           body.message = "Registration Failed";

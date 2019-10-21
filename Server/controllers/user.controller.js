@@ -17,6 +17,7 @@ exports.findAll = (req, res) => {
         res.send(users);
     }).catch(err => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while retrieving users."
         });
     });
@@ -28,6 +29,7 @@ exports.findOne = (req, res) => {
     .then(user => {
         if(!user) {
             return res.status(404).send({
+                success: false,
                 message: "User not found with id " + req.params.username
             });            
         }
@@ -35,10 +37,12 @@ exports.findOne = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
+                success: false,
                 message: "User not found with id " + req.params.username
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Error retrieving user with id " + req.params.username
         });
     });
@@ -50,6 +54,7 @@ exports.findOnePublic = (req, res) => {
     .then(user => {
         if(!user) {
             return res.status(404).send({
+                success: false,
                 message: "User not found with id " + req.params.username
             });            
         }
@@ -63,10 +68,12 @@ exports.findOnePublic = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
+                success: false,
                 message: "User not found with id " + req.params.username
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Error retrieving user with id " + req.params.username
         });
     });
@@ -77,6 +84,7 @@ exports.create = (req, res) => {
     // Validate request
     if(!req.body.email || !req.body.username || !req.body.password) {
         return res.status(400).send({
+            success: false,
             message: "email, username and password can not be empty"
         });
     }
@@ -99,6 +107,7 @@ exports.create = (req, res) => {
         mail(user).catch(console.error);    
     }).catch(err => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while creating the user."
         });
     });
@@ -158,6 +167,7 @@ exports.create = (req, res) => {
 exports.update = (req, res) => {
     if(!req.body.username || !req.body.password) {
         return res.status(400).send({
+            success: false,
             message: "User content can not be empty"
         });
     }
@@ -174,6 +184,7 @@ exports.update = (req, res) => {
     .then(user => {
         if(!user) {
             return res.status(404).send({
+                success: false,
                 message: "User not found with id " + req.params.username
             });
         }
@@ -181,10 +192,12 @@ exports.update = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
+                success: false,
                 message: "User not found with id " + req.params.username
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Error updating user with id " + req.params.username
         });
     });
@@ -196,6 +209,7 @@ exports.checkPass = (req, res) => {
     .then(user => {
         if(user.length === 0) {
             return res.status(404).send({
+                success: false,
                 message: "User not found with id " + req.body.username
             });            
         }
@@ -243,10 +257,12 @@ exports.checkPass = (req, res) => {
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
+                success: false,
                 message: "[caught] User not found with id " + req.body.username
             });                
         }
         return res.status(500).send({
+            success: false,
             message: "Error retrieving user with id " + req.body.username
         });
     });
@@ -259,6 +275,7 @@ exports.checkToken = (req, res) => {
         }}, {new: true}, (err, doc) => {
             if(err){
                 return res.send({
+                success: false,
                     message: "Could not verify account " + req.query.email
                 });
             }
@@ -266,6 +283,7 @@ exports.checkToken = (req, res) => {
         .then(user => {
             if(!user) {
                 return res.send({
+                success: false,
                     message: "Could not verify account " + req.query.email
                 });
             } else {
@@ -280,10 +298,12 @@ exports.checkToken = (req, res) => {
             }
             if(err.kind === 'ObjectId') {
                 return res.status(404).send({
+                success: false,
                     message: "Could not verify account " + req.params.email
                 });              
             } else {
                 return res.send({
+                success: false,
                     message: "Could not verify account " + req.params.email
                 });
             }
