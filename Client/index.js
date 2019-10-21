@@ -204,6 +204,31 @@ app.get('/contests/:contestId', async (req, res) => {
   });
 });
 
+app.post('/signup_', async (req, res) => {
+  // res.render('/home');
+  let options = {
+    url : serverRoute + '/signup',
+    method: 'post',
+    body: {
+      name: req.body.name,
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    console.log(body);
+        if (body.verifyToken){
+          body.message = "Sign up successful, Account verification has been sent to your email";
+        } else {
+          body.message = "Registration Failed";
+        }
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+
+  });
+});
+
 app.get('/logout', async (req, res) => {
   res.clearCookie('token');
   res.clearCookie('username');
