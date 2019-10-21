@@ -221,9 +221,7 @@ app.post('/signup_', async (req, res) => {
     console.log(body);
         if (body.success){
           body.message = "Sign up successful, Account verification has been sent to your email";
-        } else {
-          body.message = "Registration Failed";
-        }
+        } 
         res.render('error', {data: body, imgUsername: req.cookies.username})
 
   });
