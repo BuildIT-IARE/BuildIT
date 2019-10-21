@@ -239,11 +239,13 @@ app.post('/login_', async (req, res) => {
   }
   request(options, function(err, response, body){      
     if (body.success){
+      res.cookie("token", body.token);
+      res.cookie("username", body.username);
         if (body.admin){
           res.render('admin');
         }
         else{
-          res.render('home')
+          res.render('home', {imgUsername: req.cookies.username});
         }
     } else {
       res.render('error', {data: body, imgUsername: req.cookies.username})
