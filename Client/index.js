@@ -76,7 +76,18 @@ app.get('/admin/update/contest', async (req, res) => {
   res.render('contestupdate');
 });
 app.get('/admin/manageusers', async (req, res) => {
-  res.render('manageusers');
+  let options = {
+    url : serverRoute + '/admin/users',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    console.log(body);
+    res.render('manageusers', {data: body});
+  });
 });
 
 app.get('/admin/results', async (req, res) => {
