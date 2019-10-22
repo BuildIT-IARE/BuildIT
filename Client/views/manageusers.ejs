@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<title>Manage Users</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+<div class="w3-container">
+  
+
+  <table class="w3-table w3-striped">
+    <tr>
+      <th> Username</th>
+      <th> Password</th>
+      <th> Name</th>
+      <th> Email</th>
+      <th> Admin</th>
+
+    </tr>
+<% for(let i=0; i < data.length; i++){ %>
+    <tr>
+        <td><%= data[i].username %></td>
+        <td><%= data[i].password %></td>
+        <td><%= data[i].name %></td> 
+        <td><%= data[i].admin %></td>          
+    </tr>    
+<% } %>
+ 
+  </table>
+</div>
+
+</body>
+</html>
