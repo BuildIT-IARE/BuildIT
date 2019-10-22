@@ -85,7 +85,6 @@ app.get('/admin/manageusers', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
-    console.log(body);
     res.render('manageusers', {data: body});
   });
 });
@@ -133,7 +132,6 @@ app.post('/admin/results/contest', async (req, res) => {
 
     request(options, function(err, response, bodyquestion){
 
-      console.log(bodyparticipation);
 
       res.render('results', {datap: bodyparticipation, dataq: bodyquestion });
     });
@@ -264,7 +262,7 @@ app.post('/signup_', async (req, res) => {
   }
   request(options, function(err, response, body){
     console.log(body);
-        if (body.success){
+        if (body.username && body.password){
           body.message = "Sign up successful, Account verification has been sent to your email";
         } 
 
