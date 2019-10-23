@@ -33,8 +33,8 @@
 									<a class="gn-icon gn-icon-download" >Manage Questions</a>
 									<ul class="gn-submenu">
 										<li><a class="gn-icon gn-icon-add" href="<%= data.url %>/admin/add/question">Add Questions</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="<%= data.url %>/admin/update/question">Update Questions</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="<%= data.url %>/admin/update/question">Delete Questions</a></li>
+										<li><a class="gn-icon gn-icon-update" href="<%= data.url %>/admin/update/question">Update Questions</a></li>
+										<li><a class="gn-icon gn-icon-trashcan" href="<%= data.url %>/admin/update/question">Delete Questions</a></li>
 									</ul>
 								</li>
 								<li><a class="gn-icon gn-icon-cog" href="<%= data.url %>/admin/manageusers">Manage users</a></li>
@@ -49,7 +49,7 @@
 				
 			</ul>
 			<header>
-				<h1>Manage Contests<span>Update Contests</span></h1>	
+				<h1>Manage Contests<span style="color: white">Update Contests</span></h1>	
 			</header> 
 			<div class="main-block">
                 <form action="http://localhost:5000/contests" method = "PUT">

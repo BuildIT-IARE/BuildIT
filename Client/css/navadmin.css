@@ -486,7 +486,10 @@ font-style: normal;
 }
 
 body {
-background: #34495e;
+background:#41228e;
+}
+.span-color{
+ color: white;
 }
 
 .container > header,

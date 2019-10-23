@@ -10,9 +10,7 @@
 		<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
 		<meta name="author" content="Codrops" />
 		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="css/demo.css" />
-		<link rel="stylesheet" type="text/css" href="css/component.css" /> 
+		<link rel="stylesheet" href="../../css/navadmin.css">
 		<script src="/adminjs/modernizr.custom.js"></script>
     <style>
       html, body {
@@ -215,7 +213,7 @@
 }
 
 body {
-	background: #34495e;
+background:#41228e;
 }
 
 .container > header,
@@ -728,16 +726,16 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
                       <a class="gn-icon gn-icon-download" >Manage Contests</a>
                       <ul class="gn-submenu">
                         <li><a class="gn-icon gn-icon-illustrator" href="<%= data.url %>/admin/add/contest">Add Contests</a></li>
-                        <li><a class="gn-icon gn-icon-photoshop" href="<%= data.url %>/admin/update/contest">Update Contests</a></li>
-                        <li><a class="gn-icon gn-icon-photoshop" href="<%= data.url %>/admin/update/contest">Delete Contests</a></li>
+                        <li><a class="gn-icon gn-icon-update" href="<%= data.url %>/admin/update/contest">Update Contests</a></li>
+                        <li><a class="gn-icon gn-icon-trashcan" href="<%= data.url %>/admin/update/contest">Delete Contests</a></li>
                       </ul>
                     </li>
                     <li>
                       <a class="gn-icon gn-icon-download" >Manage Questions</a>
                       <ul class="gn-submenu">
                         <li><a class="gn-icon gn-icon-illustrator" href="<%= data.url %>/admin/add/question">Add Questions</a></li>
-                        <li><a class="gn-icon gn-icon-photoshop" href="<%= data.url %>/admin/update/question">Update Questions</a></li>
-                        <li><a class="gn-icon gn-icon-photoshop" href="<%= data.url %>/admin/update/question">Delete Questions</a></li>
+                        <li><a class="gn-icon gn-icon-update" href="<%= data.url %>/admin/update/question">Update Questions</a></li>
+                        <li><a class="gn-icon gn-icon-trashcan" href="<%= data.url %>/admin/update/question">Delete Questions</a></li>
                       </ul>
                     </li>
                     <li><a class="gn-icon gn-icon-cog" href="<%= data.url %>/admin/manageusers" >Manage users</a></li>
@@ -752,7 +750,7 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
             
           </ul>
           <header>
-            <h1>Results<span>of Contests</span></h1>	
+            <h1>Results<span style="color: white">of Contests</span></h1>	
 		  </header> 
 
 
