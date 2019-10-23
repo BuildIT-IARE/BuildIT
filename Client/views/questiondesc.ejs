@@ -165,7 +165,7 @@ function close_window() {
           <p class="cars-text"><%= data[0].author %></p>
         </div>
         <% } %>
-        <button class = "button" position = "right"><a href= "http://localhost:3000/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><span>Go to IDE</span></a></button></a>
+        <button class = "button" position = "right"><a href= "<%= data.url %>/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><span>Go to IDE</span></a></button></a>
     </div>
   </div>
 </section>

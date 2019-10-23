@@ -258,7 +258,7 @@ footer a {
         <h2><a href="/home" style="color: red">Back to Home page</a></h2>
         <div class="container" id="container">
           <div class="form-container sign-up-container">
-            <form action="http://localhost:3000/signup_" method="POST">
+            <form action="<%= data.url %>/signup_" method="POST">
 			  <h1>Create Account</h1>
 			  <p></p>
               <input required="true" name="name" type="text" placeholder="Name" />
@@ -271,7 +271,7 @@ footer a {
             </form>
           </div>
           <div class="form-container sign-in-container">
-            <form action="http://localhost:3000/login_" method="POST">
+            <form action="<%= data.url %>/login_" method="POST">
 			  <h1>Sign In</h1>
 			  <p></p>
               <input required="true" name="username" type="text" placeholder="Username" />

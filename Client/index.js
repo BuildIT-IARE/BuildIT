@@ -60,7 +60,10 @@ app.get('/profile', async (req, res) => {
 });
 
 app.get('/login', async (req, res) => {
-  res.render('login');
+  let url = {
+    url: clientRoute
+  }
+  res.render('login', {data: url});
 });
 
 app.get('/admin/add/question', async (req, res) => {
@@ -69,18 +72,28 @@ app.get('/admin/add/question', async (req, res) => {
   }
   res.render('questionadd', {data: url});
 });
+
 app.get('/admin/add/contest', async (req, res) => {
   let url = {
     url: clientRoute
   }
   res.render('contestadd', {data: url});
 });
+
 app.get('/admin/update/question', async (req, res) => {
-  res.render('questionupdate');
+  let url = {
+    url: clientRoute
+  }
+  res.render('questionupdate', {data: url});
 });
+
 app.get('/admin/update/contest', async (req, res) => {
-  res.render('contestupdate');
+  let url = {
+    url: clientRoute
+  }
+  res.render('contestupdate', {data: url});
 });
+
 app.get('/admin/manageusers', async (req, res) => {
   let options = {
     url : serverRoute + '/admin/users',
@@ -107,7 +120,8 @@ app.get('/admin/results', async (req, res) => {
   }
 
   request(options, function(err, response, body){
-    body.url = clientRoute + '/admin/results/contest';
+    body.posturl = clientRoute + '/admin/results/contest';
+    body.url = clientRoute;
     body.method = "POST";
     res.render('dropdown', {data: body});
   });
@@ -149,7 +163,10 @@ app.post('/admin/results/contest', async (req, res) => {
 
 
 app.get('/admin', async (req, res) => {
-  res.render('contestadd');
+  let url = {
+    url: clientRoute
+  }
+  res.render('contestadd', {data: url});
 });
 
 app.get('/ide/:questionId', async (req, res) => {
@@ -327,6 +344,7 @@ app.get('/contests/questions/:questionId', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
+    body.url = clientRoute;
     res.render('questiondesc', {imgUsername: req.cookies.username, data: body});
   });
 });
