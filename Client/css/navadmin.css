@@ -363,12 +363,11 @@ font-style: normal;
 font-variant: normal;
 font-family: 'ecoicons';
 line-height: 1;
-speak: none;
 -webkit-font-smoothing: antialiased;
 }
 
 .gn-icon-help::before {
-content: "\e000"
+content: "\2764"
 }
 
 .gn-icon-earth::before {
@@ -387,12 +386,15 @@ content: "\e005"
 content: "\e007"
 }
 
-.gn-icon-photoshop::before {
-content: "\e001"
+.gn-icon-update::before {
+content: "\2B06"
+}
+.gn-icon-trashcan::before {
+    content: "\1F5D1"
 }
 
-.gn-icon-illustrator::before {
-content: "\e002"
+.gn-icon-add::before {
+content: "\002B"
 }
 
 .gn-icon-archive::before {
@@ -484,7 +486,10 @@ font-style: normal;
 }
 
 body {
-background: #34495e;
+background:#41228e;
+}
+.span-color{
+ color: white;
 }
 
 .container > header,
