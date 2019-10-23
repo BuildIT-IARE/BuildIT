@@ -111,9 +111,10 @@ function close_window() {
     <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <button onclick="close()" class = "button1" ><a href="javascript:close_window();"><span style="color:white" >Back to Questions</span></a></button><br><br>
+        <button onclick="close()" class = "button1" ><a href="javascript:close_window();"><span style="color:white" >Close</span></a></button><br><br>
+        <button class = "button" style = "float: right" position = "right"><a href= "<%= data.url %>/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><span>IDE</span></a></button></a>
+
         <h3 class="section-title"><%= data[0].questionName %> - #<%= data[0].questionId %></h3>
-        
         <div class = "font-tertiary text-white">
             <p class="cars-text"><%= data[0].questionDescriptionText %>
             </p>
@@ -129,6 +130,7 @@ function close_window() {
             </blockquote>
           </div>
           <% } %>
+          <br>
           <% if(data[0].questionOutputText !== undefined ) { %>
             <div>
               <h4><b>Output:</b></h4>
@@ -137,6 +139,7 @@ function close_window() {
               </blockquote>
             </div>
             <% } %>
+        <br>
         <% if(data[0].questionExampleInput1 !== undefined && data[0].questionExampleInput2 !== undefined && data[0].questionExampleInput3 !== undefined) { %>
         <div>
           <h4><b>Sample Input:</b></h4><br>
@@ -145,6 +148,7 @@ function close_window() {
             <pre style="font-size: 18px"><%= data[0].questionExampleInput3 %></pre>
           </div>
         <% } %>
+        <br>
         <% if(data[0].questionExampleOutput1 !== undefined && data[0].questionExampleOutput2 !== undefined && data[0].questionExampleOutput3 !== undefined) { %>
           <div>
             <h4><b>Sample Output :</b></h4>
@@ -153,19 +157,21 @@ function close_window() {
             <pre style="font-size: 18px"><%= data[0].questionExampleOutput3 %></pre>
           </div>
           <% } %>
+          <br>
           <% if (data[0].questionExplanation !== undefined) { %>
           <div>    
           <h4><b>Explanation:</b></h4>
           <p class="cars-text"><%= data[0].questionExplanation %></p>
         </div>
         <% } %>
+        <br>  
         <% if (data[0].author !== undefined) { %>
         <div>
           <h4><b>Author:</b></h4>
           <p class="cars-text"><%= data[0].author %></p>
         </div>
         <% } %>
-        <button class = "button" position = "right"><a href= "<%= data.url %>/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><span>Go to IDE</span></a></button></a>
+        <button class = "button" position = "right"><a href= "<%= data.url %>/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><span>IDE</span></a></button></a>
     </div>
   </div>
 </section>
