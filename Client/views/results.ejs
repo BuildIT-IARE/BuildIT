@@ -6,24 +6,22 @@
 <body>
 
 <div class="w3-container">
-  <h2>Contest Id - <%= datap[0].contestId %> </h2>
+  <h2 style="text-align: center">Contest Id - <%= datap[0].contestId %> </h2>
 
   <table class="w3-table w3-striped">
     <tr>
-      <th>ParticipationId</th>
-      <th>Participation Time</th>
       <th>Username</th>
+      <th>Participation Time</th>
       <% for (let i = 0; i < dataq.length; i++){ %>
         <th><%= dataq[i].questionId %></th>
       <% } %>
     </tr>
   <% for(let i=0; i < datap.length; i++){ %>    
       <tr>
-        <td><%= datap[i].participationId %></td>
-        <td><%= datap[i].participationTime %></td>
         <td><%= datap[i].username %></td>
+        <td><%= datap[i].participationTime.slice(0, datap[i].participationTime.length - 9 ) %></td>
         <% if (datap[i].submissionResults.length !== 0){ %>
-          <% for (let j = 0; j < datap[i].submissionResults.length -1 ; j++ ){ %>
+          <% for (let j = 0; j < datap[i].submissionResults.length ; j++ ){ %>
             <% let done = 0; let k = 0; %>
             <% while (done < dataq.length-1) { %>
               <% if (dataq[k].questionId === datap[i].submissionResults[j].questionId) { %>
