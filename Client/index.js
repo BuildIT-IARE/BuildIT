@@ -64,10 +64,16 @@ app.get('/login', async (req, res) => {
 });
 
 app.get('/admin/add/question', async (req, res) => {
-  res.render('questionadd');
+  let url = {
+    url: clientRoute
+  }
+  res.render('questionadd', {data: url});
 });
 app.get('/admin/add/contest', async (req, res) => {
-  res.render('contestadd');
+  let url = {
+    url: clientRoute
+  }
+  res.render('contestadd', {data: url});
 });
 app.get('/admin/update/question', async (req, res) => {
   res.render('questionupdate');
@@ -85,6 +91,7 @@ app.get('/admin/manageusers', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
+    body.url = clientRoute;
     res.render('manageusers', {data: body});
   });
 });
@@ -131,9 +138,10 @@ app.post('/admin/results/contest', async (req, res) => {
     }
 
     request(options, function(err, response, bodyquestion){
-
-
-      res.render('results', {datap: bodyparticipation, dataq: bodyquestion });
+      let url = {
+        url: clientRoute
+      }
+      res.render('results', {data: url, datap: bodyparticipation, dataq: bodyquestion });
     });
     
   });
@@ -323,6 +331,21 @@ app.get('/contests/questions/:questionId', async (req, res) => {
   });
 });
 
+app.get('/verify', async (req, res) => {
+  // res.render('/home');
+  let options = {
+    url : serverRoute + '/verify',
+    method: 'post',
+    body: {
+      email: req.query.email,
+      token: req.query.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    res.render('error', {data: body, imgUsername: req.cookies.username});
+  });
+});
 
 app.listen(3000);
 console.log('Server @ port 3000');

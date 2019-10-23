@@ -19,7 +19,7 @@ module.exports = (app) => {
     app.post('/login', users.checkPass);
 
     // Verify Route
-    app.get('/verify', users.checkToken);
+    app.post('/verify', users.checkToken);
 
     // // Update a user with userId
     // app.put('/users', middleware.checkTokenAdmin, users.update);

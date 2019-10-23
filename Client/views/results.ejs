@@ -2,10 +2,46 @@
 <html>
 <title>Submissions Table</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../css/navadmin.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<body>
 
-<div class="w3-container">
+<body>
+    <ul id="gn-menu" class="gn-menu-main">
+				<li class="gn-trigger">
+					<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+					<nav class="gn-menu-wrapper">
+						<div class="gn-scroller">
+							<ul class="gn-menu">
+								
+								<li>
+									<a class="gn-icon gn-icon-download" >Manage Contests</a>
+									<ul class="gn-submenu">
+										<li><a class="gn-icon gn-icon-illustrator" href="<%= data.url %>/admin/add/contest">Add Contests</a></li>
+										<li><a class="gn-icon gn-icon-photoshop" href="<%= data.url %>/admin/update/contest">Update Contests</a></li>
+										<li><a class="gn-icon gn-icon-photoshop" href="<%= data.url %>/admin/update/contest">Delete Contests</a></li>
+									</ul>
+								</li>
+								<li>
+									<a class="gn-icon gn-icon-download" >Manage Questions</a>
+									<ul class="gn-submenu">
+										<li><a class="gn-icon gn-icon-illustrator" href="<%= data.url %>/admin/add/question">Add Questions</a></li>
+										<li><a class="gn-icon gn-icon-photoshop" href="<%= data.url %>/admin/update/question">Update Questions</a></li>
+										<li><a class="gn-icon gn-icon-photoshop" href="<%= data.url %>/admin/update/question">Delete Questions</a></li>
+									</ul>
+								</li>
+								<li><a class="gn-icon gn-icon-cog" 	href="<%= data.url %>/admin/manageusers" >Manage users</a></li>
+								<li><a class="gn-icon gn-icon-help" href="<%= data.url %>/admin/results">Results</a></li>
+								
+							</ul>
+						</div><!-- /gn-scroller -->
+					</nav>
+				</li>
+				<li><a href="<%= data.url %>/admin/add/question">Refresh</a></li>
+				<li><a class="codrops-icon codrops-icon-prev" href="<%= data.url %>/"><span>Home</span></a></li>
+				
+      </ul>
+      <br><br><br><br><br>
+    <div class="w3-container" style="background: white;">
   <h2 style="text-align: center">Contest Id - <%= datap[0].contestId %> </h2>
 
   <table class="w3-table w3-striped">
@@ -35,7 +71,13 @@
       </tr>
   <% } %>
   </table>
+  <br>
+  <br>
 </div>
-
+<script src="/adminjs/classie.js"></script>
+<script src="/adminjs/gnmenu.js"></script>
+<script>
+  new gnMenu( document.getElementById( 'gn-menu' ) );
+</script>
 </body>
 </html>

@@ -6,7 +6,8 @@ const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
 let config = require('../util/config');
-
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
 
 let clientAddress = 'http://localhost:3000';
 
@@ -132,21 +133,46 @@ exports.create = (req, res) => {
                 }
             });
         };
-
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            host: 'smtp.gmail.com',
-            auth: {
-                user: 'buildit.iare@gmail.com', 
-                pass: 'FLF@iare1206'
-            }
-        });
+  
+        // let transporter = nodemailer.createTransport({
+        //     service: 'gmail',
+        //     host: 'smtp.gmail.com',
+        //     auth: {
+        //         user: 'buildit.iare@gmail.com', 
+        //         pass: 'FLF@iare1206'
+        //     }
+        // });
     
         let htmlPath = path.join(__dirname, '../util/verifytemplate.html');
         readHTMLFile(htmlPath, function(err, html) {
             if(err){
                 console.log(err);
             }
+            // Oauth2 set up
+            const oauth2Client = new OAuth2(
+                "1064096911787-mkih3p6r7f6p2tcc24i267736mu8qljj.apps.googleusercontent.com", // ClientID
+                "Qs2c7YP8Q8jCMw-PIbARUrmn", // Client Secret
+                "https://developers.google.com/oauthplayground" // Redirect URL
+            );
+
+            oauth2Client.setCredentials({
+                refresh_token: "1//04XEQXx_iEG72CgYIARAAGAQSNwF-L9Ir9XRvFe7XM6QPG8DM5Rgnd14TQHMf2fbgTGiLZk5ak6QfSFcp98jgdjACTtWR4oMAH_A"
+            });
+            const accessToken = oauth2Client.getAccessToken();
+
+            const smtpTransport = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    type: "OAuth2",
+                    user: "buildit.iare@gmail.com", 
+                    clientId: "1064096911787-mkih3p6r7f6p2tcc24i267736mu8qljj.apps.googleusercontent.com",
+                    clientSecret: "Qs2c7YP8Q8jCMw-PIbARUrmn",
+                    refreshToken: "1//04XEQXx_iEG72CgYIARAAGAQSNwF-L9Ir9XRvFe7XM6QPG8DM5Rgnd14TQHMf2fbgTGiLZk5ak6QfSFcp98jgdjACTtWR4oMAH_A",
+                    accessToken: accessToken
+                }
+            });
+
+            // Generate Handlebars template
             var template = handlebars.compile(html);
             var replacements = {
                 name: user.name,
@@ -156,13 +182,26 @@ exports.create = (req, res) => {
             };
             var htmlToSend = template(replacements);
 
-            transporter.sendMail({
-                from: '"BuildIT" <buildit.iare@gmail.com>', // sender address
-                to: user.email, // list of receivers
-                subject: 'Your Verfication Code - BuildIT', // Subject line
-                text: 'Hello, ' + user.name, // plain text body
-                html: htmlToSend // html body
-            });
+            const mailOptions = {
+                from: "buildit.iare@gmail.com",
+                to: user.email,
+                subject: "Your Verfication Code - BuildIT",
+                generateTextFromHTML: true,
+                html: htmlToSend
+            };
+            
+            smtpTransport.sendMail(mailOptions, (error, response) => {
+                error ? console.log(error) : console.log(response);
+                smtpTransport.close();
+           });
+
+            // transporter.sendMail({
+            //     from: '"BuildIT" <buildit.iare@gmail.com>', // sender address
+            //     to: user.email, // list of receivers
+            //     subject: 'Your Verfication Code - BuildIT', // Subject line
+            //     text: 'Hello, ' + user.name, // plain text body
+            //     html: htmlToSend // html body
+            // });
         });
     }
 };
@@ -280,13 +319,13 @@ exports.checkPass = (req, res) => {
 
 // Check Token and activate account
 exports.checkToken = (req, res) => {
-    User.findOneAndUpdate({email: req.query.email, verifyToken: req.query.token}, {$set:{
+    User.findOneAndUpdate({email: req.body.email, verifyToken: req.body.token}, {$set:{
             isVerified: true
         }}, {new: true}, (err, doc) => {
             if(err){
                 return res.send({
                 success: false,
-                    message: "Could not verify account " + req.query.email
+                    message: "Could not verify account " + req.body.email
                 });
             }
         })
@@ -294,7 +333,7 @@ exports.checkToken = (req, res) => {
             if(!user) {
                 return res.send({
                 success: false,
-                    message: "Could not verify account " + req.query.email
+                    message: "Could not verify account " + req.body.email
                 });
             } else {
                 res.send({
@@ -309,12 +348,12 @@ exports.checkToken = (req, res) => {
             if(err.kind === 'ObjectId') {
                 return res.status(404).send({
                 success: false,
-                    message: "Could not verify account " + req.params.email
+                    message: "Could not verify account " + req.body.email
                 });              
             } else {
                 return res.send({
                 success: false,
-                    message: "Could not verify account " + req.params.email
+                    message: "Could not verify account " + req.body.email
                 });
             }
     });
