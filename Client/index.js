@@ -75,7 +75,8 @@ app.get('/admin/add/question', async (req, res) => {
 
 app.get('/admin/add/contest', async (req, res) => {
   let url = {
-    url: clientRoute
+    url: clientRoute,
+    serverurl: serverRoute
   }
   res.render('contestadd', {data: url});
 });
@@ -313,7 +314,10 @@ app.post('/login_', async (req, res) => {
           res.redirect('admin');
         }
         else{
-          res.render('temp', {imgUsername: req.cookies.username});
+          let url = {
+            url: clientRoute
+          };
+          res.render('temp', {data: url, imgUsername: req.cookies.username});
         }
     } else {
       res.render('error', {data: body, imgUsername: req.cookies.username})
