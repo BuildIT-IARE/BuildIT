@@ -332,7 +332,7 @@ textarea.form-control {
 .navbar .nav-item .nav-link {
   font-family: "BwNistaInt-xBd";
   text-transform: uppercase;
-  padding: 15px; }
+  padding: 10px; }
 
 .navbar .nav-item.active {
   font-weight: bold; }

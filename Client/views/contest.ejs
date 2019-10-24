@@ -52,12 +52,14 @@
       <% for(let i = 0; i < data.length; i++){ %>
         <div class="col-lg-4 col-sm-6 mb-4">
           <article class="card shadow">
-            <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>">
+            <!-- <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> -->
             <div class="card-body">
               <h4 class="card-title"><a class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
-              </h4>
-              <p class="cars-text"><%= data[i].contestId %></p>
+              </h4><br>
+              <p><b>Duration: </b><%= data[i].contestDuration %> Mins</p>
+              <p><b>Date: </b><%= data[i].contestDate %></p><br>
               <a href="contests/<%= data[i].contestId %>" class="btn btn-xs btn-primary">Participate</a>
+
             </div>
           </article>
         </div>

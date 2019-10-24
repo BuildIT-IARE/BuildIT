@@ -63,6 +63,9 @@
   right: 0;
   padding-bottom:20px;  
 }
+p{
+  font-size: 130%;
+}
 .button {
   border-radius: 4px;
   background-color: #454fd4;
@@ -114,20 +117,18 @@ function close_window() {
 }
 </script>
 <!-- about -->
-<section class="section pt-5">
+<section class="section pt-8">
     <div class="container">
     <div class="row">
-      <div class="col-md-8">
-        <button onclick="close()" class = "button1" ><a href="javascript:close_window();"><span style="color:white" >Close</span></a></button><br><br>
+      <div class="col-md-12">
+        <button onclick="close()" class = "button1" ><a href="javascript:close_window();"><span style="color: #ffffff" >Close</span></a></button><br><br>
         <a href= "<%= data.url %>/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><button class = "button" style = "float: right" position = "right"><span>Online Editor</span></button></a>
 
         <h3 class="section-title"><%= data[0].questionName %> - #<%= data[0].questionId %></h3>
-      <div class="border">
+
+      <div class="border" style="background: #F7F4E7; font-family: Verdana, Geneva, Tahoma, sans-serif;">
         <div class = "font-tertiary text-white">
-            <p class="cars-text"><%= data[0].questionDescriptionText %></p>
-            <% if (data[0].difficulty !== undefined) { %>
-            <sup>Difficulty: <%= data[0].difficulty %></sup>
-            <% } %>
+            <p class="cars-text" style="font-size: 130%;"><%= data[0].questionDescriptionText %></p>
         </div>
         <% if(data[0].questionInputText !== undefined ) { %>
       <div>          
@@ -149,7 +150,7 @@ function close_window() {
         <br>
         <% if(data[0].questionExampleInput1 !== undefined && data[0].questionExampleInput2 !== undefined && data[0].questionExampleInput3 !== undefined) { %>
         <div>
-          <h4><b>Sample Input:</b></h4><br>
+          <h4><b>Sample Input:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleInput1 %></pre>
             <pre style="font-size: 18px"><%= data[0].questionExampleInput2 %></pre>
             <pre style="font-size: 18px"><%= data[0].questionExampleInput3 %></pre>
@@ -179,7 +180,8 @@ function close_window() {
         </div>
         <% } %>
       </div>
-        <button class = "button" position = "right"><a href= "<%= data.url %>/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><span>IDE</span></a></button></a>
+      <br>
+        <button class = "button" position = "right"><a href= "<%= data.url %>/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><span>Online Editor</span></a></button></a>
     </div>
   </div>
 </section>

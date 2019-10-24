@@ -187,7 +187,6 @@ app.get('/contest', async (req, res) => {
   }
   
   request(options, function(err, response, body){
-    // console.log(body);  
     res.render('contest', {imgUsername: req.cookies.username, data: body});
     
   });
@@ -230,8 +229,6 @@ app.get('/contests/:contestId', async (req, res) => {
        }
       // get participation details
       request(options3, function(err, response, bodytimer){
-        // console.log(JSON.stringify(bodytimer, null, 4));
-        // console.log(JSON.stringify(body, null, 4));
         bodytimer = bodytimer[0];
         let questions = [];
         let scores = [];
@@ -287,7 +284,6 @@ app.post('/signup_', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
-    console.log(body);
         if (body.username && body.password){
           body.message = "Sign up successful, Account verification has been sent to your email";
         } 
