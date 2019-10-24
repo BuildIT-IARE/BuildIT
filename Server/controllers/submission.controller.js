@@ -24,7 +24,14 @@ exports.create = (req, result, callback) => {
         submissionToken: result.submissionToken,
         submissionTime: moment()
       });
-
+    
+    if (submission.score === 100){
+        submission.color = '#21BA45';
+      } else if (submission.score < 100 && submission.score >= 25){
+        submission.color = 'orange';
+      } else {
+        submission.color = 'red';
+      }
     // SaveReg in the database
     submission.save()
     .then(data => {
