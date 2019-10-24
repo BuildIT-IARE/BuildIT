@@ -11,7 +11,8 @@ var submissionSchema = new Schema({
     score: Number,
     result: Array,
     submissionToken: Array,
-    submissionTime: String
+    submissionTime: String,
+    color: String   
 });
 
 module.exports = mongoose.model('Submission', submissionSchema);

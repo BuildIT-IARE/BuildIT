@@ -146,6 +146,15 @@ function handleError2(jqXHR, textStatus, errorThrown) {
     showError(`${"Error"} (${jqXHR.status})`, `<pre>${jqXHR.responseJSON.message}</pre>`);
 }
 
+function handleMyResult2(data) {
+    showError(`<h1 style="color: ${data.color}">${"Score - "}${data.score}</h1>`, `<pre style="font-size: large; color: ${data.color}">${data.message}</pre>`);
+}
+
+function handleMyResult(data) {
+    handleMyResult2(data);
+    $submitBtn.removeClass("loading");
+}
+
 function handleRunError(jqXHR, textStatus, errorThrown) {
     handleError(jqXHR, textStatus, errorThrown);
     $runBtn.removeClass("loading");
@@ -225,13 +234,11 @@ function handleResult2(data) {
         stdout = "Not all testcases were satisfied, score: 50";
     } else if (status === 25){
         stdout = "Not all testcases were satisfied, score: 25";
-    } else {
+    } else if(status === 0) {
         stdout = "No testcases were satisfied, score: 0";
+    } else {
+        stdout = "An error occured, have you logged in?";
     }
-    // var stderr = decode(data.stderr);
-    // var compile_output = decode(data.compile_output);
-    // var sandbox_message = decode(data.message);
-    // var memory = (data.memory === null ? "-" : data.memory + "KB");
     
     var time = data.submissionTime;
 
@@ -247,9 +254,6 @@ function handleResult2(data) {
     }
 
     stdoutEditor.setValue(stdout);
-    // stderrEditor.setValue(stderr);
-    // compileOutputEditor.setValue(compile_output);
-    // sandboxMessageEditor.setValue(sandbox_message);
 
     if (stdout !== "") {
         var dot = document.getElementById("stdout-dot");
@@ -257,118 +261,10 @@ function handleResult2(data) {
             dot.hidden = false;
         }
     }
-    // if (stderr !== "") {
-    //     var dot = document.getElementById("stderr-dot");
-    //     if (!dot.parentElement.classList.contains("lm_active")) {
-    //         dot.hidden = false;
-    //     }
-    // }
-    // if (compile_output !== "") {
-    //     var dot = document.getElementById("compile-output-dot");
-    //     if (!dot.parentElement.classList.contains("lm_active")) {
-    //         dot.hidden = false;
-    //     }
-    // }
-    // if (sandbox_message !== "") {
-    //     var dot = document.getElementById("sandbox-message-dot");
-    //     if (!dot.parentElement.classList.contains("lm_active")) {
-    //         dot.hidden = false;
-    //     }
-    // }
 
     $submitBtn.removeClass("loading");
 }
 
-function getIdFromURI() {
-  return location.search.substr(1).trim();
-}
-
-function save() {
-    var content = JSON.stringify({
-        source_code: encode(sourceEditor.getValue()),
-        language_id: $selectLanguage.val(),
-        stdin: encode(stdinEditor.getValue()),
-        stdout: encode(stdoutEditor.getValue()),
-        stderr: encode(stderrEditor.getValue()),
-        compile_output: encode(compileOutputEditor.getValue()),
-        sandbox_message: encode(stderrEditor.getValue()),
-        status_line: encode($statusLine.html())
-    });
-    var filename = "judge0-ide.json";
-    var data = {
-        content: content,
-        filename: filename
-    };
-
-    $.ajax({
-        url: pbUrl,
-        type: "POST",
-        async: true,
-        headers: {
-            "Accept": "application/json"
-        },
-        data: data,
-        success: function (data, textStatus, jqXHR) {
-            if (getIdFromURI() != data["short"]) {
-                window.history.replaceState(null, null, location.origin + location.pathname + "?" + data["short"]);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            handleError(jqXHR, textStatus, errorThrown);
-        }
-    });
-}
-
-function downloadSource() {
-    var value = parseInt($selectLanguage.val());
-    download(sourceEditor.getValue(), fileNames[value], "text/plain");
-}
-
-function loadSavedSource() {
-    snipped_id = getIdFromURI();
-
-    if (snipped_id.length == 36) {
-        $.ajax({
-            url: apiUrl + "/submissions/" + snipped_id + "?fields=source_code,language_id,stdin,stdout,stderr,compile_output,message,time,memory,status&base64_encoded=true",
-            type: "GET",
-            success: function(data, textStatus, jqXHR) {
-                sourceEditor.setValue(decode(data["source_code"]));
-                $selectLanguage.dropdown("set selected", data["language_id"]);
-                stdinEditor.setValue(decode(data["stdin"]));
-                stdoutEditor.setValue(decode(data["stdout"]));
-                stderrEditor.setValue(decode(data["stderr"]));
-                compileOutputEditor.setValue(decode(data["compile_output"]));
-                sandboxMessageEditor.setValue(decode(data["message"]));
-                var time = (data.time === null ? "-" : data.time + "s");
-                var memory = (data.memory === null ? "-" : data.memory + "KB");
-                $statusLine.html(`${data.status.description}, ${time}, ${memory}`);
-                changeEditorLanguage();
-            },
-            error: handleRunError
-        });
-    } else {
-        $.ajax({
-            url: pbUrl + "/" + snipped_id + ".json",
-            type: "GET",
-            success: function (data, textStatus, jqXHR) {
-                sourceEditor.setValue(decode(data["source_code"]));
-                $selectLanguage.dropdown("set selected", data["language_id"]);
-                stdinEditor.setValue(decode(data["stdin"]));
-                stdoutEditor.setValue(decode(data["stdout"]));
-                stderrEditor.setValue(decode(data["stderr"]));
-                compileOutputEditor.setValue(decode(data["compile_output"]));
-                sandboxMessageEditor.setValue(decode(data["sandbox_message"]));
-                $statusLine.html(decode(data["status_line"]));
-                changeEditorLanguage();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                showError("Not Found", "Code not found!");
-                window.history.replaceState(null, null, location.origin + location.pathname);
-                loadRandomLanguage();
-            }
-        });
-    }
-}
 
 function run() {
     if (sourceEditor.getValue().trim() === "") {
@@ -478,7 +374,20 @@ function submit() {
             'authorization': getCookie('token')
         },
         success: function (data, textStatus, jqXHR) {
-            handleResult2(data);
+            // handleResult2(data);
+            if (data.score === 100){
+                data.message = "All testcases satisfied, score: 100";
+            } else if (data.score === 50){
+                data.message = "Not all testcases were satisfied, score: 50";
+            } else if (data.score === 25){
+                data.message = "Not all testcases were satisfied, score: 25";
+            } else if(data.score === 0) {
+                data.message = "No testcases were satisfied, score: 0";
+            } else {
+                data.message = "An error occured, have you logged in?";
+            }
+            console.log(data);
+            handleMyResult(data);
         },
         error: handleRunError2
     });
@@ -700,11 +609,7 @@ $(document).ready(function () {
         });
 
         layout.on("initialised", function () {
-            if (getIdFromURI()) {
-                loadSavedSource();
-            } else {
-                loadRandomLanguage();
-            }
+            loadRandomLanguage();
             $("#site-navigation").css("border-bottom", "1px solid black");
         });
 
