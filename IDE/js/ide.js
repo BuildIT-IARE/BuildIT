@@ -229,15 +229,21 @@ function handleResult2(data) {
     var stdout;
 
     if (status === 100){
-        stdout = "All testcases satisfied, score: 100";
+        stdout ="<span style='color:Green'>All testcases satisfied, score: 100</span>";
     } else if (status === 50){
-        stdout = "Not all testcases were satisfied, score: 50";
+        stdout = "<span style='color=yellow'>Not all testcases were satisfied, score: 50</span>";
     } else if (status === 25){
+<<<<<<< HEAD
+        stdout = "<span style='color:orange'>Not all testcases were satisfied, score: 25</span>";
+    } else {
+        stdout = "<span style='color:Red'>No testcases were satisfied, score: 0</span>";
+=======
         stdout = "Not all testcases were satisfied, score: 25";
     } else if(status === 0) {
         stdout = "No testcases were satisfied, score: 0";
     } else {
         stdout = "An error occured, have you logged in?";
+>>>>>>> 95de04fc36bc7635a43f15711efc0cdc393d9ff4
     }
     
     var time = data.submissionTime;
