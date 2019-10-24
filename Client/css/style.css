@@ -316,11 +316,11 @@ textarea.form-control {
 
 /* /card */
 .navigation {
-  padding: 40px 130px;
+  padding: 30px 40px;
   transition: .3s ease; }
   .navigation.nav-bg {
     background-color: #A62232;
-    padding: 15px 100px; }
+    padding: 15px 60px; }
     @media (max-width: 991px) {
       .navigation.nav-bg {
         padding: 15px 20px; } }
