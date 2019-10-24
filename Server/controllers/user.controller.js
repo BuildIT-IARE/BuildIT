@@ -9,7 +9,7 @@ let config = require('../util/config');
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 
-let clientAddress = 'http://localhost:3000';
+let clientAddress = config.clientAddress;
 
 // Retrieve and return all users from the database.
 exports.findAll = (req, res) => {
@@ -63,7 +63,8 @@ exports.findOnePublic = (req, res) => {
         let sendUser = {
             username: user.username,
             name: user.name, 
-            email: user.email
+            email: user.email,
+            branch: user.branch
         }
         res.send(sendUser);
     }).catch(err => {
@@ -91,13 +92,13 @@ exports.create = (req, res) => {
     }
     let token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     // Create a user
-
     const user = new User({
         username: req.body.username,
         name: req.body.name, 
         password: req.body.password,
         name: req.body.name,
         email: req.body.email,
+        branch: req.body.branch,
         verifyToken: token
     });
 
@@ -133,16 +134,7 @@ exports.create = (req, res) => {
                 }
             });
         };
-  
-        // let transporter = nodemailer.createTransport({
-        //     service: 'gmail',
-        //     host: 'smtp.gmail.com',
-        //     auth: {
-        //         user: 'buildit.iare@gmail.com', 
-        //         pass: 'FLF@iare1206'
-        //     }
-        // });
-    
+
         let htmlPath = path.join(__dirname, '../util/verifytemplate.html');
         readHTMLFile(htmlPath, function(err, html) {
             if(err){
@@ -150,13 +142,13 @@ exports.create = (req, res) => {
             }
             // Oauth2 set up
             const oauth2Client = new OAuth2(
-                "1064096911787-mkih3p6r7f6p2tcc24i267736mu8qljj.apps.googleusercontent.com", // ClientID
-                "Qs2c7YP8Q8jCMw-PIbARUrmn", // Client Secret
+                config.OAuthClientID, // ClientID
+                config.OAuthClientSecret, // Client Secret
                 "https://developers.google.com/oauthplayground" // Redirect URL
             );
 
             oauth2Client.setCredentials({
-                refresh_token: "1//04XEQXx_iEG72CgYIARAAGAQSNwF-L9Ir9XRvFe7XM6QPG8DM5Rgnd14TQHMf2fbgTGiLZk5ak6QfSFcp98jgdjACTtWR4oMAH_A"
+                refresh_token: config.OAuthRefreshToken
             });
             const accessToken = oauth2Client.getAccessToken();
 
@@ -165,9 +157,9 @@ exports.create = (req, res) => {
                 auth: {
                     type: "OAuth2",
                     user: "buildit.iare@gmail.com", 
-                    clientId: "1064096911787-mkih3p6r7f6p2tcc24i267736mu8qljj.apps.googleusercontent.com",
-                    clientSecret: "Qs2c7YP8Q8jCMw-PIbARUrmn",
-                    refreshToken: "1//04XEQXx_iEG72CgYIARAAGAQSNwF-L9Ir9XRvFe7XM6QPG8DM5Rgnd14TQHMf2fbgTGiLZk5ak6QfSFcp98jgdjACTtWR4oMAH_A",
+                    clientId: config.OAuthClientID,
+                    clientSecret: config.OAuthClientSecret,
+                    refreshToken: config.OAuthRefreshToken,
                     accessToken: accessToken
                 }
             });
@@ -178,7 +170,8 @@ exports.create = (req, res) => {
                 name: user.name,
                 username: user.username.toLowerCase(),
                 email: user.email,
-                token: user.verifyToken
+                token: user.verifyToken,
+                clientUrl: clientAddress
             };
             var htmlToSend = template(replacements);
 
@@ -191,17 +184,12 @@ exports.create = (req, res) => {
             };
             
             smtpTransport.sendMail(mailOptions, (error, response) => {
-                error ? console.log(error) : console.log(response);
+                if(error){
+                    console.log(error);
+                }
                 smtpTransport.close();
            });
 
-            // transporter.sendMail({
-            //     from: '"BuildIT" <buildit.iare@gmail.com>', // sender address
-            //     to: user.email, // list of receivers
-            //     subject: 'Your Verfication Code - BuildIT', // Subject line
-            //     text: 'Hello, ' + user.name, // plain text body
-            //     html: htmlToSend // html body
-            // });
         });
     }
 };

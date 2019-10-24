@@ -91,7 +91,13 @@ input {
 	margin: 8px 0;
 	width: 100%;
 }
-
+select {
+	background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+}
 .container {
 	background-color: #fff;
 	border-radius: 10px;
@@ -253,18 +259,30 @@ footer a {
 	background:#41228e;
     text-decoration: none;
 }
+
     </style>
     <body>
         <h2><a href="/home" style="color: red">Back to Home page</a></h2>
         <div class="container" id="container">
           <div class="form-container sign-up-container">
             <form action="<%= data.url %>/signup_" method="POST">
-			  <h1>Create Account</h1>
-			  <p></p>
+			  <h1 style="padding: 8px;">Create Account</h1>
+			  
               <input required="true" name="name" type="text" placeholder="Name" />
               <input required="true" name="email" type="email" placeholder="Email" />
 			  <input required="true" name="username" type="text" placeholder="Username" />
 			  <input required="true" name="password" type="password" placeholder="Password" />
+			  <select class="custom-select" required="true" name="branch" type="text">
+				  	<option disabled selected>Select your Branch</option>
+					<option value="cse">CSE</option>
+					<option value="it">IT</option>
+					<option value="ece">ECE</option>
+					<option value="eee">EEE</option>
+					<option value="mech">MECH</option>
+					<option value="aero">AERO</option>
+					<option value="civil">CIVIL</option>
+			  </select>
+
 			  <!-- <input name="iare" type="checkbox" value="true">Are you a student of IARE? -->
 			  <p></p>
               <button>Sign Up</button>
@@ -295,7 +313,8 @@ footer a {
               </div>
             </div>
           </div>
-        </div>
+		</div>
+		
         <script type="text/javascript">
           const signUpButton = document.getElementById('signUp');
           const signInButton = document.getElementById('signIn');

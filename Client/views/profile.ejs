@@ -28,7 +28,7 @@
 
 <style>
   body{
-    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    background: -webkit-linear-gradient(left, #41228e, #41228e);
 }
 .emp-profile{
     padding: 3%;
@@ -124,9 +124,9 @@
 }
 </style> 
 <body>  
-<header>
+<header style="background: brown;">
         <nav class="navbar navbar-expand-lg navbar-dark">
-          <a class="navbar-brand font-tertiary h3" href="/index"> <img src="../../images/logo.png"> <img src="../../images/logotext.png"></a>
+          <a class="navbar-brand font-tertiary h3" href="/index"> <img src="../../images/logo.png"></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
             aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -160,13 +160,14 @@
           </div>
         </nav>
       </header> 
+
     <div class="container emp-profile">
     <form method="post">
         <div class="row">
             <div class="col-md-4">
                     <% if (imgUsername !== undefined){ %>
                         <div class="profile-img">
-                              <img height = "160px" width="135px" src="http://13.233.239.42/iare/images/cse/<%= imgUsername %>.jpg" class="nav-link" >
+                              <img height = "160px" width="135px" src="http://13.233.239.42/iare/images/<%= data.branch %>/<%= imgUsername %>.jpg" class="nav-link" >
                               <span style="color: white" class="nav-item"><b><%= imgUsername %></b></span>
                         </div>
                     <% } %>
@@ -182,7 +183,7 @@
                                                     <label>Username</label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p><%= data.username %></p>
+                                                    <p><%= imgUsername %></p>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -192,6 +193,14 @@
                                                 <div class="col-md-6">
                                                     <p><%= data.name %></p>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Branch</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><%= data.branchCaps %></p>
+                                                    </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -208,7 +217,7 @@
         </div>
     </form>          
 </div> 
-<% include ../views/partials/aboutfooter %>
+<% include ../views/partials/footer %>
 <!-- jQuery -->
 <script src="plugins/jQuery/jquery.min.js"></script>
 <!-- Bootstrap JS -->

@@ -13,6 +13,7 @@ var userSchema = new Schema({
     name: String,
     email: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], index: true},
     admin: String,
+    branch: String,
     totalScore: {type: Number, default: 0},
     isVerified: {type: Boolean, default: false},
     verifyToken: String,

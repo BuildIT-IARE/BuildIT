@@ -6,9 +6,12 @@ const request = require('request');
 const cookieParser = require('cookie-parser');
 var path = require('path');
 
+let config = require('../Server/util/config');
 
-let serverRoute = 'http://localhost:5000';
-let clientRoute = 'http://localhost:3000';
+
+let serverRoute = config.serverAddress;
+let clientRoute = config.clientAddress;
+
 const app = express();
 app.options('*', cors());
 app.use(
@@ -54,6 +57,7 @@ app.get('/profile', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
+    body.branchCaps = body.branch.toUpperCase();
     res.render('profile', {data: body, imgUsername: req.cookies.username});
   });
 
@@ -69,8 +73,25 @@ app.get('/login', async (req, res) => {
 app.get('/admin/add/question', async (req, res) => {
   let url = {
     url: clientRoute
-  }
-  res.render('questionadd', {data: url});
+  };
+
+  let options = {
+    url : serverRoute + '/isAdmin',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  };
+
+  request(options, function(err, response, body){
+    if (body.success){
+      res.render('questionadd', {data: url});
+    } else {
+      body.message = "Unauthorized access";
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+    }    
+  });
 });
 
 app.get('/admin/add/contest', async (req, res) => {
@@ -78,21 +99,69 @@ app.get('/admin/add/contest', async (req, res) => {
     url: clientRoute,
     serverurl: serverRoute
   }
-  res.render('contestadd', {data: url});
+  let options = {
+    url : serverRoute + '/isAdmin',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  
+  request(options, function(err, response, body){
+    if (body.success){
+      res.render('contestadd', {data: url});
+    } else {
+      body.message = "Unauthorized access";
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+    }    
+  });
 });
 
 app.get('/admin/update/question', async (req, res) => {
   let url = {
     url: clientRoute
   }
-  res.render('questionupdate', {data: url});
+  let options = {
+    url : serverRoute + '/isAdmin',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  
+  request(options, function(err, response, body){
+    if (body.success){
+      res.render('questionupdate', {data: url});
+    } else {
+      body.message = "Unauthorized access";
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+    }    
+  });
 });
 
 app.get('/admin/update/contest', async (req, res) => {
   let url = {
     url: clientRoute
   }
-  res.render('contestupdate', {data: url});
+  let options = {
+    url : serverRoute + '/isAdmin',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  
+  request(options, function(err, response, body){
+    if (body.success){
+      res.render('contestupdate', {data: url});
+    } else {
+      body.message = "Unauthorized access";
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+    }    
+  });
 });
 
 app.get('/admin/manageusers', async (req, res) => {
@@ -105,6 +174,7 @@ app.get('/admin/manageusers', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
+    
     body.url = clientRoute;
     res.render('manageusers', {data: body});
   });
@@ -162,12 +232,60 @@ app.post('/admin/results/contest', async (req, res) => {
   });
 });
 
+app.get('/contests/:contestId/leaderboard', async (req, res) => {
+  let options = {
+    url : serverRoute + '/participations/all',
+    method: 'post',
+    body: {
+      contestId: req.params.contestId
+    },
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, bodyparticipation){
+
+    let options = {
+      url : serverRoute + '/questions/contests/'+ req.params.contestId,
+      method: 'get',
+      headers: {
+        'authorization': req.cookies.token
+      },
+      json: true
+    }
+
+    request(options, function(err, response, bodyquestion){
+      let url = {
+        url: clientRoute
+      }
+      res.render('results_public', {data: url, datap: bodyparticipation, dataq: bodyquestion });
+    });
+    
+  });
+});
 
 app.get('/admin', async (req, res) => {
   let url = {
     url: clientRoute
   }
-  res.render('contestadd', {data: url});
+  let options = {
+    url : serverRoute + '/isAdmin',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  
+  request(options, function(err, response, body){
+    if (body.success){
+      res.render('contestadd', {data: url});
+    } else {
+      body.message = "Unauthorized access";
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+    }    
+  });
 });
 
 app.get('/ide/:questionId', async (req, res) => {
@@ -279,7 +397,8 @@ app.post('/signup_', async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      branch: req.body.branch
     },
     json: true
   }
@@ -365,5 +484,5 @@ app.get('/verify', async (req, res) => {
   });
 });
 
-app.listen(3000);
-console.log('Server @ port 3000');
+app.listen(4000);
+console.log('Server @ port 4000');
