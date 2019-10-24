@@ -220,13 +220,13 @@ function handleResult2(data) {
     var stdout;
 
     if (status === 100){
-        stdout = "All testcases satisfied, score: 100";
+        stdout ="<span style='color:Green'>All testcases satisfied, score: 100</span>";
     } else if (status === 50){
-        stdout = "Not all testcases were satisfied, score: 50";
+        stdout = "<span style='color=yellow'>Not all testcases were satisfied, score: 50</span>";
     } else if (status === 25){
-        stdout = "Not all testcases were satisfied, score: 25";
+        stdout = "<span style='color:orange'>Not all testcases were satisfied, score: 25</span>";
     } else {
-        stdout = "No testcases were satisfied, score: 0";
+        stdout = "<span style='color:Red'>No testcases were satisfied, score: 0</span>";
     }
     // var stderr = decode(data.stderr);
     // var compile_output = decode(data.compile_output);
