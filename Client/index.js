@@ -72,7 +72,8 @@ app.get('/login', async (req, res) => {
 
 app.get('/admin/add/question', async (req, res) => {
   let url = {
-    url: clientRoute
+    url: clientRoute,
+    serverurl: serverRoute
   };
 
   let options = {

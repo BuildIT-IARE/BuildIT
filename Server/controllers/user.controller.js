@@ -161,6 +161,9 @@ exports.create = (req, res) => {
                     clientSecret: config.OAuthClientSecret,
                     refreshToken: config.OAuthRefreshToken,
                     accessToken: accessToken
+                },
+                tls: {
+                    rejectUnauthorized: false
                 }
             });
 
