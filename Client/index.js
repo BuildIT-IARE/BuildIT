@@ -143,7 +143,8 @@ app.get('/admin/update/question', async (req, res) => {
 
 app.get('/admin/update/contest', async (req, res) => {
   let url = {
-    url: clientRoute
+    url: clientRoute,
+    serverurl: serverRoute
   }
   let options = {
     url : serverRoute + '/isAdmin',
@@ -406,7 +407,7 @@ app.post('/signup_', async (req, res) => {
         if (body.username && body.password){
           body.message = "Sign up successful, Account verification has been sent to your email";
         } 
-
+        body.url = clientRoute;
         res.render('error', {data: body, imgUsername: req.cookies.username})
 
   });
