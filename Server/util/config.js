@@ -1,5 +1,5 @@
 module.exports = {
-    localServer: false,
+    localServer: true,
     secret: 'IIdhfdSHIO42425UUdncxdf952S',
     clientAddress: 'http://172.16.17.233:4000',
     serverAddress: 'http://172.16.17.233:5000',
