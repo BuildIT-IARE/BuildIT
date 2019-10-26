@@ -94,6 +94,48 @@ app.post('/testPost', async (req, res) => {
 });
 
 // Main Routes
+app.post('/isOngoing', middleware.checkToken, async(req, res) => {
+  contests.getDuration(req, (err, duration) => {
+    if (err){
+      res.status(404).send({message: err});
+    }
+
+    let date = new Date();
+    let today = date.toLocaleDateString();
+    let day = today.slice(0, 2);
+    let month = today.slice(3, 5);
+    let year = today.slice(6, 10);
+    if (!localServer){
+      today = `${year}-${day}-${month}`;
+    } else {
+      today = `${year}-${month}-${day}`;
+    }
+    let minutes = date.getMinutes();
+    let hours = date.getHours();
+    if (hours < 10){
+      hours = '0'+String(hours);
+    }
+
+    if (minutes < 10){
+      minutes = '0'+String(minutes);
+    }
+
+    let currentTime = `${hours}${minutes}`;
+    currentTime = eval(currentTime);
+    if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
+      accepted = true
+    } else {
+      accepted = false
+    }
+    if (req.decoded.admin){
+      accepted = true;
+    }
+    res.send({
+      success: accepted,
+      message: "Contest window hasn't opened!"
+    });
+  });
+});
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   contests.getDuration(req, (err, duration) => {
