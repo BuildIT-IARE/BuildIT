@@ -36,7 +36,7 @@
 						</div><!-- /gn-scroller -->
 					</nav>
 				</li>
-				<li><a href="<%= data.url %>/admin/add/question">Refresh</a></li>
+				<li><a href="<%= data.url %>/admin/results/contest">Refresh</a></li>
 				<li><a class="codrops-icon codrops-icon-prev" href="<%= data.url %>/logout"><span>Logout</span></a></li>
 				
       </ul>
@@ -63,7 +63,8 @@
             <% while (done < dataq.length-1) { %>
               <% if (dataq[k].questionId === datap[i].submissionResults[j].questionId) { %>
                 <% done++ %>
-                <td><%= datap[i].submissionResults[j].score %></td>
+                <!-- Here -->
+          <td><%= datap[i].submissionResults[j].score %></td>
               <% } %>
               <% k++ %>
             <% } %>

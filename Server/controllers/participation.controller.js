@@ -70,24 +70,19 @@ exports.create = (req, res) => {
 exports.acceptSubmission = (sub, callback) => {
     // Change here
     // Find participation and update it with the request body
-    console.log("twice?");
     Participation.find({participationId: sub.participationId})
     .then(participation => {
         // Check prev sub
             participation = participation[0];
-            console.log("Found participation");
             found = false;
             updated = false;
             if (participation.submissionResults.length !== 0){
             for (let i = 0; i < participation.submissionResults.length; i++){
                 if (participation.submissionResults[i].questionId === sub.questionId){
                     found = true;
-                    console.log("Found question");
                     if (participation.submissionResults[i].score < sub.score){
                         // Update higher score
                         updated = true;
-                        console.log("Updated score");
-                        console.log(participation.submissionResults[i].score, sub.score)
                         Participation.findOneAndUpdate({participationId: sub.participationId}, {$set:{
                             submissionResults: { questionId: sub.questionId, score: sub.score}
                           }}, {new: true}, (err, doc) => {
@@ -111,25 +106,21 @@ exports.acceptSubmission = (sub, callback) => {
                 }
             }
             if (found && !updated){
-                console.log("didnt update");
                 return callback(null, participation);
             }
         }
             if (!found){
-                console.log("Question wasnt attempted before");
                 Participation.findOneAndUpdate({participationId: sub.participationId}, {$addToSet:{
                     submissionResults: { questionId: sub.questionId, score: sub.score}
                   }}, {new: true}, (err, doc) => {
                     if (err) {
                         console.log("Something wrong when updating data!");
                     }
-                    console.log(doc);
                   })
                 .then(participation => {
                     if(!participation) {
                         return callback("Participation not found with Id ", null);
                     }
-                    console.log("returning", participation);
                     return callback(null, participation);
                 }).catch(err => {
                     console.log(err);

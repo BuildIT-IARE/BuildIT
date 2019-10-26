@@ -45,26 +45,29 @@
 
 <div class="w3-container" style="background: white;">
 
-    <h2 style="text-align: center">All Users</h2>
+    <h2 style="text-align: center">BuildIT Users</h2>
 
-
+	<button onclick="exportTableToCSV('users.csv')">Download User Details</button>
+	<br><hr>
   <table class="w3-table w3-striped">
     <tr>
       <th> Username</th>
       <th> Password</th>
-      <th> Name</th>
+	  <th> Name</th>
+	  <th> Branch</th>
       <th> Email</th>
-      <th> Admin Access</th>
 
     </tr>
 <% for(let i=0; i < data.length; i++){ %>
+	<% if (!data[i].admin){ %>
     <tr>
         <td><%= data[i].username %></td>
         <td><%= data[i].password %></td>
-        <td><%= data[i].name %></td> 
+		<td><%= data[i].name %></td> 
+		<td><%= data[i].branch %></td> 		
         <td><%= data[i].email %></td> 
-        <td><%= data[i].admin %></td>          
-    </tr>    
+	</tr>  
+	<% } %>  
 <% } %>
  
   </table>
@@ -77,5 +80,41 @@
 <script>
   new gnMenu( document.getElementById( 'gn-menu' ) );
 </script>
+<script>
+		function downloadCSV(csv, filename) {
+		var csvFile;
+		var downloadLink;
+	  
+		csvFile = new Blob([csv], {type: "text/csv"});
+	  
+		downloadLink = document.createElement("a");
+	  
+		downloadLink.download = filename;
+	  
+		downloadLink.href = window.URL.createObjectURL(csvFile);
+	  
+		downloadLink.style.display = "none";
+	  
+		document.body.appendChild(downloadLink);
+	  
+		downloadLink.click();
+	  }
+	  
+	  function exportTableToCSV(filename) {
+		var csv = [];
+		var rows = document.querySelectorAll("table tr");
+		
+		for (var i = 0; i < rows.length; i++) {
+			var row = [], cols = rows[i].querySelectorAll("td, th");
+			
+			for (var j = 0; j < cols.length; j++) 
+				row.push(cols[j].innerText);
+			
+			csv.push(row.join(","));        
+		}
+	  
+		downloadCSV(csv.join("\n"), filename);
+	  }
+		</script>
 </body>
 </html>

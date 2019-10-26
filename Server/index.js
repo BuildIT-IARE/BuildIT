@@ -7,12 +7,20 @@ const cookieParser = require('cookie-parser');
 const request = require('request');
 const moment = require('moment');
 
+let config = require('./util/config');
 let middleware = require('./util/middleware.js');
 
-
-let homepage = 'http://localhost:3000/';
 // API Address
-const apiAddress = 'https://api.judge0.com/';
+const localServer = config.localServer;
+
+let apiAddress = config.apiAddress;
+let timeOut = 3000;
+
+if (localServer){
+  apiAddress = config.localAPI;
+  timeOut = 0;
+}
+
 console.log("Using API from url", apiAddress);
 
 // INIT
@@ -39,7 +47,7 @@ mongoose.set('useFindAndModify', false);
 moment.suppressDeprecationWarnings = true;
 
 dbConfig = {
-  url: 'mongodb://localhost:27017/BuildIT'
+  url: config.dbURL
 }
 // Connecting to the database
 mongoose.connect(dbConfig.url, {
@@ -87,11 +95,6 @@ app.post('/testPost', async (req, res) => {
 
 // Main Routes
 
-app.get('/logout', async (req, res) => {
-    res.clearCookie('token');
-    res.redirect(homepage);
-});
-
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   contests.getDuration(req, (err, duration) => {
     if (err){
@@ -103,10 +106,13 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     let day = today.slice(0, 2);
     let month = today.slice(3, 5);
     let year = today.slice(6, 10);
-    today = `${year}-${day}-${month}`;
+    if (!localServer){
+      today = `${year}-${day}-${month}`;
+    } else {
+      today = `${year}-${month}-${day}`;
+    }
     let minutes = date.getMinutes();
     let hours = date.getHours();
-
     if (hours < 10){
       hours = '0'+String(hours);
     }
@@ -127,6 +133,11 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
         if (err){
             res.status(404).send({message: "Question not found with id " + req.body.questionId});
         } else {
+          if(localServer){
+            postUrl = apiAddress + '/submissions/?wait=true';
+          } else {
+            postUrl = apiAddress + '/submissions'
+          }
           let options1 = {
             method: 'post',
             body: {
@@ -136,7 +147,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
               expected_output: testcases.HO1
             },
             json: true,
-            url: apiAddress + '/submissions'
+            url: postUrl
           };
     
           let options2 = {
@@ -148,7 +159,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
               expected_output: testcases.HO2
             },
             json: true,
-            url: apiAddress + '/submissions'
+            url: postUrl
           };
     
           let options3 = {
@@ -160,7 +171,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
               expected_output: testcases.HO3
             },
             json: true,
-            url: apiAddress + '/submissions'
+            url: postUrl
           };
           
           let result = {
@@ -282,17 +293,17 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                                 });
                               });
                             });
-                            }, 3000);
+                            }, timeOut);
                           });
-                          }, 3000);
+                          }, timeOut);
                         });
-                        }, 3000);
+                        }, timeOut);
                     });  
-                    }, 3000);
+                    }, timeOut);
                   });
-                  }, 3000);
+                  }, timeOut);
                 });
-              }, 3000);
+              }, timeOut);
             } else {
               res.status(403).send({message: "Your test duration has expired"});
             }
@@ -368,6 +379,12 @@ app.get('/getScores', middleware.checkToken, async (req, res) => {
   });
 
   // res.end();
+});
+
+app.get('/isAdmin', middleware.checkTokenAdmin, async (req, res) => {
+  res.send({
+    success: true
+  });
 });
 
 app.listen(5000,()=>console.log('Server @ port 5000'));
