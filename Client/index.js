@@ -298,7 +298,7 @@ app.get('/ide/:questionId', async (req, res) => {
 });
 
 
-app.get('/contests', async (req, res) => {
+app.get('/contest', async (req, res) => {
   let options = {
     url : serverRoute + '/contests',
     method: 'get',
