@@ -32,6 +32,8 @@ app.use('/ide', express.static(path.resolve('../IDE')));
 
 app.use('/contests', express.static(__dirname + '/'));
 app.use('/contests/questions', express.static(__dirname + '/'));
+app.use('/admin', express.static(__dirname + '/'));
+
 
 
 app.get('/', async (req, res) => {
@@ -313,9 +315,9 @@ app.get('/contest', async (req, res) => {
 });
 
 app.get('/contests/:contestId', async (req, res) => {
-  // Add participation
-  let options1 = {
-    url : serverRoute + '/participations',
+  // check if contest is open
+  let options = {
+    url : serverRoute + '/isOngoing',
     method: 'post',
     headers: {
       'authorization': req.cookies.token
@@ -325,68 +327,86 @@ app.get('/contests/:contestId', async (req, res) => {
     },
     json: true
   }
-
-  request(options1, function(err, response, body){
-
-    let options = {
-      url : serverRoute + '/questions/contests/'+req.params.contestId,
-      method: 'get',
-      headers: {
-        'authorization': req.cookies.token
-      },
-      json: true
-    }
-    // Get questions for contest
-    request(options, function(err, response, body){
-      res.cookie('contestId',req.params.contestId);
-        let options3 ={
-          url: serverRoute + '/participations/' + req.params.contestId,
+  request(options, function(err, response, body){
+    if (body.success){
+      // Add participation
+      let options1 = {
+        url : serverRoute + '/participations',
+        method: 'post',
+        headers: {
+          'authorization': req.cookies.token
+        },
+        body: {
+          contestId: req.params.contestId 
+        },
+        json: true
+      }
+  
+      request(options1, function(err, response, body){
+  
+        let options = {
+          url : serverRoute + '/questions/contests/'+req.params.contestId,
           method: 'get',
           headers: {
             'authorization': req.cookies.token
           },
           json: true
-       }
-      // get participation details
-      request(options3, function(err, response, bodytimer){
-        bodytimer = bodytimer[0];
-        let questions = [];
-        let scores = [];
-        for (let i = 0; i < body.length; i++){
-          questions[i] = body[i].questionId;
         }
-        for (let i = 0; i < questions.length; i++){
-          let maxScore = 0;
-          for(let j = 0; j < bodytimer.submissionResults.length; j++){
-            if (bodytimer.submissionResults[j].questionId === questions[i]){
-              if (maxScore < bodytimer.submissionResults[j].score){
-                maxScore = bodytimer.submissionResults[j].score;
+        // Get questions for contest
+        request(options, function(err, response, body){
+          res.cookie('contestId',req.params.contestId);
+            let options3 ={
+              url: serverRoute + '/participations/' + req.params.contestId,
+              method: 'get',
+              headers: {
+                'authorization': req.cookies.token
+              },
+              json: true
+          }
+          // get participation details
+          request(options3, function(err, response, bodytimer){
+            bodytimer = bodytimer[0];
+            let questions = [];
+            let scores = [];
+            for (let i = 0; i < body.length; i++){
+              questions[i] = body[i].questionId;
+            }
+            for (let i = 0; i < questions.length; i++){
+              let maxScore = 0;
+              for(let j = 0; j < bodytimer.submissionResults.length; j++){
+                if (bodytimer.submissionResults[j].questionId === questions[i]){
+                  if (maxScore < bodytimer.submissionResults[j].score){
+                    maxScore = bodytimer.submissionResults[j].score;
+                  }
+                }
+              }
+              scores[i] = maxScore;
+            }
+            for (let i = 0; i < body.length; i++){
+              for(let j = 0; j < questions.length; j++){
+                if (body[i].questionId === questions[j]){
+                  body[i].score = scores[j];
+                }
               }
             }
-          }
-          scores[i] = maxScore;
-        }
-        for (let i = 0; i < body.length; i++){
-          for(let j = 0; j < questions.length; j++){
-            if (body[i].questionId === questions[j]){
-              body[i].score = scores[j];
+            for (let i = 0; i < body.length; i++){
+              if (body[i].score === 100){
+                body[i].color = "green";
+              } else if (body[i].score === 50){
+                body[i].color = "orange";
+              } else if (body[i].score === 25) {
+                body[i].color = "red";
+              } else {
+                body[i].color = "black";
+              }
             }
-          }
-        }
-        for (let i = 0; i < body.length; i++){
-          if (body[i].score === 100){
-            body[i].color = "green";
-          } else if (body[i].score === 50){
-            body[i].color = "orange";
-          } else if (body[i].score === 25) {
-            body[i].color = "red";
-          } else {
-            body[i].color = "black";
-          }
-        }
-        res.render('questions', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
+            res.render('questions', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
+          });
+        });
       });
-    });
+    } else {
+      res.render('error', {data: body, imgUsername: req.cookies.username});
+    }
   });
 });
 

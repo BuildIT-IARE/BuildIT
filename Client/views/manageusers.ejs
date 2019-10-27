@@ -37,7 +37,7 @@
 						</div><!-- /gn-scroller -->
 					</nav>
 				</li>
-				<li><a href="<%= data.url %>/admin/add/question">Refresh</a></li>
+				<li><a href="<%= data.url %>/admin/manageusers">Refresh</a></li>
 				<li><a class="codrops-icon codrops-icon-prev" href="<%= data.url %>/logout"><span>Logout</span></a></li>
 				
       </ul>
@@ -51,6 +51,7 @@
 	<br><hr>
   <table class="w3-table w3-striped">
     <tr>
+	  <th> No. </th>
       <th> Username</th>
       <th> Password</th>
 	  <th> Name</th>
@@ -61,6 +62,7 @@
 <% for(let i=0; i < data.length; i++){ %>
 	<% if (!data[i].admin){ %>
     <tr>
+		<td><%= i  %></td>
         <td><%= data[i].username %></td>
         <td><%= data[i].password %></td>
 		<td><%= data[i].name %></td> 
