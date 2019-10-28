@@ -361,7 +361,7 @@ function submit() {
         language_id: languageId,
         stdin: stdinValue,
         contestId: getCookie('contestId'),
-        questionId: windowUrl.slice(serverUrl.length+9, windowUrl.length)
+        questionId: windowUrl.slice(serverUrl.length+5, windowUrl.length)
     };
     timeStart = performance.now();
     $.ajax({
