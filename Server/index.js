@@ -122,6 +122,7 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 
     let currentTime = `${hours}${minutes}`;
     currentTime = eval(currentTime);
+    console.log(duration.date.toString(), today);
     if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
       accepted = true
     } else {
