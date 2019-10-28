@@ -18,8 +18,7 @@ var userSchema = new Schema({
     isVerified: {type: Boolean, default: false},
     verifyToken: String,
     passwordResetToken: String,
-    passwordResetExpires: Date,
-    ip: String
+    passwordResetExpires: Date
 }, {timestamps: true});
 
 
