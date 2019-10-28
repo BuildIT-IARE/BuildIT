@@ -237,38 +237,38 @@ app.post('/admin/results/contest', async (req, res) => {
   });
 });
 
-app.get('/contests/:contestId/leaderboard', async (req, res) => {
-  let options = {
-    url : serverRoute + '/participations/all',
-    method: 'post',
-    body: {
-      contestId: req.params.contestId
-    },
-    headers: {
-      'authorization': req.cookies.token
-    },
-    json: true
-  }
-  request(options, function(err, response, bodyparticipation){
+// app.get('/contests/:contestId/leaderboard', async (req, res) => {
+//   let options = {
+//     url : serverRoute + '/participations/all',
+//     method: 'post',
+//     body: {
+//       contestId: req.params.contestId
+//     },
+//     headers: {
+//       'authorization': req.cookies.token
+//     },
+//     json: true
+//   }
+//   request(options, function(err, response, bodyparticipation){
 
-    let options = {
-      url : serverRoute + '/questions/contests/'+ req.params.contestId,
-      method: 'get',
-      headers: {
-        'authorization': req.cookies.token
-      },
-      json: true
-    }
+//     let options = {
+//       url : serverRoute + '/questions/contests/'+ req.params.contestId,
+//       method: 'get',
+//       headers: {
+//         'authorization': req.cookies.token
+//       },
+//       json: true
+//     }
 
-    request(options, function(err, response, bodyquestion){
-      let url = {
-        url: clientRoute
-      }
-      res.render('results_public', {data: url, datap: bodyparticipation, dataq: bodyquestion });
-    });
+//     request(options, function(err, response, bodyquestion){
+//       let url = {
+//         url: clientRoute
+//       }
+//       res.render('results_public', {data: url, datap: bodyparticipation, dataq: bodyquestion });
+//     });
     
-  });
-});
+//   });
+// });
 
 app.get('/admin', async (req, res) => {
 
