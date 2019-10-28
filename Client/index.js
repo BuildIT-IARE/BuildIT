@@ -184,7 +184,7 @@ app.get('/admin/manageusers', async (req, res) => {
     body.serverurl = serverRoute;
     for (let i = 0; i < body.length; i++){
       if (!body[i].isVerified){
-        body[i].color = 'style="background: pink;"';
+        body[i].color = "pink";
       }
     }
     res.render('manageusers', {data: body});
