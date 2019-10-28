@@ -98,10 +98,7 @@ app.get('/admin/add/question', async (req, res) => {
 });
 
 app.get('/admin/add/contest', async (req, res) => {
-  let url = {
-    url: clientRoute,
-    serverurl: serverRoute
-  }
+
   let options = {
     url : serverRoute + '/isAdmin',
     method: 'get',
@@ -112,6 +109,10 @@ app.get('/admin/add/contest', async (req, res) => {
   }
   
   request(options, function(err, response, body){
+    let url = {
+      url: clientRoute,
+      serverurl: serverRoute
+    }
     if (body.success){
       res.render('contestadd', {data: url});
     } else {
