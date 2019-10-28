@@ -102,7 +102,6 @@ function close_window() {
   <table class="w3-table w3-striped">
     <tr>
       <th>Roll No</th>
-      <th>Name</th>
       <% for (let i = 0; i < dataq.length; i++){ %>
         <th><%= dataq[i].questionId %></th>
       <% } %>
@@ -110,7 +109,6 @@ function close_window() {
   <% for(let i=0; i < datap.length; i++){ %>    
       <tr>
         <td><%= datap[i].username %></td>
-        <td><%= datap[i].name %></td>        
         <% if (datap[i].submissionResults.length !== 0){ %>
           <% for (let j = 0; j < datap[i].submissionResults.length ; j++ ){ %>
             <% let done = 0; let k = 0; %>
