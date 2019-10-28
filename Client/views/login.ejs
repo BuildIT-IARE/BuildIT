@@ -271,12 +271,12 @@ footer a {
             <form action="<%= data.url %>/signup_" method="POST">
 			  <h1 style="padding: 8px;">Create Account</h1>
 			  
-              <input required="true" name="name" type="text" placeholder="Name" />
-              <input required="true" name="email" type="email" placeholder="Email" />
-			  <input required="true" name="username" type="text" placeholder="Roll No" />
-			  <input required="true" name="password" type="password" placeholder="Password" />
-			  <input required="true" name="password2" type="password" placeholder="Confirm Password" />
-			  <select class="custom-select" required="true" name="branch" type="text">
+              <input required name="name" type="text" placeholder="Name" />
+              <input required name="email" type="email" placeholder="Email" />
+			  <input required name="username" type="text" placeholder="Roll No" />
+			  <input required name="password" type="password" placeholder="Password" />
+			  <input required name="password2" type="password" placeholder="Confirm Password" />
+			  <select class="custom-select" required name="branch" type="text">
 				  	<option disabled selected>Select your Branch</option>
 					<option value="cse">CSE</option>
 					<option value="it">IT</option>
@@ -287,7 +287,7 @@ footer a {
 					<option value="civil">CIVIL</option>
 			  </select>
 
-			  <!-- <input name="iare" type="checkbox" value="true">Are you a student of IARE? -->
+			  <!-- <input name="iare" type="checkbox" value>Are you a student of IARE? -->
 			  
               <button>Sign Up</button>
             </form>
@@ -296,8 +296,8 @@ footer a {
             <form action="<%= data.url %>/login_" method="POST">
 			  <h1>Sign In</h1>
 			  <p></p>
-              <input required="true" name="username" type="text" placeholder="Roll No" />
-			  <input required="true" name="password" type="password" placeholder="Password" />
+              <input required name="username" type="text" placeholder="Roll No" />
+			  <input required name="password" type="password" placeholder="Password" />
 			  <a></a>
               <!-- <a>Forgot your password? Contact Admin.</a> -->
 			  <button>Sign In</button>
