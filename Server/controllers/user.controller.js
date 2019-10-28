@@ -126,7 +126,8 @@ exports.create = (req, res) => {
         name: req.body.name,
         email: req.body.email,
         branch: req.body.branch,
-        verifyToken: token
+        verifyToken: token,
+        ip: req.body.ip || req.ip
     });
 
     // Save user in the database
