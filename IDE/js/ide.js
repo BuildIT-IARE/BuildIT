@@ -1,5 +1,5 @@
 var apiUrl = localStorageGetItem("api-url") || "https://api.judge0.com";
-var serverUrl = "http://localhost:5000";
+var serverUrl = "http://119.235.53.59:5000";
 var wait = localStorageGetItem("wait") || false;
 var pbUrl = "https://pb.judge0.com";
 var check_timeout = 200;
