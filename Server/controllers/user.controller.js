@@ -6,10 +6,13 @@ const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
 let config = require('../util/config');
+let domains = require('../util/email');
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 
 let clientAddress = config.clientAddress;
+let emailDomains = domains.domains;
+
 
 // Retrieve and return all users from the database.
 exports.findAll = (req, res) => {
@@ -87,9 +90,33 @@ exports.create = (req, res) => {
     if(!req.body.email || !req.body.username || !req.body.password) {
         return res.status(400).send({
             success: false,
-            message: "email, username and password can not be empty"
+            message: "email, username and password can not be empty!"
         });
     }
+
+    if(req.body.password !== req.body.password2){
+        return res.status(400).send({
+            success: false,
+            message: "Check your password again!"
+        });
+    }
+
+    if(req.body.username.length !== 10 && (req.body.username.slice(2, 6) !== '951a' || req.body.username.slice(0,4) !== 'iare'){
+        return res.status(400).send({
+            success: false,
+            message: "Please enter a valid roll no."
+        });
+    }
+
+    atSign = req.body.email.indexOf('@') + 1;
+
+    if(emailDomains.indexOf(req.body.email.slice(atSign, req.body.email.length)) === -1){
+        return res.status(400).send({
+            success: false,
+            message: "We do not support this email provider, please try another email id."
+        });
+    }    
+
     let token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     // Create a user
     const user = new User({
@@ -196,8 +223,6 @@ exports.create = (req, res) => {
         });
     }
 };
-
-
 
 // Update a user identified by the username in the request
 exports.update = (req, res) => {

@@ -423,6 +423,7 @@ app.post('/signup_', async (req, res) => {
       email: req.body.email,
       username: req.body.username,
       password: req.body.password,
+      password2: req.body.password2,
       branch: req.body.branch
     },
     json: true
