@@ -86,8 +86,8 @@
           border-width: 3px;
         
         
-        </style>
-        <script>
+</style>
+<script>
 function close_window() {
     close();
 }
@@ -110,7 +110,7 @@ function close_window() {
       <tr>
         <td><%= datap[i].username %></td>
         <% if (datap[i].submissionResults.length !== 0){ %>
-          <% for (let j = 0; j < datap[i].submissionResults.length ; j++ ){ %>
+          <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %>
             <% let done = 0; let k = 0; %>
             <% while (done < dataq.length-1 && k < dataq.length) { %>
               <% if (dataq[k].questionId === datap[i].submissionResults[j].questionId) { %>
