@@ -272,9 +272,7 @@ app.get('/contests/:contestId/leaderboard', async (req, res) => {
 });
 
 app.get('/admin', async (req, res) => {
-  let url = {
-    url: clientRoute
-  }
+
   let options = {
     url : serverRoute + '/isAdmin',
     method: 'get',
@@ -285,6 +283,10 @@ app.get('/admin', async (req, res) => {
   }
   
   request(options, function(err, response, body){
+    let url = {
+      url: clientRoute,
+      serverurl: serverRoute
+    }
     if (body.success){
       res.render('contestadd', {data: url});
     } else {
