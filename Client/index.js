@@ -113,6 +113,7 @@ app.get('/admin/add/contest', async (req, res) => {
       url: clientRoute,
       serverurl: serverRoute
     }
+    console.log(url);
     if (body.success){
       res.render('contestadd', {data: url});
     } else {
