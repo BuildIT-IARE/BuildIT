@@ -170,6 +170,9 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     } else {
       accepted = false
     }
+    if (req.decoded.admin){
+      accepted = true;
+    }
     if (accepted) {
       questions.getTestCases(req, (err, testcases) => {
         if (err){
