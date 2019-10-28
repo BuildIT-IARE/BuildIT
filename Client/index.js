@@ -181,7 +181,23 @@ app.get('/admin/manageusers', async (req, res) => {
   request(options, function(err, response, body){
     
     body.url = clientRoute;
+    body.serverurl = serverRoute;
     res.render('manageusers', {data: body});
+  });
+});
+
+app.get('/admin/deleteuser/:username', async (req, res) => {
+  let options = {
+    url : serverRoute + '/users/' + req.params.username,
+    method: 'delete',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+
+    res.redirect('/admin/manageusers');
   });
 });
 

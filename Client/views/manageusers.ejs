@@ -59,7 +59,7 @@
 	  <th> Name</th>
 	  <th> Branch</th>
       <th> Email</th>
-
+	  <th> Delete</th>
     </tr>
 <% for(let i=0; i < data.length; i++){ %>
 	<% if (!data[i].admin){ %>
@@ -69,7 +69,8 @@
         <td><%= data[i].password %></td>
 		<td><%= data[i].name %></td> 
 		<td><%= data[i].branch %></td> 		
-        <td><%= data[i].email %></td> 
+		<td><%= data[i].email %></td>
+		<td><a href="<%= data[i].url %>/admin/deleteuser/<%= data[i].username %>">Delete User</a></td> 
 	</tr>  
 	<% } %>  
 <% } %>

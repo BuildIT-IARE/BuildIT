@@ -25,5 +25,5 @@ module.exports = (app) => {
     // app.put('/users', middleware.checkTokenAdmin, users.update);
 
     // Delete a user with userId
-    // app.delete('/users/:username', users.delete);
+    app.delete('/users/:username', middleware.checkTokenAdmin, users.delete);
 }

@@ -374,3 +374,28 @@ exports.checkToken = (req, res) => {
             }
     });
 };
+
+// Delete a user with username
+exports.delete = (req, res) => {
+    User.findOneAndRemove({username: req.params.username})
+    .then(user => {
+        if(!user) {
+            return res.status(404).send({
+                success: false,
+                message: "user not found with id " + req.params.username
+            });
+        }
+        res.send({message: "user deleted successfully!"});
+    }).catch(err => {
+        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.status(404).send({
+                success: false,
+                message: "user not found with id " + req.params.username
+            });                
+        }
+        return res.status(500).send({
+            success: false,
+            message: "Could not delete user with id " + req.params.username
+        });
+    });
+};
