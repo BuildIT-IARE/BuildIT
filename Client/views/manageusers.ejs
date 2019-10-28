@@ -64,8 +64,8 @@
 <% for(let i=0; i < data.length; i++){ %>
 	<% if (!data[i].admin){ %>
     <tr>
-		<td style="background: pink;"><%= i %></td>
-        <td><%= data[i].username %></td>
+		<td><%= i %></td>
+        <td <%= data[i].color%> ><%= data[i].username %></td>
         <td><%= data[i].password %></td>
 		<td><%= data[i].name %></td> 
 		<td><%= data[i].branch %></td> 		
