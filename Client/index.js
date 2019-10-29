@@ -69,12 +69,15 @@ app.get('/profile', async (req, res) => {
     urlExists(testUrl, function(err, exists) {
       if (exists){
         body.imgUrl = testUrl;
+        console.log(body.imgUrl);
+        res.render('profile', {data: body, imgUsername: req.cookies.username});
       } else {
         body.imgUrl = './images/defaultuser.png';
+        console.log(body.imgUrl);
+        res.render('profile', {data: body, imgUsername: req.cookies.username});
       }
     });
-    console.log(body.imgUrl);
-    res.render('profile', {data: body, imgUsername: req.cookies.username});
+    
   });
 
 });
