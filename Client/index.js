@@ -218,7 +218,6 @@ app.get('/admin/deleteuser/:username', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
-    res.alert(body.message);
     res.redirect('/admin/manageusers');
   });
 });
