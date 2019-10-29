@@ -73,8 +73,6 @@ app.get('/profile', async (req, res) => {
         body.imgUrl = './images/defaultuser.png';
       }
     });
- 
-
     res.render('profile', {data: body, imgUsername: req.cookies.username});
   });
 
