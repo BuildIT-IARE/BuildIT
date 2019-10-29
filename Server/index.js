@@ -132,7 +132,7 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
     }
     res.send({
       success: accepted,
-      message: "Contest window hasn't opened!"
+      message: "Contest window isn't open!"
     });
   });
 });
