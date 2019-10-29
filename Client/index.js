@@ -65,7 +65,7 @@ app.get('/profile', async (req, res) => {
     let imageUrl = "http://13.233.239.42/iare/images/";
     let rollno =  req.cookies.username;
     let testUrl = imageUrl + branch + rollno + '.jpg';
-
+    console.log(testUrl);
     urlExists(testUrl, function(err, exists) {
       if (exists){
         body.imgUrl = testUrl;
@@ -73,6 +73,7 @@ app.get('/profile', async (req, res) => {
         body.imgUrl = './images/defaultuser.png';
       }
     });
+    console.log(body.imgUrl);
     res.render('profile', {data: body, imgUsername: req.cookies.username});
   });
 
