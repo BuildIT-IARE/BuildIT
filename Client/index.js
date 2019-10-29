@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const request = require('request');
+const urlExists = require('url-exists');
 const cookieParser = require('cookie-parser');
 var path = require('path');
 
@@ -60,6 +61,20 @@ app.get('/profile', async (req, res) => {
   }
   request(options, function(err, response, body){
     body.branchCaps = body.branch.toUpperCase();
+    let branch = body.branch;
+    let imageUrl = "http://13.233.239.42/iare/images/";
+    let rollno =  req.cookies.username;
+    let testUrl = imageUrl + branch + rollno + '.jpg';
+
+    urlExists(testUrl, function(err, exists) {
+      if (exists){
+        body.imgUrl = testUrl;
+      } else {
+        body.imgUrl = './images/defaultuser.png';
+      }
+    });
+ 
+
     res.render('profile', {data: body, imgUsername: req.cookies.username});
   });
 
