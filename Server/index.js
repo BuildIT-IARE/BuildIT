@@ -130,6 +130,9 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
     if (req.decoded.admin){
       accepted = true;
     }
+    if (moment(duration.date.toString()).isAfter(today, 'day')){
+      accepted = true;
+    }
     res.send({
       success: accepted,
       message: "Contest window isn't open!"
