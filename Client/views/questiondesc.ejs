@@ -177,14 +177,14 @@ function close_window() {
           </div>
           <% } %>
           <br>
-        <% if(data[0].questionExampleInput3 !== undefined) { %>
+        <% if(data[0].questionExampleInput3) { %>
         <div>
           <h4><b>Sample Input 3:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleInput3 %></pre>
           </div>
         <% } %>
         <br>
-          <% if(data[0].questionExampleOutput3 !== undefined) { %>
+          <% if(data[0].questionExampleOutput3) { %>
           <div>
             <h4><b>Sample Output 3:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleOutput3 %></pre>
