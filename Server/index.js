@@ -130,8 +130,6 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
     if (req.decoded.admin){
       accepted = true;
     }
-    console.log(today, duration.date.toString());
-    console.log(moment(today).isAfter(duration.date.toString()));
     if (moment(today).isAfter(duration.date.toString())){
       accepted = true;
     }
