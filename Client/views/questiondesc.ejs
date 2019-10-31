@@ -131,73 +131,73 @@ function close_window() {
         <div class = "font-tertiary text-white">
             <p class="cars-text" style="font-size: 130%;"><%= data[0].questionDescriptionText %></p>
         </div>
-        <% if(data[0].questionInputText !== undefined ) { %>
+        <% if(data[0].questionInputText) { %>
       <div>          
             <h4><b>Input:</b></h4>
             <blockquote style="font-size: 20px">
               <li><%= data[0].questionInputText %></li>
             </blockquote>
           </div>
-          <% } %>
           <br>
-          <% if(data[0].questionOutputText !== undefined ) { %>
+          <% } %>
+          <% if(data[0].questionOutputText) { %>
             <div>
               <h4><b>Output:</b></h4>
               <blockquote style="font-size: 20px">
                 <li><%= data[0].questionOutputText %></li>
               </blockquote>
             </div>
+            <br>
             <% } %>
-        <br>
-        <% if(data[0].questionExampleInput1 !== undefined) { %>
+        <% if(data[0].questionExampleInput1) { %>
         <div>
           <h4><b>Sample Input 1:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleInput1 %></pre>
           </div>
-        <% } %>
         <br>
-        <% if(data[0].questionExampleOutput1 !== undefined) { %>
+        <% } %>
+        <% if(data[0].questionExampleOutput1) { %>
           <div>
             <h4><b>Sample Output 1:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleOutput1 %></pre>
           </div>
-          <% } %>
           <br>
-        <% if(data[0].questionExampleInput2 !== undefined) { %>
+          <% } %>
+        <% if(data[0].questionExampleInput2) { %>
         <div>
           <h4><b>Sample Input 2:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleInput2 %></pre>
           </div>
-        <% } %>
         <br>
-        <% if(data[0].questionExampleOutput2 !== undefined) { %>
+        <% } %>
+        <% if(data[0].questionExampleOutput2) { %>
           <div>
             <h4><b>Sample Output 2:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleOutput2 %></pre>
           </div>
-          <% } %>
           <br>
+          <% } %>
         <% if(data[0].questionExampleInput3) { %>
         <div>
           <h4><b>Sample Input 3:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleInput3 %></pre>
           </div>
-        <% } %>
         <br>
+        <% } %>
           <% if(data[0].questionExampleOutput3) { %>
           <div>
             <h4><b>Sample Output 3:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleOutput3 %></pre>
           </div>
-          <% } %>
           <br>
+          <% } %>
           <% if (data[0].questionExplanation !== undefined) { %>
           <div>    
           <h4><b>Explanation:</b></h4>
           <p class="cars-text"><%= data[0].questionExplanation %></p>
         </div>
-        <% } %>
         <br>  
+        <% } %>
         <% if (data[0].author !== undefined) { %>
         <div>
           <h4><b>Author:</b></h4>
