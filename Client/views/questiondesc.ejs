@@ -191,14 +191,14 @@ function close_window() {
           </div>
           <br>
           <% } %>
-          <% if (data[0].questionExplanation !== undefined) { %>
+          <% if (data[0].questionExplanation) { %>
           <div>    
           <h4><b>Explanation:</b></h4>
           <p class="cars-text"><%= data[0].questionExplanation %></p>
         </div>
         <br>  
         <% } %>
-        <% if (data[0].author !== undefined) { %>
+        <% if (data[0].author) { %>
         <div>
           <h4><b>Author:</b></h4>
           <p class="cars-text"><%= data[0].author %></p>
