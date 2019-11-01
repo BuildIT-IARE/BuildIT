@@ -57,9 +57,15 @@
             <div class="card-body">
               <h4 class="card-title"><a class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
               </h4><br>
+              <% if (data[i].contestDuration) { %>
               <p><b>Duration: </b><%= data[i].contestDuration %> Mins</p>
+              <% } %>
+              <% if (data[i].contestDate) { %>
               <p><b>Date: </b><%= data[i].contestDate %></p>
+              <% } %>
+              <% if (data[i].contestStartTime && data[i].contestEndTime) { %>
               <p><b>Timing: </b><%= data[i].contestStartTime %> to <%= data[i].contestEndTime %></p><br>
+              <% } %>
               <a href="contests/<%= data[i].contestId %>" class="btn btn-xs btn-primary">Participate</a>
 
             </div>
