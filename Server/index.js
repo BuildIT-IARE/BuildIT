@@ -122,6 +122,7 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 
     let currentTime = `${hours}${minutes}`;
     currentTime = eval(currentTime);
+    console.log(duration.date.toString(), today, currentTime);
     if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
       accepted = true
     } else {
@@ -133,7 +134,7 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
     if (moment(today).isAfter(duration.date.toString())){
       accepted = true;
     }
-
+    accepted = true;
     res.send({
       success: accepted,
       message: "Contest window isn't open!"
