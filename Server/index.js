@@ -178,9 +178,12 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     currentTime = eval(currentTime);
     console.log(duration.date.toString(), today, currentTime);
     if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
-      accepted = true
+      accepted = true;
     } else {
-      accepted = false
+      accepted = false;
+    }
+    if (req.decoded.admin){
+      accepted = true;
     }
     if (accepted) {
       questions.getTestCases(req, (err, testcases) => {
