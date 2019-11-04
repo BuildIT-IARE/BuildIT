@@ -102,6 +102,9 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 
     let date = new Date();
     let today = date.toLocaleDateString();
+    if (today.length === 9){
+      today = '0'+today;
+    }
     console.log(today);
     let day = today.slice(0, 2);
     let month = today.slice(3, 5);
@@ -135,7 +138,6 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
     if (moment(today).isAfter(duration.date.toString())){
       accepted = true;
     }
-    accepted = true;
     res.send({
       success: accepted,
       message: "Contest window isn't open!"
