@@ -175,6 +175,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
 
     let currentTime = `${hours}${minutes}`;
     currentTime = eval(currentTime);
+    console.log(duration.date.toString(), today, currentTime);
     if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
       accepted = true
     } else {
