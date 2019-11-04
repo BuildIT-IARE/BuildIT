@@ -105,7 +105,6 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
     if (today.length === 9){
       today = '0'+today;
     }
-    console.log(today);
     let day = today.slice(0, 2);
     let month = today.slice(3, 5);
     let year = today.slice(6, 10);
@@ -160,6 +159,9 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
       today = `${year}-${day}-${month}`;
     } else {
       today = `${year}-${month}-${day}`;
+    }
+    if (today.length === 9){
+      today = '0'+today;
     }
     let minutes = date.getMinutes();
     let hours = date.getHours();
