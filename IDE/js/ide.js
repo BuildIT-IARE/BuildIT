@@ -1,4 +1,4 @@
-var apiUrl = localStorageGetItem("api-url") || "https://api.judge0.com";
+var apiUrl = localStorageGetItem("api-url") || "http://119.235.53.59:3000";
 var serverUrl = "http://119.235.53.59:5000";
 var wait = localStorageGetItem("wait") || false;
 var pbUrl = "https://pb.judge0.com";
