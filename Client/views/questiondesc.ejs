@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>BuildIT</title>
+  <title><%= data[0].questionName %></title>
 
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="plugins/slick/slick.css">
   <!-- themefy-icon -->
   <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
+  <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
 
   <!-- Main Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
@@ -128,52 +129,76 @@ function close_window() {
 
       <div class="border" style="background: #F7F4E7; font-family: Verdana, Geneva, Tahoma, sans-serif;">
         <div class = "font-tertiary text-white">
-            <p class="cars-text" style="font-size: 130%;"><%= data[0].questionDescriptionText %></p>
+            <p class="cars-text" style="font-size: 130%; white-space: pre-line;"><%= data[0].questionDescriptionText %></p>
         </div>
-        <% if(data[0].questionInputText !== undefined ) { %>
+        <% if(data[0].questionInputText) { %>
       <div>          
             <h4><b>Input:</b></h4>
             <blockquote style="font-size: 20px">
               <li><%= data[0].questionInputText %></li>
             </blockquote>
           </div>
-          <% } %>
           <br>
-          <% if(data[0].questionOutputText !== undefined ) { %>
+          <% } %>
+          <% if(data[0].questionOutputText) { %>
             <div>
               <h4><b>Output:</b></h4>
               <blockquote style="font-size: 20px">
                 <li><%= data[0].questionOutputText %></li>
               </blockquote>
             </div>
+            <br>
             <% } %>
-        <br>
-        <% if(data[0].questionExampleInput1 !== undefined && data[0].questionExampleInput2 !== undefined && data[0].questionExampleInput3 !== undefined) { %>
+        <% if(data[0].questionExampleInput1) { %>
         <div>
-          <h4><b>Sample Input:</b></h4>
+          <h4><b>Sample Input 1:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleInput1 %></pre>
+          </div>
+        <br>
+        <% } %>
+        <% if(data[0].questionExampleOutput1) { %>
+          <div>
+            <h4><b>Sample Output 1:</b></h4>
+            <pre style="font-size: 18px"><%= data[0].questionExampleOutput1 %></pre>
+          </div>
+          <br>
+          <% } %>
+        <% if(data[0].questionExampleInput2) { %>
+        <div>
+          <h4><b>Sample Input 2:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleInput2 %></pre>
+          </div>
+        <br>
+        <% } %>
+        <% if(data[0].questionExampleOutput2) { %>
+          <div>
+            <h4><b>Sample Output 2:</b></h4>
+            <pre style="font-size: 18px"><%= data[0].questionExampleOutput2 %></pre>
+          </div>
+          <br>
+          <% } %>
+        <% if(data[0].questionExampleInput3) { %>
+        <div>
+          <h4><b>Sample Input 3:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleInput3 %></pre>
           </div>
-        <% } %>
         <br>
-        <% if(data[0].questionExampleOutput1 !== undefined && data[0].questionExampleOutput2 !== undefined && data[0].questionExampleOutput3 !== undefined) { %>
+        <% } %>
+          <% if(data[0].questionExampleOutput3) { %>
           <div>
-            <h4><b>Sample Output :</b></h4>
-            <pre style="font-size: 18px"><%= data[0].questionExampleOutput1 %></pre>
-            <pre style="font-size: 18px"><%= data[0].questionExampleOutput2 %></pre>
+            <h4><b>Sample Output 3:</b></h4>
             <pre style="font-size: 18px"><%= data[0].questionExampleOutput3 %></pre>
           </div>
-          <% } %>
           <br>
-          <% if (data[0].questionExplanation !== undefined) { %>
+          <% } %>
+          <% if (data[0].questionExplanation) { %>
           <div>    
           <h4><b>Explanation:</b></h4>
           <p class="cars-text"><%= data[0].questionExplanation %></p>
         </div>
-        <% } %>
         <br>  
-        <% if (data[0].author !== undefined) { %>
+        <% } %>
+        <% if (data[0].author) { %>
         <div>
           <h4><b>Author:</b></h4>
           <p class="cars-text"><%= data[0].author %></p>

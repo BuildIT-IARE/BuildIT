@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
-<title>Submissions Table</title>
+<title>Leaderboards</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../../css/navadmin.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<head>
+<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+</head>
 <style>
         .button1 {
           border-radius: 4px;
@@ -86,8 +89,8 @@
           border-width: 3px;
         
         
-        </style>
-        <script>
+</style>
+<script>
 function close_window() {
     close();
 }
@@ -101,7 +104,7 @@ function close_window() {
   <br><hr>
   <table class="w3-table w3-striped">
     <tr>
-      <th>Username</th>
+      <th>Roll No</th>
       <% for (let i = 0; i < dataq.length; i++){ %>
         <th><%= dataq[i].questionId %></th>
       <% } %>
@@ -110,9 +113,9 @@ function close_window() {
       <tr>
         <td><%= datap[i].username %></td>
         <% if (datap[i].submissionResults.length !== 0){ %>
-          <% for (let j = 0; j < datap[i].submissionResults.length ; j++ ){ %>
+          <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %>
             <% let done = 0; let k = 0; %>
-            <% while (done < dataq.length-1) { %>
+            <% while (done < dataq.length-1 && k < dataq.length) { %>
               <% if (dataq[k].questionId === datap[i].submissionResults[j].questionId) { %>
                 <% done++ %>
                 <td><%= datap[i].submissionResults[j].score %></td>

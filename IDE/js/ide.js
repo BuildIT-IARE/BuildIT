@@ -1,5 +1,5 @@
-var apiUrl = localStorageGetItem("api-url") || "https://api.judge0.com";
-var serverUrl = "http://localhost:5000";
+var apiUrl = localStorageGetItem("api-url") || "http://119.235.53.59:3000";
+var serverUrl = "http://119.235.53.59:5000";
 var wait = localStorageGetItem("wait") || false;
 var pbUrl = "https://pb.judge0.com";
 var check_timeout = 200;
@@ -361,7 +361,7 @@ function submit() {
         language_id: languageId,
         stdin: stdinValue,
         contestId: getCookie('contestId'),
-        questionId: windowUrl.slice(serverUrl.length+9, windowUrl.length)
+        questionId: windowUrl.slice(serverUrl.length+5, windowUrl.length)
     };
     timeStart = performance.now();
     $.ajax({

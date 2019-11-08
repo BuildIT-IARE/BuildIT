@@ -260,7 +260,10 @@ footer a {
     text-decoration: none;
 }
 
-    </style>
+	</style>
+	<head>
+		<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+	</head>
     <body>
         <h2><a href="/home" style="color: red">Back to Home page</a></h2>
         <div class="container" id="container">
@@ -268,12 +271,13 @@ footer a {
             <form action="<%= data.url %>/signup_" method="POST">
 			  <h1 style="padding: 8px;">Create Account</h1>
 			  
-              <input required="true" name="name" type="text" placeholder="Name" />
-              <input required="true" name="email" type="email" placeholder="Email" />
-			  <input required="true" name="username" type="text" placeholder="Roll No" />
-			  <input required="true" name="password" type="password" placeholder="Password" />
-			  <select class="custom-select" required="true" name="branch" type="text">
-				  	<option disabled selected>Select your Branch</option>
+              <input required name="name" type="text" placeholder="Name" />
+              <input required name="email" type="email" placeholder="Email" />
+			  <input required name="username" type="text" placeholder="Roll No" />
+			  <input required name="password" type="password" placeholder="Password" />
+			  <input required name="password2" type="password" placeholder="Confirm Password" />
+			  <select class="custom-select" required name="branch" type="text">
+				  	<option disabled selected value="">Select your Branch</option>
 					<option value="cse">CSE</option>
 					<option value="it">IT</option>
 					<option value="ece">ECE</option>
@@ -283,8 +287,8 @@ footer a {
 					<option value="civil">CIVIL</option>
 			  </select>
 
-			  <!-- <input name="iare" type="checkbox" value="true">Are you a student of IARE? -->
-			  <p></p>
+			  <!-- <input name="iare" type="checkbox" value>Are you a student of IARE? -->
+			  
               <button>Sign Up</button>
             </form>
           </div>
@@ -292,8 +296,8 @@ footer a {
             <form action="<%= data.url %>/login_" method="POST">
 			  <h1>Sign In</h1>
 			  <p></p>
-              <input required="true" name="username" type="text" placeholder="Username" />
-			  <input required="true" name="password" type="password" placeholder="Password" />
+              <input required name="username" type="text" placeholder="Roll No" />
+			  <input required name="password" type="password" placeholder="Password" />
 			  <a></a>
               <!-- <a>Forgot your password? Contact Admin.</a> -->
 			  <button>Sign In</button>

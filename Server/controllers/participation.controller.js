@@ -83,9 +83,10 @@ exports.acceptSubmission = (sub, callback) => {
                     if (participation.submissionResults[i].score < sub.score){
                         // Update higher score
                         updated = true;
-                        Participation.findOneAndUpdate({participationId: sub.participationId}, {$set:{
-                            submissionResults: { questionId: sub.questionId, score: sub.score}
-                          }}, {new: true}, (err, doc) => {
+                        console.log("Came here");
+                        Participation.updateOne({participationId: sub.participationId, "submissionResults.questionId": sub.questionId}, {$set:
+                            {"submissionResults.$.score": sub.score}
+                          }, {new: true}, (err, doc) => {
                             if (err) {
                                 console.log("Something wrong when updating data!");
                             }
