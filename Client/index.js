@@ -60,8 +60,6 @@ app.get('/profile', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
-    body.branchCaps = body.branch;
-    res.render('profile', {data: body, imgUsername: req.cookies.username});
     body.branchCaps = body.branch.toUpperCase();
     let branch = body.branch;
     let imageUrl = "http://13.233.239.42/iare/images/";
