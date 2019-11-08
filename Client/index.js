@@ -60,10 +60,8 @@ app.get('/profile', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
-<<<<<<< HEAD
     body.branchCaps = body.branch;
     res.render('profile', {data: body, imgUsername: req.cookies.username});
-=======
     body.branchCaps = body.branch.toUpperCase();
     let branch = body.branch;
     let imageUrl = "http://13.233.239.42/iare/images/";
@@ -81,8 +79,6 @@ app.get('/profile', async (req, res) => {
         res.render('profile', {data: body, imgUsername: req.cookies.username});
       }
     });
-    
->>>>>>> 5f450ef1d1cb51021fa3e9fada2cc519d42c88ab
   });
 
 });
