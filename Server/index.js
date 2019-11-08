@@ -131,7 +131,7 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
     } else {
       accepted = false
     }
-    accepted = true;
+    // accepted = true;
     if (req.decoded.admin){
       accepted = true;
     }
@@ -186,7 +186,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     if (req.decoded.admin){
       accepted = true;
     }
-    accepted = true;
+    // accepted = true;
     if (accepted) {
       questions.getTestCases(req, (err, testcases) => {
         if (err){
@@ -248,8 +248,8 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
             let validTime = participation.validTill;
 
             // participation.validTill = validTime.slice(4, validTime.length-9);
-            //if (momentDate.isBefore(participation.validTill)){
-            if (true){
+            if (momentDate.isBefore(participation.validTill)){
+            // if (true){
               setTimeout(()=> {
                 request(options1, function (err, response, body) {
                   if (err) {
