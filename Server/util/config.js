@@ -1,10 +1,10 @@
 module.exports = {
     localServer: true,
     secret: 'IIdhfdSHIO42425UUdncxdf952S',
-    clientAddress: 'http://172.16.17.233:4000',
-    serverAddress: 'http://172.16.17.233:5000',
+    clientAddress: 'http://localhost:4000',
+    serverAddress: 'http://localhost:5000',
     apiAddress: 'https://api.judge0.com/',
-    localAPI: 'http://172.16.17.233:3000',
+    localAPI: 'http://localhost:3000',
     dbURL: 'mongodb://localhost/BuildIT',
     OAuthClientID: '1064096911787-mkih3p6r7f6p2tcc24i267736mu8qljj.apps.googleusercontent.com',
     OAuthClientSecret: 'Qs2c7YP8Q8jCMw-PIbARUrmn',

@@ -57,7 +57,7 @@ app.get('/profile', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
-    body.branchCaps = body.branch.toUpperCase();
+    body.branchCaps = body.branch;
     res.render('profile', {data: body, imgUsername: req.cookies.username});
   });
 
