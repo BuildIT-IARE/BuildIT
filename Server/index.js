@@ -131,6 +131,7 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
     } else {
       accepted = false
     }
+    accepted = true;
     if (req.decoded.admin){
       accepted = true;
     }
