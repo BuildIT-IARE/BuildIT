@@ -24,7 +24,6 @@
     "morgan": "^1.9.1",
     "nodemailer": "^6.3.1",
     "nodemon": "^1.19.3",
-    "request": "^2.88.0",
-    "url-exists": "^1.0.3"
+    "request": "^2.88.0"
   }
 }
