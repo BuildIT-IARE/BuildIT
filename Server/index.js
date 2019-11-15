@@ -268,96 +268,100 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                           res.status(404).send({message: err});
                         }
                         result.token3 = body.token;
-
-                        option1 = {
-                          url: apiAddress + '/submissions/' + result.token1,
-                          method: 'get'
-                        }
-                        option2 = {
-                          url: apiAddress + '/submissions/' + result.token2,
-                          method: 'get'
-                        }
-                        option3 = {
-                          url: apiAddress + '/submissions/' + result.token3,
-                          method: 'get'
-                        }
-                        setTimeout(()=>{
-                        request(option1, function (err, response, body) {
-                          if (err) {
-                          res.status(404).send({message: err});
+                        if (result.token1 && result.token2 && result.token3){
+                          option1 = {
+                            url: apiAddress + '/submissions/' + result.token1,
+                            method: 'get'
                           }
-                          let data = JSON.parse(body);
-                
-                          let resp = data.status.description;
-                          result.response1 = resp;
-                          setTimeout(()=>{
-                          request(option2, function (err, response, body) {
-                            if (err) {
-                              res.status(404).send({message: err});
-                            }
-                            let data = JSON.parse(body);
-                  
-                            let resp = data.status.description;
-                            result.response2 = resp;
+                          option2 = {
+                            url: apiAddress + '/submissions/' + result.token2,
+                            method: 'get'
+                          }
+                          option3 = {
+                            url: apiAddress + '/submissions/' + result.token3,
+                            method: 'get'
+                          }
 
-                            setTimeout(()=>{
-                            request(option3, function (err, response, body) {
+                          setTimeout(()=>{
+                            request(option1, function (err, response, body) {
                               if (err) {
-                                res.status(404).send({message: err});
+                              res.status(404).send({message: err});
                               }
                               let data = JSON.parse(body);
                     
                               let resp = data.status.description;
-                              result.response3 = resp;
-                              // End of chain
-
-                              result.languageId = req.body.language_id;
-                              result.questionId = req.body.questionId;
-                              result.username = req.decoded.username;
-                              result.sourceCode = req.body.source_code;
-                              result.submissionToken = [result.token1, result.token2, result.token3];
-                              result.result = [result.response1, result.response2, result.response3];
-                              result.participationId = result.username + result.contestId;
-                              var testcasesPassed = 0;
-                              if (result.response1 === "Accepted"){
-                                testcasesPassed += 1;
-                              }
-                              if (result.response2 === "Accepted"){
-                                testcasesPassed += 1;
-                              }
-                              if (result.response3 === "Accepted"){
-                                testcasesPassed += 1;
-                              }
-                              if (testcasesPassed === 3){
-                                result.score = 100;
-                              } else if (testcasesPassed === 2) {
-                                result.score = 50;
-                              } else if (testcasesPassed === 1){
-                                result.score = 25;
-                              } else {
-                                result.score = 0;
-                              }
-
-                              // Add score to profile
-                              participations.acceptSubmission(result, (err, doc) =>{
-                                if (err){
+                              result.response1 = resp;
+                              setTimeout(()=>{
+                              request(option2, function (err, response, body) {
+                                if (err) {
                                   res.status(404).send({message: err});
                                 }
-                                // Create a submission
-                                submissions.create(req, result, (err, sub) => {
-                                  if (err){
+                                let data = JSON.parse(body);
+                      
+                                let resp = data.status.description;
+                                result.response2 = resp;
+    
+                                setTimeout(()=>{
+                                request(option3, function (err, response, body) {
+                                  if (err) {
                                     res.status(404).send({message: err});
-                                  } else {
-                                    res.send(sub);
                                   }
+                                  let data = JSON.parse(body);
+                        
+                                  let resp = data.status.description;
+                                  result.response3 = resp;
+                                  // End of chain
+    
+                                  result.languageId = req.body.language_id;
+                                  result.questionId = req.body.questionId;
+                                  result.username = req.decoded.username;
+                                  result.sourceCode = req.body.source_code;
+                                  result.submissionToken = [result.token1, result.token2, result.token3];
+                                  result.result = [result.response1, result.response2, result.response3];
+                                  result.participationId = result.username + result.contestId;
+                                  var testcasesPassed = 0;
+                                  if (result.response1 === "Accepted"){
+                                    testcasesPassed += 1;
+                                  }
+                                  if (result.response2 === "Accepted"){
+                                    testcasesPassed += 1;
+                                  }
+                                  if (result.response3 === "Accepted"){
+                                    testcasesPassed += 1;
+                                  }
+                                  if (testcasesPassed === 3){
+                                    result.score = 100;
+                                  } else if (testcasesPassed === 2) {
+                                    result.score = 50;
+                                  } else if (testcasesPassed === 1){
+                                    result.score = 25;
+                                  } else {
+                                    result.score = 0;
+                                  }
+    
+                                  // Add score to profile
+                                  participations.acceptSubmission(result, (err, doc) =>{
+                                    if (err){
+                                      res.status(404).send({message: err});
+                                    }
+                                    // Create a submission
+                                    submissions.create(req, result, (err, sub) => {
+                                      if (err){
+                                        res.status(404).send({message: err});
+                                      } else {
+                                        res.send(sub);
+                                      }
+                                    });
+                                  });
                                 });
+                                }, timeOut);
                               });
+                              }, timeOut);
                             });
                             }, timeOut);
-                          });
-                          }, timeOut);
-                        });
-                        }, timeOut);
+                        } else {
+                          res.status(500).send({message: "Server is Busy, try again later!"});
+                        }
                     });  
                     }, timeOut);
                   });

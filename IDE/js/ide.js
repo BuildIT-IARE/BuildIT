@@ -386,7 +386,6 @@ function submit() {
             } else {
                 data.message = "An error occured, have you logged in?";
             }
-            console.log(data);
             handleMyResult(data);
         },
         error: handleRunError2
