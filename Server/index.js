@@ -248,7 +248,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
             let validTime = participation.validTill;
 
             // participation.validTill = validTime.slice(4, validTime.length-9);
-            if (momentDate.isBefore(participation.validTill)){
+            if (momentDate.isBefore(participation.validTill) || req.decoded.admin){
             // if (true){
               setTimeout(()=> {
                 request(options1, function (err, response, body) {
