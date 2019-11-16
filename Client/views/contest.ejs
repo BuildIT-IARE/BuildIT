@@ -97,9 +97,6 @@
             <div class="card-body">
               <h4 class="card-title"><a class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
               </h4>
-                <% if (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
-                <pre style="font-size: 16px; color: green">Scheduled for today</pre>
-                <% } %>
               <p>
               <% if (data[i].contestDuration) { %>
               <b>Duration: </b><%= data[i].contestDuration %> Mins
