@@ -100,17 +100,17 @@
                 <pre style="font-size: 16px; color: green">Scheduled for today</pre>
                 <% } %>
               <p>
-              <% if (data[i].contestDuration) { %>
+              <% if (data[i].contestDuration && data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
               <b>Duration: </b><%= data[i].contestDuration %> Mins
               <% } %>
               </p>
               <p>
-              <% if (data[i].contestDate) { %>
+              <% if (data[i].contestDate && data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
               <b>Date: </b><%= data[i].contestDate %>
               <% } %>
               </p>
               <p>
-              <% if (data[i].contestStartTime && data[i].contestEndTime) { %>
+              <% if (data[i].contestStartTime && data[i].contestEndTime && data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
               <b>Timing: </b><%= data[i].contestStartTime %> to <%= data[i].contestEndTime %>
               <% } %>
               </p>
