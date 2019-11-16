@@ -56,7 +56,7 @@
             <!-- <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> -->
             <div class="card-body">
               <h4 class="card-title"><a class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
-              </h4><br>
+              </h4>
                 <% if (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
                 <pre style="color: green">Scheduled for today</pre>
                 <% } %>
