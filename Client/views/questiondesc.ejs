@@ -134,7 +134,7 @@ function close_window() {
         <% if(data[0].questionInputText) { %>
       <div>          
             <h4><b>Input:</b></h4>
-            <blockquote style="font-size: 20px">
+            <blockquote style="font-size: 20px; white-space: pre-line;">
               <li><%= data[0].questionInputText %></li>
             </blockquote>
           </div>
@@ -143,7 +143,7 @@ function close_window() {
           <% if(data[0].questionOutputText) { %>
             <div>
               <h4><b>Output:</b></h4>
-              <blockquote style="font-size: 20px">
+              <blockquote style="font-size: 20px; white-space: pre-line;">
                 <li><%= data[0].questionOutputText %></li>
               </blockquote>
             </div>
@@ -194,7 +194,7 @@ function close_window() {
           <% if (data[0].questionExplanation) { %>
           <div>    
           <h4><b>Explanation:</b></h4>
-          <p class="cars-text"><%= data[0].questionExplanation %></p>
+          <p class="cars-text" style="white-space: pre-line;"><%= data[0].questionExplanation %></p>
         </div>
         <br>  
         <% } %>
