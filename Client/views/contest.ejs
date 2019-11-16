@@ -58,7 +58,7 @@
               <h4 class="card-title"><a class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
               </h4><br>
               <p>
-                <% if (data[i].contestDate === new Date().toISOString().slice(0,10);) { %>
+                <% if (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
                 <b><style="color: green">Scheduled for today</style></b>
                 <% } %>
               </p>
