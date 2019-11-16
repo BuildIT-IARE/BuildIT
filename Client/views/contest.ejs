@@ -54,12 +54,12 @@
         <div class="col-lg-4 col-sm-6 mb-4">
           <article class="card shadow">
             <!-- <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> -->
-            <div class="card-body">
+            <div class="card-body" style="background: green;">
               <h4 class="card-title"><a class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
               </h4><br>
               <p>
                 <% if (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
-                <p style="color: green">Scheduled for today</p>
+                <pre style="color: green">Scheduled for today</pre>
                 <% } %>
               </p>
               <p>
