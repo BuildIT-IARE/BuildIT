@@ -85,6 +85,45 @@
     </div>
   </div>
 </section>
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <h5 id = "login"></h5>
+      <% for(let i = data.length-1; i >= 0; i--){ %>
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <article class="card shadow">
+            <!-- <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> -->
+            <div class="card-body">
+              <h4 class="card-title"><a class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
+              </h4>
+                <% if (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
+                <pre style="font-size: 16px; color: green">Scheduled for today</pre>
+                <% } %>
+              <p>
+              <% if (data[i].contestDuration) { %>
+              <b>Duration: </b><%= data[i].contestDuration %> Mins
+              <% } %>
+              </p>
+              <p>
+              <% if (data[i].contestDate) { %>
+              <b>Date: </b><%= data[i].contestDate %>
+              <% } %>
+              </p>
+              <p>
+              <% if (data[i].contestStartTime && data[i].contestEndTime) { %>
+              <b>Timing: </b><%= data[i].contestStartTime %> to <%= data[i].contestEndTime %>
+              <% } %>
+              </p>
+              <br>
+              <a href="contests/<%= data[i].contestId %>" class="btn btn-xs btn-primary">Participate</a>
+
+            </div>
+          </article>
+        </div>
+        <% } %>
+    </div>
+  </div>
+</section>
 <script>
     function getCookie(name) {
       var dc = document.cookie;
