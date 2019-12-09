@@ -297,7 +297,7 @@ app.get('/contests/:contestId/leaderboard', async (req, res) => {
       let url = {
         url: clientRoute
       }
-      res.render('results_public', {data: url, datap: bodyparticipation, dataq: bodyquestion });
+      res.render('results_public2', {data: url, datap: bodyparticipation, dataq: bodyquestion});
     });
     
   });
