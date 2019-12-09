@@ -30,11 +30,7 @@
     <title>BuildIT IDE</title>
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
-    <script>
-        let serverUrl = 'http://119.235.53.59:4000';
-        let questionId = windowUrl.slice(serverUrl.length+5, windowUrl.length);
-        document.getElementById('questionIdText').innerHTML = questionId;
-    </script>
+
 </head>
 
 <body>
@@ -153,5 +149,9 @@
         </div>
     </div>
 </body>
-
+<script>
+        let serverUrl = 'http://119.235.53.59:4000';
+        let questionId = windowUrl.slice(serverUrl.length+5, windowUrl.length);
+        document.getElementById('questionIdText').innerHTML = questionId;
+</script>
 </html>
