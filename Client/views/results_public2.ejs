@@ -113,7 +113,7 @@ function close_window() {
         <% let k = 0; %>
         <% if (datap[i].submissionResults.length !== 0){ %>
           <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %>
-              <td><%= K = k + datap[i].submissionResults[j].score %></td>
+              <%= k = k + datap[i].submissionResults[j].score %>
           <% } %>
         <% } %>
 
