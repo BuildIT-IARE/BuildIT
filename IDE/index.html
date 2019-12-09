@@ -151,6 +151,7 @@
 </body>
 <script>
         serverUrl = 'http://119.235.53.59:4000';
+        windowUrl = window.location.href;
         let questionId = windowUrl.slice(serverUrl.length+5, windowUrl.length);
         console.log(questionId);
         document.getElementById('questionIdText').innerHTML = questionId;
