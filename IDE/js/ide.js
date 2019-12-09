@@ -443,6 +443,7 @@ function loadRandomLanguage() {
 }
 
 function setQuestionId() {
+    document.getElementById('questionText').innerHTML = "Question ID: ";
     windowUrl = window.location.href;
     let questionId = windowUrl.slice(serverUrl.length+5, windowUrl.length);
     document.getElementById('questionIdText').innerHTML = questionId;
