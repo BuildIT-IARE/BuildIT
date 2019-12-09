@@ -363,6 +363,7 @@ function submit() {
         contestId: getCookie('contestId'),
         questionId: windowUrl.slice(serverUrl.length+5, windowUrl.length)
     };
+
     timeStart = performance.now();
     $.ajax({
         url: serverUrl+'/validateSubmission',
@@ -439,6 +440,12 @@ function loadRandomLanguage() {
     $selectLanguage.dropdown("set selected", 34);
     
     insertTemplate();
+}
+
+function setQuestionId() {
+    let questionId = windowUrl.slice(serverUrl.length+5, windowUrl.length);
+    console.log(questionId);
+    document.getElementById('questionIdText').innerHTML = questionId;
 }
 
 $(window).resize(function() {
@@ -609,6 +616,7 @@ $(document).ready(function () {
 
         layout.on("initialised", function () {
             loadRandomLanguage();
+            setQuestionId();
             $("#site-navigation").css("border-bottom", "1px solid black");
         });
 
