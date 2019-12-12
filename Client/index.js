@@ -437,6 +437,7 @@ app.get('/contests/:contestId', async (req, res) => {
                 body[i].color = "black";
               }
             }
+            body.contestId =  req.params.contestId;
             res.render('questions', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
         });
