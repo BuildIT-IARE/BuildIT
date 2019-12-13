@@ -52,6 +52,7 @@
   <table class="w3-table w3-striped">
     <tr>
       <th>Username</th>
+      <th>Contest ID</th>
       <th>Participation Time</th>
       <% for (let i = 0; i < dataq.length; i++){ %>
         <th><%= dataq[i].questionId %></th>
@@ -60,6 +61,7 @@
   <% for(let i=0; i < datap.length; i++){ %>    
       <tr>
         <td><%= datap[i].username %></td>
+        <td><%= datap[0].contestId %></td>
         <td><%= datap[i].participationTime.slice(0, datap[i].participationTime.length - 9 ) %></td>
         <% if (datap[i].submissionResults.length !== 0){ %>
           <% for (let j = 0; j < datap[i].submissionResults.length ; j++ ){ %>
