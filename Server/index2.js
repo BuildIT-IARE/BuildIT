@@ -79,3 +79,5 @@ require('./routes/submission.route.js')(app);
 // Require participation routes
 require('./routes/participation.route.js')(app);
 
+
+app.listen(5003,()=>console.log('Server @ port 5003'));
