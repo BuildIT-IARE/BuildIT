@@ -5,6 +5,7 @@ var moment = require('moment');
 // Create and Save a new participation
 exports.create = (req, res) => {
     req.body.username = req.decoded.username;
+    console.log(req.decoded.username)
     // Validate request
     if(!req.body.username) {
         return res.status(400).send({
