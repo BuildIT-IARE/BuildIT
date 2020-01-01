@@ -12,7 +12,7 @@ var submissionSchema = new Schema({
     result: Array,
     submissionToken: Array,
     submissionTime: String,
-    color: String   
+    color: String
 });
 
 module.exports = mongoose.model('Submission', submissionSchema);
