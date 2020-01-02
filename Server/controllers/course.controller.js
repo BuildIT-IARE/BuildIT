@@ -34,3 +34,16 @@ exports.create = (req, res) => {
         });
     });
 };
+
+// Retrieve and return all courses from the database.
+exports.findAll = (req, res) => {
+    Course.find()
+    .then(courses => {
+        res.send(courses);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving courses."
+        });
+    });
+};
+
