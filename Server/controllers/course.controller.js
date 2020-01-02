@@ -71,3 +71,68 @@ exports.findOne = (req, res) => {
         });
     });
 };
+
+// Update a course identified by the courseId in the request
+exports.update = (req, res) => {
+    if(!req.body.courseId) {
+        return res.status(400).send({
+            success: false,
+            message: "content can not be empty"
+        });
+    }
+    // Findcourse and update it with the request body
+   Course.findOneAndUpdate({courseId: req.body.courseId}, {$set:{
+        courseId: req.body.courseId,
+        courseName: req.body.courseName
+        }}, {new: true}, (err, doc) => {
+          if(err){
+              console.log("Error Occured");
+          }
+      })
+    .then(course => {
+        if(!course) {
+            return res.status(404).send({
+                success: false,
+                message: "Course not found with id " + req.body.courseId
+            });
+        }
+        res.send(course);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                success: false,
+                message: "Course not found with id " + req.body.courseId
+            });                
+        }
+        return res.status(500).send({
+            success: false,
+            message: "Error updating course with id " + req.body.courseId
+        });
+    });
+};
+
+
+// Delete a course with the specified courseId in the request
+exports.delete = (req, res) => {
+    Course.findOneAndRemove({courseId: req.params.courseId})
+    .then(course => {
+        if(!course) {
+            return res.status(404).send({
+                success: false,
+                message: "Course not found with id " + req.params.courseId
+            });
+        }
+        res.send({message: "course deleted successfully!"});
+    }).catch(err => {
+        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.status(404).send({
+                success: false,
+                message: "Course not found with id " + req.params.courseId
+            });                
+        }
+        return res.status(500).send({
+            success: false,
+            message: "Could not deleteCourse with id " + req.params.courseId
+        });
+    });
+};
