@@ -47,3 +47,27 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Find a single course with a courseId
+exports.findOne = (req, res) => {
+    Course.find({courseId: req.params.courseId})
+    .then(course => {
+        if(!course) {
+            return res.status(404).send({
+                success: false,
+                message: "Course not found with id " + req.params.courseId
+            });            
+        }
+        res.send(course);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                success: false,
+                message: "Course not found with id " + req.params.courseId
+            });                
+        }
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving course with id " + req.params.courseId
+        });
+    });
+};
