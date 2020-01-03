@@ -12,8 +12,8 @@ module.exports = (app) => {
     // Retrieve a single question with questionId
     app.get('/questions/:questionId', middleware.checkToken, questions.findOne);
 
-    // Retrieve all questions with contestId
-    app.get('/questions/contests/:contestId', middleware.checkToken, questions.findAllContest);
+    // Retrieve all questions with courseId
+    app.get('/questions/courses/:courseId', middleware.checkToken, questions.findAllcourse);
 
     // Update a question with questionId
     app.put('/questions/:questionId', middleware.checkTokenAdmin, questions.update);

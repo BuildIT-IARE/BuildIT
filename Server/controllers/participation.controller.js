@@ -53,7 +53,7 @@ exports.create = (req, res) => {
                 });
             });
         } else {
-            res.send({success: false, message: "user already participated"});
+            res.send({success: false, message: "User already participated"});
 
         }
     }).catch(err => {
