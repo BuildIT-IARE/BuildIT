@@ -156,3 +156,16 @@ exports.findUser = (req, res) => {
         });
     });
 };
+
+// Retrieve and return all participation details.
+exports.findContestPart = (req, res) => {
+    Participation.find({contestId: req.body.contestId})
+    .then(participation => {
+        res.send(participation);
+    }).catch(err => {
+        res.status(500).send({
+            success: false,
+            message: err.message || "Some error occurred while retrieving participation."
+        });
+    });
+};
