@@ -80,4 +80,53 @@ require('./routes/submissionTut.route.js')(app);
 require('./routes/participationTut.route.js')(app);
 
 
+app.post('/submissionValidation', middleware.checkToken, (req, res) => {
+  questions.getTestCases(req, (err, testCases) => {
+    if (err){
+      res.status(404).send({message: "Question not found with id " + req.body.questionId});
+  } else {
+    if(localServer){
+      postUrl = apiAddress + '/submissions/?wait=true';
+    } else {
+      postUrl = apiAddress + '/submissions';
+    }
+    let options1 = {
+      method: 'post',
+      body: {
+        source_code: req.body.source_code,
+        language_id: req.body.language_id,
+        stdin: testcases.HI1,
+        expected_output: testcases.HO1
+      },
+      json: true,
+      url: postUrl
+    };
+
+    let options2 = {
+      method: 'post',
+      body: {
+        source_code: req.body.source_code,
+        language_id: req.body.language_id,
+        stdin: testcases.HI2,
+        expected_output: testcases.HO2
+      },
+      json: true,
+      url: postUrl
+    };
+
+    let options3 = {
+      method: 'post',
+      body: {
+        source_code: req.body.source_code,
+        language_id: req.body.language_id,
+        stdin: testcases.HI3,
+        expected_output: testcases.HO3
+      },
+      json: true,
+      url: postUrl
+    };
+  }
+  });
+});
+
 app.listen(5003,()=>console.log('Server @ port 5003'));
