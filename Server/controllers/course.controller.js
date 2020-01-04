@@ -1,4 +1,4 @@
-import Course from '../models/course.model.js';
+const Course = require('../models/course.model.js');
 
 // Create and Save a new course
 exports.create = (req, res) => {

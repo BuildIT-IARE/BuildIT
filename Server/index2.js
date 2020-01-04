@@ -59,25 +59,30 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-// Imports
-const users = require('./controllers/user.controller.js');
-const submissions = require('./controllers/submission.controller.js');
-const questions = require('./controllers/question.controller.js');
-const participations = require('./controllers/participation.controller.js');
-const contests = require('./controllers/contest.controller.js');
+// // // Imports
+// const users = require('./controllers/user.controller.js');
+// // const submissions = require('./controllers/submissionTut.controller.js');
+// const questions = require('./controllers/questionTut.controller.js');
+// // const participations = require('./controllers/participation.controller.js');
+// // const participationsTut = require('./controllers/participationTut.controller.js');
+// // const contests = require('./controllers/contest.controller.js');
+// const courses = require('./controllers/course.controller.js');
 
 
 
-// Require contest routes
-require('./routes/contest.route.js')(app);
-// Require user routes
-require('./routes/user.route.js')(app);
-// Require question routes
-require('./routes/question.route.js')(app);
-// Require submission routes
-require('./routes/submission.route.js')(app);
-// Require participation routes
-require('./routes/participation.route.js')(app);
+// // // Require contest routes
+// // require('./routes/contest.route.js')(app);
+// require('./routes/course.route.js')(app);
+// // // Require user routes
+// require('./routes/user.route.js')(app);
+// // // Require question routes
+// // require('./routes/question.route.js')(app);
+// require('./routes/questionTut.route.js')(app);
+// // // Require submission routes
+// require('./routes/submissionTut.route.js')(app);
+// // // Require participation routes
+// // require('./routes/participation.route.js')(app);
+// require('./routes/participationTut.route.js')(app);
 
 
 app.listen(5003,()=>console.log('Server @ port 5003'));
