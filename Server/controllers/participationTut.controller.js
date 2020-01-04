@@ -168,3 +168,18 @@ exports.findContestPart = (req, res) => {
         });
     });
 };
+
+exports.findUserPart = (result, callback) => {
+    Participation.find({participationId: result.participationId})
+    .then(participation => {
+        if(!participation){
+            return callback("Couldn't find participation", null);
+        }
+        return callback(null, participation);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return callback("Couldn't find participation, caught exception", null);                 
+        }
+        return callback("Error retrieving data", null);
+    });
+};
