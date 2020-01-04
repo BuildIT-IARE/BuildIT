@@ -1,5 +1,4 @@
-const Participation = require('../models/participation.model.js');
-const contests = require('./contest.controller.js');
+const Participation = require('../models/participationTut.model.js');
 
 var moment = require('moment');
 // Create and Save a new participation
@@ -13,33 +12,24 @@ exports.create = (req, res) => {
         });
     }
 
-    if(!req.body.contestId) {
+    if(!req.body.courseId) {
         return res.status(400).send({
             success: false,
-            message: "contest Id can not be empty"
+            message: "course Id can not be empty"
         });
     }
     
-    Participation.find({participationId: req.body.username + req.body.contestId})
+    Participation.find({participationId: req.body.username + req.body.courseId})
     .then(participation => {
         if (participation.length === 0){
-            contests.getDuration(req, (err, duration) => {
-                if (err){
-                    res.send({success: false, message: "Error occured"});
-                }
-        
-                let date = moment();
-                let d = duration.duration;
-                let endTime = moment(date, 'HH:mm:ss').add(d, 'minutes');
-        
+            let date = moment();
                 // Create a Participation
                 const participation = new Participation({
-                    participationId: req.body.username + req.body.contestId,
+                    participationId: req.body.username + req.body.courseId,
                     username: req.body.username,
-                    contestId: req.body.contestId,
+                    courseId: req.body.courseId,
                     participationTime: date,
-                    submissionResults: [],
-                    validTill: endTime
+                    submissionResults: []
                 });
                 // Save participation in the database
                 participation.save()
@@ -51,7 +41,7 @@ exports.create = (req, res) => {
                         message: err.message || "Some error occurred while Registering."
                     });
                 });
-            });
+            
         } else {
             res.send({success: false, message: "User already participated"});
 
@@ -176,20 +166,5 @@ exports.findContestPart = (req, res) => {
             success: false,
             message: err.message || "Some error occurred while retrieving participation."
         });
-    });
-};
-
-exports.findUserTime = (result, callback) => {
-    Participation.find({participationId: result.participationId})
-    .then(participation => {
-        if(!participation){
-            return callback("Couldn't find participation", null);
-        }
-        return callback(null, participation);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return callback("Couldn't find participation, caught exception", null);                 
-        }
-        return callback("Error retrieving data", null);
     });
 };
