@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const request = require('request');
 const moment = require('moment');
 
-let config = require('./util/config');
+let config = require('./util/config2');
 let middleware = require('./util/middleware.js');
 
 // API Address
