@@ -11,17 +11,17 @@ let config = require('./util/config');
 let middleware = require('./util/middleware.js');
 
 // API Address
-const localServer = config.localServer;
+// const localServer = config.localServer;
 
-let apiAddress = config.apiAddress;
+// let apiAddress = config.apiAddress;
 let timeOut = 3000;
 
-if (localServer){
-  apiAddress = config.localAPI;
-  timeOut = 0;
-}
+// if (localServer){
+//   apiAddress = config.localAPI;
+//   timeOut = 0;
+// }
 
-console.log("Using API from url", apiAddress);
+// console.log("Using API from url", apiAddress);
 
 // INIT
 const app = express();

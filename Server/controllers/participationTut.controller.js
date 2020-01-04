@@ -1,5 +1,4 @@
 const Participation = require('../models/participationTut.model.js');
-const courses = require('./course.controller.js');
 
 var moment = require('moment');
 // Create and Save a new participation
