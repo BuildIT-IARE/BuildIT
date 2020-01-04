@@ -125,6 +125,58 @@ app.post('/submissionValidation', middleware.checkToken, (req, res) => {
       json: true,
       url: postUrl
     };
+
+    let result = {
+      contestId: testcases.contestId,
+      participationId: req.decoded.username + testcases.contestId
+    };
+
+    participations.findUserPart(result, (err, participation) => {
+      if (err){
+        res.status(404).send({message: err});
+      }
+      participation = participation[0];
+
+      setTimeout(() => {
+        request(options1, (err, resp, body) => {
+          if (err) {
+            res.status(404).send({message: err});
+          }
+          result.token1 = body.token;
+          setTimeout(() => {
+            request(options2, (err, resp, body) => {
+              if (err) {
+                res.status(404).send({message: err});
+              }
+              result.token2 = body.token;
+              setTimeout(() => {
+                request(options3, (err, resp, body) => {
+                  if (err) {
+                    res.status(404).send({message: err});
+                  }
+                  result.token3 = body.token;
+                  if (result.token1 && result.token2 && result.token3){
+                    option1 = {
+                      url: apiAddress + '/submissions/' + result.token1,
+                      method: 'get'
+                    }
+                    option2 = {
+                      url: apiAddress + '/submissions/' + result.token2,
+                      method: 'get'
+                    }
+                    option3 = {
+                      url: apiAddress + '/submissions/' + result.token3,
+                      method: 'get'
+                    }
+                    // to be continued
+                  }
+                });
+              }, timeOut);
+            });
+          }, timeOut);
+        });
+      }, timeOut);
+    });
   }
   });
 });
