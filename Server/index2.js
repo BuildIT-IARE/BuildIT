@@ -320,5 +320,11 @@ app.get('/retrieveScores', middleware.checkToken, async (req, res) => {
   });
 });
 
+app.get('/isAdmin', middleware.checkTokenAdmin, async (req, res) => {
+  res.send({
+    success: true
+  });
+});
+
 
 app.listen(5003,()=>console.log('Server @ port 5003'));
