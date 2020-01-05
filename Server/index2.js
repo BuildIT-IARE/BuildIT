@@ -168,7 +168,41 @@ app.post('/submissionValidation', middleware.checkToken, (req, res) => {
                       url: apiAddress + '/submissions/' + result.token3,
                       method: 'get'
                     }
-                    // to be continued
+                    setTimeout(() => {
+                      request(option1, (err, response, body) => {
+                        if (err) {
+                          res.status(404).send({message: err});
+                          }
+                          let data = JSON.parse(body);
+                
+                          let resp = data.status.description;
+                          result.response1 = resp;
+                          setTimeout(() => {
+                            request(option2, (err, response, body) => {
+                              if (err) {
+                                res.status(404).send({message: err});
+                                }
+                                let data = JSON.parse(body);
+                      
+                                let resp = data.status.description;
+                                result.response2 = resp;
+                                setTimeout(() => {
+                                  request(option3, (err, response, body) => {
+                                    if (err) {
+                                      res.status(404).send({message: err});
+                                      }
+                                      let data = JSON.parse(body);
+                            
+                                      let resp = data.status.description;
+                                      result.response3 = resp;
+
+                                      //to be continued
+                                  });
+                                }, timeOut);
+                            });
+                          }, timeOut);
+                      });
+                    },timeOut);
                   }
                 });
               }, timeOut);

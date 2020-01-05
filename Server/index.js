@@ -360,7 +360,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                             });
                             }, timeOut);
                         } else {
-                          res.status(500).send({message: "Server is Busy, try again later!"});
+                          res.status(500).send({message: "Server is Busy, try again later! or Check your code if any compilation errors."});
                         }
                     });  
                     }, timeOut);
