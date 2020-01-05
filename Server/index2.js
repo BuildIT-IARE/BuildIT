@@ -221,13 +221,30 @@ app.post('/submissionValidation', middleware.checkToken, (req, res) => {
                                         result.score = 25;
                                       } else {
                                         result.score = 0;
+                                      }
+
+                                      // Add score to profile
+                                  participations.acceptSubmission(result, (err, doc) =>{
+                                    if (err){
+                                      res.status(404).send({message: err});
                                     }
+                                    // Create a submission
+                                    submissions.create(req, result, (err, sub) => {
+                                      if (err){
+                                        res.status(404).send({message: err});
+                                      } else {
+                                        res.send(sub);
+                                      }
+                                    });
+                                  });
                                   });
                                 }, timeOut);
                             });
                           }, timeOut);
                       });
                     },timeOut);
+                  } else {
+                    res.status(500).send({message: "Server is Busy, try again later! or Check your code if any compilation errors."});
                   }
                 });
               }, timeOut);
