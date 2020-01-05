@@ -80,8 +80,8 @@ require('./routes/submissionTut.route.js')(app);
 require('./routes/participationTut.route.js')(app);
 
 
-app.post('/submissionValidation', middleware.checkToken, (req, res) => {
-  questions.getTestCases(req, (err, testCases) => {
+app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
+  questions.getTestCases(req, (err, testcases) => {
     if (err){
       res.status(404).send({message: "Question not found with id " + req.body.questionId});
   } else {
@@ -254,6 +254,24 @@ app.post('/submissionValidation', middleware.checkToken, (req, res) => {
       }, timeOut);
     });
   }
+  });
+});
+
+app.get('/retrieveScores', middleware.checkToken, async (req, res) => {
+  let username = req.decoded.username;
+  // let contestId = req.cookies.contestId || req.body.contestId;
+  let contestId = req.body.contestId;
+  let result = {};
+  let finalScores = {};
+  let allQuestions = [];
+  let scores = [];
+  req.cookies.contestId = contestId;
+  result.participationId =  username + contestId;
+  questions.getAllQuestions(req, (err, question) => {
+    if (err){
+      res.send(err);
+    }
+    // to be continued
   });
 });
 
