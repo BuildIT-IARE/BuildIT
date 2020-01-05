@@ -196,7 +196,32 @@ app.post('/submissionValidation', middleware.checkToken, (req, res) => {
                                       let resp = data.status.description;
                                       result.response3 = resp;
 
-                                      //to be continued
+                                      result.languageId = req.body.language_id;
+                                      result.questionId = req.body.questionId;
+                                      result.username = req.decoded.username;
+                                      result.sourceCode = req.body.source_code;
+                                      result.submissionToken = [result.token1, result.token2, result.token3];
+                                      result.result = [result.response1, result.response2, result.response3];
+                                      result.participationId = result.username + result.contestId;
+                                      var testcasesPassed = 0;
+                                      if (result.response1 === "Accepted"){
+                                        testcasesPassed += 1;
+                                      }
+                                      if (result.response2 === "Accepted"){
+                                        testcasesPassed += 1;
+                                      }
+                                      if (result.response3 === "Accepted"){
+                                        testcasesPassed += 1;
+                                      }
+                                      if (testcasesPassed === 3){
+                                        result.score = 100;
+                                      } else if (testcasesPassed === 2) {
+                                        result.score = 50;
+                                      } else if (testcasesPassed === 1){
+                                        result.score = 25;
+                                      } else {
+                                        result.score = 0;
+                                    }
                                   });
                                 }, timeOut);
                             });
