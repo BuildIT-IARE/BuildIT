@@ -271,8 +271,54 @@ app.get('/retrieveScores', middleware.checkToken, async (req, res) => {
     if (err){
       res.send(err);
     }
-    // to be continued
+    for(let i = 0; i < question.length; i++){
+      allQuestions[i] = question[i].questionId;
+    }
+    participations.findUserPart(result, (err, participation) => {
+      if (err){
+        res.send(err);
+      }
+      if (participation.length !== 0){
+        participation = participation[0];
+        for (let i = 0; i < allQuestions.length; i++){
+          let maxScore = 0;
+          for(let j = 0; j < participation.submissionResults.length; j++){
+            if (participation.submissionResults[j].questionId === allQuestions[i]){
+              if (maxScore < participation.submissionResults[j].score){
+                maxScore = participation.submissionResults[j].score;
+              }
+            }
+          }
+          scores[i] = maxScore;
+        }
+        for (let j = 0; j < allQuestions.length; j++){
+          finalScores[allQuestions[j]] = {
+            questionId: allQuestions[j],
+            score: scores[j]
+          };
+          if (scores[j] === 100){
+            finalScores[allQuestions[j]].color = "green";
+          } else if(score[j] === 50){
+            finalScores[allQuestions[j]].color = "orange";
+          } else if( scores[j] === 25) {
+            finalScores[allQuestions[j]].color = "red";
+          } else {
+            finalScores[allQuestions[j]].color = "black";
+          }
+        }
+      } else {
+        for (let i = 0; i < allQuestions.length; i++){
+          finalScores[allQuestions[i]] = {
+            questionId: allQuestions[i],
+            score: 0,
+            color: "black"
+          }
+        }
+      }
+      res.send(finalScores);
+    });
   });
 });
+
 
 app.listen(5003,()=>console.log('Server @ port 5003'));
