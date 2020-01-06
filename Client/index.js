@@ -545,11 +545,15 @@ app.get('/verify', async (req, res) => {
   });
 });
 
+// Tutorials functions
+
 app.get('/tutorials', async(req, res) => {
   body = {};
   body.message = "Coming Soon!";
   res.render('error', {data: body, imgUsername: req.cookies.username});
 });
+
+
 
 app.listen(4000);
 console.log('Server @ port 4000');
