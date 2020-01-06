@@ -84,14 +84,14 @@ require('./routes/submission.route.js')(app);
 // Require participation routes
 require('./routes/participation.route.js')(app);
 
-// // Require question routes
-// require('./routes/questionTut.route.js')(app);
-// // Require submission routes
-// require('./routes/submissionTut.route.js')(app);
-// // Require participation routes
-// require('./routes/participationTut.route.js')(app);
-// // Require course routes
-// require('./routes/course.route.js')(app);
+// Require question routes
+require('./routes/questionTut.route.js')(app);
+// Require submission routes
+require('./routes/submissionTut.route.js')(app);
+// Require participation routes
+require('./routes/participationTut.route.js')(app);
+// Require course routes
+require('./routes/course.route.js')(app);
 
 
 // Examples
