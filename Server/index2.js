@@ -60,7 +60,7 @@ mongoose.connect(dbConfig.url, {
 });
 
 // Imports
-const users = require('./controllers/user.controller.js');
+// const users = require('./controllers/user.controller.js');
 const submissions = require('./controllers/submissionTut.controller.js');
 const questions = require('./controllers/questionTut.controller.js');
 const participations = require('./controllers/participationTut.controller.js');

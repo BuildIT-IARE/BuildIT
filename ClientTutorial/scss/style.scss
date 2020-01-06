@@ -1,65 +1,32 @@
+/*!------------------------------------------------------------------
+[MAIN STYLESHEET]
 
-@import 'varriable.scss';
-@import 'mixins.scss';
-@import 'extend';
-@import 'responsive.scss';
-@import 'reset';
-@import 'btn';
-@import 'section_title';
-@import 'slick-nav.scss';
+PROJECT:	Project Name
+VERSION:	Versoin Number
+-------------------------------------------------------------------*/
 
+/*------------------------------------------------------------------
+[TABLE OF CONTENTS]
+-------------------------------------------------------------------*/
 
+@import 'variables';
 
-// header
-@import 'header';
+@import 'mixins';
 
-// slider
-@import 'slider';
+@import 'typography';
 
-// about
-@import 'about';
+@import 'buttons';
 
-// footer
-@import 'footer';
+@import 'common';
 
-// bradcam
-@import 'bradcam';
+@import 'templates/navigation';
 
-// latest_blog
-@import 'latest_blog';
+@import 'templates/hero-area';
 
-// nesletter
-@import 'nesletter';
-// nesletter
-@import 'faq';
+@import 'templates/homepage';
 
-// bradcam
-@import 'coures';
-// bradcam
-@import 'team';
-// bradcam
-@import 'course_details';
+@import 'templates/blog';
 
-// bradcam
-@import 'testmonial';
-// bradcam
-@import 'popular_courses';
+@import 'templates/about';
 
-
-
-
-// other pages default
-
-// contact
-@import 'contact';
-
-// elements
-@import 'elements.scss';
-
-// blog
-@import 'blog';
-
-
-// blog part
-@import 'blog_part';
-
+@import 'templates/portfolio';

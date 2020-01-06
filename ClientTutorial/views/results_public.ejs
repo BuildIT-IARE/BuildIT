@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<title>Leaderboards</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../css/navadmin.css">
+<link rel="stylesheet" href="../css/w3.css">
+<head>
+<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+</head>
+<style>
+        .button1 {
+          border-radius: 4px;
+          background-color: #454fd4;
+          border: none;
+          color: white;
+          text-align: center;
+          font-size:  15px;
+          padding: 5px;
+          width: 110px;
+          transition: all 0.5s;
+          cursor: pointer;
+          margin: 5px;
+        }
+        
+        .button1 span {
+          cursor: pointer;
+          display: inline-block;
+          transition: 1s;
+        }
+        
+        .button1 span:after {
+          content: '\21B6';
+          opacity: 0;
+          top: 50px;
+          right: 20px;
+          transition: 0.3s;
+        }
+        
+        .button1:hover span {
+          padding-right: 20px;
+        }
+        
+        .button1:hover span:after {
+          opacity: 1;
+          right: 0;
+          padding-bottom:20px;  
+        }
+        p{
+          font-size: 130%;
+        }
+        .button {
+          border-radius: 4px;
+          background-color: #454fd4;
+          border: none;
+          color: white;
+          /* text-align: center; */
+          font-size:  px;
+          padding: 20px;
+          width: 160px;
+          transition: all 0.5s;
+          cursor: pointer;
+          margin: 5px;
+        }
+        .button span {
+          cursor: pointer;
+          display: inline-block;
+          position: relative;
+          transition: 1s;
+        }
+        .button span:after {
+          content: '\00bb';
+          position: "relative";
+          opacity: 0;
+          top: 0;
+          right: -20px;
+          transition: 0.5s;
+        }
+        .button:hover span {
+          padding-left: 25px;
+        }
+        .button:hover span:after {
+          opacity: 1;
+          right: 0;
+        }
+        div .border {
+          border-color: red;
+          margin: 4px;
+          padding: 4px;
+          border-width: 3px;
+        
+        
+</style>
+<script>
+function close_window() {
+    close();
+}
+</script>        
+<body>
+    <p></p><br>
+    <a href="javascript:close_window();"><button onclick="close()" class = "button1" ><span style="color: #ffffff" >Close</span></button></a><br><br>
+
+    <div class="w3-container" style="background: white;">
+  <h2 style="text-align: center">Leaderboards: <%= datap[0].contestId %> </h2>
+  <br><hr>
+  <table class="w3-table w3-striped">
+    <tr>
+      <th>Roll No</th>
+      <% for (let i = 0; i < dataq.length; i++){ %>
+        <th><%= dataq[i].questionId %></th>
+      <% } %>
+    </tr>
+  <% for(let i=0; i < datap.length; i++){ %>    
+      <tr>
+        <td><%= datap[i].username %></td>
+        <% if (datap[i].submissionResults.length !== 0){ %>
+          <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %>
+            <% let done = 0; let k = 0; %>
+            <% while (done < dataq.length-1 && k < dataq.length) { %>
+              <% if (dataq[k].questionId === datap[i].submissionResults[j].questionId) { %>
+                <% done++ %>
+                <td><%= datap[i].submissionResults[j].score %></td>
+              <% } %>
+              <% k++ %>
+            <% } %>
+          <% } %>
+        <% } %>
+      </tr>
+  <% } %>
+  </table>
+  <br>
+  <br>
+</div>
+<script src="/adminjs/classie.js"></script>
+<script src="/adminjs/gnmenu.js"></script>
+</body>
+</html>

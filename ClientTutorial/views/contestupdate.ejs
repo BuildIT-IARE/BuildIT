@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Admin menu</title>
+		<meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
+		<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+		<script src="/adminjs/modernizr.custom.js"></script>
+		<link rel="stylesheet" href="../../css/navadmin.css">
+	</head>
+	<body>
+		<div class="container">
+			<ul id="gn-menu" class="gn-menu-main">
+				<li class="gn-trigger">
+					<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+					<nav class="gn-menu-wrapper">
+						<div class="gn-scroller">
+							<ul class="gn-menu">
+								
+								<li>
+									<a class="gn-icon gn-icon-download" >Manage Contests</a>
+									<ul class="gn-submenu">
+										<li><a class="gn-icon gn-icon-add" href="<%= data.url %>/admin/add/contest">Add Contests</a></li>
+										<li><a class="gn-icon gn-icon-update" href="<%= data.url %>/admin/update/contest">Update Contests</a></li>
+										<li><a class="gn-icon gn-icon-trashcan" href="<%= data.url %>/admin/update/contest">Delete Contests</a></li>
+									</ul>
+								</li>
+								<li>
+									<a class="gn-icon gn-icon-download" >Manage Questions</a>
+									<ul class="gn-submenu">
+										<li><a class="gn-icon gn-icon-add" href="<%= data.url %>/admin/add/question">Add Questions</a></li>
+										<li><a class="gn-icon gn-icon-update" href="<%= data.url %>/admin/update/question">Update Questions</a></li>
+										<li><a class="gn-icon gn-icon-trashcan" href="<%= data.url %>/admin/update/question">Delete Questions</a></li>
+									</ul>
+								</li>
+								<li><a class="gn-icon gn-icon-cog" href="<%= data.url %>/admin/manageusers">Manage users</a></li>
+								<li><a class="gn-icon gn-icon-help" href="<%= data.url %>/admin/results">Results</a></li>
+								
+							</ul>
+						</div><!-- /gn-scroller -->
+					</nav>
+				</li>
+				<li><a href="<%= data.url %>/admin/update/contest">Refresh</a></li>
+				<li><a class="codrops-icon codrops-icon-prev" href="<%= data.url %>/logout"><span>Logout</span></a></li>
+				
+			</ul>
+			<header>
+				<h1>Manage Contests<span style="color: white">Update Contests</span></h1>	
+			</header> 
+			<div class="main-block">
+                <form action="<%= data.serverurl %>/contests" method = "PUT">
+                  
+                  <h4>Contest ID</h4>
+                  <textarea name="contestId" rows = "5"></textarea>
+                  <p class="comments">Contest Name</p>
+                  <textarea name="contestName" rows="5"></textarea>
+                  <p class="comments">Contest Date</p>
+                  <input name="contestDate" type="date"></textarea>
+                  <p class="comments">Contest Duration</p>
+                  <textarea name="contestDuration" rows="5"></textarea>
+                  <p class="comments">Contest Start Time</p>
+                  <textarea name="contestStartTime" rows="5"></textarea>
+                  <p class="comments">Contest End Time</p>
+                  <textarea name="contestEndTime" rows="5"></textarea>
+                  <div class="btn-block">
+                    <button  class= "submit" type="submit" href="/">Send</button>
+                  </div>
+                </form>
+            </div>
+		</div><!-- /container -->
+		<script src="/adminjs/classie.js"></script>
+		<script src="/adminjs/gnmenu.js"></script>
+		<script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
+	</body>
+</html>
