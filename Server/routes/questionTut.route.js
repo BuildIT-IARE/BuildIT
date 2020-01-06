@@ -13,7 +13,7 @@ module.exports = (app) => {
     app.get('/tquestions/:questionId', middleware.checkToken, questions.findOne);
 
     // Retrieve all questions with courseId
-    app.get('/tquestions/courses/:courseId', middleware.checkToken, questions.findAllcourse);
+    app.get('/tquestions/courses/:courseId', middleware.checkToken, questions.findAllCourse);
 
     // Update a question with questionId
     app.put('/tquestions/:questionId', middleware.checkTokenAdmin, questions.update);
