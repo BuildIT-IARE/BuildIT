@@ -116,11 +116,17 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 
     let date = new Date();
     let today = date.toLocaleDateString();
-    if (today.length === 9){
-      today = '0'+today;
-    }
+    // if (today.length === 9){
+    //   today = '0'+today;
+    // }
     let day = today.slice(0, 2);
+    if (parseInt(day)<10){
+      day = '0'+String(day);
+    }
     let month = today.slice(3, 5);
+    if (parseInt(month)<10){
+      month = '0'+String(month);
+    }
     let year = today.slice(6, 10);
     if (!localServer){
       today = `${year}-${day}-${month}`;
