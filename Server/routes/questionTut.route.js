@@ -4,20 +4,20 @@ module.exports = (app) => {
     const questions = require('../controllers/questionTut.controller.js');
 
     // Create a new question
-    app.post('/questions', middleware.checkTokenAdmin, questions.create);
+    app.post('/tquestions', middleware.checkTokenAdmin, questions.create);
 
     // Retrieve all questions
-    app.get('/questions', middleware.checkTokenAdmin, questions.findAll);
+    app.get('/tquestions', middleware.checkTokenAdmin, questions.findAll);
 
     // Retrieve a single question with questionId
-    app.get('/questions/:questionId', middleware.checkToken, questions.findOne);
+    app.get('/tquestions/:questionId', middleware.checkToken, questions.findOne);
 
     // Retrieve all questions with courseId
-    app.get('/questions/courses/:courseId', middleware.checkToken, questions.findAllcourse);
+    app.get('/tquestions/courses/:courseId', middleware.checkToken, questions.findAllcourse);
 
     // Update a question with questionId
-    app.put('/questions/:questionId', middleware.checkTokenAdmin, questions.update);
+    app.put('/tquestions/:questionId', middleware.checkTokenAdmin, questions.update);
 
     // Delete a question with questionId
-    app.delete('/questions/:questionId', middleware.checkTokenAdmin, questions.delete);
+    app.delete('/tquestions/:questionId', middleware.checkTokenAdmin, questions.delete);
 }
