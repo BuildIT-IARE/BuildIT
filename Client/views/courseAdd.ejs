@@ -17,11 +17,11 @@
 		<div class="container">
 			<% include ../views/partials/adminpanel %>
 			<header>
-				<h1>Manage Contests<span style="color:white">Add Contests</span></h1>	
+				<h1>Manage Courses<span style="color:white">Add Course</span></h1>	
 			</header> 
 			<div class="main-block">
-				<form action="<%= data.serverurl %>/tutorials" method = "POST">
-				  <h4>Contest ID</h4>
+				<form action="<%= data.serverurl %>/courses" method = "POST">
+				  <h4>Course ID</h4>
 				  <textarea name="courseId" rows = "5"></textarea>
 				  <p class="comments">Course Name</p>
 				  <textarea name="courseName" rows="5"></textarea>
