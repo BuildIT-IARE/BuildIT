@@ -545,5 +545,11 @@ app.get('/verify', async (req, res) => {
   });
 });
 
+app.get('/tutorials', async(req, res) => {
+  body = {};
+  body.message = "Coming Soon!";
+  res.render('error', {data: body});
+});
+
 app.listen(4000);
 console.log('Server @ port 4000');
