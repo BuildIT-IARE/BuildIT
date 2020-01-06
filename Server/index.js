@@ -469,7 +469,7 @@ app.get('/getScores', middleware.checkToken, async (req, res) => {
 
 
 app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
-  questionsTut.getTestCases(req, (err, testcases) => {
+  questions.getTestCases(req, (err, testcases) => {
     if (err){
       res.status(404).send({message: "Question not found with id " + req.body.questionId});
   } else {
@@ -617,7 +617,7 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
                                       res.status(404).send({message: err});
                                     }
                                     // Create a submission
-                                    submissionsTut.create(req, result, (err, sub) => {
+                                    submissions.create(req, result, (err, sub) => {
                                       if (err){
                                         res.status(404).send({message: err});
                                       } else {
@@ -655,14 +655,14 @@ app.get('/retrieveScores', middleware.checkToken, async (req, res) => {
   let scores = [];
   req.cookies.contestId = contestId;
   result.participationId =  username + contestId;
-  questionsTut.getAllQuestions(req, (err, question) => {
+  questions.getAllQuestions(req, (err, question) => {
     if (err){
       res.send(err);
     }
     for(let i = 0; i < question.length; i++){
       allQuestions[i] = question[i].questionId;
     }
-    participationsTut.findUserPart(result, (err, participation) => {
+    participations.findUserPart(result, (err, participation) => {
       if (err){
         res.send(err);
       }
