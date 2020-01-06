@@ -66,10 +66,10 @@ const questions = require('./controllers/question.controller.js');
 const participations = require('./controllers/participation.controller.js');
 const contests = require('./controllers/contest.controller.js');
 
-const submissionsTut = require('./controllers/submissionTut.controller.js');
-const questionsTut = require('./controllers/questionTut.controller.js');
-const participationsTut = require('./controllers/participationTut.controller.js');
-const courses = require('./controllers/course.controller.js');
+// const submissionsTut = require('./controllers/submissionTut.controller.js');
+// const questionsTut = require('./controllers/questionTut.controller.js');
+// const participationsTut = require('./controllers/participationTut.controller.js');
+// const courses = require('./controllers/course.controller.js');
 
 
 
