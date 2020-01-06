@@ -1,4 +1,4 @@
-const Submission = require('../models/submissionTut.model.js');
+const Submission = require('../models/submission.model.js');
 var moment = require('moment');
 
 
