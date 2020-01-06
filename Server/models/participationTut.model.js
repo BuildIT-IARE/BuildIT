@@ -8,8 +8,10 @@ var participationTutSchema = new Schema({
     participationId: String,
     username: String,
     courseId: String,
-    participationTime: String,
-    submissionResults: Array
+    submissionResults: Array,
+    EasySolved: Array,
+    MediumSolved: Array,
+    HardSolved: Array
 });
 
 module.exports = mongoose.model('ParticipationTutorials', participationTutSchema);

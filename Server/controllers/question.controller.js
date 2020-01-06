@@ -40,7 +40,8 @@ exports.create = (req, res) => {
     questionExplanation: req.body.questionExplanation,
     author: req.body.author,
     editorial: req.body.editorial,
-    difficulty: req.body.difficulty
+    difficulty: req.body.difficulty,
+    language: req.body.language
     });
 
     // Save Question in the database
@@ -156,7 +157,8 @@ exports.update = (req, res) => {
         questionExplanation: req.body.questionExplanation,
         author: req.body.author,
         editorial: req.body.editorial,
-        difficulty: req.body.difficulty
+        difficulty: req.body.difficulty,
+        language: req.body.language
       }}, {new: true}, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
