@@ -127,6 +127,9 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
     // let year = today.slice(6, 10);
 
     let day = date.getDate();
+    if (day < 10){
+      day = '0'+String(day);
+    }
     let month = date.getMonth()+1;
     if (month < 10){
       month = '0'+String(month);
