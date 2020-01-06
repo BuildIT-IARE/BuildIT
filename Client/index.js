@@ -553,5 +553,22 @@ app.get('/tutorials', async(req, res) => {
   res.render('error', {data: body, imgUsername: req.cookies.username});
 });
 
+app.get('/tutorials2', async (req, res) => {
+  let options = {
+    url : serverRoute + '/courses',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  
+  request(options, function(err, response, body){
+    
+    res.render('tutorials', {imgUsername: req.cookies.username, data: body});
+    
+  });
+});
+
 app.listen(4000);
 console.log('Server @ port 4000');
