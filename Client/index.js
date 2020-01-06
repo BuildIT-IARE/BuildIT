@@ -182,6 +182,104 @@ app.get('/admin/update/contest', async (req, res) => {
   });
 });
 
+app.get('/admin/add/questionTut', async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute
+  };
+
+  let options = {
+    url : serverRoute + '/isAdmin',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  };
+
+  request(options, function(err, response, body){
+    if (body.success){
+      res.render('questionTutAdd', {data: url});
+    } else {
+      body.message = "Unauthorized access";
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+    }    
+  });
+});
+
+app.get('/admin/add/course', async (req, res) => {
+
+  let options = {
+    url : serverRoute + '/isAdmin',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  
+  request(options, function(err, response, body){
+    let url = {
+      url: clientRoute,
+      serverurl: serverRoute
+    }
+    if (body.success){
+      res.render('courseAdd', {data: url});
+    } else {
+      body.message = "Unauthorized access";
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+    }    
+  });
+});
+
+app.get('/admin/update/questionTut', async (req, res) => {
+  let url = {
+    url: clientRoute
+  }
+  let options = {
+    url : serverRoute + '/isAdmin',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  
+  request(options, function(err, response, body){
+    if (body.success){
+      res.render('questionTutUpdate', {data: url});
+    } else {
+      body.message = "Unauthorized access";
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+    }    
+  });
+});
+
+app.get('/admin/update/course', async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute
+  }
+  let options = {
+    url : serverRoute + '/isAdmin',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  
+  request(options, function(err, response, body){
+    if (body.success){
+      res.render('courseUpdate', {data: url});
+    } else {
+      body.message = "Unauthorized access";
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+    }    
+  });
+});
+
+
 app.get('/admin/manageusers', async (req, res) => {
   let options = {
     url : serverRoute + '/admin/users',
