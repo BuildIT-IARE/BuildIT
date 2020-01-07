@@ -178,9 +178,22 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     if (today.length === 9){
       today = '0'+today;
     }
-    let day = today.slice(0, 2);
-    let month = today.slice(3, 5);
-    let year = today.slice(6, 10);
+
+    // let day = today.slice(0, 2);
+    // let month = today.slice(3, 5);
+    // let year = today.slice(6, 10);
+
+    let day = date.getDate();
+    if (day < 10){
+      day = '0'+String(day);
+    }
+    let month = date.getMonth()+1;
+    if (month < 10){
+      month = '0'+String(month);
+    }
+    let year = date.getFullYear();
+
+
     if (!localServer){
       today = `${year}-${day}-${month}`;
     } else {
