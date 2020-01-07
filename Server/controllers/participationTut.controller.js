@@ -93,6 +93,36 @@ exports.acceptSubmission = (sub, callback) => {
                             }
                             return callback("Error updating Participation with Id ", null);
                         });
+
+                       if(sub.difficulty === 'Easy'){
+                        if (participation.EasySolved.length !== 0){
+                            for(let k = 0; k < participation.EasySolved.length; k++){
+                                if (participation.EasySolved[k].difficulty === sub.difficulty){
+                                    if (sub.difficulty && participation.EasySolved[k].difficulty === 'Easy'){
+                                        Participation.findOneAndUpdate({participationId: sub.participationId}, {$addToSet:{
+                                            EasySolved: { questionId: sub.questionId, difficulty: sub.difficulty}
+                                        }}, {new: true}, (err, doc) => {
+                                            if (err) {
+                                                console.log("Something wrong when updating data!");
+                                            }
+                                        })
+                                        .then(participation => {
+                                            if(!participation) {
+                                                return callback("Participation not found with Id ", null);
+                                            }
+                                            return callback(null, participation);
+                                        }).catch(err => {
+                                            console.log(err);
+                                            if(err.kind === 'ObjectId') {
+                                                return callback("Participation not found with Id ", null);    
+                                            }
+                                            return callback("Error updating Participation with Id ", null);
+                                        });
+                                    }
+                                }
+                            }
+                         }
+                        }
                     }
                 }
             }

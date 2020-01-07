@@ -516,6 +516,8 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
 
     let result = {
       contestId: testcases.contestId,
+      difficulty: testcases.difficulty,
+      
       participationId: req.decoded.username + testcases.contestId
     };
 
@@ -616,6 +618,7 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
                                     if (err){
                                       res.status(404).send({message: err});
                                     }
+
                                     // Create a submission
                                     submissions.create(req, result, (err, sub) => {
                                       if (err){

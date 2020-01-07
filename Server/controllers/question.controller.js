@@ -113,7 +113,8 @@ exports.getTestCases = (req, callback) => {
             HI3: question.questionHiddenInput3,
             HO1: question.questionHiddenOutput1,
             HO2: question.questionHiddenOutput2,
-            HO3: question.questionHiddenOutput3
+            HO3: question.questionHiddenOutput3,
+            difficulty: question.difficulty
         }
         return callback(null, testcases);
     }).catch(err => {
@@ -123,6 +124,7 @@ exports.getTestCases = (req, callback) => {
         return callback("Error retrieving data", null);        
     });
 };
+
 
 
 // Update a question identified by the questionId in the request
