@@ -98,8 +98,7 @@ exports.acceptSubmission = (sub, callback) => {
                         if (participation.EasySolved.length !== 0){
                             for(let k = 0; k < participation.EasySolved.length; k++){
                                 if (participation.EasySolved[k].questionId !== sub.questionId){
-                                    if (sub.difficulty === 'Easy'){
-                                        Participation.updateOne({participationId: sub.participationId}, {$set:{
+                                        Participation.findOneAndUpdate({participationId: sub.participationId}, {$addToSet:{
                                             EasySolved: { questionId: sub.questionId, difficulty: sub.difficulty}
                                         }}, {new: true}, (err, doc) => {
                                             if (err) {
@@ -118,7 +117,6 @@ exports.acceptSubmission = (sub, callback) => {
                                             }
                                             return callback("Error updating Participation with Id ", null);
                                         });
-                                    }
                                 }
                             }
                          }
