@@ -1,7 +1,9 @@
-arr = [{qid: 'abc'}, {qid: 'bcd'}]
-let b = 'abc'
- let c = arr.find(o => o.qid === b)
-if (arr.find(o => o.qid === b)){
-    arr.score = '12'
+a = 20
+b = 3
+if (a === b){
+    c = a + b
 }
-console.log(arr)
+if (a !== b){
+    c = a - b
+}
+console.log(c)

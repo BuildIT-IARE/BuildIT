@@ -1,4 +1,5 @@
 const Participation = require('../models/participationTut.model.js');
+const inarray = require('inarray');
 
 var moment = require('moment');
 // Create and Save a new participation
@@ -57,6 +58,7 @@ exports.create = (req, res) => {
 };
 
 // add sol to participation
+// add sol to participation
 exports.acceptSubmission = (sub, callback) => {
     // Change here
     // Find participation and update it with the request body
@@ -93,34 +95,6 @@ exports.acceptSubmission = (sub, callback) => {
                             }
                             return callback("Error updating Participation with Id ", null);
                         });
-
-                       if(sub.difficulty === 'Easy'){
-                        if (participation.EasySolved.length !== 0){
-                            for(let k = 0; k < participation.EasySolved.length; k++){
-                                if (participation.EasySolved[k].questionId !== sub.questionId){
-                                        Participation.findOneAndUpdate({participationId: sub.participationId}, {$addToSet:{
-                                            EasySolved: { questionId: sub.questionId, difficulty: sub.difficulty}
-                                        }}, {new: true}, (err, doc) => {
-                                            if (err) {
-                                                console.log("Something wrong when updating data!");
-                                            }
-                                        })
-                                        .then(participation => {
-                                            if(!participation) {
-                                                return callback("Participation not found with Id ", null);
-                                            }
-                                            return callback(null, participation);
-                                        }).catch(err => {
-                                            console.log(err);
-                                            if(err.kind === 'ObjectId') {
-                                                return callback("Participation not found with Id ", null);    
-                                            }
-                                            return callback("Error updating Participation with Id ", null);
-                                        });
-                                }
-                            }
-                         }
-                        }
                     }
                 }
             }
@@ -149,6 +123,24 @@ exports.acceptSubmission = (sub, callback) => {
                     return callback("Error updating Participation with Id ", null);
                 });
             }
+            if(sub.difficulty === 'Easy'){
+                if(sub.score === 100){
+                if (participation.EasySolved.length !== 0){
+                //     for(let k = 0; k < participation.EasySolved.length; k++){
+                //         if (participation.EasySolved[k] !== sub.questionId){
+                //             participation.EasySolved.push
+                //         }
+                //     }
+                //  }
+                let compare = inarray(participation.EasySolved, sub.questionId);
+                if (!compare){
+                    participation.EasySolved.push(sub.questionId);
+                }
+                } else{
+                    participation.EasySolved.push(sub.questionId);
+                }
+            }
+            }
             }).catch(err => {
                 console.log(err);
                 res.status(500).send({
@@ -157,6 +149,7 @@ exports.acceptSubmission = (sub, callback) => {
                 });
             });    
 };
+
 
 // Retrieve and return all participations from the database.
 exports.findAll = (req, res) => {
