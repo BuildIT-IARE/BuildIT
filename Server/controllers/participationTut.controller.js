@@ -97,9 +97,9 @@ exports.acceptSubmission = (sub, callback) => {
                        if(sub.difficulty === 'Easy'){
                         if (participation.EasySolved.length !== 0){
                             for(let k = 0; k < participation.EasySolved.length; k++){
-                                if (participation.EasySolved[k].difficulty === sub.difficulty){
-                                    if (sub.difficulty && participation.EasySolved[k].difficulty === 'Easy'){
-                                        Participation.findOneAndUpdate({participationId: sub.participationId}, {$addToSet:{
+                                if (participation.EasySolved[k].questionId !== sub.questionId){
+                                    if (sub.difficulty === 'Easy'){
+                                        Participation.updateOne({participationId: sub.participationId}, {$set:{
                                             EasySolved: { questionId: sub.questionId, difficulty: sub.difficulty}
                                         }}, {new: true}, (err, doc) => {
                                             if (err) {
