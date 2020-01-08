@@ -207,7 +207,7 @@ exports.findAll = (req, res) => {
 
 // Retrieve and return all participation details for user in contest.
 exports.findUser = (req, res) => {
-    Participation.find({participationId: req.decoded.username + req.params.contestId})
+    Participation.find({participationId: req.decoded.username + 'Course'})
     .then(participation => {
         res.send(participation);
     }).catch(err => {
@@ -218,18 +218,18 @@ exports.findUser = (req, res) => {
     });
 };
 
-// Retrieve and return all participation details.
-exports.findContestPart = (req, res) => {
-    Participation.find({contestId: req.body.contestId})
-    .then(participation => {
-        res.send(participation);
-    }).catch(err => {
-        res.status(500).send({
-            success: false,
-            message: err.message || "Some error occurred while retrieving participation."
-        });
-    });
-};
+// // Retrieve and return all participation details.
+// exports.findContestPart = (req, res) => {
+//     Participation.find({contestId: req.body.contestId})
+//     .then(participation => {
+//         res.send(participation);
+//     }).catch(err => {
+//         res.status(500).send({
+//             success: false,
+//             message: err.message || "Some error occurred while retrieving participation."
+//         });
+//     });
+// };
 
 exports.findUserPart = (result, callback) => {
     Participation.find({participationId: result.participationId})
