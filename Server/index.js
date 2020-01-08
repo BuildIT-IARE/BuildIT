@@ -531,7 +531,7 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
       contestId: testcases.contestId,
       difficulty: testcases.difficulty,
       
-      participationId: req.decoded.username + testcases.contestId
+      participationId: req.decoded.username + 'Course'
     };
 
     participationsTut.findUserPart(result, (err, participation) => {
@@ -605,7 +605,7 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
                                       result.sourceCode = req.body.source_code;
                                       result.submissionToken = [result.token1, result.token2, result.token3];
                                       result.result = [result.response1, result.response2, result.response3];
-                                      result.participationId = result.username + result.contestId;
+                                      result.participationId = result.username + 'Course';
                                       var testcasesPassed = 0;
                                       if (result.response1 === "Accepted"){
                                         testcasesPassed += 1;
@@ -632,6 +632,11 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
                                       res.status(404).send({message: err});
                                     }
 
+                                    participationsTut.getDifficulty(result, (err, doc) => {
+                                      if (err){
+                                        res.status(404).send({message: err});
+                                      }
+                                    
                                     // Create a submission
                                     submissions.create(req, result, (err, sub) => {
                                       if (err){
@@ -640,6 +645,7 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
                                         res.send(sub);
                                       }
                                     });
+                                   });
                                   });
                                   });
                                 }, timeOut);
@@ -670,7 +676,7 @@ app.get('/retrieveScores', middleware.checkToken, async (req, res) => {
   let allQuestions = [];
   let scores = [];
   req.cookies.contestId = contestId;
-  result.participationId =  username + contestId;
+  result.participationId =  username + 'Course';
   questions.getAllQuestions(req, (err, question) => {
     if (err){
       res.send(err);
