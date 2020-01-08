@@ -1,9 +1,7 @@
-a = 20
-b = 3
-if (a === b){
-    c = a + b
+const inarray = require('inarray');
+arr = ['adam', 'krish', 'nick'];
+let compare = inarray(arr, 'kris');
+if(!compare){
+    arr.push('kris')
 }
-if (a !== b){
-    c = a - b
-}
-console.log(c)
+console.log(arr)

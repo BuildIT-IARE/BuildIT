@@ -68,6 +68,60 @@ exports.acceptSubmission = (sub, callback) => {
             participation = participation[0];
             found = false;
             updated = false;
+            if(sub.difficulty === 'Easy'){
+                if(sub.score === 100){
+                if (participation.EasySolved.length !== 0){
+                //     for(let k = 0; k < participation.EasySolved.length; k++){
+                //         if (participation.EasySolved[k] !== sub.questionId){
+                //             participation.EasySolved.push
+                //         }
+                //     }
+                //  }
+                let compare = inarray(participation.EasySolved, sub.questionId);
+                if (!compare){
+                    participation.EasySolved.push(sub.questionId);
+                }
+                } else{
+                    participation.EasySolved.push(sub.questionId);
+                }
+                }
+            }
+            if(sub.difficulty === 'Medium'){
+                if(sub.score === 100){
+                if (participation.MediumSolved.length !== 0){
+                //     for(let k = 0; k < participation.EasySolved.length; k++){
+                //         if (participation.EasySolved[k] !== sub.questionId){
+                //             participation.EasySolved.push
+                //         }
+                //     }
+                //  }
+                let compare = inarray(participation.MediumSolved, sub.questionId);
+                if (!compare){
+                    participation.MediumSolved.push(sub.questionId);
+                }
+                } else{
+                    participation.MediumSolved.push(sub.questionId);
+                }
+                }
+            }
+            if(sub.difficulty === 'Hard'){
+                if(sub.score === 100){
+                if (participation.HardSolved.length !== 0){
+                //     for(let k = 0; k < participation.EasySolved.length; k++){
+                //         if (participation.EasySolved[k] !== sub.questionId){
+                //             participation.EasySolved.push
+                //         }
+                //     }
+                //  }
+                let compare = inarray(participation.HardSolved, sub.questionId);
+                if (!compare){
+                    participation.HardSolved.push(sub.questionId);
+                }
+                } else{
+                    participation.HardSolved.push(sub.questionId);
+                }
+                }
+            }
             if (participation.submissionResults.length !== 0){
             for (let i = 0; i < participation.submissionResults.length; i++){
                 if (participation.submissionResults[i].questionId === sub.questionId){
@@ -123,24 +177,7 @@ exports.acceptSubmission = (sub, callback) => {
                     return callback("Error updating Participation with Id ", null);
                 });
             }
-            if(sub.difficulty === 'Easy'){
-                if(sub.score === 100){
-                if (participation.EasySolved.length !== 0){
-                //     for(let k = 0; k < participation.EasySolved.length; k++){
-                //         if (participation.EasySolved[k] !== sub.questionId){
-                //             participation.EasySolved.push
-                //         }
-                //     }
-                //  }
-                let compare = inarray(participation.EasySolved, sub.questionId);
-                if (!compare){
-                    participation.EasySolved.push(sub.questionId);
-                }
-                } else{
-                    participation.EasySolved.push(sub.questionId);
-                }
-            }
-            }
+            
             }).catch(err => {
                 console.log(err);
                 res.status(500).send({
