@@ -1,4 +1,5 @@
 const Participation = require('../models/participationTut.model.js');
+const inarray = require('inarray');
 
 var moment = require('moment');
 // Create and Save a new participation
@@ -56,6 +57,7 @@ exports.create = (req, res) => {
     
 };
 
+// add sol to participation
 // add sol to participation
 exports.acceptSubmission = (sub, callback) => {
     // Change here
@@ -121,6 +123,24 @@ exports.acceptSubmission = (sub, callback) => {
                     return callback("Error updating Participation with Id ", null);
                 });
             }
+            if(sub.difficulty === 'Easy'){
+                if(sub.score === 100){
+                if (participation.EasySolved.length !== 0){
+                //     for(let k = 0; k < participation.EasySolved.length; k++){
+                //         if (participation.EasySolved[k] !== sub.questionId){
+                //             participation.EasySolved.push
+                //         }
+                //     }
+                //  }
+                let compare = inarray(participation.EasySolved, sub.questionId);
+                if (!compare){
+                    participation.EasySolved.push(sub.questionId);
+                }
+                } else{
+                    participation.EasySolved.push(sub.questionId);
+                }
+            }
+            }
             }).catch(err => {
                 console.log(err);
                 res.status(500).send({
@@ -129,6 +149,7 @@ exports.acceptSubmission = (sub, callback) => {
                 });
             });    
 };
+
 
 // Retrieve and return all participations from the database.
 exports.findAll = (req, res) => {
