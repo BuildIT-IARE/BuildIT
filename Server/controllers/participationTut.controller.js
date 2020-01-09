@@ -154,10 +154,13 @@ exports.getDifficulty = (sub, callback) => {
             let compare = inarray(participation.EasySolved, sub.questionId);
             if (!compare){
                 participation.EasySolved.push(sub.questionId);
+            } else{
+                return callback('QuestionId already present', null);
             }
             } else{
                 participation.EasySolved.push(sub.questionId);
             }
+            return (null, participation);
             }
         } else if(sub.difficulty === 'Medium'){
             if(sub.score === 100){
@@ -165,10 +168,13 @@ exports.getDifficulty = (sub, callback) => {
             let compare = inarray(participation.MediumSolved, sub.questionId);
             if (!compare){
                 participation.MediumSolved.push(sub.questionId);
+            } else{
+                return callback('QuestionId already present', null);
             }
             } else{
                 participation.MediumSolved.push(sub.questionId);
             }
+            return (null, participation);
             }
         } else if(sub.difficulty === 'Hard'){
             if(sub.score === 100){
@@ -176,13 +182,16 @@ exports.getDifficulty = (sub, callback) => {
             let compare = inarray(participation.HardSolved, sub.questionId);
             if (!compare){
                 participation.HardSolved.push(sub.questionId);
+            } else{
+                return callback('QuestionId already present', null);
             }
             } else{
                 participation.HardSolved.push(sub.questionId);
             }
+            return (null, participation);
             }
         }
-        return (null, participation);
+        
     }).catch(err => {
         console.log(err);
         if(err.kind === 'ObjectId') {
