@@ -528,9 +528,8 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
     };
 
     let result = {
-      contestId: testcases.contestId,
       difficulty: testcases.difficulty,
-      
+      language: testcases.language,
       participationId: req.decoded.username + 'Course'
     };
 

@@ -114,7 +114,8 @@ exports.getTestCases = (req, callback) => {
             HO1: question.questionHiddenOutput1,
             HO2: question.questionHiddenOutput2,
             HO3: question.questionHiddenOutput3,
-            difficulty: question.difficulty
+            difficulty: question.difficulty,
+            language: question.language
         }
         return callback(null, testcases);
     }).catch(err => {
