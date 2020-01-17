@@ -738,8 +738,8 @@ app.get('/isAdmin', middleware.checkTokenAdmin, async (req, res) => {
   });
 });
 
-app.get('/pdfset1', middleware.checkToken, async (req, res) => {
-  res.sendFile(path.resolve("../Public/pdf/set1.pdf"));
+app.get('/pdf/:setno', middleware.checkToken, async (req, res) => {
+  res.sendFile(path.resolve("../Public/pdf/"+req.params.setno+".pdf"));
 });
 
 
