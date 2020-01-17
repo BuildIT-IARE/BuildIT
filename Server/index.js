@@ -178,9 +178,22 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     if (today.length === 9){
       today = '0'+today;
     }
-    let day = today.slice(0, 2);
-    let month = today.slice(3, 5);
-    let year = today.slice(6, 10);
+
+    // let day = today.slice(0, 2);
+    // let month = today.slice(3, 5);
+    // let year = today.slice(6, 10);
+
+    let day = date.getDate();
+    if (day < 10){
+      day = '0'+String(day);
+    }
+    let month = date.getMonth()+1;
+    if (month < 10){
+      month = '0'+String(month);
+    }
+    let year = date.getFullYear();
+
+
     if (!localServer){
       today = `${year}-${day}-${month}`;
     } else {
@@ -515,10 +528,9 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
     };
 
     let result = {
-      contestId: testcases.contestId,
       difficulty: testcases.difficulty,
-      
-      participationId: req.decoded.username + testcases.contestId
+      language: testcases.language,
+      participationId: req.decoded.username + 'Course'
     };
 
     participationsTut.findUserPart(result, (err, participation) => {
@@ -592,7 +604,7 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
                                       result.sourceCode = req.body.source_code;
                                       result.submissionToken = [result.token1, result.token2, result.token3];
                                       result.result = [result.response1, result.response2, result.response3];
-                                      result.participationId = result.username + result.contestId;
+                                      result.participationId = result.username + 'Course';
                                       var testcasesPassed = 0;
                                       if (result.response1 === "Accepted"){
                                         testcasesPassed += 1;
@@ -619,6 +631,12 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
                                       res.status(404).send({message: err});
                                     }
 
+                                    // Get difficulty
+                                    participationsTut.getDifficulty(result, (err, doc) => {
+                                      if (err){
+                                        res.status(404).send({message: err});
+                                      }
+                                    
                                     // Create a submission
                                     submissions.create(req, result, (err, sub) => {
                                       if (err){
@@ -627,6 +645,7 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
                                         res.send(sub);
                                       }
                                     });
+                                   });
                                   });
                                   });
                                 }, timeOut);
@@ -657,7 +676,7 @@ app.get('/retrieveScores', middleware.checkToken, async (req, res) => {
   let allQuestions = [];
   let scores = [];
   req.cookies.contestId = contestId;
-  result.participationId =  username + contestId;
+  result.participationId =  username + 'Course';
   questions.getAllQuestions(req, (err, question) => {
     if (err){
       res.send(err);

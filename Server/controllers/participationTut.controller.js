@@ -1,4 +1,5 @@
 const Participation = require('../models/participationTut.model.js');
+const inarray = require('inarray');
 
 var moment = require('moment');
 // Create and Save a new participation
@@ -57,6 +58,7 @@ exports.create = (req, res) => {
 };
 
 // add sol to participation
+// add sol to participation
 exports.acceptSubmission = (sub, callback) => {
     // Change here
     // Find participation and update it with the request body
@@ -66,6 +68,7 @@ exports.acceptSubmission = (sub, callback) => {
             participation = participation[0];
             found = false;
             updated = false;
+            
             if (participation.submissionResults.length !== 0){
             for (let i = 0; i < participation.submissionResults.length; i++){
                 if (participation.submissionResults[i].questionId === sub.questionId){
@@ -75,7 +78,7 @@ exports.acceptSubmission = (sub, callback) => {
                         updated = true;
                         console.log("Came here");
                         Participation.updateOne({participationId: sub.participationId, "submissionResults.questionId": sub.questionId}, {$set:
-                            {"submissionResults.$.score": sub.score}
+                            {"submissionResults.$.score": sub.score, "submissionResults.$.language": sub.language, "submissionResults.$.difficulty": sub.difficulty}
                           }, {new: true}, (err, doc) => {
                             if (err) {
                                 console.log("Something wrong when updating data!");
@@ -93,36 +96,6 @@ exports.acceptSubmission = (sub, callback) => {
                             }
                             return callback("Error updating Participation with Id ", null);
                         });
-
-                       if(sub.difficulty === 'Easy'){
-                        if (participation.EasySolved.length !== 0){
-                            for(let k = 0; k < participation.EasySolved.length; k++){
-                                if (participation.EasySolved[k].difficulty === sub.difficulty){
-                                    if (sub.difficulty && participation.EasySolved[k].difficulty === 'Easy'){
-                                        Participation.findOneAndUpdate({participationId: sub.participationId}, {$addToSet:{
-                                            EasySolved: { questionId: sub.questionId, difficulty: sub.difficulty}
-                                        }}, {new: true}, (err, doc) => {
-                                            if (err) {
-                                                console.log("Something wrong when updating data!");
-                                            }
-                                        })
-                                        .then(participation => {
-                                            if(!participation) {
-                                                return callback("Participation not found with Id ", null);
-                                            }
-                                            return callback(null, participation);
-                                        }).catch(err => {
-                                            console.log(err);
-                                            if(err.kind === 'ObjectId') {
-                                                return callback("Participation not found with Id ", null);    
-                                            }
-                                            return callback("Error updating Participation with Id ", null);
-                                        });
-                                    }
-                                }
-                            }
-                         }
-                        }
                     }
                 }
             }
@@ -132,7 +105,7 @@ exports.acceptSubmission = (sub, callback) => {
         }
             if (!found){
                 Participation.findOneAndUpdate({participationId: sub.participationId}, {$addToSet:{
-                    submissionResults: { questionId: sub.questionId, score: sub.score}
+                    submissionResults: { questionId: sub.questionId, score: sub.score, difficulty: sub.difficulty, language: sub.language}
                   }}, {new: true}, (err, doc) => {
                     if (err) {
                         console.log("Something wrong when updating data!");
@@ -151,6 +124,7 @@ exports.acceptSubmission = (sub, callback) => {
                     return callback("Error updating Participation with Id ", null);
                 });
             }
+            
             }).catch(err => {
                 console.log(err);
                 res.status(500).send({
@@ -159,6 +133,73 @@ exports.acceptSubmission = (sub, callback) => {
                 });
             });    
 };
+
+
+exports.getDifficulty = (sub, callback) => {
+    Participation.find({participationId: sub.participationId})
+    .then(participation => {
+        if(!participation) {
+            return callback("Participation not found with Id ", null);
+        }
+        participation = participation[0];
+        if(sub.difficulty === 'Easy'){
+            if(sub.score === 100){
+            if (participation.EasySolved.length !== 0){
+            //     for(let k = 0; k < participation.EasySolved.length; k++){
+            //         if (participation.EasySolved[k] !== sub.questionId){
+            //             participation.EasySolved.push
+            //         }
+            //     }
+            //  }
+            let compare = inarray(participation.EasySolved, sub.questionId);
+            if (!compare){
+                participation.EasySolved.push(sub.questionId);
+            } else{
+                return callback('QuestionId already present', null);
+            }
+            } else{
+                participation.EasySolved.push(sub.questionId);
+            }
+            return (null, participation);
+            }
+        } else if(sub.difficulty === 'Medium'){
+            if(sub.score === 100){
+            if (participation.MediumSolved.length !== 0){
+            let compare = inarray(participation.MediumSolved, sub.questionId);
+            if (!compare){
+                participation.MediumSolved.push(sub.questionId);
+            } else{
+                return callback('QuestionId already present', null);
+            }
+            } else{
+                participation.MediumSolved.push(sub.questionId);
+            }
+            return (null, participation);
+            }
+        } else if(sub.difficulty === 'Hard'){
+            if(sub.score === 100){
+            if (participation.HardSolved.length !== 0){
+            let compare = inarray(participation.HardSolved, sub.questionId);
+            if (!compare){
+                participation.HardSolved.push(sub.questionId);
+            } else{
+                return callback('QuestionId already present', null);
+            }
+            } else{
+                participation.HardSolved.push(sub.questionId);
+            }
+            return (null, participation);
+            }
+        }
+        
+    }).catch(err => {
+        console.log(err);
+        if(err.kind === 'ObjectId') {
+            return callback("Participation not found with Id ", null);    
+        }
+        return callback("Error updating Participation with Id ", null);
+    });
+}
 
 // Retrieve and return all participations from the database.
 exports.findAll = (req, res) => {
@@ -175,7 +216,7 @@ exports.findAll = (req, res) => {
 
 // Retrieve and return all participation details for user in contest.
 exports.findUser = (req, res) => {
-    Participation.find({participationId: req.decoded.username + req.params.contestId})
+    Participation.find({participationId: req.decoded.username + 'Course'})
     .then(participation => {
         res.send(participation);
     }).catch(err => {
@@ -186,18 +227,18 @@ exports.findUser = (req, res) => {
     });
 };
 
-// Retrieve and return all participation details.
-exports.findContestPart = (req, res) => {
-    Participation.find({contestId: req.body.contestId})
-    .then(participation => {
-        res.send(participation);
-    }).catch(err => {
-        res.status(500).send({
-            success: false,
-            message: err.message || "Some error occurred while retrieving participation."
-        });
-    });
-};
+// // Retrieve and return all participation details.
+// exports.findContestPart = (req, res) => {
+//     Participation.find({contestId: req.body.contestId})
+//     .then(participation => {
+//         res.send(participation);
+//     }).catch(err => {
+//         res.status(500).send({
+//             success: false,
+//             message: err.message || "Some error occurred while retrieving participation."
+//         });
+//     });
+// };
 
 exports.findUserPart = (result, callback) => {
     Participation.find({participationId: result.participationId})
