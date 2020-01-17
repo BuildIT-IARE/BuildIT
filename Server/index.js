@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const request = require('request');
 const moment = require('moment');
+const upload = require('express-fileupload');
 
 let config = require('./util/config');
 let middleware = require('./util/middleware.js');
@@ -734,6 +735,30 @@ app.get('/isAdmin', middleware.checkTokenAdmin, async (req, res) => {
   res.send({
     success: true
   });
+});
+
+app.get('/weeklypdf', middleware.checkToken, async (req, res) => {
+  res.send("Send ")
+});
+
+
+app.post('/uploadpdf', middleware.checkTokenAdmin, async (req, res) => {
+  if (req.files){
+    let file = req.files.filename,
+        filename = file.name;
+    file.mv("./pdf/"+filename, function(err){
+      if(err){
+        console.log(err);
+        res.send("error occured");
+      }
+      else{
+        res.json({
+          success: true,
+          message: "uploaded"
+        });
+      }
+    });
+  }
 });
 
 app.listen(5000,()=>console.log('Server @ port 5000'));
