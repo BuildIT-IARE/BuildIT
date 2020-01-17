@@ -38,7 +38,7 @@ app.use(
 app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
-
+app.use(upload());
 
 // CODE STARTS HERE
 
