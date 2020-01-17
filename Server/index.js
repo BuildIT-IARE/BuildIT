@@ -631,6 +631,7 @@ app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
                                       res.status(404).send({message: err});
                                     }
 
+                                    // Get difficulty
                                     participationsTut.getDifficulty(result, (err, doc) => {
                                       if (err){
                                         res.status(404).send({message: err});
