@@ -737,12 +737,12 @@ app.get('/isAdmin', middleware.checkTokenAdmin, async (req, res) => {
   });
 });
 
-app.get('/weeklypdf', middleware.checkToken, async (req, res) => {
-  res.send("Send ")
+app.get('/pdfset1', middleware.checkToken, async (req, res) => {
+  res.sendFile(__dirname+"../Public/pdf/set1.pdf");
 });
 
 
-app.post('/uploadpdf', async (req, res) => {
+app.post('/uploadpdf', middleware.checkTokenAdmin, async (req, res) => {
   if (req.files){
     // console.log(req.files);
     let file = req.files.upfile,
