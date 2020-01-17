@@ -633,6 +633,10 @@ app.get('/logout', async (req, res) => {
   res.redirect('/home');
 });
 
+app.get('/pdf/:setNo', async (req, res) => {
+  res.redirect(serverRoute+"/pdf/"+req.params.setNo);
+});
+
 app.get('/error', async (req, res) => {
   res.render('error', {imgUsername: req.cookies.username});
 });
