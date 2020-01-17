@@ -651,6 +651,7 @@ app.get('/tutorials', async(req, res) => {
   res.render('error', {data: body, imgUsername: req.cookies.username});
 });
 
+
 app.get('/tutorials2', async (req, res) => {
   let options = {
     url : serverRoute + '/courses',
