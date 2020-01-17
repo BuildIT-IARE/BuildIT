@@ -744,10 +744,10 @@ app.get('/weeklypdf', middleware.checkToken, async (req, res) => {
 
 app.post('/uploadpdf', async (req, res) => {
   if (req.files){
-    console.log(req.files);
+    // console.log(req.files);
     let file = req.files.upfile,
         filename = file.name;
-    file.mv("./pdf/"+filename, function(err){
+    file.mv("../Public/pdf/"+filename, function(err){
       if(err){
         console.log(err);
         res.send("error occured");
