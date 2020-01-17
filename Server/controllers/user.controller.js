@@ -87,6 +87,7 @@ exports.findOnePublic = (req, res) => {
 // Create and Save a new user
 exports.create = (req, res) => {
     // Validate request
+    console.log(req.body);
     if(!req.body.email || !req.body.username || !req.body.password || !req.body.name || !req.body.branch) {
         return res.status(400).send({
             success: false,
