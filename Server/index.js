@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const request = require('request');
 const moment = require('moment');
 const upload = require('express-fileupload');
+var path = require('path');
 
 let config = require('./util/config');
 let middleware = require('./util/middleware.js');
@@ -738,7 +739,7 @@ app.get('/isAdmin', middleware.checkTokenAdmin, async (req, res) => {
 });
 
 app.get('/pdfset1', middleware.checkToken, async (req, res) => {
-  res.sendFile(__dirname+"../Public/pdf/set1.pdf");
+  res.sendFile(path.resolve("../Public/pdf/set1.pdf"));
 });
 
 
