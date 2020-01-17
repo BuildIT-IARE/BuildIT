@@ -758,6 +758,8 @@ app.post('/uploadpdf', async (req, res) => {
         });
       }
     });
+  } else{
+    res.send("Failed");
   }
 });
 
