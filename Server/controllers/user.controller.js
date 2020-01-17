@@ -101,7 +101,7 @@ exports.create = (req, res) => {
         });
     }
 
-    if(req.body.username.slice(2, 6) !== '951a' || req.body.username.slice(0,4) !== 'iare'){
+    if((req.body.username.length !== 10 && req.body.username.slice(2, 6) !== '951a') || (req.body.username.length !== 9 && req.body.username.slice(0,4) !== 'iare')){
         return res.status(400).send({
             success: false,
             message: "Please enter a valid roll no."
