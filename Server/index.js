@@ -742,7 +742,7 @@ app.get('/weeklypdf', middleware.checkToken, async (req, res) => {
 });
 
 
-app.post('/uploadpdf', middleware.checkTokenAdmin, async (req, res) => {
+app.post('/uploadpdf', async (req, res) => {
   if (req.files){
     let file = req.files.filename,
         filename = file.name;
