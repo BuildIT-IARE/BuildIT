@@ -121,6 +121,46 @@ div .border {
 }
 
 
+.button2 {
+  border-radius: 4px;
+  background-color: #454fd4;
+  border: none;
+  color: white;
+  /* text-align: center; */
+  font-size:  px;
+  padding: 20px;
+  width: 260px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+.button2 span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 1s;
+}
+.button2 span:after {
+  content: '\00bb';
+  position: "relative";
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.button2:hover span {
+  padding-left: 25px;
+}
+.button2:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+div .border {
+  border-color: red;
+  margin: 4px;
+  padding: 4px;
+  border-width: 3px;
+}
 
   </style>
 </head>
@@ -154,32 +194,32 @@ div .border {
     <div class="container">
       <div class="row">
           <div class="font-tertiary mb-5">
-              <a href="pdf/set1" target="_blank" class="button">SET 1</a>
+              <a href="pdf/set1" target="_blank" class="button2">SET 1</a>
   
           </div>  
         
      
         
           <div class="font-tertiary mb-5">
-              <a href="pdf/set2" target="_blank" class="button1">SET 2</a>
+              <a href="pdf/set2" target="_blank" class="button2">SET 2</a>
           </div>  
         
         
         
           <div class="font-tertiary mb-5">
-              <a href="pdf/set3" target="_blank" class="button1">SET 3</a>
+              <a href="pdf/set3" target="_blank" class="button2">SET 3</a>
           </div>  
         
         
         
           <div class="font-tertiary mb-5">
-              <a href="pdf/set4" target="_blank" class="button1">SET 4</a>
+              <a href="pdf/set4" target="_blank" class="button2">SET 4</a>
           </div>  
         
         
         
           <div class="font-tertiary mb-5">
-              <a href="pdf/set5" target="_blank" class="button1">SET 5</a>
+              <a href="pdf/set5" target="_blank" class="button2">SET 5</a>
           </div>  
         </div> </div>
         </section>
