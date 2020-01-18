@@ -681,7 +681,10 @@ app.get('/tutorials', async(req, res) => {
 });
 
 app.get('/flipClass', async (req, res) => {
-  res.render('flipClass', {imgUsername: req.cookies.username});
+  let url = {
+    url: clientRoute
+  }
+  res.render('flipClass', {imgUsername: req.cookies.username, data: url});
 });
 
 app.get('/tutorials2', async (req, res) => {
