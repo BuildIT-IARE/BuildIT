@@ -138,6 +138,13 @@ position: relative;
 border:1px solid black;
 border-radius: 50%;
 }
+.cbtn {
+  display:block;
+  width:50%; /* of the container */
+  height:50%;
+  top: 25%; left:25%;
+  border-radius: 50%;
+}
 
   </style>
 </head>
@@ -161,7 +168,7 @@ border-radius: 50%;
     <br>
   <div class="outer">
     <div class="inner"  >
-      <a href= "<%= data.url %>/ide %>" style="color:white" target="_blank"><span>Online Editor</span></a>
+      <a class= "cbtn" href= "<%= data.url %>/ide %>" style="color:white" target="_blank"><span>Online Editor</span></a>
     </div>
 </div>
 <br>
