@@ -682,7 +682,8 @@ app.get('/tutorials', async(req, res) => {
 
 app.get('/flipClass', async (req, res) => {
   let url = {
-    url: clientRoute
+    url: clientRoute,
+    surl: serverRoute
   }
   res.render('flipClass', {imgUsername: req.cookies.username, data: url});
 });
