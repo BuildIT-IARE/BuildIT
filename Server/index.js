@@ -756,7 +756,8 @@ app.post('/uploadpdf', middleware.checkTokenAdmin, async (req, res) => {
       else{
         res.json({
           success: true,
-          message: "uploaded"
+          message: "uploaded",
+          filename: filename
         });
       }
     });
