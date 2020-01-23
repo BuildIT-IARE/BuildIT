@@ -85,7 +85,6 @@ exports.getDuration = (req, callback) => {
         }
         contest = contest[0]
         let durationData = {
-            contestId: contest.contestId,
             startTime: contest.contestStartTime,
             endTime: contest.contestEndTime,
             duration: contest.contestDuration,
