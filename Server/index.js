@@ -223,6 +223,9 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     if (req.decoded.admin){
       accepted = true;
     }
+    // if (req.duration.contestId.slice(0,2) === "BW"){
+    //   accepted = true;
+    // } 
     // accepted = true;
     if (accepted) {
       questions.getTestCases(req, (err, testcases) => {
