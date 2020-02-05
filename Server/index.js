@@ -543,7 +543,7 @@ app.post('/tutorialsCheck', middleware.checkToken, async (req, res) => {
           language: testcases.language,
           participationId: req.decoded.username + testcases.courseId
         };
-    
+        console.log(result);
         participationsTut.findUserPart(result, (err, participation) => {
           if (err){
             res.status(404).send({message: err});
