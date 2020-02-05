@@ -6,8 +6,6 @@ const request = require('request');
 const urlExists = require('url-exists');
 const cookieParser = require('cookie-parser');
 var path = require('path');
-const inarray = require('inarray');
-
 let config = require('../Server/util/config');
 
 
@@ -656,6 +654,21 @@ app.get('/contests/questions/:questionId', async (req, res) => {
   request(options, function(err, response, body){
     body.url = clientRoute;
     res.render('questiondesc', {imgUsername: req.cookies.username, data: body});
+  });
+});
+
+app.get('/tutorials/questions/:questionId', async (req, res) => {
+  let options = {
+    url : serverRoute + '/questions/'+req.params.questionId,
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    body.url = clientRoute;
+    res.render('questionTutDesc', {imgUsername: req.cookies.username, data: body});
   });
 });
 
