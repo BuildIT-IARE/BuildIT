@@ -34,6 +34,8 @@ app.use('/tutorials', express.static(__dirname + '/'));
 app.use('/contests', express.static(__dirname + '/'));
 
 app.use('/contests/questions', express.static(__dirname + '/'));
+app.use('/tutorials/questions', express.static(__dirname + '/'));
+
 app.use('/admin', express.static(__dirname + '/'));
 
 

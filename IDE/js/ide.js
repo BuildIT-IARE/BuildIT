@@ -456,6 +456,9 @@ $(window).resize(function() {
 
 $(document).ready(function () {
 
+    if (getCookie(courseId)){
+        $('#tutorials').('Practice Mode')
+    }
     $selectLanguage = $("#select-language");
     $selectLanguage.change(function (e) {
         if (!isEditorDirty) {
