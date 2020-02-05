@@ -715,7 +715,7 @@ app.get('/tutorials/:courseId', async (req, res) => {
           'authorization': req.cookies.token
         },
         body: {
-          contestId: req.params.courseId 
+          courseId: req.params.courseId 
         },
         json: true
       }
