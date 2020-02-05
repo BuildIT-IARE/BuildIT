@@ -6,6 +6,7 @@ const request = require('request');
 const urlExists = require('url-exists');
 const cookieParser = require('cookie-parser');
 var path = require('path');
+const inarray = require('inarray');
 
 let config = require('../Server/util/config');
 
@@ -750,10 +751,13 @@ app.get('/tutorials/:courseId', async (req, res) => {
             let questions = [];
             let scores = [];
             for (let i = 0; i < body.length; i++){
-              if (inarray(body[i].questionId, bodytimer.submissionResults)){
+              if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1){
                 body[i].solved = "Solved";
                 body[i].color = "green";
-              } 
+              } else {
+                body[i].solved = "";
+                body[i].color = "black";
+              }
             }
             // for (let i = 0; i < questions.length; i++){
             //   let maxScore = 0;
