@@ -707,28 +707,15 @@ app.get('/tutorials2', async (req, res) => {
 
 app.get('/tutorials/:courseId', async (req, res) => {
   // check if contest is open
-  let options = {
-    url : serverRoute + '/isOngoing',
-    method: 'post',
-    headers: {
-      'authorization': req.cookies.token
-    },
-    body: {
-      contestId: req.params.contestId 
-    },
-    json: true
-  }
-  request(options, function(err, response, body){
-    if (body.success){
       // Add participation
       let options1 = {
-        url : serverRoute + '/participations',
+        url : serverRoute + '/tparticipations',
         method: 'post',
         headers: {
           'authorization': req.cookies.token
         },
         body: {
-          contestId: req.params.contestId 
+          contestId: req.params.courseId 
         },
         json: true
       }
@@ -736,7 +723,7 @@ app.get('/tutorials/:courseId', async (req, res) => {
       request(options1, function(err, response, body){
   
         let options = {
-          url : serverRoute + '/questions/contests/'+req.params.contestId,
+          url : serverRoute + '/questions/courses/'+req.params.courseId,
           method: 'get',
           headers: {
             'authorization': req.cookies.token
@@ -745,9 +732,9 @@ app.get('/tutorials/:courseId', async (req, res) => {
         }
         // Get questions for contest
         request(options, function(err, response, body){
-          res.cookie('contestId',req.params.contestId);
+          res.cookie('courseId',req.params.courseId);
             let options3 ={
-              url: serverRoute + '/participations/' + req.params.contestId,
+              url: serverRoute + '/tparticipations/' + req.params.courseId,
               method: 'get',
               headers: {
                 'authorization': req.cookies.token
@@ -783,23 +770,21 @@ app.get('/tutorials/:courseId', async (req, res) => {
             for (let i = 0; i < body.length; i++){
               if (body[i].score === 100){
                 body[i].color = "green";
-              } else if (body[i].score === 50){
-                body[i].color = "orange";
-              } else if (body[i].score === 25) {
-                body[i].color = "red";
+                body[i].solved = "Solved";
               } else {
                 body[i].color = "black";
+                body[i].solved = "Unsolved";
               }
             }
-            body.contestId =  req.params.contestId;
-            res.render('questions', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
+            body.courseId =  req.params.courseId;
+            res.render('questionsTut', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
         });
       });
-    } else {
-      res.render('error', {data: body, imgUsername: req.cookies.username});
-    }
-  });
+    // } else {
+    //   res.render('error', {data: body, imgUsername: req.cookies.username});
+    // }
+  
 });
 
 app.listen(4000);
