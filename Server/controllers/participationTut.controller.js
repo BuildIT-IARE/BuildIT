@@ -23,14 +23,15 @@ exports.create = (req, res) => {
     Participation.find({participationId: req.body.username + req.body.courseId})
     .then(participation => {
         if (participation.length === 0){
-            let date = moment();
                 // Create a Participation
                 const participation = new Participation({
                     participationId: req.body.username + req.body.courseId,
                     username: req.body.username,
                     courseId: req.body.courseId,
-                    participationTime: date,
-                    submissionResults: []
+                    submissionResults: [],
+                    easySolved: [],
+                    mediumSolved: [],
+                    hardSolved: []
                 });
                 // Save participation in the database
                 participation.save()
@@ -57,7 +58,6 @@ exports.create = (req, res) => {
     
 };
 
-// add sol to participation
 // add sol to participation
 exports.acceptSubmission = (sub, callback) => {
     // Change here
@@ -144,49 +144,49 @@ exports.getDifficulty = (sub, callback) => {
         participation = participation[0];
         if(sub.difficulty === 'Easy'){
             if(sub.score === 100){
-            if (participation.EasySolved.length !== 0){
-            //     for(let k = 0; k < participation.EasySolved.length; k++){
-            //         if (participation.EasySolved[k] !== sub.questionId){
-            //             participation.EasySolved.push
+            if (participation.easySolved.length !== 0){
+            //     for(let k = 0; k < participation.easySolved.length; k++){
+            //         if (participation.easySolved[k] !== sub.questionId){
+            //             participation.easySolved.push
             //         }
             //     }
             //  }
-            let compare = inarray(participation.EasySolved, sub.questionId);
+            let compare = inarray(participation.easySolved, sub.questionId);
             if (!compare){
-                participation.EasySolved.push(sub.questionId);
+                participation.easySolved.push(sub.questionId);
             } else{
                 return callback('QuestionId already present', null);
             }
             } else{
-                participation.EasySolved.push(sub.questionId);
+                participation.easySolved.push(sub.questionId);
             }
             return (null, participation);
             }
         } else if(sub.difficulty === 'Medium'){
             if(sub.score === 100){
-            if (participation.MediumSolved.length !== 0){
-            let compare = inarray(participation.MediumSolved, sub.questionId);
+            if (participation.mediumSolved.length !== 0){
+            let compare = inarray(participation.mediumSolved, sub.questionId);
             if (!compare){
-                participation.MediumSolved.push(sub.questionId);
+                participation.mediumSolved.push(sub.questionId);
             } else{
                 return callback('QuestionId already present', null);
             }
             } else{
-                participation.MediumSolved.push(sub.questionId);
+                participation.mediumSolved.push(sub.questionId);
             }
             return (null, participation);
             }
         } else if(sub.difficulty === 'Hard'){
             if(sub.score === 100){
-            if (participation.HardSolved.length !== 0){
-            let compare = inarray(participation.HardSolved, sub.questionId);
+            if (participation.hardSolved.length !== 0){
+            let compare = inarray(participation.hardSolved, sub.questionId);
             if (!compare){
-                participation.HardSolved.push(sub.questionId);
+                participation.hardSolved.push(sub.questionId);
             } else{
                 return callback('QuestionId already present', null);
             }
             } else{
-                participation.HardSolved.push(sub.questionId);
+                participation.hardSolved.push(sub.questionId);
             }
             return (null, participation);
             }

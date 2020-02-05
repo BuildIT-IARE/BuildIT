@@ -9,9 +9,9 @@ var participationTutSchema = new Schema({
     username: String,
     courseId: String,
     submissionResults: Array,
-    EasySolved: Array,
-    MediumSolved: Array,
-    HardSolved: Array
+    easySolved: Array,
+    mediumSolved: Array,
+    hardSolved: Array
 });
 
 module.exports = mongoose.model('ParticipationTutorials', participationTutSchema);
