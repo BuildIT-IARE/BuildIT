@@ -22,7 +22,8 @@ exports.create = (req, result, callback) => {
         result: result.result,
         score: result.score,
         submissionToken: result.submissionToken,
-        submissionTime: moment()
+        submissionTime: moment(),
+        participationId: result.participationId
       });
     
     if (submission.score === 100){

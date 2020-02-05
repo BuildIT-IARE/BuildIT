@@ -135,7 +135,7 @@ exports.acceptSubmission = (sub, callback) => {
 };
 
 
-exports.getDifficulty = (sub, callback) => {
+exports.insertDifficultyWise = (sub, callback) => {
     Participation.find({participationId: sub.participationId})
     .then(participation => {
         if(!participation) {
@@ -144,51 +144,39 @@ exports.getDifficulty = (sub, callback) => {
         participation = participation[0];
         if(sub.difficulty === 'Easy'){
             if(sub.score === 100){
-            if (participation.easySolved.length !== 0){
-            //     for(let k = 0; k < participation.easySolved.length; k++){
-            //         if (participation.easySolved[k] !== sub.questionId){
-            //             participation.easySolved.push
-            //         }
-            //     }
-            //  }
-            let compare = inarray(participation.easySolved, sub.questionId);
-            if (!compare){
-                participation.easySolved.push(sub.questionId);
-            } else{
-                return callback('QuestionId already present', null);
-            }
-            } else{
-                participation.easySolved.push(sub.questionId);
-            }
-            return (null, participation);
+                let exists = inarray(participation.easySolved, sub.questionId);
+                if (!exists){
+                    participation.easySolved.push(sub.questionId);
+                } else{
+                    return callback('QuestionId already present', null);
+                }
+                return (null, participation);
+            } else {
+                return (null, participation);
             }
         } else if(sub.difficulty === 'Medium'){
             if(sub.score === 100){
-            if (participation.mediumSolved.length !== 0){
-            let compare = inarray(participation.mediumSolved, sub.questionId);
-            if (!compare){
-                participation.mediumSolved.push(sub.questionId);
-            } else{
-                return callback('QuestionId already present', null);
-            }
-            } else{
-                participation.mediumSolved.push(sub.questionId);
-            }
-            return (null, participation);
+                let exists = inarray(participation.mediumSolved, sub.questionId);
+                if (!exists){
+                    participation.mediumSolved.push(sub.questionId);
+                } else{
+                    return callback('QuestionId already present', null);
+                }
+                return (null, participation);
+            } else {
+                return (null, participation);
             }
         } else if(sub.difficulty === 'Hard'){
             if(sub.score === 100){
-            if (participation.hardSolved.length !== 0){
-            let compare = inarray(participation.hardSolved, sub.questionId);
-            if (!compare){
-                participation.hardSolved.push(sub.questionId);
-            } else{
-                return callback('QuestionId already present', null);
-            }
-            } else{
-                participation.hardSolved.push(sub.questionId);
-            }
-            return (null, participation);
+                let exists = inarray(participation.hardSolved, sub.questionId);
+                if (!exists){
+                    participation.hardSolved.push(sub.questionId);
+                } else {
+                    return callback('QuestionId already present', null);
+                }
+                return (null, participation);
+            } else {
+                return (null, participation);
             }
         }
         

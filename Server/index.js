@@ -400,7 +400,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                             });
                             }, timeOut);
                         } else {
-                          res.status(500).send({message: "Server is Busy, try again later! or Check your code if any compilation errors."});
+                          res.status(500).send({message: "Server is Busy, try again later! or check your code for any compilation errors, and try again."});
                         }
                     });  
                     }, timeOut);
@@ -486,190 +486,190 @@ app.get('/getScores', middleware.checkToken, async (req, res) => {
 });
 
 
-app.post('/submissionValidation', middleware.checkToken, async (req, res) => {
-  questions.getTestCases(req, (err, testcases) => {
+app.post('/tutorialsCheck', middleware.checkToken, async (req, res) => {
+  courses.findCourseLanguage(req, (err, course) =>{
     if (err){
-      res.status(404).send({message: "Question not found with id " + req.body.questionId});
-  } else {
-    if(localServer){
-      postUrl = apiAddress + '/submissions/?wait=true';
-    } else {
-      postUrl = apiAddress + '/submissions';
-    }
-    let options1 = {
-      method: 'post',
-      body: {
-        source_code: req.body.source_code,
-        language_id: req.body.language_id,
-        stdin: testcases.HI1,
-        expected_output: testcases.HO1
-      },
-      json: true,
-      url: postUrl
-    };
-
-    let options2 = {
-      method: 'post',
-      body: {
-        source_code: req.body.source_code,
-        language_id: req.body.language_id,
-        stdin: testcases.HI2,
-        expected_output: testcases.HO2
-      },
-      json: true,
-      url: postUrl
-    };
-
-    let options3 = {
-      method: 'post',
-      body: {
-        source_code: req.body.source_code,
-        language_id: req.body.language_id,
-        stdin: testcases.HI3,
-        expected_output: testcases.HO3
-      },
-      json: true,
-      url: postUrl
-    };
-
-    let result = {
-      difficulty: testcases.difficulty,
-      language: testcases.language,
-      participationId: req.decoded.username + 'Course'
-    };
-
-    participationsTut.findUserPart(result, (err, participation) => {
-      if (err){
-        res.status(404).send({message: err});
-      }
-      participation = participation[0];
-
-      setTimeout(() => {
-        request(options1, (err, resp, body) => {
-          if (err) {
+      res.status(404).send({message: "Course not found with id " + req.body.courseId});
+  }
+    if (course.languageId === req.body.language_id){
+      questions.getTestCases(req, (err, testcases) => {
+        if (err){
+          res.status(404).send({message: "Question not found with id " + req.body.questionId});
+      } else {
+        if(localServer){
+          postUrl = apiAddress + '/submissions/?wait=true';
+        } else {
+          postUrl = apiAddress + '/submissions';
+        }
+        let options1 = {
+          method: 'post',
+          body: {
+            source_code: req.body.source_code,
+            language_id: req.body.language_id,
+            stdin: testcases.HI1,
+            expected_output: testcases.HO1
+          },
+          json: true,
+          url: postUrl
+        };
+    
+        let options2 = {
+          method: 'post',
+          body: {
+            source_code: req.body.source_code,
+            language_id: req.body.language_id,
+            stdin: testcases.HI2,
+            expected_output: testcases.HO2
+          },
+          json: true,
+          url: postUrl
+        };
+    
+        let options3 = {
+          method: 'post',
+          body: {
+            source_code: req.body.source_code,
+            language_id: req.body.language_id,
+            stdin: testcases.HI3,
+            expected_output: testcases.HO3
+          },
+          json: true,
+          url: postUrl
+        };
+    
+        let result = {
+          difficulty: testcases.difficulty,
+          language: testcases.language,
+          participationId: req.decoded.username + testcases.courseId
+        };
+    
+        participationsTut.findUserPart(result, (err, participation) => {
+          if (err){
             res.status(404).send({message: err});
           }
-          result.token1 = body.token;
+          participation = participation[0];
+    
           setTimeout(() => {
-            request(options2, (err, resp, body) => {
+            request(options1, (err, resp, body) => {
               if (err) {
                 res.status(404).send({message: err});
               }
-              result.token2 = body.token;
+              result.token1 = body.token;
               setTimeout(() => {
-                request(options3, (err, resp, body) => {
+                request(options2, (err, resp, body) => {
                   if (err) {
                     res.status(404).send({message: err});
                   }
-                  result.token3 = body.token;
-                  if (result.token1 && result.token2 && result.token3){
-                    option1 = {
-                      url: apiAddress + '/submissions/' + result.token1,
-                      method: 'get'
-                    }
-                    option2 = {
-                      url: apiAddress + '/submissions/' + result.token2,
-                      method: 'get'
-                    }
-                    option3 = {
-                      url: apiAddress + '/submissions/' + result.token3,
-                      method: 'get'
-                    }
-                    setTimeout(() => {
-                      request(option1, (err, response, body) => {
-                        if (err) {
-                          res.status(404).send({message: err});
-                          }
-                          let data = JSON.parse(body);
-                
-                          let resp = data.status.description;
-                          result.response1 = resp;
-                          setTimeout(() => {
-                            request(option2, (err, response, body) => {
-                              if (err) {
-                                res.status(404).send({message: err});
-                                }
-                                let data = JSON.parse(body);
-                      
-                                let resp = data.status.description;
-                                result.response2 = resp;
-                                setTimeout(() => {
-                                  request(option3, (err, response, body) => {
-                                    if (err) {
-                                      res.status(404).send({message: err});
-                                      }
-                                      let data = JSON.parse(body);
-                            
-                                      let resp = data.status.description;
-                                      result.response3 = resp;
-
-                                      result.languageId = req.body.language_id;
-                                      result.questionId = req.body.questionId;
-                                      result.username = req.decoded.username;
-                                      result.sourceCode = req.body.source_code;
-                                      result.submissionToken = [result.token1, result.token2, result.token3];
-                                      result.result = [result.response1, result.response2, result.response3];
-                                      result.participationId = result.username + 'Course';
-                                      var testcasesPassed = 0;
-                                      if (result.response1 === "Accepted"){
-                                        testcasesPassed += 1;
-                                      }
-                                      if (result.response2 === "Accepted"){
-                                        testcasesPassed += 1;
-                                      }
-                                      if (result.response3 === "Accepted"){
-                                        testcasesPassed += 1;
-                                      }
-                                      if (testcasesPassed === 3){
-                                        result.score = 100;
-                                      } else if (testcasesPassed === 2) {
-                                        result.score = 50;
-                                      } else if (testcasesPassed === 1){
-                                        result.score = 25;
-                                      } else {
-                                        result.score = 0;
-                                      }
-
-                                      // Add score to profile
-                                  participationsTut.acceptSubmission(result, (err, doc) =>{
-                                    if (err){
-                                      res.status(404).send({message: err});
+                  result.token2 = body.token;
+                  setTimeout(() => {
+                    request(options3, (err, resp, body) => {
+                      if (err) {
+                        res.status(404).send({message: err});
+                      }
+                      result.token3 = body.token;
+                      if (result.token1 && result.token2 && result.token3){
+                        option1 = {
+                          url: apiAddress + '/submissions/' + result.token1,
+                          method: 'get'
+                        }
+                        option2 = {
+                          url: apiAddress + '/submissions/' + result.token2,
+                          method: 'get'
+                        }
+                        option3 = {
+                          url: apiAddress + '/submissions/' + result.token3,
+                          method: 'get'
+                        }
+                        setTimeout(() => {
+                          request(option1, (err, response, body) => {
+                            if (err) {
+                              res.status(404).send({message: err});
+                              }
+                              let data = JSON.parse(body);
+                    
+                              let resp = data.status.description;
+                              result.response1 = resp;
+                              setTimeout(() => {
+                                request(option2, (err, response, body) => {
+                                  if (err) {
+                                    res.status(404).send({message: err});
                                     }
-
-                                    // Get difficulty
-                                    participationsTut.getDifficulty(result, (err, doc) => {
-                                      if (err){
-                                        res.status(404).send({message: err});
-                                      }
-                                    
-                                    // Create a submission
-                                    submissions.create(req, result, (err, sub) => {
-                                      if (err){
-                                        res.status(404).send({message: err});
-                                      } else {
-                                        res.send(sub);
-                                      }
-                                    });
-                                   });
-                                  });
-                                  });
-                                }, timeOut);
-                            });
-                          }, timeOut);
-                      });
-                    },timeOut);
-                  } else {
-                    res.status(500).send({message: "Server is Busy, try again later! or Check your code if any compilation errors."});
-                  }
+                                    let data = JSON.parse(body);
+                          
+                                    let resp = data.status.description;
+                                    result.response2 = resp;
+                                    setTimeout(() => {
+                                      request(option3, (err, response, body) => {
+                                        if (err) {
+                                          res.status(404).send({message: err});
+                                          }
+                                          let data = JSON.parse(body);
+                                
+                                          let resp = data.status.description;
+                                          result.response3 = resp;
+    
+                                          result.languageId = req.body.language_id;
+                                          result.questionId = req.body.questionId;
+                                          result.username = req.decoded.username;
+                                          result.sourceCode = req.body.source_code;
+                                          result.submissionToken = [result.token1, result.token2, result.token3];
+                                          result.result = [result.response1, result.response2, result.response3];
+                                          var testcasesPassed = 0;
+                                          if (result.response1 === "Accepted"){
+                                            testcasesPassed += 1;
+                                          }
+                                          if (result.response2 === "Accepted"){
+                                            testcasesPassed += 1;
+                                          }
+                                          if (result.response3 === "Accepted"){
+                                            testcasesPassed += 1;
+                                          }
+                                          if (testcasesPassed === 3){
+                                            result.score = 100;
+                                          } else if (testcasesPassed === 2) {
+                                            result.score = 50;
+                                          } else if (testcasesPassed === 1){
+                                            result.score = 25;
+                                          } else {
+                                            result.score = 0;
+                                          }
+                                            // Add score to profile
+                                            participationsTut.insertDifficultyWise(result, (err, doc) => {
+                                              if (err){
+                                                res.status(404).send({message: err});
+                                              }
+                                                // Create a submission
+                                                submissions.create(req, result, (err, sub) => {
+                                                  if (err){
+                                                    res.status(404).send({message: err});
+                                                  } else {
+                                                    res.send(sub);
+                                                  }
+                                                });
+                                            });
+                                      });
+                                    }, timeOut);
+                                });
+                              }, timeOut);
+                          });
+                        },timeOut);
+                      } else {
+                        res.status(500).send({message: "Server is Busy, try again later! or check your code for any compilation errors and try again."});
+                      }
+                    });
+                  }, timeOut);
                 });
               }, timeOut);
             });
           }, timeOut);
         });
-      }, timeOut);
-    });
-  }
+      }
+      });
+    } else {
+      res.status(500).send({message: "This language is not allowed for this course"});
+    }
   });
+
 });
 
 app.get('/retrieveScores', middleware.checkToken, async (req, res) => {
