@@ -465,7 +465,7 @@ $(document).ready(function () {
         }
         return "";
      }
-    if (getCookie(courseId)){
+    if (getCookie("courseId")){
         $('#tutorials').text('Practice Mode')
     }
     $selectLanguage = $("#select-language");
