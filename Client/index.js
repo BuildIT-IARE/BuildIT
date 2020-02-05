@@ -707,7 +707,7 @@ app.get('/tutorials2', async (req, res) => {
 
 app.get('/tutorials/:courseId', async (req, res) => {
     res.clearCookie('contestId');
-  // check if contest is open
+    res.cookie('courseId',req.params.courseId);
       // Add participation
       let options1 = {
         url : serverRoute + '/tparticipations',
@@ -733,7 +733,6 @@ app.get('/tutorials/:courseId', async (req, res) => {
         }
         // Get questions for contest
         request(options, function(err, response, body){
-          res.cookie('courseId',req.params.courseId);
             let options3 ={
               url: serverRoute + '/tparticipations/' + req.params.courseId,
               method: 'get',
@@ -745,6 +744,7 @@ app.get('/tutorials/:courseId', async (req, res) => {
           // get participation details
           request(options3, function(err, response, bodytimer){
             bodytimer = bodytimer[0];
+            console.log(bodytimer);
             let questions = [];
             let scores = [];
             for (let i = 0; i < body.length; i++){
