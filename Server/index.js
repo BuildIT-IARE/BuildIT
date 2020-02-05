@@ -635,6 +635,7 @@ app.post('/tutorialsCheck', middleware.checkToken, async (req, res) => {
                                             result.score = 0;
                                           }
                                             // Add score to profile
+                                            console.log("------",result);
                                             participationsTut.insertDifficultyWise(result, (err, doc) => {
                                               if (err){
                                                 res.status(404).send({message: err});
