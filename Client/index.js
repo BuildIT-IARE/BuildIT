@@ -759,48 +759,11 @@ app.get('/tutorials/:courseId', async (req, res) => {
                 body[i].color = "black";
               }
             }
-            // for (let i = 0; i < questions.length; i++){
-            //   let maxScore = 0;
-            //   for(let j = 0; j < bodytimer.submissionResults.length; j++){
-            //     if (bodytimer.submissionResults[j].questionId === questions[i]){
-            //       if (maxScore < bodytimer.submissionResults[j].score){
-            //         maxScore = bodytimer.submissionResults[j].score;
-            //       }
-            //     }
-            //   }
-            //   scores[i] = maxScore;
-            // }
-            // for (let i = 0; i < body.length; i++){
-            //   for(let j = 0; j < questions.length; j++){
-            //     if (body[i].questionId === questions[j]){
-            //       body[i].score = scores[j];
-            //     }
-            //   }
-            // }
-            // for (let i = 0; i < body.length; i++){
-            //   if (body[i].score === 100){
-            //     body[i].color = "green";
-            //     body[i].solved = "Solved";
-            //   } else {
-            //     body[i].color = "black";
-            //     body[i].solved = "Unsolved";
-            //   }
-            // }
             body.courseId =  req.params.courseId;
-            console.log("BodyTimer ____________________________________")
-            console.log(bodytimer);
-            console.log("Body ____________________________________")
-            console.log(body);
-
-            // console.log(JSON.stringify(body, null, 2));
             res.render('questionsTut', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
         });
       });
-    // } else {
-    //   res.render('error', {data: body, imgUsername: req.cookies.username});
-    // }
-  
 });
 
 app.listen(4000);
