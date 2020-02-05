@@ -183,7 +183,7 @@ exports.insertDifficultyWise = (sub, callback) => {
                 return callback(null, participation);
             }
         } else {
-            return callback("Question Difficulty not set, contact admin", null);
+            return callback("Question difficulty not set, contact admin", null);
         }
         
     }).catch(err => {
