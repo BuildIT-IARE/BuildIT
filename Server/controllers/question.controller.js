@@ -241,6 +241,30 @@ exports.findAllContest = (req, res) => {
     });
 };
 
+exports.findAllCourse = (req, res) => {
+    Question.find({courseId: req.params.courseId})
+    .then(question => {
+        if(!question) {
+            return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.params.questionId
+            });            
+        }
+        res.send(question);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.params.questionId
+            });                
+        }
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving question with id " + req.params.questionId
+        });
+    });
+};
+
 exports.getAllQuestions = (req, callback) => {
     Question.find({contestId: req.cookies.contestId})
     .then(question => {
