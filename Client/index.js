@@ -741,6 +741,7 @@ app.get('/tutorials/:courseId', async (req, res) => {
               },
               json: true
           }
+          console.log(options3.url);
           // get participation details
           request(options3, function(err, response, bodytimer){
             bodytimer = bodytimer[0];
