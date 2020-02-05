@@ -162,9 +162,9 @@ exports.insertDifficultyWise = (sub, callback) => {
                 } else{
                     return callback('QuestionId already present', null);
                 }
-                return (null, participation);
+                return callback(null, participation);
             } else {
-                return (null, participation);
+                return callback(null, participation);
             }
         } else if(sub.difficulty === 'Hard'){
             if(sub.score === 100){
@@ -174,10 +174,12 @@ exports.insertDifficultyWise = (sub, callback) => {
                 } else {
                     return callback('QuestionId already present', null);
                 }
-                return (null, participation);
+                return callback(null, participation);
             } else {
-                return (null, participation);
+                return callback(null, participation);
             }
+        } else {
+            return callback("Question Difficulty not set, contact admin", null);
         }
         
     }).catch(err => {
