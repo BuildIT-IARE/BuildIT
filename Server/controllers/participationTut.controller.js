@@ -150,7 +150,7 @@ exports.insertDifficultyWise = (sub, callback) => {
                     participation.easySolved.push(sub.questionId);
                     participation.save();
                 } else{
-                    return callback('QuestionId already present', null);
+                    return callback(null, participation);
                 }
                 return (null, participation);
             } else {
@@ -163,7 +163,7 @@ exports.insertDifficultyWise = (sub, callback) => {
                     participation.mediumSolved.push(sub.questionId);
                     participation.save();
                 } else{
-                    return callback('QuestionId already present', null);
+                    return callback(null, participation);
                 }
                 return callback(null, participation);
             } else {
@@ -176,7 +176,7 @@ exports.insertDifficultyWise = (sub, callback) => {
                     participation.hardSolved.push(sub.questionId);
                     participation.save();
                 } else {
-                    return callback('QuestionId already present', null);
+                    return callback(null, participation);
                 }
                 return callback(null, participation);
             } else {
