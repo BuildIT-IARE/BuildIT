@@ -781,6 +781,7 @@ app.get('/tutorials/:courseId', async (req, res) => {
               }
             }
             body.courseId =  req.params.courseId;
+            console.log(JSON.stringify(body, null, 2));
             res.render('questionsTut', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
         });
