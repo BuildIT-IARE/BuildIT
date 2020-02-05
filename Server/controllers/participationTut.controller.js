@@ -213,7 +213,7 @@ exports.findAll = (req, res) => {
 
 // Retrieve and return all participation details for user in contest.
 exports.findUser = (req, res) => {
-    Participation.find({participationId: req.decoded.username + 'Course'})
+    Participation.find({participationId: req.decoded.username + req.params.courseId})
     .then(participation => {
         res.send(participation);
     }).catch(err => {
