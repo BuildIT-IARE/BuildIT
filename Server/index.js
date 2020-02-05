@@ -430,6 +430,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
           if (err){
             res.status(404).send({message: "Question not found with id " + req.body.questionId});
         } else {
+          console.log(testcases);
           if(localServer){
             postUrl = apiAddress + '/submissions/?wait=true';
           } else {
