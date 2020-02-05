@@ -706,6 +706,7 @@ app.get('/tutorials2', async (req, res) => {
 });
 
 app.get('/tutorials/:courseId', async (req, res) => {
+    res.clearCookie('contestId');
   // check if contest is open
       // Add participation
       let options1 = {
