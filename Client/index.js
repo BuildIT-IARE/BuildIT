@@ -746,8 +746,11 @@ app.get('/tutorials/:courseId', async (req, res) => {
           console.log(options3.url);
           // get participation details
           request(options3, function(err, response, bodytimer){
+            console.log("BodyTimer ____________________________________")
             bodytimer = bodytimer[0];
             console.log(bodytimer);
+            console.log("Body ____________________________________")
+            console.log(body);
             let questions = [];
             let scores = [];
             for (let i = 0; i < body.length; i++){
