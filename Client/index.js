@@ -748,8 +748,6 @@ app.get('/tutorials/:courseId', async (req, res) => {
           // get participation details
           request(options3, function(err, response, bodytimer){
             bodytimer = bodytimer[0];
-            let questions = [];
-            let scores = [];
             for (let i = 0; i < body.length; i++){
               if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1){
                 body[i].solved = "Solved";
