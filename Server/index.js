@@ -149,7 +149,6 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 
     let currentTime = `${hours}${minutes}`;
     currentTime = eval(currentTime);
-    console.log(duration.date.toString(), today, currentTime);
     if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
       accepted = true
     } else {
@@ -491,7 +490,7 @@ app.post('/tutorialsCheck', middleware.checkToken, async (req, res) => {
     if (err){
       res.status(404).send({message: "Course not found with id " + req.body.courseId});
     }
-    console.log(course.languageId, req.body.language_id);
+    console.log(course, req.body.language_id);
     if (course.languageId === req.body.language_id){
       questions.getTestCases(req, (err, testcases) => {
         if (err){
