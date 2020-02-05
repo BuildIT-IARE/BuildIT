@@ -148,6 +148,7 @@ exports.insertDifficultyWise = (sub, callback) => {
                 let exists = inarray(participation.easySolved, sub.questionId);
                 if (!exists){
                     participation.easySolved.push(sub.questionId);
+                    participation.save();
                 } else{
                     return callback('QuestionId already present', null);
                 }
@@ -160,6 +161,7 @@ exports.insertDifficultyWise = (sub, callback) => {
                 let exists = inarray(participation.mediumSolved, sub.questionId);
                 if (!exists){
                     participation.mediumSolved.push(sub.questionId);
+                    participation.save();
                 } else{
                     return callback('QuestionId already present', null);
                 }
@@ -172,6 +174,7 @@ exports.insertDifficultyWise = (sub, callback) => {
                 let exists = inarray(participation.hardSolved, sub.questionId);
                 if (!exists){
                     participation.hardSolved.push(sub.questionId);
+                    participation.save();
                 } else {
                     return callback('QuestionId already present', null);
                 }
