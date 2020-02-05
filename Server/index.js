@@ -572,15 +572,12 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                                               participationsTut.insertDifficultyWise(result, (err, doc) => {
                                                 if (err){
                                                   res.status(404).send({message: err});
-                                                }
+                                                } else {
                                                   // Create a submission
                                                   submissions.create(req, result, (err, sub) => {
-                                                    if (err){
-                                                      res.status(404).send({message: err});
-                                                    } else {
-                                                      res.send(sub);
-                                                    }
+                                                    res.send(sub);
                                                   });
+                                                }
                                               });
                                         });
                                       }, timeOut);
