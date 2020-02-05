@@ -361,6 +361,7 @@ function submit() {
         language_id: languageId,
         stdin: stdinValue,
         contestId: getCookie('contestId'),
+        courseId: getCookie('courseId'),
         questionId: windowUrl.slice(serverUrl.length+5, windowUrl.length)
     };
 

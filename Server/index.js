@@ -169,7 +169,7 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 });
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
-  if (req.cookies.contestId){
+  if (req.body.contestId){
     contests.getDuration(req, (err, duration) => {
       if (err){
         res.status(404).send({message: err});
@@ -419,7 +419,6 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
       }
     });
   } else {
-
     courses.findCourseLanguage(req, (err, course) =>{
       course = course[0]
       if (err){
