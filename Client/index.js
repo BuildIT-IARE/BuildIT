@@ -773,10 +773,30 @@ app.get('/tutorials/:courseId', async (req, res) => {
                 body[i].color = "black";
               }
             }
+            let totalSolEasy = 0;
+            let totalSolMedium = 0;
+            let totalSolHard = 0;
+            let eCount = 0;
+            let mCount = 0;
+            let hCount = 0;
+            for(let i = 0; i < body.length; i++){
+              if (body.difficulty === "Easy"){
+                eCount++;
+              }
+              else if(body.difficulty === "Medium"){
+                mCount++;
+              }
+              else if(body.difficulty === "Hard"){
+                hCount++;
+              }
+            }
+            totalSolEasy = bodytimer.easySolved;
+            totalSolMedium = bodytimer.mediumSolved;
+            totalSolHard = bodytimer.hardSolved;
             body.courseId =  req.params.courseId;
-            body.easyPercentage;
-            body.mediumPercentage;
-            body.hardPercentage;
+            body.easyPercentage = ((totalSolEasy/eCount)*100);
+            body.mediumPercentage = ((totalSolMedium/mCount)*100);
+            body.hardPercentage = ((totalSolHard/hCount)*100);
             res.render('questionsTut', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
         });
