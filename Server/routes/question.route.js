@@ -23,4 +23,7 @@ module.exports = (app) => {
 
     // Delete a question with questionId
     app.delete('/questions/:questionId', middleware.checkTokenAdmin, questions.delete);
+
+    // Create a new question
+    app.post('/questions/mergeCourse', middleware.checkTokenAdmin, questions.merge);
 }

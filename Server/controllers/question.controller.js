@@ -1,4 +1,6 @@
 const Question = require('../models/question.model.js');
+const inarray = require('inarray');
+
 // const Base64 = require('js-base64').Base64;
 // Create and Save a new question
 exports.create = (req, res) => {
@@ -280,3 +282,43 @@ exports.getAllQuestions = (req, callback) => {
         return callback("Error retrieving questions", null);
     });
 };
+
+exports.merge = (req ,res) => {
+    Question.find({questionId: req.body.questionId})
+    .then(question =>{
+        if(!question) {
+            return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.body.questionId
+            }); 
+        }
+        question = question[0];
+        console.log(question);
+        if (!req.body.courseId){
+            return res.status(404).send({
+                success: false,
+                message: "Enter a valid courseId"
+            }); 
+        }
+        let exists = inarray(question.courseId, req.body.courseId);
+        if(!exists){
+            question.courseId.push(req.body.courseId);
+            question.save();
+            res.send(question);
+        }
+        else{
+            return res.send(question);
+        }
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.body.questionId
+            });                
+        }
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving question with id " + req.body.questionId
+        });
+    });
+}
