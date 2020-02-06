@@ -306,9 +306,9 @@ exports.merge = (req ,res) => {
             question.save();
             res.send(question);
         }
-        // else{
-        //     return res.send(question);
-        // }
+        else{
+            return res.send(question);
+        }
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
