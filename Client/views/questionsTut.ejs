@@ -209,8 +209,8 @@ series2.columns.template.adapter.add("fill", function(fill, target) {
   return chart.colors.getIndex(target.dataItem.index);
 });
 
-// // Add cursor
-// chart.cursor = new am4charts.RadarCursor();
+// Add cursor
+chart.cursor = new am4charts.RadarCursor();
 
 }); // end am4core.ready()
 </script>
@@ -226,7 +226,7 @@ series2.columns.template.adapter.add("fill", function(fill, target) {
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <div id="chartdiv"></div>
+        <div id="chartdiv" style = "background: powderblue;"></div>
         <h1 class="text-white font-tertiary" id="demo"></h1>
       </div>
     </div>
