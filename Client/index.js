@@ -386,6 +386,34 @@ app.get('/admin/results', async (req, res) => {
     res.render('dropdown', {data: body});
   });
 });
+app.get('/admin/move', async (req, res) => {
+  let options = {
+    url : serverRoute + '/questions',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+
+
+  request(options, function(err, response, body){
+    let options = {
+      url : serverRoute + '/courses',
+      method: 'get',
+      headers: {
+        'authorization': req.cookies.token
+      },
+      json: true
+    }
+    request(options, function(err, response, bodyCourses){
+
+    body.posturl = serverRoute + '/questions/mergeCourse';
+    body.method = "POST";
+    res.render('dropdown', {data: body, dataCourses: bodyCourses});
+    });
+  });
+});
 
 app.post('/admin/results/contest', async (req, res) => {
   let options = {
