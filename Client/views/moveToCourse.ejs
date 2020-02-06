@@ -30,9 +30,10 @@
 	  <option value="<%= data[i].questionId %>"><%= data[i].questionId %> - <%= data[i].questionName %></option>
 	  <% } %>
     </select>
+    <br>
     <select id="courseId" name="courseId">
         <% for (let i = 0; i < dataCourse.length; i++){ %>
-          <option value="<%= dataCourse[i].courseId %>"><%= dataCourse[i].courseId %> - <%= dataCourse[i].questionName %></option>
+          <option value="<%= dataCourse[i].courseId %>"><%= dataCourse[i].courseId %> - <%= dataCourse[i].courseName %></option>
           <% } %>
         </select>
     <input type="submit" value="Submit">
