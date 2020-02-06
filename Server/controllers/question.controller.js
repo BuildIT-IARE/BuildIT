@@ -283,29 +283,41 @@ exports.getAllQuestions = (req, callback) => {
     });
 };
 
-exports.merge = (sub ,callback) => {
-    Question.find({questionId: sub.questionId})
+exports.merge = (req ,res) => {
+    Question.find({questionId: req.body.questionId})
     .then(question =>{
         if(!question) {
-            return callback("Question not found with Id ", null);
+            return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.body.questionId
+            }); 
         }
         question = question[0];
         console.log(question);
-        if (!sub.courseId){
-            return callback("Enter valid Course Id", null);
+        if (!req.body.courseId){
+            return res.status(404).send({
+                success: false,
+                message: "Enter a valid courseId"
+            }); 
         }
-        let exists = inarray(question.courseId, sub.courseId);
+        let exists = inarray(question.courseId, req.body.courseId);
         if(!exists){
-            question.courseId.push(sub.courseId);
+            question.courseId.push(req.body.courseId);
             question.save();
-        } else{
-            return callback(null, question);
         }
+        // else{
+        //     return res.send(question);
+        // }
     }).catch(err => {
-        console.log(err);
         if(err.kind === 'ObjectId') {
-            return callback("Question not found with Id ", null);    
+            return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.body.questionId
+            });                
         }
-        return callback("Error updating Question with Id ", null);
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving question with id " + req.body.questionId
+        });
     });
 }
