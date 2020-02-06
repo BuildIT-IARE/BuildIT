@@ -88,6 +88,31 @@ app.get('/login', async (req, res) => {
   res.render('login', {data: url});
 });
 
+app.get('/admin/add/tutQuestion', async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute
+  };
+
+  let options = {
+    url : serverRoute + '/isAdmin',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  };
+
+  request(options, function(err, response, body){
+    if (body.success){
+      res.render('tutQuestionAdd', {data: url});
+    } else {
+      body.message = "Unauthorized access";
+        res.render('error', {data: body, imgUsername: req.cookies.username})
+    }    
+  });
+});
+
 app.get('/admin/add/question', async (req, res) => {
   let url = {
     url: clientRoute,
