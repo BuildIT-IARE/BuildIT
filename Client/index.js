@@ -410,7 +410,7 @@ app.get('/admin/move', async (req, res) => {
 
     body.posturl = serverRoute + '/questions/mergeCourse';
     body.method = "POST";
-    res.render('dropdown', {data: body, dataCourses: bodyCourses});
+    res.render('moveToCourse', {data: body, dataCourses: bodyCourses});
     });
   });
 });
