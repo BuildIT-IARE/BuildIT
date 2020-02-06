@@ -779,13 +779,13 @@ app.get('/tutorials/:courseId', async (req, res) => {
             let mCount = 0;
             let hCount = 0;
             for(let i = 0; i < body.length; i++){
-              if (body.difficulty === "Easy"){
+              if (body[i].difficulty === "Easy"){
                 eCount++;
               }
-              else if(body.difficulty === "Medium"){
+              else if(body[i].difficulty === "Medium"){
                 mCount++;
               }
-              else if(body.difficulty === "Hard"){
+              else if(body[i].difficulty === "Hard"){
                 hCount++;
               }
             }
