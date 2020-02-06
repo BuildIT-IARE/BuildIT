@@ -304,6 +304,7 @@ exports.merge = (req ,res) => {
         if(!exists){
             question.courseId.push(req.body.courseId);
             question.save();
+            res.send(question);
         }
         // else{
         //     return res.send(question);
