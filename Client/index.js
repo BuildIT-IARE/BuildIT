@@ -6,8 +6,6 @@ const request = require('request');
 const urlExists = require('url-exists');
 const cookieParser = require('cookie-parser');
 var path = require('path');
-const inarray = require('inarray');
-
 let config = require('../Server/util/config');
 
 
@@ -36,6 +34,8 @@ app.use('/tutorials', express.static(__dirname + '/'));
 app.use('/contests', express.static(__dirname + '/'));
 
 app.use('/contests/questions', express.static(__dirname + '/'));
+app.use('/tutorials/questions', express.static(__dirname + '/'));
+
 app.use('/admin', express.static(__dirname + '/'));
 
 
@@ -659,6 +659,21 @@ app.get('/contests/questions/:questionId', async (req, res) => {
   });
 });
 
+app.get('/tutorials/questions/:questionId', async (req, res) => {
+  let options = {
+    url : serverRoute + '/questions/'+req.params.questionId,
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    body.url = clientRoute;
+    res.render('questionTutDesc', {imgUsername: req.cookies.username, data: body});
+  });
+});
+
 app.get('/verify', async (req, res) => {
   // res.render('/home');
   let options = {
@@ -744,10 +759,11 @@ app.get('/tutorials/:courseId', async (req, res) => {
               },
               json: true
           }
-          console.log(options3.url);
+          // console.log(options3.url);
           // get participation details
           request(options3, function(err, response, bodytimer){
             bodytimer = bodytimer[0];
+            console.log(bodytimer.easyPercentage);
             for (let i = 0; i < body.length; i++){
               if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1){
                 body[i].solved = "Solved";
@@ -758,6 +774,9 @@ app.get('/tutorials/:courseId', async (req, res) => {
               }
             }
             body.courseId =  req.params.courseId;
+            body.easyPercentage;
+            body.mediumPercentage;
+            body.hardPercentage;
             res.render('questionsTut', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
         });
