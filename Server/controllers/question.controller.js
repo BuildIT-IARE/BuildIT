@@ -1,4 +1,6 @@
 const Question = require('../models/question.model.js');
+const inarray = require('inarray');
+
 // const Base64 = require('js-base64').Base64;
 // Create and Save a new question
 exports.create = (req, res) => {
@@ -280,3 +282,30 @@ exports.getAllQuestions = (req, callback) => {
         return callback("Error retrieving questions", null);
     });
 };
+
+exports.merge = (sub ,callback) => {
+    Question.find({questionId: sub.questionId})
+    .then(question =>{
+        if(!question) {
+            return callback("Question not found with Id ", null);
+        }
+        question = question[0];
+        console.log(question);
+        if (!sub.courseId){
+            return callback("Enter valid Course Id", null);
+        }
+        let exists = inarray(question.courseId, sub.courseId);
+        if(!exists){
+            question.courseId.push(sub.courseId);
+            question.save();
+        } else{
+            return callback(null, question);
+        }
+    }).catch(err => {
+        console.log(err);
+        if(err.kind === 'ObjectId') {
+            return callback("Question not found with Id ", null);    
+        }
+        return callback("Error updating Question with Id ", null);
+    });
+}
