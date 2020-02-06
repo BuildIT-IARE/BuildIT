@@ -124,8 +124,8 @@ div .border {
 #chartdiv {
   width: 100%;
   height: 400px;
-  position: fixed;
-  top: 100%;
+  position: absolute;
+  bottom: 100%;
   right: 0%;
 }
 </style>
@@ -226,7 +226,7 @@ chart.cursor = new am4charts.RadarCursor();
 
 <!-- page title -->
 <section class="page-title bg-primary position-relative">
-
+  <center><h3 class="text-red font-tertiary" ><%= data.courseId %></h3></center>
 </section>
 <!-- /page title -->
 <div id="chartdiv" style = "background: white;"></div>
@@ -237,7 +237,7 @@ chart.cursor = new am4charts.RadarCursor();
 
 <section class="section">
   <div class="container">
-    <center><h3 class="text-red font-tertiary" style="color: purple;"><%= data.courseId %></h3></center>
+    
     <br>
     <div class="row">
       <% for (let i = 0; i < data.length; i++ ){ %>
