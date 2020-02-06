@@ -792,6 +792,8 @@ app.get('/tutorials/:courseId', async (req, res) => {
             totalSolEasy = bodytimer.easySolved.length;
             totalSolMedium = bodytimer.mediumSolved.length;
             totalSolHard = bodytimer.hardSolved.length;
+            console.log(totalSolEasy);
+            console.log(eCount);
             body.courseId =  req.params.courseId;
             body.easyPercentage = ((totalSolEasy/eCount)*100);
             body.mediumPercentage = ((totalSolMedium/mCount)*100);
