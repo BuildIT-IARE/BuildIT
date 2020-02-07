@@ -43,7 +43,8 @@ exports.create = (req, res) => {
     author: req.body.author,
     editorial: req.body.editorial,
     difficulty: req.body.difficulty,
-    language: req.body.language
+    language: req.body.language,
+    conceptLevel: req.body.conceptLevel
     });
 
     // Save Question in the database
@@ -118,7 +119,8 @@ exports.getTestCases = (req, callback) => {
             HO3: question.questionHiddenOutput3,
             difficulty: question.difficulty,
             language: question.language,
-            courseId: question.courseId
+            courseId: question.courseId,
+            conceptLevel: question.conceptLevel
         }
         return callback(null, testcases);
     }).catch(err => {
@@ -164,7 +166,8 @@ exports.update = (req, res) => {
         author: req.body.author,
         editorial: req.body.editorial,
         difficulty: req.body.difficulty,
-        language: req.body.language
+        language: req.body.language,
+        conceptLevel: req.body.conceptLevel
       }}, {new: true}, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
