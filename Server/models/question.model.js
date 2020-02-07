@@ -27,7 +27,8 @@ var questionSchema = new Schema({
     editorial: String,
     difficulty: String,
     language: String,
-    courseId: Array
+    courseId: Array,
+    conceptLevel: String
 });
 
 module.exports = mongoose.model('Question', questionSchema);

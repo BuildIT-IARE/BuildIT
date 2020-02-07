@@ -745,11 +745,11 @@ app.get('/verify', async (req, res) => {
 
 // Tutorials Code
 
-// app.get('/tutorials', async(req, res) => {
-//   body = {};
-//   body.message = "Coming Soon!";
-//   res.render('error', {data: body, imgUsername: req.cookies.username});
-// });
+app.get('/tutorials', async(req, res) => {
+  body = {};
+  body.message = "Coming Soon!";
+  res.render('error', {data: body, imgUsername: req.cookies.username});
+});
 
 app.get('/flipClass', async (req, res) => {
   let url = {
@@ -759,7 +759,7 @@ app.get('/flipClass', async (req, res) => {
   res.render('flipClass', {imgUsername: req.cookies.username, data: url});
 });
 
-app.get('/tutorials', async (req, res) => {
+app.get('/tutorials2', async (req, res) => {
   let options = {
     url : serverRoute + '/courses',
     method: 'get',
