@@ -5,6 +5,9 @@ module.exports = (app) => {
 
     // Create a new question
     app.post('/questions', middleware.checkTokenAdmin, questions.create);
+    
+    // Create a new question for Tutorials
+    app.post('/questiontutorials', middleware.checkTokenAdmin, questions.createTutorials);
 
     // Retrieve all questions
     app.get('/questions', middleware.checkTokenAdmin, questions.findAll);
