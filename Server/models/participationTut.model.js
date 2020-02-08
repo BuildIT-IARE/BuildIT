@@ -11,7 +11,8 @@ var participationTutSchema = new Schema({
     submissionResults: Array,
     easySolved: Array,
     mediumSolved: Array,
-    hardSolved: Array
+    hardSolved: Array,
+    contestSolved: Array
 });
 
 module.exports = mongoose.model('ParticipationTutorials', participationTutSchema);

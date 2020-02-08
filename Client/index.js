@@ -831,6 +831,7 @@ app.get('/tutorials/:courseId', async (req, res) => {
             let eCount = 0;
             let mCount = 0;
             let hCount = 0;
+            let cCount = 0;
             for(let i = 0; i < body.length; i++){
               if (body[i].difficulty === "Easy"){
                 eCount++;
@@ -840,17 +841,24 @@ app.get('/tutorials/:courseId', async (req, res) => {
               }
               else if(body[i].difficulty === "Hard"){
                 hCount++;
+              } 
+              else if(body[i].difficulty === "Contest"){
+                cCount++;
               }
             }
             totalSolEasy = bodytimer.easySolved.length;
             totalSolMedium = bodytimer.mediumSolved.length;
             totalSolHard = bodytimer.hardSolved.length;
+            totalSolContest = bodytimer.contestSolved.length;
+
             console.log(totalSolEasy);
             console.log(eCount);
             body.courseId =  req.params.courseId;
             body.easyPercentage = ((totalSolEasy/eCount)*100);
             body.mediumPercentage = ((totalSolMedium/mCount)*100);
             body.hardPercentage = ((totalSolHard/hCount)*100);
+            body.contestPercentage = ((totalSolContest/cCount)*100);
+
             console.log(body);
             res.render('questionsTut', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
