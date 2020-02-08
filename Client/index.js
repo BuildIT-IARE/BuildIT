@@ -858,7 +858,6 @@ app.get('/tutorials/:courseId', async (req, res) => {
             body.mediumPercentage = ((totalSolMedium/mCount)*100);
             body.hardPercentage = ((totalSolHard/hCount)*100);
             body.contestPercentage = ((totalSolContest/cCount)*100);
-
             console.log(body);
             res.render('questionsTut', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
