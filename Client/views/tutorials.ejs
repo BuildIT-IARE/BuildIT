@@ -25,7 +25,14 @@
   <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
+  <meta name="description" content="">
+  <meta name="viewport" content="width=550, initial-scale=1">
 
+  <link rel="stylesheet" href="demo.css">
+  <link rel="stylesheet" href="../dist/jquery.flipster.min.css">
+
+  <script src="jquery.min.js"></script>
+  <script src="../dist/jquery.flipster.min.js"></script>
 </head>
 
 <body>
@@ -46,34 +53,59 @@
 <!-- /page title -->
 
 <!-- blog -->
-<section class="section">
-  <div class="container">
-    
-    <div class="row">
-      <h5 id = "login"></h5>
-      <% for(let i = data.length-1; i >= 0; i--){ %>
-        <div class="col-lg-4 col-sm-6 mb-4">
-          <article class="card shadow">
-            <!-- <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> -->
-            <div class="card-body">
-              <h4 class="card-title"><a style="white-space: pre-line;" class="text-dark" href="/tutorials/<%= data[i].courseId %>"><%= data[i].courseName %></a>
-              </h4>
 
-              <p>
-              <% if (data[i].courseId) { %>
-              <b>Course ID: </b><%= data[i].courseId %>
-              <% } %>
-              </p>
-              <br>
-              <a href="/tutorials/<%= data[i].courseId %>" class="btn btn-xs btn-primary">Practice</a>
+<article id="demo-flat" class="demo">
 
-            </div>
-          </article>
-        </div>
-        <% } %>
-    </div>
+  <h2>Flipster Flat</h2>
+
+  <div id="flat">
+      <ul>
+          <li data-flip-title="Red">
+              <img src="img/text1.gif">
+          </li>
+          <li data-flip-title="Razzmatazz" data-flip-category="Purples">
+              <img src="img/text2.gif">
+           </li>
+          <li data-flip-title="Deep Lilac" data-flip-category="Purples">
+              <img src="img/text3.gif">
+          </li>
+          <li data-flip-title="Daisy Bush" data-flip-category="Purples">
+              <img src="img/text4.gif">
+          </li>
+          <li data-flip-title="Cerulean Blue" data-flip-category="Blues">
+              <img src="img/text5.gif">
+          </li>
+          <li data-flip-title="Dodger Blue" data-flip-category="Blues">
+              <img src="img/text6.gif">
+          </li>
+          <li data-flip-title="Cyan" data-flip-category="Blues">
+              <img src="img/text7.gif">
+          </li>
+          <li data-flip-title="Robin's Egg" data-flip-category="Blues">
+              <img src="img/text8.gif">
+          </li>
+          <li data-flip-title="Deep Sea" data-flip-category="Greens">
+              <img src="img/text9.gif">
+          </li>
+          <li data-flip-title="Apple" data-flip-category="Greens">
+              <img src="img/text10.gif">
+          </li>
+      </ul>
   </div>
-</section>
+
+<script>
+  var flat = $("#flat").flipster({
+      style: 'flat',
+      spacing: -0.25
+  });
+</script>
+
+<pre class="code">$("#flat").flipster({
+  style: 'flat',
+  spacing: -0.25
+});</pre>
+
+</article>
 
 <script>
     function getCookie(name) {
@@ -103,7 +135,7 @@
       if (myCookie == null) {
           // do cookie doesn't exist stuff;
         console.log("came");
-        document.getElementById("login").innerHTML = "Login to view contests";
+        document.getElementById("login").innerHTML = "Login to view Tutorials";
       }
   }
   doSomething()
