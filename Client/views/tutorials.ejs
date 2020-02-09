@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>BuildIT Lab</title>
+  <title>BuildIT Tutorials</title>
 
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,29 +76,6 @@
         </div>
     </article>
   </center>
-      <% for(let i = data.length-1; i >= 0; i--){ %>
-        <% if (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
-        <div class="col-lg-4 col-sm-6 mb-4">
-          <article class="card shadow">
-            <!-- <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> -->
-            <div class="card-body">
-              <h4 class="card-title"><a style="white-space: pre-line;" class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
-              </h4>
-              <p>
-              <% if (data[i].contestStartTime && data[i].contestEndTime) { %>
-              <b>Timing: </b><%= data[i].contestStartTime %> to <%= data[i].contestEndTime %>
-              <% } %>
-              </p>
-              <br>
-              <a href="contests/<%= data[i].contestId %>" class="btn btn-xs btn-primary">Practice</a>
-
-            </div>
-          </article>
-        </div>
-        <% } %>
-        <% } %>
-    </div>
-  </div>
 </section>
 
 <script>
