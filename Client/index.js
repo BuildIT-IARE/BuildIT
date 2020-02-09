@@ -859,6 +859,18 @@ app.get('/tutorials/:courseId', async (req, res) => {
             body.hardPercentage = ((totalSolHard/hCount)*100);
             body.contestPercentage = ((totalSolContest/cCount)*100);
             console.log(body);
+
+            if (body.courseId === "IARE_PY"){
+              body.courseName = "Python Proficiency";
+            } else if (body.courseId === "IARE_C"){
+              body.courseName = "C Proficiency";
+            } else if (body.courseId === "IARE_JAVA"){
+              body.courseName = "Java Proficiency";
+            } else if (body.courseId === "IARE_CPP"){
+              body.courseName = "C++ Proficiency";
+            } else {
+              body.courseName = "Invalid Course";
+            }
             res.render('questionsTut', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
         });
