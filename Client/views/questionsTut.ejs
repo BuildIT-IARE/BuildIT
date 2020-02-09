@@ -19,6 +19,7 @@
   <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
 
   <!-- Main Stylesheet -->
+  <link href="/css/dist/jquery.flipster.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   
   <!--Favicon-->
@@ -232,7 +233,6 @@ chart.cursor = new am4charts.RadarCursor();
 <section class="page-title bg-primary position-relative">
   <center><h2 class="text-white font-tertiary" ><%= data.courseId %></h2></center>
   <br>
-
 </section>
 <!-- /page title -->
 
@@ -242,6 +242,53 @@ chart.cursor = new am4charts.RadarCursor();
 
 <section class="section">
   <div class="container">
+
+    <div id="carousel">
+      <ul class="flip-items">
+          <li data-flip-title="Red">
+              <img src="img/text1.gif">
+          </li>
+          <li data-flip-title="Razzmatazz" data-flip-category="Purples">
+              <img src="img/text2.gif">
+           </li>
+          <li data-flip-title="Deep Lilac" data-flip-category="Purples">
+              <img src="img/text3.gif">
+          </li>
+          <li data-flip-title="Daisy Bush" data-flip-category="Purples">
+              <img src="img/text4.gif">
+          </li>
+          <li data-flip-title="Cerulean Blue" data-flip-category="Blues">
+              <img src="img/text5.gif">
+          </li>
+          <li data-flip-title="Dodger Blue" data-flip-category="Blues">
+              <img src="img/text6.gif">
+          </li>
+          <li data-flip-title="Cyan" data-flip-category="Blues">
+              <img src="img/text7.gif">
+          </li>
+          <li data-flip-title="Robin's Egg" data-flip-category="Blues">
+              <img src="img/text8.gif">
+          </li>
+          <li data-flip-title="Deep Sea" data-flip-category="Greens">
+              <img src="img/text9.gif">
+          </li>
+          <li data-flip-title="Apple" data-flip-category="Greens">
+              <img src="img/text10.gif">
+          </li>
+          <li data-flip-title="Pistachio" data-flip-category="Greens">
+              <img src="img/text11.gif">
+          </li>
+          <li data-flip-title="Pear" data-flip-category="Greens">
+              <img src="img/text12.gif">
+          </li>
+          <li data-flip-title="Bright Sun" data-flip-category="Yellows">
+              <img src="img/text13.gif">
+          </li>
+          <li data-flip-title="Mikado" data-flip-category="Yellows">
+              <img src="img/text14.gif">
+          </li>
+      </ul>
+  </div>
 <div id="chartdiv"></div>
     
     <div class="row">
@@ -271,6 +318,14 @@ chart.cursor = new am4charts.RadarCursor();
 
 <!-- Main Script -->
 <script src="js/script.js"></script>
-
+<script src="/css/dist/jquery.flipster.min.js"></script>
+<script>
+  $("#carousel").flipster({
+    style: 'carousel',
+    spacing: -0.5,
+    nav: true,
+    buttons: true,
+});
+</script>
 </body>
 </html>
