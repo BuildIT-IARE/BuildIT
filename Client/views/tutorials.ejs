@@ -55,7 +55,7 @@
       <h3 class="font-tertiary mb-5" style="text-align: center; color: green;">Proficiency Courses</h3>
     <div class="row">
       <h5 id = "login"></h5>
-
+      <center>
       <article id="demo-flat" class="demo">
     
         <div id="flat">
@@ -74,10 +74,8 @@
                 </li>
             </ul>
         </div>
-    
-
-    
     </article>
+  </center>
       <% for(let i = data.length-1; i >= 0; i--){ %>
         <% if (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
         <div class="col-lg-4 col-sm-6 mb-4">
