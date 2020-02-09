@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>BuildIT</title>
+  <title>BuildIT Lab</title>
 
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,7 +37,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h1 class="text-white font-tertiary">Tutorials</h1>
+        <h1 class="text-white font-tertiary">BuildIT Laboratory</h1>
       </div>
     </div>
   </div>
@@ -46,7 +46,83 @@
 <!-- /page title -->
 
 <!-- blog -->
+<section class="section">
+  <div class="container">
+      <h3 class="font-tertiary mb-5" style="color: green;">Proficiency Courses</h3>
+    <div class="row">
+      <h5 id = "login"></h5>
+      <% for(let i = data.length-1; i >= 0; i--){ %>
+        <% if (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <article class="card shadow">
+            <!-- <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> -->
+            <div class="card-body">
+              <h4 class="card-title"><a style="white-space: pre-line;" class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
+              </h4>
 
+              <p>
+              <% if (data[i].contestDuration) { %>
+              <b>Duration: </b><%= data[i].contestDuration %> Mins
+              <% } %>
+              </p>
+              <p>
+              <% if (data[i].contestDate) { %>
+              <b>Date: </b><%= data[i].contestDate %>
+              <% } %>
+              </p>
+              <p>
+              <% if (data[i].contestStartTime && data[i].contestEndTime) { %>
+              <b>Timing: </b><%= data[i].contestStartTime %> to <%= data[i].contestEndTime %>
+              <% } %>
+              </p>
+              <br>
+              <a href="contests/<%= data[i].contestId %>" class="btn btn-xs btn-primary">Participate</a>
+
+            </div>
+          </article>
+        </div>
+        <% } %>
+        <% } %>
+    </div>
+  </div>
+  <div class="container">
+      <h3 class="font-tertiary mb-5" style="color: grey;">Inactive Contests</h3>
+    <div class="row">
+      <h5 id = "login"></h5>
+      <% for(let i = data.length-1; i >= 0; i--){ %>
+        <% if (data[i].contestDate !== new Date().toISOString().slice(0,10)) { %>
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <article class="card shadow">
+            <!-- <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> -->
+            <div class="card-body">
+              <h4 class="card-title"><a style="white-space: pre-line;" class="text-dark" href="contests/<%= data[i].contestId %>"><%= data[i].contestName %></a>
+              </h4>
+              <p>
+              <% if (data[i].contestDuration) { %>
+              <b>Duration: </b><%= data[i].contestDuration %> Mins
+              <% } %>
+              </p>
+              <p>
+              <% if (data[i].contestDate) { %>
+              <b>Date: </b><%= data[i].contestDate %>
+              <% } %>
+              </p>
+              <p>
+              <% if (data[i].contestStartTime && data[i].contestEndTime) { %>
+              <b>Timing: </b><%= data[i].contestStartTime %> to <%= data[i].contestEndTime %>
+              <% } %>
+              </p>
+              <br>
+              <a href="contests/<%= data[i].contestId %>" class="btn btn-xs btn-primary">Participate</a>
+
+            </div>
+          </article>
+        </div>
+        <% } %>
+        <% } %>
+    </div>
+  </div>
+</section>
 
 <script>
     function getCookie(name) {
@@ -76,7 +152,7 @@
       if (myCookie == null) {
           // do cookie doesn't exist stuff;
         console.log("came");
-        document.getElementById("login").innerHTML = "Login to view Tutorials";
+        document.getElementById("login").innerHTML = "Login to view contests";
       }
   }
   doSomething()
