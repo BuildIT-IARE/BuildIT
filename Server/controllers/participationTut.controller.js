@@ -68,7 +68,7 @@ exports.insertDifficultyWise = (sub, callback) => {
         }
         participation = participation[0];
         console.log(participation);
-        if(sub.difficulty === 'Easy'){
+        if(sub.difficulty === 'level_0'){
             if(sub.score === 100){
                 let exists = inarray(participation.easySolved, sub.questionId);
                 if (!exists){
@@ -82,7 +82,7 @@ exports.insertDifficultyWise = (sub, callback) => {
             } else {
                 return (null, participation);
             }
-        } else if(sub.difficulty === 'Medium'){
+        } else if(sub.difficulty === 'level_1'){
             if(sub.score === 100){
                 let exists = inarray(participation.mediumSolved, sub.questionId);
                 if (!exists){
@@ -96,7 +96,7 @@ exports.insertDifficultyWise = (sub, callback) => {
             } else {
                 return callback(null, participation);
             }
-        } else if(sub.difficulty === 'Hard'){
+        } else if(sub.difficulty === 'level_2'){
             if(sub.score === 100){
                 let exists = inarray(participation.hardSolved, sub.questionId);
                 if (!exists){
@@ -110,7 +110,7 @@ exports.insertDifficultyWise = (sub, callback) => {
             } else {
                 return callback(null, participation);
             }
-        }else if(sub.difficulty === 'Contest'){
+        }else if(sub.difficulty === 'contest'){
             if(sub.score === 100){
                 let exists = inarray(participation.contestSolved, sub.questionId);
                 if (!exists){
