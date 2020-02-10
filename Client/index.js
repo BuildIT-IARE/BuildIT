@@ -819,7 +819,7 @@ app.get('/tutorials/:courseId/:difficulty', async (req, res) => {
     for (let i = 0; i < body.length; i++){
       if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1){
         body[i].solved = "Solved";
-        body[i].color = "green";
+        body[i].color = "#96f542";
       } else {
         body[i].solved = "Unsolved";
         body[i].color = "";
