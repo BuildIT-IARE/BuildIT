@@ -727,9 +727,9 @@ app.get('/tutorials/questions/:questionId', async (req, res) => {
   });
 });
 
-app.get('/tutorials/:courseId/:level', async (req, res) => {
+app.get('/tutorials/:courseId/:difficulty/:concept', async (req, res) => {
   let options = {
-    url : serverRoute + '/questions/courses/' + req.params.courseId + '/' + req.params.level,
+    url : serverRoute + '/questions/courses/' + req.params.courseId + '/' + req.params.difficulty,
     method: 'get',
     headers: {
       'authorization': req.cookies.token
