@@ -737,6 +737,7 @@ app.get('/tutorials/:courseId/:difficulty', async (req, res) => {
     json: true
   }
   request(options, function(err, response, body){
+    console.log(body);
     body.url = clientRoute;
     res.render('questionTutDesc', {imgUsername: req.cookies.username, data: body});
   });
