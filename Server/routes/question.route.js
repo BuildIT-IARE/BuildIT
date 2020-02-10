@@ -18,10 +18,14 @@ module.exports = (app) => {
     // Retrieve all questions with contestId
     app.get('/questions/contests/:contestId', middleware.checkToken, questions.findAllContest);
 
+    
     // Retrieve all questions with courseId
-    app.get('/questions/courses/:courseId/:difficulty', middleware.checkToken, questions.findAllCourse);
+    app.get('/questions/courses/:courseId', middleware.checkToken, questions.findAllCourse);
 
-    // Retrieve all questions with courseId
+    // Retrieve all questions with courseId and diff
+    app.get('/questions/courses/:courseId/:difficulty', middleware.checkToken, questions.findAllCourseDifficulty);
+
+    // Retrieve all questions with courseId and diff/subdiff
     app.get('/questions/courses/:courseId/:difficulty/:conceptLevel', middleware.checkToken, questions.findAllCourseConceptWise);
 
     // Update a question with questionId
