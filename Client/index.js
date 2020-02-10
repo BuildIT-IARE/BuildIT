@@ -727,6 +727,21 @@ app.get('/tutorials/questions/:questionId', async (req, res) => {
   });
 });
 
+app.get('/tutorials/:courseId/:level', async (req, res) => {
+  let options = {
+    url : serverRoute + '/questions/courses/' + req.params.courseId + '/' + req.params.level,
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    body.url = clientRoute;
+    res.render('questionTutDesc', {imgUsername: req.cookies.username, data: body});
+  });
+});
+
 app.get('/verify', async (req, res) => {
   // res.render('/home');
   let options = {

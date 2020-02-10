@@ -305,6 +305,7 @@ exports.findAllContest = (req, res) => {
 };
 
 exports.findAllCourse = (req, res) => {
+    let level = req.params.level;
     Question.find({courseId: req.params.courseId})
     .then(question => {
         if(!question) {
