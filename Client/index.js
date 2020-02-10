@@ -820,6 +820,7 @@ app.get('/tutorials/:courseId/:difficulty/:concept', async (req, res) => {
     }
 
     body.url = clientRoute;
+    // Course Name
     if (req.params.courseId === "IARE_PY"){
       body.courseName = "Python Proficiency";
     } else if (req.params.courseId === "IARE_C"){
@@ -830,6 +831,18 @@ app.get('/tutorials/:courseId/:difficulty/:concept', async (req, res) => {
       body.courseName = "C++ Proficiency";
     } else {
       body.courseName = "Invalid Course";
+    }
+    // Course level 
+    if (req.params.concept === "bs"){
+      body.courseName = body.courseName + " - Basics";
+    } else if (req.params.concept === "cs"){
+      body.courseName = body.courseName + " - Control Structures";
+    } else if (req.params.courseId === "al"){
+      body.courseName = body.courseName + " - Arrays/Lists";
+    } else if (req.params.courseId === "po"){
+      body.courseName = body.courseName + " - Pointers/Objects";
+    } else if (req.params.courseId === "so"){
+      body.courseName = body.courseName + " - Structures/Objects";
     }
     res.render('displayTutQuestions', {imgUsername: req.cookies.username, data: body});
     });
