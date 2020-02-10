@@ -966,13 +966,11 @@ app.get('/tutorials/:courseId', async (req, res) => {
             totalSolMedium = bodytimer.mediumSolved.length;
             totalSolHard = bodytimer.hardSolved.length;
             totalSolContest = bodytimer.contestSolved.length;
-
             req.params.courseId =  req.params.courseId;
             body.easyPercentage = ((totalSolEasy/eCount)*100);
             body.mediumPercentage = ((totalSolMedium/mCount)*100);
             body.hardPercentage = ((totalSolHard/hCount)*100);
             body.contestPercentage = ((totalSolContest/cCount)*100);
-
 
             if (req.params.courseId === "IARE_PY"){
               body.courseName = "Python Proficiency";
@@ -985,8 +983,6 @@ app.get('/tutorials/:courseId', async (req, res) => {
             } else {
               body.courseName = "Invalid Course";
             }
-            console.log(body, "________________________________________________");
-            console.log(bodytimer);
             res.render('questionsTut', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
         });
