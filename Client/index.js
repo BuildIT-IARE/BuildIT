@@ -815,7 +815,7 @@ app.get('/tutorials/:courseId/:difficulty', async (req, res) => {
   }
   request(options3, function(err, response, bodytimer){
     bodytimer = bodytimer[0];
-
+    
     for (let i = 0; i < body.length; i++){
       if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1){
         body[i].solved = "Solved";
@@ -838,6 +838,8 @@ app.get('/tutorials/:courseId/:difficulty', async (req, res) => {
     } else {
       body.courseName = "Invalid Course";
     }
+    console.log(body, "\n ____________________________________________________________________");
+    console.log(bodytimer);
     res.render('displayTutQuestions', {imgUsername: req.cookies.username, data: body});
   });
   });
