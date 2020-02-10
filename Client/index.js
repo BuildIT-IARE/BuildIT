@@ -740,6 +740,17 @@ app.get('/tutorials/:courseId/:difficulty', async (req, res) => {
   request(options, function(err, response, body){
     console.log(body);
     body.url = clientRoute;
+    if (body.courseId === "IARE_PY"){
+      body.courseName = "Python Proficiency";
+    } else if (body.courseId === "IARE_C"){
+      body.courseName = "C Proficiency";
+    } else if (body.courseId === "IARE_JAVA"){
+      body.courseName = "Java Proficiency";
+    } else if (body.courseId === "IARE_CPP"){
+      body.courseName = "C++ Proficiency";
+    } else {
+      body.courseName = "Invalid Course";
+    }
     res.render('displayTutQuestions', {imgUsername: req.cookies.username, data: body});
   });
 });

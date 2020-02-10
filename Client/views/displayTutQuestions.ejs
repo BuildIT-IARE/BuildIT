@@ -154,7 +154,7 @@ div .border {
         <tbody>
             <tr>
             <% for (let i = 0; i < data.length; i++ ){ %>
-                <td>i</td>
+                <td><% i %></td>
                 <td><%= data[i].questionName %></td>
             <% } %>
             </tr>
@@ -167,9 +167,6 @@ div .border {
         </tfoot>
     </table>
     </div>
-    <div>
-  <a href= "<%= data.url %>/contests/<%= data[0].contestId %>/leaderboard" style="color:white" target="_blank"><button class = "button" position = "right"><span>Leaderboards</span></button></a>
-</div> 
   </div>
 </section>
 
