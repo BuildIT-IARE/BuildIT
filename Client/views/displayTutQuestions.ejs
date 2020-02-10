@@ -149,15 +149,18 @@ div .border {
             <tr>
                 <th>#</th>
                 <th>Question Name</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
             <% for (let i = 0; i < data.length; i++ ){ %>
-                <td><%= i %></td>
+            <tr style = "background: <%= data[i].color %>;">
+                <td><%= i+1 %></td>
                 <td><%= data[i].questionName %></td>
-            <% } %>
+                <td><%= data[i].status </td>
             </tr>
+            <% } %>
+
         </tbody>
         <tfoot>
             <tr>

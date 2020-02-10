@@ -728,32 +728,7 @@ app.get('/tutorials/questions/:questionId', async (req, res) => {
   });
 });
 
-app.get('/tutorials/:courseId/:difficulty', async (req, res) => {
-  let options = {
-    url : serverRoute + '/questions/courses/' + req.params.courseId + '/' + req.params.difficulty,
-    method: 'get',
-    headers: {
-      'authorization': req.cookies.token
-    },
-    json: true
-  }
-  request(options, function(err, response, body){
-    console.log(body);
-    body.url = clientRoute;
-    if (req.params.courseId === "IARE_PY"){
-      body.courseName = "Python Proficiency";
-    } else if (req.params.courseId === "IARE_C"){
-      body.courseName = "C Proficiency";
-    } else if (req.params.courseId === "IARE_JAVA"){
-      body.courseName = "Java Proficiency";
-    } else if (req.params.courseId === "IARE_CPP"){
-      body.courseName = "C++ Proficiency";
-    } else {
-      body.courseName = "Invalid Course";
-    }
-    res.render('displayTutQuestions', {imgUsername: req.cookies.username, data: body});
-  });
-});
+
 
 app.get('/tutorials/:courseId/:difficulty/:concept', async (req, res) => {
   let options = {
@@ -819,6 +794,55 @@ app.get('/tutorials2', async (req, res) => {
   });
 });
 
+app.get('/tutorials/:courseId/:difficulty', async (req, res) => {
+
+  let options = {
+    url : serverRoute + '/questions/courses/' + req.params.courseId + '/' + req.params.difficulty,
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    let options3 ={
+      url: serverRoute + '/tparticipations/' + req.params.courseId,
+      method: 'get',
+      headers: {
+        'authorization': req.cookies.token
+      },
+      json: true
+  }
+  request(options3, function(err, response, bodytimer){
+    bodytimer = bodytimer[0];
+
+    for (let i = 0; i < body.length; i++){
+      if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1){
+        body[i].solved = "Solved";
+        body[i].color = "green";
+      } else {
+        body[i].solved = "Unsolved";
+        body[i].color = "";
+      }
+    }
+
+    body.url = clientRoute;
+    if (req.params.courseId === "IARE_PY"){
+      body.courseName = "Python Proficiency";
+    } else if (req.params.courseId === "IARE_C"){
+      body.courseName = "C Proficiency";
+    } else if (req.params.courseId === "IARE_JAVA"){
+      body.courseName = "Java Proficiency";
+    } else if (req.params.courseId === "IARE_CPP"){
+      body.courseName = "C++ Proficiency";
+    } else {
+      body.courseName = "Invalid Course";
+    }
+    res.render('displayTutQuestions', {imgUsername: req.cookies.username, data: body});
+  });
+  });
+});
+
 app.get('/tutorials/:courseId', async (req, res) => {
     res.clearCookie('contestId');
     res.cookie('courseId',req.params.courseId);
@@ -859,15 +883,7 @@ app.get('/tutorials/:courseId', async (req, res) => {
           // get participation details
           request(options3, function(err, response, bodytimer){
             bodytimer = bodytimer[0];
-            for (let i = 0; i < body.length; i++){
-              if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1){
-                body[i].solved = "Solved";
-                body[i].color = "green";
-              } else {
-                body[i].solved = "";
-                body[i].color = "black";
-              }
-            }
+
             let totalSolEasy = 0;
             let totalSolMedium = 0;
             let totalSolHard = 0;
@@ -894,14 +910,12 @@ app.get('/tutorials/:courseId', async (req, res) => {
             totalSolHard = bodytimer.hardSolved.length;
             totalSolContest = bodytimer.contestSolved.length;
 
-            console.log(totalSolEasy);
-            console.log(eCount);
             req.params.courseId =  req.params.courseId;
             body.easyPercentage = ((totalSolEasy/eCount)*100);
             body.mediumPercentage = ((totalSolMedium/mCount)*100);
             body.hardPercentage = ((totalSolHard/hCount)*100);
             body.contestPercentage = ((totalSolContest/cCount)*100);
-            console.log(body);
+
 
             if (req.params.courseId === "IARE_PY"){
               body.courseName = "Python Proficiency";
