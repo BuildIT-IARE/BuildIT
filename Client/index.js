@@ -740,13 +740,13 @@ app.get('/tutorials/:courseId/:difficulty', async (req, res) => {
   request(options, function(err, response, body){
     console.log(body);
     body.url = clientRoute;
-    if (body.courseId === "IARE_PY"){
+    if (req.params.courseId === "IARE_PY"){
       body.courseName = "Python Proficiency";
-    } else if (body.courseId === "IARE_C"){
+    } else if (req.params.courseId === "IARE_C"){
       body.courseName = "C Proficiency";
-    } else if (body.courseId === "IARE_JAVA"){
+    } else if (req.params.courseId === "IARE_JAVA"){
       body.courseName = "Java Proficiency";
-    } else if (body.courseId === "IARE_CPP"){
+    } else if (req.params.courseId === "IARE_CPP"){
       body.courseName = "C++ Proficiency";
     } else {
       body.courseName = "Invalid Course";
@@ -896,20 +896,20 @@ app.get('/tutorials/:courseId', async (req, res) => {
 
             console.log(totalSolEasy);
             console.log(eCount);
-            body.courseId =  req.params.courseId;
+            req.params.courseId =  req.params.courseId;
             body.easyPercentage = ((totalSolEasy/eCount)*100);
             body.mediumPercentage = ((totalSolMedium/mCount)*100);
             body.hardPercentage = ((totalSolHard/hCount)*100);
             body.contestPercentage = ((totalSolContest/cCount)*100);
             console.log(body);
 
-            if (body.courseId === "IARE_PY"){
+            if (req.params.courseId === "IARE_PY"){
               body.courseName = "Python Proficiency";
-            } else if (body.courseId === "IARE_C"){
+            } else if (req.params.courseId === "IARE_C"){
               body.courseName = "C Proficiency";
-            } else if (body.courseId === "IARE_JAVA"){
+            } else if (req.params.courseId === "IARE_JAVA"){
               body.courseName = "Java Proficiency";
-            } else if (body.courseId === "IARE_CPP"){
+            } else if (req.params.courseId === "IARE_CPP"){
               body.courseName = "C++ Proficiency";
             } else {
               body.courseName = "Invalid Course";
