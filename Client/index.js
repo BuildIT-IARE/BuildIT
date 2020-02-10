@@ -978,12 +978,16 @@ app.get('/tutorials/:courseId', async (req, res) => {
 
             if (req.params.courseId === "IARE_PY"){
               body.courseName = "Python Proficiency";
+              body.courseId = "IARE_PY";
             } else if (req.params.courseId === "IARE_C"){
               body.courseName = "C Proficiency";
+              body.courseId = "IARE_C";
             } else if (req.params.courseId === "IARE_JAVA"){
               body.courseName = "Java Proficiency";
+              body.courseId = "IARE_JAVA";
             } else if (req.params.courseId === "IARE_CPP"){
               body.courseName = "C++ Proficiency";
+              body.courseId = "IARE_CPP";
             } else {
               body.courseName = "Invalid Course";
             }
