@@ -730,20 +730,6 @@ app.get('/tutorials/questions/:questionId', async (req, res) => {
 
 
 
-app.get('/tutorials/:courseId/:difficulty/:concept', async (req, res) => {
-  let options = {
-    url : serverRoute + '/questions/courses/' + req.params.courseId + '/' + req.params.difficulty,
-    method: 'get',
-    headers: {
-      'authorization': req.cookies.token
-    },
-    json: true
-  }
-  request(options, function(err, response, body){
-    body.url = clientRoute;
-    res.render('questionTutDesc', {imgUsername: req.cookies.username, data: body});
-  });
-});
 
 app.get('/verify', async (req, res) => {
   // res.render('/home');
@@ -791,6 +777,62 @@ app.get('/tutorials2', async (req, res) => {
     
     res.render('tutorials', {imgUsername: req.cookies.username, data: body});
     
+  });
+});
+
+
+app.get('/tutorials/:courseId/:difficulty/:concept', async (req, res) => {
+  let concept = req.params.concept;
+
+  let subjectMap = ["bs","cs","al","po","so"];
+  
+  let reqConcept = subjectMap.indexOf(concept);
+
+  let options = {
+    url : serverRoute + '/questions/courses/' + req.params.courseId + '/' + req.params.difficulty + '/' + reqConcept,
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    let options3 ={
+      url: serverRoute + '/tparticipations/' + req.params.courseId,
+      method: 'get',
+      headers: {
+        'authorization': req.cookies.token
+      },
+      json: true
+  }
+  request(options3, function(err, response, bodytimer){
+    bodytimer = bodytimer[0];
+
+    
+    for (let i = 0; i < body.length; i++){
+      if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1){
+        body[i].solved = "Solved";
+        body[i].color = "#96f542";
+      } else {
+        body[i].solved = "Unsolved";
+        body[i].color = "";
+      }
+    }
+
+    body.url = clientRoute;
+    if (req.params.courseId === "IARE_PY"){
+      body.courseName = "Python Proficiency";
+    } else if (req.params.courseId === "IARE_C"){
+      body.courseName = "C Proficiency";
+    } else if (req.params.courseId === "IARE_JAVA"){
+      body.courseName = "Java Proficiency";
+    } else if (req.params.courseId === "IARE_CPP"){
+      body.courseName = "C++ Proficiency";
+    } else {
+      body.courseName = "Invalid Course";
+    }
+    res.render('displayTutQuestions', {imgUsername: req.cookies.username, data: body});
+    });
   });
 });
 

@@ -21,6 +21,9 @@ module.exports = (app) => {
     // Retrieve all questions with courseId
     app.get('/questions/courses/:courseId/:difficulty', middleware.checkToken, questions.findAllCourse);
 
+    // Retrieve all questions with courseId
+    app.get('/questions/courses/:courseId/:difficulty/:conceptLevel', middleware.checkToken, questions.findAllCourseConceptWise);
+
     // Update a question with questionId
     app.put('/questions/:questionId', middleware.checkTokenAdmin, questions.update);
 
