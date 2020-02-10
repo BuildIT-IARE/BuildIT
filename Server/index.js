@@ -419,6 +419,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
       }
     });
   } else {
+    // Course Validation
     courses.findCourseLanguage(req, (err, course) =>{
       course = course[0]
       if (err){
@@ -475,7 +476,8 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
           let result = {
             difficulty: testcases.difficulty,
             language: testcases.language,
-            participationId: req.decoded.username + testcases.courseId
+            participationId: req.decoded.username + testcases.courseId,
+            courseId: testcases.courseId
           };
           console.log(result);
           participationsTut.findUserPart(result, (err, participation) => {

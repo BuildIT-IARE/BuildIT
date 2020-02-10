@@ -894,16 +894,16 @@ app.get('/tutorials/:courseId', async (req, res) => {
             let hCount = 0;
             let cCount = 0;
             for(let i = 0; i < body.length; i++){
-              if (body[i].difficulty === "Easy"){
+              if (body[i].difficulty === "level_0"){
                 eCount++;
               }
-              else if(body[i].difficulty === "Medium"){
+              else if(body[i].difficulty === "level_1"){
                 mCount++;
               }
-              else if(body[i].difficulty === "Hard"){
+              else if(body[i].difficulty === "level_2"){
                 hCount++;
               } 
-              else if(body[i].difficulty === "Contest"){
+              else if(body[i].difficulty === "contest"){
                 cCount++;
               }
             }
