@@ -328,7 +328,7 @@ exports.findAllCourse = (req, res) => {
     });
 };
 
-exports.findAllCourse = (req, res) => {
+exports.findAllCourseConceptWise = (req, res) => {
     Question.find({courseId: req.params.courseId, difficulty: req.params.difficulty, conceptLevel: req.params.conceptLevel})
     .then(question => {
         if(!question) {
