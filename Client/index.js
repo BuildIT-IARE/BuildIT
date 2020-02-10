@@ -976,10 +976,10 @@ app.get('/tutorials/:courseId', async (req, res) => {
             totalSolHard = bodytimer.hardSolved.length;
             totalSolContest = bodytimer.contestSolved.length;
             req.params.courseId =  req.params.courseId;
-            body.easyPercentage = eval((totalSolEasy/eCount)*100);
-            body.mediumPercentage = eval((totalSolMedium/mCount)*100);
-            body.hardPercentage = eval((totalSolHard/hCount)*100);
-            body.contestPercentage = eval((totalSolContest/cCount)*100);
+            body.easyPercentage = Math.floor((totalSolEasy/eCount)*100);
+            body.mediumPercentage = Math.floor((totalSolMedium/mCount)*100);
+            body.hardPercentage = Math.floor((totalSolHard/hCount)*100);
+            body.contestPercentage = Math.floor((totalSolContest/cCount)*100);
 
             if (req.params.courseId === "IARE_PY"){
               body.courseName = "Python Proficiency";
