@@ -156,7 +156,7 @@ div .border {
             <% for (let i = 0; i < data.length; i++ ){ %>
             <tr style = "background: <%= data[i].color %>;">
                 <td><%= i+1 %></td>
-                <td><%= data[i].questionName %></td>
+                <td><a href = "<%= data.clientRoute %>/tutorials/questions/<%= data[i].questionId%>"><%= data[i].questionName %></a></td>
                 <td><%= data[i].solved %></td>
             </tr>
             <% } %>
