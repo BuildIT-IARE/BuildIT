@@ -985,6 +985,7 @@ app.get('/tutorials/:courseId', async (req, res) => {
             } else {
               body.courseName = "Invalid Course";
             }
+            console.log(body);
             res.render('questionsTut', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
           });
         });
