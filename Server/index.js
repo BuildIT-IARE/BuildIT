@@ -100,8 +100,7 @@ app.get('/testGet', async (req, res) => {
 app.post('/testPost', async (req, res) => {
     console.log('request body');
     console.log(req.body);
-    console.log(req.file.level);
-    res.json(req.file);
+    res.json(req.body);
 });
 
 // Main Routes
