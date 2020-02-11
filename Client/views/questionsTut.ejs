@@ -130,15 +130,6 @@ div .border {
   right: 500;
 }
 </style>
-
-<!-- Resources -->
-<script src="js/core.js"></script>
-<script src="js/charts.js"></script>
-<script src="js/animated.js"></script>
-
-<!-- Chart code -->
-
-
 </head>
 
 <body>
@@ -198,15 +189,15 @@ div .border {
               <img src="/images/8.png">
             </a>
           </li>
+          <li data-flip-title="Progress" data-flip-category="Progress">
+            <a href = "<%= data.clientRoute %>/tutorials/<%= data.courseId %>/progress" ></a>
+              <img src="/images/8.png">
+            </a>
+          </li>
       </ul>
   </div>
   <br><br>
   <hr>
-  <h3 class="font-tertiary mb-5" style="text-align: center; color: green;">Your Progress</h3>
-
-    <div id="chartdiv"></div>
-    <hr>
-  </div>
 </section>
 
 
@@ -230,90 +221,5 @@ div .border {
     buttons: true,
 });
 </script>
-<script>
-  am4core.ready(function() {
-  
-  // Themes begin
-  am4core.useTheme(am4themes_animated);
-  // Themes end
-  
-  
-  
-  // Create chart instance
-  var chart = am4core.create("chartdiv", am4charts.RadarChart);
-  
-  // Add data
-  chart.data = [{
-    "category": "Level 0",
-    "value": eval("<%= data.easyPercentage %>"),
-    "full": 100
-  }, {
-    "category": "Level 1",
-    "value": eval("<%= data.mediumPercentage %>"),
-    "full": 100
-  }, {
-    "category": "Level 2",
-    "value": eval("<%= data.hardPercentage %>"),
-    "full": 100
-  },{
-    "category": "Contest",
-    "value": eval("<%= data.contestPercentage %>"),
-    "full": 100
-  }];
-  
-  // Make chart not full circle
-  chart.startAngle = -90;
-  chart.endAngle = 180;
-  chart.innerRadius = am4core.percent(20);
-  
-  // Set number format
-  chart.numberFormatter.numberFormat = "#'%'";
-  
-  // Create axes
-  var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-  categoryAxis.dataFields.category = "category";
-  categoryAxis.renderer.grid.template.location = 0;
-  categoryAxis.renderer.grid.template.strokeOpacity = 0;
-  categoryAxis.renderer.labels.template.horizontalCenter = "right";
-  categoryAxis.renderer.labels.template.fontWeight = 500;
-  categoryAxis.renderer.labels.template.adapter.add("fill", function(fill, target) {
-    return (target.dataItem.index >= 0) ? chart.colors.getIndex(target.dataItem.index) : fill;
-  });
-  categoryAxis.renderer.minGridDistance = 10;
-  
-  var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-  valueAxis.renderer.grid.template.strokeOpacity = 0;
-  valueAxis.min = 0;
-  valueAxis.max = 100;
-  valueAxis.strictMinMax = true;
-  
-  // Create series
-  var series1 = chart.series.push(new am4charts.RadarColumnSeries());
-  series1.dataFields.valueX = "full";
-  series1.dataFields.categoryY = "category";
-  series1.clustered = false;
-  series1.columns.template.fill = new am4core.InterfaceColorSet().getFor("alternativeBackground");
-  series1.columns.template.fillOpacity = 0.08;
-  series1.columns.template.cornerRadiusTopLeft = 20;
-  series1.columns.template.strokeWidth = 0;
-  series1.columns.template.radarColumn.cornerRadius = 20;
-  
-  var series2 = chart.series.push(new am4charts.RadarColumnSeries());
-  series2.dataFields.valueX = "value";
-  series2.dataFields.categoryY = "category";
-  series2.clustered = false;
-  series2.columns.template.strokeWidth = 0;
-  series2.columns.template.tooltipText = "{category}: [bold]{value}[/]";
-  series2.columns.template.radarColumn.cornerRadius = 20;
-  
-  series2.columns.template.adapter.add("fill", function(fill, target) {
-    return chart.colors.getIndex(target.dataItem.index);
-  });
-  
-  // Add cursor
-  chart.cursor = new am4charts.RadarCursor();
-  
-  }); // end am4core.ready()
-  </script>
 </body>
 </html>

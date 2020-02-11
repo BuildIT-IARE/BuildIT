@@ -780,6 +780,81 @@ app.get('/tutorials', async (req, res) => {
   });
 });
 
+app.get('/tutorials/:courseId/progress', async (req, res) => {
+
+      let options = {
+        url : serverRoute + '/questions/courses/'+req.params.courseId,
+        method: 'get',
+        headers: {
+          'authorization': req.cookies.token
+        },
+        json: true
+      }
+      // Get questions for contest
+      request(options, function(err, response, body){
+          let options3 ={
+            url: serverRoute + '/tparticipations/' + req.params.courseId,
+            method: 'get',
+            headers: {
+              'authorization': req.cookies.token
+            },
+            json: true
+        }
+        // get participation details
+        request(options3, function(err, response, bodytimer){
+          bodytimer = bodytimer[0];
+
+          let totalSolEasy = 0;
+          let totalSolMedium = 0;
+          let totalSolHard = 0;
+          let totalSolContest = 0;
+          let eCount = 0;
+          let mCount = 0;
+          let hCount = 0;
+          let cCount = 0;
+          for(let i = 0; i < body.length; i++){
+            if (body[i].difficulty === "level_0"){
+              eCount++;
+            }
+            else if(body[i].difficulty === "level_1"){
+              mCount++;
+            }
+            else if(body[i].difficulty === "level_2"){
+              hCount++;
+            } 
+            else if(body[i].difficulty === "contest"){
+              cCount++;
+            }
+          }
+          totalSolEasy = bodytimer.easySolved.length;
+          totalSolMedium = bodytimer.mediumSolved.length;
+          totalSolHard = bodytimer.hardSolved.length;
+          totalSolContest = bodytimer.contestSolved.length;
+          req.params.courseId =  req.params.courseId;
+          body.easyPercentage = Math.ceil((totalSolEasy/eCount)*100);
+          body.mediumPercentage = Math.ceil((totalSolMedium/mCount)*100);
+          body.hardPercentage = Math.ceil((totalSolHard/hCount)*100);
+          body.contestPercentage = Math.ceil((totalSolContest/cCount)*100);
+
+          if (req.params.courseId === "IARE_PY"){
+            body.courseName = "Python Proficiency";
+            body.courseId = "IARE_PY";
+          } else if (req.params.courseId === "IARE_C"){
+            body.courseName = "C Proficiency";
+            body.courseId = "IARE_C";
+          } else if (req.params.courseId === "IARE_JAVA"){
+            body.courseName = "Java Proficiency";
+            body.courseId = "IARE_JAVA";
+          } else if (req.params.courseId === "IARE_CPP"){
+            body.courseName = "C++ Proficiency";
+            body.courseId = "IARE_CPP";
+          } else {
+            body.courseName = "Invalid Course";
+          }
+          res.render('tutProgress', {imgUsername: req.cookies.username, data: body, datatimer: bodytimer});
+        });
+      });
+});
 
 app.get('/tutorials/:courseId/:difficulty/:concept', async (req, res) => {
   let concept = req.params.concept;
@@ -949,38 +1024,6 @@ app.get('/tutorials/:courseId', async (req, res) => {
           request(options3, function(err, response, bodytimer){
             bodytimer = bodytimer[0];
 
-            let totalSolEasy = 0;
-            let totalSolMedium = 0;
-            let totalSolHard = 0;
-            let totalSolContest = 0;
-            let eCount = 0;
-            let mCount = 0;
-            let hCount = 0;
-            let cCount = 0;
-            for(let i = 0; i < body.length; i++){
-              if (body[i].difficulty === "level_0"){
-                eCount++;
-              }
-              else if(body[i].difficulty === "level_1"){
-                mCount++;
-              }
-              else if(body[i].difficulty === "level_2"){
-                hCount++;
-              } 
-              else if(body[i].difficulty === "contest"){
-                cCount++;
-              }
-            }
-            totalSolEasy = bodytimer.easySolved.length;
-            totalSolMedium = bodytimer.mediumSolved.length;
-            totalSolHard = bodytimer.hardSolved.length;
-            totalSolContest = bodytimer.contestSolved.length;
-            req.params.courseId =  req.params.courseId;
-            body.easyPercentage = Math.ceil((totalSolEasy/eCount)*100);
-            body.mediumPercentage = Math.ceil((totalSolMedium/mCount)*100);
-            body.hardPercentage = Math.ceil((totalSolHard/hCount)*100);
-            body.contestPercentage = Math.ceil((totalSolContest/cCount)*100);
-
             if (req.params.courseId === "IARE_PY"){
               body.courseName = "Python Proficiency";
               body.courseId = "IARE_PY";
@@ -1001,6 +1044,8 @@ app.get('/tutorials/:courseId', async (req, res) => {
         });
       });
 });
+
+
 
 app.listen(4000);
 console.log('Server @ port 4000');
