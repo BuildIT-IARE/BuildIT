@@ -100,7 +100,7 @@ app.get('/testGet', async (req, res) => {
 app.post('/testPost', async (req, res) => {
     console.log('request body');
     console.log(req.body);
-    console.log(req.file);
+    console.log(req.file.courseId);
     res.json(req.file);
 });
 
