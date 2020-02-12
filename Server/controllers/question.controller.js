@@ -1,10 +1,62 @@
 const Question = require('../models/question.model.js');
 const inarray = require('inarray');
-
+const xlsx = require('xlsx');
 // const Base64 = require('js-base64').Base64;
 // Create and Save a new question
 exports.create = (req, res) => {
     // Validate request
+    // if(!req.body.questionId) {
+    //     return res.status(400).send({
+    //         success: false,
+    //         message: "QuestionId can not be empty"
+    // });
+    // }
+    // if(!req.body.questionName) {
+    //     return res.status(400).send({
+    //         success: false,
+    //         message: "Question name can not be empty"
+    //     });
+    // }
+
+    // Create a Question
+    // const question = new Question({
+    // questionId: req.body.questionId,
+    // questionName: req.body.questionName,
+    // contestId: req.body.contestId,
+    // questionDescriptionText: req.body.questionDescriptionText, 
+    // questionInputText: req.body.questionInputText,
+    // questionOutputText: req.body.questionOutputText,
+    // questionExampleInput1: req.body.questionExampleInput1,
+    // questionExampleOutput1: req.body.questionExampleOutput1,
+    // questionExampleInput2: req.body.questionExampleInput2,
+    // questionExampleOutput2: req.body.questionExampleOutput2,
+    // questionExampleInput3: req.body.questionExampleInput3,
+    // questionExampleOutput3: req.body.questionExampleOutput3,
+    // questionHiddenInput1: req.body.questionHiddenInput1,
+    // questionHiddenInput2: req.body.questionHiddenInput2,
+    // questionHiddenInput3: req.body.questionHiddenInput3,
+    // questionHiddenOutput1: req.body.questionHiddenOutput1,
+    // questionHiddenOutput2: req.body.questionHiddenOutput2,
+    // questionHiddenOutput3: req.body.questionHiddenOutput3,
+    // questionExplanation: req.body.questionExplanation,
+    // author: req.body.author,
+    // editorial: req.body.editorial,
+    // difficulty: req.body.difficulty,
+    // language: req.body.language,
+    // conceptLevel: req.body.conceptLevel
+    // });
+
+    // // Save Question in the database
+    // question.save()
+    // .then(data => {
+    //     res.send(data);
+    // }).catch(err => {
+    //     res.status(500).send({
+    //         success: false,
+    //         message: err.message || "Some error occurred while creating the Question."
+    //     });
+    // });
+
     if(req.files.upfile){
         var file = req.files.upfile,
           name = file.name,
@@ -19,8 +71,9 @@ exports.create = (req, res) => {
             let wb = xlsx.readFile('../quesxlsx'+name);
             let ws = wb.Sheets["Sheet1"];
             let data = xlsx.utils.sheet_to_json(ws);
+            let question;
             for(let i = 0; i < data.length; i++){
-                const question = new Question({
+                 question = new Question({
                     questionId: data[i].questionId,
                     questionName: data[i].questionName,
                     contestId: data[i].contestId,
@@ -72,6 +125,58 @@ exports.create = (req, res) => {
 
 exports.createTutorials = (req, res) => {
      // Validate request
+    // if(!req.body.questionId) {
+    //     return res.status(400).send({
+    //         success: false,
+    //         message: "QuestionId can not be empty"
+    // })
+    // }
+    // if(!req.body.questionName) {
+    //     return res.status(400).send({
+    //         success: false,
+    //         message: "Question name can not be empty"
+    //     });
+    // }
+
+    // Create a Question
+    // const question = new Question({
+    // questionId: req.body.questionId,
+    // questionName: req.body.questionName,
+    // contestId: req.body.contestId,
+    // questionDescriptionText: req.body.questionDescriptionText, 
+    // questionInputText: req.body.questionInputText,
+    // questionOutputText: req.body.questionOutputText,
+    // questionExampleInput1: req.body.questionExampleInput1,
+    // questionExampleOutput1: req.body.questionExampleOutput1,
+    // questionExampleInput2: req.body.questionExampleInput2,
+    // questionExampleOutput2: req.body.questionExampleOutput2,
+    // questionExampleInput3: req.body.questionExampleInput3,
+    // questionExampleOutput3: req.body.questionExampleOutput3,
+    // questionHiddenInput1: req.body.questionHiddenInput1,
+    // questionHiddenInput2: req.body.questionHiddenInput2,
+    // questionHiddenInput3: req.body.questionHiddenInput3,
+    // questionHiddenOutput1: req.body.questionHiddenOutput1,
+    // questionHiddenOutput2: req.body.questionHiddenOutput2,
+    // questionHiddenOutput3: req.body.questionHiddenOutput3,
+    // questionExplanation: req.body.questionExplanation,
+    // author: req.body.author,
+    // editorial: req.body.editorial,
+    // difficulty: req.body.difficulty,
+    // language: req.body.language,
+    // conceptLevel: req.body.conceptLevel,
+    // courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"]
+    // });
+
+    // // Save Question in the database
+    // question.save()
+    // .then(data => {
+    //     res.send(data);
+    // }).catch(err => {
+    //     res.status(500).send({
+    //         success: false,
+    //         message: err.message || "Some error occurred while creating the Question."
+    //     });
+    // });
      if(req.files.upfile){
         var file = req.files.upfile,
           name = file.name,
@@ -86,8 +191,9 @@ exports.createTutorials = (req, res) => {
             let wb = xlsx.readFile('../quesTutxlsx'+name);
             let ws = wb.Sheets["Sheet1"];
             let data = xlsx.utils.sheet_to_json(ws);
+            let question;
             for(let i = 0; i < data.length; i++){
-                const question = new Question({
+                question = new Question({
                     questionId: data[i].questionId,
                     questionName: data[i].questionName,
                     contestId: data[i].contestId,
