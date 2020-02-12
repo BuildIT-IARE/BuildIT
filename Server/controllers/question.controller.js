@@ -153,9 +153,9 @@ exports.createTutorials = (req, res) => {
     questionExplanation: req.body.questionExplanation,
     author: req.body.author,
     editorial: req.body.editorial,
-    difficulty: req.body.difficulty,
+    difficulty: req.body.level,
     language: req.body.language,
-    conceptLevel: req.body.conceptLevel,
+    conceptLevel: req.body.sublevel,
     courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"]
     });
 
@@ -211,9 +211,9 @@ exports.createTutorialsExcel = (req, res) => {
                    questionExplanation: data[i].questionExplanation,
                    author: data[i].author,
                    editorial: data[i].editorial,
-                   difficulty: data[i].difficulty,
+                   difficulty: data[i].level,
                    language: data[i].language,
-                   conceptLevel: data[i].conceptLevel,
+                   conceptLevel: data[i].sublevel,
                    courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"]
                    });
                
