@@ -56,15 +56,6 @@ exports.create = (req, res) => {
             message: err.message || "Some error occurred while creating the Question."
         });
     });
-
-    .then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            success: false,
-            message: err.message || "Some error occurred while creating the Question."
-        });
-    });
 };
 
 exports.createExcel = (req, res) => {
