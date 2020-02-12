@@ -1,6 +1,6 @@
 const Question = require('../models/question.model.js');
 const inarray = require('inarray');
-
+const xlsx = require('xlsx');
 // const Base64 = require('js-base64').Base64;
 // Create and Save a new question
 exports.create = (req, res) => {
@@ -9,7 +9,7 @@ exports.create = (req, res) => {
     //     return res.status(400).send({
     //         success: false,
     //         message: "QuestionId can not be empty"
-    // })
+    // });
     // }
     // if(!req.body.questionName) {
     //     return res.status(400).send({
