@@ -22,7 +22,7 @@
 			</header> 
 			<div class="main-block"></div>
 			
-<!-- 
+<!-- <form action="<%= data.serverurl %>/questions" method = "POST">
 				<h4>Question ID</h4>
 				<input name="questionId" type="text"/>
 				<h4>Question Name</h4>
@@ -69,6 +69,7 @@
 				<input type="radio" name="difficulty" value="Easy"> Easy </input>
 				<input type="radio" name="difficulty" value="Medium"> Medium </input>
 				<input type="radio" name="difficulty" value="Hard"> Hard </input> -->
+<!-- </form> -->
       <form action="<%= data.serverurl %>/questions" method = "POST" enctype="multipart/form-data">
         <h1>Upload File Here</h1>
       <input type="file" name="upfile" value="">
