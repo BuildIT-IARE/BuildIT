@@ -95,9 +95,9 @@ exports.create = (req, res) => {
                     questionExplanation: data[i].questionExplanation,
                     author: data[i].author,
                     editorial: data[i].editorial,
-                    difficulty: data[i].difficulty,
+                    difficulty: data[i].level,
                     language: data[i].language,
-                    conceptLevel: data[i].conceptLevel
+                    conceptLevel: data[i].sublevel
                     });
                 
                     // Save Question in the database
@@ -215,9 +215,9 @@ exports.createTutorials = (req, res) => {
                     questionExplanation: data[i].questionExplanation,
                     author: data[i].author,
                     editorial: data[i].editorial,
-                    difficulty: data[i].difficulty,
+                    difficulty: data[i].level,
                     language: data[i].language,
-                    conceptLevel: data[i].conceptLevel,
+                    conceptLevel: data[i].sublevel,
                     courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"]
                     });
                 
