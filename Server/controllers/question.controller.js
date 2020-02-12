@@ -19,8 +19,9 @@ exports.create = (req, res) => {
             let wb = xlsx.readFile('../quesxlsx'+name);
             let ws = wb.Sheets["Sheet1"];
             let data = xlsx.utils.sheet_to_json(ws);
+            let question;
             for(let i = 0; i < data.length; i++){
-                const question = new Question({
+                 question = new Question({
                     questionId: data[i].questionId,
                     questionName: data[i].questionName,
                     contestId: data[i].contestId,
@@ -86,8 +87,9 @@ exports.createTutorials = (req, res) => {
             let wb = xlsx.readFile('../quesTutxlsx'+name);
             let ws = wb.Sheets["Sheet1"];
             let data = xlsx.utils.sheet_to_json(ws);
+            let question;
             for(let i = 0; i < data.length; i++){
-                const question = new Question({
+                question = new Question({
                     questionId: data[i].questionId,
                     questionName: data[i].questionName,
                     contestId: data[i].contestId,
