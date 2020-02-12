@@ -21,8 +21,14 @@
 				<h1>Manage Questions<span style="color:white">Add Questions</span></h1>	
 			</header> 
 			<div class="main-block"></div>
-			
-<!-- <form action="<%= data.serverurl %>/questions" method = "POST">
+			<form action="<%= data.serverurl %>/questionsExcel" method = "POST" enctype="multipart/form-data">
+				<h1>Upload Excel File Here</h1>
+			  <input type="file" name="upfile" value="">
+				<div class="btn-block">
+				  <button class= "submit" type="submit" href="/">Send</button>
+				</div>
+			  </form>
+			<form action="<%= data.serverurl %>/questions" method = "POST">
 				<h4>Question ID</h4>
 				<input name="questionId" type="text"/>
 				<h4>Question Name</h4>
@@ -68,17 +74,9 @@
 				<p class="comments"><b>Difficulty</b></p>
 				<input type="radio" name="difficulty" value="Easy"> Easy </input>
 				<input type="radio" name="difficulty" value="Medium"> Medium </input>
-				<input type="radio" name="difficulty" value="Hard"> Hard </input> -->
-<!-- </form> -->
-      <form action="<%= data.serverurl %>/questions" method = "POST" enctype="multipart/form-data">
-        <h1>Upload File Here</h1>
-      <input type="file" name="upfile" value="">
-        <div class="btn-block">
-          <button class= "submit" type="submit" href="/">Send</button>
-        </div>
-      </form>
-
-    </div>
+				<input type="radio" name="difficulty" value="Hard"> Hard </input> 
+			</form>
+    	</div>
 		</div><!-- /container -->
 		<script src="/adminjs/classie.js"></script>
 		<script src="/adminjs/gnmenu.js"></script>

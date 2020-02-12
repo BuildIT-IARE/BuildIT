@@ -6,8 +6,14 @@ module.exports = (app) => {
     // Create a new question
     app.post('/questions', middleware.checkTokenAdmin, questions.create);
     
+    // Create a new question
+    app.post('/questionsExcel', middleware.checkTokenAdmin, questions.createExcel);
+
     // Create a new question for Tutorials
     app.post('/questiontutorials', middleware.checkTokenAdmin, questions.createTutorials);
+
+    // Create a new question for Tutorials
+    app.post('/questiontutorialsExcel', middleware.checkTokenAdmin, questions.createTutorialsExcel);
 
     // Retrieve all questions
     app.get('/questions', middleware.checkTokenAdmin, questions.findAll);
