@@ -446,7 +446,7 @@ function loadRandomLanguage() {
 function setQuestionId() {
     windowUrl = window.location.href;
     let questionId = windowUrl.slice(serverUrl.length+5, windowUrl.length);
-    // console.log(serverUrl + "/questions/" + questionId);
+    console.log(serverUrl + "/questions/" + questionId);
     $.get(serverUrl + "/questions/name/" + questionId, function(data, status){
         console.log(data);
         document.getElementById("questionIdText").innerHTML = data.questionName;    
