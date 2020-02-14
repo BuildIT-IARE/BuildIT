@@ -294,6 +294,32 @@ exports.findOne = (req, res) => {
     });
 };
 
+exports.getQuestionName = (req, res) => {
+    Question.find({questionId: req.params.questionId})
+    .then(question => {
+        if(!question) {
+            return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.params.questionId
+            });            
+        }
+        let response = {
+            questionName: question.questionName
+        }
+        res.send(response);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.params.questionId
+            });                
+        }
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving question with id " + req.params.questionId
+        });
+    });
+};
 // Find testcases with questionId
 exports.getTestCases = (req, callback) => {
     Question.find({questionId: req.body.questionId})
