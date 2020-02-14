@@ -444,10 +444,13 @@ function loadRandomLanguage() {
 }
 
 function setQuestionId() {
-    document.getElementById('questionText').innerHTML = "Question ID: ";
     windowUrl = window.location.href;
     let questionId = windowUrl.slice(serverUrl.length+5, windowUrl.length);
-    document.getElementById('questionIdText').innerHTML = questionId;
+    console.log(serverUrl + "/questions/name/" + questionId);
+    $.get(serverUrl + "/questions/name/" + questionId, function(data, status){
+        console.log(data);
+        document.getElementById("questionIdText").innerHTML = data.questionName;    
+        });
 }
 
 $(window).resize(function() {

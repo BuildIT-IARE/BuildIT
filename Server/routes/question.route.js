@@ -17,6 +17,9 @@ module.exports = (app) => {
 
     // Retrieve all questions
     app.get('/questions', middleware.checkTokenAdmin, questions.findAll);
+    
+    // Retrieve a single questionName with questionId Public
+    app.get('/questions/name/:questionId', questions.getQuestionName);
 
     // Retrieve a single question with questionId
     app.get('/questions/:questionId', middleware.checkToken, questions.findOne);
