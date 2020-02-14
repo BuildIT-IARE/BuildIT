@@ -490,7 +490,7 @@ app.post('/admin/resultsTut/course', async(req,res) => {
       },
       json: true
     }
-    request(options2, function(err, response, body){
+    request(options2, function(err, response, body1){
           bodytimer = bodytimer[0];
           let totalSolEasy = 0;
           let totalSolMedium = 0;
@@ -500,17 +500,17 @@ app.post('/admin/resultsTut/course', async(req,res) => {
           let mCount = 0;
           let hCount = 0;
           let cCount = 0;
-          for(let i = 0; i < body.length; i++){
-            if (body[i].difficulty === "level_0"){
+          for(let i = 0; i < body1.length; i++){
+            if (body1[i].difficulty === "level_0"){
               eCount++;
             }
-            else if(body[i].difficulty === "level_1"){
+            else if(body1[i].difficulty === "level_1"){
               mCount++;
             }
-            else if(body[i].difficulty === "level_2"){
+            else if(body1[i].difficulty === "level_2"){
               hCount++;
             } 
-            else if(body[i].difficulty === "contest"){
+            else if(body1[i].difficulty === "contest"){
               cCount++;
             }
           }
