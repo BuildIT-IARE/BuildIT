@@ -189,63 +189,72 @@ exports.createTutorials = (req, res) => {
         });
     });
 };
+exports.createExcelTutorials = (req, res) => {
 
-exports.createTutorialsExcel = (req, res) => {
     if(req.files.upfile){
-       var file = req.files.upfile,
-         name = file.name,
-         type = file.mimetype;
-       var uploadpath = '../quesTutxlsx'+name;
-       file.mv(uploadpath,function(err){
-         if(err){
-           console.log("File Upload Failed",name,err);
-           res.send("Error Occured!")
-         }
-         else {
-           let wb = xlsx.readFile('../quesTutxlsx'+name);
-           let ws = wb.Sheets["Sheet1"];
-           let data = xlsx.utils.sheet_to_json(ws);
-           let question;
-           for(let i = 0; i < data.length; i++){
-               question = new Question({
-                   questionId: data[i].questionId,
-                   questionName: data[i].questionName,
-                   contestId: data[i].contestId,
-                   questionDescriptionText: data[i].questionDescriptionText, 
-                   questionInputText: data[i].questionInputText,
-                   questionOutputText: data[i].questionOutputText,
-                   questionExampleInput1: data[i].questionExampleInput1,
-                   questionExampleOutput1: data[i].questionExampleOutput1,
-                   questionExampleInput2: data[i].questionExampleInput2,
-                   questionExampleOutput2: data[i].questionExampleOutput2,
-                   questionExampleInput3: data[i].questionExampleInput3,
-                   questionExampleOutput3: data[i].questionExampleOutput3,
-                   questionHiddenInput1: data[i].questionHiddenInput1,
-                   questionHiddenInput2: data[i].questionHiddenInput2,
-                   questionHiddenInput3: data[i].questionHiddenInput3,
-                   questionHiddenOutput1: data[i].questionHiddenOutput1,
-                   questionHiddenOutput2: data[i].questionHiddenOutput2,
-                   questionHiddenOutput3: data[i].questionHiddenOutput3,
-                   questionExplanation: data[i].questionExplanation,
-                   author: data[i].author,
-                   editorial: data[i].editorial,
-                   difficulty: data[i].level,
-                   language: data[i].language,
-                   conceptLevel: data[i].sublevel,
-                   courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"]
-                   });
-               
-                   // Save Question in the database
-                   question.save()
-           }
-           res.send('Done! Uploading files');
-         }
-       });
-     }else {
-       res.send("No File selected !");
-       res.end();
-     };
+        var file = req.files.upfile,
+          name = file.name,
+          type = file.mimetype;
+        var uploadpath = '../quesxlsx'+name;
+        file.mv(uploadpath,function(err){
+          if(err){
+            console.log("File Upload Failed",name,err);
+            res.send("Error Occured!")
+          }
+          else {
+            let wb = xlsx.readFile('../quesxlsx'+name);
+            let ws = wb.Sheets["Sheet1"];
+            let data = xlsx.utils.sheet_to_json(ws);
+            let question;
+            Question.find()
+            .then(questions => {
+                let currQuestions = questions.length;
+                for(let i = 0; i < data.length; i++){
+                    question = new Question({
+                        questionId: "IARE"+(currQuestions+(i+1)).toString(),
+                        questionName: data[i].questionName,
+                        contestId: data[i].contestId,
+                        questionDescriptionText: data[i].questionDescriptionText, 
+                        questionInputText: data[i].questionInputText,
+                        questionOutputText: data[i].questionOutputText,
+                        questionExampleInput1: data[i].questionExampleInput1,
+                        questionExampleOutput1: data[i].questionExampleOutput1,
+                        questionExampleInput2: data[i].questionExampleInput2,
+                        questionExampleOutput2: data[i].questionExampleOutput2,
+                        questionExampleInput3: data[i].questionExampleInput3,
+                        questionExampleOutput3: data[i].questionExampleOutput3,
+                        questionHiddenInput1: data[i].questionHiddenInput1,
+                        questionHiddenInput2: data[i].questionHiddenInput2,
+                        questionHiddenInput3: data[i].questionHiddenInput3,
+                        questionHiddenOutput1: data[i].questionHiddenOutput1,
+                        questionHiddenOutput2: data[i].questionHiddenOutput2,
+                        questionHiddenOutput3: data[i].questionHiddenOutput3,
+                        questionExplanation: data[i].questionExplanation,
+                        author: data[i].author,
+                        editorial: data[i].editorial,
+                        difficulty: data[i].level,
+                        language: data[i].language,
+                        conceptLevel: data[i].sublevel,
+                        courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"]
+                     });
+                       // Save Question in the database
+                       question.save();
+               }
+               res.send('Done! Uploaded files');
+            }).catch(err => {
+                res.status(500).send({
+                    success: false,
+                    message: err.message || "Some error occurred while retrieving questions."
+                });
+            });
+          }
+        });
+      }else {
+        res.send("No File selected !");
+        res.end();
+      };
 };
+
 
 // Retrieve and return all questions from the database.
 exports.findAll = (req, res) => {
