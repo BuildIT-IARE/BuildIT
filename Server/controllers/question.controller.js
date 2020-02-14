@@ -80,7 +80,6 @@ exports.createExcel = (req, res) => {
             let ws = wb.Sheets["Sheet1"];
             let data = xlsx.utils.sheet_to_json(ws);
             let question;
-            let totalAdded = 0;
             Question.find()
             .then(questions => {
                 let currQuestions = questions.length;
@@ -114,9 +113,8 @@ exports.createExcel = (req, res) => {
                    
                        // Save Question in the database
                        question.save();
-                       totalAdded++;
                }
-               res.send('Done! Uploaded files: ',totalAdded);
+               res.send('Done! Uploaded files');
             }).catch(err => {
                 res.status(500).send({
                     success: false,
