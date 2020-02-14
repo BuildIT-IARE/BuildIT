@@ -449,7 +449,7 @@ function setQuestionId() {
     // console.log(serverUrl + "/questions/" + questionId);
     $.get(serverUrl + "/questions/name/" + questionId, function(data, status){
         data = data[0];
-        // console.log(data);
+        console.log(data);
         document.getElementById("questionIdText").innerHTML = data.questionName;    
         });
 }
