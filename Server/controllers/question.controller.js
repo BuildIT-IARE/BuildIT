@@ -12,7 +12,7 @@ exports.create = (req, res) => {
         });
     }
 
-    Question.find({contestId: "*"})
+    Question.find({contestId:""})
     .then(questions => {
         let currQuestions = questions.length + 1;
         req.body.questionId = "IARE" + currQuestions.toString();
