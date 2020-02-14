@@ -5,12 +5,6 @@ const xlsx = require('xlsx');
 // Create and Save a new question
 exports.create = (req, res) => {
     // Validate request
-    if(!req.body.questionId) {
-        return res.status(400).send({
-            success: false,
-            message: "QuestionId can not be empty"
-    });
-    }
     if(!req.body.questionName) {
         return res.status(400).send({
             success: false,
