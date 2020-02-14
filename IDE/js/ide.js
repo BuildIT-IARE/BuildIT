@@ -446,10 +446,10 @@ function loadRandomLanguage() {
 function setQuestionId() {
     windowUrl = window.location.href;
     let questionId = windowUrl.slice(serverUrl.length+5, windowUrl.length);
-    console.log(serverUrl + "/questions/" + questionId);
+    // console.log(serverUrl + "/questions/" + questionId);
     $.get(serverUrl + "/questions/" + questionId, function(data, status){
         data = data[0];
-        console.log(data);
+        // console.log(data);
         document.getElementById("questionIdText").innerHTML = data.questionName;    
         });
 }
