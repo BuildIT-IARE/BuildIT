@@ -518,7 +518,6 @@ app.post('/admin/resultsTut/course', async(req,res) => {
           totalSolMedium = bodytimer.mediumSolved.length;
           totalSolHard = bodytimer.hardSolved.length;
           totalSolContest = bodytimer.contestSolved.length;
-          bodytimer.courseId = req.body.courseId;
           bodytimer.easyPercentage = Math.ceil((totalSolEasy/eCount)*100);
           bodytimer.mediumPercentage = Math.ceil((totalSolMedium/mCount)*100);
           bodytimer.hardPercentage = Math.ceil((totalSolHard/hCount)*100);
