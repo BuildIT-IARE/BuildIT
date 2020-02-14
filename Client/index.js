@@ -387,6 +387,25 @@ app.get('/admin/results', async (req, res) => {
     res.render('dropdown', {data: body});
   });
 });
+
+app.get('/admin/resultsTut', async (req, res) => {
+  let options = {
+    url : serverRoute + '/courses',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+
+  request(options, function(err, response, body){
+    body.posturl = clientRoute + '/admin/resultsTut/course';
+    body.url = clientRoute;
+    body.method = "POST";
+    res.render('dropdown2', {data: body});
+  });
+});
+
 app.get('/admin/move', async (req, res) => {
   let options = {
     url : serverRoute + '/questions',
@@ -447,6 +466,67 @@ app.post('/admin/results/contest', async (req, res) => {
       res.render('results', {data: url, datap: bodyparticipation, dataq: bodyquestion });
     });
     
+  });
+});
+
+app.post('/admin/resultsTut/course', async(req,res) => {
+  let options = {
+    url: serverRoute + '/tparticipations/all',
+    method: 'post',
+    body: {
+      courseId: req.body.courseId
+    },
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, (err, response, bodytimer) => {
+    let options2 = {
+      url : serverRoute + '/questions/courses/'+ req.body.courseId,
+      method: 'get',
+      headers: {
+        'authorization': req.cookies.token
+      },
+      json: true
+    }
+    request(options2, (err, response, body) => {
+          bodypart = bodypart[0];
+          let totalSolEasy = 0;
+          let totalSolMedium = 0;
+          let totalSolHard = 0;
+          let totalSolContest = 0;
+          let eCount = 0;
+          let mCount = 0;
+          let hCount = 0;
+          let cCount = 0;
+          for(let i = 0; i < body.length; i++){
+            if (body[i].difficulty === "level_0"){
+              eCount++;
+            }
+            else if(body[i].difficulty === "level_1"){
+              mCount++;
+            }
+            else if(body[i].difficulty === "level_2"){
+              hCount++;
+            } 
+            else if(body[i].difficulty === "contest"){
+              cCount++;
+            }
+          }
+          totalSolEasy = bodytimer.easySolved.length;
+          totalSolMedium = bodytimer.mediumSolved.length;
+          totalSolHard = bodytimer.hardSolved.length;
+          totalSolContest = bodytimer.contestSolved.length;
+          bodytimer.courseId = req.body.courseId;
+          bodytimer.easyPercentage = Math.ceil((totalSolEasy/eCount)*100);
+          bodytimer.mediumPercentage = Math.ceil((totalSolMedium/mCount)*100);
+          bodytimer.hardPercentage = Math.ceil((totalSolHard/hCount)*100);
+          bodytimer.contestPercentage = Math.ceil((totalSolContest/cCount)*100);
+          bodytimer.clientRoute = clientRoute;
+          bodytimer.serverRoute = serverRoute;
+          res.render('results1', {data: bodytimer});
+    });
   });
 });
 

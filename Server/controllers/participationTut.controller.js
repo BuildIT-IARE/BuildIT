@@ -150,6 +150,17 @@ exports.findAll = (req, res) => {
     });
 };
 
+exports.findCourse = (req, res) => {
+    Participation.find({courseId: req.body.courseId})
+    .then(participation => {
+        res.send(participation);
+    }).catch(err => {
+        res.status(500).send({
+            success: false,
+            message: err.message || "Some error occurred while retrieving participation."
+        });
+    });
+};
 // Retrieve and return all participation details for user in contest.
 exports.findUser = (req, res) => {
     Participation.find({participationId: req.decoded.username + req.params.courseId})

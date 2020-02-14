@@ -19,13 +19,73 @@
 			<header>
 				<h1>Manage Tutorials<span style="color:white">Add Questions</span></h1>	
 			</header> 
-			<div class="main-block"></div>
+      <div class="main-block">
+
+      <form action="<%= data.serverurl %>/questiontutorialsExcel" method = "POST" enctype="multipart/form-data">
+        <h1>Upload Excel File Here</h1>
+    <input type="file" name="upfile" value="">
+      <div class="btn-block">
+        <button class= "submit" type="submit" href="/">Send</button>
+      </div>
+    </form>
+    <hr><br>
+      </div>
+    <div class="main-block">
       <form action="<%= data.serverurl %>/questiontutorials" method = "POST" enctype="multipart/form-data">
-        <h1>Upload File Here</h1>
-      <input type="file" name="upfile" value="">
-        <div class="btn-block">
-          <button class= "submit" type="submit" href="/">Send</button>
-        </div>
+      <h1>Add Question Manually</h1>
+      <h4>Question ID</h4>
+        <input name="questionId" type="text"/>
+        <h4>Question Name</h4>
+        <input name="questionName" type="text"/>
+        <h4>Course ID</h4>
+        <input name="courseId" type="text"/>
+        <p class="comments">Description</p>
+        <textarea name="questionDescriptionText" rows="30"></textarea>
+        <p class="comments">Input</p>
+        <textarea name="questionInputText" rows="10"></textarea>
+        <p class="comments">Output</p>
+        <textarea name="questionOutputText" rows="10"></textarea>
+        <p class="comments">Example Input 1:</p>
+        <textarea name="questionExampleInput1" rows="10"></textarea>
+        <p class="comments">Example Output 1:</p>
+        <textarea name="questionExampleOutput1" rows="10"></textarea>
+        <p class="comments">Example Input 2:</p>
+        <textarea name="questionExampleInput2" rows="10"></textarea>
+        <p class="comments">Example Output 2:</p>
+        <textarea name="questionExampleOutput2" rows="10"></textarea>
+        <p class="comments">Example Input 3:</p>
+        <textarea name="questionExampleInput3" rows="10"></textarea>
+        <p class="comments">Example Output 3:</p>
+        <textarea name="questionExampleOutput3" rows="10"></textarea>
+        <p class="comments">Hidden Input 1:</p>
+        <textarea name="questionHiddenInput1" rows="10"></textarea>
+        <p class="comments">Hidden Output 1:</p>
+        <textarea name="questionHiddenOutput1" rows="10"></textarea>
+        <p class="comments">Hidden Input 2:</p>
+        <textarea name="questionHiddenInput2" rows="10"></textarea>
+        <p class="comments">Hidden Output 2:</p>
+        <textarea name="questionHiddenOutput2" rows="10"></textarea>
+        <p class="comments">Hidden Input 3:</p>
+        <textarea name="questionHiddenInput3" rows="10"></textarea>
+        <p class="comments">Hidden Output 3:</p>
+        <textarea name="questionHiddenOutput3" rows="10"></textarea>
+        <p class="comments">Explanation</p>
+        <textarea name="questionExplanation" rows="30"></textarea>
+        <p class="comments">Author:</p>
+        <textarea name="author" rows="10"></textarea>
+        <p class="comments">Editorial:</p>
+        <textarea name="editorial" rows="10"></textarea>
+        <p class="comments"><b>Level:</b></p>
+        <input type="radio" name="difficulty" value="level_0" required> Level 0 </input>
+        <input type="radio" name="difficulty" value="level_1"> Level 1 </input>
+        <input type="radio" name="difficulty" value="level_2"> Level 2 </input>
+        <input type="radio" name="difficulty" value="contest"> Contest </input>
+        <p class="comments"><b>SubLevel (if any):</b></p>
+        <input type="radio" name="conceptLevel" value="0"> Basics </input>
+        <input type="radio" name="conceptLevel" value="1"> Control Structures </input>
+        <input type="radio" name="conceptLevel" value="2"> Arrays/Lists </input>
+        <input type="radio" name="conceptLevel" value="3"> Pointers/Objects </input>
+        <input type="radio" name="conceptLevel" value="4"> Structures/Objects </input> 
       </form>
     </div>
 		</div><!-- /container -->
