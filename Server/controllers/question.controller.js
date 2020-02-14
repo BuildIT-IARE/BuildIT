@@ -304,7 +304,7 @@ exports.getQuestionName = (req, res) => {
             });            
         }
         let response = {
-            questionName: question.questionName
+            questionName: question[0].questionName
         }
         res.send(response);
     }).catch(err => {
