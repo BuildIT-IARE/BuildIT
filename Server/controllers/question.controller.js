@@ -80,38 +80,47 @@ exports.createExcel = (req, res) => {
             let ws = wb.Sheets["Sheet1"];
             let data = xlsx.utils.sheet_to_json(ws);
             let question;
-            for(let i = 0; i < data.length; i++){
-                 question = new Question({
-                    questionId: data[i].questionId,
-                    questionName: data[i].questionName,
-                    contestId: data[i].contestId,
-                    questionDescriptionText: data[i].questionDescriptionText, 
-                    questionInputText: data[i].questionInputText,
-                    questionOutputText: data[i].questionOutputText,
-                    questionExampleInput1: data[i].questionExampleInput1,
-                    questionExampleOutput1: data[i].questionExampleOutput1,
-                    questionExampleInput2: data[i].questionExampleInput2,
-                    questionExampleOutput2: data[i].questionExampleOutput2,
-                    questionExampleInput3: data[i].questionExampleInput3,
-                    questionExampleOutput3: data[i].questionExampleOutput3,
-                    questionHiddenInput1: data[i].questionHiddenInput1,
-                    questionHiddenInput2: data[i].questionHiddenInput2,
-                    questionHiddenInput3: data[i].questionHiddenInput3,
-                    questionHiddenOutput1: data[i].questionHiddenOutput1,
-                    questionHiddenOutput2: data[i].questionHiddenOutput2,
-                    questionHiddenOutput3: data[i].questionHiddenOutput3,
-                    questionExplanation: data[i].questionExplanation,
-                    author: data[i].author,
-                    editorial: data[i].editorial,
-                    difficulty: data[i].difficulty,
-                    language: data[i].language,
-                    conceptLevel: data[i].conceptLevel
-                    });
-                
-                    // Save Question in the database
-                    question.save()
-            }
-            res.send('Done! Uploaded files: ', i);
+            Question.find()
+            .then(questions => {
+                let currQuestions = questions.length;
+                for(let i = 0; i < data.length; i++){
+                    question = new Question({
+                       questionId: "IARE"+(currQuestions+(i+1)).toString(),
+                       questionName: data[i].questionName,
+                       contestId: data[i].contestId,
+                       questionDescriptionText: data[i].questionDescriptionText, 
+                       questionInputText: data[i].questionInputText,
+                       questionOutputText: data[i].questionOutputText,
+                       questionExampleInput1: data[i].questionExampleInput1,
+                       questionExampleOutput1: data[i].questionExampleOutput1,
+                       questionExampleInput2: data[i].questionExampleInput2,
+                       questionExampleOutput2: data[i].questionExampleOutput2,
+                       questionExampleInput3: data[i].questionExampleInput3,
+                       questionExampleOutput3: data[i].questionExampleOutput3,
+                       questionHiddenInput1: data[i].questionHiddenInput1,
+                       questionHiddenInput2: data[i].questionHiddenInput2,
+                       questionHiddenInput3: data[i].questionHiddenInput3,
+                       questionHiddenOutput1: data[i].questionHiddenOutput1,
+                       questionHiddenOutput2: data[i].questionHiddenOutput2,
+                       questionHiddenOutput3: data[i].questionHiddenOutput3,
+                       questionExplanation: data[i].questionExplanation,
+                       author: data[i].author,
+                       editorial: data[i].editorial,
+                       difficulty: data[i].difficulty,
+                       language: data[i].language,
+                       conceptLevel: data[i].conceptLevel
+                       });
+                   
+                       // Save Question in the database
+                       question.save()
+               }
+               res.send('Done! Uploaded files: ', i);
+            }).catch(err => {
+                res.status(500).send({
+                    success: false,
+                    message: err.message || "Some error occurred while retrieving questions."
+                });
+            });
           }
         });
       }else {
