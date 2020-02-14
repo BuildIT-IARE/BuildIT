@@ -189,7 +189,7 @@ exports.createTutorials = (req, res) => {
         });
     });
 };
-exports.createExcelTutorials = (req, res) => {
+exports.createTutorialsExcel = (req, res) => {
 
     if(req.files.upfile){
         var file = req.files.upfile,
