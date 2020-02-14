@@ -481,7 +481,7 @@ app.post('/admin/resultsTut/course', async(req,res) => {
     },
     json: true
   }
-  request(options, (err, response, bodytimer) => {
+  request(options, function(err, response, bodytimer){
     let options2 = {
       url : serverRoute + '/questions/courses/'+ req.body.courseId,
       method: 'get',
@@ -490,8 +490,8 @@ app.post('/admin/resultsTut/course', async(req,res) => {
       },
       json: true
     }
-    request(options2, (err, response, body) => {
-          bodypart = bodypart[0];
+    request(options2, function(err, response, body){
+          bodytimer = bodytimer[0];
           let totalSolEasy = 0;
           let totalSolMedium = 0;
           let totalSolHard = 0;
