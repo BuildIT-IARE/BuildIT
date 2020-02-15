@@ -423,7 +423,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     // Course Validation
     console.log("Course/Tutorials Eval");
     courses.findCourseLanguage(req, (err, course) =>{
-      course = course[0]
+      course = course[0];
       if (err){
         res.status(404).send({message: "Course not found with id " + req.body.courseId});
       }

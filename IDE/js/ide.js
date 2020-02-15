@@ -377,6 +377,7 @@ function submit() {
             'authorization': getCookie('token')
         },
         success: function (data, textStatus, jqXHR) {
+            console.log("Done, ",textStatus, data);
             // handleResult2(data);
             if (data.score === 100){
                 data.message = "All testcases satisfied, score: 100";
