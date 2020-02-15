@@ -575,6 +575,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                                               // Add score to profile
                                               console.log("------",result);
                                               participationsTut.insertDifficultyWise(result, (err, doc) => {
+                                                console.log("HELP");
                                                 console.log(err, doc);
                                                 if (err){
                                                   res.status(404).send({message: err});
