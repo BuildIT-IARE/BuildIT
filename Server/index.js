@@ -478,8 +478,8 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
           let result = {
             difficulty: testcases.difficulty,
             language: testcases.language,
-            participationId: req.decoded.username + testcases.courseId,
-            courseId: testcases.courseId
+            participationId: req.decoded.username + req.body.courseId,
+            courseId: req.body.courseId
           };
           console.log(result);
           participationsTut.findUserPart(result, (err, participation) => {
