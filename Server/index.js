@@ -579,18 +579,16 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                                                 console.log(err, doc);
                                                 if (err){
                                                   res.status(404).send({message: err});
-                                                } else {
+                                                }
                                                   console.log("creating sub");
                                                   // Create a submission
                                                   submissions.create(req, result, (err, sub) => {
                                                     if (err){
                                                       res.status(404).send({message: err});
-                                                    } else {
+                                                    }
                                                       console.log(sub);
                                                       res.send(sub);
-                                                    }
                                                   });
-                                                }
                                               });
                                         });
                                       }, timeOut);
