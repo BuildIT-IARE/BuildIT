@@ -169,7 +169,7 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 });
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
-  if (req.body.contestId){
+  if (req.body.contestId.length !== 0){
     contests.getDuration(req, (err, duration) => {
       if (err){
         res.status(404).send({message: err});
