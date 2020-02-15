@@ -490,6 +490,9 @@ app.post('/admin/resultsTut/course', async(req,res) => {
       },
       json: true
     }
+    let course = {
+      course: req.body.courseId
+    }
     request(options2, function(err, response, body1){
               let eCount = 0;
               let mCount = 0;
@@ -529,7 +532,8 @@ app.post('/admin/resultsTut/course', async(req,res) => {
           bodytimer[j].serverRoute = serverRoute;
           j = j+1;
         }
-          res.render('results1', {data: bodytimer});
+
+          res.render('results1', {datac: course, data: bodytimer});
   });
   });
 });
