@@ -169,7 +169,8 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 });
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
-  if (req.body.contestId){
+  if (req.body.contestId.length !== 0){
+    console.log("Contest Eval");
     contests.getDuration(req, (err, duration) => {
       if (err){
         res.status(404).send({message: err});
@@ -420,8 +421,9 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     });
   } else {
     // Course Validation
+    console.log("Course/Tutorials Eval");
     courses.findCourseLanguage(req, (err, course) =>{
-      course = course[0]
+      course = course[0];
       if (err){
         res.status(404).send({message: "Course not found with id " + req.body.courseId});
       }
@@ -476,8 +478,8 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
           let result = {
             difficulty: testcases.difficulty,
             language: testcases.language,
-            participationId: req.decoded.username + testcases.courseId,
-            courseId: testcases.courseId
+            participationId: req.decoded.username + req.body.courseId,
+            courseId: req.body.courseId
           };
           console.log(result);
           participationsTut.findUserPart(result, (err, participation) => {
