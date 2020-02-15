@@ -473,6 +473,12 @@ $(document).ready(function () {
     if (getCookie("courseId")){
         $('#tutorials').text('          Practice Mode     ')
     }
+    let username = getCookie("username");
+    $.get(serverUrl + "/users/" + username, function(data, status){
+        let branch = data.branch;
+        $('#userImage').attr('src') = "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg"
+        });
+    
     $selectLanguage = $("#select-language");
     $selectLanguage.change(function (e) {
         if (!isEditorDirty) {
