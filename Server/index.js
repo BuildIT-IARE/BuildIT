@@ -578,6 +578,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                                                 if (err){
                                                   res.status(404).send({message: err});
                                                 } else {
+                                                  console.log("creating sub");
                                                   // Create a submission
                                                   submissions.create(req, result, (err, sub) => {
                                                     if (err){
