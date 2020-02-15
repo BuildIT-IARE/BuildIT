@@ -473,8 +473,9 @@ $(document).ready(function () {
     if (getCookie("courseId")){
         $('#tutorials').text('          Practice Mode     ')
     }
-    let username = getCookie("username");
-    let branch = getCookie("branch");
+    // let username = getCookie("username");
+    // let branch = getCookie("branch");
+    // $('#userImage').attr('src') = "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg";
 
     // $.get(serverUrl + "/users/" + username, function(data, status){
     //     let branch = data.branch;
