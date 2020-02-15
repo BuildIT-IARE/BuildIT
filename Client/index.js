@@ -514,6 +514,7 @@ app.post('/admin/resultsTut/course', async(req,res) => {
               cCount++;
             }
           }
+          console.log(eCount,mCount,hCount,cCount);
           totalSolEasy = bodytimer.easySolved.length;
           totalSolMedium = bodytimer.mediumSolved.length;
           totalSolHard = bodytimer.hardSolved.length;
