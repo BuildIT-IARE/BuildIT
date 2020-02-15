@@ -27,7 +27,7 @@
   <form action="<%= data.posturl %>" method = "<%= data.method %>">
     <select id="courseId" name="courseId">
 	<% for (let i = 0; i < data.length; i++){ %>
-	  <option value="<%= data[i].courseId %>"><%= data[i].courseId %></option>
+	  <option value="<%= data[i].courseId %>"><%= data[i].courseId %> - (<%= data[i].courseName %>)</option>
 	  <% } %>
     </select>
   

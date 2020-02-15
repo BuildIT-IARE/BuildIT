@@ -500,6 +500,7 @@ app.post('/admin/resultsTut/course', async(req,res) => {
           let mCount = 0;
           let hCount = 0;
           let cCount = 0;
+          bodytimer.course = req.body.courseId
           for(let i = 0; i < body1.length; i++){
             if (body1[i].difficulty === "level_0"){
               eCount++;
