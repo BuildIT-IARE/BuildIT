@@ -68,6 +68,7 @@ exports.insertDifficultyWise = (sub, callback) => {
         }
         participation = participation[0];
         console.log(participation);
+        console.log(sub);
         if(sub.difficulty === 'level_0'){
             if(sub.score === 100){
                 let exists = inarray(participation.easySolved, sub.questionId);
