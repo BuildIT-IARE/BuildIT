@@ -170,6 +170,7 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   if (req.body.contestId.length !== 0){
+    console.log("Contest Eval");
     contests.getDuration(req, (err, duration) => {
       if (err){
         res.status(404).send({message: err});
@@ -420,6 +421,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     });
   } else {
     // Course Validation
+    console.log("Course/Tutorials Eval");
     courses.findCourseLanguage(req, (err, course) =>{
       course = course[0]
       if (err){
