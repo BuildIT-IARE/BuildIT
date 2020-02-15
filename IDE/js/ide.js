@@ -365,6 +365,7 @@ function submit() {
         questionId: windowUrl.slice(serverUrl.length+5, windowUrl.length)
     };
 
+    console.log(data);
     timeStart = performance.now();
     $.ajax({
         url: serverUrl+'/validateSubmission',
