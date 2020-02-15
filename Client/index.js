@@ -491,15 +491,12 @@ app.post('/admin/resultsTut/course', async(req,res) => {
       json: true
     }
     request(options2, function(err, response, body1){
-          let totalSolEasy = 0;
-          let totalSolMedium = 0;
-          let totalSolHard = 0;
-          let totalSolContest = 0;
-          let eCount = 0;
-          let mCount = 0;
-          let hCount = 0;
-          let cCount = 0;
+              let eCount = 0;
+              let mCount = 0;
+              let hCount = 0;
+              let cCount = 0;
           for(let i = 0; i < body1.length; i++){
+            
             if (body1[i].difficulty === "level_0"){
               eCount++;
             }
@@ -513,19 +510,27 @@ app.post('/admin/resultsTut/course', async(req,res) => {
               cCount++;
             }
           }
+          let j=0;
+          while(j < bodytimer.length){   
+          let totalSolEasy = 0;
+          let totalSolMedium = 0;
+          let totalSolHard = 0;
+          let totalSolContest = 0;       
           console.log(eCount,mCount,hCount,cCount);
-          totalSolEasy = bodytimer.easySolved.length;
-          totalSolMedium = bodytimer.mediumSolved.length;
-          totalSolHard = bodytimer.hardSolved.length;
-          totalSolContest = bodytimer.contestSolved.length;
-          bodytimer.easyPercentage = Math.ceil((totalSolEasy/eCount)*100);
-          bodytimer.mediumPercentage = Math.ceil((totalSolMedium/mCount)*100);
-          bodytimer.hardPercentage = Math.ceil((totalSolHard/hCount)*100);
-          bodytimer.contestPercentage = Math.ceil((totalSolContest/cCount)*100);
-          bodytimer.clientRoute = clientRoute;
-          bodytimer.serverRoute = serverRoute;
+          totalSolEasy = bodytimer[j].easySolved.length;
+          totalSolMedium = bodytimer[j].mediumSolved.length;
+          totalSolHard = bodytimer[j].hardSolved.length;
+          totalSolContest = bodytimer[j].contestSolved.length;
+          bodytimer[j].easyPercentage = Math.ceil((totalSolEasy/eCount)*100);
+          bodytimer[j].mediumPercentage = Math.ceil((totalSolMedium/mCount)*100);
+          bodytimer[j].hardPercentage = Math.ceil((totalSolHard/hCount)*100);
+          bodytimer[j].contestPercentage = Math.ceil((totalSolContest/cCount)*100);
+          bodytimer[j].clientRoute = clientRoute;
+          bodytimer[j].serverRoute = serverRoute;
+          j = j+1;
+        }
           res.render('results1', {data: bodytimer});
-    });
+  });
   });
 });
 
