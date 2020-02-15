@@ -475,7 +475,6 @@ $(document).ready(function () {
     }
     let username = getCookie("username");
     let branch = getCookie("branch");
-    // $('#userImage').attr('src') = "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg";
 
     // $.get(serverUrl + "/users/" + username, function(data, status){
     //     let branch = data.branch;
@@ -650,6 +649,8 @@ $(document).ready(function () {
 
         layout.init();
     });
+    $('#userImage').attr('src') = "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg";
+
 });
 
 // Template Sources
