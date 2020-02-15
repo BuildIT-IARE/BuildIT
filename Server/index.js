@@ -170,7 +170,6 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 
 app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   if (req.body.contestId.length !== 0){
-    console.log("Contest Eval");
     contests.getDuration(req, (err, duration) => {
       if (err){
         res.status(404).send({message: err});
@@ -215,7 +214,6 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   
       let currentTime = `${hours}${minutes}`;
       currentTime = eval(currentTime);
-      console.log(duration.date.toString(), today, currentTime);
       if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
         accepted = true;
       } else {
@@ -421,19 +419,16 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
     });
   } else {
     // Course Validation
-    console.log("Course/Tutorials Eval");
     courses.findCourseLanguage(req, (err, course) =>{
       course = course[0];
       if (err){
         res.status(404).send({message: "Course not found with id " + req.body.courseId});
       }
-      // console.log(course, req.body.language_id);
       if (course.languageId === req.body.language_id){
         questions.getTestCases(req, (err, testcases) => {
           if (err){
             res.status(404).send({message: "Question not found with id " + req.body.questionId});
         } else {
-          console.log(testcases);
           if(localServer){
             postUrl = apiAddress + '/submissions/?wait=true';
           } else {
@@ -481,7 +476,6 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
             participationId: req.decoded.username + req.body.courseId,
             courseId: req.body.courseId
           };
-          console.log(result);
           participationsTut.findUserPart(result, (err, participation) => {
             if (err){
               res.status(404).send({message: err});
@@ -573,20 +567,15 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                                               result.score = 0;
                                             }
                                               // Add score to profile
-                                              console.log("------",result);
                                               participationsTut.insertDifficultyWise(result, (err, doc) => {
-                                                console.log("HELP");
-                                                console.log(err, doc);
                                                 if (err){
                                                   res.status(404).send({message: err});
                                                 }
-                                                  console.log("creating sub");
                                                   // Create a submission
                                                   submissions.create(req, result, (err, sub) => {
                                                     if (err){
                                                       res.status(404).send({message: err});
                                                     }
-                                                      console.log(sub);
                                                       res.send(sub);
                                                   });
                                               });
@@ -757,12 +746,10 @@ app.get('/pdf/:setno', middleware.checkToken, async (req, res) => {
 
 app.post('/uploadpdf', middleware.checkTokenAdmin, async (req, res) => {
   if (req.files){
-    // console.log(req.files);
     let file = req.files.upfile,
         filename = file.name;
     file.mv("../Public/pdf/"+filename, function(err){
       if(err){
-        console.log(err);
         res.send("error occured");
       }
       else{

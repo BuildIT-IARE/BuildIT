@@ -167,7 +167,7 @@ function handleRunError2(jqXHR, textStatus, errorThrown) {
 
 function handleResult(data) {
     timeEnd = performance.now();
-    console.log("It took " + (timeEnd - timeStart) + " ms to get submission result.");
+    // console.log("It took " + (timeEnd - timeStart) + " ms to get submission result.");
 
     var status = data.status;
     var stdout = decode(data.stdout);
@@ -365,7 +365,7 @@ function submit() {
         questionId: windowUrl.slice(serverUrl.length+5, windowUrl.length)
     };
 
-    console.log(data);
+    // console.log(data);
     timeStart = performance.now();
     $.ajax({
         url: serverUrl+'/validateSubmission',
@@ -377,7 +377,7 @@ function submit() {
             'authorization': getCookie('token')
         },
         success: function (data, textStatus, jqXHR) {
-            console.log(data);
+            // console.log(data);
             // handleResult2(data);
             if (data.score === 100){
                 data.message = "All testcases satisfied, score: 100";
@@ -448,9 +448,9 @@ function loadRandomLanguage() {
 function setQuestionId() {
     windowUrl = window.location.href;
     let questionId = windowUrl.slice(serverUrl.length+5, windowUrl.length);
-    console.log(serverUrl + "/questions/name/" + questionId);
+    // console.log(serverUrl + "/questions/name/" + questionId);
     $.get(serverUrl + "/questions/name/" + questionId, function(data, status){
-        console.log(data);
+        // console.log(data);
         document.getElementById("questionIdText").innerHTML = data.questionName;    
         });
 }
