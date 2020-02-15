@@ -476,7 +476,8 @@ $(document).ready(function () {
     let username = getCookie("username");
     $.get(serverUrl + "/users/" + username, function(data, status){
         let branch = data.branch;
-        $('#userImage').attr('src') = "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg"
+        console.log(branch);
+        $('#userImage').attr('src') = "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg";
         });
     
     $selectLanguage = $("#select-language");
