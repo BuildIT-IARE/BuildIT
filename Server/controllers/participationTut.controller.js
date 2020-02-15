@@ -79,10 +79,10 @@ exports.insertDifficultyWise = (sub, callback) => {
                 } else{
                     return callback(null, participation);
                 }
-                return (null, participation);
+                return callback(null, participation);
             } else {
                 console.log("Returned");
-                return (null, participation);
+                return callback(null, participation);
             }
         } else if(sub.difficulty === 'level_1'){
             if(sub.score === 100){
