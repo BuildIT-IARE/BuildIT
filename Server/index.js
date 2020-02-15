@@ -580,7 +580,11 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                                                 } else {
                                                   // Create a submission
                                                   submissions.create(req, result, (err, sub) => {
-                                                    res.send(sub);
+                                                    if (err){
+                                                      res.status(404).send({message: err});
+                                                    } else {
+                                                      res.send(sub);
+                                                    }
                                                   });
                                                 }
                                               });
