@@ -59,7 +59,7 @@
             <% for (let i = 0; i < data.length; i++ ){ %>
             <tr style = "background: <%= data[i].color %>;">
                 <td><%= i+1 %></td>
-                <td><a href = "<%= data.clientRoute %>/tutorials/questions/<%= data[i].questionId%>"><%= data[i].questionName %></a></td>
+                <td><a href = "<%= data.clientRoute %>/tutorials/questions/<%= data[i].questionId%>" target="_blank"><%= data[i].questionName %></a></td>
                 <td><%= data[i].solved %></td>
             </tr>
             <% } %>
