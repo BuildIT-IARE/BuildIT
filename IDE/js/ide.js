@@ -451,7 +451,11 @@ function setQuestionId() {
     // console.log(serverUrl + "/questions/name/" + questionId);
     $.get(serverUrl + "/questions/name/" + questionId, function(data, status){
         // console.log(data);
-        document.getElementById("questionIdText").innerHTML = data.questionName;    
+        if (data.questionName){
+            document.getElementById("questionIdText").innerHTML = data.questionName;    
+        } else {
+        document.getElementById("questionIdText").innerHTML = "-";    
+        }
         });
 }
 
