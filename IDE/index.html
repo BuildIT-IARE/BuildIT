@@ -100,6 +100,7 @@
         <div class="right menu">
             <a class="link item" id="tutorials" style="color: cyan; font-size: large;"></a>
             <a class="link item" id="questionIdText" style="color: orangered; font-size: large;"></a>
+            <a class="link item" id="username" style="color: pink; font-size: large;"></a>
             <img id="userImage" class="link item"  width = "90px" height = "90px" src="images/defaultuser.png"/>
         </div>
     </div>
@@ -165,10 +166,13 @@
         return "";
      }
 $(document).ready(function () {
+
     let branch = getCookie("branch");
     let username = getCookie("username");
     if (branch){
         $('#userImage').attr('src', "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg");
+        document.getElementById('username').innerHTML = username;
+        
     }
 });
 </script>
