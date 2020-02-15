@@ -454,7 +454,7 @@ function setQuestionId() {
         if (data.questionName){
             document.getElementById("questionIdText").innerHTML = data.questionName;    
         } else {
-        document.getElementById("questionIdText").innerHTML = "-";    
+        document.getElementById("questionIdText").innerHTML = "*";    
         }
         });
 }
@@ -479,7 +479,7 @@ $(document).ready(function () {
     } else if (getCookie("contestId")) {
         $('#tutorials').text('Contest Ongoing')
     } else {
-        $('#tutorials').text('-');
+        $('#tutorials').text('*');
     }
     // let username = getCookie("username");
     // let branch = getCookie("branch");
