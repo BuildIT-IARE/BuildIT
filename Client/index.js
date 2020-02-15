@@ -754,6 +754,7 @@ app.post('/login_', async (req, res) => {
     if (body.success){
       res.cookie("token", body.token);
       res.cookie("username", body.username);
+      res.cookie("branch", body.branch);
         if (body.admin){
           res.redirect('admin');
         }

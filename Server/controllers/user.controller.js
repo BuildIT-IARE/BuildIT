@@ -304,7 +304,8 @@ exports.checkPass = (req, res) => {
                     success: true,
                     token: token,
                     username: user[0].username.toUpperCase(), 
-                    message: "Auth successful"
+                    message: "Auth successful",
+                    branch: user[0].branch.toLowerCase()
                 });
             }
         } else {

@@ -474,11 +474,13 @@ $(document).ready(function () {
         $('#tutorials').text('          Practice Mode     ')
     }
     let username = getCookie("username");
-    $.get(serverUrl + "/users/" + username, function(data, status){
-        let branch = data.branch;
-        console.log(branch);
-        $('#userImage').attr('src') = "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg";
-        });
+    let branch = getCookie("branch");
+    $('#userImage').attr('src') = "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg";
+
+    // $.get(serverUrl + "/users/" + username, function(data, status){
+    //     let branch = data.branch;
+    //     console.log(branch);
+    //     });
     
     $selectLanguage = $("#select-language");
     $selectLanguage.change(function (e) {
