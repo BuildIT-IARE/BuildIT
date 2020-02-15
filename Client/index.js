@@ -756,6 +756,7 @@ app.post('/login_', async (req, res) => {
       res.cookie("username", body.username);
       res.cookie("branch", body.branch);
         if (body.admin){
+          res.clearCookie("branch");
           res.redirect('admin');
         }
         else{
@@ -776,6 +777,8 @@ app.get('/logout', async (req, res) => {
   res.clearCookie('token');
   res.clearCookie('username');
   res.clearCookie('contestId');
+  res.clearCookie('courseId');
+  res.clearCookie('branch');
   res.redirect('/home');
 });
 
