@@ -491,7 +491,6 @@ app.post('/admin/resultsTut/course', async(req,res) => {
       json: true
     }
     request(options2, function(err, response, body1){
-          bodytimer = bodytimer[0];
           let totalSolEasy = 0;
           let totalSolMedium = 0;
           let totalSolHard = 0;
