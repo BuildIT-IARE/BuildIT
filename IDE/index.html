@@ -167,7 +167,7 @@
 $(document).ready(function () {
     let branch = getCookie("branch");
     let username = getCookie("username");
-    if (username !== "ADMIN"){
+    if (branch){
         $('#userImage').attr('src', "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg");
     }
 });
