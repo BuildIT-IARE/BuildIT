@@ -472,8 +472,10 @@ $(document).ready(function () {
      }
     if (getCookie("courseId")){
         $('#tutorials').text('Practicing')
-    } else {
+    } else if (getCookie("contestId")) {
         $('#tutorials').text('Contest Ongoing')
+    } else {
+        $('#tutorials').text('-');
     }
     // let username = getCookie("username");
     // let branch = getCookie("branch");
