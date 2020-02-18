@@ -36,7 +36,7 @@ body {
 #site-navigation {
     border-radius: 0;
     margin: 0;
-    background: grey;
+    background: rgb(53, 48, 48);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     height: 90px;
 }
