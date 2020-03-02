@@ -653,7 +653,7 @@ $(document).ready(function () {
         layout.on("initialised", function () {
             loadRandomLanguage();
             setQuestionId();
-            $("#site-navigation").css("border-bottom", "1px solid black");
+            // $("#site-navigation").css("border-bottom", "1px solid black");
         });
 
         layout.init();
