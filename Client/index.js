@@ -951,7 +951,7 @@ app.get('/tutorials/:courseId/progress', async (req, res) => {
 app.get('/tutorials/:courseId/:difficulty/:concept', async (req, res) => {
   let concept = req.params.concept;
 
-  let subjectMap = ["bs","cs","al","po","so"];
+  let subjectMap = ["bs","cs","al","fn","po","so"];
   
   let reqConcept = subjectMap.indexOf(concept);
 
@@ -1014,6 +1014,8 @@ app.get('/tutorials/:courseId/:difficulty/:concept', async (req, res) => {
       body.courseName = body.courseName + " - Pointers/Objects";
     } else if (req.params.concept === "so"){
       body.courseName = body.courseName + " - Structures/Objects";
+    } else if (req.params.concept === "fn"){
+      body.courseName = body.courseName + " - Functions";
     }
     res.render('displayTutQuestions', {imgUsername: req.cookies.username, data: body});
     });
