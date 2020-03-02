@@ -1009,7 +1009,7 @@ app.get('/tutorials/:courseId/:difficulty/:concept', async (req, res) => {
     } else if (req.params.concept === "cs"){
       body.courseName = body.courseName + " - Control Structures";
     } else if (req.params.concept === "al"){
-      body.courseName = body.courseName + " - Arrays/Lists";
+      body.courseName = body.courseName + " - Arrays/Lists/Strings";
     } else if (req.params.concept === "po"){
       body.courseName = body.courseName + " - Pointers/Objects";
     } else if (req.params.concept === "so"){
