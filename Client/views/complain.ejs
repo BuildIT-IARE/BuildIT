@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <title>BuildIT Lab</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+  <!-- slick slider -->
+  <link rel="stylesheet" href="plugins/slick/slick.css">
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
+
+  <!-- Main Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
+  
+  <!--Favicon-->
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../../css/navadmin.css">
+  <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+
+</head>
+
+<body>
+  
+<% include ../views/partials/header %>
+
+<!-- page title -->
+<section class="page-title bg-primary position-relative">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="text-white font-tertiary">Complain Box</h1>
+      </div>
+    </div>
+  </div>
+
+</section>
+<!-- /page title -->
+
+<!-- blog -->
+<section class="section">
+  <div class="container">
+    <form action="<%= data.posturl %>" method = "POST">
+        <h4>Subject</h4>
+        <input name="complainSubject" type="text"/>
+        <h4>Question Id</h4>
+        <input name="questionId" type="text"/>
+        <h4>Question Name</h4>
+        <input name="questionName" type="text"/>
+        <h4>Complain Description</h4>
+        <input name="complainDesc" type="text"/>
+        <hr>
+        <button class= "submit" type="submit" href="/">Send</button>
+    </form>
+</div>
+</section>
+
+
+<!-- footer -->
+<!--<footer class="bg-dark footer-section">
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5 class="text-light">Email</h5>
+          <p class="text-white paragraph-lg font-secondary">steve.fruits@email.com</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-light">Phone</h5>
+          <p class="text-white paragraph-lg font-secondary">+880 2544 658 256</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-light">Address</h5>
+          <p class="text-white paragraph-lg font-secondary">125/A, CA Commercial Area, California, USA</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="border-top text-center border-dark py-5">
+    <p class="mb-0 text-light">Copyright ©<script>
+        var CurrentYear = new Date().getFullYear()
+        document.write(CurrentYear)
+      </script> a theme by <a href="themefisher.com">themefisher.com</a></p>
+  </div>
+------footer------->
+<!-- /footer -->
+<% include ../views/partials/aboutfooter %>
+
+<!-- jQuery -->
+<script src="plugins/jQuery/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+<!-- slick slider -->
+<script src="plugins/slick/slick.min.js"></script>
+<!-- filter -->
+<script src="plugins/shuffle/shuffle.min.js"></script>
+
+<!-- Main Script -->
+<script src="js/script.js"></script>
+
+</body>
+</html>

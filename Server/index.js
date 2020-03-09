@@ -67,7 +67,7 @@ const submissions = require('./controllers/submission.controller.js');
 const questions = require('./controllers/question.controller.js');
 const participations = require('./controllers/participation.controller.js');
 const contests = require('./controllers/contest.controller.js');
-
+const complains = require('./controllers/complain.controller.js');
 const participationsTut = require('./controllers/participationTut.controller.js');
 const courses = require('./controllers/course.controller.js');
 
@@ -88,6 +88,8 @@ require('./routes/participation.route.js')(app);
 require('./routes/participationTut.route.js')(app);
 // Require course routes
 require('./routes/course.route.js')(app);
+// Require complain routes
+require('./routes/complain.route.js')(app);
 
 
 // Examples

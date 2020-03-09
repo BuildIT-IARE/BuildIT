@@ -1,0 +1,68 @@
+const Complain = require('../models/complain.model.js');
+
+exports.create = (req, res) => {
+    if(!req.body.complainId) {
+        return res.status(400).send({
+            success: false,
+            message: "ComplainId can not be empty"
+        });
+    }
+    if(!req.body.complainSubject) {
+        return res.status(400).send({
+            success: false,
+            message: "Complain Subject can not be empty"
+        });
+    }
+    if(!req.body.complainDesc) {
+        return res.status(400).send({
+            success: false,
+            message: "Complain Description can not be empty"
+        });
+    }
+    if(!req.body.questionId) {
+        return res.status(400).send({
+            success: false,
+            message: "QuestionId can not be empty"
+        });
+    }
+    if(!req.body.questionName) {
+        return res.status(400).send({
+            success: false,
+            message: "Question Name can not be empty"
+        });
+    }
+
+    // Create a Complain
+    const complain = new Complain({
+        complainId: req.body.complainId,
+        complainSubject: req.body.complainSubject,
+        username: req.body.username,
+        complainDesc: req.body.complainDesc,
+        questionId: req.body.questionId,
+        questionName: req.body.questionName
+      });
+
+    // Save Complain in the database
+    complain.save()
+    .then(data => {
+        res.send(data);
+    }).catch(err => {
+        res.status(500).send({
+            success: false,
+            message: err.message || "Some error occurred while creating the Complain."
+        });
+    });
+
+};
+
+// Retrieve and return all Complains from the database.
+exports.findAll = (req, res) => {
+    Complain.find()
+    .then(complains => {
+        res.send(complains);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving complains."
+        });
+    });
+};
