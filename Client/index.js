@@ -356,6 +356,22 @@ app.get('/admin/manageusers', async (req, res) => {
   });
 });
 
+app.get('/admin/complaints', async (req, res) => {
+  let options = {
+    url : serverRoute + '/complains',
+    method: 'get',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    body.url = clientRoute;
+    body.serverurl = serverRoute;
+    res.render('admincomplain', {data: body});
+  })
+})
+
 app.get('/admin/deleteuser/:username', async (req, res) => {
   let options = {
     url : serverRoute + '/users/' + req.params.username,
