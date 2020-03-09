@@ -740,6 +740,41 @@ app.post('/signup_', async (req, res) => {
 
   });
 });
+
+app.get('/registerComplaint', async (req, res) => {
+  body = {}
+  body.posturl = clientRoute + '/complaint';
+  body.url = clientRoute;
+  body.method = "POST";
+  res.render('complain', {data: body, imgUsername: req.cookies.username});
+})
+
+app.post('/complaint', async (req, res) => {
+  let options = {
+    url : serverRoute + '/complains',
+    method: 'post',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    body: {
+      complainId: req.decoded.username + req.body.questionId,
+      complainSubject: req.body.complainSubject,
+      username: req.decoded.username,
+      complainDesc: req.body.complainDesc,
+      questionId: req.body.questionId,
+      questionName: req.body.questionName
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    if (body.username && body.complainSubject && body.complainDesc && body.questionId && body.questionName){
+      body.message = "Complain Successfully Registered";
+    } 
+    body.url = clientRoute;
+    res.render('error', {data: body, imgUsername: req.cookies.username})
+});
+})
+
 app.post('/login_', async (req, res) => {
   let options = {
     url : serverRoute + '/login',
