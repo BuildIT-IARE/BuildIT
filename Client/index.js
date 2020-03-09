@@ -773,9 +773,9 @@ app.post('/complaint', async (req, res) => {
       'authorization': req.cookies.token
     },
     body: {
-      complainId: req.decoded.username + req.body.questionId,
+      complainId: req.cookies.username + req.body.questionId,
       complainSubject: req.body.complainSubject,
-      username: req.decoded.username,
+      username: req.cookies.username,
       complainDesc: req.body.complainDesc,
       questionId: req.body.questionId,
       questionName: req.body.questionName
