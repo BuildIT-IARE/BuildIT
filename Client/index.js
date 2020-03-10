@@ -388,7 +388,7 @@ app.get('/admin/deleteuser/:username', async (req, res) => {
 
 app.get('/admin/deletecomplain/:questionId', async (req, res) => {
   let options = {
-    url : serverRoute + '/complains/' + req.params.username,
+    url : serverRoute + '/complains/' + req.params.questionId,
     method: 'delete',
     headers: {
       'authorization': req.cookies.token
