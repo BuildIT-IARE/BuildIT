@@ -76,7 +76,8 @@ exports.delete = (req, res) => {
                 message: "q not found with id " + req.params.questionId
             });
         }
-        res.send({message: "complaint deleted successfully!"});
+        res.send({success: true, 
+            message: "complaint deleted successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
