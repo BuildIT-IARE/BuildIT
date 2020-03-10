@@ -771,10 +771,11 @@ app.post('/signup_', async (req, res) => {
   });
 });
 
-app.get('/registerComplaint', async (req, res) => {
+app.get('/registerComplaint/:questionId', async (req, res) => {
   body = {}
   body.posturl = clientRoute + '/complaint';
   body.url = clientRoute;
+  body.questionId = req.params.questionId;
   body.method = "POST";
   res.render('complain', {data: body, imgUsername: req.cookies.username});
 })

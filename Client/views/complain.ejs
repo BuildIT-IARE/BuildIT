@@ -51,12 +51,10 @@
 <section class="section">
   <div class="container">
     <form action="<%= data.posturl %>" method = "POST">
+        <h4>Question Id</h4>
+        <input value = "<%= data.questionId %>" name="questionId" type="text" readonly/>
         <h4>Subject</h4>
         <input name="complainSubject" type="text"/>
-        <h4>Question Id</h4>
-        <input name="questionId" type="text"/>
-        <h4>Question Name</h4>
-        <input name="questionName" type="text"/>
         <h4>Complain Description</h4>
         <input name="complainDesc" type="text"/>
         <hr>
