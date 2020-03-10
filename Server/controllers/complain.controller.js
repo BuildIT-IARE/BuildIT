@@ -25,12 +25,6 @@ exports.create = (req, res) => {
             message: "QuestionId can not be empty"
         });
     }
-    if(!req.body.questionName) {
-        return res.status(400).send({
-            success: false,
-            message: "Question Name can not be empty"
-        });
-    }
 
     // Create a Complain
     const complain = new Complain({
@@ -38,8 +32,7 @@ exports.create = (req, res) => {
         complainSubject: req.body.complainSubject,
         username: req.body.username,
         complainDesc: req.body.complainDesc,
-        questionId: req.body.questionId,
-        questionName: req.body.questionName
+        questionId: req.body.questionId
       });
 
     // Save Complain in the database
