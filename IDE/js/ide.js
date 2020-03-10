@@ -478,16 +478,42 @@ $(document).ready(function () {
         $('#tutorials').text('Practicing')
         courseId = getCookie("courseId");
         if (courseId === "IARE_PY"){
-            
+            $('#select-language').append(`<option mode = "python" value="34"> Python (3.6.0) </option>`);
         } else if (courseId === "IARE_C"){
-
+            $('#select-language').append(`<option mode = "c" value="4"> C (gcc 7.2.0) </option>`);
         } else if (courseId === "IARE_CPP"){
-            
+            $('#select-language').append(`<option mode = "cpp" value="10"> C++ (g++ 7.2.0) </option>`);
         } else if (courseId === "IARE_JAVA"){
-            
+            $('#select-language').append(`<option mode = "java" value="26"> Java (OpenJDK 9 with Eclipse OpenJ9) </option>`);
         }
     } else if (getCookie("contestId")) {
         $('#tutorials').text('Contest Ongoing')
+        $('#select-language').append(`<option value="1" mode="shell">Bash (4.4)</option>
+        <option value="3" mode="text/x-pascal">Basic (fbc 1.05.0)</option>
+        <option value="4" mode="c">C (gcc 7.2.0)</option>
+        <option value="10" mode="cpp">C++ (g++ 7.2.0)</option>
+        <option value="16" mode="csharp">C# (mono 5.4.0.167)</option>
+        <option value="18" mode="clojure">Clojure (1.8.0)</option>
+        <option value="19" mode="text/x-crystal">Crystal (0.23.1)</option>
+        <option value="20" mode="text/x-elixir">Elixir (1.5.1)</option>
+        <option value="21" mode="text/x-erlang">Erlang (OTP 20.0)</option>
+        <option value="22" mode="go">Go (1.9)</option>
+        <option value="23" mode="text/x-haskell">Haskell (ghc 8.2.1)</option>
+        <option value="25" mode="plaintext">Insect (5.0.0)</option>
+        <option value="26" mode="java">Java (OpenJDK 9 with Eclipse OpenJ9)</option>
+        <option value="27" mode="java">Java (OpenJDK 8)</option>
+        <option value="28" mode="java">Java (OpenJDK 7)</option>
+        <option value="29" mode="javascript">JavaScript (nodejs 8.5.0)</option>
+        <option value="31" mode="text/x-ocaml">OCaml (4.05.0)</option>
+        <option value="32" mode="text/x-octave">Octave (4.2.0)</option>
+        <option value="33" mode="pascal">Pascal (fpc 3.0.0)</option>
+        <option value="34" mode="python">Python (3.6.0)</option>
+        <option value="36" mode="python">Python (2.7.9)</option>
+        <option value="38" mode="ruby">Ruby (2.4.0)</option>
+        <option value="42" mode="rust">Rust (1.20.0)</option>
+        <option value="43" mode="plaintext">Text (plain text)</option>
+        <option value="44" mode="plaintext">Executable</option>`);
+
     } else {
         $('#tutorials').text('*');
     }
