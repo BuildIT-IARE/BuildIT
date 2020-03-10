@@ -476,6 +476,16 @@ $(document).ready(function () {
      }
     if (getCookie("courseId")){
         $('#tutorials').text('Practicing')
+        courseId = getCookie("courseId");
+        if (courseId === "IARE_PY"){
+            
+        } else if (courseId === "IARE_C"){
+
+        } else if (courseId === "IARE_CPP"){
+            
+        } else if (courseId === "IARE_JAVA"){
+            
+        }
     } else if (getCookie("contestId")) {
         $('#tutorials').text('Contest Ongoing')
     } else {
