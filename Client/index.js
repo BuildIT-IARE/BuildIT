@@ -792,13 +792,12 @@ app.post('/complaint', async (req, res) => {
       complainSubject: req.body.complainSubject,
       username: req.cookies.username,
       complainDesc: req.body.complainDesc,
-      questionId: req.body.questionId,
-      questionName: req.body.questionName
+      questionId: req.body.questionId
     },
     json: true
   }
   request(options, function(err, response, body){
-    if (body.username && body.complainSubject && body.complainDesc && body.questionId && body.questionName){
+    if (body.username && body.complainSubject && body.complainDesc && body.questionId){
       body.message = "Complain Successfully Registered";
     } 
     body.url = clientRoute;
