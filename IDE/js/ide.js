@@ -478,7 +478,7 @@ $(document).ready(function () {
         $('#tutorials').text('Practicing')
         courseId = getCookie("courseId");
         if (courseId === "IARE_PY"){
-            
+            $('#select-language').attr('');
         } else if (courseId === "IARE_C"){
 
         } else if (courseId === "IARE_CPP"){
