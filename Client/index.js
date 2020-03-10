@@ -798,7 +798,7 @@ app.post('/complaint', async (req, res) => {
   }
   request(options, function(err, response, body){
     if (body.username && body.complainSubject && body.complainDesc && body.questionId){
-      body.message = "Complain Successfully Registered";
+      body.message = "Report Successfully Registered";
     } 
     body.url = clientRoute;
     res.render('error', {data: body, imgUsername: req.cookies.username})
