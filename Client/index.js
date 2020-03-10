@@ -643,7 +643,7 @@ app.get('/contest', async (req, res) => {
   }
   
   request(options, function(err, response, body){
-    
+    res.clearCookie('courseId');
     res.render('contest', {imgUsername: req.cookies.username, data: body});
     
   });
