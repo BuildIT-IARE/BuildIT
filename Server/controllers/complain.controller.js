@@ -68,9 +68,9 @@ exports.findAll = (req, res) => {
 };
 // delete w/ questionId
 exports.delete = (req, res) => {
-    User.findOneAndRemove({questionId: req.params.questionId})
-    .then(user => {
-        if(!user) {
+    Complain.findOneAndRemove({questionId: req.params.questionId})
+    .then(complain => {
+        if(!complain) {
             return res.status(404).send({
                 success: false,
                 message: "q not found with id " + req.params.questionId
