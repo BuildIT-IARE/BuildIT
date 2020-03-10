@@ -66,3 +66,27 @@ exports.findAll = (req, res) => {
         });
     });
 };
+// delete w/ questionId
+exports.delete = (req, res) => {
+    User.findOneAndRemove({questionId: req.params.questionId})
+    .then(user => {
+        if(!user) {
+            return res.status(404).send({
+                success: false,
+                message: "q not found with id " + req.params.questionId
+            });
+        }
+        res.send({message: "complaint deleted successfully!"});
+    }).catch(err => {
+        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.status(404).send({
+                success: false,
+                message: "q not found with id " + req.params.questionId
+            });                
+        }
+        return res.status(500).send({
+            success: false,
+            message: "Could not delete user with id " + req.params.questionId
+        });
+    });
+};

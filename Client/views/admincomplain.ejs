@@ -24,16 +24,18 @@
       <th> Question Name</th>
       <th> Username</th>
 	  <th> Complain Subject</th>
-	  <th> Complain Description</th>
+    <th> Complain Description</th>
+    <th> Resolve</th>
     </tr>
 <% for(let i=0; i < data.length; i++){ %>
     <tr>
-		<td><%= i %></td>
+		<td><%= i+1 %></td>
         <td><%= data[i].questionId %></td>
         <td><%= data[i].questionName %></td>
 		<td><%= data[i].username %></td> 
 		<td><%= data[i].complainSubject %></td> 		
-		<td><%= data[i].complainDesc %></td>
+    <td><%= data[i].complainDesc %></td>
+    <td><a href = "<%= data[i].url %>/admin/deletecomplain/<%= data[i].questionId %>">Solved</a></td>
 	</tr>  
 <% } %>
  

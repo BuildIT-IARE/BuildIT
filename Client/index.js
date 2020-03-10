@@ -386,6 +386,20 @@ app.get('/admin/deleteuser/:username', async (req, res) => {
   });
 });
 
+app.get('/admin/deletecomplain/:questionId', async (req, res) => {
+  let options = {
+    url : serverRoute + '/complain/' + req.params.username,
+    method: 'delete',
+    headers: {
+      'authorization': req.cookies.token
+    },
+    json: true
+  }
+  request(options, function(err, response, body){
+    res.redirect('/admin/complaints');
+  });
+});
+
 app.get('/admin/results', async (req, res) => {
   let options = {
     url : serverRoute + '/contests',

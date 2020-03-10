@@ -8,4 +8,7 @@ module.exports = (app) => {
 
     // Retrieve all complains
     app.get('/complains', middleware.checkTokenAdmin, complains.findAll);
+
+    app.delete('/complains/:questionId', middleware.checkTokenAdmin, complains.delete);
+
 }
