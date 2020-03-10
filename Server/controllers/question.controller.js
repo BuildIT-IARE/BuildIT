@@ -6,12 +6,6 @@ const xlsx = require('xlsx');
 exports.create = (req, res) => {
     // Validate request
 
-    if(!req.body.questionId) {
-        return res.status(400).send({
-            success: false,
-            message: "QuestionId can not be empty"
-    });
-    }
     if(!req.body.questionName) {
         return res.status(400).send({
             success: false,
@@ -86,10 +80,12 @@ exports.createExcel = (req, res) => {
             let ws = wb.Sheets["Sheet1"];
             let data = xlsx.utils.sheet_to_json(ws);
             let question;
-
+            Question.find()
+            .then(questions => {
+            let currQuestions = questions.length;
             for(let i = 0; i < data.length; i++){
                  question = new Question({
-                    questionId: data[i].questionId,
+                    questionId: "IARE"+(currQuestions+(i+1)).toString(),
                     questionName: data[i].questionName,
                     contestId: data[i].contestId,
                     questionDescriptionText: data[i].questionDescriptionText, 
@@ -119,6 +115,12 @@ exports.createExcel = (req, res) => {
                     question.save()
             }
             res.send('Done! Uploaded files: ', i);
+        }).catch(err => {
+            res.status(500).send({
+                success: false,
+                message: err.message || "Some error occurred while retrieving questions."
+                });
+            });
           }
         });
       }else {
