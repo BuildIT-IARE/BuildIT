@@ -569,7 +569,7 @@ exports.merge = (req ,res) => {
         }
         question = question[0];
         question.courseId = ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"];
-        question.conceptLevel = "contest";
+        question.difficulty = "contest";
         question.save();
         res.send(question);
     }).catch(err => {
