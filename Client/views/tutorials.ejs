@@ -52,9 +52,9 @@
 <!-- blog -->
 <section class="section">
   <div class="container">
-      <h3 class="font-tertiary mb-5" style="text-align: center; color: green;">Proficiency Courses</h3>
+      <h3 id = "login" class="font-tertiary mb-5" style="text-align: center; color: green;">Proficiency Courses</h3>
     <div class="row1wa">
-      <h5 id = "login"></h5>
+      <!-- <h5 id = "login"></h5> -->
       <center>
         <div id="flat">
 
@@ -89,7 +89,7 @@
   
       if (myCookie == null) {
           // do cookie doesn't exist stuff;
-        document.getElementById("login").innerHTML = "Login to view contests";
+        document.getElementById("login").innerHTML = "Login to view courses";
       } else {
         $('#flat').append(`            <ul>
                 <li data-flip-title="C">
