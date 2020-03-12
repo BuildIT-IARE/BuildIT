@@ -91,7 +91,7 @@
           // do cookie doesn't exist stuff;
         document.getElementById("login").innerHTML = "Login to view courses";
       } else {
-        $('#flat').append(`            <ul>
+        document.getElementById('flat').innerHTML = `<ul>
                 <li data-flip-title="C">
                   <a href = "<% data.clientRoute %>/tutorials/IARE_C">
                     <img width="300px" height="300px" src="/images/IARE_C.png">
@@ -112,7 +112,7 @@
                     <img width="300px" height="300px" src="/images/IARE_JAVA.png">
                   </a>
                 </li>
-            </ul>`)
+            </ul>`;
       }
   }
   doSomething()
