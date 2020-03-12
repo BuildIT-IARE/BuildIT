@@ -57,28 +57,7 @@
       <h5 id = "login"></h5>
       <center>
         <div id="flat">
-            <ul>
-                <li data-flip-title="C">
-                  <a href = "<% data.clientRoute %>/tutorials/IARE_C">
-                    <img width="300px" height="300px" src="/images/IARE_C.png">
-                  </a>
-                </li>
-                <li data-flip-title="C++">
-                  <a href = "<% data.clientRoute %>/tutorials/IARE_CPP">
-                    <img width="300px" height="300px" src="/images/IARE_CPP.png">
-                  </a>
-                 </li>
-                <li data-flip-title="Python">
-                  <a href = "<% data.clientRoute %>/tutorials/IARE_PY">
-                    <img width="300px" height="300px" src="/images/IARE_PY.png">
-                  </a>
-                </li>
-                <li data-flip-title="Java">
-                  <a href = "<% data.clientRoute %>/tutorials/IARE_JAVA">
-                    <img width="300px" height="300px" src="/images/IARE_JAVA.png">
-                  </a>
-                </li>
-            </ul>
+
         </div>
   </center>
 </section>
@@ -111,6 +90,29 @@
       if (myCookie == null) {
           // do cookie doesn't exist stuff;
         document.getElementById("login").innerHTML = "Login to view contests";
+      } else {
+        $('#flat').append(`            <ul>
+                <li data-flip-title="C">
+                  <a href = "<% data.clientRoute %>/tutorials/IARE_C">
+                    <img width="300px" height="300px" src="/images/IARE_C.png">
+                  </a>
+                </li>
+                <li data-flip-title="C++">
+                  <a href = "<% data.clientRoute %>/tutorials/IARE_CPP">
+                    <img width="300px" height="300px" src="/images/IARE_CPP.png">
+                  </a>
+                 </li>
+                <li data-flip-title="Python">
+                  <a href = "<% data.clientRoute %>/tutorials/IARE_PY">
+                    <img width="300px" height="300px" src="/images/IARE_PY.png">
+                  </a>
+                </li>
+                <li data-flip-title="Java">
+                  <a href = "<% data.clientRoute %>/tutorials/IARE_JAVA">
+                    <img width="300px" height="300px" src="/images/IARE_JAVA.png">
+                  </a>
+                </li>
+            </ul>`)
       }
   }
   doSomething()
