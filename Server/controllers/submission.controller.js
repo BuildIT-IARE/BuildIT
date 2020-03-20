@@ -67,3 +67,44 @@ exports.findUser = (req, res) => {
         });
     });
 };
+exports.findContest = (req, res) => {
+    Submission.find({contestId: req.body.contestId})
+    .then(submission => {
+        if(!submission) {
+            res.send("Submissions not found");
+        }
+        result = [];
+        submission = submission[0];
+        users = [];
+        submission.forEach(sub => {
+            users.push(sub.username);
+        });
+        users = users.filter((a, b) => users.indexOf(a) === b);
+        users.forEach(user => {
+            Submission.find({contestId: req.body.contestId, username: user})
+            .then(dup => {
+                for(let s=0; s <= dup.length; s++){
+                    result.push({questionId: dup[s].questionId, username: dup[s].username,languageId: dup[s].languageId, sourceCode: dup[s].sourceCode,score: dup[s].score});
+                }
+            })
+        })
+        res.send(result);
+    }).catch(err => {
+        res.status(500).send({
+            success: false,
+            message: err.message || "Some error occurred while retrieving submission."
+        });
+    });
+};
+
+// exports.findContestUser = (req, res) => {
+//     Submission.find({contestId: req.body.contestId, username: req.body.username, questionId: req.body.questionId})
+//     .then(submission => {
+//         res.send(submission);
+//     }).catch(err => {
+//         res.status(500).send({
+//             success: false,
+//             message: err.message || "Some error occurred while retrieving submission."
+//         });
+//     });
+// };
