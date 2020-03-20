@@ -68,20 +68,20 @@ exports.findUser = (req, res) => {
     });
 };
 exports.findContest = (req, res) => {
-    Submission.find({contestId: req.body.contestId})
+    Submission.find({contestId: req.body.contestId, questionId: req.body.questionId})
     .then(submission => {
         if(!submission) {
             res.send("Submissions not found");
         }
         result = [];
-        submission = submission[0];
+        // submission = submission[0];
         users = [];
-        submission.forEach(sub => {
-            users.push(sub.username);
-        });
+        for(let i = 0; i <= submission.length; i++){
+            users.push(submission[i].username)
+        }
         users = users.filter((a, b) => users.indexOf(a) === b);
         users.forEach(user => {
-            Submission.find({contestId: req.body.contestId, username: user})
+            Submission.find({contestId: req.body.contestId, questionId: req.body.questionId, username: user})
             .then(dup => {
                 for(let s=0; s <= dup.length; s++){
                     result.push({questionId: dup[s].questionId, username: dup[s].username,languageId: dup[s].languageId, sourceCode: dup[s].sourceCode,score: dup[s].score});
