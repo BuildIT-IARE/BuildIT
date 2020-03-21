@@ -67,11 +67,11 @@ exports.findUser = (req, res) => {
         });
     });
 };
-exports.findContest = (req, res) => {
-    Submission.find({contestId: req.body.contestId, questionId: req.body.questionId})
+exports.findContest = (sub, callback) => {
+    Submission.find({contestId: sub.contestId, questionId: sub.questionId})
     .then(submission => {
         if(!submission) {
-            res.send("Submissions not found");
+            return callback("Submissions not found", null);
         }
         result = [];
         // submission = submission[0];
@@ -81,19 +81,20 @@ exports.findContest = (req, res) => {
         }
         users = users.filter((a, b) => users.indexOf(a) === b);
         users.forEach(user => {
-            Submission.find({contestId: req.body.contestId, questionId: req.body.questionId, username: user})
+            Submission.find({contestId: sub.contestId, questionId: sub.questionId, username: user})
             .then(dup => {
                 for(let s=0; s <= dup.length; s++){
                     result.push({questionId: dup[s].questionId, username: dup[s].username,languageId: dup[s].languageId, sourceCode: dup[s].sourceCode,score: dup[s].score});
                 }
             })
         })
-        res.send(result);
+        return callback(null, result);
     }).catch(err => {
-        res.status(500).send({
-            success: false,
-            message: err.message || "Some error occurred while retrieving submission."
-        });
+        console.log(err);
+        if(err.kind === 'ObjectId') {
+            return callback("Submission not found with Id ", null);    
+        }
+        return callback("Error updating Submission with Id ", null);
     });
 };
 
