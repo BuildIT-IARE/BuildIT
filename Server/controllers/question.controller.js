@@ -114,7 +114,7 @@ exports.createExcel = (req, res) => {
                     // Save Question in the database
                     question.save()
             }
-            res.send('Done! Uploaded files: ', i);
+            res.send('Done! Uploaded files');
         }).catch(err => {
             res.status(500).send({
                 success: false,

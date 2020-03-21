@@ -767,4 +767,11 @@ app.post('/uploadpdf', middleware.checkTokenAdmin, async (req, res) => {
   }
 });
 
+// get the submissions based on contest+question
+app.get('/createFiles/:contestId/:questionId', async (req, res) => {
+  contestId = req.params.contestId;
+  questionId = req.params.questionId;
+  res.json({status: "working"});
+});
+
 app.listen(5000,()=>console.log('Server @ port 5000'));
