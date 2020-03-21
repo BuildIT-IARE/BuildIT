@@ -8,4 +8,7 @@ module.exports = (app) => {
 
     // Retrieve submissions with userId
     app.get('/submissions/user/:username/:questionId', middleware.checkToken,  submissions.findUser);
+
+    app.get('/submissions/gen/:questionId', submissions.genSource);
+
 }

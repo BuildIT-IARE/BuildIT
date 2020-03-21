@@ -1,7 +1,7 @@
 const Submission = require('../models/submission.model.js');
 var moment = require('moment');
-
-
+const fs = require('fs');
+const path = require('path');
 // Create and Save a new submission
 exports.create = (req, result, callback) => {
     // Validate request
@@ -67,34 +67,52 @@ exports.findUser = (req, res) => {
         });
     });
 };
-exports.findContest = (sub, callback) => {
-    Submission.find({contestId: sub.contestId, questionId: sub.questionId})
+exports.genSource = (req, res) => {
+    Submission.find({questionId: req.params.questionId})
     .then(submission => {
-        if(!submission) {
-            return callback("Submissions not found", null);
+        if(submission.length === 0) {
+            res.send("Submissions not found");
         }
-        result = [];
+        // result = [];
         // submission = submission[0];
         users = [];
-        for(let i = 0; i <= submission.length; i++){
+        for(let i = 0; i < submission.length; i++){
             users.push(submission[i].username)
         }
         users = users.filter((a, b) => users.indexOf(a) === b);
+        console.log(users);
+        let dir = path.resolve('../Public/source_codes/' + req.params.questionId);
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
         users.forEach(user => {
-            Submission.find({contestId: sub.contestId, questionId: sub.questionId, username: user})
+            Submission.find({questionId: req.params.questionId, username: user, score: 100})
             .then(dup => {
-                for(let s=0; s <= dup.length; s++){
-                    result.push({questionId: dup[s].questionId, username: dup[s].username,languageId: dup[s].languageId, sourceCode: dup[s].sourceCode,score: dup[s].score});
+                for(let s=0; s < dup.length; s++){
+                    // result.push({questionId: dup[s].questionId, username: dup[s].username, languageId: dup[s].languageId, sourceCode: dup[s].sourceCode});
+                    let l = dup.length - 1;
+                    fs.writeFile('../Public/source_codes/'+dup[l].questionId +'/'+dup[l].username+'.txt',dup[l].sourceCode, (err) => {
+                        if (err){
+                           console.log("File gen failed!", err);   
+                        }
+                    })
                 }
-            })
+            }).catch(err => {
+                console.log(err);
+                if(err.kind === 'ObjectId') {
+                    res.send("Submission not found with Id ");    
+                }
+                res.send("Error updating Submission with Id ");
+            });
         })
-        return callback(null, result);
+        // console.log(result);
+        res.send("Files Generation started!");
     }).catch(err => {
         console.log(err);
         if(err.kind === 'ObjectId') {
-            return callback("Submission not found with Id ", null);    
+            res.send("Submission not found with Id ");    
         }
-        return callback("Error updating Submission with Id ", null);
+        res.send("Error updating Submission with Id ");
     });
 };
 
