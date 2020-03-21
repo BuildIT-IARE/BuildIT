@@ -906,11 +906,11 @@ app.get('/verify', async (req, res) => {
 
 // Tutorials Code
 
-app.get('/tutorials', async(req, res) => {
-  body = {};
-  body.message = "Coming Soon!";
-  res.render('error', {data: body, imgUsername: req.cookies.username});
-});
+// app.get('/tutorials', async(req, res) => {
+//   body = {};
+//   body.message = "Coming Soon!";
+//   res.render('error', {data: body, imgUsername: req.cookies.username});
+// });
 
 app.get('/flipClass', async (req, res) => {
   let url = {
@@ -920,7 +920,7 @@ app.get('/flipClass', async (req, res) => {
   res.render('flipClass', {imgUsername: req.cookies.username, data: url});
 });
 
-app.get('/tutorials2', async (req, res) => {
+app.get('/tutorials', async (req, res) => {
   let options = {
     url : serverRoute + '/courses',
     method: 'get',
@@ -1135,8 +1135,8 @@ app.get('/tutorials/:courseId/:difficulty', async (req, res) => {
     } else {
       body.courseName = "Invalid Course";
     }
-    console.log(body, "\n ____________________________________________________________________");
-    console.log(bodytimer);
+    // console.log(body, "\n ____________________________________________________________________");
+    // console.log(bodytimer);
     res.render('displayTutQuestions', {imgUsername: req.cookies.username, data: body});
   });
   });

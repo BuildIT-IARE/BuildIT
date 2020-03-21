@@ -568,22 +568,10 @@ exports.merge = (req ,res) => {
             }); 
         }
         question = question[0];
-        console.log(question);
-        if (!req.body.courseId){
-            return res.status(404).send({
-                success: false,
-                message: "Enter a valid courseId"
-            }); 
-        }
-        let exists = inarray(question.courseId, req.body.courseId);
-        if(!exists){
-            question.courseId.push(req.body.courseId);
-            question.save();
-            res.send(question);
-        }
-        else{
-            return res.send(question);
-        }
+        question.courseId = ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"];
+        question.difficulty = "contest";
+        question.save();
+        res.send(question);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({

@@ -52,33 +52,12 @@
 <!-- blog -->
 <section class="section">
   <div class="container">
-      <h3 class="font-tertiary mb-5" style="text-align: center; color: green;">Proficiency Courses</h3>
+      <h3 id = "login" class="font-tertiary mb-5" style="text-align: center; color: green;">Proficiency Courses</h3>
     <div class="row1wa">
-      <h5 id = "login"></h5>
+      <!-- <h5 id = "login"></h5> -->
       <center>
         <div id="flat">
-            <ul>
-                <li data-flip-title="C">
-                  <a href = "<% data.clientRoute %>/tutorials/IARE_C">
-                    <img width="300px" height="300px" src="/images/IARE_C.png">
-                  </a>
-                </li>
-                <li data-flip-title="C++">
-                  <a href = "<% data.clientRoute %>/tutorials/IARE_CPP">
-                    <img width="300px" height="300px" src="/images/IARE_CPP.png">
-                  </a>
-                 </li>
-                <li data-flip-title="Python">
-                  <a href = "<% data.clientRoute %>/tutorials/IARE_PY">
-                    <img width="300px" height="300px" src="/images/IARE_PY.png">
-                  </a>
-                </li>
-                <li data-flip-title="Java">
-                  <a href = "<% data.clientRoute %>/tutorials/IARE_JAVA">
-                    <img width="300px" height="300px" src="/images/IARE_JAVA.png">
-                  </a>
-                </li>
-            </ul>
+
         </div>
   </center>
 </section>
@@ -110,7 +89,30 @@
   
       if (myCookie == null) {
           // do cookie doesn't exist stuff;
-        document.getElementById("login").innerHTML = "Login to view contests";
+        document.getElementById("login").innerHTML = "Login to view courses";
+      } else {
+        document.getElementById('flat').innerHTML = `<ul>
+                <li data-flip-title="C">
+                  <a href = "<% data.clientRoute %>/tutorials/IARE_C">
+                    <img width="300px" height="300px" src="/images/IARE_C.png">
+                  </a>
+                </li>
+                <li data-flip-title="C++">
+                  <a href = "<% data.clientRoute %>/tutorials/IARE_CPP">
+                    <img width="300px" height="300px" src="/images/IARE_CPP.png">
+                  </a>
+                 </li>
+                <li data-flip-title="Python">
+                  <a href = "<% data.clientRoute %>/tutorials/IARE_PY">
+                    <img width="300px" height="300px" src="/images/IARE_PY.png">
+                  </a>
+                </li>
+                <li data-flip-title="Java">
+                  <a href = "<% data.clientRoute %>/tutorials/IARE_JAVA">
+                    <img width="300px" height="300px" src="/images/IARE_JAVA.png">
+                  </a>
+                </li>
+            </ul>`;
       }
   }
   doSomething()
