@@ -201,6 +201,7 @@ exports.create = (req, res) => {
                 name: user.name,
                 username: user.username.toLowerCase(),
                 email: user.email,
+                password: user.password,
                 token: user.verifyToken,
                 clientUrl: clientAddress
             };
@@ -264,6 +265,104 @@ exports.update = (req, res) => {
         });
     });
 };
+
+exports.forgotPass = (req, res) => {
+    User.findOne({username: req.body.username})
+    .then(user =>{
+        if(user.length === 0) {
+            return res.status(404).send({
+                success: false,
+                message: "User not found with id " + req.body.username
+            });            
+        }
+        user = user[0];
+        res.send(user);
+        mailUser(user).catch(console.error);  
+    })
+    .catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                success: false,
+                message: "User not found with id " + req.params.username
+            });                
+        }
+    });
+        // Gen token & send email here
+        async function mailUser(user) {
+
+            var readHTMLFile = async function(path, callback) {
+                fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+                    if (err) {
+                        callback(err);
+                    }
+                    else {
+                        callback(null, html);
+                    }
+                });
+            };
+    
+            let htmlPath = path.join(__dirname, '../util/forgotPass.html');
+            readHTMLFile(htmlPath, function(err, html) {
+                if(err){
+                    console.log(err);
+                }
+                // Oauth2 set up
+                const oauth2Client = new OAuth2(
+                    config.OAuthClientID, // ClientID
+                    config.OAuthClientSecret, // Client Secret
+                    "https://developers.google.com/oauthplayground" // Redirect URL
+                );
+    
+                oauth2Client.setCredentials({
+                    refresh_token: config.OAuthRefreshToken
+                });
+                const accessToken = oauth2Client.getAccessToken();
+    
+                const smtpTransport = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                        type: "OAuth2",
+                        user: "buildit.iare@gmail.com", 
+                        clientId: config.OAuthClientID,
+                        clientSecret: config.OAuthClientSecret,
+                        refreshToken: config.OAuthRefreshToken,
+                        accessToken: accessToken
+                    },
+                    tls: {
+                        rejectUnauthorized: false
+                    }
+                });
+    
+                // Generate Handlebars template
+                var template = handlebars.compile(html);
+                var replacements = {
+                    name: user.name,
+                    username: user.username.toLowerCase(),
+                    email: user.email,
+                    password: user.password,
+                    token: user.verifyToken,
+                    clientUrl: clientAddress
+                };
+                var htmlToSend = template(replacements);
+    
+                const mailOptions = {
+                    from: "buildit.iare@gmail.com",
+                    to: user.email,
+                    subject: "Your Verfication Code - BuildIT",
+                    generateTextFromHTML: true,
+                    html: htmlToSend
+                };
+                
+                smtpTransport.sendMail(mailOptions, (error, response) => {
+                    if(error){
+                        console.log(error);
+                    }
+                    smtpTransport.close();
+               });
+    
+            });
+        }
+}
 
 // Find username and check pass
 exports.checkPass = (req, res) => {
