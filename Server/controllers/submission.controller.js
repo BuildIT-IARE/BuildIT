@@ -80,18 +80,34 @@ exports.genSource = (req, res) => {
             users.push(submission[i].username)
         }
         users = users.filter((a, b) => users.indexOf(a) === b);
-        console.log(users);
         let dir = path.resolve('../Public/source_codes/' + req.params.questionId);
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
+        // gen folders for all langs
+        genLangs = [path.resolve('../Public/source_codes/' + req.params.questionId + '/c/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/java/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/py/')]
+        for (let i = 0; i < genLangs.length; i++){
+            dir = genLangs[i];
+            if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir);
+            }
+        }
         users.forEach(user => {
             Submission.find({questionId: req.params.questionId, username: user, score: 100})
             .then(dup => {
+                langCode = {
+                    4: 'c',
+                    10: 'c',
+                    26: 'java',
+                    27: 'java',
+                    28: 'java',
+                    34: 'py',
+                    36: 'py',
+                }
                 for(let s=0; s < dup.length; s++){
                     // result.push({questionId: dup[s].questionId, username: dup[s].username, languageId: dup[s].languageId, sourceCode: dup[s].sourceCode});
                     let l = dup.length - 1;
-                    fs.writeFile('../Public/source_codes/'+dup[l].questionId +'/'+dup[l].username+'.txt',dup[l].sourceCode, (err) => {
+                    fs.writeFile('../Public/source_codes/'+dup[l].questionId+'/'+langCode[dup[l].languageId] +'/'+dup[l].username+'.'+langCode[dup[l].languageId],dup[l].sourceCode, (err) => {
                         if (err){
                            console.log("File gen failed!", err);   
                         }
@@ -106,7 +122,8 @@ exports.genSource = (req, res) => {
             });
         })
         // console.log(result);
-        res.send("Files Generation started!");
+        let response = "Files Generation started! " + submission.length.toString() + " Files"; 
+        res.send(response);
     }).catch(err => {
         console.log(err);
         if(err.kind === 'ObjectId') {

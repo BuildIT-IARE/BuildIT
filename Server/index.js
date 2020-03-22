@@ -8,6 +8,8 @@ const request = require('request');
 const moment = require('moment');
 const upload = require('express-fileupload');
 var path = require('path');
+const archiver = require('archiver');
+const fs = require('fs');
 
 let config = require('./util/config');
 let middleware = require('./util/middleware.js');
@@ -745,6 +747,13 @@ app.get('/pdf/:setno', middleware.checkToken, async (req, res) => {
   res.sendFile(path.resolve("../Public/pdf/"+req.params.setno+".pdf"));
 });
 
+app.get('/genReport/:questionId', middleware.checkToken, async (req, res) => {
+  let questionId = req.params.questionId;
+  res.sendFile(path.resolve('../Public/source_codes/'+ questionId +'/'+questionId+'.zip'));
+});
+
+
+
 
 app.post('/uploadpdf', middleware.checkTokenAdmin, async (req, res) => {
   if (req.files){
@@ -768,9 +777,28 @@ app.post('/uploadpdf', middleware.checkTokenAdmin, async (req, res) => {
 });
 
 // get latest plag report
-app.get('/plagreport', async (req, res) => {
-  let p = path.resolve('../Public/source_codes/result');
-  res.sendFile(p+'/index.html');
+app.get('/plagreport/:languageId/:questionId', async (req, res) => {
+  let questionId = req.params.questionId;
+  let languageId = req.params.languageId;
+  let p = path.resolve('../Public/source_codes/'+ questionId +'/'+ languageId +'-result');
+
+  function zipDirectory(source, out) {
+    const archive = archiver('zip', { zlib: { level: 9 }});
+    const stream = fs.createWriteStream(out);
+  
+    return new Promise((resolve, reject) => {
+      archive
+        .directory(source, false)
+        .on('error', err => reject(err))
+        .pipe(stream)
+      ;
+  
+      stream.on('close', () => resolve());
+      archive.finalize();
+      console.log("Zip Generated");
+    });
+  }
+  zipDirectory(p,p+'/result.zip').then(res.sendFile(p+'/result.zip')).catch(res.send("Failed"));
 });
 
 app.listen(5000,()=>console.log('Server @ port 5000'));
