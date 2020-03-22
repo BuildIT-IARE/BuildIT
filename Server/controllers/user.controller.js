@@ -276,7 +276,7 @@ exports.forgotPass = (req, res) => {
             });            
         }
         user = user[0];
-        res.send(user);
+        res.send({success: true, user:user});
         mailUser(user).catch(console.error);  
     })
     .catch(err => {
