@@ -97,7 +97,7 @@ exports.genSource = (req, res) => {
             .then(dup => {
                 langCode = {
                     4: 'c',
-                    10: 'cpp',
+                    10: 'c',
                     26: 'java',
                     34: 'py',
                     36: 'py',
