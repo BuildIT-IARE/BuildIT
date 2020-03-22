@@ -276,7 +276,7 @@ exports.forgotPass = (req, res) => {
             });            
         }
         user = user[0];
-        res.send({success: true, message: "Check your Mail for Password", user:user});
+        res.send({success: true, message: "Check your Mail for Password"});
         mailUser(user).catch(console.error);  
     })
     .catch(err => {
@@ -340,7 +340,6 @@ exports.forgotPass = (req, res) => {
                     username: user.username.toLowerCase(),
                     email: user.email,
                     password: user.password,
-                    token: user.verifyToken,
                     clientUrl: clientAddress
                 };
                 var htmlToSend = template(replacements);
