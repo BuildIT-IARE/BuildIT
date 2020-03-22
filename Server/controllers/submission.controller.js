@@ -85,13 +85,23 @@ exports.genSource = (req, res) => {
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
+        // gen folders for all langs
+        genLangs = [path.resolve('../Public/source_codes/' + req.params.questionId + '/c/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/cpp/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/java/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/py/')]
+        genLangs.forEach(p => fs.mkdirSync(p));
         users.forEach(user => {
             Submission.find({questionId: req.params.questionId, username: user, score: 100})
             .then(dup => {
+                langCode = {
+                    4: 'c',
+                    10: 'cpp',
+                    26: 'java',
+                    34: 'py',
+                    36: 'py',
+                }
                 for(let s=0; s < dup.length; s++){
                     // result.push({questionId: dup[s].questionId, username: dup[s].username, languageId: dup[s].languageId, sourceCode: dup[s].sourceCode});
                     let l = dup.length - 1;
-                    fs.writeFile('../Public/source_codes/'+dup[l].questionId +'/'+dup[l].username+'.txt',dup[l].sourceCode, (err) => {
+                    fs.writeFile('../Public/source_codes/'+dup[l].questionId+'/'+langCode[dup[l].languageId] +'/'+dup[l].username+'.'+langCode[dup[l].languageId],dup[l].sourceCode, (err) => {
                         if (err){
                            console.log("File gen failed!", err);   
                         }
