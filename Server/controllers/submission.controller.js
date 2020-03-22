@@ -85,7 +85,7 @@ exports.genSource = (req, res) => {
             fs.mkdirSync(dir);
         }
         // gen folders for all langs
-        genLangs = [path.resolve('../Public/source_codes/' + req.params.questionId + '/c/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/cpp/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/java/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/py/')]
+        genLangs = [path.resolve('../Public/source_codes/' + req.params.questionId + '/c/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/java/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/py/')]
         for (let i = 0; i < genLangs.length; i++){
             dir = genLangs[i];
             if (!fs.existsSync(dir)){
