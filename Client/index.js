@@ -856,7 +856,6 @@ app.post('/fp', async(req,res) => {
   }
   request(options, function (err, response, body){
     if (body.success){
-      body.message = "Check your E-Mail for Password";
       res.render('error', {data: body, imgUsername: req.cookies.username});
     }
     else{
