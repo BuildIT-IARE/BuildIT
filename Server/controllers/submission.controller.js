@@ -120,7 +120,8 @@ exports.genSource = (req, res) => {
             });
         })
         // console.log(result);
-        res.send("Files Generation started! ", submission.length, " Files");
+        let response = "Files Generation started! " + submission.length.toString() + " Files"; 
+        res.send(response);
     }).catch(err => {
         console.log(err);
         if(err.kind === 'ObjectId') {
