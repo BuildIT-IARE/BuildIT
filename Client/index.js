@@ -870,7 +870,7 @@ app.get('/logout', async (req, res) => {
   res.clearCookie('contestId');
   res.clearCookie('courseId');
   res.clearCookie('branch');
-  res.redirect('/home');
+  res.redirect('/');
 });
 
 app.get('/pdf/:setNo', async (req, res) => {
