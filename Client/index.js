@@ -89,6 +89,13 @@ app.get('/login', async (req, res) => {
   res.render('login', {data: url});
 });
 
+app.get('/forgotpassword', async (req, res) => {
+  let url = {
+    url: serverRoute + 'forgotPass'
+  }
+  res.render('forgotPassword', {data: url});
+})
+
 app.get('/admin/add/tutQuestion', async (req, res) => {
   let url = {
     url: clientRoute,

@@ -26,4 +26,7 @@ module.exports = (app) => {
 
     // Delete a user with userId
     app.delete('/users/:username', middleware.checkTokenAdmin, users.delete);
+
+    // Forgot Password
+    app.post('/forgotPass', users.forgotPass);
 }
