@@ -1,7 +1,7 @@
 module.exports = {
     localServer: true,
     secret: 'IIdhfdSHIO42425UUdncxdf952S',
-    clientAddress: 'http://119.235.53.59:4000',
+    clientAddress: 'http://119.235.53.59:80',
     serverAddress: 'http://119.235.53.59:5000',
     apiAddress: 'https://api.judge0.com/',
     localAPI: 'http://119.235.53.59:3000',
