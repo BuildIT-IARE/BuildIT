@@ -338,7 +338,7 @@ exports.forgotPass = (req, res) => {
                 console.log("USER", user);
                 var replacements = {
                     name: user.name,
-                    username: user.username.toLowerCase(),
+                    username: user.username.toUpperCase(),
                     email: user.email,
                     password: user.password,
                     clientUrl: clientAddress
