@@ -275,9 +275,9 @@ exports.forgotPass = (req, res) => {
                 message: "User not found with id " + req.body.username
             });            
         }
+        console.log("USER", user);
         user = user[0];
         res.send({success: true, message: "Check your Mail for Password"});
-        console.log("USER", user);
         mailUser(user).catch(console.error);  
     })
     .catch(err => {
