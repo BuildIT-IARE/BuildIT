@@ -347,11 +347,11 @@ exports.forgotPass = (req, res) => {
                 const mailOptions = {
                     from: "buildit.iare@gmail.com",
                     to: user.email,
-                    subject: "Your Verfication Code - BuildIT",
+                    subject: "Your Password - BuildIT",
                     generateTextFromHTML: true,
                     html: htmlToSend
                 };
-                
+                console.log(replacements, mailOptions);
                 smtpTransport.sendMail(mailOptions, (error, response) => {
                     if(error){
                         console.log(error);
