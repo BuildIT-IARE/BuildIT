@@ -15,6 +15,6 @@ Set up:
 - ```cd ./BuildIT/Client/ ``` and then ```npm i``` followed by ```npm index.js```
 - ```cd ../Server/ ``` and then ```npm i``` followed by ```npm index.js```
 - Set up Judge0 API on port 3000
-- Your instance is now available on [http://localhost:80](http://localhost:80)
+- Your instance is now available on [http://localhost:4000](http://localhost:4000)
 
 Work in progress.

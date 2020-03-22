@@ -1,7 +1,7 @@
 module.exports = {
     localServer: true,
     secret: 'IIdhfdSHIO42425UUdncxdf952S',
-    clientAddress: 'http://119.235.53.59:80',
+    clientAddress: 'http://119.235.53.59:4000',
     serverAddress: 'http://119.235.53.59:5000',
     apiAddress: 'https://api.judge0.com/',
     localAPI: 'http://119.235.53.59:3000',
@@ -10,4 +10,3 @@ module.exports = {
     OAuthClientSecret: 'Qs2c7YP8Q8jCMw-PIbARUrmn',
     OAuthRefreshToken: '1//04XEQXx_iEG72CgYIARAAGAQSNwF-L9Ir9XRvFe7XM6QPG8DM5Rgnd14TQHMf2fbgTGiLZk5ak6QfSFcp98jgdjACTtWR4oMAH_A'
   };
-  // Changed port
