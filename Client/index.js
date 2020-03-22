@@ -1232,5 +1232,6 @@ app.get('/tutorials/:courseId', async (req, res) => {
 
 
 
-app.listen(4000);
-console.log('Server @ port 4000');
+app.listen(80);
+console.log('Server @ port 80');
+// Changed port
