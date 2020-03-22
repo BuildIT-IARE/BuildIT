@@ -747,6 +747,13 @@ app.get('/pdf/:setno', middleware.checkToken, async (req, res) => {
   res.sendFile(path.resolve("../Public/pdf/"+req.params.setno+".pdf"));
 });
 
+app.get('/genReport/:questionId', middleware.checkToken, async (req, res) => {
+  let questionId = req.params.questionId;
+  res.sendFile(path.resolve('../Public/source_codes/'+ questionId +'/'+questionId+'.zip'));
+});
+
+
+
 
 app.post('/uploadpdf', middleware.checkTokenAdmin, async (req, res) => {
   if (req.files){
