@@ -91,7 +91,7 @@ app.get('/login', async (req, res) => {
 
 app.get('/forgotpassword_', async (req, res) => {
   let url = {
-    url: serverRoute + '/forgotPass'
+    url: clientRoute + '/fp'
   }
   res.render('forgotPassword', {data: url});
 })
@@ -844,6 +844,26 @@ app.post('/login_', async (req, res) => {
 
   });
 });
+
+app.post('/fp', async(req,res) => {
+  let options = {
+    url : serverRoute + '/forgotPass',
+    method: 'post',
+    body: {
+      username: req.body.username
+    },
+    json: true
+  }
+  request(options, function (err, response, body){
+    if (body.success){
+      body.message = "Check your E-Mail for Password";
+      res.render('error', {data: body, imgUsername: req.cookies.username});
+    }
+    else{
+      res.render('error', {data: body, imgUsername: req.cookies.username});
+    }
+  })
+})
 
 app.get('/logout', async (req, res) => {
   res.clearCookie('token');
