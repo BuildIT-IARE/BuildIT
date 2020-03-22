@@ -99,6 +99,8 @@ exports.genSource = (req, res) => {
                     4: 'c',
                     10: 'c',
                     26: 'java',
+                    27: 'java',
+                    28: 'java',
                     34: 'py',
                     36: 'py',
                 }
