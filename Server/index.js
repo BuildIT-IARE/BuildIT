@@ -8,6 +8,7 @@ const request = require('request');
 const moment = require('moment');
 const upload = require('express-fileupload');
 var path = require('path');
+const archiver = require('archiver');
 
 let config = require('./util/config');
 let middleware = require('./util/middleware.js');
@@ -772,8 +773,24 @@ app.get('/plagreport/:languageId/:questionId', async (req, res) => {
   let questionId = req.params.questionId;
   let languageId = req.params.languageId;
   let p = path.resolve('../Public/source_codes/'+ questionId +'/'+ languageId +'-result');
-  console.log(p);
-  res.sendFile(p+'/index.html');
+
+  function zipDirectory(source, out) {
+    const archive = archiver('zip', { zlib: { level: 9 }});
+    const stream = fs.createWriteStream(out);
+  
+    return new Promise((resolve, reject) => {
+      archive
+        .directory(source, false)
+        .on('error', err => reject(err))
+        .pipe(stream)
+      ;
+  
+      stream.on('close', () => resolve());
+      archive.finalize();
+    });
+  }
+  zipDirectory(p,p+'/result.zip');
+  res.sendFile(p+'/result.zip');
 });
 
 app.listen(5000,()=>console.log('Server @ port 5000'));
