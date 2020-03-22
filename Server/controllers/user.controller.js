@@ -276,7 +276,6 @@ exports.forgotPass = (req, res) => {
             });            
         }
         console.log("USER", user);
-        user = user[0];
         res.send({success: true, message: "Check your Mail for Password"});
         mailUser(user).catch(console.error);  
     })
