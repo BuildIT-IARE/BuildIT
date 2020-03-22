@@ -267,6 +267,7 @@ exports.update = (req, res) => {
 };
 
 exports.forgotPass = (req, res) => {
+    console.log("reqbody", req.body);
     User.findOne({username: req.body.username})
     .then(user =>{
         if(user.length === 0) {
