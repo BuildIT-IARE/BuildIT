@@ -768,7 +768,7 @@ app.post('/uploadpdf', middleware.checkTokenAdmin, async (req, res) => {
 });
 
 // get latest plag report
-app.get('/plagreport/:questionId/:languageId', async (req, res) => {
+app.get('/plagreport/:languageId/:questionId', async (req, res) => {
   let questionId = req.params.questionId;
   let languageId = req.params.languageId;
   let p = path.resolve('../Public/source_codes/'+ questionId +'/'+ languageId +'-result');
