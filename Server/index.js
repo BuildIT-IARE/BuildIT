@@ -787,10 +787,10 @@ app.get('/plagreport/:languageId/:questionId', async (req, res) => {
   
       stream.on('close', () => resolve());
       archive.finalize();
+      console.log("Zip Generated");
     });
   }
-  zipDirectory(p,p+'/result.zip');
-  res.sendFile(p+'/result.zip');
+  zipDirectory(p,p+'/result.zip').then(res.sendFile(p+'/result.zip')).catch(res.send("Failed"));
 });
 
 app.listen(5000,()=>console.log('Server @ port 5000'));
