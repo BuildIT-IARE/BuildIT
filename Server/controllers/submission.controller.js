@@ -80,14 +80,18 @@ exports.genSource = (req, res) => {
             users.push(submission[i].username)
         }
         users = users.filter((a, b) => users.indexOf(a) === b);
-        console.log(users);
         let dir = path.resolve('../Public/source_codes/' + req.params.questionId);
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
         // gen folders for all langs
         genLangs = [path.resolve('../Public/source_codes/' + req.params.questionId + '/c/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/cpp/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/java/'),path.resolve('../Public/source_codes/' + req.params.questionId+ '/py/')]
-        genLangs.forEach(p => fs.mkdirSync(p));
+        for (let i = 0; i < genLangs.length; i++){
+            dir = genLangs[i];
+            if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir);
+            }
+        }
         users.forEach(user => {
             Submission.find({questionId: req.params.questionId, username: user, score: 100})
             .then(dup => {
