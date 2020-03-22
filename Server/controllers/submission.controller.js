@@ -36,7 +36,7 @@ exports.create = (req, result, callback) => {
     // SaveReg in the database
     submission.save()
     .then(data => {
-        console.log(data);
+        // console.log(data);
         return callback(null, data);
     }).catch(err => {
         return callback("Error occurred while Submitting.", null);
