@@ -335,6 +335,7 @@ exports.forgotPass = (req, res) => {
     
                 // Generate Handlebars template
                 var template = handlebars.compile(html);
+                console.log("USER", user);
                 var replacements = {
                     name: user.name,
                     username: user.username.toLowerCase(),
