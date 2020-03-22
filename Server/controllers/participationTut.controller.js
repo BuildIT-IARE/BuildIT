@@ -67,8 +67,8 @@ exports.insertDifficultyWise = (sub, callback) => {
             return callback("Participation not found with Id ", null);
         }
         participation = participation[0];
-        console.log(participation);
-        console.log(sub);
+        // console.log(participation);
+        // console.log(sub);
         if(sub.difficulty === 'level_0'){
             if(sub.score === 100){
                 let exists = inarray(participation.easySolved, sub.questionId);
@@ -81,7 +81,7 @@ exports.insertDifficultyWise = (sub, callback) => {
                 }
                 return callback(null, participation);
             } else {
-                console.log("Returned");
+                // console.log("Returned");
                 return callback(null, participation);
             }
         } else if(sub.difficulty === 'level_1'){
