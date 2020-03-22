@@ -9,6 +9,7 @@ const moment = require('moment');
 const upload = require('express-fileupload');
 var path = require('path');
 const archiver = require('archiver');
+const fs = require('fs');
 
 let config = require('./util/config');
 let middleware = require('./util/middleware.js');
