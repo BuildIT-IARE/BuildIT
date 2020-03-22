@@ -772,6 +772,7 @@ app.get('/plagreport/:questionId/:languageId', async (req, res) => {
   let questionId = req.params.questionId;
   let languageId = req.params.languageId;
   let p = path.resolve('../Public/source_codes/'+ questionId +'/'+ languageId +'/result'+);
+  console.log(p);
   res.sendFile(p+'/index.html');
 });
 
