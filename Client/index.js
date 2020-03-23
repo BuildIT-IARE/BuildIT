@@ -10,7 +10,7 @@ let config = require('../Server/util/config');
 
 
 let serverRoute = config.serverAddress;
-let clientRoute = config.clientAddress;
+let clientRoute = "http://buildit.iare.ac.in";
 
 const app = express();
 app.options('*', cors());
