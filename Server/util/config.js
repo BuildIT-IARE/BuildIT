@@ -1,7 +1,7 @@
 module.exports = {
     localServer: true,
     secret: 'IIdhfdSHIO42425UUdncxdf952S',
-    clientAddress: 'http://buildit.iare.ac.in',
+    clientAddress: "http://buildit.iare.ac.in",
     serverAddress: 'http://13.234.234.30:5000',
     apiAddress: 'https://api.judge0.com/',
     localAPI: 'http://13.234.234.30:3000',
