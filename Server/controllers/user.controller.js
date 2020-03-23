@@ -102,14 +102,8 @@ exports.create = (req, res) => {
         });
     }
 
-    if((req.body.username.length !== 10 && req.body.username.slice(2, 6) !== '951a') && (req.body.username.length !== 9 && req.body.username.slice(0,4) !== 'iare')){
-        return res.status(400).send({
-            success: false,
-            message: "Please enter a valid roll no."
-        });
-    }
-
-    atSign = req.body.email.indexOf('@') + 1;
+    if((req.body.username.length === 10 && req.body.username.slice(2, 6) === '951a') || (req.body.username.length === 9 && req.body.username.slice(0,4) === 'iare')){
+        atSign = req.body.email.indexOf('@') + 1;
 
     if(emailDomains.indexOf(req.body.email.slice(atSign, req.body.email.length)) === -1){
         return res.status(400).send({
@@ -224,6 +218,14 @@ exports.create = (req, res) => {
 
         });
     }
+    } else {
+        return res.status(400).send({
+            success: false,
+            message: "Please enter a valid roll no."
+        });
+    }
+
+    
 };
 
 // Update a user identified by the username in the request
