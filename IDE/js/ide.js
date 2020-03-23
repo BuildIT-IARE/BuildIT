@@ -770,7 +770,7 @@ begin\n\
     writeln ('hello, world')\n\
 end.\n";
 
-var pythonSource = "print(\"hello, world\")\n";
+var pythonSource = "#Code goes here!\n";
 
 var rubySource = "puts \"hello, world\"\n";
 
