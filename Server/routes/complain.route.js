@@ -7,7 +7,7 @@ module.exports = (app) => {
     app.post('/complains', middleware.checkToken, complains.create);
 
     // Retrieve all complains
-    app.get('/complains', middleware.checkTokenAdmin, complains.findAll);
+    app.get('/complains', middleware.checkToken, complains.findAll);
 
     app.delete('/complains/:questionId', middleware.checkTokenAdmin, complains.delete);
 
