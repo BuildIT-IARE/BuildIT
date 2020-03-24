@@ -102,7 +102,7 @@ exports.create = (req, res) => {
         });
     }
 
-    if((req.body.username.length === 10 && req.body.username.slice(2, 6).toLowerCase() === '951a') || (req.body.username.length === 9 && req.body.username.slice(0,4) === 'iare')){
+    if((req.body.username.length === 10 && req.body.username.slice(2, 6).toLowerCase() === '951a') || (req.body.username.length === 10 && req.body.username.slice(2, 6).toLowerCase() === '955a') || (req.body.username.length === 9 && req.body.username.slice(0,4) === 'iare')){
         atSign = req.body.email.indexOf('@') + 1;
 
     if(emailDomains.indexOf(req.body.email.slice(atSign, req.body.email.length)) === -1){
