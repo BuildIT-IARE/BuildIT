@@ -107,24 +107,19 @@ function close_window() {
     <tr>
       <th>Roll No</th>
       <th>Total Score</th>
-      <th>IP Address</th>
     </tr>
   <% for(let i=0; i < datap.length; i++){ %>    
       <tr>
         <td><%= datap[i].username %></td>
         <% let k = 0; %>
-        <% let str = 0; %>
         <% if (datap[i].submissionResults.length !== 0){ %>
         
           <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %>
               <% k = k + datap[i].submissionResults[j].score %>
-              <% str = str + datap[i].submissionResults[j].ipAddress %>
-              <% str = str + ' , ' %>
           <% } %>
         <% } %>
 
         <td><%= k %></td>
-        <td><%= str %></td>
       </tr>
   <% } %>
   </table>
