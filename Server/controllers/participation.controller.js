@@ -85,7 +85,7 @@ exports.acceptSubmission = (sub, callback) => {
                         updated = true;
                         console.log("Came here");
                         Participation.updateOne({participationId: sub.participationId, "submissionResults.questionId": sub.questionId}, {$set:
-                            {"submissionResults.$.score": sub.score,"submissionResults.$.score":sub.ipAddress}
+                            {"submissionResults.$.score": sub.score,"submissionResults.$.ipAddress":sub.ipAddress}
                           }, {new: true}, (err, doc) => {
                             if (err) {
                                 console.log("Something wrong when updating data!");
