@@ -85,7 +85,7 @@ exports.acceptSubmission = (sub, callback) => {
                         updated = true;
                         console.log("Came here");
                         Participation.updateOne({participationId: sub.participationId, "submissionResults.questionId": sub.questionId}, {$set:
-                            {"submissionResults.$.score": sub.score}
+                            {"submissionResults.$.score": sub.score,"submissionResults.$.score":sub.ipAddress}
                           }, {new: true}, (err, doc) => {
                             if (err) {
                                 console.log("Something wrong when updating data!");
@@ -112,7 +112,7 @@ exports.acceptSubmission = (sub, callback) => {
         }
             if (!found){
                 Participation.findOneAndUpdate({participationId: sub.participationId}, {$addToSet:{
-                    submissionResults: { questionId: sub.questionId, score: sub.score}
+                    submissionResults: { questionId: sub.questionId, score: sub.score, ipAddress: sub.ipAddress}
                   }}, {new: true}, (err, doc) => {
                     if (err) {
                         console.log("Something wrong when updating data!");
