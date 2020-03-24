@@ -42,7 +42,8 @@ let checkTokenAdmin = (req, res, next) => {
   let token = req.cookies.token || req.headers['x-access-token'] || req.headers['authorization']; 
   // Express headers are auto converted to lowercase
   // req.headers['x-access-token'] || req.headers['authorization'];
-  console.log(req.cookies,req.body,req.headers);
+  console.log(token);
+
   if (token) {
     if (token.startsWith('Bearer ')) {
       // Remove Bearer from string
