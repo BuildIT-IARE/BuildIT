@@ -118,7 +118,7 @@ function close_window() {
         
           <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %>
               <% k = k + datap[i].submissionResults[j].score %>
-              <% str = str + datap[i].submissionResults[j].ipAddress %>
+              <% str = str + datap[i].submissionResults[j].ipAddress.toString() %>
               <% str = str + ' , ' %>
           <% } %>
         <% } %>
