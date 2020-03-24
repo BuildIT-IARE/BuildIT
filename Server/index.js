@@ -10,7 +10,7 @@ const upload = require('express-fileupload');
 var path = require('path');
 const archiver = require('archiver');
 const fs = require('fs');
-
+const requestIp = require('request-ip');
 let config = require('./util/config');
 let middleware = require('./util/middleware.js');
 
@@ -367,6 +367,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
                                     result.submissionToken = [result.token1, result.token2, result.token3];
                                     result.result = [result.response1, result.response2, result.response3];
                                     result.participationId = result.username + result.contestId;
+                                    result.clientIp = requestIp.getClientIp(req);
                                     var testcasesPassed = 0;
                                     if (result.response1 === "Accepted"){
                                       testcasesPassed += 1;
