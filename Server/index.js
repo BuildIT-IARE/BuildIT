@@ -155,8 +155,8 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
 
     let currentTime = `${hours}${minutes}`;
     currentTime = eval(currentTime);
-    currentTime = moment().tz('Asia/Kolkata').format('HHmm')
-    console.log(currentTime);
+    currentTime = moment().tz('Asia/Kolkata').format('HHmm');
+    // console.log(currentTime);
     if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
       accepted = true
     } else {
@@ -222,6 +222,7 @@ app.post('/validateSubmission', middleware.checkToken, async (req, res)=> {
   
       let currentTime = `${hours}${minutes}`;
       currentTime = eval(currentTime);
+      currentTime = moment().tz('Asia/Kolkata').format('HHmm');
       if (duration.date.toString() === today && duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
         accepted = true;
       } else {
