@@ -143,6 +143,8 @@ app.post('/isOngoing', middleware.checkToken, async(req, res) => {
     }
     let minutes = date.getMinutes();
     let hours = date.getHours();
+    minutes = minutes + 30;
+    hours = hours + 5;
     if (hours < 10){
       hours = '0'+String(hours);
     }
