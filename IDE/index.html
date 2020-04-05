@@ -11,12 +11,18 @@
 
     <script src="offline/goldenlayout.min.js"></script>
     <link rel="stylesheet" href="offline/goldenlayout-base.css" />
-    <link rel="stylesheet" href="offline/goldenlayout-dark-theme.css"/>
+    <link rel="stylesheet" href="offline/goldenlayout-dark-theme.css" />
 
     <script type="text/javascript" src="third_party/monaco-editor-0.18.0/min/vs/loader.js"></script>
-    <script>require.config({ paths: { "vs": "third_party/monaco-editor-0.18.0/min/vs" } });</script>
+    <script>
+        require.config({
+            paths: {
+                "vs": "third_party/monaco-editor-0.18.0/min/vs"
+            }
+        });
+    </script>
 
-    <link rel="stylesheet" href="offline/semantic.min.css"/>
+    <link rel="stylesheet" href="offline/semantic.min.css" />
     <script src="offline/semantic.min.js"></script>
 
     <link href="offline/exo2.css" rel="stylesheet">
@@ -31,12 +37,15 @@
 </head>
 
 <body>
-    <div id="site-navigation" class="ui inverted menu" style="border-top: 2px solid purple; border-bottom: 2px solid purple;">
-       <div id="site-header" class="header item">
-        <a href="/"><h2>BuildIT</h2><sup> By Go-Labs</sup></a>
+    <div id="site-navigation" class="ui inverted menu"
+        style="border-top: 2px solid purple; border-bottom: 2px solid purple;">
+        <div id="site-header" class="header item">
+            <a href="/">
+                <h2>BuildIT</h2><sup> By Go-Labs</sup>
+            </a>
         </div>
         <div class="left menu">
-           
+
             <!-- <div class="link item" onclick="$('#site-settings').modal('show')"><i class="cog icon"></i> Settings</div> -->
             <!-- <option value="1" mode="shell">Bash (4.4)</option>
                     <option value="3" mode="text/x-pascal">Basic (fbc 1.05.0)</option>
@@ -82,7 +91,7 @@
             <a class="link item" id="tutorials" style="color: cyan; font-size: large;"></a>
             <a class="link item" id="questionIdText" style="color: orangered; font-size: large;"></a>
             <a class="link item" id="username" style="color: pink; font-size: large;"></a>
-            <img id="userImage" class="link item"  width = "90px" height = "90px" src="images/defaultuser.png"/>
+            <img id="userImage" class="link item" width="90px" height="90px" src="images/defaultuser.png" />
         </div>
     </div>
 
@@ -136,25 +145,27 @@
     </div>
 </body>
 <script>
-        function getCookie(cname) {
+    function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
-        for(var i=0; i<ca.length; i++) {
+        for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1);
-            if (c.indexOf(name) != -1) return c.substring(name.length,c.length);
+            while (c.charAt(0) == ' ') c = c.substring(1);
+            if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
         }
         return "";
-     }
-$(document).ready(function () {
-
-    let branch = getCookie("branch");
-    let username = getCookie("username");
-    if (branch){
-        $('#userImage').attr('src', "http://cms.iare.ac.in/iare/images/"+branch+"/"+username+".jpg");
-        document.getElementById('username').innerHTML = username;
     }
-});
+    $(document).ready(function () {
+
+        let branch = getCookie("branch");
+        let username = getCookie("username");
+        if (branch) {
+            $('#userImage').attr('src', "http://cms.iare.ac.in/iare/images/" + branch + "/" + username +
+            ".jpg");
+            document.getElementById('username').innerHTML = username;
+        }
+    });
 </script>
+
 </html>
 <!-- 41228e -->

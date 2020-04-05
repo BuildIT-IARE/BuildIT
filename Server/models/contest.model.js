@@ -1,15 +1,15 @@
 // MONGOOSE SCHEMA
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 
 var contestSchema = new Schema({
-    contestId: String,
-    contestName: String,
-    contestDate: String,
-    contestDuration: String,
-    contestStartTime: String,
-    contestEndTime: String    
-  });
+  contestId: String,
+  contestName: String,
+  contestDate: String,
+  contestDuration: String,
+  contestStartTime: String,
+  contestEndTime: String,
+});
 
-module.exports = mongoose.model('Contest', contestSchema);
+module.exports = mongoose.model("Contest", contestSchema);

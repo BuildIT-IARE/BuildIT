@@ -1,48 +1,87 @@
-let middleware = require('../util/middleware.js');
+let middleware = require("../util/middleware.js");
 
 module.exports = (app) => {
-    const questions = require('../controllers/question.controller.js');
+  const questions = require("../controllers/question.controller.js");
 
-    // Create a new question
-    app.post('/questions', middleware.checkTokenAdmin, questions.create);
-    
-    // Create a new question
-    app.post('/questionsExcel', middleware.checkTokenAdmin, questions.createExcel);
+  // Create a new question
+  app.post("/questions", middleware.checkTokenAdmin, questions.create);
 
-    // Create a new question for Tutorials
-    app.post('/questiontutorials', middleware.checkTokenAdmin, questions.createTutorials);
+  // Create a new question
+  app.post(
+    "/questionsExcel",
+    middleware.checkTokenAdmin,
+    questions.createExcel
+  );
 
-    // Create a new question for Tutorials
-    app.post('/questiontutorialsExcel', middleware.checkTokenAdmin, questions.createTutorialsExcel);
+  // Create a new question for Tutorials
+  app.post(
+    "/questiontutorials",
+    middleware.checkTokenAdmin,
+    questions.createTutorials
+  );
 
-    // Retrieve all questions
-    app.get('/questions', middleware.checkTokenAdmin, questions.findAll);
-    
-    // Retrieve a single questionName with questionId Public
-    app.get('/questions/name/:questionId', questions.getQuestionName);
+  // Create a new question for Tutorials
+  app.post(
+    "/questiontutorialsExcel",
+    middleware.checkTokenAdmin,
+    questions.createTutorialsExcel
+  );
 
-    // Retrieve a single question with questionId
-    app.get('/questions/:questionId', middleware.checkToken, questions.findOne);
+  // Retrieve all questions
+  app.get("/questions", middleware.checkTokenAdmin, questions.findAll);
 
-    // Retrieve all questions with contestId
-    app.get('/questions/contests/:contestId', middleware.checkToken, questions.findAllContest);
+  // Retrieve a single questionName with questionId Public
+  app.get("/questions/name/:questionId", questions.getQuestionName);
 
-    
-    // Retrieve all questions with courseId
-    app.get('/questions/courses/:courseId', middleware.checkToken, questions.findAllCourse);
+  // Retrieve a single question with questionId
+  app.get("/questions/:questionId", middleware.checkToken, questions.findOne);
 
-    // Retrieve all questions with courseId and diff
-    app.get('/questions/courses/:courseId/:difficulty', middleware.checkToken, questions.findAllCourseDifficulty);
+  // Retrieve all questions with contestId
+  app.get(
+    "/questions/contests/:contestId",
+    middleware.checkToken,
+    questions.findAllContest
+  );
 
-    // Retrieve all questions with courseId and diff/subdiff
-    app.get('/questions/courses/:courseId/:difficulty/:conceptLevel', middleware.checkToken, questions.findAllCourseConceptWise);
+  // Retrieve all questions with courseId
+  app.get(
+    "/questions/courses/:courseId",
+    middleware.checkToken,
+    questions.findAllCourse
+  );
 
-    // Update a question with questionId
-    app.put('/questions/:questionId', middleware.checkTokenAdmin, questions.update);
+  // Retrieve all questions with courseId and diff
+  app.get(
+    "/questions/courses/:courseId/:difficulty",
+    middleware.checkToken,
+    questions.findAllCourseDifficulty
+  );
 
-    // Delete a question with questionId
-    app.delete('/questions/:questionId', middleware.checkTokenAdmin, questions.delete);
+  // Retrieve all questions with courseId and diff/subdiff
+  app.get(
+    "/questions/courses/:courseId/:difficulty/:conceptLevel",
+    middleware.checkToken,
+    questions.findAllCourseConceptWise
+  );
 
-    // Create a new question
-    app.post('/questions/mergeCourse', middleware.checkTokenAdmin, questions.merge);
-}
+  // Update a question with questionId
+  app.put(
+    "/questions/:questionId",
+    middleware.checkTokenAdmin,
+    questions.update
+  );
+
+  // Delete a question with questionId
+  app.delete(
+    "/questions/:questionId",
+    middleware.checkTokenAdmin,
+    questions.delete
+  );
+
+  // Create a new question
+  app.post(
+    "/questions/mergeCourse",
+    middleware.checkTokenAdmin,
+    questions.merge
+  );
+};

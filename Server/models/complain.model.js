@@ -1,15 +1,15 @@
 // MONGOOSE SCHEMA
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 
 var complainSchema = new Schema({
-    complainId: String,
-    complainSubject: String,
-    username: String,
-    complainDesc: String,
-    questionId: String,
-    questionName: String
-  });
+  complainId: String,
+  complainSubject: String,
+  username: String,
+  complainDesc: String,
+  questionId: String,
+  questionName: String,
+});
 
-module.exports = mongoose.model('Complain', complainSchema);
+module.exports = mongoose.model("Complain", complainSchema);
