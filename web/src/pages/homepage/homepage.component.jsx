@@ -23,7 +23,10 @@ const HomePage = ({ history }) => (
       <HalfContainer>
         <QuarterContainer>
           <Title>BuildIT_</Title>
-          <SubTitle>From Institute of Aeronautical Engineering.</SubTitle>
+          <SubTitle>
+            Exclusive Online Judge platform for the students of Institute of
+            Aeronautical Engineering.
+          </SubTitle>
         </QuarterContainer>
         <QuarterContainer>
           <CustomButton onClick={() => history.push("/signin")}>

@@ -9,6 +9,7 @@ const INITIAL_STATE = {
 const UserReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case UserActionTypes.SIGN_IN_START:
+    case UserActionTypes.SIGN_UP_START:
       return {
         ...state,
         isFetching: true,
@@ -22,9 +23,17 @@ const UserReducer = (state = INITIAL_STATE, action) => {
         error: null,
       };
     case UserActionTypes.SIGN_IN_FAILURE:
+    case UserActionTypes.SIGN_UP_FAILURE:
       return {
         ...state,
+        isFetching: false,
+        currentUser: null,
         error: action.payload,
+      };
+    case UserActionTypes.SIGN_OUT:
+      return {
+        ...state,
+        currentUser: null,
       };
     default:
       return state;

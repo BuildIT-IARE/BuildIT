@@ -34,7 +34,7 @@ exports.findOne = (req, res) => {
       if (!user) {
         return res.status(404).send({
           success: false,
-          message: "User not found with id " + req.params.username,
+          message: "User not found with username " + req.params.username,
         });
       }
       res.send(user);
@@ -43,7 +43,7 @@ exports.findOne = (req, res) => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
           success: false,
-          message: "User not found with id " + req.params.username,
+          message: "User not found with username  " + req.params.username,
         });
       }
       return res.status(500).send({
@@ -60,7 +60,7 @@ exports.findOnePublic = (req, res) => {
       if (!user) {
         return res.status(404).send({
           success: false,
-          message: "User not found with id " + req.params.username,
+          message: "User not found with username " + req.params.username,
         });
       }
       user = user[0];
@@ -76,7 +76,7 @@ exports.findOnePublic = (req, res) => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
           success: false,
-          message: "User not found with id " + req.params.username,
+          message: "User not found with username " + req.params.username,
         });
       }
       return res.status(500).send({
@@ -89,7 +89,10 @@ exports.findOnePublic = (req, res) => {
 // Create and Save a new user
 exports.create = (req, res) => {
   // Validate request
-  console.log(req.body);
+
+  if (req.body.confirmPassword) {
+    req.body.password2 = req.body.confirmPassword;
+  }
   if (
     !req.body.email ||
     !req.body.username ||
@@ -127,7 +130,7 @@ exports.create = (req, res) => {
       return res.status(400).send({
         success: false,
         message:
-          "We do not support this email provider, please try another email id.",
+          "We do not support this email provider, please try another email ID.",
       });
     }
 
@@ -275,7 +278,7 @@ exports.update = (req, res) => {
       if (!user) {
         return res.status(404).send({
           success: false,
-          message: "User not found with id " + req.params.username,
+          message: "User not found with username  " + req.params.username,
         });
       }
       res.send(user);
@@ -284,7 +287,7 @@ exports.update = (req, res) => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
           success: false,
-          message: "User not found with id " + req.params.username,
+          message: "User not found with username  " + req.params.username,
         });
       }
       return res.status(500).send({
@@ -300,7 +303,7 @@ exports.forgotPass = (req, res) => {
       if (user.length === 0) {
         return res.status(404).send({
           success: false,
-          message: "User not found with id " + req.body.username,
+          message: "User not found with username  " + req.body.username,
         });
       }
       console.log("USER", user);
@@ -311,7 +314,7 @@ exports.forgotPass = (req, res) => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
           success: false,
-          message: "User not found with id " + req.params.username,
+          message: "User not found with username  " + req.params.username,
         });
       }
     });
@@ -396,7 +399,7 @@ exports.checkPass = (req, res) => {
       if (user.length === 0) {
         return res.status(404).send({
           success: false,
-          message: "User not found with id " + req.body.username,
+          message: "User not found with username  " + req.body.username,
         });
       }
       if (user[0].password === req.body.password) {
@@ -433,13 +436,13 @@ exports.checkPass = (req, res) => {
             });
           }
         } else {
-          res.send({
+          res.status(404).send({
             success: false,
             message: "Please verify account to continue.",
           });
         }
       } else {
-        res.send({
+        res.status(404).send({
           success: false,
           message: "Incorrect password entered.",
         });
@@ -449,10 +452,11 @@ exports.checkPass = (req, res) => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
           success: false,
-          message: "[caught] User not found with id " + req.body.username,
+          message:
+            "[caught] User not found with username  " + req.body.username,
         });
       }
-      return res.status(500).send({
+      return res.status(404).send({
         success: false,
         message: "Error retrieving user with id " + req.body.username,
       });
@@ -471,7 +475,7 @@ exports.checkToken = (req, res) => {
     { new: true },
     (err, doc) => {
       if (err) {
-        return res.send({
+        return res.status(404).send({
           success: false,
           message: "Could not verify account " + req.body.email,
         });
@@ -480,7 +484,7 @@ exports.checkToken = (req, res) => {
   )
     .then((user) => {
       if (!user) {
-        return res.send({
+        return res.status(404).send({
           success: false,
           message: "Could not verify account " + req.body.email,
         });
@@ -501,7 +505,7 @@ exports.checkToken = (req, res) => {
           message: "Could not verify account " + req.body.email,
         });
       } else {
-        return res.send({
+        return res.status(404).send({
           success: false,
           message: "Could not verify account " + req.body.email,
         });
@@ -516,7 +520,7 @@ exports.delete = (req, res) => {
       if (!user) {
         return res.status(404).send({
           success: false,
-          message: "user not found with id " + req.params.username,
+          message: "User not found with username  " + req.params.username,
         });
       }
       res.send({ message: "user deleted successfully!" });
@@ -525,7 +529,7 @@ exports.delete = (req, res) => {
       if (err.kind === "ObjectId" || err.name === "NotFound") {
         return res.status(404).send({
           success: false,
-          message: "user not found with id " + req.params.username,
+          message: "User not found with username  " + req.params.username,
         });
       }
       return res.status(500).send({

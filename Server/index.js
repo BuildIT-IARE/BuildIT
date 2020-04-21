@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const request = require("request");
@@ -16,7 +15,7 @@ let middleware = require("./util/middleware.js");
 
 // API Address
 const localServer = config.localServer;
-
+const port = process.env.PORT || 5000;
 let apiAddress = config.apiAddress;
 let timeOut = 3000;
 
@@ -25,7 +24,7 @@ if (localServer) {
   timeOut = 0;
 }
 
-console.log("Using API from url", apiAddress);
+console.log("Using API from URL: ", apiAddress);
 
 // INIT
 const app = express();
@@ -36,11 +35,18 @@ app.use(
   })
 );
 
-// app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
 app.use(upload());
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../web/build")));
+
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../web/build", "index.html"));
+  });
+}
 
 // CODE STARTS HERE
 
@@ -911,4 +917,4 @@ app.get("/plagreport/:languageId/:questionId", async (req, res) => {
     .catch(res.send("Failed"));
 });
 
-app.listen(5000, () => console.log("Server @ port 5000"));
+app.listen(port, () => console.log("Server @ port", port));

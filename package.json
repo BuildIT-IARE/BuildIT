@@ -1,0 +1,22 @@
+{
+  "name": "buildit",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.19.0",
+    "npm": "6.13.4"
+  },
+  "scripts": {
+    "client": "cd web && yarn start",
+    "server": "service mongodb start && cd Server && nodemon index.js",
+    "build": "cd web && npm run build",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "start": "cd Server && node index.js",
+    "heroku-postbuild": "cd web && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1"
+  },
+  "dependencies": {
+    "reselect": "^4.0.0"
+  }
+}

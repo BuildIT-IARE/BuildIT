@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import { logoColor, gray } from "../../vars";
+import { logoColor } from "../../vars";
 
 export const TopNavbar = styled.div`
   /* position: fixed; */
@@ -45,10 +45,18 @@ export const OptionsContainer = styled.div`
   display: block;
 `;
 
+const getTextColor = (props) => {
+  if (props.logocolor) {
+    return logoColor;
+  } else {
+    return "gray";
+  }
+};
+
 export const OptionItem = styled(Link)`
   font-size: 14px;
   margin-left: 12px;
-  color: ${gray};
+  color: ${getTextColor};
   text-decoration: none;
 
   &:hover {
