@@ -29,7 +29,7 @@ const HomePage = ({ history }) => (
           </SubTitle>
         </QuarterContainer>
         <QuarterContainer>
-          <CustomButton onClick={() => history.push("/signin")}>
+          <CustomButton onClick={() => history.push("/contests")}>
             Get Started
           </CustomButton>
         </QuarterContainer>

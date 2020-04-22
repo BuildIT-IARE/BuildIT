@@ -5,5 +5,6 @@ export const TitleContainer = styled.h1`
   color: #161617;
   font-weight: 900;
   margin-top: 0;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
+  user-select: none;
 `;

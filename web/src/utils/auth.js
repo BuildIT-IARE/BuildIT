@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const requestSignIn = (userCredentials) => {
   return axios({
-    url: "login",
+    url: "/login",
     method: "post",
     data: { ...userCredentials },
   });
@@ -10,7 +10,7 @@ export const requestSignIn = (userCredentials) => {
 
 export const requestSignUp = (userCredentials) => {
   return axios({
-    url: "signup",
+    url: "/signup",
     method: "post",
     data: { ...userCredentials },
   });

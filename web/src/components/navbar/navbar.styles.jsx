@@ -14,6 +14,7 @@ export const TopNavbar = styled.div`
   box-shadow: 0 1px 2px rgba(16, 16, 17, 0.02),
     0 3.4px 8px rgba(16, 16, 17, 0.007), 0 12px 30px rgba(16, 16, 17, 0.003);
   font-size: 16px;
+  user-select: none;
 `;
 
 export const NavbarContainer = styled.div`
@@ -32,12 +33,14 @@ export const LogoContainer = styled(Link)`
   font-size: 24px;
   cursor: pointer;
   text-decoration: none;
-  -webkit-transition: color 0.7s;
+  transition-property: color;
+  transition-duration: 5s;
 
   &:hover {
     color: ${logoColor};
+    transition-property: color;
+    transition-duration: 0.7s;
   }
-  color: black;
 `;
 
 export const OptionsContainer = styled.div`

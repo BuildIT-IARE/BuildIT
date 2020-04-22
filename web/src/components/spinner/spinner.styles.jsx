@@ -62,9 +62,9 @@ export const SpinnerContainer = styled.div`
   height: 100px;
   position: relative;
   text-align: center;
-
   -webkit-animation: sk-rotate 2s infinite linear;
   animation: sk-rotate 2s infinite linear;
+
   ${Keyframes}
 `;
 

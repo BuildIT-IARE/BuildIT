@@ -23,6 +23,7 @@ export const QuarterContainer = styled.div`
   text-align: center;
   width: 50%;
   height: 30%;
+  margin-bottom: 50px;
 `;
 
 export const SubTitle = styled.p`

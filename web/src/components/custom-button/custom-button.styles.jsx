@@ -25,7 +25,7 @@ export const Button = styled.button`
   font-family: "Open Sans";
   font-weight: bolder;
   cursor: pointer;
-  margin: 30px;
+  overflow: hidden;
 
   ${ButtonStyles}
 `;

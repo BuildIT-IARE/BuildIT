@@ -9,6 +9,9 @@
     "client": "cd web && yarn start",
     "server": "service mongodb start && cd Server && nodemon index.js",
     "build": "cd web && npm run build",
+    "setup-client": "cd web && yarn",
+    "setup-server": "cd Server && yarn",
+    "setup": "yarn setup-client && yarn setup-server",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "start": "cd Server && node index.js",
     "heroku-postbuild": "cd web && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
