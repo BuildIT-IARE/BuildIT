@@ -11,16 +11,32 @@ class ErrorBoundary extends React.Component {
     };
   }
 
-  static getDerivedStateFromError() {
-    return { ...state, hasErrored: true };
+  static getDerivedStateFromError(err) {
+    console.log("hit");
+    return { message: err.message, hasErrored: true };
   }
 
-  componentDidCatch(err) {
-    console.log("An error has occurred: ", err);
+  componentDidCatch(err, info) {
+    console.log("An error has occurred: ", err, info);
+    this.setState({
+      ...this.state,
+      message: err.message,
+      info,
+      hasErrored: true,
+    });
   }
 
   render() {
-    return this.state.hasErrored ? <ErrorPrompt /> : this.props.children;
+    return this.state.hasErrored ? (
+      <ErrorPrompt
+        image="construction"
+        message={
+          "An unexpected error has occurred. Please refresh the application to try again."
+        }
+      />
+    ) : (
+      this.props.children
+    );
   }
 }
 

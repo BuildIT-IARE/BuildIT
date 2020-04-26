@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { withRouter } from "react-router-dom";
 
-import { ContestsPageContainer } from "./contests.styles";
+import { ContestsPageContainer } from "./display-contests.styles";
 
 import ContestCard from "../contest-card/contest-card.component";
 import Page from "../page/page.component";
@@ -12,7 +12,7 @@ import BackArrow from "../back-arrow/back-arrow.component";
 
 import { selectContestsDisplay } from "../../redux/contest/contest.selector";
 
-const Contests = ({ match, history, contests }) => {
+const DisplayContests = ({ match, history, contests }) => {
   return (
     <Page>
       <ContestsPageContainer>
@@ -35,4 +35,4 @@ const mapStateToProps = createStructuredSelector({
   contests: selectContestsDisplay,
 });
 
-export default withRouter(connect(mapStateToProps)(Contests));
+export default withRouter(connect(mapStateToProps)(DisplayContests));

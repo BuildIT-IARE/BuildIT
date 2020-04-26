@@ -1,5 +1,7 @@
 import React from "react";
-import { ReactComponent as ErrorAlien } from "../../assets/svg/error_404.svg";
+import { ReactComponent as Error404 } from "../../assets/svg/error_404.svg";
+import { ReactComponent as ErrorMonster } from "../../assets/svg/errormonster.svg";
+import { ReactComponent as ErrorConstruction } from "../../assets/svg/errorconstruction.svg";
 
 import {
   ErrorImageOverlay,
@@ -9,13 +11,22 @@ import {
 
 import Page from "../page/page.component";
 
-const ErrorPrompt = () => (
+const ErrorPrompt = ({
+  message = "Woops! Looks like you're lost.",
+  image = "404",
+}) => (
   <Page>
     <ErrorImageOverlay>
       <ErrorImageContainer>
-        <ErrorAlien />
+        {image === "monster" ? (
+          <ErrorMonster />
+        ) : image === "construction" ? (
+          <ErrorConstruction />
+        ) : (
+          <Error404 />
+        )}
       </ErrorImageContainer>
-      <ErrorImageText>Woops! Looks like you're lost.</ErrorImageText>
+      <ErrorImageText>{message}</ErrorImageText>
     </ErrorImageOverlay>
   </Page>
 );

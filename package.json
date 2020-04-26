@@ -7,7 +7,7 @@
   },
   "scripts": {
     "client": "cd web && yarn start",
-    "server": "service mongodb start && cd Server && nodemon index.js",
+    "server": "cd Server && nodemon index.js",
     "build": "cd web && npm run build",
     "setup-client": "cd web && yarn",
     "setup-server": "cd Server && yarn",

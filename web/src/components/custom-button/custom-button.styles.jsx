@@ -26,6 +26,7 @@ export const Button = styled.button`
   font-weight: bolder;
   cursor: pointer;
   overflow: hidden;
-
+  user-select: none;
+  margin: 10px 5px;
   ${ButtonStyles}
 `;

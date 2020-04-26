@@ -10,6 +10,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+  color: black;
+  font-size: 22px;
 }
 
 html {
@@ -18,4 +20,9 @@ html {
   text-rendering: optimizeLegibility;
   box-sizing: border-box;
   background-color: #fff;
+}
+
+::selection {
+  color: #c804fc;
+  background: white;
 }

@@ -1,23 +1,21 @@
 import styled from "styled-components";
 import { logoColor } from "../../vars";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-`;
+const getTextColor = (props) => {
+  if (props.active) {
+    return logoColor;
+  } else {
+    return "black";
+  }
+};
 
-export const TitleContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 export const CardContainer = styled.div`
   margin: 15px 0px;
   height: 5vw;
   width: 60vw;
   display: flex;
   overflow: hidden;
-  color: black;
+  color: ${getTextColor};
   font-weight: 600;
   text-transform: uppercase;
   justify-content: space-between;
@@ -39,6 +37,15 @@ export const CardContainer = styled.div`
   span {
     padding: 20px;
   }
+  span.green {
+    color: green;
+  }
+  span.orange {
+    color: orange;
+  }
+  span.red {
+    color: red;
+  }
 
   svg {
     fill: ${logoColor};
@@ -53,6 +60,6 @@ export const CardContainer = styled.div`
     }
 
     transition-property: background-color, fill;
-    transition-duration: 1s;
+    transition-duration: 0.7s;
   }
 `;

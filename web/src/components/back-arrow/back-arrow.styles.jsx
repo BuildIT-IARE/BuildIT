@@ -7,7 +7,8 @@ export const BackAr = styled(Back)`
   width: 50px;
   cursor: pointer;
   margin-bottom: 20px;
-
+  transition: fill;
+  transition-duration: 0.3s;
   :hover {
     fill: ${logoColor};
   }

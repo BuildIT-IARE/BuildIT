@@ -10,6 +10,7 @@ import AttemptPage from "./pages/attempt-page/attempt-page.component";
 
 import Navbar from "./components/navbar/navbar.component";
 import Spinner from "./components/spinner/spinner.component";
+import ErrorBoundary from "./components/error-boundary/error-boundary.component";
 import ErrorPrompt from "./components/error-boundary/error.component";
 
 import { selectCurrentUser } from "./redux/user/user.selector";
@@ -21,30 +22,32 @@ const App = ({ currentUser }) => {
   return (
     <div>
       <Navbar />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route
-          exact
-          path="/signin"
-          render={() => {
-            return currentUser ? (
-              <Redirect to="/contests" />
-            ) : (
-              <SignInAndSignUp />
-            );
-          }}
-        />
-        <Route
-          path="/contests"
-          render={(props) => checkAuth(<ContestsPage {...props} />)}
-        />
-        <Route
-          path="/attempt"
-          render={(props) => checkAuth(<AttemptPage {...props} />)}
-        />
-        <Route exact path="/spinner" component={Spinner} />
-        <Route component={ErrorPrompt} />
-      </Switch>
+      <ErrorBoundary>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route
+            exact
+            path="/signin"
+            render={() => {
+              return currentUser ? (
+                <Redirect to="/contests" />
+              ) : (
+                <SignInAndSignUp />
+              );
+            }}
+          />
+          <Route
+            path="/contests"
+            render={(props) => checkAuth(<ContestsPage {...props} />)}
+          />
+          <Route
+            path="/attempt"
+            render={(props) => checkAuth(<AttemptPage {...props} />)}
+          />
+          <Route exact path="/spinner" component={Spinner} />
+          <Route component={ErrorPrompt} />
+        </Switch>
+      </ErrorBoundary>
     </div>
   );
 };

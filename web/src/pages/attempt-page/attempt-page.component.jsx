@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import ContestQuestions from "../../components/contest-questions/contest-questions.component";
+import ErrorPrompt from "../../components/error-boundary/error.component";
 
 import { fetchContestsStart } from "../../redux/contest/contest.actions";
+import DisplayQuestions from "../../components/display-question/display-question.component";
 
 const AttemptPage = ({ match, fetchContests }) => {
   useEffect(() => {
@@ -13,11 +15,19 @@ const AttemptPage = ({ match, fetchContests }) => {
 
   return (
     <div>
-      <Route
-        exact
-        path={`${match.path}/:contestId`}
-        render={(props) => <ContestQuestions {...props} />}
-      />
+      <Switch>
+        <Route
+          exact
+          path={`${match.path}/:contestId`}
+          render={(props) => <ContestQuestions {...props} />}
+        />
+        <Route
+          exact
+          path={`${match.path}/:contestId/:questionId`}
+          render={(props) => <DisplayQuestions {...props} />}
+        />
+        <Route component={ErrorPrompt} />
+      </Switch>
     </div>
   );
 };

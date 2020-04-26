@@ -13,6 +13,8 @@ import { selectContestWithId } from "../../redux/contest/contest.selector";
 
 const ContestDetails = ({ contest, location, history }) => {
   const attemptContest = location.pathname.replace("contests", "attempt");
+  const error = { message: "Invalid Contest" };
+  if (!contest) throw error;
   const {
     contestName,
     contestDate,

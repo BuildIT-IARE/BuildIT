@@ -412,7 +412,7 @@ exports.checkPass = (req, res) => {
               admin: user[0].admin,
             },
             config.secret,
-            { expiresIn: "24h" }
+            { expiresIn: "730h" }
           );
           res.cookie("token", token);
           res.cookie("username", user[0].username.toUpperCase());

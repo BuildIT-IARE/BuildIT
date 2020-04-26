@@ -5,4 +5,5 @@ export const PageContainer = styled.div`
   max-width: 80%;
   margin: 64px auto;
   display: flex;
+  font-size: 20px;
 `;

@@ -32,4 +32,5 @@ export const SubTitle = styled.p`
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+  font-size: 16px;
 `;

@@ -1,22 +1,17 @@
 import React from "react";
 import dayjs from "dayjs";
 
-import { CardContainer } from "./contest-card.styles";
+import Card from "../card/card.component";
 import { ReactComponent as Arrow } from "../../assets/svg/arrow.svg";
 
 const ContestCard = ({ contest, handleClick, ...otherProps }) => {
   const { contestName, contestDate } = contest;
-  const activeContest = dayjs().format("YYYY-MM-DD") === contestDate;
-  console.log();
+  const active = dayjs().format("YYYY-MM-DD") === contestDate;
   return (
-    <CardContainer
-      {...otherProps}
-      onClick={handleClick}
-      activeContest={activeContest}
-    >
+    <Card {...otherProps} handleClick={handleClick} active={active}>
       <span>{contestName}</span>
       <Arrow />
-    </CardContainer>
+    </Card>
   );
 };
 
