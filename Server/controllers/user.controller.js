@@ -308,7 +308,7 @@ exports.forgotPass = (req, res) => {
       }
       console.log("USER", user);
       res.send({ success: true, message: "Check your Mail for Password" });
-      mailUser(user).catch(console.error);
+      mailUser(user).catch((err) => console.log(err));
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
