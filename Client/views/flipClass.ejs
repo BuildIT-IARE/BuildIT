@@ -1,247 +1,273 @@
 <!DOCTYPE html>
 <html lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <title id="demo1">Flip Lab</title>
 
-<head>
-  <meta charset="utf-8">
-  <title id = "demo1">Flip Lab</title>
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
 
-  <!-- mobile responsive meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  <!-- ** Plugins Needed for the Project ** -->
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
-  <!-- slick slider -->
-  <link rel="stylesheet" href="plugins/slick/slick.css">
-  <!-- themefy-icon -->
-  <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
-  <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+    <!-- slick slider -->
+    <link rel="stylesheet" href="plugins/slick/slick.css" />
+    <!-- themefy-icon -->
+    <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
 
-  <!-- Main Stylesheet -->
-  <link href="css/style.css" rel="stylesheet">
-  
-  <!--Favicon-->
-  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- Main Stylesheet -->
+    <link href="css/style.css" rel="stylesheet" />
 
-  <style>
-    .green {
-      color: green;
-    }
-    .red {
-      color: red;
-    }
-    .orange {
-      color: orange;
-    }
-    .black {
-      color: black;
-    }
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 
-    .button1 {
-  border-radius: 4px;
-  background-color: #454fd4;
-  border: none;
-  color: white;
-  text-align: center;
-  font-size:  15px;
-  padding: 5px;
-  width: 110px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
+    <style>
+      .green {
+        color: green;
+      }
+      .red {
+        color: red;
+      }
+      .orange {
+        color: orange;
+      }
+      .black {
+        color: black;
+      }
 
-.button1 span {
-  cursor: pointer;
-  display: inline-block;
-  transition: 1s;
-}
+      .button1 {
+        border-radius: 4px;
+        background-color: #454fd4;
+        border: none;
+        color: white;
+        text-align: center;
+        font-size: 15px;
+        padding: 5px;
+        width: 110px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+      }
 
-.button1 span:after {
-  content: '\21B6';
-  opacity: 0;
-  top: 50px;
-  right: 20px;
-  transition: 0.3s;
-}
+      .button1 span {
+        cursor: pointer;
+        display: inline-block;
+        transition: 1s;
+      }
 
-.button1:hover span {
-  padding-right: 20px;
-}
+      .button1 span:after {
+        content: "\21B6";
+        opacity: 0;
+        top: 50px;
+        right: 20px;
+        transition: 0.3s;
+      }
 
-.button1:hover span:after {
-  opacity: 1;
-  right: 0;
-  padding-bottom:20px;  
-}
-p{
-  font-size: 130%;
-}
-.button {
-  border-radius: 4px;
-  background-color: #A62232;
-  border: none;
-  color: white;
-  /* text-align: center; */
-  font-size:  px;
-  padding: 20px;
-  width: 160px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 1s;
-  background-color: #A62232;
-}
-.button span:after {
-  content: '\00bb';
-  position: "relative";
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-  background-color: #A62232;
-}
-.button:hover span {
-  padding-left: 25px;
-}
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-div .border {
-  border-color: red;
-  margin: 4px;
-  padding: 4px;
-  border-width: 3px;
-}
+      .button1:hover span {
+        padding-right: 20px;
+      }
 
+      .button1:hover span:after {
+        opacity: 1;
+        right: 0;
+        padding-bottom: 20px;
+      }
+      p {
+        font-size: 130%;
+      }
+      .button {
+        border-radius: 4px;
+        background-color: #a62232;
+        border: none;
+        color: white;
+        /* text-align: center; */
+        font-size: px;
+        padding: 20px;
+        width: 160px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 1s;
+        background-color: #a62232;
+      }
+      .button span:after {
+        content: "\00bb";
+        position: "relative";
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+        background-color: #a62232;
+      }
+      .button:hover span {
+        padding-left: 25px;
+      }
+      .button:hover span:after {
+        opacity: 1;
+        right: 0;
+      }
+      div .border {
+        border-color: red;
+        margin: 4px;
+        padding: 4px;
+        border-width: 3px;
+      }
 
-.button2 {
-  border-radius: 4px;
-  background-color: #454fd4;
-  border: none;
-  color: white;
-  /* text-align: center; */
-  font-size:  px;
-  padding: 20px;
-  width: 100%;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
-.button2 span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 1s;
-}
-.button2 span:after {
-  content: '\00bb';
-  position: "relative";
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-.button2:hover span {
-  padding-left: 25px;
-}
-.button2:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-div .border {
-  border-color: red;
-  margin: 4px;
-  padding: 4px;
-  border-width: 3px;
-}
+      .button2 {
+        border-radius: 4px;
+        background-color: #454fd4;
+        border: none;
+        color: white;
+        /* text-align: center; */
+        font-size: px;
+        padding: 20px;
+        width: 100%;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .button2 span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 1s;
+      }
+      .button2 span:after {
+        content: "\00bb";
+        position: "relative";
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+      }
+      .button2:hover span {
+        padding-left: 25px;
+      }
+      .button2:hover span:after {
+        opacity: 1;
+        right: 0;
+      }
+      div .border {
+        border-color: red;
+        margin: 4px;
+        padding: 4px;
+        border-width: 3px;
+      }
+    </style>
+  </head>
 
-  </style>
-</head>
+  <body>
+    <% include ../views/partials/header %>
 
-<body>
-
-  <% include ../views/partials/header %>
-
-  <section class="page-title bg-primary position-relative">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 text-center">
-          <h1 class="text-white font-tertiary">Flipped Learning Classroom Activities</h1>
+    <section class="page-title bg-primary position-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="text-white font-tertiary">Project Based Learning</h1>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-<br>
-<section class="section">
-  <div class = "container">
-    <body>
-      <table align= "center">
-          <tr>
-             <td colspan = "1"><div class="font-tertiary mb-5">
-              <a href="<%= data.surl %>/pdf/set26" target="_blank" class="button2">SET 26</a>
-  
-          </div> </td>
-          <td colspan= "2"></td>
-             <td colspan = "1"><div class="font-tertiary mb-5">
-              <a href="<%= data.surl %>/pdf/set27" target="_blank" class="button2">SET 27</a>
-  
-          </div> </td>
-             
- 
-          </tr>
-          
-          <tr>
-           <td><div class="font-tertiary mb-5">
-            <a href="<%= data.surl %>/pdf/set28" target="_blank" class="button2">SET 28</a>
+    </section>
+    <br />
+    <section class="section">
+      <div class="container">
+        <body>
+          <table align="center">
+            <tr>
+              <td colspan="1">
+                <div class="font-tertiary mb-5">
+                  <a
+                    href="<%= data.surl %>/pdf/set26"
+                    target="_blank"
+                    class="button2"
+                    >SET 26</a
+                  >
+                </div>
+              </td>
+              <td colspan="2"></td>
+              <td colspan="1">
+                <div class="font-tertiary mb-5">
+                  <a
+                    href="<%= data.surl %>/pdf/set27"
+                    target="_blank"
+                    class="button2"
+                    >SET 27</a
+                  >
+                </div>
+              </td>
+            </tr>
 
-        </div> </td>
-           <td colspan = "2"><div class="font-tertiary mb-5">
-            <a href= "<%= data.url %>/ide %>" class = "button" target="_blank">Editor</a><br>
-          </div> </td>
-           
-           <td><div class="font-tertiary mb-5">
-            <a href="<%= data.surl %>/pdf/set29" target="_blank" class="button2">SET 29</a>
+            <tr>
+              <td>
+                <div class="font-tertiary mb-5">
+                  <a
+                    href="<%= data.surl %>/pdf/set28"
+                    target="_blank"
+                    class="button2"
+                    >SET 28</a
+                  >
+                </div>
+              </td>
+              <td colspan="2">
+                <div class="font-tertiary mb-5">
+                  <a
+                    href="<%= data.url %>/ide %>"
+                    class="button"
+                    target="_blank"
+                    >Editor</a
+                  ><br />
+                </div>
+              </td>
 
-        </div> </td>
- 
- 
-          </tr>
-          <tr>
-           <td colspan = "4" align = "center"><div class="font-tertiary mb-5">
-            <a href="<%= data.surl %>/pdf/set30" target="_blank" class="button2">SET 30</a>
+              <td>
+                <div class="font-tertiary mb-5">
+                  <a
+                    href="<%= data.surl %>/pdf/set29"
+                    target="_blank"
+                    class="button2"
+                    >SET 29</a
+                  >
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4" align="center">
+                <div class="font-tertiary mb-5">
+                  <a
+                    href="<%= data.surl %>/pdf/set30"
+                    target="_blank"
+                    class="button2"
+                    >SET 30</a
+                  >
+                </div>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </div>
+    </section>
 
-        </div> </td>
-           
-           
- 
- 
-          </tr>
-       </table>
-      
-   </body>
-  </div>
-</section>
+    <!-- jQuery -->
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- slick slider -->
+    <script src="plugins/slick/slick.min.js"></script>
+    <!-- filter -->
+    <script src="plugins/shuffle/shuffle.min.js"></script>
 
-<!-- jQuery -->
-<script src="plugins/jQuery/jquery.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="plugins/bootstrap/bootstrap.min.js"></script>
-<!-- slick slider -->
-<script src="plugins/slick/slick.min.js"></script>
-<!-- filter -->
-<script src="plugins/shuffle/shuffle.min.js"></script>
-
-<!-- Main Script -->
-<script src="js/script.js"></script>
-
-</body>
+    <!-- Main Script -->
+    <script src="js/script.js"></script>
+  </body>
 </html>
