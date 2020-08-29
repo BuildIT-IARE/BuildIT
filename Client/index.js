@@ -190,7 +190,11 @@ app.get("/admin/add/contest", async (req, res) => {
       res.render("contestadd", { data: url });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+        token: req.cookies.token,
+      });
     }
   });
 });
