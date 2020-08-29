@@ -48,7 +48,7 @@ let checkTokenAdmin = (req, res, next) => {
     req.body.token;
   // Express headers are auto converted to lowercase
   // req.headers['x-access-token'] || req.headers['authorization'];
-  // console.log(token);
+  console.log("TOKEN" + token);
   if (token) {
     if (token.startsWith("Bearer ")) {
       // Remove Bearer from string

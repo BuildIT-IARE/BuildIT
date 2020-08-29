@@ -190,7 +190,7 @@ app.get("/admin/add/contest", async (req, res) => {
       res.render("contestadd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
-      console.log("token", req.cookies.token);
+      console.log("token " + req.cookies.token);
       res.render("error", {
         data: body,
         imgUsername: req.cookies.username,
