@@ -187,14 +187,13 @@ app.get("/admin/add/contest", async (req, res) => {
       serverurl: serverRoute,
     };
     if (body.success) {
-      res.render("contestadd", { data: url });
+      res.render("contestadd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       console.log("token", req.cookies.token);
       res.render("error", {
         data: body,
         imgUsername: req.cookies.username,
-        token: req.cookies.token,
       });
     }
   });
@@ -643,7 +642,7 @@ app.get("/admin", async (req, res) => {
       serverurl: serverRoute,
     };
     if (body.success) {
-      res.render("contestadd", { data: url });
+      res.render("contestadd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
