@@ -44,10 +44,12 @@ let checkTokenAdmin = (req, res, next) => {
   let token =
     req.cookies.token ||
     req.headers["x-access-token"] ||
-    req.headers["authorization"];
+    req.headers["authorization"] ||
+    req.body.token;
   // Express headers are auto converted to lowercase
   // req.headers['x-access-token'] || req.headers['authorization'];
-  // console.log(token);
+  console.log("TOKEN" + token);
+  console.log("REQBODY" + JSON.stringify(req.body));
   if (token) {
     if (token.startsWith("Bearer ")) {
       // Remove Bearer from string

@@ -1,52 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-		<title>Admin menu</title>
-		<meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
-		<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
-		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" href="../../css/navadmin.css">
-		<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
-		<script src="/adminjs/modernizr.custom.js"></script>
-	</head>
-	<body>
-		<div class="container">
-			<% include ../views/partials/adminpanel %>
-			<header>
-				<h1>Manage Courses<span style="color:white">Add Course</span></h1>	
-			</header> 
-			<div class="main-block">
-				<form action="<%= data.serverurl %>/courses" method = "POST">
-				  <h4>Course ID</h4>
-				  <textarea name="courseId" rows = "5"></textarea>
-				  <p class="comments">Course Name</p>
-				  <textarea name="courseName" rows="5"></textarea>
-				  <p class="comments">Allowed Language</p>
-				  <select id="languageId" name="languageId">
-					<option value="4">C</option>
-					<option value="10">C++</option>	
-					<option value="16">C#</option>
-					<option value="22">Go</option>
-					<option value="26">Java JDK9</option>	
-					<option value="29">JavaScript</option>
-					<option value="34">Python 3</option>			  
-					<option value="36">Python 2</option>
-					<option value="38">Ruby</option>
-				  </select>
-				  <div class="btn-block">
-					<button  class= "submit" type="submit" href="/">Send</button>
-				  </div>
-				</form>
-			  </div>
-		</div><!-- /container -->
-		<script src="/adminjs/classie.js"></script>
-		<script src="/adminjs/gnmenu.js"></script>
-		<script>
-			new gnMenu( document.getElementById( 'gn-menu' ) );
-		</script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin menu</title>
+    <meta
+      name="description"
+      content="A sidebar menu as seen on the Google Nexus 7 website"
+    />
+    <meta
+      name="keywords"
+      content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu"
+    />
+    <meta name="author" content="Codrops" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../../css/navadmin.css" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+    <script src="/adminjs/modernizr.custom.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <% include ../views/partials/adminpanel %>
+      <header>
+        <h1>Manage Courses<span style="color: white">Add Course</span></h1>
+      </header>
+      <div class="main-block">
+        <form action="<%= data.serverurl %>/courses" method="POST">
+          <h4>Course ID</h4>
+          <textarea name="courseId" rows="5"></textarea>
+          <p class="comments">Course Name</p>
+          <textarea name="courseName" rows="5"></textarea>
+          <p class="comments">Allowed Language</p>
+          <select id="languageId" name="languageId">
+            <option value="4">C</option>
+            <option value="10">C++</option>
+            <option value="16">C#</option>
+            <option value="22">Go</option>
+            <option value="26">Java JDK9</option>
+            <option value="29">JavaScript</option>
+            <option value="34">Python 3</option>
+            <option value="36">Python 2</option>
+            <option value="38">Ruby</option>
+          </select>
+          <textarea
+            type="hidden"
+            name="token"
+            id="token"
+            value="<%= token %>"
+            style="display: none"
+          ></textarea>
+
+          <div class="btn-block">
+            <button class="submit" type="submit" href="/">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /container -->
+    <script src="/adminjs/classie.js"></script>
+    <script src="/adminjs/gnmenu.js"></script>
+    <script>
+      new gnMenu(document.getElementById("gn-menu"));
+    </script>
+    <script>
+      document.getElementById("token").value = "<%= token %>";
+    </script>
+  </body>
 </html>

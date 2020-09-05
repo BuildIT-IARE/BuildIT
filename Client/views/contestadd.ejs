@@ -33,6 +33,7 @@
 				  <textarea placeholder="24 Hours HHMM format" name="contestStartTime" rows="5"></textarea>
 				  <p class="comments">Contest End Time</p>
 				  <textarea placeholder="24 Hours HHMM format" name="contestEndTime" rows="5"></textarea>
+				  <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
 				  <div class="btn-block">
 					<button  class= "submit" type="submit" href="/">Send</button>
 				  </div>
@@ -43,6 +44,9 @@
 		<script src="/adminjs/gnmenu.js"></script>
 		<script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
+		<script>
+			document.getElementById("token").value = "<%= token %>";
 		</script>
 	</body>
 </html>

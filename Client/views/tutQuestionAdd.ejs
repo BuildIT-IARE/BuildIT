@@ -86,6 +86,8 @@
         <input type="radio" name="conceptLevel" value="2"> Arrays/Lists </input>
         <input type="radio" name="conceptLevel" value="3"> Pointers/Objects </input>
         <input type="radio" name="conceptLevel" value="4"> Structures/Objects </input> 
+				  <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
+
       </form>
     </div>
 		</div><!-- /container -->
@@ -93,6 +95,9 @@
 		<script src="/adminjs/gnmenu.js"></script>
 		<script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
-		</script>
+    </script>
+    		<script>
+          document.getElementById("token").value = "<%= token %>";
+        </script>
 	</body>
 </html>

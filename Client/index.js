@@ -113,7 +113,7 @@ app.get("/admin/add/tutQuestion", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("tutQuestionAdd", { data: url });
+      res.render("tutQuestionAdd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -138,7 +138,7 @@ app.get("/admin/add/question", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("questionadd", { data: url });
+      res.render("questionadd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -163,7 +163,7 @@ app.get("/admin/add/pdf", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("uploadpdf", { data: url });
+      res.render("uploadpdf", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -187,10 +187,14 @@ app.get("/admin/add/contest", async (req, res) => {
       serverurl: serverRoute,
     };
     if (body.success) {
-      res.render("contestadd", { data: url });
+      res.render("contestadd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      console.log("token " + req.cookies.token);
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
     }
   });
 });
@@ -259,7 +263,7 @@ app.get("/admin/add/questionTut", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("questionTutAdd", { data: url });
+      res.render("questionTutAdd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -283,7 +287,7 @@ app.get("/admin/add/course", async (req, res) => {
       serverurl: serverRoute,
     };
     if (body.success) {
-      res.render("courseAdd", { data: url });
+      res.render("courseAdd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -638,7 +642,7 @@ app.get("/admin", async (req, res) => {
       serverurl: serverRoute,
     };
     if (body.success) {
-      res.render("contestadd", { data: url });
+      res.render("contestadd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
