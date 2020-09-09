@@ -31,7 +31,7 @@
 	  <% } %>
     </select>
   
-  <input type="submit" value="Submit" style="color: <%= if (data.color){data.color}else{'green'} %>">
+  <input type="submit" value="Submit" style="color: <%= data.color ? data.color: 'green'%>">
   </form>
 </div>
 		<script src="/adminjs/classie.js"></script>
