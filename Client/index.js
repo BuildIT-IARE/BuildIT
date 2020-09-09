@@ -295,6 +295,25 @@ app.get("/admin/add/course", async (req, res) => {
   });
 });
 
+app.get("/admin/delete/contest", async (req, res) => {
+  let options = {
+    url: serverRoute + "/contests",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    body.posturl = serverRoute + "/contests";
+    body.url = clientRoute;
+    body.method = "DELETE";
+    body.color = "red";
+    res.render("dropdown", { data: body });
+  });
+});
+
 app.get("/admin/update/questionTut", async (req, res) => {
   let url = {
     url: clientRoute,
