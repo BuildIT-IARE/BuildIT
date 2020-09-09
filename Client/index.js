@@ -357,10 +357,10 @@ app.post("/contestDelete", async (req, res) => {
 
 app.post("/questionDelete", async (req, res) => {
   let options = {
-    url: serverRoute + "/questions/" + req.body.contestId,
+    url: serverRoute + "/questions/" + req.body.questionId,
     method: "post",
     body: {
-      questionId: req.body.contestId,
+      questionId: req.body.questionId,
       token: req.cookies.token,
     },
     headers: {
