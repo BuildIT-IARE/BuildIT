@@ -306,12 +306,71 @@ app.get("/admin/delete/contest", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    body.posturl = serverRoute + "/contests";
+    body.posturl = clientRoute + "/contestDelete";
     body.url = clientRoute;
-    body.method = "DELETE";
+    body.method = "POST";
     body.class = "btn-danger";
     body.title = "Delete";
     res.render("dropdown", { data: body });
+  });
+});
+
+app.get("/admin/delete/question", async (req, res) => {
+  let options = {
+    url: serverRoute + "/questions",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    body.posturl = clientRoute + "/contestDelete";
+    body.url = clientRoute;
+    body.method = "POST";
+    body.class = "btn-danger";
+    body.title = "Delete";
+    body.subtitle = "Questions";
+    res.render("dropdown", { data: body });
+  });
+});
+
+app.post("/contestDelete", async (req, res) => {
+  let options = {
+    url: serverRoute + "/contests/" + req.body.contestId,
+    method: "delete",
+    body: {
+      contestId: req.body.contestId,
+      token: req.cookies.token,
+    },
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.redirect("/admin/delete/contest");
+  });
+});
+
+app.post("/questionDelete", async (req, res) => {
+  let options = {
+    url: serverRoute + "/questions/" + req.body.contestId,
+    method: "post",
+    body: {
+      questionId: req.body.contestId,
+      token: req.cookies.token,
+    },
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.redirect("/admin/delete/question");
   });
 });
 
