@@ -864,18 +864,11 @@ input[type="submit"]:hover {
 }
 
 .btn-danger {
-  width: 100%;
-  background-color: rgb(180, 11, 11);
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  background-color: rgb(180, 11, 11) !important;
 }
 
 .btn-danger:hover {
-  background-color: rgb(219, 62, 62);
+  background-color: rgb(219, 62, 62) !important;
 }
 
 .b div {
