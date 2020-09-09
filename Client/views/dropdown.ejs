@@ -18,7 +18,8 @@
       <div class="container">
         <% include ../views/partials/adminpanel %>
           <header>
-            <h1><%=data.title? data.title : Results %><span style="color: white">Contests</span></h1>	
+            <%= data.title %>
+            <h1><%= data.title ? data.title : Results %><span style="color: white">Contests</span></h1>	
 		  </header> 
 
 
