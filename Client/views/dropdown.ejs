@@ -23,7 +23,7 @@
 
 
 <div class = "b">
-		<h3 style="color:white">Select Contests</h3>
+		<h3 style="color:white">Select <%= data.subtitle ? data.subtitle : "Contests" %></h3>
   <form action="<%= data.posturl %>" method = "<%= data.method %>">
     <select id="contestId" name="contestId">
   <% for (let i = 0; i < data.length; i++){ %>
