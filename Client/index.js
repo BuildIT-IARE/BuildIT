@@ -310,6 +310,7 @@ app.get("/admin/delete/contest", async (req, res) => {
     body.url = clientRoute;
     body.method = "DELETE";
     body.class = "btn btn-danger";
+    body.title = "Delete";
     res.render("dropdown", { data: body });
   });
 });

@@ -18,7 +18,7 @@
       <div class="container">
         <% include ../views/partials/adminpanel %>
           <header>
-            <h1>Results<span style="color: white">of Contests</span></h1>	
+            <h1><%=data.title? data.title : Results %><span style="color: white">Contests</span></h1>	
 		  </header> 
 
 
@@ -31,7 +31,7 @@
 	  <% } %>
     </select>
   
-  <input type="submit" class = "<%= data.class ? data.class : null%>"value="Submit">
+  <input type="submit" class = "<%= data.class ? data.class : null %>"value="Submit">
   </form>
 </div>
 		<script src="/adminjs/classie.js"></script>
