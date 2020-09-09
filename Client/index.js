@@ -309,7 +309,7 @@ app.get("/admin/delete/contest", async (req, res) => {
     body.posturl = serverRoute + "/contests";
     body.url = clientRoute;
     body.method = "DELETE";
-    body.color = "red";
+    body.class = "btn btn-danger";
     res.render("dropdown", { data: body });
   });
 });
