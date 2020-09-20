@@ -18,20 +18,24 @@
       <div class="container">
         <% include ../views/partials/adminpanel %>
           <header>
-            <h1>Results<span style="color: white">of Contests</span></h1>	
+            <h1><%= data.title ? data.title : "Results" %><span style="color: white"><%= data.subtitle ? data.subtitle : "Contests" %></span></h1>	
 		  </header> 
 
 
 <div class = "b">
-		<h3 style="color:white">Select Contests</h3>
+		<h3 style="color:white">Select <%= data.subtitle ? data.subtitle : "Contests" %></h3>
   <form action="<%= data.posturl %>" method = "<%= data.method %>">
     <select id="contestId" name="contestId">
-	<% for (let i = 0; i < data.length; i++){ %>
-	  <option value="<%= data[i].contestId %>"><%= data[i].contestName %></option>
-	  <% } %>
+  <% for (let i = 0; i < data.length; i++){ %>
+    <% if (data.subtitle){ %>
+      <option value="<%= data[i].questionId %>"><%= data[i].questionName %></option>
+      <% } else {%>
+      <option value="<%= data[i].contestId %>"><%= data[i].contestName %></option>
+    <% } %>
+	<% } %>
     </select>
   
-    <input type="submit" value="Submit">
+  <input type="submit" class = "<%= data.class ? data.class : null %>"value="Submit">
   </form>
 </div>
 		<script src="/adminjs/classie.js"></script>
