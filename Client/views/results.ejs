@@ -41,7 +41,10 @@
           if (dataq[k].questionId === datap[i].submissionResults[j].questionId)
           { %> <% done++ %>
           <td><%= datap[i].submissionResults[j].score %></td>
-          <% } %> <% k++ %> <% } %> <% } %> <% } %>
+          <% } %> <% k++ %> <% } %> <% } %> <% } else { %> <% for ( let i = 0; i
+          < dataq.length; i++){ %>
+          <td>0</td>
+          <% } %> <% } %>
         </tr>
         <% } %>
       </table>
