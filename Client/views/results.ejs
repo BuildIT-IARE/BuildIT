@@ -1,93 +1,96 @@
 <!DOCTYPE html>
 <html>
-<title>Submissions Table</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../css/navadmin.css">
-<link rel="stylesheet" href="../css/w3.css">
-<head>
-    <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
-</head>
+  <title>Submissions Table</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../css/navadmin.css" />
+  <link rel="stylesheet" href="../css/w3.css" />
+  <head>
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+  </head>
 
-
-<body>
-  <% include ../views/partials/adminpanel %>
-      <br><br><br><br><br>
-    <div class="w3-container" style="background: white;">
-      <h2 style="text-align: center">Contest Id - <%= datap[0].contestId %> </h2>
-      <button onclick="exportTableToCSV('results.csv')">Download Results</button>
-  <br><hr>
-  <table class="w3-table w3-striped">
-    <tr>
-      <th>Username</th>
-      <th>Contest ID</th>
-      <th>Participation Time</th>
-      <% for (let i = 0; i < dataq.length; i++){ %>
-        <th><%= dataq[i].questionId %></th>
-      <% } %>
-    </tr>
-  <% for(let i=0; i < datap.length; i++){ %>    
-      <tr>
-        <td><%= datap[i].username %></td>
-        <td><%= datap[0].contestId %></td>
-        <td><%= datap[i].participationTime.slice(0, datap[i].participationTime.length - 9 ) %></td>
-        <% if (datap[i].submissionResults.length !== 0){ %>
-          <% for (let j = 0; j < datap[i].submissionResults.length ; j++ ){ %>
-            <% let done = 0; let k = 0; %>
-            <% while (done < dataq.length-1 && k < dataq.length) { %>
-              <% if (dataq[k].questionId === datap[i].submissionResults[j].questionId) { %>
-                <% done++ %>
-          <td><%= datap[i].submissionResults[j].score %></td>
-              <% } %>
-              <% k++ %>
-            <% } %>
+  <body>
+    <% include ../views/partials/adminpanel %>
+    <br /><br /><br /><br /><br />
+    <div class="w3-container" style="background: white">
+      <h2 style="text-align: center">Contest Id - <%= datap[0].contestId %></h2>
+      <button onclick="exportTableToCSV('results.csv')">
+        Download Results
+      </button>
+      <br />
+      <hr />
+      <table class="w3-table w3-striped">
+        <tr>
+          <th>Username</th>
+          <th>Contest ID</th>
+          <th>Participation Time</th>
+          <% for (let i = 0; i < dataq.length; i++){ %>
+          <th><%= dataq[i].questionId %></th>
           <% } %>
+        </tr>
+        <% for(let i=0; i < datap.length; i++){ %>
+        <tr>
+          <td><%= datap[i].username %></td>
+          <td><%= datap[0].contestId %></td>
+          <td>
+            <%= datap[i].participationTime.slice(0,
+            datap[i].participationTime.length - 9 ) %>
+          </td>
+          <% if (datap[i].submissionResults.length !== 0){ %> <% for (let j = 0;
+          j < datap[i].submissionResults.length ; j++ ){ %> <% let done = 0; let
+          k = 0; %> <% while (done < dataq.length && k < dataq.length) { %> <%
+          if (dataq[k].questionId === datap[i].submissionResults[j].questionId)
+          { %> <% done++ %>
+          <td><%= datap[i].submissionResults[j].score %></td>
+          <% } %> <% k++ %> <% } %> <% } %> <% } else { %> <% for ( let i = 0; i
+          < dataq.length; i++){ %>
+          <td>0</td>
+          <% } %> <% } %>
+        </tr>
         <% } %>
-      </tr>
-  <% } %>
-  </table>
-  <br>
-  <br>
-</div>
-<script src="/adminjs/classie.js"></script>
-<script src="/adminjs/gnmenu.js"></script>
-<script>
-  new gnMenu( document.getElementById( 'gn-menu' ) );
-</script>
-<script>
-  function downloadCSV(csv, filename) {
-  var csvFile;
-  var downloadLink;
+      </table>
+      <br />
+      <br />
+    </div>
+    <script src="/adminjs/classie.js"></script>
+    <script src="/adminjs/gnmenu.js"></script>
+    <script>
+      new gnMenu(document.getElementById("gn-menu"));
+    </script>
+    <script>
+      function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
 
-  csvFile = new Blob([csv], {type: "text/csv"});
+        csvFile = new Blob([csv], { type: "text/csv" });
 
-  downloadLink = document.createElement("a");
+        downloadLink = document.createElement("a");
 
-  downloadLink.download = filename;
+        downloadLink.download = filename;
 
-  downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.href = window.URL.createObjectURL(csvFile);
 
-  downloadLink.style.display = "none";
+        downloadLink.style.display = "none";
 
-  document.body.appendChild(downloadLink);
+        document.body.appendChild(downloadLink);
 
-  downloadLink.click();
-}
+        downloadLink.click();
+      }
 
-function exportTableToCSV(filename) {
-  var csv = [];
-  var rows = document.querySelectorAll("table tr");
-  
-  for (var i = 0; i < rows.length; i++) {
-      var row = [], cols = rows[i].querySelectorAll("td, th");
-      
-      for (var j = 0; j < cols.length; j++) 
-          row.push(cols[j].innerText);
-      
-      csv.push(row.join(","));        
-  }
+      function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
 
-  downloadCSV(csv.join("\n"), filename);
-}
-  </script>
-</body>
+        for (var i = 0; i < rows.length; i++) {
+          var row = [],
+            cols = rows[i].querySelectorAll("td, th");
+
+          for (var j = 0; j < cols.length; j++) row.push(cols[j].innerText);
+
+          csv.push(row.join(","));
+        }
+
+        downloadCSV(csv.join("\n"), filename);
+      }
+    </script>
+  </body>
 </html>
