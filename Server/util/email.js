@@ -8,6 +8,7 @@ var domains = [
   "gmx.com",
   "googlemail.com",
   "google.com",
+  "iare.ac.in",
   "hotmail.com",
   "hotmail.co.uk",
   "mac.com",
