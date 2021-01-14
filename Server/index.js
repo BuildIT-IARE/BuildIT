@@ -466,11 +466,9 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
                                                       result,
                                                       (err, sub) => {
                                                         if (err) {
-                                                          res
-                                                            .status(404)
-                                                            .send({
-                                                              message: err,
-                                                            });
+                                                          res.status(404).send({
+                                                            message: err,
+                                                          });
                                                         } else {
                                                           res.send(sub);
                                                         }
@@ -910,7 +908,7 @@ app.post("/updateLeaderboard", middleware.checkTokenAdmin, async (req, res) => {
   if (req.files) {
     let file = req.files.upfile,
       filename = "current_leaderboard";
-    file.mv("../Public/pdf/" + filename, function (err) {
+    file.mv("../Public/" + filename, function (err) {
       if (err) {
         res.send("error occured");
       } else {

@@ -7,6 +7,7 @@ const urlExists = require("url-exists");
 const cookieParser = require("cookie-parser");
 var path = require("path");
 let config = require("../Server/util/config");
+const xlsx = require("xlsx");
 
 let serverRoute = config.serverAddress;
 let clientRoute = config.clientAddress;
@@ -47,6 +48,13 @@ app.get("/home", async (req, res) => {
 });
 app.get("/about", async (req, res) => {
   res.render("about", { imgUsername: req.cookies.username });
+});
+app.get("/leaderboard", async (req, res) => {
+  let wb = xlsx.readFile("../Public/current_leaderboard");
+  let ws = wb.Sheets["Sheet1"];
+  let data = xlsx.utils.sheet_to_json(ws);
+  console.log(data);
+  res.render("leaderboard", { imgUsername: req.cookies.username });
 });
 
 app.get("/profile", async (req, res) => {
