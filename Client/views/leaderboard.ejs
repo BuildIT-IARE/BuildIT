@@ -66,8 +66,8 @@
           <tbody>
             <% for (let i = 0; i < data.length; i++ ){ %>
             <tr>
-              <%= Object.keys(data[i]).forEach((col)=> { %> <%=
-              if(data[i][col]){ %>
+              <%= Object.keys(data[i]).forEach((col)=> { %>
+              <%=if(data[i][col]){%>
               <td><%= data[i][col] %></td>
               <%} else { %>
               <td>0</td>
