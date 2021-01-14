@@ -58,9 +58,7 @@
           <thead>
             <tr>
               <!-- Dynamic headers -->
-              <%= Object.keys(data[0]).forEach((val)=>{ %>
-              <th><%= val %></th>
-              <% }) %>
+              <%= JSON.stringify(Object.keys(data[0])) %>
             </tr>
           </thead>
         </table>
