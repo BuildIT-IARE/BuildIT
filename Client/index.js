@@ -53,8 +53,25 @@ app.get("/leaderboard", async (req, res) => {
   let wb = xlsx.readFile("../Public/current_leaderboard");
   let ws = wb.Sheets["Sheet1"];
   let data = xlsx.utils.sheet_to_json(ws);
+  let headers = [
+    "Rank",
+    "Roll Number",
+    "Name",
+    "Username",
+    "HackerRank (HR)",
+    "CodeChef (CC)",
+    "Codeforces (CF)",
+    "InterviewBit (IB)",
+    "Spoj (S)",
+    "BuildIT",
+    "Overall Score",
+  ];
   // console.log(data);
-  res.render("leaderboard", { imgUsername: req.cookies.username, data: data });
+  res.render("leaderboard", {
+    imgUsername: req.cookies.username,
+    data: data,
+    headers: headers,
+  });
 });
 
 app.get("/profile", async (req, res) => {
