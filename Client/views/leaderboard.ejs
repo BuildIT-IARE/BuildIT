@@ -49,40 +49,8 @@
 
     <section class="section">
       <div class="container">
-        <div><%= JSON.stringify(data) %></div>
-        <table
-          id="leaderboard"
-          class="table table-striped table-bordered"
-          style="width: 100%"
-        >
-          <thead>
-            <tr>
-              <!-- Dynamic headers -->
-              <%= Object.keys(data[0]).forEach((val)=>{ %>
-              <th><% val %></th>
-              <% }) %>
-            </tr>
-          </thead>
-          <!-- <tbody>
-            <%= for (let i = 0; i < data.length; i++ ){ %>
-            <tr>
-              <%= headers.forEach((col)=> { if(data[i][col]){ %>
-              <td><%= data[i][col] %></td>
-              <% } else { %>
-              <td>0</td>
-              <% } %> <% }) %>
-            </tr>
-            <% } %>
-          </tbody> -->
-          <tfoot>
-            <tr>
-              <!-- Dynamic headers -->
-              <%= Object.keys(data[0]).forEach((val)=>{ %>
-              <th><% val %></th>
-              <% }) %>
-            </tr>
-          </tfoot>
-        </table>
+        <%= let headers = Object.keys(data[i]); %>
+        <div><%= JSON.stringify(data) %> <%= headers %></div>
       </div>
     </section>
 
