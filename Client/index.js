@@ -53,8 +53,8 @@ app.get("/leaderboard", async (req, res) => {
   let wb = xlsx.readFile("../Public/current_leaderboard");
   let ws = wb.Sheets["Sheet1"];
   let data = xlsx.utils.sheet_to_json(ws);
-  console.log(data);
-  res.render("leaderboard", { imgUsername: req.cookies.username });
+  // console.log(data);
+  res.render("leaderboard", { imgUsername: req.cookies.username, data: data });
 });
 
 app.get("/profile", async (req, res) => {
