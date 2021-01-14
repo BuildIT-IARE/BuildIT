@@ -67,7 +67,7 @@
             <% for (let i = 0; i < data.length; i++ ){ %>
             <tr>
               <% Object.keys(data[i]).forEach((col)=> { %>
-              <td><%= data[i][col] %></td>
+              <td><%= data[i][col] ? data[i][col] : 0 %></td>
               <% }) %>
             </tr>
             <% } %>
