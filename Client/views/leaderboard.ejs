@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <title id="demo1">Tutorials</title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css" />
+    <!-- slick slider -->
+    <link rel="stylesheet" href="/plugins/slick/slick.css" />
+    <!-- themefy-icon -->
+    <link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+
+    <!-- Main Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/datatables/dataTables.min.css" rel="stylesheet" />
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+  </head>
+
+  <body>
+    <% include ../views/partials/header %>
+
+    <!-- page title -->
+    <section
+      class="page-title bg-primary position-relative"
+      style="height: 1vh"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h2 class="text-white font-tertiary">Leaderboard</h2>
+            <br />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <table
+          id="leaderboard"
+          class="table table-striped table-bordered"
+          style="width: 100%"
+        >
+          <thead>
+            <tr>
+              for (let i = 0; i < data[0].length; i++){
+              <th><%= data[0][i] %></th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let i = 0; i < data.length; i++ ){ %>
+            <tr>
+              <% for (let j=0; j < data[i].length; j++){ %>
+              <td><%= data[i][j]</td>
+              <% } %>
+            </tr>
+            <% } %>
+          </tbody>
+          <tfoot>
+            <tr>
+              for (let i = 0; i < data[0].length; i++){
+              <th><%= data[0][i] %></th>
+              }
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- jQuery -->
+    <script src="/plugins/jQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="/plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- slick slider -->
+    <script src="/plugins/slick/slick.min.js"></script>
+    <!-- filter -->
+    <script src="/plugins/shuffle/shuffle.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="/js/script.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#leaderboard").DataTable();
+      });
+    </script>
+  </body>
+</html>

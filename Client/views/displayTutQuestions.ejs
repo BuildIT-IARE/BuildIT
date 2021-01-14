@@ -1,104 +1,110 @@
 <!DOCTYPE html>
 <html lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <title id="demo1">Tutorials</title>
 
-<head>
-  <meta charset="utf-8">
-  <title id = "demo1">Tutorials</title>
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
 
-  <!-- mobile responsive meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  <!-- ** Plugins Needed for the Project ** -->
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css">
-  <!-- slick slider -->
-  <link rel="stylesheet" href="/plugins/slick/slick.css">
-  <!-- themefy-icon -->
-  <link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css">
-  <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css" />
+    <!-- slick slider -->
+    <link rel="stylesheet" href="/plugins/slick/slick.css" />
+    <!-- themefy-icon -->
+    <link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
 
-  <!-- Main Stylesheet -->
-  <link href="/css/style.css" rel="stylesheet">
-  <link href="/datatables/dataTables.min.css" rel="stylesheet">
-  
-  <!--Favicon-->
-  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <!-- Main Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/datatables/dataTables.min.css" rel="stylesheet" />
 
-</head>
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+  </head>
 
-<body>
+  <body>
+    <% include ../views/partials/header %>
 
-  <% include ../views/partials/header %>
-
-<!-- page title -->
-<section class="page-title bg-primary position-relative">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h2 class="text-white font-tertiary"><%= data.courseName %></h2>
-        <br>
+    <!-- page title -->
+    <section
+      class="page-title bg-primary position-relative"
+      style="height: 1vh"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h2 class="text-white font-tertiary"><%= data.courseName %></h2>
+            <br />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-</section>
-
-<section class="section">
-  <div class="container">
-        <table id="questions" class="table table-striped table-bordered" style="width:100%;">
-        <thead>
+    <section class="section">
+      <div class="container">
+        <table
+          id="questions"
+          class="table table-striped table-bordered"
+          style="width: 100%"
+        >
+          <thead>
             <tr>
-                <th>#</th>
-                <th>Question Name</th>
-                <th>Status</th>
+              <th>#</th>
+              <th>Question Name</th>
+              <th>Status</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <% for (let i = 0; i < data.length; i++ ){ %>
-            <tr style = "background: <%= data[i].color %>;">
-                <td><%= i+1 %></td>
-                <td><a href = "<%= data.clientRoute %>/tutorials/questions/<%= data[i].questionId%>" target="_blank"><%= data[i].questionName %></a></td>
-                <td><%= data[i].solved %></td>
+            <tr style="background: <%= data[i].color %>">
+              <td><%= i+1 %></td>
+              <td>
+                <a
+                  href="<%= data.clientRoute %>/tutorials/questions/<%= data[i].questionId%>"
+                  target="_blank"
+                  ><%= data[i].questionName %></a
+                >
+              </td>
+              <td><%= data[i].solved %></td>
             </tr>
             <% } %>
-
-        </tbody>
-        <tfoot>
+          </tbody>
+          <tfoot>
             <tr>
-                <th>#</th>
-                <th>Question Name</th>
-                <th>Status</th>
+              <th>#</th>
+              <th>Question Name</th>
+              <th>Status</th>
             </tr>
-        </tfoot>
-    </table>
-  </div>
-</section>
+          </tfoot>
+        </table>
+      </div>
+    </section>
 
+    <!-- jQuery -->
+    <script src="/plugins/jQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
 
-<!-- jQuery -->
-<script src="/plugins/jQuery/jquery.min.js"></script>
-<script type="text/javascript" src="/datatables/datatables.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="/plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- slick slider -->
+    <script src="/plugins/slick/slick.min.js"></script>
+    <!-- filter -->
+    <script src="/plugins/shuffle/shuffle.min.js"></script>
 
-<!-- Bootstrap JS -->
-<script src="/plugins/bootstrap/bootstrap.min.js"></script>
-<!-- slick slider -->
-<script src="/plugins/slick/slick.min.js"></script>
-<!-- filter -->
-<script src="/plugins/shuffle/shuffle.min.js"></script>
+    <!-- Main Script -->
+    <script src="/js/script.js"></script>
 
-
-<!-- Main Script -->
-<script src="/js/script.js"></script>
-
-
-
-<script>
-    $(document).ready(function() {
-    $('#questions').DataTable();
-} );
-</script>
-
-</body>
+    <script>
+      $(document).ready(function () {
+        $("#questions").DataTable();
+      });
+    </script>
+  </body>
 </html>
