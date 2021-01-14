@@ -56,25 +56,25 @@
         >
           <thead>
             <tr>
-              for (let i = 0; i < data[0].length; i++){
+              <% for (let i = 0; i < data[0].length; i++){ %>
               <th><%= data[0][i] %></th>
-              }
+              <% } %>
             </tr>
           </thead>
           <tbody>
             <% for (let i = 0; i < data.length; i++ ){ %>
             <tr>
               <% for (let j=0; j < data[i].length; j++){ %>
-              <td><%= data[i][j]</td>
+              <td><%= data[i][j] %></td>
               <% } %>
             </tr>
             <% } %>
           </tbody>
           <tfoot>
             <tr>
-              for (let i = 0; i < data[0].length; i++){
+              <% for (let i = 0; i < data[0].length; i++){ %>
               <th><%= data[0][i] %></th>
-              }
+              <% } %>
             </tr>
           </tfoot>
         </table>
