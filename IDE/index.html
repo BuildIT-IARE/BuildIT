@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Online compiler and IDE powered by Judge0 API">
-    <meta name="keywords" content="online compiler, online ide">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Online compiler and IDE powered by Judge0 API"
+    />
+    <meta name="keywords" content="online compiler, online ide" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <script src="offline/jquery.min.js"></script>
 
@@ -13,41 +15,47 @@
     <link rel="stylesheet" href="offline/goldenlayout-base.css" />
     <link rel="stylesheet" href="offline/goldenlayout-dark-theme.css" />
 
-    <script type="text/javascript" src="third_party/monaco-editor-0.18.0/min/vs/loader.js"></script>
+    <script
+      type="text/javascript"
+      src="third_party/monaco-editor-0.18.0/min/vs/loader.js"
+    ></script>
     <script>
-        require.config({
-            paths: {
-                "vs": "third_party/monaco-editor-0.18.0/min/vs"
-            }
-        });
+      require.config({
+        paths: {
+          vs: "third_party/monaco-editor-0.18.0/min/vs",
+        },
+      });
     </script>
 
     <link rel="stylesheet" href="offline/semantic.min.css" />
     <script src="offline/semantic.min.js"></script>
 
-    <link href="offline/exo2.css" rel="stylesheet">
+    <link href="offline/exo2.css" rel="stylesheet" />
 
     <script type="text/javascript" src="third_party/download.js"></script>
 
     <script type="text/javascript" src="js/ide.js"></script>
 
-    <link type="text/css" rel="stylesheet" href="css/ide.css">
+    <link type="text/css" rel="stylesheet" href="css/ide.css" />
 
     <title>BuildIT IDE</title>
-</head>
+  </head>
 
-<body>
-    <div id="site-navigation" class="ui inverted menu"
-        style="border-top: 2px solid purple; border-bottom: 2px solid purple;">
-        <div id="site-header" class="header item">
-            <a href="/">
-                <h2>BuildIT</h2><sup> By Go-Labs</sup>
-            </a>
-        </div>
-        <div class="left menu">
-
-            <!-- <div class="link item" onclick="$('#site-settings').modal('show')"><i class="cog icon"></i> Settings</div> -->
-            <!-- <option value="1" mode="shell">Bash (4.4)</option>
+  <body>
+    <div
+      id="site-navigation"
+      class="ui inverted menu"
+      style="border-top: 2px solid purple; border-bottom: 2px solid purple"
+    >
+      <div id="site-header" class="header item">
+        <a href="/">
+          <h2>BuildIT</h2>
+          <sup> By Go-Labs</sup>
+        </a>
+      </div>
+      <div class="left menu">
+        <!-- <div class="link item" onclick="$('#site-settings').modal('show')"><i class="cog icon"></i> Settings</div> -->
+        <!-- <option value="1" mode="shell">Bash (4.4)</option>
                     <option value="3" mode="text/x-pascal">Basic (fbc 1.05.0)</option>
                     <option value="4" mode="c">C (gcc 7.2.0)</option>
                     <option value="10" mode="cpp">C++ (g++ 7.2.0)</option>
@@ -72,100 +80,121 @@
                     <option value="42" mode="rust">Rust (1.20.0)</option>
                     <option value="43" mode="plaintext">Text (plain text)</option>
                     <option value="44" mode="plaintext">Executable</option>  -->
-            <div class="item fitted borderless left-padding">
-                <select id="select-language" class="ui dropdown">
-                </select>
-            </div>
-            <div class="item fitted borderless left-padding">
-                <button id="run-btn" class="ui primary icon button">Run</button>
-            </div>
-            <div class="item fitted borderless left-padding">
-                <button id="submit-btn" class="ui green icon button">Submit</button>
-                <!-- <pre id="tutorials" style="color: cyan; font-size: large;"></pre> -->
-            </div>
-            <!-- <div class="item fitted borderless left-padding">
+        <div class="item fitted borderless left-padding">
+          <select id="select-language" class="ui dropdown"></select>
+        </div>
+        <div class="item fitted borderless left-padding">
+          <button id="run-btn" class="ui primary icon button">Run</button>
+        </div>
+        <div class="item fitted borderless left-padding">
+          <button id="submit-btn" class="ui green icon button">Submit</button>
+          <!-- <pre id="tutorials" style="color: cyan; font-size: large;"></pre> -->
+        </div>
+        <!-- <div class="item fitted borderless left-padding">
                 <pre id="questionIdText" style="color: orangered; font-size: large;"></pre>
             </div> -->
-        </div>
-        <div class="right menu">
-            <a class="link item" id="tutorials" style="color: cyan; font-size: large;"></a>
-            <a class="link item" id="questionIdText" style="color: orangered; font-size: large;"></a>
-            <a class="link item" id="username" style="color: pink; font-size: large;"></a>
-            <img id="userImage" class="link item" width="90px" height="90px" src="images/defaultuser.png" />
-        </div>
+      </div>
+      <div class="right menu">
+        <a
+          class="link item"
+          id="tutorials"
+          style="color: cyan; font-size: large"
+        ></a>
+        <a
+          class="link item"
+          id="questionIdText"
+          style="color: orangered; font-size: large"
+        ></a>
+        <a
+          class="link item"
+          id="username"
+          style="color: pink; font-size: large"
+        ></a>
+        <img
+          id="userImage"
+          class="link item"
+          width="90px"
+          height="90px"
+          src="images/defaultuser.png"
+        />
+      </div>
     </div>
 
     <div id="site-content"></div>
 
     <div id="site-modal" class="ui basic modal">
-        <div class="header">
-            <i></i>
-            <span id="title"></span>
+      <div class="header">
+        <i></i>
+        <span id="title"></span>
+      </div>
+      <div class="content"></div>
+      <div class="actions">
+        <div class="ui small inverted labeled icon cancel button">
+          <i class="remove icon"></i>
+          Close (ESC)
         </div>
-        <div class="content"></div>
-        <div class="actions">
-            <div class="ui small inverted labeled icon cancel button">
-                <i class="remove icon"></i>
-                Close (ESC)
-            </div>
-        </div>
+      </div>
     </div>
 
     <div id="site-settings" class="ui modal">
-        <i class="close icon"></i>
-        <div class="header">
-            <i class="cog icon"></i>
-            Settings
-        </div>
-        <div class="content">
-            <div class="ui form">
-                <div class="inline fields">
-                    <label>Editor Mode</label>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="editor-mode" checked="checked">
-                            <label>Normal</label>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="editor-mode">
-                            <label>Vim</label>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" name="editor-mode">
-                            <label>Emacs</label>
-                        </div>
-                    </div>
-                </div>
+      <i class="close icon"></i>
+      <div class="header">
+        <i class="cog icon"></i>
+        Settings
+      </div>
+      <div class="content">
+        <div class="ui form">
+          <div class="inline fields">
+            <label>Editor Mode</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="editor-mode" checked="checked" />
+                <label>Normal</label>
+              </div>
             </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="editor-mode" />
+                <label>Vim</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="editor-mode" />
+                <label>Emacs</label>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</body>
-<script>
+  </body>
+  <script>
     function getCookie(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1);
-            if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
-        }
-        return "";
+      var name = cname + "=";
+      var ca = document.cookie.split(";");
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == " ") c = c.substring(1);
+        if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+      }
+      return "";
     }
     $(document).ready(function () {
-
-        let branch = getCookie("branch");
-        let username = getCookie("username");
-        if (branch) {
-            $('#userImage').attr('src', "http://cms.iare.ac.in/iare/images/" + branch + "/" + username +
-            ".jpg");
-            document.getElementById('username').innerHTML = username;
-        }
+      let branch = getCookie("branch");
+      let username = getCookie("username");
+      if (branch) {
+        $("#userImage").attr(
+          "src",
+          "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/" +
+            branch +
+            "/" +
+            username +
+            ".jpg"
+        );
+        document.getElementById("username").innerHTML = username;
+      }
     });
-</script>
-
+  </script>
 </html>
 <!-- 41228e -->

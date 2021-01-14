@@ -95,7 +95,7 @@ app.get("/profile", async (req, res) => {
   request(options, function (err, response, body) {
     body.branchCaps = body.branch.toUpperCase();
     let branch = body.branch;
-    let imageUrl = "http://cms.iare.ac.in/iare/images/";
+    let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
     let rollno = req.cookies.username;
     let testUrl = imageUrl + branch + "/" + rollno + ".jpg";
     urlExists(testUrl, function (err, exists) {
