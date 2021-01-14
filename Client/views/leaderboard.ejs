@@ -49,6 +49,7 @@
 
     <section class="section">
       <div class="container">
+        <%= let header = Object.keys(data[0]) %>
         <div><%= JSON.stringify(data) %></div>
         <table
           id="leaderboard"
@@ -58,7 +59,7 @@
           <thead>
             <tr>
               <!-- Dynamic headers -->
-              <%= "Test" + JSON.stringify(Object.keys(data[0]))%>
+              <%= "Test" + JSON.stringify(header) %>
             </tr>
           </thead>
         </table>
