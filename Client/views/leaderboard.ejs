@@ -49,6 +49,7 @@
 
     <section class="section">
       <div class="container">
+        <%= let headers = Object.keys(data[i]); %>
         <div><%= JSON.stringify(data) %></div>
         <table
           id="leaderboard"
@@ -66,8 +67,7 @@
           <tbody>
             <% for (let i = 0; i < data.length; i++ ){ %>
             <tr>
-              <%= Object.keys(data[i]).forEach((col)=> { %>
-              <%=if(data[i][col]){%>
+              <%= headers.forEach((col)=> { %> <%= if(data[i][col]){ %>
               <td><%= data[i][col] %></td>
               <%} else { %>
               <td>0</td>
