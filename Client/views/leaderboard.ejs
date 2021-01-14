@@ -59,17 +59,17 @@
           <thead>
             <tr>
               <!-- Dynamic headers -->
-              <% Object.keys(data[0]).forEach((val)=>{ %>
-              <th><%= val %></th>
+              <%= Object.keys(data[0]).forEach((val)=>{ %>
+              <th><% val %></th>
               <% }) %>
             </tr>
           </thead>
           <tbody>
-            <% for (let i = 0; i < data.length; i++ ){ %>
+            <%= for (let i = 0; i < data.length; i++ ){ %>
             <tr>
-              <%= headers.forEach((col)=> { %> <%= if(data[i][col]){ %>
+              <%= headers.forEach((col)=> { if(data[i][col]){ %>
               <td><%= data[i][col] %></td>
-              <%} else { %>
+              <% } else { %>
               <td>0</td>
               <% } %> <% }) %>
             </tr>
@@ -78,8 +78,8 @@
           <tfoot>
             <tr>
               <!-- Dynamic headers -->
-              <% Object.keys(data[0]).forEach((val)=>{ %>
-              <th><%= val %></th>
+              <%= Object.keys(data[0]).forEach((val)=>{ %>
+              <th><% val %></th>
               <% }) %>
             </tr>
           </tfoot>
