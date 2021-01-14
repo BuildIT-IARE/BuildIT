@@ -63,15 +63,15 @@
               <% }) %>
             </tr>
           </thead>
-          <!-- <tbody>
+          <tbody>
             <% for (let i = 0; i < data.length; i++ ){ %>
             <tr>
-              <% for (let j=0; j < data[i].length; j++){ %>
-              <td><%= data[i][j] %></td>
-              <% } %>
+              <% Object.keys(data[i]).forEach((col)=> { %>
+              <td><%= data[i][col] %></td>
+              <% }) %>
             </tr>
             <% } %>
-          </tbody> -->
+          </tbody>
           <tfoot>
             <tr>
               <!-- Dynamic headers -->
