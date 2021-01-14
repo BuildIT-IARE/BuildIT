@@ -76,7 +76,10 @@ app.get("/leaderboard", async (req, res) => {
       headers: headers,
     });
   } else {
-    res.render("error", { data: { message: "Leaderboard not initialised" } });
+    res.render("error", {
+      data: { message: "Leaderboard not initialised" },
+      imgUsername: req.cookies.username,
+    });
   }
 });
 
