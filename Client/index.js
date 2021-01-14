@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 var path = require("path");
 let config = require("../Server/util/config");
 const xlsx = require("xlsx");
+const fs = require("fs");
 
 let serverRoute = config.serverAddress;
 let clientRoute = config.clientAddress;
@@ -50,28 +51,33 @@ app.get("/about", async (req, res) => {
   res.render("about", { imgUsername: req.cookies.username });
 });
 app.get("/leaderboard", async (req, res) => {
-  let wb = xlsx.readFile("../Public/current_leaderboard");
-  let ws = wb.Sheets["Sheet1"];
-  let data = xlsx.utils.sheet_to_json(ws);
-  let headers = [
-    "Rank",
-    "Roll Number",
-    "Name",
-    "Username",
-    "HackerRank (HR)",
-    "CodeChef (CC)",
-    "Codeforces (CF)",
-    "InterviewBit (IB)",
-    "Spoj (S)",
-    "BuildIT",
-    "Overall Score",
-  ];
-  // console.log(data);
-  res.render("leaderboard", {
-    imgUsername: req.cookies.username,
-    data: data,
-    headers: headers,
-  });
+  let filePath = "../Public/current_leaderboard";
+  if (fs.existsSync(filePath)) {
+    let wb = xlsx.readFile(filePath);
+    let ws = wb.Sheets["Sheet1"];
+    let data = xlsx.utils.sheet_to_json(ws);
+    let headers = [
+      "Rank",
+      "Roll Number",
+      "Name",
+      "Username",
+      "HackerRank (HR)",
+      "CodeChef (CC)",
+      "Codeforces (CF)",
+      "InterviewBit (IB)",
+      "Spoj (S)",
+      "BuildIT",
+      "Overall Score",
+    ];
+    // console.log(data);
+    res.render("leaderboard", {
+      imgUsername: req.cookies.username,
+      data: data,
+      headers: headers,
+    });
+  } else {
+    res.render("error", { data: { message: "Leaderboard not initialised" } });
+  }
 });
 
 app.get("/profile", async (req, res) => {
