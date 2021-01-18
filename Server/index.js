@@ -354,38 +354,20 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
                               };
 
                               setTimeout(() => {
-                                request(option1, function (
-                                  err,
-                                  response,
-                                  body
-                                ) {
-                                  if (err) {
-                                    res.status(404).send({ message: err });
-                                  }
-                                  let data = JSON.parse(body);
+                                request(
+                                  option1,
+                                  function (err, response, body) {
+                                    if (err) {
+                                      res.status(404).send({ message: err });
+                                    }
+                                    let data = JSON.parse(body);
 
-                                  let resp = data.status.description;
-                                  result.response1 = resp;
-                                  setTimeout(() => {
-                                    request(option2, function (
-                                      err,
-                                      response,
-                                      body
-                                    ) {
-                                      if (err) {
-                                        res.status(404).send({ message: err });
-                                      }
-                                      let data = JSON.parse(body);
-
-                                      let resp = data.status.description;
-                                      result.response2 = resp;
-
-                                      setTimeout(() => {
-                                        request(option3, function (
-                                          err,
-                                          response,
-                                          body
-                                        ) {
+                                    let resp = data.status.description;
+                                    result.response1 = resp;
+                                    setTimeout(() => {
+                                      request(
+                                        option2,
+                                        function (err, response, body) {
                                           if (err) {
                                             res
                                               .status(404)
@@ -394,82 +376,114 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
                                           let data = JSON.parse(body);
 
                                           let resp = data.status.description;
-                                          result.response3 = resp;
-                                          // End of chain
+                                          result.response2 = resp;
 
-                                          result.languageId =
-                                            req.body.language_id;
-                                          result.questionId =
-                                            req.body.questionId;
-                                          result.username =
-                                            req.decoded.username;
-                                          result.sourceCode =
-                                            req.body.source_code;
-                                          result.submissionToken = [
-                                            result.token1,
-                                            result.token2,
-                                            result.token3,
-                                          ];
-                                          result.result = [
-                                            result.response1,
-                                            result.response2,
-                                            result.response3,
-                                          ];
-                                          result.participationId =
-                                            result.username + result.contestId;
-                                          result.clientIp = requestIp.getClientIp(
-                                            req
-                                          );
-                                          var testcasesPassed = 0;
-                                          if (result.response1 === "Accepted") {
-                                            testcasesPassed += 1;
-                                          }
-                                          if (result.response2 === "Accepted") {
-                                            testcasesPassed += 1;
-                                          }
-                                          if (result.response3 === "Accepted") {
-                                            testcasesPassed += 1;
-                                          }
-                                          if (testcasesPassed === 3) {
-                                            result.score = 100;
-                                          } else if (testcasesPassed === 2) {
-                                            result.score = 50;
-                                          } else if (testcasesPassed === 1) {
-                                            result.score = 25;
-                                          } else {
-                                            result.score = 0;
-                                          }
-
-                                          // Add score to profile
-                                          participations.acceptSubmission(
-                                            result,
-                                            (err, doc) => {
-                                              if (err) {
-                                                res
-                                                  .status(404)
-                                                  .send({ message: err });
-                                              }
-                                              // Create a submission
-                                              submissions.create(
-                                                req,
-                                                result,
-                                                (err, sub) => {
-                                                  if (err) {
-                                                    res
-                                                      .status(404)
-                                                      .send({ message: err });
-                                                  } else {
-                                                    res.send(sub);
-                                                  }
+                                          setTimeout(() => {
+                                            request(
+                                              option3,
+                                              function (err, response, body) {
+                                                if (err) {
+                                                  res
+                                                    .status(404)
+                                                    .send({ message: err });
                                                 }
-                                              );
-                                            }
-                                          );
-                                        });
-                                      }, timeOut);
-                                    });
-                                  }, timeOut);
-                                });
+                                                let data = JSON.parse(body);
+
+                                                let resp =
+                                                  data.status.description;
+                                                result.response3 = resp;
+                                                // End of chain
+
+                                                result.languageId =
+                                                  req.body.language_id;
+                                                result.questionId =
+                                                  req.body.questionId;
+                                                result.username =
+                                                  req.decoded.username;
+                                                result.sourceCode =
+                                                  req.body.source_code;
+                                                result.submissionToken = [
+                                                  result.token1,
+                                                  result.token2,
+                                                  result.token3,
+                                                ];
+                                                result.result = [
+                                                  result.response1,
+                                                  result.response2,
+                                                  result.response3,
+                                                ];
+                                                result.participationId =
+                                                  result.username +
+                                                  result.contestId;
+                                                result.clientIp = requestIp.getClientIp(
+                                                  req
+                                                );
+                                                var testcasesPassed = 0;
+                                                if (
+                                                  result.response1 ===
+                                                  "Accepted"
+                                                ) {
+                                                  testcasesPassed += 1;
+                                                }
+                                                if (
+                                                  result.response2 ===
+                                                  "Accepted"
+                                                ) {
+                                                  testcasesPassed += 1;
+                                                }
+                                                if (
+                                                  result.response3 ===
+                                                  "Accepted"
+                                                ) {
+                                                  testcasesPassed += 1;
+                                                }
+                                                if (testcasesPassed === 3) {
+                                                  result.score = 100;
+                                                } else if (
+                                                  testcasesPassed === 2
+                                                ) {
+                                                  result.score = 50;
+                                                } else if (
+                                                  testcasesPassed === 1
+                                                ) {
+                                                  result.score = 25;
+                                                } else {
+                                                  result.score = 0;
+                                                }
+
+                                                // Add score to profile
+                                                participations.acceptSubmission(
+                                                  result,
+                                                  (err, doc) => {
+                                                    if (err) {
+                                                      res
+                                                        .status(404)
+                                                        .send({ message: err });
+                                                    }
+                                                    // Create a submission
+                                                    submissions.create(
+                                                      req,
+                                                      result,
+                                                      (err, sub) => {
+                                                        if (err) {
+                                                          res.status(404).send({
+                                                            message: err,
+                                                          });
+                                                        } else {
+                                                          res.send(sub);
+                                                        }
+                                                      }
+                                                    );
+                                                  }
+                                                );
+                                              }
+                                            );
+                                          }, timeOut);
+                                        }
+                                      );
+                                    }, timeOut);
+                                  }
+                                );
                               }, timeOut);
                             } else {
                               res.status(500).send({
@@ -875,6 +889,26 @@ app.post("/uploadpdf", middleware.checkTokenAdmin, async (req, res) => {
     let file = req.files.upfile,
       filename = file.name;
     file.mv("../Public/pdf/" + filename, function (err) {
+      if (err) {
+        res.send("error occured");
+      } else {
+        res.json({
+          success: true,
+          message: "uploaded",
+          filename: filename,
+        });
+      }
+    });
+  } else {
+    res.send("Failed");
+  }
+});
+
+app.post("/updateLeaderboard", middleware.checkTokenAdmin, async (req, res) => {
+  if (req.files) {
+    let file = req.files.upfile,
+      filename = "current_leaderboard";
+    file.mv("../Public/" + filename, function (err) {
       if (err) {
         res.send("error occured");
       } else {

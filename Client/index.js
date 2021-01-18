@@ -7,6 +7,8 @@ const urlExists = require("url-exists");
 const cookieParser = require("cookie-parser");
 var path = require("path");
 let config = require("../Server/util/config");
+const xlsx = require("xlsx");
+const fs = require("fs");
 
 let serverRoute = config.serverAddress;
 let clientRoute = config.clientAddress;
@@ -48,6 +50,38 @@ app.get("/home", async (req, res) => {
 app.get("/about", async (req, res) => {
   res.render("about", { imgUsername: req.cookies.username });
 });
+app.get("/leaderboard", async (req, res) => {
+  let filePath = "../Public/current_leaderboard";
+  if (fs.existsSync(filePath)) {
+    let wb = xlsx.readFile(filePath);
+    let ws = wb.Sheets["Sheet1"];
+    let data = xlsx.utils.sheet_to_json(ws);
+    let headers = [
+      "Rank",
+      "Roll Number",
+      "Name",
+      "Username",
+      "HackerRank (HR)",
+      "CodeChef (CC)",
+      "Codeforces (CF)",
+      "InterviewBit (IB)",
+      "Spoj (S)",
+      "BuildIT",
+      "Overall Score",
+    ];
+    // console.log(data);
+    res.render("leaderboard", {
+      imgUsername: req.cookies.username,
+      data: data,
+      headers: headers,
+    });
+  } else {
+    res.render("error", {
+      data: { message: "Leaderboard not initialised" },
+      imgUsername: req.cookies.username,
+    });
+  }
+});
 
 app.get("/profile", async (req, res) => {
   let options = {
@@ -61,7 +95,7 @@ app.get("/profile", async (req, res) => {
   request(options, function (err, response, body) {
     body.branchCaps = body.branch.toUpperCase();
     let branch = body.branch;
-    let imageUrl = "http://cms.iare.ac.in/iare/images/";
+    let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
     let rollno = req.cookies.username;
     let testUrl = imageUrl + branch + "/" + rollno + ".jpg";
     urlExists(testUrl, function (err, exists) {
@@ -164,6 +198,31 @@ app.get("/admin/add/pdf", async (req, res) => {
   request(options, function (err, response, body) {
     if (body.success) {
       res.render("uploadpdf", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.get("/admin/add/leaderboard", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.render("uploadcsv", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
