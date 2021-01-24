@@ -9,6 +9,7 @@ var path = require("path");
 let config = require("../Server/util/config");
 const xlsx = require("xlsx");
 const fs = require("fs");
+const fetch = require("node-fetch");
 
 let serverRoute = config.serverAddress;
 let clientRoute = config.clientAddress;
@@ -60,7 +61,6 @@ app.get("/leaderboard", async (req, res) => {
       "Rank",
       "Roll Number",
       "Name",
-      "Username",
       "HackerRank (HR)",
       "CodeChef (CC)",
       "Codeforces (CF)",
@@ -68,12 +68,30 @@ app.get("/leaderboard", async (req, res) => {
       "Spoj (S)",
       "BuildIT",
       "Overall Score",
+      "Weekly Performance",
     ];
-    // console.log(data);
+    let toppers = [
+      data[0]["Roll Number"],
+      data[1]["Roll Number"],
+      data[2]["Roll Number"],
+    ];
+    const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+      fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+      fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+      fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+    ]);
+
+    const first = await firstResponse.json();
+    const second = await secondResponse.json();
+    const third = await thirdResponse.json();
+
+    const topperData = [first, second, third];
+
     res.render("leaderboard", {
       imgUsername: req.cookies.username,
       data: data,
       headers: headers,
+      toppers: topperData,
     });
   } else {
     res.render("error", {

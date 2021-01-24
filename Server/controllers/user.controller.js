@@ -86,6 +86,45 @@ exports.findOnePublic = (req, res) => {
     });
 };
 
+// Find the branch with a username
+exports.findBranch = (req, res) => {
+  User.find({ username: req.params.username })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({
+          success: false,
+          message: "User not found with username " + req.params.username,
+        });
+      }
+      user = user[0];
+      let imgUrl =
+        "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/" +
+        user.branch +
+        "/" +
+        user.username.toUpperCase() +
+        ".jpg";
+      let sendUser = {
+        username: user.username,
+        name: user.name,
+        branch: user.branch,
+        imgUrl: imgUrl,
+      };
+      res.send(sendUser);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          success: false,
+          message: "User not found with username " + req.params.username,
+        });
+      }
+      return res.status(500).send({
+        success: false,
+        message: "Error retrieving user with id " + req.params.username,
+      });
+    });
+};
+
 // Create and Save a new user
 exports.create = (req, res) => {
   // Validate request
