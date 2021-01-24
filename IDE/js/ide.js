@@ -838,7 +838,7 @@ Content of compiled binary is Base64 encoded and used as source code.\n\
 https://ide.judge0.com/?kS_f\n\
 ';
 
-function callinsertTemplate(data){
+function insertUserCode(data){
   currentLanguageId = parseInt(data);
   sourceEditor.setValue(sources[currentLanguageId]);
   monaco.editor.setModelLanguage(
