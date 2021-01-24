@@ -13,6 +13,9 @@ const requestIp = require("request-ip");
 let config = require("./util/config");
 let middleware = require("./util/middleware.js");
 
+const User = require("./models/user.model");
+const Participation = require("./models/participation.model");
+
 // API Address
 const localServer = config.localServer;
 const port = process.env.PORT || 5000;
@@ -922,6 +925,35 @@ app.post("/updateLeaderboard", middleware.checkTokenAdmin, async (req, res) => {
   } else {
     res.send("Failed");
   }
+});
+
+app.post("/startUpdate", async (req, res) => {
+  let users = await User.find();
+  users.forEach(async (user) => {
+    let userParticipations = await Participation.find({
+      username: user.username,
+    });
+
+    userParticipations.forEach(async (uPart) => {
+      let incVal = 0;
+      uPart.submissionResults.forEach((submission) => {
+        if (submission.score === 100) {
+          incVal = incVal + 1;
+        }
+      });
+      await User.findOneAndUpdate(
+        { username: user.username },
+        { totalScore: user.totalScore + incVal },
+        { new: true },
+        function (err) {
+          if (err) {
+            console.log(err);
+          }
+        }
+      );
+    });
+  });
+  res.send("Done");
 });
 
 // get latest plag report
