@@ -942,7 +942,9 @@ app.post("/startUpdate", async (req, res) => {
         incVal = incVal + 1;
       }
     }
-    userCollection[uPart.username] += incVal;
+    if (uPart.username in userCollection) {
+      userCollection[uPart.username] += incVal;
+    }
   }
   res.send(userCollection);
 });
