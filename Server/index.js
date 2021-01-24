@@ -929,7 +929,9 @@ app.post("/updateLeaderboard", middleware.checkTokenAdmin, async (req, res) => {
 
 app.post("/startUpdate", async (req, res) => {
   let users = await User.find();
+
   for (const user of users) {
+    console.log("Updated user ", user.username);
     let userParticipations = await Participation.find({
       username: user.username,
     });
@@ -941,6 +943,7 @@ app.post("/startUpdate", async (req, res) => {
           incVal = incVal + 1;
         }
       }
+      console.log("INC by: ", incVal);
       await User.findOneAndUpdate(
         { username: user.username },
         { totalScore: user.totalScore + incVal },
@@ -952,7 +955,6 @@ app.post("/startUpdate", async (req, res) => {
         }
       );
     }
-    console.log("Updated user ", user.username);
   }
   res.send("Done");
 });
