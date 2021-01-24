@@ -952,6 +952,7 @@ app.post("/startUpdate", async (req, res) => {
         }
       );
     });
+    console.log("Updated user ", user.username);
   });
   res.send("Done");
 });
