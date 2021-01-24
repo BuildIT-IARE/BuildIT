@@ -929,34 +929,22 @@ app.post("/updateLeaderboard", middleware.checkTokenAdmin, async (req, res) => {
 
 app.post("/startUpdate", async (req, res) => {
   let users = await User.find();
-
+  let userCollection = {};
   for (const user of users) {
-    console.log("Updated user ", user.username);
-    let userParticipations = await Participation.find({
-      username: user.username,
-    });
-
-    for (const uPart of userParticipations) {
-      let incVal = 0;
-      for (const submission of uPart.submissionResults) {
-        if (submission.score === 100) {
-          incVal = incVal + 1;
-        }
-      }
-      console.log("INC by: ", incVal);
-      await User.findOneAndUpdate(
-        { username: user.username },
-        { totalScore: user.totalScore + incVal },
-        { new: true },
-        function (err) {
-          if (err) {
-            console.log(err);
-          }
-        }
-      );
-    }
+    userCollection[user] = 0;
   }
-  res.send("Done");
+  let userParticipations = await Participation.find();
+
+  for (const uPart of userParticipations) {
+    let incVal = 0;
+    for (const submission of uPart.submissionResults) {
+      if (submission.score === 100) {
+        incVal = incVal + 1;
+      }
+    }
+    userCollection[user] += incVal;
+  }
+  res.send(userCollection);
 });
 
 // get latest plag report
