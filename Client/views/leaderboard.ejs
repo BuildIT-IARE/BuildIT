@@ -89,19 +89,8 @@
     <section class="section">
       <div class="container">
         <!-- Toppers -->
+        <h2 style="padding-bottom: 2rem">Top 3</h2>
         <div class="row">
-          <div class="column">
-            <div class="card d-flex justify-content-center align-items-center">
-              <img
-                src="<%= toppers[1].imgUrl %>"
-                style="width: 157px; height: 210px"
-              />
-              <div class="container">
-                <h2><%= toppers[1].username %></h2>
-                <p class="title"><%= toppers[1].name %></p>
-              </div>
-            </div>
-          </div>
           <div class="column">
             <div class="card d-flex justify-content-center align-items-center">
               <img
@@ -109,8 +98,20 @@
                 style="width: 157px; height: 210px"
               />
               <div class="container">
-                <h2><%= toppers[0].username %></h2>
+                <h2>#1 <%= toppers[0].username %></h2>
                 <p class="title"><%= toppers[0].name %></p>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="card d-flex justify-content-center align-items-center">
+              <img
+                src="<%= toppers[1].imgUrl %>"
+                style="width: 157px; height: 210px"
+              />
+              <div class="container">
+                <h2>#2 <%= toppers[1].username %></h2>
+                <p class="title"><%= toppers[1].name %></p>
               </div>
             </div>
           </div>
@@ -121,7 +122,7 @@
                 style="width: 157px; height: 210px"
               />
               <div class="container">
-                <h2><%= toppers[2].username %></h2>
+                <h2>#3 <%= toppers[2].username %></h2>
                 <p class="title"><%= toppers[2].name %></p>
               </div>
             </div>
