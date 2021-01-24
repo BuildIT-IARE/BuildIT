@@ -838,6 +838,32 @@ Content of compiled binary is Base64 encoded and used as source code.\n\
 https://ide.judge0.com/?kS_f\n\
 ';
 
+function callinsertTemplate(data){
+  insertTemplate();
+}
+
+function getSubmission() {
+  let windowUrl = window.location.href;
+  let username= getCookie("username");
+  let questionId= windowUrl.slice(serverUrl.length + 5, windowUrl.length);
+  $.ajax({
+    url: serverUrl + "/submissions/user/" + username.toLowerCase() + "/" + questionId + "/",
+    type: "GET",
+    async: true,
+    headers: {
+      authorization: getCookie("token"),
+    },
+    success: function (data) {
+      var a = data.length-1;
+      currentLanguageId = data[a].languageId;
+      sources[currentLanguageId] = data[a].sourceCode;
+      callinsertTemplate(data);
+    },
+  });
+};
+
+getSubmission();
+
 var sources = {
   1: bashSource,
   2: bashSource,
