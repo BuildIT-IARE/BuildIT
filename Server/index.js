@@ -931,7 +931,7 @@ app.post("/startUpdate", async (req, res) => {
   let users = await User.find();
   let userCollection = {};
   for (const user of users) {
-    userCollection[user] = 0;
+    userCollection[user.username] = 0;
   }
   let userParticipations = await Participation.find();
 
