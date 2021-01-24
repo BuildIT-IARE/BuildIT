@@ -15,6 +15,9 @@ module.exports = (app) => {
   // Retrieve a single user with userId public
   app.get("/users/:username", middleware.checkToken, users.findOnePublic);
 
+  // Retrieve a single user with userId public
+  app.get("/users/branch/:username", users.findBranch);
+
   // Login Route
   app.post("/login", users.checkPass);
 
