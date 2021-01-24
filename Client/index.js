@@ -660,6 +660,23 @@ app.post("/admin/results/contest", async (req, res) => {
   });
 });
 
+app.get("/admin/solved", async (req, res) => {
+  let options = {
+    url: serverRoute + "/getSolvedCount",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.render("solvedCount", {
+      data: body,
+    });
+  });
+});
+
 app.post("/admin/resultsTut/course", async (req, res) => {
   let options = {
     url: serverRoute + "/tparticipations/all",

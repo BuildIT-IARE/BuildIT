@@ -15,6 +15,7 @@ let middleware = require("./util/middleware.js");
 
 const User = require("./models/user.model");
 const Participation = require("./models/participation.model");
+const ParticipationTut = require("./models/participationTut.model");
 
 // API Address
 const localServer = config.localServer;
@@ -927,13 +928,16 @@ app.post("/updateLeaderboard", middleware.checkTokenAdmin, async (req, res) => {
   }
 });
 
-app.post("/startUpdate", async (req, res) => {
+app.get("/getSolvedCount", middleware.checkTokenAdmin, async (req, res) => {
   let users = await User.find();
   let userCollection = {};
   for (const user of users) {
     userCollection[user.username] = 0;
   }
+
   let userParticipations = await Participation.find();
+  let tutorialParticipations = await ParticipationTut.find();
+  userParticipations = userParticipations.concat(tutorialParticipations);
 
   for (const uPart of userParticipations) {
     let incVal = 0;
