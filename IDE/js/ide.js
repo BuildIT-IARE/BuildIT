@@ -860,10 +860,12 @@ function getSubmission() {
       authorization: getCookie("token"),
     },
     success: function (data) {
-      var a = data.length-1;
-      currentLanguageId = parseInt(data[a].languageId);
-      sources[currentLanguageId] = data[a].sourceCode;
-      insertUserCode(data[a].languageId);
+      if(data.length > 0) {
+        var a = data.length-1;
+        currentLanguageId = parseInt(data[a].languageId);
+        sources[currentLanguageId] = data[a].sourceCode;
+        insertUserCode(data[a].languageId);
+      };
     },
   });
 };
