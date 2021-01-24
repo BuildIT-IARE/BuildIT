@@ -24,10 +24,10 @@
           </tr>
         </thead>
         <tbody>
-          <% for ( const user in data){ %>
+          <% for ( const user in solved){ %>
           <tr>
             <td><%= user %></td>
-            <td><%= data[user] %></td>
+            <td><%= solved[user] %></td>
           </tr>
           <% } %>
         </tbody>
@@ -82,12 +82,5 @@
         downloadCSV(csv.join("\n"), filename);
       }
     </script>
-    <!-- <script src="/plugins/jQuery/jquery.min.js"></script>
-    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        $("#solved").DataTable();
-      });
-    </script> -->
   </body>
 </html>
