@@ -104,7 +104,7 @@ exports.findBranch = (req, res) => {
         user.username.toUpperCase() +
         ".jpg";
       let sendUser = {
-        username: user.username,
+        username: user.username.toUpperCase(),
         name: user.name,
         branch: user.branch,
         imgUrl: imgUrl,
