@@ -929,18 +929,18 @@ app.post("/updateLeaderboard", middleware.checkTokenAdmin, async (req, res) => {
 
 app.post("/startUpdate", async (req, res) => {
   let users = await User.find();
-  users.forEach(async (user) => {
+  for (const user of users) {
     let userParticipations = await Participation.find({
       username: user.username,
     });
 
-    userParticipations.forEach(async (uPart) => {
+    for (const uPart of userParticipations) {
       let incVal = 0;
-      uPart.submissionResults.forEach((submission) => {
+      for (const submission of uPart.submissionResults) {
         if (submission.score === 100) {
           incVal = incVal + 1;
         }
-      });
+      }
       await User.findOneAndUpdate(
         { username: user.username },
         { totalScore: user.totalScore + incVal },
@@ -951,9 +951,9 @@ app.post("/startUpdate", async (req, res) => {
           }
         }
       );
-    });
+    }
     console.log("Updated user ", user.username);
-  });
+  }
   res.send("Done");
 });
 
