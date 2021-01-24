@@ -671,12 +671,12 @@ app.get("/admin/solved", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    // let scoreArray = [];
-    // Object.keys(body).forEach((user) => {
-    //   scoreArray.push([user, body[user]]);
-    // });
+    let url = {
+      url: clientRoute,
+    };
     res.render("solvedCount", {
-      data: body,
+      data: url,
+      solved: body,
     });
   });
 });
