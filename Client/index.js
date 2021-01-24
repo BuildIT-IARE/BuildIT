@@ -671,8 +671,12 @@ app.get("/admin/solved", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
+    let scoreArray = [];
+    Object.keys(body).forEach((user) => {
+      scoreArray.append([user, body[user]]);
+    });
     res.render("solvedCount", {
-      data: body,
+      data: scoreArray,
     });
   });
 });

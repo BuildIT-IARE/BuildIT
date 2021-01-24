@@ -24,10 +24,10 @@
           </tr>
         </thead>
         <tbody>
-          <% for ( const user in Object.keys(data)){ %>
+          <% for ( const user in data){ %>
           <tr>
-            <td>user</td>
-            <td><%= data[user] %></td>
+            <td><%= user[0] %></td>
+            <td><%= user[1] %></td>
           </tr>
           <% } %>
         </tbody>
