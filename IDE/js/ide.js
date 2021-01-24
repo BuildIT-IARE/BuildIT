@@ -839,7 +839,13 @@ https://ide.judge0.com/?kS_f\n\
 ';
 
 function callinsertTemplate(data){
-  insertTemplate();
+  currentLanguageId = parseInt(data);
+  sourceEditor.setValue(sources[currentLanguageId]);
+  monaco.editor.setModelLanguage(
+    sourceEditor.getModel(),
+    $selectLanguage.find(":selected").attr("mode")
+  );
+  $(".lm_title")[0].innerText = fileNames[currentLanguageId];
 }
 
 function getSubmission() {
