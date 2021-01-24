@@ -857,7 +857,7 @@ function getSubmission() {
       var a = data.length-1;
       currentLanguageId = data[a].languageId;
       sources[currentLanguageId] = data[a].sourceCode;
-      callinsertTemplate(data);
+      insertUserCode(data[a].languageId);
     },
   });
 };
