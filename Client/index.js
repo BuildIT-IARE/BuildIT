@@ -10,6 +10,7 @@ let config = require("../Server/util/config");
 const xlsx = require("xlsx");
 const fs = require("fs");
 const fetch = require("node-fetch");
+var _ = require("lodash");
 
 let serverRoute = config.serverAddress;
 let clientRoute = config.clientAddress;
@@ -71,11 +72,17 @@ app.get("/leaderboard", async (req, res) => {
       "Overall Score",
       "Weekly Performance",
     ];
+
+    const ordered = _.orderBy(data, function (item) {
+      return item["Weekly Performance"];
+    });
+
     let toppers = [
-      data[0]["Roll Number"],
-      data[1]["Roll Number"],
-      data[2]["Roll Number"],
+      ordered[0]["Roll Number"],
+      ordered[1]["Roll Number"],
+      ordered[2]["Roll Number"],
     ];
+
     const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
       fetch(`${serverRoute}/users/branch/${toppers[0]}`),
       fetch(`${serverRoute}/users/branch/${toppers[1]}`),
