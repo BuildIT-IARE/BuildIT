@@ -66,6 +66,7 @@ app.get("/leaderboard", async (req, res) => {
       "Codeforces (CF)",
       "InterviewBit (IB)",
       "Spoj (S)",
+      "Geeks For Geeks (GFG)",
       "BuildIT",
       "Overall Score",
       "Weekly Performance",
