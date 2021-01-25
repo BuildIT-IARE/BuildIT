@@ -87,9 +87,9 @@
     </section>
 
     <section class="section" style="padding-top: 1rem">
-      <div class="container">
+      <div class="container d-flex flex-column align-items-center">
         <!-- Toppers -->
-        <img src="../images/skillup.jpg" />
+        <img src="../images/skillup.jpg" style="width: 80%" />
         <h2 style="padding-bottom: 2rem">This Week's Toppers</h2>
         <div class="row">
           <div class="column">
@@ -99,7 +99,7 @@
                 style="width: 157px; height: 210px"
               />
               <div class="container">
-                <h2>#1 <%= toppers[0].username %></h2>
+                <p class="title"><%= toppers[0].username %></p>
                 <p class="title"><%= toppers[0].name %></p>
               </div>
             </div>
@@ -111,7 +111,7 @@
                 style="width: 157px; height: 210px"
               />
               <div class="container">
-                <h2>#2 <%= toppers[1].username %></h2>
+                <p class="title"><%= toppers[1].username %></p>
                 <p class="title"><%= toppers[1].name %></p>
               </div>
             </div>
@@ -123,7 +123,7 @@
                 style="width: 157px; height: 210px"
               />
               <div class="container">
-                <h2>#3 <%= toppers[2].username %></h2>
+                <p class="title"><%= toppers[2].username %></p>
                 <p class="title"><%= toppers[2].name %></p>
               </div>
             </div>
