@@ -80,14 +80,17 @@
         <input type="radio" name="difficulty" value="level_1"> Level 1 </input>
         <input type="radio" name="difficulty" value="level_2"> Level 2 </input>
         <input type="radio" name="difficulty" value="contest"> Contest </input>
+        <hr>
         <p class="comments"><b>SubLevel (if any):</b></p>
         <input type="radio" name="conceptLevel" value="0"> Basics </input>
         <input type="radio" name="conceptLevel" value="1"> Control Structures </input>
         <input type="radio" name="conceptLevel" value="2"> Arrays/Lists </input>
         <input type="radio" name="conceptLevel" value="3"> Pointers/Objects </input>
         <input type="radio" name="conceptLevel" value="4"> Structures/Objects </input> 
-				  <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
+        <hr>
+				<textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
 
+        <button class= "submit" type="submit" href="/">Send</button>
       </form>
     </div>
 		</div><!-- /container -->
