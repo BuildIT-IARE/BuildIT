@@ -25,10 +25,14 @@
 <div class = "b">
 		<h3 style="color:white">Select <%= data.subtitle ? data.subtitle : "Contests" %></h3>
   <form action="<%= data.posturl %>" method = "<%= data.method %>">
-    <select id="contestId" name="contestId">
+    <% if (data.subtitle){ %>
+      <select id="contestId" name="questionId">
+    <% } else {%>
+      <select id="contestId" name="contestId">
+    <% } %>
   <% for (let i = 0; i < data.length; i++){ %>
     <% if (data.subtitle){ %>
-      <option value="<%= data[i].questionId %>"><%= data[i].questionName %></option>
+      <option value="<%= data[i].questionId %>"><%= data[i].questionId %> - <%= data[i].questionName %></option>
       <% } else {%>
       <option value="<%= data[i].contestId %>"><%= data[i].contestName %></option>
     <% } %>

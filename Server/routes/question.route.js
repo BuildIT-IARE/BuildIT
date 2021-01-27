@@ -65,7 +65,7 @@ module.exports = (app) => {
   );
 
   // Update a question with questionId
-  app.put(
+  app.post(
     "/questions/:questionId",
     middleware.checkTokenAdmin,
     questions.update
