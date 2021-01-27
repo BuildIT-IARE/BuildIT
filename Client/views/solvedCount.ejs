@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <title>Submissions Table</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../css/navadmin.css" />
+  <link rel="stylesheet" href="../css/w3.css" />
+  <head>
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+  </head>
+
+  <body>
+    <% include ../views/partials/adminpanel %>
+    <br /><br /><br /><br /><br />
+    <div class="w3-container" style="background: white">
+      <h2 style="text-align: center">Report</h2>
+      <button onclick="exportTableToCSV('solved.csv')">Download Results</button>
+      <br />
+      <hr />
+      <table class="w3-table w3-striped" id="solved">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Questions Solved</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for ( const user in solved){ %>
+          <tr>
+            <td><%= user %></td>
+            <td><%= solved[user] %></td>
+          </tr>
+          <% } %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Username</th>
+            <th>Questions Solved</th>
+          </tr>
+        </tfoot>
+      </table>
+      <br />
+      <br />
+    </div>
+    <script src="/adminjs/classie.js"></script>
+    <script src="/adminjs/gnmenu.js"></script>
+    <script>
+      new gnMenu(document.getElementById("gn-menu"));
+    </script>
+    <script>
+      function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+
+        csvFile = new Blob([csv], { type: "text/csv" });
+
+        downloadLink = document.createElement("a");
+
+        downloadLink.download = filename;
+
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+
+        downloadLink.style.display = "none";
+
+        document.body.appendChild(downloadLink);
+
+        downloadLink.click();
+      }
+
+      function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+          var row = [],
+            cols = rows[i].querySelectorAll("td, th");
+
+          for (var j = 0; j < cols.length; j++) row.push(cols[j].innerText);
+
+          csv.push(row.join(","));
+        }
+
+        downloadCSV(csv.join("\n"), filename);
+      }
+    </script>
+    <script src="/plugins/jQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#solved").DataTable({
+          paging: false,
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -18,7 +18,7 @@
       </button>
       <br />
       <hr />
-      <table class="w3-table w3-striped">
+      <table class="w3-table w3-striped" id="results">
         <tr>
           <th>Username</th>
           <th>Contest ID</th>
@@ -91,6 +91,12 @@
 
         downloadCSV(csv.join("\n"), filename);
       }
+    </script>
+    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#results").DataTable();
+      });
     </script>
   </body>
 </html>

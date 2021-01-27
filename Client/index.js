@@ -9,6 +9,8 @@ var path = require("path");
 let config = require("../Server/util/config");
 const xlsx = require("xlsx");
 const fs = require("fs");
+const fetch = require("node-fetch");
+var _ = require("lodash");
 
 let serverRoute = config.serverAddress;
 let clientRoute = config.clientAddress;
@@ -60,20 +62,44 @@ app.get("/leaderboard", async (req, res) => {
       "Rank",
       "Roll Number",
       "Name",
-      "Username",
       "HackerRank (HR)",
       "CodeChef (CC)",
       "Codeforces (CF)",
       "InterviewBit (IB)",
       "Spoj (S)",
+      "Geeks For Geeks (GFG)",
       "BuildIT",
       "Overall Score",
+      "Weekly Performance",
     ];
-    // console.log(data);
+
+    const ordered = _.orderBy(data, function (item) {
+      return item["Weekly Performance"];
+    });
+
+    let toppers = [
+      ordered[0]["Roll Number"],
+      ordered[1]["Roll Number"],
+      ordered[2]["Roll Number"],
+    ];
+
+    const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+      fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+      fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+      fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+    ]);
+
+    const first = await firstResponse.json();
+    const second = await secondResponse.json();
+    const third = await thirdResponse.json();
+
+    const topperData = [first, second, third];
+
     res.render("leaderboard", {
       imgUsername: req.cookies.username,
       data: data,
       headers: headers,
+      toppers: topperData,
     });
   } else {
     res.render("error", {
@@ -656,6 +682,27 @@ app.post("/admin/results/contest", async (req, res) => {
         datap: bodyparticipation,
         dataq: bodyquestion,
       });
+    });
+  });
+});
+
+app.get("/admin/solved", async (req, res) => {
+  let options = {
+    url: serverRoute + "/getSolvedCount",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    let url = {
+      url: clientRoute,
+    };
+    res.render("solvedCount", {
+      data: url,
+      solved: body,
     });
   });
 });
