@@ -331,6 +331,60 @@ app.get("/admin/update/contest", async (req, res) => {
   });
 });
 
+app.get("/admin/edit/question", async (req, res) => {
+  let options = {
+    url: serverRoute + "/questions",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    body.posturl = clientRoute + "/questionEdit";
+    body.url = clientRoute;
+    body.method = "POST";
+    body.class = "btn-green";
+    body.title = "Editing";
+    body.subtitle = "Questions";
+    res.render("dropdown", { data: body });
+  });
+});
+
+app.post("/questionEdit", async (req, res) => {
+  let questionId = req.body.questionId;
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      let options = {
+        url: serverRoute + "/questions/"+ questionId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      
+      request(options, function (err, response, body) {
+        body[0].serverurl = serverRoute;
+        res.render("questionedit", { data: body[0], token: req.cookies.token});
+      });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    };
+  });
+});
+
 app.get("/admin/add/questionTut", async (req, res) => {
   let url = {
     url: clientRoute,
@@ -411,7 +465,7 @@ app.get("/admin/delete/question", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    body.posturl = clientRoute + "/contestDelete";
+    body.posturl = clientRoute + "/questionDelete";
     body.url = clientRoute;
     body.method = "POST";
     body.class = "btn-danger";
@@ -443,7 +497,7 @@ app.post("/contestDelete", async (req, res) => {
 app.post("/questionDelete", async (req, res) => {
   let options = {
     url: serverRoute + "/questions/" + req.body.questionId,
-    method: "post",
+    method: "delete",
     body: {
       questionId: req.body.questionId,
       token: req.cookies.token,
