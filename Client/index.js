@@ -52,7 +52,7 @@ app.get("/home", async (req, res) => {
 app.get("/about", async (req, res) => {
   res.render("about", { imgUsername: req.cookies.username });
 });
-app.get("/leaderboard", async (req, res) => {
+app.get("/skillup365", async (req, res) => {
   let filePath = "../Public/current_leaderboard";
   if (fs.existsSync(filePath)) {
     let wb = xlsx.readFile(filePath);
