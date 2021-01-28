@@ -65,7 +65,9 @@
       }
 
       .title {
-        color: grey;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 2px;
       }
     </style>
   </head>
@@ -92,71 +94,34 @@
       <div class="container d-flex flex-column align-items-center">
         <!-- Toppers -->
         <img src="../images/skillup.jpg" style="width: 80%" />
-        <h2 style="padding-bottom: 2rem">This Week's Toppers</h2>
+        <div class="d-flex flex-row">
+          <h2 style="padding-bottom: 2rem">This Week's Toppers</h2>
+          <img src="../images/join.jpg" />
+        </div>
         <div class="row" style="width: 75vw">
-          <div class="column">
-            <div class="card d-flex justify-content-center align-items-center"">
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  src="../images/no1.jpg"
-                  style="width: 140px; padding-right: 10px; height: 120px"
-                /><img
-                  src="<%= toppers[0].imgUrl %>"
-                  style="width: 157px; height: 210px; padding-top: 12px;"
-                />
-              </div>
-              <div class="container d-flex align-items-center flex-column">
-                <p class="title" style="color: #005aab; font-size: 1.3rem">
-                  <%= toppers[0].username %>
-                </p>
-                <p class="title" style="color: #d2ad6b; font-size: 1.3rem">
-                  <%= toppers[0].name %>
-                </p>
-              </div>
-            </div>
-          </div>
+          <% for (let i = 0; i < 4; i++){ %>
           <div class="column">
             <div class="card d-flex justify-content-center align-items-center">
               <div class="d-flex flex-row align-items-center">
                 <img
-                  src="../images/no2.jpg"
+                  src="../images/no<% i + 1 %>.jpg"
                   style="width: 140px; padding-right: 10px; height: 120px"
                 /><img
-                  src="<%= toppers[1].imgUrl %>"
-                  style="width: 157px; height: 210px; padding-top: 12px;"
+                  src="<%= toppers[i].imgUrl %>"
+                  style="width: 157px; height: 210px; padding-top: 12px"
                 />
               </div>
               <div class="container d-flex align-items-center flex-column">
-                <p class="title" style="color: #005aab; font-size: 1.3rem">
-                  <%= toppers[1].username %>
+                <p class="title" style="color: #005aab">
+                  <%= toppers[i].name %>
                 </p>
-                <p class="title" style="color: #d2ad6b; font-size: 1.3rem">
-                  <%= toppers[1].name %>
+                <p class="title" style="color: #d2ad6b">
+                  <%= toppers[i].username %>
                 </p>
               </div>
             </div>
           </div>
-          <div class="column">
-            <div class="card d-flex justify-content-center align-items-center">
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  src="../images/no3.jpg"
-                  style="width: 140px; padding-right: 10px; height: 120px"
-                /><img
-                  src="<%= toppers[2].imgUrl %>"
-                  style="width: 157px; height: 210px; padding-top: 12px;"
-                />
-              </div>
-              <div class="container d-flex align-items-center flex-column">
-                <p class="title" style="color: #005aab; font-size: 1.3rem">
-                  <%= toppers[2].username %>
-                </p>
-                <p class="title" style="color: #d2ad6b; font-size: 1.3rem">
-                  <%= toppers[2].name %>
-                </p>
-              </div>
-            </div>
-          </div>
+          <% } %>
         </div>
         <table
           id="leaderboard"
