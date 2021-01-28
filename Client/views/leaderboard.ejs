@@ -70,7 +70,7 @@
         margin-bottom: 2px;
       }
 
-      label {
+      .dataTables_filter {
         float: right;
       }
     </style>
@@ -103,8 +103,14 @@
           style="padding-bottom: 0.5rem"
         >
           <h2>This Week's Toppers</h2>
+          <a href="../images/SkillUp.pdf">
+            <img
+              src="../images/join.jpg"
+              style="height: 80px; padding-left: 20px"
+            />
+          </a>
         </div>
-        <div class="row" style="width: 75vw">
+        <div class="row" style="width: 90vw; margin: auto">
           <% for (let i = 0; i < 3; i++){ %>
           <div class="column">
             <div class="card d-flex justify-content-center align-items-center">
@@ -128,14 +134,6 @@
             </div>
           </div>
           <% } %>
-          <div class="column">
-            <a href="../images/SkillUp.pdf">
-              <img
-                src="../images/join.jpg"
-                style="height: 80px; padding-left: 4px"
-              />
-            </a>
-          </div>
         </div>
         <table
           id="leaderboard"
