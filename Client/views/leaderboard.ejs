@@ -91,13 +91,13 @@
     </section>
 
     <section class="section" style="padding-top: 1rem">
-      <div
-        class="container d-flex flex-column align-items-center"
-        style="padding-bottom: 0.5rem"
-      >
+      <div class="container d-flex flex-column align-items-center">
         <!-- Toppers -->
         <img src="../images/skillup.jpg" style="width: 80%" />
-        <div class="d-flex flex-row">
+        <div
+          class="d-flex flex-row align-items-center justify-content-center"
+          style="padding-bottom: 0.5rem"
+        >
           <h2>This Week's Toppers</h2>
           <img
             src="../images/join.jpg"
@@ -110,7 +110,7 @@
             <div class="card d-flex justify-content-center align-items-center">
               <div class="d-flex flex-row align-items-center">
                 <img
-                  src="../images/no<% i + 1 %>.jpg"
+                  src="../images/no<%= i + 1 %>.jpg"
                   style="width: 140px; padding-right: 10px; height: 120px"
                 /><img
                   src="<%= toppers[i].imgUrl %>"
