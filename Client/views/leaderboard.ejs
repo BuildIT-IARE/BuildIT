@@ -78,6 +78,11 @@
         text-align: center;
         vertical-align: top;
       }
+
+      th,
+      td {
+        width: 120px !important;
+      }
     </style>
   </head>
 
@@ -212,9 +217,7 @@
 
     <script>
       $(document).ready(function () {
-        $("#leaderboard").DataTable({
-          columns: [{ width: "200px" }],
-        });
+        $("#leaderboard").DataTable();
       });
     </script>
   </body>
