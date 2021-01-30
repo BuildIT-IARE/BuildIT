@@ -212,7 +212,9 @@
 
     <script>
       $(document).ready(function () {
-        $("#leaderboard").DataTable();
+        $("#leaderboard").DataTable({
+          columns: [{ width: "200px" }],
+        });
       });
     </script>
   </body>
