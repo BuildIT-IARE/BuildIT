@@ -2,7 +2,7 @@
 <html lang="zxx">
   <head>
     <meta charset="utf-8" />
-    <title id="demo1">Leaderboard</title>
+    <title id="demo1">SkillUP365: Skill Enhancement Program</title>
 
     <!-- mobile responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,7 +31,7 @@
       /* Three columns side by side */
       .column {
         float: left;
-        width: 33.3%;
+        width: 25%;
         margin-bottom: 16px;
         padding: 0 8px;
       }
@@ -65,7 +65,18 @@
       }
 
       .title {
-        color: grey;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 2px;
+      }
+
+      .dataTables_filter {
+        float: right;
+      }
+
+      #leaderboard {
+        text-align: center;
+        vertical-align: top;
       }
     </style>
   </head>
@@ -81,7 +92,9 @@
       <div class="container">
         <div class="row">
           <div class="col-12 text-center">
-            <h2 class="text-white font-tertiary">Leaderboard</h2>
+            <h3 class="text-white font-tertiary">
+              SkillUP365: Skill Enhancement Program
+            </h3>
             <br />
           </div>
         </div>
@@ -92,75 +105,49 @@
       <div class="container d-flex flex-column align-items-center">
         <!-- Toppers -->
         <img src="../images/skillup.jpg" style="width: 80%" />
-        <h2 style="padding-bottom: 2rem">This Week's Toppers</h2>
-        <div class="row" style="width: 75vw">
-          <div class="column">
-            <div class="card d-flex justify-content-center align-items-center"">
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  src="../images/no1.jpg"
-                  style="width: 140px; padding-right: 10px; height: 120px"
-                /><img
-                  src="<%= toppers[0].imgUrl %>"
-                  style="width: 157px; height: 210px; padding-top: 12px;"
-                />
-              </div>
-              <div class="container d-flex align-items-center flex-column">
-                <p class="title" style="color: #005aab; font-size: 1.3rem">
-                  <%= toppers[0].username %>
-                </p>
-                <p class="title" style="color: #d2ad6b; font-size: 1.3rem">
-                  <%= toppers[0].name %>
-                </p>
-              </div>
-            </div>
-          </div>
+        <div
+          class="row d-flex flex-row align-items-center justify-content-center"
+          style="padding-bottom: 0.5rem"
+        >
+          <h2>This Week's Toppers</h2>
+          <a
+            href="../images/SkillUp.pdf"
+            style="position: absolute; top: 87vh; left: 74vw"
+          >
+            <img
+              src="../images/join.jpg"
+              style="height: 65px; padding-left: 20px"
+            />
+          </a>
+        </div>
+        <div class="row" style="width: 97vw; margin: auto">
+          <% for (let i = 0; i < 3; i++){ %>
           <div class="column">
             <div class="card d-flex justify-content-center align-items-center">
               <div class="d-flex flex-row align-items-center">
                 <img
-                  src="../images/no2.jpg"
+                  src="../images/no<%= i + 1 %>.jpg"
                   style="width: 140px; padding-right: 10px; height: 120px"
                 /><img
-                  src="<%= toppers[1].imgUrl %>"
-                  style="width: 157px; height: 210px; padding-top: 12px;"
+                  src="<%= toppers[i].imgUrl %>"
+                  style="width: 157px; height: 210px; padding-top: 12px"
                 />
               </div>
               <div class="container d-flex align-items-center flex-column">
-                <p class="title" style="color: #005aab; font-size: 1.3rem">
-                  <%= toppers[1].username %>
+                <p class="title" style="color: #005aab">
+                  <%= toppers[i].name %>
                 </p>
-                <p class="title" style="color: #d2ad6b; font-size: 1.3rem">
-                  <%= toppers[1].name %>
+                <p class="title" style="color: #d2ad6b">
+                  <%= toppers[i].username %>
                 </p>
               </div>
             </div>
           </div>
-          <div class="column">
-            <div class="card d-flex justify-content-center align-items-center">
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  src="../images/no3.jpg"
-                  style="width: 140px; padding-right: 10px; height: 120px"
-                /><img
-                  src="<%= toppers[2].imgUrl %>"
-                  style="width: 157px; height: 210px; padding-top: 12px;"
-                />
-              </div>
-              <div class="container d-flex align-items-center flex-column">
-                <p class="title" style="color: #005aab; font-size: 1.3rem">
-                  <%= toppers[2].username %>
-                </p>
-                <p class="title" style="color: #d2ad6b; font-size: 1.3rem">
-                  <%= toppers[2].name %>
-                </p>
-              </div>
-            </div>
-          </div>
+          <% } %>
         </div>
         <table
           id="leaderboard"
-          class="table table-striped table-bordered"
+          class="table table-striped table-bordered dt-center"
           style="width: 100%"
         >
           <thead>

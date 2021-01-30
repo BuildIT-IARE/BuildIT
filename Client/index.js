@@ -52,7 +52,7 @@ app.get("/home", async (req, res) => {
 app.get("/about", async (req, res) => {
   res.render("about", { imgUsername: req.cookies.username });
 });
-app.get("/leaderboard", async (req, res) => {
+app.get("/skillup365", async (req, res) => {
   let filePath = "../Public/current_leaderboard";
   if (fs.existsSync(filePath)) {
     let wb = xlsx.readFile(filePath);
@@ -73,9 +73,13 @@ app.get("/leaderboard", async (req, res) => {
       "Weekly Performance",
     ];
 
-    const ordered = _.orderBy(data, function (item) {
-      return item["Weekly Performance"];
-    });
+    const ordered = _.orderBy(
+      data,
+      function (item) {
+        return item["Weekly Performance"];
+      },
+      "desc"
+    );
 
     let toppers = [
       ordered[0]["Roll Number"],
@@ -366,22 +370,22 @@ app.post("/questionEdit", async (req, res) => {
   request(options, function (err, response, body) {
     if (body.success) {
       let options = {
-        url: serverRoute + "/questions/"+ questionId,
+        url: serverRoute + "/questions/" + questionId,
         method: "get",
         headers: {
           authorization: req.cookies.token,
         },
         json: true,
       };
-      
+
       request(options, function (err, response, body) {
         body[0].serverurl = serverRoute;
-        res.render("questionedit", { data: body[0], token: req.cookies.token});
+        res.render("questionedit", { data: body[0], token: req.cookies.token });
       });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
-    };
+    }
   });
 });
 
