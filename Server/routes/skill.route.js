@@ -30,4 +30,11 @@ module.exports = (app) => {
     middleware.checkToken,
     skills.findOne
   );
+  
+  // Retrieve all weeks
+  app.get(
+    "/weeks",
+    middleware.checkTokenAdmin,
+    skills.findAllWeeks
+  );
 };
