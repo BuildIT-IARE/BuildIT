@@ -117,39 +117,39 @@ exports.findOne = (req, res) => {
 
 exports.findRecent = (req, res) => {
 	Skill.find()
-	.then((skill) => {
-		if (!skill) {
-			return res.status(404).send({
+		.then((skill) => {
+			if (!skill) {
+				return res.status(404).send({
+					success: false,
+					message: "Week not found with week Id",
+				});
+			}
+			let arr=[];
+			let i = skill.length-1;
+			let week = skill[i].weekId;
+			while(i>=0 && skill[i].weekId === week ) {
+				arr.push(skill[i]),
+				i = i-1;
+			}
+			res.send(arr);
+		})
+		.catch((err) => {
+			if (err.kind === "ObjectId") {
+				return res.status(404).send({
+					success: false,
+					message: "Week not found with week Id",
+				});
+			}
+			return res.status(500).send({
 				success: false,
-				message: "Week not found with week Id",
+				message: "Error retrieving user with id",
 			});
-		}
-		let arr=[];
-		let i = skill.length-1;
-		let week = skill[i].weekId;
-		while(i>=0 && skill[i].weekId === week ) {
-			arr.push(skill[i]),
-			i = i-1;
-		}
-		res.send(arr);
-	})
-	.catch((err) => {
-	if (err.kind === "ObjectId") {
-		return res.status(404).send({
-		success: false,
-		message: "Week not found with week Id",
 		});
-	}
-	return res.status(500).send({
-		success: false,
-		message: "Error retrieving user with id",
-	});
-	});
 };
 
 exports.findAllWeeks = (req, res) => {
 	WeekSkill.find()
-		.then((weekSkill) => {
+    .then((weekSkill) => {
 			res.send(weekSkill);
 		})
 		.catch((err) => {
