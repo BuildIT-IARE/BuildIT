@@ -61,7 +61,6 @@ app.get("/skillup365", async (req, res) => {
     let headers = [
       "Rank",
       "Roll Number",
-      "Name",
       "HackerRank (HR)",
       "CodeChef (CC)",
       "Codeforces (CF)",
@@ -71,6 +70,7 @@ app.get("/skillup365", async (req, res) => {
       "BuildIT",
       "Overall Score",
       "Weekly Performance",
+      "Points",
     ];
 
     const ordered = _.orderBy(
