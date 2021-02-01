@@ -17,6 +17,7 @@ var skillSchema = new Schema({
 	buildIT: { type: Number, default: 0 },
 	overallScore: { type: Number, default: 0 },
 	weeklyPerformance: { type: Number, default: 0 },
+	points: { type: Number, default: 0 },
 });
 
 module.exports = mongoose.model("Skill", skillSchema);

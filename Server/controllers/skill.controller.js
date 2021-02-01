@@ -54,6 +54,7 @@ exports.createExcel = (req, res) => {
 							buildIT: data[i].buildIT,
 							overallScore: data[i].overallScore,
 							weeklyPerformance: data[i].weeklyPerformance,
+							points: data[i].points,
 							});
 							// Save Skill in the database
 							skill.save();

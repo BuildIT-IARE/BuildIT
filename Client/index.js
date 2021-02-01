@@ -424,7 +424,7 @@ app.get("/admin/edit/question", async (req, res) => {
     body.class = "btn-green";
     body.title = "Editing";
     body.subtitle = "Questions";
-    res.render("dropdown", { data: body });
+    res.render("search", { data: body });
   });
 });
 
