@@ -83,6 +83,32 @@
       td {
         width: 120px !important;
       }
+
+      .b {
+        display: none;
+      }
+
+      .dropdown {
+        position: relative;
+        left: 55px;
+        width: 120px;
+        text-align: center;
+        padding-left: 9px;
+        font-size: 0.9rem;
+        padding-left: 9px;
+        border: 1px outset #BEBEBE;
+        cursor: pointer;
+      }
+
+      .dropdown:focus {
+        border: 1.1px solid #1c62b9;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,.4);
+      }
+
+      .dropdown:hover {
+        box-shadow: 0 1px 1px rgba(0,0,0,.15),
+        inset 0 0 2px rgba(0,0,0,.05);
+      }
     </style>
   </head>
 
@@ -147,6 +173,22 @@
           </div>
           <% } %>
         </div>
+      </div>
+    </section>
+    <div>
+      <form action="<%= data.clientAddress %>/skill/" method="POST">
+        <input class="b" name="lastWeek" value="<%= data.week %>">
+        <select class="dropdown" name="weekId" onchange="javascript:$('#submit').click();">
+            <option value="">Select Week</option>
+            <% for (let i = data.week; i > 0; i--){ %>
+              <option value="WEEK<%= i %>">Week <%= i %></option>
+            <% } %>
+        </select>
+        <input class="b" id="submit" type="submit" name="submit" value="Submit">
+      </form>
+    </div>
+    <section class="section" style="padding-top: 1rem">
+      <div class="container d-flex flex-column align-items-center">
         <table
           id="leaderboard"
           class="table table-striped table-bordered dt-center"
@@ -171,14 +213,22 @@
           </thead>
           <tbody>
             <% for (let i = 0; i < data.length; i++ ){ %>
-            <tr>
-              <% headers.forEach((col)=> { if (data[i][col]) { %>
-              <td><%= data[i][col] %></td>
-              <% } else { %>
-              <td>0</td>
-              <% } %> <% }) %>
-            </tr>
-            <% } %>
+              <tr>
+                <td><%=data[i].rank%></td>
+                <td><%=data[i].rollNumber%></td>
+                <td><%=data[i].name%></td>
+                <td><%=data[i].hackerRank%></td>
+                <td><%=data[i].codeChef%></td>
+                <td><%=data[i].codeforces%></td>
+                <td><%=data[i].interviewBit%></td>
+                <td><%=data[i].spoj%></td>
+                <td><%=data[i].geeksForGeeks%></td>
+                <td><%=data[i].buildIT%></td>
+                <td><%=data[i].overallScore%></td>
+                <td><%=data[i].weeklyPerformance%></td>
+                <td>0</td>
+              </tr>
+              <% } %>
           </tbody>
           <tfoot>
             <tr>

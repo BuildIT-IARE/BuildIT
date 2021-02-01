@@ -53,64 +53,136 @@ app.get("/about", async (req, res) => {
   res.render("about", { imgUsername: req.cookies.username });
 });
 app.get("/skillup365", async (req, res) => {
-  let filePath = "../Public/current_leaderboard";
-  if (fs.existsSync(filePath)) {
-    let wb = xlsx.readFile(filePath);
-    let ws = wb.Sheets["Sheet1"];
-    let data = xlsx.utils.sheet_to_json(ws);
-    let headers = [
-      "Rank",
-      "Roll Number",
-      "HackerRank (HR)",
-      "CodeChef (CC)",
-      "Codeforces (CF)",
-      "InterviewBit (IB)",
-      "Spoj (S)",
-      "Geeks For Geeks (GFG)",
-      "BuildIT",
-      "Overall Score",
-      "Weekly Performance",
-      "Points",
-    ];
+	let options = {
+	  url: serverRoute + "/skill",
+	  method: "get",
+	  headers: {
+		authorization: req.cookies.token,
+	  },
+	  json: true,
+	};
+  
+	request(options, async(err, response, body) => {
+	  if(!err) {
+      const ordered = _.orderBy(
+        body,
+        ['weeklyPerformance'],
+        "desc"
+      );
+      
+      let toppers = [
+        ordered[0].rollNumber,
+        ordered[1].rollNumber,
+        ordered[2].rollNumber,
+      ];
 
-    const ordered = _.orderBy(
-      data,
-      function (item) {
-        return item["Weekly Performance"];
-      },
-      "desc"
-    );
+      const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+        fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+        fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+        fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+      ]);
 
-    let toppers = [
-      ordered[0]["Roll Number"],
-      ordered[1]["Roll Number"],
-      ordered[2]["Roll Number"],
-    ];
+      const first = await firstResponse.json();
+      const second = await secondResponse.json();
+      const third = await thirdResponse.json();
+    
+      const topperData = [first, second, third];
+      
+      body.week = parseInt( (body[0].weekId)[4] );
+      body.clientAddress = clientRoute;
+      res.render("leaderboard", {
+        data: body,
+        toppers: topperData,
+        imgUsername: req.cookies.username,
+      });
+    } else {
+      res.render("error", {
+        data: { message: "Leaderboard not initialised" },
+        imgUsername: req.cookies.username,
+      });
+    }
+	})
+});
 
-    const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-      fetch(`${serverRoute}/users/branch/${toppers[0]}`),
-      fetch(`${serverRoute}/users/branch/${toppers[1]}`),
-      fetch(`${serverRoute}/users/branch/${toppers[2]}`),
-    ]);
+app.post("/skill/", async (req, res) => {
+  let lastWeek = req.body.lastWeek;
 
-    const first = await firstResponse.json();
-    const second = await secondResponse.json();
-    const third = await thirdResponse.json();
+	let options = {
+	  url: serverRoute + "/skill/" + req.body.weekId,
+	  method: "get",
+	  headers: {
+		  authorization: req.cookies.token,
+	  },
+	  json: true,
+	};
+  
+	request(options, async(err, response, body) => {
+	  if(!err) {
+      const ordered = _.orderBy(
+        body,
+        ['weeklyPerformance'],
+        "desc"
+      );
+      
+      let toppers = [
+        ordered[0].rollNumber,
+        ordered[1].rollNumber,
+        ordered[2].rollNumber,
+      ];
 
-    const topperData = [first, second, third];
+      const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+        fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+        fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+        fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+      ]);
 
-    res.render("leaderboard", {
-      imgUsername: req.cookies.username,
-      data: data,
-      headers: headers,
-      toppers: topperData,
-    });
-  } else {
-    res.render("error", {
-      data: { message: "Leaderboard not initialised" },
-      imgUsername: req.cookies.username,
-    });
-  }
+      const first = await firstResponse.json();
+      const second = await secondResponse.json();
+      const third = await thirdResponse.json();
+    
+      const topperData = [first, second, third];
+      
+      body.week = lastWeek;
+      body.clientAddress = clientRoute;
+      body.imgUrl = imageUrl;
+      
+      res.render("leaderboard", {
+        data: body,
+        toppers: topperData,
+        imgUsername: req.cookies.username,
+      });
+    } else {
+      res.render("error", {
+        data: { message: "Leaderboard not initialised" },
+        imgUsername: req.cookies.username,
+      });
+    }
+	})
+});
+
+app.get("/admin/add/skillup", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.render("skilladd", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
 });
 
 app.get("/profile", async (req, res) => {
