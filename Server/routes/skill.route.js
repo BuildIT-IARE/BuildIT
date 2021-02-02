@@ -13,28 +13,24 @@ module.exports = (app) => {
   // Retrieve all skill
   app.get(
     "/skills",
-    middleware.checkTokenAdmin,
     skills.findAll
   );
   
   // Retrieve a single week with weekId
   app.get(
     "/skill",
-    middleware.checkToken,
     skills.findRecent
   );
 
   // Retrieve a single week with last weekId
   app.get(
     "/skill/:week",
-    middleware.checkToken,
     skills.findOne
   );
   
   // Retrieve all weeks
   app.get(
     "/weeks",
-    middleware.checkTokenAdmin,
     skills.findAllWeeks
   );
 };

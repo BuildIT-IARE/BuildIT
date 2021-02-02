@@ -52,7 +52,23 @@ app.get("/home", async (req, res) => {
 app.get("/about", async (req, res) => {
   res.render("about", { imgUsername: req.cookies.username });
 });
+
 app.get("/skillup365", async (req, res) => {
+  let headers = [
+    "rank",
+    "rollNumber",
+    "hackerRank",
+    "codeChef",
+    "codeforces",
+    "interviewBit",
+    "spoj",
+    "geeksForGeeks",
+    "buildIT",
+    "overallScore",
+    "weeklyPerformance",
+    "points",
+  ];
+
 	let options = {
 	  url: serverRoute + "/skill",
 	  method: "get",
@@ -66,14 +82,16 @@ app.get("/skillup365", async (req, res) => {
 	  if(!err) {
       const ordered = _.orderBy(
         body,
-        ['weeklyPerformance'],
+        function (item) {
+          return item["weeklyPerformance"];
+        },
         "desc"
       );
-      
+
       let toppers = [
-        ordered[0].rollNumber,
-        ordered[1].rollNumber,
-        ordered[2].rollNumber,
+        ordered[0]["rollNumber"],
+        ordered[1]["rollNumber"],
+        ordered[2]["rollNumber"],
       ];
 
       const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
@@ -85,15 +103,17 @@ app.get("/skillup365", async (req, res) => {
       const first = await firstResponse.json();
       const second = await secondResponse.json();
       const third = await thirdResponse.json();
-    
+  
       const topperData = [first, second, third];
       
       body.week = parseInt( (body[0].weekId)[4] );
       body.clientAddress = clientRoute;
+
       res.render("leaderboard", {
-        data: body,
-        toppers: topperData,
         imgUsername: req.cookies.username,
+        data: body,
+        headers: headers,
+        toppers: topperData,
       });
     } else {
       res.render("error", {
@@ -105,6 +125,21 @@ app.get("/skillup365", async (req, res) => {
 });
 
 app.post("/skill/", async (req, res) => {
+  let headers = [
+    "rank",
+    "rollNumber",
+    "hackerRank",
+    "codeChef",
+    "codeforces",
+    "interviewBit",
+    "spoj",
+    "geeksForGeeks",
+    "buildIT",
+    "overallScore",
+    "weeklyPerformance",
+    "points",
+  ];
+  
   let lastWeek = req.body.lastWeek;
 
 	let options = {
@@ -120,14 +155,16 @@ app.post("/skill/", async (req, res) => {
 	  if(!err) {
       const ordered = _.orderBy(
         body,
-        ['weeklyPerformance'],
+        function (item) {
+          return item["weeklyPerformance"];
+        },
         "desc"
       );
-      
+
       let toppers = [
-        ordered[0].rollNumber,
-        ordered[1].rollNumber,
-        ordered[2].rollNumber,
+        ordered[0]["rollNumber"],
+        ordered[1]["rollNumber"],
+        ordered[2]["rollNumber"],
       ];
 
       const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
@@ -139,17 +176,17 @@ app.post("/skill/", async (req, res) => {
       const first = await firstResponse.json();
       const second = await secondResponse.json();
       const third = await thirdResponse.json();
-    
+  
       const topperData = [first, second, third];
       
       body.week = lastWeek;
       body.clientAddress = clientRoute;
-      body.imgUrl = imageUrl;
       
       res.render("leaderboard", {
-        data: body,
-        toppers: topperData,
         imgUsername: req.cookies.username,
+        data: body,
+        headers: headers,
+        toppers: topperData,
       });
     } else {
       res.render("error", {

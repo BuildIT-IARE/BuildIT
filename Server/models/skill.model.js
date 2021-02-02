@@ -7,7 +7,6 @@ var skillSchema = new Schema({
 	weekId: String,
 	rank: { type: Number, default: 0 },	
 	rollNumber: String,
-	name: String,
 	hackerRank: { type: Number, default: 0 },
 	codeChef: { type: Number, default: 0 },
 	codeforces: { type: Number, default: 0 },
