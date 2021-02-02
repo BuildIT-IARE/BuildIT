@@ -213,22 +213,14 @@
           </thead>
           <tbody>
             <% for (let i = 0; i < data.length; i++ ){ %>
-              <tr>
-                <td><%=data[i].rank%></td>
-                <td><%=data[i].rollNumber%></td>
-                <td><%=data[i].name%></td>
-                <td><%=data[i].hackerRank%></td>
-                <td><%=data[i].codeChef%></td>
-                <td><%=data[i].codeforces%></td>
-                <td><%=data[i].interviewBit%></td>
-                <td><%=data[i].spoj%></td>
-                <td><%=data[i].geeksForGeeks%></td>
-                <td><%=data[i].buildIT%></td>
-                <td><%=data[i].overallScore%></td>
-                <td><%=data[i].weeklyPerformance%></td>
-                <td>0</td>
-              </tr>
-              <% } %>
+            <tr>
+              <% headers.forEach((col)=> { if (data[i][col]) { %>
+              <td><%= data[i][col] %></td>
+              <% } else { %>
+              <td>0</td>
+              <% } %> <% }) %>
+            </tr>
+            <% } %>
           </tbody>
           <tfoot>
             <tr>
