@@ -179,7 +179,7 @@
       <form action="<%= data.clientAddress %>/skill/" method="POST">
         <select class="dropdown" name="weekId" onchange="javascript:$('#submit').click();">
             <option value="">Select Week</option>
-            <% for (let i = data.week-1; i >= 0; i--){ %>
+            <% for (let i = week.length-1; i >= 0; i--){ %>
               <option value="<%= week[i].weekId %>"><%= week[i].weekId %></option>
             <% } %>
         </select>
