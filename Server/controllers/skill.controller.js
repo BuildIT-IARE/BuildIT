@@ -8,6 +8,7 @@ exports.createExcel = (req, res) => {
     var file = req.files.upfile,
       name = file.name,
       type = file.mimetype;
+    var week = req.body.date;
     var uploadpath = "../Public/current_leaderboard";
     file.mv(uploadpath, function (err) {
       if (err) {
@@ -17,11 +18,9 @@ exports.createExcel = (req, res) => {
         let wb = xlsx.readFile("../Public/current_leaderboard");
         let ws = wb.Sheets["Sheet1"];
         let data = xlsx.utils.sheet_to_json(ws);
-        let skill, weekSkill, week;
+        let skill, weekSkill;
         WeekSkill.find()
           .then((weekSkills) => {
-            let currWeek = weekSkills.length || 0;
-            week = "WEEK" + (currWeek + 1).toString();
             weekSkill = new WeekSkill({
               dateId: new Date(),
               weekId: week,
