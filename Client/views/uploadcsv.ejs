@@ -18,31 +18,58 @@
     <link rel="stylesheet" href="../../css/navadmin.css" />
     <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
     <script src="/adminjs/modernizr.custom.js"></script>
+    <style>
+			[type="date"]::-webkit-calendar-picker-indicator {
+				opacity: 0;
+			}
+			
+			#date {
+				background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat;
+				border: 1px solid #c4c4c4;
+				border-radius: 5px;
+				padding: 3px 5px;
+				box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+				width: 190px;
+			}
+		</style>
   </head>
   <body>
     <div class="container">
       <% include ../views/partials/adminpanel %>
       <header>
-        <h1>Manage Leaderboard<span style="color: white">Add CSV</span></h1>
+        <h1><%= data.subtitle ? "Manage Skill Up 365" : "Manage Leaderboard" %>
+          <span style="color: white"><%= data.subtitle ? "Add Weekly Scores" : "Add CSV" %></span></h1>
       </header>
       <div class="main-block">
         <form
           class="fileupload"
-          action="<%= data.serverurl %>/updateLeaderboard"
+          action="<%= data.serverurl %>"
           method="post"
           enctype="multipart/form-data"
         >
-          <h1>Upload File Here</h1>
-          <a href="../images/sample.xlsx">Sample CSV</a>
-          <input type="file" name="upfile" value="" />
-          <textarea
-            type="hidden"
-            name="token"
-            id="token"
-            value="<%= token %>"
-            style="display: none"
-          ></textarea>
-          <input type="submit" />
+          <% if( data.subtitle ) { %>
+            <label for="date">
+              Select Date:&nbsp;
+            </label>
+            <input type="date" name="weekDate" onclick="myFunction()" id="date">
+            <br>
+            <br>
+            <label for="upload">
+              Browse File:
+            </label>
+            <input type="file" name="upfile" id="upload" value="" />
+          <% } else { %>
+            <h1>Upload File Here</h1>
+            <input type="file" name="upfile" value="" />
+          <% } %>
+            <textarea
+              type="hidden"
+              name="token"
+              id="token"
+              value="<%= token %>"
+              style="display: none"
+            ></textarea>
+            <input type="submit" />
         </form>
       </div>
     </div>
@@ -55,5 +82,15 @@
     <script>
       document.getElementById("token").value = "<%= token %>";
     </script>
+    <script>
+			function myFunction() {
+				const d = new Date();
+				const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+				const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
+				const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+				var y = document.getElementById("date");
+				y.setAttribute("value", `${ye}-${mo}-${da}` );
+			}
+		</script>
   </body>
 </html>

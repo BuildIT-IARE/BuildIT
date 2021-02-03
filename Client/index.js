@@ -200,7 +200,7 @@ app.post("/skill/", async (req, res) => {
 app.get("/admin/add/skillup", async (req, res) => {
   let url = {
     url: clientRoute,
-    serverurl: serverRoute,
+    serverurl: serverRoute + "/skillExcel",
   };
 
   let options = {
@@ -214,7 +214,8 @@ app.get("/admin/add/skillup", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("skilladd", { data: url, token: req.cookies.token });
+      url.subtitle = "skillUP";
+      res.render("uploadcsv", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -347,7 +348,7 @@ app.get("/admin/add/pdf", async (req, res) => {
 app.get("/admin/add/leaderboard", async (req, res) => {
   let url = {
     url: clientRoute,
-    serverurl: serverRoute,
+    serverurl: serverRoute + "/updateLeaderboard",
   };
 
   let options = {
