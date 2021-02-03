@@ -116,7 +116,6 @@ app.get("/skillup365", async (req, res) => {
     
         const topperData = [first, second, third];
         
-        body.week = parseInt( (body[0].weekId)[4] );
         body.clientAddress = clientRoute;
 
         res.render("leaderboard", {
