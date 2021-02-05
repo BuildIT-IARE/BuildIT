@@ -3,7 +3,57 @@ const WeekSkill = require("../models/weekSkill.model.js");
 const inarray = require("inarray");
 const xlsx = require("xlsx");
 
-exports.createExcel = (req, res) => {
+exports.createExcel = async (req, res) => {
+  var currDate = req.body.date;
+  let commonWeek = currDate;
+  WeekSkill.find({})
+    .sort({ weekId: 1 })
+    .then(async (weekskills) => {
+      var count = weekskills.length;
+      var i = 0,
+        f = 0;
+      var prevDate = weekskills[0]["weekId"];
+      while (
+        parseInt(weekskills[i]["weekId"].substring(0, 4)) <
+        parseInt(currDate.substring(0, 4))
+      )
+        ++i;
+      while (
+        parseInt(weekskills[i]["weekId"].substring(5, 7)) <
+        parseInt(currDate.substring(5, 7))
+      )
+        ++i;
+      while (
+        -parseInt(weekskills[i]["weekId"].substring(8, 10)) +
+          parseInt(currDate.substring(8, 10)) >
+        6
+      )
+        ++i;
+      prevDate = weekskills[i]["weekId"];
+      while (i < count && f < 2) {
+        var date1 = new Date(prevDate);
+        var date2 = new Date(currDate);
+        var Difference_In_Time = date1.getTime() - date2.getTime();
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+        var prevDay = date1.getDay();
+        var currDay = date2.getDay();
+
+        if (Difference_In_Days >= 0) {
+          if (Difference_In_Days <= 6 && currDay <= prevDay) {
+            commonWeek = prevDate;
+          }
+        } else {
+          if (-Difference_In_Days <= 6 && currDay > prevDay) {
+            commonWeek = prevDate;
+          }
+        }
+        ++f;
+        ++i;
+        prevDate = weekskills[i]["weekId"];
+      }
+    });
+
   if (req.files.upfile) {
     var file = req.files.upfile,
       name = file.name,
@@ -19,14 +69,43 @@ exports.createExcel = (req, res) => {
         let ws = wb.Sheets["Sheet1"];
         let data = xlsx.utils.sheet_to_json(ws);
         let skill, weekSkill;
-        WeekSkill.find()
-          .then((weekSkills) => {
-            weekSkill = new WeekSkill({
+        WeekSkill.find({})
+          .sort({ weekId: 1 })
+          .replaceOne(
+            { weekId: commonWeek },
+            {
               dateId: new Date(),
               weekId: week,
+              __v: 0,
+            },
+            { upsert: true }
+          )
+          .then((weekSkills) => {
+            if (!weekSkills) {
+              return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.params.questionId,
+              });
+            }
+            res.send(weekSkills);
+          })
+          .catch((err) => {
+            res.status(500).send({
+              success: false,
+              message:
+                err.message || "Some error occurred while retrieving skills.",
             });
-            // Save Week Skill in the database
-            weekSkill.save();
+          });
+        Skill.find()
+          .remove({ weekId: commonWeek })
+          .then((weekSkills) => {
+            if (!weekSkills) {
+              return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.params.questionId,
+              });
+            }
+            res.send(weekSkills);
           })
           .catch((err) => {
             res.status(500).send({
@@ -144,6 +223,7 @@ exports.findRecent = (req, res) => {
 
 exports.findAllWeeks = (req, res) => {
   WeekSkill.find()
+    .sort({ weekId: 1 })
     .then((weekSkill) => {
       res.send(weekSkill);
     })
