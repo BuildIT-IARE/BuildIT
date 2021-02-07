@@ -3,12 +3,12 @@ const WeekSkill = require("../models/weekSkill.model.js");
 const inarray = require("inarray");
 const xlsx = require("xlsx");
 
-exports.createExcel = async (req, res) => {
-  var currDate = req.body.date;
+exports.createExcel = (req, res) => {
+  let currDate = req.body.date;
   let commonWeek = currDate;
   WeekSkill.find({})
     .sort({ weekId: 1 })
-    .then(async (weekskills) => {
+    .then( (weekskills) => {
       var count = weekskills.length;
       var i = 0,
         f = 0;
@@ -69,40 +69,45 @@ exports.createExcel = async (req, res) => {
         let ws = wb.Sheets["Sheet1"];
         let data = xlsx.utils.sheet_to_json(ws);
         let skill, weekSkill;
-        WeekSkill.find({})
-          .sort({ weekId: 1 })
-          .replaceOne(
-            { weekId: commonWeek },
-            {
+        WeekSkill.deleteOne({ weekId: commonWeek })
+        .then((weekSkills) => {
+          if (!weekSkills) {
+            return res.status(404).send({
+              success: false,
+              message: "week not found with id " + commonWeek,
+            });
+          }
+          res.send(weekSkills);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message || "Some error occurred while retrieving week.",
+          });
+        });
+        WeekSkill.find()
+          .then((weekSkills) => {
+            weekSkill = new WeekSkill({
               dateId: new Date(),
               weekId: week,
-              __v: 0,
-            },
-            { upsert: true }
-          )
-          .then((weekSkills) => {
-            if (!weekSkills) {
-              return res.status(404).send({
-                success: false,
-                message: "Question not found with id " + req.params.questionId,
-              });
-            }
-            res.send(weekSkills);
+            });
+            // Save Week Skill in the database
+            weekSkill.save();
           })
           .catch((err) => {
             res.status(500).send({
               success: false,
               message:
-                err.message || "Some error occurred while retrieving skills.",
+                err.message || "Some error occurred while retrieving week.",
             });
           });
-        Skill.find()
-          .remove({ weekId: commonWeek })
+        Skill.deleteMany({ weekId: commonWeek })
           .then((weekSkills) => {
             if (!weekSkills) {
               return res.status(404).send({
                 success: false,
-                message: "Question not found with id " + req.params.questionId,
+                message: "week data not found with id " + commonWeek,
               });
             }
             res.send(weekSkills);

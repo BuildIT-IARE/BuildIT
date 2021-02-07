@@ -140,7 +140,11 @@
           class="row d-flex flex-column align-items-center justify-content-center"
           style="padding-bottom: 0.5rem"
         >
-          <h2>This Week's Toppers</h2>
+          <% if(data.prevWeek) { %>
+            <h2>Toppers for  <%= data[0].weekId.substring(8,10) %>-<%= data[0].weekId.substring(5,7) %>-<%= data[0].weekId.substring(0,4) %></h2>
+          <% } else { %>
+            <h2>This Week's Toppers</h2>
+          <% } %>
           <a href="../images/SkillUp.pdf">
             <img
               src="../images/join.jpg"
