@@ -199,7 +199,6 @@ app.post("/skill/", async (req, res) => {
         const topperData = [first, second, third];
         
         body.clientAddress = clientRoute;
-        body.prevWeek = "week";
         
         res.render("leaderboard", {
           imgUsername: req.cookies.username,
