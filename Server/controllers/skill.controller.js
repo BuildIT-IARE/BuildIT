@@ -8,7 +8,7 @@ exports.createExcel = (req, res) => {
   let commonWeek = currDate;
   WeekSkill.find({})
     .sort({ weekId: 1 })
-    .then( (weekskills) => {
+    .then((weekskills) => {
       var count = weekskills.length;
       var i = 0,
         f = 0;
@@ -42,10 +42,12 @@ exports.createExcel = (req, res) => {
         if (Difference_In_Days >= 0) {
           if (Difference_In_Days <= 6 && currDay <= prevDay) {
             commonWeek = prevDate;
+            break;
           }
         } else {
           if (-Difference_In_Days <= 6 && currDay > prevDay) {
             commonWeek = prevDate;
+            break;
           }
         }
         ++f;
@@ -70,22 +72,27 @@ exports.createExcel = (req, res) => {
         let data = xlsx.utils.sheet_to_json(ws);
         let skill, weekSkill;
         WeekSkill.deleteOne({ weekId: commonWeek })
-        .then((weekSkills) => {
-          if (!weekSkills) {
-            return res.status(404).send({
+          .then((weekSkills) => {
+            if (!weekSkills) {
+              return res.status(404).send({
+                success: false,
+                message: "week not found with id " + commonWeek,
+              });
+            }
+            res.send(weekSkills);
+          })
+          .catch((err) => {
+            if (err.kind === "ObjectId" || err.name === "NotFound") {
+              return res.status(404).send({
+                success: false,
+                message: "week not found with id " + commonWeek,
+              });
+            }
+            return res.status(500).send({
               success: false,
-              message: "week not found with id " + commonWeek,
+              message: "Could not delete week with id " + commonWeek,
             });
-          }
-          res.send(weekSkills);
-        })
-        .catch((err) => {
-          res.status(500).send({
-            success: false,
-            message:
-              err.message || "Some error occurred while retrieving week.",
           });
-        });
         WeekSkill.find()
           .then((weekSkills) => {
             weekSkill = new WeekSkill({
@@ -103,20 +110,25 @@ exports.createExcel = (req, res) => {
             });
           });
         Skill.deleteMany({ weekId: commonWeek })
-          .then((weekSkills) => {
-            if (!weekSkills) {
+          .then((skills) => {
+            if (!skills) {
               return res.status(404).send({
                 success: false,
-                message: "week data not found with id " + commonWeek,
+                message: "skills not found with week id " + commonWeek,
               });
             }
-            res.send(weekSkills);
+            res.send(skills);
           })
           .catch((err) => {
-            res.status(500).send({
+            if (err.kind === "ObjectId" || err.name === "NotFound") {
+              return res.status(404).send({
+                success: false,
+                message: "skill not found with id " + commonWeek,
+              });
+            }
+            return res.status(500).send({
               success: false,
-              message:
-                err.message || "Some error occurred while retrieving skills.",
+              message: "Could not delete skill with id " + commonWeek,
             });
           });
         Skill.find()
@@ -140,7 +152,7 @@ exports.createExcel = (req, res) => {
               // Save Skill in the database
               skill.save();
             }
-            res.send("Done! Uploaded files");
+            // res.send("Done! Uploaded files");
           })
           .catch((err) => {
             res.status(500).send({
@@ -197,6 +209,7 @@ exports.findOne = (req, res) => {
 
 exports.findRecent = (req, res) => {
   Skill.find()
+    .sort({ weekId: 1 })
     .then((skill) => {
       if (!skill) {
         return res.status(404).send({

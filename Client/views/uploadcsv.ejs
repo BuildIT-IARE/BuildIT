@@ -43,11 +43,10 @@
       <div class="main-block">
         <form
           class="fileupload"
-          action="<%= data.serverurl %>"
+          action="<%= data.serverurl %>/skillExcel"
           method="post"
           enctype="multipart/form-data"
         >
-          <% if( data.subtitle ) { %>
             <label for="date">
               Select Date:&nbsp;
             </label>
@@ -58,10 +57,6 @@
               Browse File:
             </label>
             <input type="file" name="upfile" id="upload" value="" />
-          <% } else { %>
-            <h1>Upload File Here</h1>
-            <input type="file" name="upfile" value="" />
-          <% } %>
             <textarea
               type="hidden"
               name="token"

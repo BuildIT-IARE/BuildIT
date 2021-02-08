@@ -221,7 +221,7 @@ app.post("/skill/", async (req, res) => {
 app.get("/admin/add/skillup", async (req, res) => {
   let url = {
     url: clientRoute,
-    serverurl: serverRoute + "/skillExcel",
+    serverurl: serverRoute,
   };
 
   let options = {
@@ -235,7 +235,6 @@ app.get("/admin/add/skillup", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      url.subtitle = "skillUP";
       res.render("uploadcsv", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
