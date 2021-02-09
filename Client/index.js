@@ -53,7 +53,7 @@ app.get("/about", async (req, res) => {
   res.render("about", { imgUsername: req.cookies.username });
 });
 
-app.get("/skillup365", async (req, res) => {
+app.post("/skill", async (req, res) => {
   let headers = [
     "rank",
     "rollNumber",
@@ -87,6 +87,10 @@ app.get("/skillup365", async (req, res) => {
       },
       json: true,
     };
+
+    if( req.body.weekId !== undefined ) {
+      options.url = serverRoute + "/skill/" + req.body.weekId;
+    }
     
     request(options, async(err, response, body) => {
       if(!err) {
@@ -118,88 +122,6 @@ app.get("/skillup365", async (req, res) => {
         
         body.clientAddress = clientRoute;
 
-        res.render("leaderboard", {
-          imgUsername: req.cookies.username,
-          data: body,
-          week: week,
-          headers: headers,
-          toppers: topperData,
-        });
-      } else {
-        res.render("error", {
-          data: { message: "Leaderboard not initialised" },
-          imgUsername: req.cookies.username,
-        });
-      }
-    })
-  })
-});
-
-app.post("/skill/", async (req, res) => {
-  let headers = [
-    "rank",
-    "rollNumber",
-    "hackerRank",
-    "codeChef",
-    "codeforces",
-    "interviewBit",
-    "spoj",
-    "geeksForGeeks",
-    "buildIT",
-    "overallScore",
-    "weeklyPerformance",
-    "points",
-  ];
-  
-  let options = {
-	  url: serverRoute + "/weeks",
-	  method: "get",
-	  headers: {
-		authorization: req.cookies.token,
-	  },
-	  json: true,
-  };
-  
-  request(options, async(err, response, week) => {
-    let options = {
-      url: serverRoute + "/skill/" + req.body.weekId,
-      method: "get",
-      headers: {
-        authorization: req.cookies.token,
-      },
-      json: true,
-    };
-    
-    request(options, async(err, response, body) => {
-      if(!err) {
-        const ordered = _.orderBy(
-          body,
-          function (item) {
-            return item["weeklyPerformance"];
-          },
-          "desc"
-        );
-
-        let toppers = [
-          ordered[0]["rollNumber"],
-          ordered[1]["rollNumber"],
-          ordered[2]["rollNumber"],
-        ];
-
-        const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-          fetch(`${serverRoute}/users/branch/${toppers[0]}`),
-          fetch(`${serverRoute}/users/branch/${toppers[1]}`),
-          fetch(`${serverRoute}/users/branch/${toppers[2]}`),
-        ]);
-
-        const first = await firstResponse.json();
-        const second = await secondResponse.json();
-        const third = await thirdResponse.json();
-    
-        const topperData = [first, second, third];
-        
-        body.clientAddress = clientRoute;
-        
         res.render("leaderboard", {
           imgUsername: req.cookies.username,
           data: body,

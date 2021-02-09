@@ -91,23 +91,7 @@
       .dropdown {
         position: relative;
         left: 6.5%;
-        width: 120px;
-        text-align: center;
-        padding-left: 9px;
-        font-size: 0.9rem;
-        padding-left: 9px;
-        border: 1px outset #BEBEBE;
-        cursor: pointer;
-      }
-
-      .dropdown:focus {
-        border: 1.1px solid #1c62b9;
-        box-shadow: inset 0 1px 2px rgba(0,0,0,.4);
-      }
-
-      .dropdown:hover {
-        box-shadow: 0 1px 1px rgba(0,0,0,.15),
-        inset 0 0 2px rgba(0,0,0,.05);
+        width: 130px;
       }
     </style>
   </head>
@@ -181,7 +165,7 @@
     </section>
     <div>
       <form action="<%= data.clientAddress %>/skill/" method="POST">
-        <select class="dropdown" name="weekId" onchange="javascript:$('#submit').click();">
+        <select class="dropdown custom-select" name="weekId" onchange="javascript:$('#submit').click();">
             <option value="">Select Week</option>
             <% for (let i = week.length-1; i >= 0; i--){ %>
               <option value="<%= week[i].weekId %>"><%= week[i].weekId %></option>
