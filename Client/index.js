@@ -52,65 +52,116 @@ app.get("/home", async (req, res) => {
 app.get("/about", async (req, res) => {
   res.render("about", { imgUsername: req.cookies.username });
 });
-app.get("/skillup365", async (req, res) => {
-  let filePath = "../Public/current_leaderboard";
-  if (fs.existsSync(filePath)) {
-    let wb = xlsx.readFile(filePath);
-    let ws = wb.Sheets["Sheet1"];
-    let data = xlsx.utils.sheet_to_json(ws);
-    let headers = [
-      "Rank",
-      "Roll Number",
-      "HackerRank (HR)",
-      "CodeChef (CC)",
-      "Codeforces (CF)",
-      "InterviewBit (IB)",
-      "Spoj (S)",
-      "Geeks For Geeks (GFG)",
-      "BuildIT",
-      "Overall Score",
-      "Weekly Performance",
-      "Points",
-    ];
 
-    const ordered = _.orderBy(
-      data,
-      function (item) {
-        return item["Weekly Performance"];
+app.post("/skill", async (req, res) => {
+  let headers = [
+    "rank",
+    "rollNumber",
+    "hackerRank",
+    "codeChef",
+    "codeforces",
+    "interviewBit",
+    "spoj",
+    "geeksForGeeks",
+    "buildIT",
+    "overallScore",
+    "weeklyPerformance",
+    "points",
+  ];
+
+  let options = {
+	  url: serverRoute + "/weeks",
+	  method: "get",
+	  headers: {
+		authorization: req.cookies.token,
+	  },
+	  json: true,
+  };
+  
+  request(options, async(err, response, week) => {
+    let options = {
+      url: serverRoute + "/skill",
+      method: "get",
+      headers: {
+      authorization: req.cookies.token,
       },
-      "desc"
-    );
+      json: true,
+    };
 
-    let toppers = [
-      ordered[0]["Roll Number"],
-      ordered[1]["Roll Number"],
-      ordered[2]["Roll Number"],
-    ];
+    if( req.body.weekId !== undefined ) {
+      options.url = serverRoute + "/skill/" + req.body.weekId;
+    }
+    
+    request(options, async(err, response, body) => {
+      if(!err) {
+        const ordered = _.orderBy(
+          body,
+          function (item) {
+            return item["weeklyPerformance"];
+          },
+          "desc"
+        );
 
-    const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-      fetch(`${serverRoute}/users/branch/${toppers[0]}`),
-      fetch(`${serverRoute}/users/branch/${toppers[1]}`),
-      fetch(`${serverRoute}/users/branch/${toppers[2]}`),
-    ]);
+        let toppers = [
+          ordered[0]["rollNumber"],
+          ordered[1]["rollNumber"],
+          ordered[2]["rollNumber"],
+        ];
 
-    const first = await firstResponse.json();
-    const second = await secondResponse.json();
-    const third = await thirdResponse.json();
+        const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+          fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+          fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+          fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+        ]);
 
-    const topperData = [first, second, third];
+        const first = await firstResponse.json();
+        const second = await secondResponse.json();
+        const third = await thirdResponse.json();
+    
+        const topperData = [first, second, third];
+        
+        body.clientAddress = clientRoute;
 
-    res.render("leaderboard", {
-      imgUsername: req.cookies.username,
-      data: data,
-      headers: headers,
-      toppers: topperData,
-    });
-  } else {
-    res.render("error", {
-      data: { message: "Leaderboard not initialised" },
-      imgUsername: req.cookies.username,
-    });
-  }
+        res.render("leaderboard", {
+          imgUsername: req.cookies.username,
+          data: body,
+          week: week,
+          headers: headers,
+          toppers: topperData,
+        });
+      } else {
+        res.render("error", {
+          data: { message: "Leaderboard not initialised" },
+          imgUsername: req.cookies.username,
+        });
+      }
+    })
+  })
+});
+
+app.get("/admin/add/skillup", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.render("uploadcsv", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
 });
 
 app.get("/profile", async (req, res) => {
@@ -235,31 +286,6 @@ app.get("/admin/add/pdf", async (req, res) => {
   });
 });
 
-app.get("/admin/add/leaderboard", async (req, res) => {
-  let url = {
-    url: clientRoute,
-    serverurl: serverRoute,
-  };
-
-  let options = {
-    url: serverRoute + "/isAdmin",
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-
-  request(options, function (err, response, body) {
-    if (body.success) {
-      res.render("uploadcsv", { data: url, token: req.cookies.token });
-    } else {
-      body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
-    }
-  });
-});
-
 app.get("/admin/add/contest", async (req, res) => {
   let options = {
     url: serverRoute + "/isAdmin",
@@ -352,7 +378,7 @@ app.get("/admin/edit/question", async (req, res) => {
     body.class = "btn-green";
     body.title = "Editing";
     body.subtitle = "Questions";
-    res.render("dropdown", { data: body });
+    res.render("search", { data: body });
   });
 });
 
