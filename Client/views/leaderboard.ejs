@@ -202,7 +202,7 @@
             <% for (let i = 0; i < data.length; i++ ){ %>
             <tr>
               <% headers.forEach((col)=> { if (data[i][col]) { %>
-              <td><%= data[i][col] %></td>
+              <td><%= data[i][col]===-1? "NA" : data[i][col] %></td>
               <% } else { %>
               <td>0</td>
               <% } %> <% }) %>
