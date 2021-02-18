@@ -6,13 +6,13 @@ const xlsx = require("xlsx");
 exports.createExcel = (req, res) => {
   let currDate = req.body.date;
   let commonWeek = currDate;
-  WeekSkill.find({})
+  WeekSkill.find()
     .sort({ weekId: 1 })
     .then((weekskills) => {
-      var count = weekskills.length;
-      var i = 0,
+      let count = weekskills.length;
+      let i = 0,
         f = 0;
-      var prevDate = weekskills[0]["weekId"];
+      let prevDate = weekskills[0]["weekId"];
       while (
         parseInt(weekskills[i]["weekId"].substring(0, 4)) <
         parseInt(currDate.substring(0, 4))
@@ -24,20 +24,19 @@ exports.createExcel = (req, res) => {
       )
         ++i;
       while (
-        -parseInt(weekskills[i]["weekId"].substring(8, 10)) +
-          parseInt(currDate.substring(8, 10)) >
-        6
+        parseInt(currDate.substring(8, 10)) >
+        parseInt(weekskills[i]["weekId"].substring(8, 10)) + 6
       )
         ++i;
       prevDate = weekskills[i]["weekId"];
       while (i < count && f < 2) {
-        var date1 = new Date(prevDate);
-        var date2 = new Date(currDate);
-        var Difference_In_Time = date1.getTime() - date2.getTime();
-        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        let date1 = new Date(prevDate);
+        let date2 = new Date(currDate);
+        let Difference_In_Time = date1.getTime() - date2.getTime();
+        let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-        var prevDay = date1.getDay();
-        var currDay = date2.getDay();
+        let prevDay = date1.getDay();
+        let currDay = date2.getDay();
 
         if (Difference_In_Days >= 0) {
           if (Difference_In_Days <= 6 && currDay <= prevDay) {
@@ -54,14 +53,18 @@ exports.createExcel = (req, res) => {
         ++i;
         prevDate = weekskills[i]["weekId"];
       }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message: err.message || "Some error occurred while retrieving week.",
+      });
     });
 
   if (req.files.upfile) {
-    var file = req.files.upfile,
-      name = file.name,
-      type = file.mimetype;
-    var week = req.body.date;
-    var uploadpath = "../Public/current_leaderboard";
+    let file = req.files.upfile,
+      name = file.name;
+    let uploadpath = "../Public/current_leaderboard";
     file.mv(uploadpath, function (err) {
       if (err) {
         console.log("File Upload Failed", name, err);
@@ -70,7 +73,9 @@ exports.createExcel = (req, res) => {
         let wb = xlsx.readFile("../Public/current_leaderboard");
         let ws = wb.Sheets["Sheet1"];
         let data = xlsx.utils.sheet_to_json(ws);
-        let skill, weekSkill;
+        let skill,
+          weekSkill,
+          week = currDate;
         WeekSkill.deleteOne({ weekId: commonWeek })
           .then((weekSkills) => {
             if (!weekSkills) {
@@ -138,14 +143,14 @@ exports.createExcel = (req, res) => {
                 weekId: week,
                 rank: data[i]["Rank"],
                 rollNumber: data[i]["Roll Number"],
-                hackerRank: data[i]["HackerRank (HR)"],
-                codeChef: data[i]["CodeChef (CC)"],
-                codeforces: data[i]["Codeforces (CF)"],
-                interviewBit: data[i]["InterviewBit (IB)"],
-                spoj: data[i]["Spoj (S)"],
-                geeksForGeeks: data[i]["Geeks For Geeks (GFG)"],
-                buildIT: data[i]["BuildIT"],
-                overallScore: data[i]["Overall Score"],
+                hackerRank: data[i]["HackerRank (HR)"] === "NA"? -1 : data[i]["HackerRank (HR)"],
+                codeChef: data[i]["CodeChef (CC)"] === "NA"? -1 : data[i]["CodeChef (CC)"],
+                codeforces: data[i]["Codeforces (CF)"] === "NA"? -1 : data[i]["Codeforces (CF)"],
+                interviewBit: data[i]["InterviewBit (IB)"] === "NA"? -1 : data[i]["InterviewBit (IB)"],
+                spoj: data[i]["Spoj (S)"] === "NA"? -1 :data[i]["Spoj (S)"],
+                geeksForGeeks: data[i]["Geeks For Geeks (GFG)"] === "NA"? -1 :data[i]["Geeks For Geeks (GFG)"],
+                buildIT: data[i]["BuildIT"] === "NA"? -1 : data[i]["BuildIT"],
+                overallScore: data[i]["Overall Score"] === "NA"? -1 : data[i]["Overall Score"],
                 weeklyPerformance: data[i]["Weekly Performance"],
                 points: data[i]["Points"],
               });
