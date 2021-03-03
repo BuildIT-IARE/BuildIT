@@ -25,6 +25,7 @@ var userSchema = new Schema(
       required: [true, "can't be blank"],
       index: true,
     },
+    phone: { type: Number, default: 0 },
     admin: String,
     branch: String,
     totalScore: { type: Number, default: 0 },

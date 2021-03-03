@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <title>Change Profile</title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+    <!-- slick slider -->
+    <link rel="stylesheet" href="plugins/slick/slick.css" />
+    <!-- themefy-icon -->
+    <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css" />
+
+    <!-- Main Stylesheet -->
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+
+    <style>
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        background: #dee2e6;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        text-align: left;
+      }
+
+      .wrapper {
+        height: 144px;
+        width: 144px;
+        position: relative;
+        border: 5px solid #fff;
+        border-radius: 50%;
+        background: url("<%= data.imgUrl %>");
+        background-size: 100% 100%;
+        margin: 100px auto;
+        overflow: hidden;
+      }
+
+      .my_file {
+        position: absolute;
+        bottom: 0;
+        outline: none;
+        color: transparent;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 60px;
+        cursor: pointer;
+        transition: 0.5s;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+      }
+
+      .my_file::-webkit-file-upload-button {
+        visibility: hidden;
+      }
+
+      .my_file::before {
+        content: "\f030";
+        font-family: fontAwesome;
+        color: #fff;
+        display: inline-block;
+        -webkit-user-select: none;
+      }
+
+      .my_file::after {
+        content: "Update";
+        font-family: "arial";
+        font-weight: bold;
+        color: #fff;
+        margin-left: -15px;
+        display: block;
+      }
+
+      .my_file:hover {
+        opacity: 1;
+      }
+
+      .title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 2px;
+      }
+
+      .cont {
+        padding-left: 16.6%;
+        padding-right: 16.66%;
+      }
+
+      .ha {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-size: 1.5rem;
+      }
+
+      .pa {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      .ba {
+        font-family: inherit;
+        background-color: #007bff;
+        border-color: #007bff;
+        font-weight: 400;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+      }
+
+      #error {
+        color: red;
+      }
+
+      /* Remove arrows from input type number */
+      /* Chrome, Safari, Edge, Opera */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+    </style>
+  </head>
+
+  <body>
+    <% include ../views/partials/header %>
+
+    <!-- page title -->
+    <section
+      class="page-title bg-primary position-relative"
+      style="height: 1vh; padding: 8%"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h3 class="text-white font-tertiary">
+              <!-- Edit Profile -->
+            </h3>
+            <br />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container-fluid cont">
+      <div class="row flex-lg-nowrap">
+        <div class="col">
+          <div class="row">
+            <div class="col mr-3 ml-3">
+              <!-- mr-3 ml-3 mb-3 -->
+              <div class="card border-right bg-light border-left">
+                <div class="card-body">
+                  <div class="e-profile">
+                    <div class="row">
+                      <div class="col-12 col-sm-auto mb-3">
+                        <div class="wrapper" style="height: 144px; margin: 0">
+                          <input type="file" class="my_file" />
+                        </div>
+                      </div>
+                      <div
+                        class="col d-flex flex-column flex-sm-row justify-content-between mb-3"
+                      >
+                        <div class="text-center text-sm-left mb-2 mb-sm-0 mt-5">
+                          <h4 class="ha pt-sm-2 pb-1 mb-0 text-nowrap">
+                            <%= imgUsername %>
+                          </h4>
+                          <p class="pa mb-0"><%= data.name %></p>
+                        </div>
+                      </div>
+                    </div>
+                    <ul class="nav nav-tabs">
+                      <li class="nav-item">
+                        <a href="" class="active nav-link">Settings</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content pt-3">
+                      <div class="tab-pane active">
+                        <form
+                          class="form"
+                          name="form1"
+                          action="/editProfile"
+                          method="POST"
+                          onsubmit="return validate()"
+                        >
+                          <!--novalidate=""-->
+                          <div class="row">
+                            <div class="col-12 col-sm-6 mb-3 border-right">
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <div class="mb-2"><b>Edit Profile</b></div>
+                                    <label>Full Name</label>
+                                    <input
+                                      class="form-control"
+                                      type="text"
+                                      name="name"
+                                      id="name"
+                                      placeholder=""
+                                      value="<%= data.name %>"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Phone</label>
+                                    <input
+                                      class="form-control"
+                                      type="number"
+                                      name="phone"
+                                      id="phone"
+                                      placeholder="+91"
+                                      value="<%= data.phone %>"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Email</label>
+                                    <input
+                                      class="form-control"
+                                      type="email"
+                                      name="email"
+                                      id="email"
+                                      placeholder="user@example.com"
+                                      value="<%= data.email %>"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <span id="error"></span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6 mb-3">
+                              <div class="mb-2"><b>Change Password</b></div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Current Password</label>
+                                    <input
+                                      class="form-control"
+                                      type="password"
+                                      name="pswd"
+                                      id="pswd"
+                                      placeholder="••••••"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>New Password</label>
+                                    <input
+                                      class="form-control"
+                                      type="password"
+                                      name="pswd1"
+                                      id="pswd1"
+                                      placeholder="••••••"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label
+                                      >Confirm
+                                      <span class="d-none d-xl-inline"
+                                        >Password</span
+                                      ></label
+                                    >
+                                    <input
+                                      class="form-control"
+                                      type="password"
+                                      name="pswd2"
+                                      id="pswd2"
+                                      placeholder="••••••"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col d-flex justify-content-end">
+                              <button
+                                class="ba btn btn-primary btn-sm"
+                                type="submit"
+                              >
+                                Save Changes
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- /footer -->
+    <% include ../views/partials/aboutfooter %>
+
+    <!-- jQuery -->
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- slick slider -->
+    <script src="plugins/slick/slick.min.js"></script>
+    <!-- filter -->
+    <script src="plugins/shuffle/shuffle.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="js/script.js"></script>
+
+    <script>
+      function validate() {
+        //collect form data in JavaScript variables
+        var name = document.form1.name.value;
+        var mobile = document.form1.phone.value;
+        var email = document.form1.email.value;
+        var pw = document.form1.pswd.value;
+        var pw1 = document.form1.pswd1.value;
+        var pw2 = document.form1.pswd2.value;
+        if (pw == "") {
+          document.getElementById("error").innerHTML =
+            "**Enter the password please!";
+          return false;
+        }
+
+        // if( !pw1 && !pw2 )
+        if (
+          (pw1 == "" || pw1 == undefined) &&
+          (pw2 == "" || pw2 == undefined)
+        ) {
+        } else {
+          //check empty password field
+          if (pw1 == "") {
+            document.getElementById("error").innerHTML =
+              "**Enter the new password please!";
+            return false;
+          }
+
+          //check empty confirm password field
+          if (pw2 == "") {
+            document.getElementById("error").innerHTML =
+              "**Enter confirm password please!";
+            return false;
+          }
+
+          //minimum password length validation
+          if (pw1.length < 8) {
+            document.getElementById("error").innerHTML =
+              "**Password length must be atleast 8 characters";
+            return false;
+          }
+
+          //maximum length of password validation
+          if (pw1.length > 15) {
+            document.getElementById("error").innerHTML =
+              "**Password length must not exceed 15 characters";
+            return false;
+          }
+
+          if (pw1 != pw2) {
+            document.getElementById("error").innerHTML =
+              "**Passwords are not same";
+            return false;
+          } else {
+            alert("Your password created successfully");
+          }
+        }
+
+        if (!validateForm(name, mobile, email)) {
+          return false;
+        } else {
+          alert("Your profile updated successfully!");
+        }
+      }
+
+      // Form Validation
+      function validateForm(name, mobile, email) {
+        if (name == "" || name == "undefined") {
+          document.getElementById("name").value = "<%= data.name %>";
+        } //character data validation
+        else if (!isNaN(name)) {
+          document.getElementById("error").innerHTML =
+            "**Only characters are allowed";
+          return false;
+        } else if (name.length <= 2) {
+          document.getElementById("error").innerHTML =
+            "**Name lenght must be atlease 3 characters!";
+          return false;
+        }
+
+        if (mobile == "" || mobile == "undefined") {
+          document.getElementById("phone").value = "<%= data.phone %>";
+        } else if (!mobile.match(/^\d{10}$/)) {
+          document.getElementById("error").innerHTML =
+            "**Not a valid Phone Number";
+          return false;
+        }
+
+        if (email == "" || email == "undefined") {
+          document.getElementById("email").value = "<%= data.email %>";
+        } else if (!email.match(/\S+@\S+\.\S+/)) {
+          document.getElementById("error").innerHTML =
+            "**Not a valid Email Address!";
+          return false;
+        }
+
+        return true;
+      }
+    </script>
+  </body>
+</html>
