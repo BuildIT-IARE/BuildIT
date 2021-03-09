@@ -182,39 +182,6 @@ app.get("/profile", async (req, res) => {
     urlExists(testUrl, function (err, exists) {
       if (exists) {
         body.imgUrl = testUrl;
-        res.render("profile", {
-          data: body,
-          imgUsername: req.cookies.username,
-        });
-      } else {
-        body.imgUrl = "./images/defaultuser.png";
-        res.render("profile", {
-          data: body,
-          imgUsername: req.cookies.username,
-        });
-      }
-    });
-  });
-});
-
-app.get("/edit", async (req, res) => {
-  let options = {
-    url: serverRoute + "/users/" + req.cookies.username.toLowerCase(),
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    body.branchCaps = body.branch.toUpperCase();
-    let branch = body.branch;
-    let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
-    let rollno = req.cookies.username;
-    let testUrl = imageUrl + branch + "/" + rollno + ".jpg";
-    urlExists(testUrl, function (err, exists) {
-      if (exists) {
-        body.imgUrl = testUrl;
         res.render("editProfile", {
           data: body,
           imgUsername: req.cookies.username,
@@ -261,7 +228,7 @@ app.post("/editProfile", async (req, res) => {
       };
       request(options1, function (err, response, body1) {
         if (body1.success) {
-          res.redirect("/edit");
+          res.redirect("/profile");
         } else {
           res.render("error", {
             data: body1,
