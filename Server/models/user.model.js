@@ -26,6 +26,7 @@ var userSchema = new Schema(
       index: true,
     },
     phone: { type: Number, default: 0 },
+    photo: { data: Buffer, contentType: String },
     admin: String,
     branch: String,
     totalScore: { type: Number, default: 0 },

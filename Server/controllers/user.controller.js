@@ -70,6 +70,7 @@ exports.findOnePublic = (req, res) => {
         email: user.email,
         branch: user.branch,
         phone: user.phone ? user.phone : "",
+        photo: user.photo.contentType ? user.photo.data.toString('base64') : "",
       };
       res.send(sendUser);
     })
@@ -335,6 +336,63 @@ exports.update = (req, res) => {
         message: "Error updating user with id " + req.params.username,
       });
     });
+};
+
+exports.updateImage = (req, res) => {
+  if (req.files.photo) {
+    let file = req.files.photo;
+    let uploadpath = "../Public/photo";
+    file.mv(uploadpath, function (err) {
+      if (err) {
+        console.log(err);
+        res.send("Error Occured!");
+      } else {
+        let file = fs.readFileSync("../Public/photo");
+        var img = {
+          data: file,
+          contentType: "image/png",
+        };
+        User.findOneAndUpdate(
+          { username: req.params.username },
+          {
+            $set: {
+              photo: img,
+            },
+          },
+          { new: true },
+          (err, doc) => {
+            if (err) {
+              console.log(err);
+            }
+          }
+        )
+          .then((user) => {
+            if (!user) {
+              return res.status(404).send({
+                success: false,
+                message: "User not found with username  " + req.params.username,
+              });
+            }
+            res.send({
+              success: true,
+              message: "Profile updated successfully.",
+            });
+          })
+          .catch((err) => {
+            if (err.kind === "ObjectId") {
+              return res.status(404).send({
+                success: false,
+                message: "User not found with username  " + req.params.username,
+              });
+            }
+            return res.status(500).send({
+              success: false,
+              message: "Error updating user with id " + req.params.username,
+            });
+          });
+      }
+    });
+  }
 };
 
 exports.updateOne = async (req, res) => {

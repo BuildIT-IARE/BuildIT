@@ -182,12 +182,14 @@ app.get("/profile", async (req, res) => {
     urlExists(testUrl, function (err, exists) {
       if (exists) {
         body.imgUrl = testUrl;
+        body.serverUrl = serverRoute;
         res.render("editProfile", {
           data: body,
           imgUsername: req.cookies.username,
         });
       } else {
         body.imgUrl = "./images/defaultuser.png";
+        body.serverUrl = serverRoute;
         res.render("editProfile", {
           data: body,
           imgUsername: req.cookies.username,

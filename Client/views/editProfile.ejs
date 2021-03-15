@@ -156,12 +156,12 @@
       }
 
       .wrapper {
-        height: 144px;
-        width: 144px;
+        height: 140px;
+        width: 140px;
         position: relative;
-        border: 5px solid #fff;
+        /* border: 5px solid #fff; */
         border-radius: 50%;
-        background: url("<%= data.imgUrl %>");
+        background: url("<%=data.photo? 'data:image/jpeg;base64,'+data.photo :data.imgUrl%>");
         background-size: 100% 100%;
         margin: 100px auto;
         overflow: hidden;
@@ -218,22 +218,19 @@
       }
 
       .ha {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-family: inherit;
         font-size: 1.5rem;
       }
 
       .pa {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-family: inherit;
         font-size: 1rem;
         line-height: 1.5;
       }
 
-      .ba {
+      .btn-primary {
         font-family: inherit;
+        color: #fff;
         background-color: #007bff;
         border-color: #007bff;
         font-weight: 400;
@@ -242,6 +239,12 @@
         font-size: 1rem;
         line-height: 1.5;
         border-radius: 0.25rem;
+      }
+
+      .btn-primary:hover {
+        color: #fff;
+        background-color: #0069d9;
+        border-color: #0062cc;
       }
 
       #error {
@@ -260,6 +263,12 @@
       input[type="number"] {
         -moz-appearance: textfield;
       }
+
+      div.wrapper > img {
+        height: 140px;
+        width: 140px;
+      }
+      
     </style>
   </head>
 
@@ -283,13 +292,13 @@
       </div>
     </section>
 
-    <div class="container-fluid cont">
+    <div class="container-fluid cont"> <!--bg-light-->
       <div class="row flex-lg-nowrap">
         <div class="col">
           <div class="row">
             <div class="col">
               <!-- mr-3 ml-3 mb-3 -->
-              <div class="card border-right bg-light border-left">
+              <div class="card border-right bg-light border-left"> <!--bg-white-->
                 <ul class="nav nav-tabs">
                   <!-- flex-column -->
                   <li class="nav-item">
@@ -313,7 +322,7 @@
                             <img
                               height="160px"
                               width="135px"
-                              src="<%= data.imgUrl %>"
+                              src="<%=data.photo? 'data:image/jpeg;base64,'+data.photo :data.imgUrl%>"
                               class="nav-link"
                             />
                             <br />
@@ -366,27 +375,45 @@
                     </div>
                   </div>
                   <div id="b" class="container tab-pane fade pr-5 pl-5">
-                    <div class="card-body border-left">
+                    <div class="card-body"> <!--border left-->
                       <div class="e-profile">
                         <div class="row">
                           <div class="col-12 col-sm-auto mb-3">
-                            <div
-                              class="wrapper"
-                              style="height: 144px; margin: 0"
-                            >
-                              <input type="file" class="my_file" />
+                            <div class="mx-auto" style="width: 140px;">
+                              <div
+                                class="wrapper"
+                                style="height: 140px; margin: 0"
+                              >
+                                <form class="form"
+                                action="<%= data.serverUrl %>/users/photo/<%= imgUsername %>"
+                                method="POST"
+                                enctype="multipart/form-data"
+                                >
+                                  <input type="file" name="photo" id="input-files" class="my_file" />                              
+                              </div>
                             </div>
                           </div>
                           <div
                             class="col d-flex flex-column flex-sm-row justify-content-between mb-3"
                           >
                             <div
-                              class="text-center text-sm-left mb-2 mb-sm-0 mt-5"
+                              class="text-center text-sm-left mb-2 mb-sm-0"
                             >
                               <h4 class="ha pt-sm-2 pb-1 mb-0 text-nowrap">
                                 <%= data.name %>
                               </h4>
                               <p class="pa mb-0"><%= imgUsername %></p>
+                              <div class="mt-2">
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                  <i class="fa fa-fw fa-camera"></i>
+                                  <span>Change Photo</span>
+                                </button>
+                              </form>
+                              </div>
+                            </div>
+                            <div class="text-center text-sm-right">
+                              <span class="badge badge-secondary">User</span>
+                              <!-- <div class="text-muted"><small>Joined 09 Dec 2017</small></div> -->
                             </div>
                           </div>
                         </div>
@@ -517,7 +544,7 @@
                               <div class="row">
                                 <div class="col d-flex justify-content-end">
                                   <button
-                                    class="ba btn btn-primary btn-sm"
+                                    class="btn btn-primary btn-sm"
                                     type="submit"
                                   >
                                     Save Changes
@@ -651,6 +678,24 @@
 
         return true;
       }
+    </script>
+    <script>
+      $(document).ready(function() {
+        let imagesPreview = function(input, placeToInsertImagePreview) {
+          if (input.files) {
+              let reader = new FileReader();
+              reader.onload = function(event) {
+                $($.parseHTML("<img>"))
+                  .attr("src", event.target.result)
+                  .appendTo(placeToInsertImagePreview);
+              };
+              reader.readAsDataURL(input.files[0]);
+          }
+        };
+        $("#input-files").on("change", function() {
+          imagesPreview(this, "div.wrapper");
+        });
+      });
     </script>
   </body>
 </html>
