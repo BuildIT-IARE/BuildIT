@@ -247,7 +247,7 @@
         border-color: #0062cc;
       }
 
-      #error {
+      #error, #error1 {
         color: red;
       }
 
@@ -388,8 +388,9 @@
                                 action="<%= data.serverUrl %>/users/photo/<%= imgUsername %>"
                                 method="POST"
                                 enctype="multipart/form-data"
+                                onsubmit="return imgValidate()"
                                 >
-                                  <input type="file" name="photo" id="input-files" class="my_file" />                              
+                                  <input type="file" name="photo" id="input-files" class="my_file" accept="image/*"/>                           
                               </div>
                             </div>
                           </div>
@@ -409,6 +410,14 @@
                                   <span>Change Photo</span>
                                 </button>
                               </form>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <span id="error1"></span>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                             <div class="text-center text-sm-right">
@@ -696,6 +705,46 @@
           imagesPreview(this, "div.wrapper");
         });
       });
+    </script>
+    <script>
+      function imgValidate() {
+        if (!window.FileReader) { // This is VERY unlikely, browser support is near-universal
+            document.getElementById("error1").innerHTML =
+              "The file API isn't supported on this browser yet.";
+            return false;
+        }
+
+        var input = document.getElementById('input-files');
+        if (!input.files) { // This is VERY unlikely, browser support is near-universal
+            console.error();
+            document.getElementById("error1").innerHTML =
+              "This browser doesn't seem to support the `files` property of file inputs.";
+            return false;
+        }
+
+        if (!input.files[0]) {
+          document.getElementById("error1").innerHTML =
+            "Please select a file before 'Submit'";
+            return false;
+        }
+
+        var oFile = input.files[0];
+        if( !oFile.type.includes('image') ) // Allowed Extensions
+        {
+          document.getElementById("error1").innerHTML =
+            "Allowed Extensions are : *.jpeg,*.jpg,*.png";
+            return false;
+        }
+        
+        if (oFile.size > 102400 ) // 100 KiB for bytes.
+        {
+          document.getElementById("error1").innerHTML =
+            "File size must under 100KiB!";
+            return false;
+        }
+
+        return true;
+      }
     </script>
   </body>
 </html>
