@@ -396,96 +396,117 @@ exports.updateImage = (req, res) => {
 };
 
 exports.updateOne = async (req, res) => {
-  let name, email, phone, password;
-
-  if (!req.params.username || !req.body.password) {
+  // 1
+  if (
+    !req.body.email ||
+    !req.body.newPassword ||
+    !req.body.password ||
+    !req.body.name
+  ) {
     return res.status(400).send({
       success: false,
-      message: "User content can not be empty",
+      message: "details can not be empty!",
     });
   }
 
-  name = req.body.name;
-  email = req.body.email;
-  phone = req.body.phone;
-  password = req.body.password;
-
-  // Find user and update it with the request body
-  User.findOneAndUpdate(
-    { username: req.params.username },
-    {
-      $set: {
-        name: name,
-        email: email,
-        phone: phone,
-        password: password,
-      },
-    },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        console.log(err);
-      }
-    }
-  )
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({
-          success: false,
-          message: "User not found with username  " + req.params.username,
-        });
-      }
-      res.send({
-        success: true,
-        message: "Profile updated successfully.",
-      });
-    })
-    .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          success: false,
-          message: "User not found with username  " + req.params.username,
-        });
-      }
-      return res.status(500).send({
-        success: false,
-        message: "Error updating user with id " + req.params.username,
-      });
+  // 2
+  atSign = req.body.email.indexOf("@") + 1;
+  if (
+    emailDomains.indexOf(
+      req.body.email.slice(atSign, req.body.email.length)
+    ) === -1
+  ) {
+    return res.status(400).send({
+      success: false,
+      message:
+        "We do not support this email provider, please try another email ID.",
     });
-};
+  }
 
-exports.pswd = (req, res) => {
-  User.find({ username: req.body.username })
-    .then((user) => {
+  // 3
+  User.find({ username: req.params.username })
+    .then(async (user) => {
       if (!user) {
         return res.status(404).send({
           success: false,
-          message: "User not found with username " + req.body.username,
+          message: "User not found with username " + req.params.username,
         });
       }
-      if (user[0].password != req.body.password) {
+      if (user[0].password !== req.body.password) {
         return res.status(404).send({
           success: false,
           message: "Incorrect password entered.",
         });
       }
-      res.send({
-        success: true,
-        message: "Profile updated successfully.",
-      });
+      const result = await updateProfile();
+      return result;
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
           success: false,
-          message: "User not found with username  " + req.body.username,
+          message: "User not found with username  " + req.params.username,
         });
       }
       return res.status(500).send({
         success: false,
-        message: "Error retrieving user with id " + req.body.username,
+        message: "Error retrieving user with id " + req.params.username,
       });
     });
+
+  // 4
+  // Find user and update it with the request body
+  const updateProfile = async (error, resolve) => {
+    return User.findOneAndUpdate(
+      { username: req.params.username },
+      {
+        $set: {
+          name: req.body.name,
+          email: req.body.email,
+          phone: req.body.phone,
+          password: req.body.newPassword,
+        },
+      },
+      { new: true },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    )
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send({
+            success: false,
+            message: "User not found with username  " + req.params.username,
+          });
+        }
+        res.send({
+          success: true,
+          message: "Profile updated successfully.",
+        });
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return res.status(404).send({
+            success: false,
+            message: "User not found with username  " + req.params.username,
+          });
+        }
+        err.message1 = err.message;
+        err.message = "";
+        if (err.message1.includes("phone")) {
+          err.message = err.message + "Mobile number is already taken. \n";
+        }
+        if (err.message1.includes("email")) {
+          err.message = err.message + "Email is already taken. \n";
+        }
+        return res.status(500).send({
+          success: false,
+          message: err.message,//"Error updating user with id " + req.params.username,
+        });
+      });
+  };
 };
 
 exports.forgotPass = (req, res) => {

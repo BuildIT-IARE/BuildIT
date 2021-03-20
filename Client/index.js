@@ -202,46 +202,30 @@ app.get("/profile", async (req, res) => {
 app.post("/editProfile", async (req, res) => {
   let options = {
     body: {
-      username: req.cookies.username.toLowerCase(),
+      name: req.body.name,
+      phone: req.body.phone,
+      email: req.body.email,
       password: req.body.pswd,
+      newPassword: req.body.pswd1 === "" ? req.body.pswd : req.body.pswd1,
     },
-    url: serverRoute + "/pswd",
+    url: serverRoute + "/users/" + req.cookies.username.toLowerCase(),
     method: "post",
     headers: {
       authorization: req.cookies.token,
     },
     json: true,
   };
+  
   request(options, function (err, response, body) {
     if (body.success) {
-      let options1 = {
-        body: {
-          name: req.body.name,
-          phone: req.body.phone,
-          email: req.body.email,
-          password: req.body.pswd1 === "" ? req.body.pswd : req.body.pswd1,
-        },
-        url: serverRoute + "/users/" + req.cookies.username.toLowerCase(),
-        method: "post",
-        headers: {
-          authorization: req.cookies.token,
-        },
-        json: true,
-      };
-      request(options1, function (err, response, body1) {
-        if (body1.success) {
-          res.redirect("/profile");
-        } else {
-          res.render("error", {
-            data: body1,
-            imgUsername: req.cookies.username,
-          });
-        }
-      });
+      res.redirect("/profile");
     } else {
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
     }
-  });
+  });  
 });
 
 app.get("/login", async (req, res) => {

@@ -27,9 +27,6 @@ module.exports = (app) => {
   // // Update a user with userId
   // app.put('/users', middleware.checkTokenAdmin, users.update);
 
-  // Check password
-  app.post("/pswd", users.pswd);
-
   // Update user info
   app.post("/users/:username", middleware.checkToken, users.updateOne);
 
