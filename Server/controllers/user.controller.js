@@ -341,57 +341,54 @@ exports.update = (req, res) => {
 exports.updateImage = (req, res) => {
   if (req.files.photo) {
     let file = req.files.photo;
-    let uploadpath = "../Public/photo";
-    file.mv(uploadpath, function (err) {
+    let username = req.params.username;
+    let uploadpath = `../Public/${username}`;
+    file.mv(uploadpath, async (err) => {
       if (err) {
         console.log(err);
         res.send("Error Occured!");
       } else {
-        let file = fs.readFileSync("../Public/photo");
+        let file = fs.readFileSync(`../Public/${username}`);
         var img = {
           data: file,
           contentType: "image/png",
         };
-        User.findOneAndUpdate(
-          { username: req.params.username },
-          {
-            $set: {
-              photo: img,
-            },
-          },
-          { new: true },
-          (err, doc) => {
-            if (err) {
-              console.log(err);
-            }
-          }
-        )
-          .then((user) => {
-            if (!user) {
-              return res.status(404).send({
-                success: false,
-                message: "User not found with username  " + req.params.username,
-              });
-            }
-            res.send({
-              success: true,
-              message: "Profile updated successfully.",
-            });
-          })
-          .catch((err) => {
-            if (err.kind === "ObjectId") {
-              return res.status(404).send({
-                success: false,
-                message: "User not found with username  " + req.params.username,
-              });
-            }
-            return res.status(500).send({
-              success: false,
-              message: "Error updating user with id " + req.params.username,
-            });
-          });
+        const result = await uploadImage(img);
+        if (result) {
+          res.redirect(clientAddress + '/error' + '?message=' + result);
+        }
+        fs.unlinkSync(`../Public/${username}`, console.log(err));
       }
     });
+  }
+  
+  const uploadImage = async (img) => {
+    return User.findOneAndUpdate(
+      { username: req.params.username },
+      {
+        $set: {
+          photo: img,
+        },
+      },
+      { new: true },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    )
+      .then((user) => {
+        if (!user) {
+          return "User not found with username  " + req.params.username;
+        }
+        res.redirect(clientAddress + '/profile');
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return "User not found with username  " + req.params.username;
+        }
+        return "Error updating user with id " + req.params.username;
+      });
   }
 };
 

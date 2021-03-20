@@ -1199,7 +1199,7 @@ app.get("/pdf/:setNo", async (req, res) => {
 });
 
 app.get("/error", async (req, res) => {
-  res.render("error", { imgUsername: req.cookies.username });
+  res.render("error", { data: req.query, imgUsername: req.cookies.username });
 });
 
 app.get("/contests/questions/:questionId", async (req, res) => {
