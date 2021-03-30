@@ -27,6 +27,12 @@ module.exports = (app) => {
   // // Update a user with userId
   // app.put('/users', middleware.checkTokenAdmin, users.update);
 
+  // Update user info
+  app.post("/users/:username", middleware.checkToken, users.updateOne);
+
+  // Update Photo
+  app.post("/users/photo/:username", middleware.checkToken, users.updateImage);
+    
   // Delete a user with userId
   app.delete("/users/:username", middleware.checkTokenAdmin, users.delete);
 

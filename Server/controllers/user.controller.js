@@ -69,6 +69,8 @@ exports.findOnePublic = (req, res) => {
         name: user.name,
         email: user.email,
         branch: user.branch,
+        phone: user.phone ? user.phone : "",
+        photo: user.photo.contentType ? user.photo.data.toString('base64') : "",
       };
       res.send(sendUser);
     })
@@ -334,6 +336,174 @@ exports.update = (req, res) => {
         message: "Error updating user with id " + req.params.username,
       });
     });
+};
+
+exports.updateImage = (req, res) => {
+  if (req.files.photo) {
+    let file = req.files.photo;
+    let username = req.params.username;
+    let uploadpath = `../Public/${username}`;
+    file.mv(uploadpath, async (err) => {
+      if (err) {
+        console.log(err);
+        res.send("Error Occured!");
+      } else {
+        let file = fs.readFileSync(`../Public/${username}`);
+        var img = {
+          data: file,
+          contentType: "image/png",
+        };
+        const result = await uploadImage(img);
+        if (result) {
+          res.redirect(clientAddress + '/error' + '?message=' + result);
+        }
+        fs.unlinkSync(`../Public/${username}`, console.log(err));
+      }
+    });
+  }
+  
+  const uploadImage = async (img) => {
+    return User.findOneAndUpdate(
+      { username: req.params.username },
+      {
+        $set: {
+          photo: img,
+        },
+      },
+      { new: true },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    )
+      .then((user) => {
+        if (!user) {
+          return "User not found with username  " + req.params.username;
+        }
+        res.redirect(clientAddress + '/profile');
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return "User not found with username  " + req.params.username;
+        }
+        return "Error updating user with id " + req.params.username;
+      });
+  }
+};
+
+exports.updateOne = async (req, res) => {
+  // 1
+  if (
+    !req.body.email ||
+    !req.body.newPassword ||
+    !req.body.password ||
+    !req.body.name
+  ) {
+    return res.status(400).send({
+      success: false,
+      message: "details can not be empty!",
+    });
+  }
+
+  // 2
+  atSign = req.body.email.indexOf("@") + 1;
+  if (
+    emailDomains.indexOf(
+      req.body.email.slice(atSign, req.body.email.length)
+    ) === -1
+  ) {
+    return res.status(400).send({
+      success: false,
+      message:
+        "We do not support this email provider, please try another email ID.",
+    });
+  }
+
+  // 3
+  User.find({ username: req.params.username })
+    .then(async (user) => {
+      if (!user) {
+        return res.status(404).send({
+          success: false,
+          message: "User not found with username " + req.params.username,
+        });
+      }
+      if (user[0].password !== req.body.password) {
+        return res.status(404).send({
+          success: false,
+          message: "Incorrect password entered.",
+        });
+      }
+      const result = await updateProfile();
+      return result;
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          success: false,
+          message: "User not found with username  " + req.params.username,
+        });
+      }
+      return res.status(500).send({
+        success: false,
+        message: "Error retrieving user with id " + req.params.username,
+      });
+    });
+
+  // 4
+  // Find user and update it with the request body
+  const updateProfile = async (error, resolve) => {
+    return User.findOneAndUpdate(
+      { username: req.params.username },
+      {
+        $set: {
+          name: req.body.name,
+          email: req.body.email,
+          phone: req.body.phone,
+          password: req.body.newPassword,
+        },
+      },
+      { new: true },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    )
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send({
+            success: false,
+            message: "User not found with username  " + req.params.username,
+          });
+        }
+        res.send({
+          success: true,
+          message: "Profile updated successfully.",
+        });
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return res.status(404).send({
+            success: false,
+            message: "User not found with username  " + req.params.username,
+          });
+        }
+        err.message1 = err.message;
+        err.message = "";
+        if (err.message1.includes("phone")) {
+          err.message = err.message + "Mobile number is already taken. \n";
+        }
+        if (err.message1.includes("email")) {
+          err.message = err.message + "Email is already taken. \n";
+        }
+        return res.status(500).send({
+          success: false,
+          message: err.message,//"Error updating user with id " + req.params.username,
+        });
+      });
+  };
 };
 
 exports.forgotPass = (req, res) => {
