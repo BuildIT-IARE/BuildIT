@@ -182,19 +182,50 @@ app.get("/profile", async (req, res) => {
     urlExists(testUrl, function (err, exists) {
       if (exists) {
         body.imgUrl = testUrl;
-        res.render("profile", {
+        body.serverUrl = serverRoute;
+        res.render("editProfile", {
           data: body,
           imgUsername: req.cookies.username,
         });
       } else {
         body.imgUrl = "./images/defaultuser.png";
-        res.render("profile", {
+        body.serverUrl = serverRoute;
+        res.render("editProfile", {
           data: body,
           imgUsername: req.cookies.username,
         });
       }
     });
   });
+});
+
+app.post("/editProfile", async (req, res) => {
+  let options = {
+    body: {
+      name: req.body.name,
+      phone: req.body.phone,
+      email: req.body.email,
+      password: req.body.pswd,
+      newPassword: req.body.pswd1 === "" ? req.body.pswd : req.body.pswd1,
+    },
+    url: serverRoute + "/users/" + req.cookies.username.toLowerCase(),
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.redirect("/profile");
+    } else {
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
+    }
+  });  
 });
 
 app.get("/login", async (req, res) => {
@@ -1168,7 +1199,7 @@ app.get("/pdf/:setNo", async (req, res) => {
 });
 
 app.get("/error", async (req, res) => {
-  res.render("error", { imgUsername: req.cookies.username });
+  res.render("error", { data: req.query, imgUsername: req.cookies.username });
 });
 
 app.get("/contests/questions/:questionId", async (req, res) => {
