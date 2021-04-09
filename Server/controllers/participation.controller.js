@@ -207,6 +207,58 @@ exports.findUser = (req, res) => {
     });
 };
 
+// Retrieve and return all participation details for user in contest.
+exports.findParticipation = (req, callback) => {
+  Participation.find({
+    participationId: req.decoded.username + req.params.contestId,
+  })
+    .then((participation) => {
+      if (!participation) {
+        return callback("participation not found ", null);
+      }
+
+      participation = participation[0];
+      return callback(null, participation);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return callback("Contest not found", null);
+      }
+      return callback("Error retrieving contest", null);
+    });
+};
+
+// Update a participation identified by the contestId in the request
+exports.updateParticipation = (req, questions, callback) => {
+  Participation.findOneAndUpdate(
+    { participationId: req.decoded.username + req.params.contestId, },
+    {
+      $set: {
+        questions: questions,
+      },
+    },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Error Occured");
+      }
+    }
+  )
+    .then((participation) => {
+      if (!participation) {
+        return callback("Contest not found ", null);
+      }
+      participation = participation[0];
+      return callback(null, participation);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return callback("Contest not found", null);
+      }
+      return callback("Error retrieving contest", null);
+    });
+};
+
 // Retrieve and return all participation details.
 exports.findContestPart = (req, res) => {
   Participation.find({ contestId: req.body.contestId })

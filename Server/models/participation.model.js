@@ -11,6 +11,7 @@ var participationSchema = new Schema({
   participationTime: String,
   submissionResults: Array,
   validTill: String,
+  questions: Array
 });
 
 module.exports = mongoose.model("Participation", participationSchema);

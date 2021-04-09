@@ -13,6 +13,13 @@ module.exports = (app) => {
     questions.createExcel
   );
 
+  // Create a new question
+  app.post(
+    "/questionsExcel/:contestId",
+    middleware.checkTokenAdmin,
+    questions.createSet
+  );
+  
   // Create a new question for Tutorials
   app.post(
     "/questiontutorials",
