@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin menu</title>
+    <meta
+      name="description"
+      content="A sidebar menu as seen on the Google Nexus 7 website"
+    />
+    <meta
+      name="keywords"
+      content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu"
+    />
+    <meta name="author" content="Codrops" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../../css/navadmin.css" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+    <script src="/adminjs/modernizr.custom.js"></script>
+
+    <style>
+      #first,
+      #second, #set {
+        padding-left: 30%;
+        padding-right: 30%;
+      }
+
+      #second, #set {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <% include ../views/partials/adminpanel %>
+      <header>
+        <h1>Manage Questions<span style="color: white">Add Sets</span></h1>
+      </header>
+    </div>
+
+    <div>
+      <div id="first">
+        <form onsubmit="return getSubmission()">
+          <!-- action, method" -->
+          <!-- <h3>Enter Contest Id</h3> -->
+          <label for="date" id="a"> &nbsp;Enter Contest Id:&nbsp; </label>
+          <input
+            type="text"
+            placeholder="Contest Id.."
+            name="questionId"
+            id="contestId"
+          />
+          <input type="submit" class="btn-green" value="Search" />
+        </form>
+      </div>
+
+      <div id="set">
+        <hr>
+        <form id="sets"></form>
+      </div>
+
+      <div id="second">
+        <hr />
+        <form
+          method="POST"
+          enctype="multipart/form-data"
+          id="form1"
+        >
+          <h3 id="h3">Add Set</h3>
+          <input type="file" name="upfile" value="" />
+          <textarea
+            type="hidden"
+            name="token"
+            id="token2"
+            value="<%= token %>"
+            style="display: none"
+          ></textarea>
+
+          <div class="btn-block">
+            <button class="submit" type="submit" href="/">Send</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- <hr /> -->
+      <br />
+    </div>
+    <!-- /container -->
+    <script src="/adminjs/classie.js"></script>
+    <script src="/adminjs/gnmenu.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      new gnMenu(document.getElementById("gn-menu"));
+    </script>
+    <script>
+      document.getElementById("token2").value = "<%= token %>";
+    </script>
+    <script>
+      function getSubmission() {
+        let contestId = document.getElementById("contestId").value.toUpperCase();
+        $.ajax({
+          url: "<%=data.serverurl%>" + "/contests/" + contestId,
+          type: "GET",
+          async: true,
+          headers: {
+            authorization: "<%= token %>",
+          },
+          success: function (data) {
+            if (data.length > 0) {
+              document.getElementById("form1").action
+                = "<%= data.serverurl %>/questionsExcel/" + data[0].contestId;
+              document.getElementById("contestId").value = data[0].contestId;
+              document.getElementById("second").style.display = "block";
+              if( data[0].sets.length ) {
+                document.getElementById("set").style.display = "block";
+              }
+              let sets = "";
+              let i;
+              for( i=0; i<data[0].sets.length; i++ ) {
+                sets += "<h3>Set " + (i+1).toString() + " Questions: "+ (data[0].sets[i]).toString().split(",").join(", ") +"</h3></br>"
+              }
+              document.getElementById("sets").innerHTML = sets;
+              document.getElementById("h3").innerHTML = "Add Set " + (data[0].sets.length+1).toString() + ":";
+            }
+            else {
+              document.getElementById("set").style.display = "block";
+              document.getElementById("sets").innerHTML = "<h3>Contest not found!</h3>";
+            }
+          }
+        });
+        return false;
+      }
+    </script>
+  </body>
+</html>

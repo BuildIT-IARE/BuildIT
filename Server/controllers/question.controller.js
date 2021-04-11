@@ -1,6 +1,8 @@
 const Question = require("../models/question.model.js");
 const inarray = require("inarray");
 const xlsx = require("xlsx");
+const contests = require("./contest.controller.js");
+const participations = require("./participation.controller.js");
 // const Base64 = require('js-base64').Base64;
 // Create and Save a new question
 exports.create = (req, res) => {
@@ -118,6 +120,96 @@ exports.createExcel = (req, res) => {
               // Save Question in the database
               question.save();
             }
+            res.send("Done! Uploaded files");
+          })
+          .catch((err) => {
+            res.status(500).send({
+              success: false,
+              message:
+                err.message ||
+                "Some error occurred while retrieving questions.",
+            });
+          });
+      }
+    });
+  } else {
+    res.send("No File selected !");
+    res.end();
+  }
+};
+
+exports.createSet = (req, res) => {
+  if (req.files.upfile) {
+    var file = req.files.upfile,
+      name = file.name,
+      type = file.mimetype;
+    var uploadpath = "../quesxlsx" + name;
+    file.mv(uploadpath, function (err) {
+      if (err) {
+        console.log("File Upload Failed", name, err);
+        res.send("Error Occured!");
+      } else {
+        let wb = xlsx.readFile("../quesxlsx" + name);
+        let ws = wb.Sheets["Sheet1"];
+        let data = xlsx.utils.sheet_to_json(ws);
+        let question;
+        Question.find()
+          .then((questions) => {
+            let currQuestions = questions.length;
+            for (let i = 0; i < data.length; i++) {
+              question = new Question({
+                questionId: "IARE" + (currQuestions + (i + 1)).toString(),
+                questionName: data[i].questionName,
+                contestId: req.params.contestId,
+                questionDescriptionText: data[i].questionDescriptionText,
+                questionInputText: data[i].questionInputText,
+                questionOutputText: data[i].questionOutputText,
+                questionExampleInput1: data[i].questionExampleInput1,
+                questionExampleOutput1: data[i].questionExampleOutput1,
+                questionExampleInput2: data[i].questionExampleInput2,
+                questionExampleOutput2: data[i].questionExampleOutput2,
+                questionExampleInput3: data[i].questionExampleInput3,
+                questionExampleOutput3: data[i].questionExampleOutput3,
+                questionHiddenInput1: data[i].questionHiddenInput1,
+                questionHiddenInput2: data[i].questionHiddenInput2,
+                questionHiddenInput3: data[i].questionHiddenInput3,
+                questionHiddenOutput1: data[i].questionHiddenOutput1,
+                questionHiddenOutput2: data[i].questionHiddenOutput2,
+                questionHiddenOutput3: data[i].questionHiddenOutput3,
+                questionExplanation: data[i].questionExplanation,
+                author: data[i].author,
+                editorial: data[i].editorial,
+                difficulty: data[i].level,
+                language: data[i].language,
+                conceptLevel: data[i].sublevel,
+              });
+
+              // Save Question in the database
+              question.save();
+            }
+
+            contests.findOneSet(req, (err, contest) => {
+              if (err) {
+                res.send({ success: false, message: "Error occured" });
+              }
+              let sets = contest.sets;
+              let initialLength = questions.length;
+              let finalLength = initialLength + data.length;
+              let set = [];
+              let i, j = 0;
+              for (i = initialLength + 1; i <= finalLength; i++) {
+                set[j++] = "IARE" + i.toString();
+              }
+              if (contest.sets) {
+                sets.push(set);
+              }
+              contests.updateOneSet(req, sets, (err, contest1) => {
+                if (err) {
+                  res.send({ success: false, message: "Error occured" });
+                }
+              })
+            });
+
             res.send("Done! Uploaded files");
           })
           .catch((err) => {
@@ -468,29 +560,107 @@ exports.delete = (req, res) => {
     });
 };
 
-exports.findAllContest = (req, res) => {
-  Question.find({ contestId: req.params.contestId })
-    .then((question) => {
-      if (!question) {
-        return res.status(404).send({
-          success: false,
-          message: "Question not found with id " + req.params.questionId,
-        });
-      }
-      res.send(question);
-    })
-    .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          success: false,
-          message: "Question not found with id " + req.params.questionId,
-        });
-      }
-      return res.status(500).send({
-        success: false,
-        message: "Error retrieving question with id " + req.params.questionId,
+exports.findAllContest = async (req, res) => {
+
+  contests.findOneSet(req, async (err, contest) => {
+    if (err) {
+      res.send({ success: false, message: "Error occured" });
+    }
+
+    if (contest.multiset === true) {
+      participations.findParticipation(req, async (err, participation) => {
+        if (err) {
+          res.send({ success: false, message: "Error occured" });
+        }
+
+        if (participation.questions.length === 0) {
+          let result = await findSet(contest, null);
+          return result;
+        }
+
+        const result = await findSet(contest, participation.questions);
+        return result;
       });
-    });
+    } else {
+      const result = await findContest();
+      return result;
+    }
+  });
+
+  const findSet = async (contest, questionArray) => {
+    return Question.find({ contestId: req.params.contestId })
+      .then(async (question) => {
+        if (!question) {
+          return res.status(404).send({
+            success: false,
+            message: "Question not found with id " + req.params.questionId,
+          });
+        };
+
+        if (questionArray !== null) {
+          let questions = [];
+          let i;
+          questions = question.filter(question => questionArray.includes(question.questionId));
+          res.send(questions);
+          return;
+        }
+
+        let sets = contest.sets;
+        let questionId = [];
+        let questions = [];
+        let index, i;
+        for (i = 0; i < contest.sets.length; i++) {
+          let index = Math.floor(Math.random() * sets[i].length);
+          questionId[i] = sets[i][index];
+        }
+        questions = question.filter(question => questionId.includes(question.questionId))
+
+        participations.updateParticipation(req, questionId, async (err, participation) => {
+          if (err) {
+            res.send({ success: false, message: "Error occured" });
+          }
+        })
+
+        res.send(questions);
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return res.status(404).send({
+            success: false,
+            message: "Question not found with id " + req.params.questionId,
+          });
+        }
+        return res.status(500).send({
+          success: false,
+          message: "Error retrieving question with id " + req.params.questionId,
+        });
+      });
+  }
+
+  const findContest = async () => {
+    return Question.find({ contestId: req.params.contestId })
+      .then((question) => {
+        if (!question) {
+          return res.status(404).send({
+            success: false,
+            message: "Question not found with id " + req.params.questionId,
+          });
+        }
+        res.send(question);
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return res.status(404).send({
+            success: false,
+            message: "Question not found with id " + req.params.questionId,
+          });
+        }
+        return res.status(500).send({
+          success: false,
+          message: "Error retrieving question with id " + req.params.questionId,
+        });
+      });
+  }
 };
 
 exports.findAllCourse = (req, res) => {

@@ -105,6 +105,57 @@ exports.getDuration = (req, callback) => {
       return callback("Error retrieving contest", null);
     });
 };
+
+// Find a single contest with a contestId for checking multiset
+exports.findOneSet = async (req, callback) => {
+  Contest.find({ contestId: req.params.contestId })
+    .then((contest) => {
+      if (!contest) {
+        return callback("Contest not found ", null);
+      }
+      contest = contest[0];
+      return callback(null, contest);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return callback("Contest not found", null);
+      }
+      return callback("Error retrieving contest", null);
+    });
+};
+
+// Update a single contest with a contestId
+exports.updateOneSet = (req, sets, callback) => {
+  Contest.findOneAndUpdate(
+    { contestId: req.params.contestId },
+    {
+      $set: {
+        multiset: true,
+        sets: sets
+      },
+    },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Error Occured");
+      }
+    }
+  )
+    .then((contest) => {
+      if (!contest) {
+        return callback("Contest not found ", null);
+      }
+      contest = contest[0];
+      return callback(null, contest);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return callback("Contest not found", null);
+      }
+      return callback("Error retrieving contest", null);
+    });
+};
+
 // Update a contest identified by the contestId in the request
 exports.update = (req, res) => {
   if (!req.body.contestId) {
