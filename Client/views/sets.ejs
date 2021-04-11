@@ -118,7 +118,7 @@
               let sets = "";
               let i;
               for( i=0; i<data[0].sets.length; i++ ) {
-                sets += "<h3>Set " + (i+1).toString() + " Questions: "+ data[0].sets[i] +"</h3></br>"
+                sets += "<h3>Set " + (i+1).toString() + " Questions: "+ (data[0].sets[i]).toString().split(",").join(", ") +"</h3></br>"
               }
               document.getElementById("sets").innerHTML = sets;
               document.getElementById("h3").innerHTML = "Add Set " + (data[0].sets.length+1).toString() + ":";
