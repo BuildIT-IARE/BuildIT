@@ -10,6 +10,8 @@ var contestSchema = new Schema({
   contestDuration: String,
   contestStartTime: String,
   contestEndTime: String,
+  multiset: { type: Boolean, default: false },
+  sets: Array
 });
 
 module.exports = mongoose.model("Contest", contestSchema);
