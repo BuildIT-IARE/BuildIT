@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title id="demo1"></title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <!-- <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css"> -->
+    <!-- slick slider -->
+    <!-- <link rel="stylesheet" href="plugins/slick/slick.css"> -->
+    <!-- themefy-icon -->
+    <!-- <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css"> -->
+    <!-- <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png"> -->
+
+    <!-- Main Stylesheet -->
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      * body {
+        font-family: Arial, Helvetica, sans-serif;
+        /* font-size: 45px; */
+        width: 100%;
+        min-height: 100vh;
+        letter-spacing: 1px;
+      }
+      /*---------------- LEVEL 1 --------------*/
+      #container {
+        min-height: 100vh;
+      }
+      /*---------------- LEVEL 2 --------------*/
+      #header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 0.5vh solid #9d94ea;
+        border-bottom: 0.5vh solid #9d94ea;
+        background-color: #b3acfa;
+        color: white;
+        padding: 2vh;
+        min-height: 12vh;
+        min-width: 100vw;
+      }
+      #main {
+        padding: 10vh 35vw;
+        min-height: 88vh;
+        min-width: 100vw;
+        line-height: 200%;
+      }
+      #title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 34px;
+        width: 80vw;
+        padding-left: 20vw;
+      }
+      #image {
+        display: flex;
+        align-items: center;
+        width: 20vw;
+        margin-top: -2vh;
+        margin-bottom: -2vh;
+        padding-left: 5vw;
+      }
+      .total {
+        margin-bottom: 3vh;
+      }
+      .content {
+        float: left;
+      }
+      .value {
+        float: right;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="header">
+        <h4 id="title">Result</h4>
+        <div id="image">
+          <h4 id="username"><%= imgUsername %>&emsp;</h4>
+          <img
+            id="img"
+            alt="No Image );"
+            width="50"
+            src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/<%= imgBranch %>/<%= imgUsername %>.jpg"
+          />
+        </div>
+      </div>
+      <div id="main">
+        <div class="content">
+          <h4 class="total">Total Score&ensp;:</h4>
+          <h4>Numeral Score&ensp;:</h4>
+          <h4>Reasoning Score&ensp;:</h4>
+          <h4>Verbal Score&ensp;:</h4>
+          <h4>Programming Score&ensp;:</h4>
+        </div>
+        <div class="value">
+          <h4 class="total"><%= data.totalScore %></h4>
+          <h4><%= data.divisionScore[0] %></h4>
+          <h4><%= data.divisionScore[1] %></h4>
+          <h4><%= data.divisionScore[2] %></h4>
+          <h4><%= data.divisionScore[3] %></h4>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

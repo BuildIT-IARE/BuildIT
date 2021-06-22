@@ -12,6 +12,27 @@
 		<link rel="stylesheet" href="../../css/navadmin.css">
 		<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
 		<script src="/adminjs/modernizr.custom.js"></script>
+		<style>
+			.new {
+				font-family: sans-serif;
+				font-size: 18px;
+				color: black;
+				line-height: normal;
+				clear: both;
+			}
+			#mcq, #coding {
+				width: fit-content;
+				border: 1px solid #c4c4c4;
+				border-radius: 5px;
+				box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+			}
+			/* #coding {
+				margin-left: 10%;
+			} */
+			#mcq {
+				margin-left: 50px;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="container">
@@ -33,6 +54,14 @@
 				  <textarea placeholder="24 Hours HHMM format" name="contestStartTime" rows="5"></textarea>
 				  <p class="comments">Contest End Time</p>
 				  <textarea placeholder="24 Hours HHMM format" name="contestEndTime" rows="5"></textarea>
+					<p class="comments" style="float: left;">Challenge</p>
+					<div class="new">
+						<input type="checkbox" name="mcq" value=false id="coding">
+						<label for="coding">&nbsp;Coding</label>
+						<input type="checkbox" name="mcq" value=true id="mcq">
+						<label for="mcq">&nbsp;Qualifier Test</label>
+					</div>
+					<br><hr>
 				  <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
 				  <div class="btn-block">
 					<button  class= "submit" type="submit" href="/">Send</button>
@@ -42,11 +71,18 @@
 		</div><!-- /container -->
 		<script src="/adminjs/classie.js"></script>
 		<script src="/adminjs/gnmenu.js"></script>
+		<script src="plugins/jQuery/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
 		<script>
 			document.getElementById("token").value = "<%= token %>";
+		</script>
+		<script>
+			$('input[type="checkbox"]').on('change', function() {
+				$('input[type="checkbox"]').not(this).prop('checked', false);
+			});
 		</script>
 	</body>
 </html>

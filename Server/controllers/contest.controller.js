@@ -25,6 +25,7 @@ exports.create = (req, res) => {
     contestDuration: req.body.contestDuration,
     contestStartTime: req.body.contestStartTime,
     contestEndTime: req.body.contestEndTime,
+    mcq: req.body.mcq,
   });
 
   // SaveContest in the database
@@ -44,16 +45,29 @@ exports.create = (req, res) => {
 
 // Retrieve and return all contests from the database.
 exports.findAll = (req, res) => {
-  Contest.find()
-    .then((contests) => {
-      res.send(contests);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving contests.",
+  if (req.body.mcq === undefined) {
+    Contest.find({})
+      .then((contests) => {
+        res.send(contests);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving contests.",
+        });
       });
-    });
+  } else {
+    Contest.find({ mcq: req.body.mcq ? true : { $in: [false, null] } })
+      .then((contests) => {
+        res.send(contests);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving contests.",
+        });
+      });
+  }
 };
 
 // Find a single contest with a contestId

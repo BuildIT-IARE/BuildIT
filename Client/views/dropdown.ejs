@@ -32,8 +32,12 @@
     <% } %>
   <% for (let i = 0; i < data.length; i++){ %>
     <% if (data.subtitle){ %>
-      <option value="<%= data[i].questionId %>"><%= data[i].questionId %> - <%= data[i].questionName %></option>
+      <% if (data.subtitle[0]==='M'){ %>
+        <option value="<%= data[i].mcqId %>"><%= data[i].mcqId %> - <%= data[i].mcqName %></option>
       <% } else {%>
+        <option value="<%= data[i].questionId %>"><%= data[i].questionId %> - <%= data[i].questionName %></option>
+      <% } %>
+    <% } else {%>
       <option value="<%= data[i].contestId %>"><%= data[i].contestName %></option>
     <% } %>
 	<% } %>
