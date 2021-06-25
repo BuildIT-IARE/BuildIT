@@ -248,44 +248,37 @@
             id="form1"
           >
             <p>1.&nbsp;</p>
-            <input type="radio" name="answer" value=1 <%
-            if(datatimer.selection===1){ %>checked<%}%> >
+            <input type="radio" name="answer" value=1
+            <% if(datatimer.selection===1){ %>checked<%}%> >
             <p>&emsp;<%= data.option1 %></p>
             <br />
             <p>2.&nbsp;</p>
-            <input type="radio" name="answer" value=2 <%
-            if(datatimer.selection===2){ %>checked<%}%> >
+            <input type="radio" name="answer" value=2
+            <% if(datatimer.selection===2){ %>checked<%}%> >
             <p>&emsp;<%= data.option2 %></p>
             <br />
             <p>3.&nbsp;</p>
-            <input type="radio" name="answer" value=3 <%
-            if(datatimer.selection===3){ %>checked<%}%> >
+            <input type="radio" name="answer" value=3
+            <% if(datatimer.selection===3){ %>checked<%}%> >
             <p>&emsp;<%= data.option3 %></p>
             <br />
             <p>4.&nbsp;</p>
-            <input type="radio" name="answer" value=4 <%
-            if(datatimer.selection===4){ %>checked<%}%> >
+            <input type="radio" name="answer" value=4
+            <% if(datatimer.selection===4){ %>checked<%}%> >
             <p>&emsp;<%= data.option4 %></p>
             <br /><br />
 
-            <input type="hidden" name="mcqId" value="<%" ="data.mcqId" % /> >
-            <input type="hidden" name="section" value="<%" ="data.section" % />
-            >
+            <input type="hidden" name="mcqId" value="<%= data.mcqId %>" >
+            <input type="hidden" name="section" value="<%= data.section %>" >
             <input
               type="hidden"
               name="sectionLen"
-              value="<%"
-              ="data.sectionLen"
-              %
-            />
+              value="<%= data.sectionLen %>"
             >
             <input
               type="hidden"
               name="questionNum"
-              value="<%"
-              ="data.questionNum"
-              %
-            />
+              value="<%= data.questionNum %>"
             >
             <input
               type="submit"
