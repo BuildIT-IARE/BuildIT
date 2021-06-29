@@ -405,7 +405,7 @@ exports.findParticipation = (req, callback) => {
 // Update a participation identified by the contestId in the request
 exports.updateParticipation = (req, questions, callback) => {
   Participation.findOneAndUpdate(
-    { participationId: req.decoded.username + req.params.contestId, },
+    { participationId: req.decoded.username + req.params.contestId },
     {
       $set: {
         questions: questions,
@@ -534,13 +534,17 @@ exports.saveResult = (req, res) => {
           responses.shift();
           mcq = mcq.map((v) => v.books); // array of 4 arrays each having mcqs array from 1 section
 
-          let score = [[], [], [], []];
-          let scoreCnt = [0, 0, 0, 0];
+          let answer = [];
+          let score = [];
+          let scoreCnt = Array(4).fill(0);
           let attemptCnt = Array(4).fill(0);
+          let divisionCnt = Array(4).fill(0);
           for (let i = 0; i < 4; i++) {
             let N = mcq[i].length;
             let M = responses[i].length;
             attemptCnt[i] = M;
+            divisionCnt[i] = N;
+            answer[i] = mcq[i].map((v) => v.answer);
             score[i] = Array(N).fill(0);
             responses[i].sort((v, w) => v.questionNum - w.questionNum);
             let k = 0;
@@ -558,20 +562,25 @@ exports.saveResult = (req, res) => {
             }
           }
           totalCnt = scoreCnt.reduce((a, b) => a + b, 0);
-          let attemptCount = attemptCnt.reduce((a, b) => a + b, 0);
+          let totalCount = divisionCnt.reduce((a, b) => a + b, 0);
           let submission = {
             compute: false,
             totalScore: totalCnt,
-            attemptCount: attemptCount,
+            totalCount: totalCount,
             divisionScore: scoreCnt,
+            divisionCount: divisionCnt,
             divisionAttemptCount: attemptCnt,
             statistics: score,
+            answerKey: answer,
           };
           console.log("came there");
           McqParticipation.findOneAndUpdate(
             { participationId: participation[0].participationId },
             {
-              $set: { submissionResults: submission },
+              $set: {
+                submissionResults: submission,
+                validTill: participation[0].participationTime,
+              },
             },
             { new: true },
             (err, doc) => {

@@ -1,15 +1,16 @@
 const Mcq = require("../models/mcq.model.js");
 const inarray = require("inarray");
 const xlsx = require("xlsx");
+const fs = require("fs");
 
 // Create and Save a new question
 exports.create = (req, res) => {
   // Validate request
 
-  if (!req.body.questionName) {
+  if (!req.body.contestId) {
     return res.status(400).send({
       success: false,
-      message: "Question name can not be empty",
+      message: "contest Id name can not be empty",
     });
   }
 
@@ -21,7 +22,6 @@ exports.create = (req, res) => {
       // Create a Question
       const question = new Mcq({
         mcqId: req.body.questionId,
-        mcqName: req.body.questionName,
         contestId: req.body.contestId,
         mcqDescriptionText: req.body.questionDescriptionText,
         option1: req.body.op1,
@@ -36,13 +36,17 @@ exports.create = (req, res) => {
       question
         .save()
         .then((data) => {
+          if (req.files.photo) {
+            updateImage(req.body.questionId);
+            return;
+          }
           res.send(data);
         })
         .catch((err) => {
           res.status(500).send({
             success: false,
             message:
-              err.message || "Some error occurred while creating the Question.",
+              err.message || "Some error occurred while creating the mcqs.",
           });
         });
     })
@@ -52,6 +56,58 @@ exports.create = (req, res) => {
         message: err.message || "Some error occurred while retrieving mcqs.",
       });
     });
+
+  const updateImage = (mcqId) => {
+    let file = req.files.photo;
+    let uploadpath = `../Public/${mcqId}`;
+    file.mv(uploadpath, async (err) => {
+      if (err) {
+        console.log(err);
+        res.send("Error Occured!");
+      } else {
+        let file = fs.readFileSync(`../Public/${mcqId}`);
+        var img = {
+          data: file,
+          contentType: "image/png",
+        };
+        const result = await uploadImage(mcqId, img);
+        if (result) {
+          res.redirect(clientAddress + "/error" + "?message=" + result);
+        }
+        fs.unlinkSync(`../Public/${mcqId}`, console.log(err));
+      }
+    });
+  };
+
+  const uploadImage = async (mcqId, img) => {
+    return Mcq.findOneAndUpdate(
+      { mcqId: mcqId },
+      {
+        $set: {
+          photo: img,
+        },
+      },
+      { new: true },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    )
+      .then((mcq) => {
+        if (!mcq) {
+          return "mcq not found with mcqId  " + mcqId;
+        }
+        mcq._doc.photo = "base64 file";
+        res.send(mcq._doc);
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return "mcq not found with mcqId  " + mcqId;
+        }
+        return "Error updating mcq with id " + mcqId;
+      });
+  };
 };
 
 exports.createExcel = (req, res) => {
@@ -75,7 +131,6 @@ exports.createExcel = (req, res) => {
             for (let i = 0; i < data.length; i++) {
               question = new Mcq({
                 mcqId: "IARE" + (currQuestions + (i + 1)).toString(),
-                mcqName: data[i].mcqName,
                 contestId: data[i].contestId,
                 mcqDescriptionText: data[i].mcqDescriptionText,
                 option1: data[i].op1,
@@ -167,7 +222,10 @@ exports.findOneContest = (req, res) => {
       mcq.answer = null;
       mcq.sectionLen = mcqs.length;
       mcq.questionNum = index + 1;
-      res.send(mcq);
+      (mcq.photo = mcq.photo.contentType
+        ? mcq.photo.data.toString("base64")
+        : ""),
+        res.send(mcq);
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
@@ -199,7 +257,10 @@ exports.findRecent = (req, res) => {
       mcq.answer = null;
       mcq.sectionLen = mcqs.length;
       mcq.questionNum = 1;
-      res.send(mcq);
+      (mcq.photo = mcq.photo.contentType
+        ? mcq.photo.data.toString("base64")
+        : ""),
+        res.send(mcq);
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
@@ -281,6 +342,10 @@ exports.update = (req, res) => {
           message: "Question not found with id " + req.params.mcqId,
         });
       }
+      if (req.files.photo) {
+        updateImage(req.params.mcqId);
+        return;
+      }
       res.send(mcq);
     })
     .catch((err) => {
@@ -295,6 +360,58 @@ exports.update = (req, res) => {
         message: "Error updating Question with id " + req.params.mcqId,
       });
     });
+
+  const updateImage = (mcqId) => {
+    let file = req.files.photo;
+    let uploadpath = `../Public/${mcqId}`;
+    file.mv(uploadpath, async (err) => {
+      if (err) {
+        console.log(err);
+        res.send("Error Occured!");
+      } else {
+        let file = fs.readFileSync(`../Public/${mcqId}`);
+        var img = {
+          data: file,
+          contentType: "image/png",
+        };
+        const result = await uploadImage(mcqId, img);
+        if (result) {
+          res.redirect(clientAddress + "/error" + "?message=" + result);
+        }
+        fs.unlinkSync(`../Public/${mcqId}`, console.log(err));
+      }
+    });
+  };
+
+  const uploadImage = async (mcqId, img) => {
+    return Mcq.findOneAndUpdate(
+      { mcqId: mcqId },
+      {
+        $set: {
+          photo: img,
+        },
+      },
+      { new: true },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    )
+      .then((mcq) => {
+        if (!mcq) {
+          return "mcq not found with mcqId  " + mcqId;
+        }
+        mcq._doc.photo = "base64 file";
+        res.send(mcq._doc);
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return "mcq not found with mcqId  " + mcqId;
+        }
+        return "Error updating mcq with id " + mcqId;
+      });
+  };
 };
 
 // Delete a question with the specified questionId in the request

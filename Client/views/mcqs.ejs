@@ -96,12 +96,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-basis: 25%;
+        /* flex-basis: 25%; */
         background-color: #dfe6ee;
         border: 0.125vw solid #afb6bf;
         user-select: none;
         height: 6vh;
-        /* width: 3vw; */
+        width: 3vw;
       }
       /*---------------- HEADER DIVISION --------------*/
       #time {
@@ -239,6 +239,17 @@
           <h4>
             Q&nbsp;<%= data.questionNum %>.&nbsp;<%= data.mcqDescriptionText %>
           </h4>
+          <% if (data.photo){ %>
+            <br>
+            <div id="description-picture">
+              <img
+                width="auto"
+                src="<%= 'data:image/jpeg;base64,' + data.photo %>"
+                id="description-pic"
+              />
+              <br />
+            </div>
+          <% } %>
           <br /><br />
           <form
             action="/qualifier_test/<%=data.contestId%>/mcq"
@@ -491,10 +502,9 @@
       function timer() {
         let timeLeft = document.getElementById("labelTime").innerText;
         if (timeLeft !== "Expired") {
-          window.alert(
-            "BuildIt will submit the latest version if the Test times out and gets closed automatically."
-          );
-          return false;
+          let str = "\r Are you sure you want to end this Quiz?\n\r Once Submitted you wont be able to edit / add new responses !!";
+          return confirm(str);
+          return conf;
         }
         return true;
       }

@@ -1460,6 +1460,12 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
 
   request(options, (err, response, body) => {
     if (!body.message) {
+      body.answers = [
+        ...body.answerKey[0],
+        ...body.answerKey[1],
+        ...body.answerKey[2],
+        ...body.answerKey[3],
+      ];
       res.render("score", {
         imgUsername: req.cookies.username,
         imgBranch: req.cookies.branch,

@@ -17,10 +17,12 @@ var participationSchema = new Schema({
 var result = new Schema({
   compute: { type: Boolean, default: true },
   totalScore: { type: Number, default: 0 },
-  attemptCount: { type: Number, default: 0 },
+  totalCount: { type: Number, default: 0 },
   divisionScore: Array,
+  divisionCount: Array,
   divisionAttemptCount: Array,
-  statistics: Array
+  statistics: Array,
+  answerKey: Array
 });
 
 var response = new Schema({

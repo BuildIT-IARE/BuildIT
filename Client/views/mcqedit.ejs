@@ -39,6 +39,9 @@
         <form
           action="<%= data.serverurl %>/mcq/<%= data.mcqId %>"
           method="POST"
+          enctype="multipart/form-data"
+          id="form"
+          onsubmit="return window.verifyImage()"
         >
           <h1>Add Question Manually</h1>
           <br />
@@ -57,8 +60,10 @@
             if(data.section===4){ %>checked<%}%> >
             <label for="8">&emsp;Programming Logic</label>
           </div>
-          <h4>Multiple Choice Question Name</h4>
-          <input name="mcqName" type="text" value="<%= data.mcqName %>" />
+          <h4>Add Picture</h4>
+          <div class="wrapper" style="margin: 0">
+            <input type="file" name="photo" id="input-files" accept="image/*"/>
+          </div>
           <h4>Contest ID</h4>
           <input name="contestId" type="text" value="<%= data.contestId %>" />
           <p class="comments">Description</p>
@@ -112,6 +117,25 @@
     </script>
     <script>
       document.getElementById("token").value = "<%= token %>";
+    </script>
+    <script>
+      function verifyImage() {
+        var input = document.getElementById('input-files');
+        var oFile = input.files[0];
+        if( !oFile.type.includes('image') ) // Allowed Extensions
+        {
+          window.alert("Allowed Extensions are : *.jpeg,*.jpg,*.png");
+          return false;
+        }
+        
+        if (oFile.size > 204800 ) // 200 KiB for bytes.
+        {
+          window.alert("File size must be under 200KiB!");
+          return false;
+        }
+
+        return true;
+      }
     </script>
   </body>
 </html>
