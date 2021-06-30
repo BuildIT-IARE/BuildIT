@@ -22,4 +22,25 @@ module.exports = (app) => {
     middleware.checkToken,
     participation.findUser
   );
+
+  // Retrieve all participations for users in a contest
+  app.get(
+    "/mcqParticipations/:contestId",
+    middleware.checkToken,
+    participation.findMcqParticipation
+  );
+
+  // Create a new participation
+  app.post(
+    "/mcqParticipations",
+    middleware.checkToken,
+    participation.createMcq
+  );
+
+  // Generate score
+  app.get(
+    "/generate_score/:contestId",
+    middleware.checkToken,
+    participation.saveResult
+  );
 };

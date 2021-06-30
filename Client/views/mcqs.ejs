@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title id="demo1"></title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <!-- <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css"> -->
+    <!-- slick slider -->
+    <!-- <link rel="stylesheet" href="plugins/slick/slick.css"> -->
+    <!-- themefy-icon -->
+    <!-- <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css"> -->
+    <!-- <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png"> -->
+
+    <!-- Main Stylesheet -->
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon"> -->
+
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      * body {
+        font-family: Arial, Helvetica, sans-serif;
+        /* font-size: 45px; */
+        width: 100%;
+        min-height: 100vh;
+        letter-spacing: 1px;
+      }
+      /*---------------- LEVEL 1 --------------*/
+      #container {
+        min-height: 100vh;
+      }
+      /*---------------- LEVEL 2 --------------*/
+      #header {
+        display: flex;
+        border-top: 0.5vh solid #9d94ea;
+        border-bottom: 0.5vh solid #9d94ea;
+        background-color: #b3acfa;
+        color: white;
+        padding: 2vh;
+        min-height: 12vh;
+        min-width: 100vw;
+      }
+      #main {
+        padding: 4vh 2vw;
+        min-height: 88vh;
+        min-width: 100vw;
+      }
+      #controls{
+        display: flex;
+        flex-direction: column;
+      }
+      /*---------------- LEVEL 3 --------------*/
+      #content {
+        float: left;
+        width: 75vw;
+        padding-right: 2vw;
+        word-wrap: break-word;
+      }
+      #nav {
+        float: right;
+        width: 21vw;
+      }
+      /*---------------- NAV DIVISION --------------*/
+      #nav {
+        display: flex;
+        flex-direction: column;
+        gap: 4vh;
+        padding: 4vh 1.5vw;
+        min-height: 55.75vh;
+        border: 0.25vw solid #afb6bf;
+      }
+      [class^="block-"] {
+        display: flex;
+        flex-direction: row;
+        gap: 1.5vw;
+        height: 7.75vh;
+      }
+      @media (max-width: 480px) {
+        [class^="block-"] {
+          flex-direction: column;
+          height: 500px;
+        }
+      }
+      [class^="box-"] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* flex-basis: 25%; */
+        background-color: #dfe6ee;
+        border: 0.125vw solid #afb6bf;
+        user-select: none;
+        height: 6vh;
+        width: 3vw;
+      }
+      /*---------------- HEADER DIVISION --------------*/
+      #time {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 10vw;
+      }
+      #section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 70vw;
+      }
+      #image {
+        display: flex;
+        align-items: center;
+        width: 20vw;
+        margin-top: -2vh;
+        margin-bottom: -2vh;
+        padding-left: 5vw;
+      }
+      #labelTime {
+        color: #009b77;
+      }
+      /*---------------- BOOTSTRAP --------------*/
+      .btn {
+        background-color: #fff;
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        /* font-size: 1rem; */
+        line-height: 1.5;
+        height: fit-content;
+        border-radius: 0.5px;
+      }
+      #section > button {
+        margin-right: 4vw;
+      }
+      button:first-child {
+        margin-left: 10vw;
+      }
+      button:last-child {
+        margin-right: 0;
+      }
+      .active {
+        background-color: #19b09f;
+        border-color: #00a591;
+        color: #fff;
+      }
+      .submit {
+        border-color: #00a591;
+        color: #00a591;
+        cursor: pointer;
+        display: none;
+      }
+      .end {
+        float: right;
+        text-decoration: none;
+        clear: both;
+        margin: 2vh auto 0 auto;
+      }
+      p {
+        display: inline-flex;
+        height: 5vh;
+      }
+      .activeQuestion {
+        background-color: #96c3eb;
+      }
+      .attemptedQuestion {
+        background-color: #8ed7cd;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="header">
+        <div id="time">
+          <h5 id="label">Time Left</h5>
+          <h2 id="labelTime"></h2>
+        </div>
+        <div id="section">
+          <% if(!data.isPartial || (data.isPartial && data.sections[1]!=='0') ) {%>
+          <button
+            type="button"
+            class="btn <% if(data.section===1){ %>active<%}%>"
+            onclick="jump(0,1)"
+          >
+            Numeral</button
+          >&emsp;
+          <% } if(!data.isPartial || (data.isPartial && data.sections[2]!=='0') ) {%>
+          <button
+            type="button"
+            class="btn <% if(data.section===2){ %>active<%}%>"
+            onclick="jump(0,2)"
+          >
+            Reasoning</button
+          >&emsp;
+          <% } if(!data.isPartial || (data.isPartial && data.sections[3]!=='0') ) {%>
+          <button
+            type="button"
+            class="btn <% if(data.section===3){ %>active<%}%>"
+            onclick="jump(0,3)"
+          >
+            Verbal</button
+          >&emsp;
+          <% } if(!data.isPartial || (data.isPartial && data.sections[4]!=='0') ) {%>
+          <button
+            type="button"
+            class="btn <% if(data.section===4){ %>active<%}%>"
+            onclick="jump(0,4)"
+          >
+            Programming
+          </button>
+          <% } %>
+        </div>
+        <div id="image">
+          <h4 id="username"><%= imgUsername %>&emsp;</h4>
+          <img
+            id="img"
+            alt="No Image );"
+            width="50"
+            src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/<%= imgBranch %>/<%= imgUsername %>.jpg"
+          />
+        </div>
+      </div>
+      <div id="main">
+        <div id="content">
+          <h4>
+            Q&nbsp;<%= data.questionNum %>.&nbsp;<%= data.mcqDescriptionText %>
+          </h4>
+          <% if (data.photo){ %>
+            <br>
+            <div id="description-picture">
+              <img
+                width="auto"
+                src="<%= 'data:image/jpeg;base64,' + data.photo %>"
+                id="description-pic"
+              />
+              <br />
+            </div>
+          <% } %>
+          <br /><br />
+          <form
+            action="/qualifier_test/<%=data.contestId%>/mcq"
+            method="POST"
+            onsubmit="return window.check()"
+            name="myform"
+            id="form1"
+          >
+            <p>1.&nbsp;</p>
+            <input type="radio" name="answer" value=1
+            <% if(datatimer.selection===1){ %>checked<%}%> >
+            <p>&emsp;<%= data.option1 %></p>
+            <br />
+            <p>2.&nbsp;</p>
+            <input type="radio" name="answer" value=2
+            <% if(datatimer.selection===2){ %>checked<%}%> >
+            <p>&emsp;<%= data.option2 %></p>
+            <br />
+            <p>3.&nbsp;</p>
+            <input type="radio" name="answer" value=3
+            <% if(datatimer.selection===3){ %>checked<%}%> >
+            <p>&emsp;<%= data.option3 %></p>
+            <br />
+            <p>4.&nbsp;</p>
+            <input type="radio" name="answer" value=4
+            <% if(datatimer.selection===4){ %>checked<%}%> >
+            <p>&emsp;<%= data.option4 %></p>
+            <br /><br />
+
+            <input type="hidden" name="isPartial" value="<%= data.isPartial %>" >
+            <input type="hidden" name="sections" value="<%= data.sections %>" >
+            <input type="hidden" name="mcqId" value="<%= data.mcqId %>" >
+            <input type="hidden" name="section" value="<%= data.section %>" >
+            <input
+              type="hidden"
+              name="sectionLen"
+              value="<%= data.sectionLen %>"
+            >
+            <input
+              type="hidden"
+              name="questionNum"
+              value="<%= data.questionNum %>"
+            >
+            <input
+              type="submit"
+              name="submit"
+              id="submit"
+              value="Submit"
+              class="btn submit"
+            />
+          </form>
+        </div>
+        <div id="controls">
+          <div id="nav">
+            <% for(let i=1; i <= data.sectionLen; i+=4){ %>
+            <div class="block-<%= i===1?1:(i-1)/4+1 %>">
+              <% for(let j=i; j < i+4 && j <= data.sectionLen; j++){ %>
+              <div
+                class="box-<%= j %>"
+                onclick="jump( '<%= j-1 %>', '<%= data.section %>')"
+              >
+                <%= j %>
+              </div>
+              <% } %>
+            </div>
+            <% } %>
+          </div>
+          <a
+            href="/qualifierTestScore/<%= data.contestId %>"
+            onclick="return timer()"
+            class="btn active end"
+            id="end"
+            >End Test</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div id="div1" style="display: none"><%= datatimer.validTill %></div>
+    <div id="div2" style="display: none"><%= datatimer.contestId %></div>
+    <script>
+      var countDownDatetemp = document.getElementById("div1").innerHTML;
+      countDownDatetemp = countDownDatetemp.slice(4, countDownDatetemp.length);
+      var countDownDate = new Date(countDownDatetemp).getTime();
+
+      // Update the count down every 1 second
+      var x = setInterval(function () {
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+
+        var hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        document.getElementById("labelTime").innerHTML =
+          hours + ":" + minutes + ":" + seconds;
+
+        // If the count down is over, write some text
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("labelTime").innerHTML = "Expired";
+          document.getElementById("end").innerText = "My Score";
+        }
+      }, 1000);
+    </script>
+    <!-- jQuery -->
+    <!-- <script src="plugins/jQuery/jquery.min.js"></script> -->
+    <!-- Bootstrap JS -->
+    <!-- <script src="plugins/bootstrap/bootstrap.min.js"></script> -->
+    <!-- slick slider -->
+    <!-- <script src="plugins/slick/slick.min.js"></script> -->
+    <!-- filter -->
+    <!-- <script src="plugins/shuffle/shuffle.min.js"></script> -->
+
+    <!-- Main Script -->
+    <!-- <script src="js/script.js"></script> -->
+
+    <!-- begin -->
+    <script>
+      window.history.forward();
+      // function noBack() { window.history.forward(); }
+      function checkKeyCode(evt) {
+        var evt = evt ? evt : evt ? evt : null;
+        console.log(evt.keyCode);
+        // var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+
+        //F12, F5, tab, Alt, Ctrl, PRNT SCR
+        if (
+          evt.keyCode == 123 ||
+          evt.keyCode == 116 ||
+          evt.keyCode == 9 ||
+          evt.keyCode == 18 || //evt.keyCode == 17 ||
+          evt.keyCode == 44
+        ) {
+          evt.keyCode = 0;
+          return false;
+        }
+
+        //Prevent Ctrl+S, Ctrl+P, Ctrl+U (and Ctrl+W for old browsers and Edge)
+        // evt = evt || window.event;
+        if (!evt.ctrlKey) return;
+        var code = evt.which || evt.keyCode;
+        switch (code) {
+          case 83: //Block Ctrl+S
+          case 80: //Block Ctrl+P
+          case 85: //Block Ctrl+U
+          case 87: //Block Ctrl+W -- Not work in Chrome and new Firefox
+            evt.preventDefault();
+            evt.stopPropagation();
+            break;
+        }
+      }
+      document.onkeydown = checkKeyCode;
+    </script>
+    <script>
+      var message = "Sorry, right-click has been disabled";
+
+      function clickIE() {
+        if (document.all) {
+          message;
+          return false;
+        }
+      }
+
+      function clickNS(e) {
+        if (document.layers || (document.getElementById && !document.all)) {
+          if (e.which == 2 || e.which == 3) {
+            message;
+            return false;
+          }
+        }
+      }
+      if (document.layers) {
+        document.captureEvents(Event.MOUSEDOWN);
+        document.onmousedown = clickNS;
+      } else {
+        document.onmouseup = clickNS;
+        document.oncontextmenu = clickIE;
+      }
+      document.oncontextmenu = new Function("return false");
+    </script>
+    <script>
+      function disableselect(e) {
+        return false;
+      }
+
+      function reEnable() {
+        return true;
+      }
+      //if IE4+
+      document.onselectstart = new Function("return false");
+      //if NS6
+      if (window.sidebar) {
+        document.onmousedown = disableselect;
+        document.onclick = reEnable;
+      }
+    </script>
+    <!-- <script>
+  window.onbeforeunload = function (e) {
+    e.preventDefault();
+    e.returnValue = 'Really want to quit the quiz?';
+};
+</script> -->
+    <!-- <script src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?a4098"></script>
+<script>
+  Mousetrap.bind(['ctrl+s', 'ctrl+p', 'ctrl+w', 'ctrl+u'], function(e) {
+    if (e.preventDefault) {
+      e.preventDefault();
+    } else {
+      // internet explorer
+      e.returnValue = false;
+    }
+  });
+</script> -->
+    <!-- end -->
+
+    <script>
+      (() => {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        if (distance > 0) {
+          document.getElementById("submit").style.display = "inherit";
+        }
+        let note = document.querySelector(".box-<%= data.questionNum %>");
+        note.classList.add("activeQuestion");
+        let mark = null;
+        ("<% for(let i=0; i<datatimer.questionNums.length; i++) {%>");
+        mark = document.querySelector(".box-<%= datatimer.questionNums[i] %>");
+        mark.classList.add("attemptedQuestion");
+        ("<% }; %>");
+      })();
+      function jump(num, sec) {
+        document.body.innerHTML +=
+          `<form id="dynForm" action="/qualifier_test/<%= data.contestId %>/mcq" method="post">
+            <input type="hidden" name="sectionLen" value=<%= data.sectionLen %> >
+            <input type="hidden" name="questionNum" value=` +
+          num +
+          `>
+            <input type="hidden" name="section" value=` +
+          sec +
+          `>
+            <input type="hidden" name="isPartial" value="<%= data.isPartial %>" >
+            <input type="hidden" name="sections" value="<%= data.sections %>" >
+          </form>`;
+        document.getElementById("dynForm").submit();
+      }
+      function timer() {
+        let timeLeft = document.getElementById("labelTime").innerText;
+        if (timeLeft !== "Expired") {
+          let str = "\r Are you sure you want to end this Quiz?\n\r Once Submitted you wont be able to edit / add new responses !!";
+          return confirm(str);
+          return conf;
+        }
+        return true;
+      }
+      function check() {
+        let selected = document["myform"]["answer"].value;
+        if (selected === "" || selected === undefined) return false;
+        return true;
+      }
+    </script>
+  </body>
+</html>

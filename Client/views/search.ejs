@@ -27,13 +27,13 @@
     <div class="container">
       <% include ../views/partials/adminpanel %>
       <header style="text-indent: 130px; height: 200px">
-        <h1>Editing<span style="color: white">Questions</span></h1>
+        <h1>Editing<span style="color: white"><%= data.subtitle ? data.subtitle : "MCQ 's" %></span></h1>
       </header>
     </div>
 
     <div class="b" style="width: 25%; margin: auto; margin-top: 45px">
       <h3 style="color: white">
-        <center>Enter Question Id</center>
+        <center>Enter <%= data.subtitle ? "Question" : "Mcq" %> Id</center>
       </h3>
       <form action="<%= data.posturl %>" method="<%= data.method %>">
         <input

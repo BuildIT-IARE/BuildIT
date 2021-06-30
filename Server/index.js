@@ -14,7 +14,8 @@ let config = require("./util/config");
 let middleware = require("./util/middleware.js");
 
 const User = require("./models/user.model");
-const Participation = require("./models/participation.model");
+const Participation = require("./models/participation.model").Participation;
+const McqParticipation = require("./models/participation.model").McqParticipation;
 const ParticipationTut = require("./models/participationTut.model");
 
 // API Address
@@ -85,6 +86,7 @@ const complains = require("./controllers/complain.controller.js");
 const participationsTut = require("./controllers/participationTut.controller.js");
 const courses = require("./controllers/course.controller.js");
 const skills = require("./controllers/skill.controller.js");
+const mcqs = require("./controllers/mcq.controller.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -105,6 +107,8 @@ require("./routes/course.route.js")(app);
 require("./routes/complain.route.js")(app);
 // Require skill routes
 require("./routes/skill.route.js")(app);
+// Require mcq routes
+require("./routes/mcq.route.js")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
@@ -189,6 +193,125 @@ app.post("/isOngoing", middleware.checkToken, async (req, res) => {
       message: "Contest window isn't open!",
     });
   });
+});
+
+app.post("/validateMcq", middleware.checkToken, async(req, res) => {
+  if (req.body.contestId) {
+    contests.getDuration(req, (err, duration) => {
+      if (err) {
+        res.status(404).send({ message: err });
+      }
+      let date = new Date();
+      let today = date.toLocaleDateString();
+      if (today.length === 9) {
+        today = "0" + today;
+      }
+
+      let day = date.getDate();
+      if (day < 10) {
+        day = "0" + String(day);
+      }
+      let month = date.getMonth() + 1;
+      if (month < 10) {
+        month = "0" + String(month);
+      }
+      let year = date.getFullYear();
+
+      if (!localServer) {
+        today = `${year}-${day}-${month}`;
+      } else {
+        today = `${year}-${month}-${day}`;
+      }
+
+      let minutes = date.getMinutes();
+      let hours = date.getHours();
+      if (hours < 10) {
+        hours = "0" + String(hours);
+      }
+
+      if (minutes < 10) {
+        minutes = "0" + String(minutes);
+      }
+
+      let currentTime = `${hours}${minutes}`;
+      currentTime = eval(currentTime);
+      currentTime = moment().tz("Asia/Kolkata").format("HHmm");
+      if (
+        duration.date.toString() === today &&
+        duration.startTime.toString() < currentTime &&
+        duration.endTime.toString() > currentTime
+      ) {
+        accepted = true;
+      } else {
+        accepted = false;
+      }
+      if (req.decoded.admin) {
+        accepted = true;
+      }
+      if (accepted) {
+        let result = {
+          contestId: req.body.contestId,
+          participationId: req.decoded.username + req.body.contestId,
+          mcqId: req.body.mcqId,
+          questionNum: req.body.questionNum,
+          answer: req.body.answer,
+          section: req.body.section,
+          check: true,
+        };
+        // check user time left
+        participations.findUserTime(result, (err, participation) => {
+          if (err) {
+            res.status(404).send({ message: err });
+          }
+          participation = participation[0];
+          let momentDate = new moment();
+          let validTime = participation.validTill;
+          
+          if (
+            momentDate.isBefore(participation.validTill) ||
+            req.decoded.admin
+          ) {
+              participations.acceptSelection(
+                result,
+                (err, doc) => {
+                  if (err) {
+                    res
+                      .status(404)
+                      .send({ message: err });
+                  } else {
+                    res.send(doc);
+                  }
+                }
+              )
+              // .catch((err)=>{
+              //   res.status(500).send({
+              //     message:
+              //       "Server is Busy, try again later! or check your code for any compilation errors, and try again.",
+              //   });
+              // });
+          } else {
+            res
+              .status(403)
+              .send({ message: "Your test duration has expired" });
+          }
+        })
+        // .catch((err)=>{
+        //   res.status(500).send({
+        //     message:
+        //       "Some error occurred while retrieving user time.",
+        //   });
+        // });
+      } else {
+        res.status(403).send({ message: "The contest window is not open" });
+      }
+    })
+    // .catch((err)=>{
+    //   res.status(500).send({
+    //     message:
+    //       "Some error occurred while retrieving contest duration.",
+    //   });
+    // });
+  }
 });
 
 app.post("/validateSubmission", middleware.checkToken, async (req, res) => {

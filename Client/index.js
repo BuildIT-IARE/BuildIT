@@ -34,6 +34,9 @@ app.use("/ide", express.static(path.resolve("../IDE")));
 
 app.use("/tutorials", express.static(__dirname + "/"));
 app.use("/contests", express.static(__dirname + "/"));
+app.use("/qualifier_test/:contestId", express.static(__dirname + "/"));
+app.use("/qualifierTestScore", express.static(__dirname + "/"));
+app.use("/qualifier_tests", express.static(__dirname + "/"));
 
 app.use("/contests/questions", express.static(__dirname + "/"));
 app.use("/tutorials/questions", express.static(__dirname + "/"));
@@ -289,6 +292,116 @@ app.get("/admin/add/question", async (req, res) => {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
     }
+  });
+});
+
+app.get("/admin/add/mcq", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.render("mcqadd", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.get("/admin/edit/mcq", async (req, res) => {
+  let body = {
+    posturl: clientRoute + "/mcqEdit",
+    url: clientRoute,
+    method: "POST",
+    class: "btn-green",
+    title: "Editing",
+  };
+
+  res.render("search", { data: body });
+});
+
+app.post("/mcqEdit", async (req, res) => {
+  let questionId = req.body.questionId;
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      let options = {
+        url: serverRoute + "/mcq/" + questionId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+
+      request(options, function (err, response, body) {
+        body[0].serverurl = serverRoute;
+        res.render("mcqedit", { data: body[0], token: req.cookies.token });
+      });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.get("/admin/delete/mcq", async (req, res) => {
+  let options = {
+    url: serverRoute + "/mcqs",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    body.posturl = clientRoute + "/mcqDelete";
+    body.url = clientRoute;
+    body.method = "POST";
+    body.class = "btn-danger";
+    body.title = "Delete";
+    body.subtitle = "MCQ's";
+    res.render("dropdown", { data: body });
+  });
+});
+
+app.post("/mcqDelete", async (req, res) => {
+  let options = {
+    url: serverRoute + "/mcq/" + req.body.questionId,
+    method: "delete",
+    body: {
+      questionId: req.body.questionId,
+      token: req.cookies.token,
+    },
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.redirect("/admin/delete/mcq");
   });
 });
 
@@ -987,6 +1100,9 @@ app.get("/contest", async (req, res) => {
     headers: {
       authorization: req.cookies.token,
     },
+    body: {
+      mcq: false,
+    },
     json: true,
   };
 
@@ -1094,6 +1210,299 @@ app.get("/contests/:contestId", async (req, res) => {
       });
     } else {
       res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.get("/qualifier_tests", async (req, res) => {
+  let options = {
+    url: serverRoute + "/contests",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: true,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.clearCookie("courseId");
+    res.render("qualifier_test", {
+      imgUsername: req.cookies.username,
+      data: body,
+    });
+  });
+});
+
+app.get("/qualifier_test/:contestId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/isOngoing",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      contestId: req.params.contestId,
+    },
+    json: true,
+  };
+  // Check if contest is open
+  request(options, function (err, response, body) {
+    if (body.success) {
+      let options1 = {
+        url: serverRoute + "/mcqParticipations", // MCQ participation
+        method: "post",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        body: {
+          contestId: req.params.contestId,
+        },
+        json: true,
+      };
+      // Add participation
+      request(options1, function (err, response, body) {
+        let option2 = {
+          url: serverRoute + "/mcqFirst/" + req.params.contestId, // First MCQ
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        // Get mcq for contest
+        request(option2, function (err, response, body) {
+          if (!body.message) {
+            res.cookie("contestId", req.params.contestId);
+            let options3 = {
+              url: serverRoute + "/mcqParticipations/" + req.params.contestId, // Time and score
+              method: "get",
+              headers: {
+                authorization: req.cookies.token,
+              },
+              json: true,
+            };
+            // Get participation details
+            request(options3, function (err, response, bodytimer) {
+              if (Array.isArray(bodytimer)) {
+                let sec = ["", "numeral", "reasoning", "verbal", "programming"][
+                  body.section
+                ];
+                bodytimer = bodytimer[0];
+                let currSection = bodytimer.responses[sec];
+                currSection = currSection.map((v) => v.questionNum);
+                let index = currSection.indexOf(body.questionNum);
+                if (index !== -1) currSection.splice(index, 1);
+                bodytimer.selection =
+                  index === -1 ? 0 : bodytimer.responses[sec][index].selection;
+                bodytimer.questionNums = currSection;
+                bodytimer.submissionResults = null;
+                bodytimer.responses = null;
+
+                // bodytimer.open = bodytimer.validTill>currentDatenTime;
+                res.render("mcqs", {
+                  imgUsername: req.cookies.username,
+                  imgBranch: req.cookies.branch,
+                  data: body,
+                  datatimer: bodytimer,
+                });
+              } else {
+                res.render("error", {
+                  data: body,
+                  imgUsername: req.cookies.username,
+                });
+              }
+            });
+          } else {
+            res.render("error", {
+              data: body,
+              imgUsername: req.cookies.username,
+            });
+          }
+        });
+      });
+    } else {
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
+  const doRequest = () => {
+    return new Promise(() => {
+      let section = Number(req.body.section);
+      let sectionLen = Number(req.body.sectionLen);
+      let questionNum = Number(req.body.questionNum);
+      let sections = req.body.sections;
+      if (req.body.isPartial === "true") {
+        if (questionNum === sectionLen) {
+          if (section === 4) {
+            questionNum -= 1;
+          } else {
+            let str = "00000";
+            let ind = sections.indexOf(section.toString());
+            // let rem = sections.substring(ind+1, 5);
+            // let ini = str.substring(ind+1, 5);
+            if (str.substring(ind + 1, 5) === sections.substring(ind + 1, 5)) {
+              questionNum -= 1;
+            } else {
+              questionNum = 0;
+              let sec = section + 1;
+              while (sections[sec] === "0" && sec < 4) {
+                sec += 1;
+              }
+              section = sec;
+            }
+          }
+        }
+      } else if (questionNum === sectionLen) {
+        if (section === 4) questionNum -= 1;
+        else {
+          questionNum = 0;
+          section += 1;
+        }
+      }
+      let options = {
+        url:
+          serverRoute +
+          "/mcqs/" +
+          req.params.contestId +
+          "/" +
+          section +
+          "/" +
+          questionNum,
+        method: "post",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        body: {
+          isPartial: req.body.isPartial === "true" ? true : false,
+          sections: req.body.sections,
+        },
+        json: true,
+      };
+      // get one MCQ
+      request(options, (err, response, body) => {
+        if (!body.message) {
+          res.cookie("contestId", req.params.contestId);
+          let options3 = {
+            url: serverRoute + "/mcqParticipations/" + req.params.contestId,
+            method: "get",
+            headers: {
+              authorization: req.cookies.token,
+            },
+            json: true,
+          };
+          // get participation details
+          request(options3, (err, response, bodytimer) => {
+            if (Array.isArray(bodytimer)) {
+              const sec = ["", "numeral", "reasoning", "verbal", "programming"][
+                body.section
+              ];
+              bodytimer = bodytimer[0];
+              let currSection = bodytimer.responses[sec];
+              currSection = currSection.map((v) => v.questionNum);
+              const index = currSection.indexOf(body.questionNum);
+              if (index !== -1) currSection.splice(index, 1);
+              bodytimer.selection =
+                index === -1 ? 0 : bodytimer.responses[sec][index].selection;
+              bodytimer.questionNums = currSection;
+              bodytimer.submissionResults = null;
+              bodytimer.responses = null;
+
+              // bodytimer.open = bodytimer.validTill>currentDatenTime;
+              res.render("mcqs", {
+                imgUsername: req.cookies.username,
+                imgBranch: req.cookies.branch,
+                data: body,
+                datatimer: bodytimer,
+              });
+            } else {
+              res.render("error", {
+                data: body,
+                imgUsername: req.cookies.username,
+              });
+            }
+          });
+        } else {
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
+      });
+    });
+  };
+
+  const addSelection = () => {
+    return new Promise(() => {
+      let options = {
+        url: serverRoute + "/validateMcq",
+        method: "post",
+        body: {
+          mcqId: req.body.mcqId,
+          answer: req.body.answer,
+          section: req.body.section,
+          contestId: req.params.contestId,
+          questionNum: req.body.questionNum,
+        },
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      request(options, async (error, response, body) => {
+        if (!body.message) {
+          const second = await doRequest();
+        } else {
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
+      });
+    });
+  };
+
+  // check whether retrieve or update and retrieve
+  if (req.body.answer) {
+    const first = await addSelection();
+  } else {
+    const first = await doRequest();
+  }
+});
+
+app.get("/qualifierTestScore/:contestId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/generate_score/" + req.params.contestId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, (err, response, body) => {
+    if (!body.message) {
+      body.answers = [
+        ...body.answerKey[0],
+        ...body.answerKey[1],
+        ...body.answerKey[2],
+        ...body.answerKey[3],
+      ];
+      body.alphabet = ["", "A", "B", "C", "D"];
+      res.render("score", {
+        imgUsername: req.cookies.username,
+        imgBranch: req.cookies.branch,
+        data: body,
+      });
+    } else {
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
     }
   });
 });

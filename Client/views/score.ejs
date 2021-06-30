@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!-- <title id="demo1"></title> -->
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@100;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo:wght@500&display=swap');
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+* body {
+  font-family: 'Barlow', sans-serif;
+  width: 100%;
+  min-height: 100vh;
+  letter-spacing: 1px;
+}
+/*---------------- LEVEL 1 --------------*/
+#container {
+  min-height: 100vh;
+}
+/*---------------- LEVEL 2 --------------*/
+#header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  border-top: 0.5vh solid #6558f5;
+  border-bottom: 0.5vh solid #6558f5;
+  background-color: #b3acfa;
+  color: white;
+  padding: 0 2vh;
+  min-height: 12vh;
+  min-width: 100vw;
+}
+#central {
+  padding: 0 31vw;
+  height: 88vh;
+  min-width: 100vw;
+  line-height: 200%;
+}
+/*---------------- LEVEL 3 HEADER--------------*/
+#home {
+  display: flex;
+  align-items: center;
+  width: 20vw;
+}
+#banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 60vw;
+}
+#image {
+  display: flex;
+  align-items: center;
+  width: 20vw;
+  padding-left: 5.5vw;
+}
+/*---------------- LEVEL 3 CENTRAL--------------*/
+#up{
+  height: 35vh;
+}
+#down{
+  min-height: 35vh;
+}
+#print{
+  max-height: 18vh;
+  padding-top: 6vh;
+}
+/*---------------- LEVEL 4 HEADER--------------*/
+#home button {
+  background-color: #fff;
+  font-family: 'Barlow', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: #50606f;
+  border: 2px solid #8d8fc7;
+  padding: .3rem .9rem;
+  border-radius: 3px;
+}
+#result {
+  font-size: 18px;
+  padding-bottom: .5vh;
+}
+#contest {
+  font-size: 28px;
+}
+#username {
+  font-family: 'Barlow', sans-serif;
+  font-size: 20px;
+  margin-right: -1vw;
+}
+/*---------------- LEVEL 4 CENTRAL--------------*/
+#score, #answer-key{
+  font-size: 3.5vh;
+  font-weight: 900;
+  padding: 6vh 0 2vh 0;
+  height: 12vh;
+}
+#box1{
+  display: flex;
+  border: 2px solid #c3cfd9;
+  width: 38vw;
+  min-height: 23vh;
+  padding: 1vh 0;
+}
+#box2{
+  /*border: 2px solid #dee2e6;*/
+  width: 38vw;
+  min-height: 23vh;
+  /* font-weight: bold; */
+}
+#print button{
+  background-color: #2AAA8A;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: white;
+  line-height: 1.5;
+  letter-spacing: 2px;
+  padding: .375rem .75rem;
+}
+/*---------------- LEVEL 5 BOX1--------------*/
+#total-score{
+  font-family: 'Baloo', sans-serif;
+  border-right:  2px solid #ddd;
+  font-size: 3.8vh;
+  font-weight: bolder;
+  width: 10vw;
+  height: 21vh;
+  padding: 6vh 2vw;
+}
+#statistic1{
+  width: 28vw;
+  height: 19vh;
+  padding: 1vh 1vw;
+  /*display: table*/
+}
+/*---------------- LEVEL 6 TOTAL SCORE--------------*/
+#line{
+    border-bottom: 2px solid #ddd;
+    -webkit-transform:
+                translateY(0)
+                translateX(.5vw)
+                rotate(-45deg);
+    width: 5vw;
+}
+#left{
+  color: #2AAA8A;
+}
+#right{
+  text-indent: 3.6vw;
+}
+/*---------------- LEVEL 6 STATISTICS--------------*/
+table, th, td {
+  border: 2px solid #c3cfd9;
+}
+td, th {
+  text-align: center;
+  padding: 3px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100%;
+  line-height: 1.5;
+}
+#box1 table {
+  font-family: 'Baloo', sans-serif;
+  font-size: 12px;
+}
+#box1 .correct{
+  color: #1aae9f;
+}
+#box1 .wrong{
+  color: #d44a5f;
+}
+#box2 table{
+  font-size: 15px;
+  table-layout:fixed;
+}
+#box2 td{
+  height: 4.5vh;
+}
+#box2 > table > tbody > tr > td:last-child {
+  padding: 2.8px;
+}
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+  
+      <div id="header">
+        <div id="home">
+          <a href="/"><button>HOME</button></a>
+        </div>
+        <div id="banner">
+          <div id="result">
+            <p>Results</p>
+          </div>
+          <div id="contest">
+            <p>IARE34 - NQT QUIZ</p>
+          </div>
+        </div>
+        <div id="image">
+          <p id="username"><%= imgUsername %>&emsp;</p>
+          <img
+            id="img"
+            alt="No Image );"
+            width="50"
+            src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/<%= imgBranch %>/<%= imgUsername %>.jpg"
+          />
+        </div>
+      </div>
+  
+      <div id="central">
+        <div id="up">
+          <div id="score">
+            <p>SCORE</p>
+          </div>
+          <div id="box1">
+            <div id="total-score">
+              <p id="left"><%= data.totalScore %></p>
+              <div id="line"></div>
+              <p id="right"><%= data.totalCount %></p>
+            </div>
+            <div id="statistic1">
+              <table>
+                <thead>
+                <tr>
+                  <th>Section</th>
+                  <th>Total</th>
+                  <th>Correct</th>
+                  <th>Wrong</th>
+                  <th>Unanswered</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>Numeral</td>
+                  <td><%= data.divisionCount[0] %></td>
+                  <td class="correct"><%= data.divisionScore[0] %></td>
+                  <td class="wrong"><%= data.divisionAttemptCount[0] - data.divisionScore[0] %></td>
+                  <td><%= data.divisionCount[0] - data.divisionAttemptCount[0] %></td>
+                </tr>
+                <tr>
+                  <td>Reasoning</td>
+                  <td><%= data.divisionCount[1] %></td>
+                  <td class="correct"><%= data.divisionScore[1] %></td>
+                  <td class="wrong"><%= data.divisionAttemptCount[1] - data.divisionScore[1] %></td>
+                  <td><%= data.divisionCount[1] - data.divisionAttemptCount[1] %></td>
+                </tr>
+                <tr>
+                  <td>Verbal</td>
+                  <td><%= data.divisionCount[2] %></td>
+                  <td class="correct"><%= data.divisionScore[2] %></td>
+                  <td class="wrong"><%= data.divisionAttemptCount[2] - data.divisionScore[2] %></td>
+                  <td><%= data.divisionCount[2] - data.divisionAttemptCount[2] %></td>
+                </tr>
+                <tr>
+                  <td>Programming</td>
+                  <td><%= data.divisionCount[3] %></td>
+                  <td class="correct"><%= data.divisionScore[3] %></td>
+                  <td class="wrong"><%= data.divisionAttemptCount[3] - data.divisionScore[3] %></td>
+                  <td><%= data.divisionCount[3] - data.divisionAttemptCount[3] %></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div id="down">
+          <div id="answer-key">
+            <p>ANSWER KEY</p>
+          </div>
+          
+          <div id="box2">
+            <table>
+              <tbody>
+              <% for(let i=0; i < data.answers.length; i+=10){ %>
+                <tr>
+                  <% for(let j=i; j < i+10 && j < data.answers.length; j++){ %>
+                  <td>
+                    <%= j+1 %> - <%= data.alphabet[data.answers[j]] %>
+                  </td>
+                  <% } %>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="print">
+          <center><button id="print-btn" onclick="window.print()">Print</button></center>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
