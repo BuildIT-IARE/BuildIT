@@ -532,28 +532,33 @@ exports.saveResult = (req, res) => {
           }
           let responses = Object.values(participation[0].responses._doc); // array of 4 arrays
           responses.shift();
+          let divs = mcq.map((v) => v._id);
           mcq = mcq.map((v) => v.books); // array of 4 arrays each having mcqs array from 1 section
 
-          let answer = [];
-          let score = [];
+          let answer = [[], [], [], []];
+          let score = [[], [], [], []];
           let scoreCnt = Array(4).fill(0);
           let attemptCnt = Array(4).fill(0);
           let divisionCnt = Array(4).fill(0);
-          for (let i = 0; i < 4; i++) {
-            let N = mcq[i].length;
+          for (let i = 0, l = 0; i < 4; i++, l++) {
+            if (divs.length < 4 && divs[l] > i+1) {
+              --l;
+              continue;
+            }
+            let N = mcq[l].length;
             let M = responses[i].length;
             attemptCnt[i] = M;
             divisionCnt[i] = N;
-            answer[i] = mcq[i].map((v) => v.answer);
+            answer[i] = mcq[l].map((v) => v.answer);
             score[i] = Array(N).fill(0);
             responses[i].sort((v, w) => v.questionNum - w.questionNum);
             let k = 0;
             for (let j = 0; j < N && k < M; j++) {
               let obj = {};
-              if (responses[i][k].mcqId === mcq[i][j].mcqId) {
+              if (responses[i][k].mcqId === mcq[l][j].mcqId) {
                 obj.questionNum = j + 1;
                 obj.selected = responses[i][k].selection;
-                obj.answer = mcq[i][j].answer;
+                obj.answer = mcq[l][j].answer;
                 obj.score = Number(obj.selected) === obj.answer ? 1 : 0;
                 scoreCnt[i] += obj.score;
                 score[i][j] = obj;

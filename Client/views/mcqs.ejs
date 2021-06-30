@@ -60,6 +60,10 @@
         min-height: 88vh;
         min-width: 100vw;
       }
+      #controls{
+        display: flex;
+        flex-direction: column;
+      }
       /*---------------- LEVEL 3 --------------*/
       #content {
         float: left;
@@ -171,8 +175,7 @@
         float: right;
         text-decoration: none;
         clear: both;
-        margin-top: 2vh;
-        margin-right: 7vw;
+        margin: 2vh auto 0 auto;
       }
       p {
         display: inline-flex;
@@ -195,6 +198,7 @@
           <h2 id="labelTime"></h2>
         </div>
         <div id="section">
+          <% if(!data.isPartial || (data.isPartial && data.sections[1]!=='0') ) {%>
           <button
             type="button"
             class="btn <% if(data.section===1){ %>active<%}%>"
@@ -202,6 +206,7 @@
           >
             Numeral</button
           >&emsp;
+          <% } if(!data.isPartial || (data.isPartial && data.sections[2]!=='0') ) {%>
           <button
             type="button"
             class="btn <% if(data.section===2){ %>active<%}%>"
@@ -209,6 +214,7 @@
           >
             Reasoning</button
           >&emsp;
+          <% } if(!data.isPartial || (data.isPartial && data.sections[3]!=='0') ) {%>
           <button
             type="button"
             class="btn <% if(data.section===3){ %>active<%}%>"
@@ -216,6 +222,7 @@
           >
             Verbal</button
           >&emsp;
+          <% } if(!data.isPartial || (data.isPartial && data.sections[4]!=='0') ) {%>
           <button
             type="button"
             class="btn <% if(data.section===4){ %>active<%}%>"
@@ -223,6 +230,7 @@
           >
             Programming
           </button>
+          <% } %>
         </div>
         <div id="image">
           <h4 id="username"><%= imgUsername %>&emsp;</h4>
@@ -279,6 +287,8 @@
             <p>&emsp;<%= data.option4 %></p>
             <br /><br />
 
+            <input type="hidden" name="isPartial" value="<%= data.isPartial %>" >
+            <input type="hidden" name="sections" value="<%= data.sections %>" >
             <input type="hidden" name="mcqId" value="<%= data.mcqId %>" >
             <input type="hidden" name="section" value="<%= data.section %>" >
             <input
@@ -300,28 +310,30 @@
             />
           </form>
         </div>
-        <div id="nav">
-          <% for(let i=1; i <= data.sectionLen; i+=4){ %>
-          <div class="block-<%= i===1?1:(i-1)/4+1 %>">
-            <% for(let j=i; j < i+4 && j <= data.sectionLen; j++){ %>
-            <div
-              class="box-<%= j %>"
-              onclick="jump( '<%= j-1 %>', '<%= data.section %>')"
-            >
-              <%= j %>
+        <div id="controls">
+          <div id="nav">
+            <% for(let i=1; i <= data.sectionLen; i+=4){ %>
+            <div class="block-<%= i===1?1:(i-1)/4+1 %>">
+              <% for(let j=i; j < i+4 && j <= data.sectionLen; j++){ %>
+              <div
+                class="box-<%= j %>"
+                onclick="jump( '<%= j-1 %>', '<%= data.section %>')"
+              >
+                <%= j %>
+              </div>
+              <% } %>
             </div>
             <% } %>
           </div>
-          <% } %>
+          <a
+            href="/qualifierTestScore/<%= data.contestId %>"
+            target="_blank"
+            onclick="return timer()"
+            class="btn active end"
+            id="end"
+            >End Test</a
+          >
         </div>
-        <a
-          href="/qualifierTestScore/<%= data.contestId %>"
-          target="_blank"
-          onclick="return timer()"
-          class="btn active end"
-          id="end"
-          >End Test</a
-        >
       </div>
     </div>
 
@@ -496,6 +508,8 @@
             <input type="hidden" name="section" value=` +
           sec +
           `>
+            <input type="hidden" name="isPartial" value="<%= data.isPartial %>" >
+            <input type="hidden" name="sections" value="<%= data.sections %>" >
           </form>`;
         document.getElementById("dynForm").submit();
       }

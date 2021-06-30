@@ -220,12 +220,19 @@ exports.findOneContest = (req, res) => {
 
       let mcq = mcqs[index]._doc;
       mcq.answer = null;
-      mcq.sectionLen = mcqs.length;
       mcq.questionNum = index + 1;
-      (mcq.photo = mcq.photo.contentType
+      mcq.sectionLen = mcqs.length;
+      mcq.isPartial = req.body.isPartial;
+      mcq.photo = mcq.photo.contentType
         ? mcq.photo.data.toString("base64")
-        : ""),
-        res.send(mcq);
+        : "";
+
+      if (mcq.isPartial)
+      {
+        mcq.sections = req.body.sections;
+      }
+
+      res.send(mcq);
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
@@ -244,7 +251,19 @@ exports.findOneContest = (req, res) => {
 
 // Retrieve first mcq
 exports.findRecent = (req, res) => {
-  Mcq.find({ contestId: req.params.contestId, section: 1 })
+  Mcq.aggregate([
+    { $match: { contestId: req.params.contestId } },
+    {
+      $group: {
+        _id: "$section",
+        myCount: { $sum: 1 },
+        resp: { $first: "$$ROOT" },
+      },
+    },
+    { $sort: { _id: 1 } },
+    //             {$limit:1},
+    //             {$project:{"_id": 0, "resp":1, "myCount": 1}},
+  ])
     .then((mcqs) => {
       if (!mcqs) {
         return res.status(404).send({
@@ -252,15 +271,30 @@ exports.findRecent = (req, res) => {
           message: "Question not found with id " + req.params.contestId,
         });
       }
+      if (!mcqs.length) throw "Each section must contain atleast question(s)!";
 
-      let mcq = mcqs[0]._doc;
+      let mcq = mcqs[0].resp;
       mcq.answer = null;
-      mcq.sectionLen = mcqs.length;
       mcq.questionNum = 1;
-      (mcq.photo = mcq.photo.contentType
-        ? mcq.photo.data.toString("base64")
-        : ""),
-        res.send(mcq);
+      mcq.isPartial = false;
+      mcq.sectionLen = mcqs[0].myCount;
+      mcq.photo = mcq.photo
+        ? mcq.photo.contentType
+          ? mcq.photo.data.toString("base64")
+          : ""
+        : "";
+
+      if (mcqs.length < 4)
+      {
+        let division = Array(5).fill(0);
+        let existingDiv = mcqs.map((v) => v._id);
+        existingDiv.forEach((c) => division[c] = c);
+        
+        mcq.sections = division.join("");
+        mcq.isPartial = true;
+      }
+
+      res.send(mcq);
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {

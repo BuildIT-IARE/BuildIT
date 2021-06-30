@@ -1335,7 +1335,29 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
       let section = Number(req.body.section);
       let sectionLen = Number(req.body.sectionLen);
       let questionNum = Number(req.body.questionNum);
-      if (questionNum === sectionLen) {
+      let sections = req.body.sections;
+      if (req.body.isPartial === "true") {
+        if (questionNum === sectionLen) {
+          if (section === 4) {
+            questionNum -= 1;
+          } else {
+            let str = "00000";
+            let ind = sections.indexOf(section.toString());
+            // let rem = sections.substring(ind+1, 5);
+            // let ini = str.substring(ind+1, 5);
+            if (str.substring(ind + 1, 5) === sections.substring(ind + 1, 5)) {
+              questionNum -= 1;
+            } else {
+              questionNum = 0;
+              let sec = section + 1;
+              while (sections[sec] === "0" && sec < 4) {
+                sec += 1;
+              }
+              section = sec;
+            }
+          }
+        }
+      } else if (questionNum === sectionLen) {
         if (section === 4) questionNum -= 1;
         else {
           questionNum = 0;
@@ -1351,9 +1373,13 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
           section +
           "/" +
           questionNum,
-        method: "get",
+        method: "post",
         headers: {
           authorization: req.cookies.token,
+        },
+        body: {
+          isPartial: req.body.isPartial === "true" ? true : false,
+          sections: req.body.sections,
         },
         json: true,
       };
@@ -1466,6 +1492,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
         ...body.answerKey[2],
         ...body.answerKey[3],
       ];
+      body.alphabet = ["", "A", "B", "C", "D"];
       res.render("score", {
         imgUsername: req.cookies.username,
         imgBranch: req.cookies.branch,

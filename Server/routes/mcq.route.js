@@ -20,7 +20,7 @@ module.exports = (app) => {
   );
   // testing end-------------------------------------------------------------------------------
   // Retrieve a single mcq with contestId
-  app.get(
+  app.post(
     "/mcqs/:contestId/:section/:questionNum",
     middleware.checkToken,
     mcqs.findOneContest

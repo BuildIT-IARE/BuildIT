@@ -124,6 +124,7 @@
   /*border: 2px solid #dee2e6;*/
   width: 38vw;
   min-height: 23vh;
+  /* font-weight: bold; */
 }
 #print button{
   background-color: #2AAA8A;
@@ -190,6 +191,12 @@ table {
 #box2 td{
   height: 4.5vh;
 }
+.correct{
+  color: #1aae9f;
+}
+.wrong{
+  color: #d44a5f;
+}
     </style>
   </head>
 
@@ -245,29 +252,29 @@ table {
                 <tr>
                   <td>Numeral</td>
                   <td><%= data.divisionCount[0] %></td>
-                  <td><%= data.divisionScore[0] %></td>
-                  <td><%= data.divisionAttemptCount[0] - data.divisionScore[0] %></td>
+                  <td class="correct"><%= data.divisionScore[0] %></td>
+                  <td class="wrong"><%= data.divisionAttemptCount[0] - data.divisionScore[0] %></td>
                   <td><%= data.divisionCount[0] - data.divisionAttemptCount[0] %></td>
                 </tr>
                 <tr>
                   <td>Reasoning</td>
                   <td><%= data.divisionCount[1] %></td>
-                  <td><%= data.divisionScore[1] %></td>
-                  <td><%= data.divisionAttemptCount[1] - data.divisionScore[1] %></td>
+                  <td class="correct"><%= data.divisionScore[1] %></td>
+                  <td class="wrong"><%= data.divisionAttemptCount[1] - data.divisionScore[1] %></td>
                   <td><%= data.divisionCount[1] - data.divisionAttemptCount[1] %></td>
                 </tr>
                 <tr>
                   <td>Verbal</td>
                   <td><%= data.divisionCount[2] %></td>
-                  <td><%= data.divisionScore[2] %></td>
-                  <td><%= data.divisionAttemptCount[2] - data.divisionScore[2] %></td>
+                  <td class="correct"><%= data.divisionScore[2] %></td>
+                  <td class="wrong"><%= data.divisionAttemptCount[2] - data.divisionScore[2] %></td>
                   <td><%= data.divisionCount[2] - data.divisionAttemptCount[2] %></td>
                 </tr>
                 <tr>
                   <td>Programming</td>
                   <td><%= data.divisionCount[3] %></td>
-                  <td><%= data.divisionScore[3] %></td>
-                  <td><%= data.divisionAttemptCount[3] - data.divisionScore[3] %></td>
+                  <td class="correct"><%= data.divisionScore[3] %></td>
+                  <td class="wrong"><%= data.divisionAttemptCount[3] - data.divisionScore[3] %></td>
                   <td><%= data.divisionCount[3] - data.divisionAttemptCount[3] %></td>
                 </tr>
                 </tbody>
@@ -287,7 +294,7 @@ table {
                 <tr>
                   <% for(let j=i; j < i+10 && j < data.answers.length; j++){ %>
                   <td>
-                    <%= j+1 %> - <%= data.answers[j] %>
+                    <%= j+1 %> - <%= data.alphabet[data.answers[j]] %>
                   </td>
                   <% } %>
                 </tr>
