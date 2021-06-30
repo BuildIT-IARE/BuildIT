@@ -135,7 +135,7 @@
   letter-spacing: 2px;
   padding: .375rem .75rem;
 }
-/*---------------- LEVEL 5 CENTRAL--------------*/
+/*---------------- LEVEL 5 BOX1--------------*/
 #total-score{
   font-family: 'Baloo', sans-serif;
   border-right:  2px solid #ddd;
@@ -184,6 +184,12 @@ table {
   font-family: 'Baloo', sans-serif;
   font-size: 12px;
 }
+#box1 .correct{
+  color: #1aae9f;
+}
+#box1 .wrong{
+  color: #d44a5f;
+}
 #box2 table{
   font-size: 15px;
   table-layout:fixed;
@@ -191,11 +197,8 @@ table {
 #box2 td{
   height: 4.5vh;
 }
-.correct{
-  color: #1aae9f;
-}
-.wrong{
-  color: #d44a5f;
+#box2 > table > tbody > tr > td:last-child {
+  padding: 2.8px;
 }
     </style>
   </head>
