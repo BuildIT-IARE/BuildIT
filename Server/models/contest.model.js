@@ -11,7 +11,8 @@ var contestSchema = new Schema({
   contestStartTime: String,
   contestEndTime: String,
   multiset: { type: Boolean, default: false },
-  sets: Array
+  sets: Array,
+  mcq: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model("Contest", contestSchema);
