@@ -536,7 +536,7 @@ exports.saveResult = (req, res) => {
     participationId: req.body.username + req.params.contestId,
   })
     .then((participation) => {
-      if (participation[0].submissionResults.compute) {
+      if (participation[0].mcqResults.compute) {
         mcqs.findAllMcqContest(req.params.contestId, (err, mcq) => {
           if (err) {
             res.send({ success: false, message: "Error occured" });
@@ -594,7 +594,7 @@ exports.saveResult = (req, res) => {
             { participationId: participation[0].participationId },
             {
               $set: {
-                submissionResults: submission,
+                mcqResults: submission,
                 validTill: participation[0].participationTime,
               },
             },
@@ -614,7 +614,7 @@ exports.saveResult = (req, res) => {
                     req.params.contestId,
                 });
               }
-              res.send(participations.submissionResults);
+              res.send(participations.mcqResults);
             })
             .catch((err) => {
               console.log(err);
@@ -635,7 +635,7 @@ exports.saveResult = (req, res) => {
             });
         });
       } else {
-        res.send(participation[0].submissionResults);
+        res.send(participation[0].mcqResults);
       }
     })
     .catch((err) => {
