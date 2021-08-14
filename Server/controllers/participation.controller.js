@@ -110,7 +110,8 @@ exports.createMcq = (req, res) => {
             username: req.body.username,
             contestId: req.body.contestId,
             participationTime: date,
-            submissionResults: {},
+            submissionResults: [],
+            mcqResults: {},
             validTill: endTime,
             responses: {
               numeral: [],

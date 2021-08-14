@@ -427,6 +427,7 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
             let result = {
               contestId: testcases.contestId,
               participationId: req.decoded.username + testcases.contestId,
+              check: duration.mcq,
             };
             // check user time left
 
