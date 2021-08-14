@@ -19,6 +19,14 @@ module.exports = (app) => {
     mcqs.findAllContest
   );
   // testing end-------------------------------------------------------------------------------
+  
+  // Retrieve all questions with contestId
+  app.post(
+    "/mcqs/question/contest/:contestId",
+    middleware.checkTokenAdmin,
+    mcqs.findOneQuestion
+  );
+  
   // Retrieve a single mcq with contestId
   app.post(
     "/mcqs/:contestId/:section/:questionNum",
