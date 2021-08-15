@@ -87,9 +87,15 @@
       <br />
     </div>
     <!-- /container -->
+
+    <!-- Ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <!-- jQuery -->
+    <!-- <script src="plugins/jQuery/jquery.min.js"></script> -->
+
     <script src="/adminjs/classie.js"></script>
     <script src="/adminjs/gnmenu.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
       new gnMenu(document.getElementById("gn-menu"));
     </script>
@@ -98,7 +104,7 @@
     </script>
     <script>
       function getSubmission() {
-        let contestId = document.getElementById("contestId").value.toUpperCase();
+        let contestId = document.getElementById("contestId").value;
         $.ajax({
           url: "<%=data.serverurl%>" + "/contests/" + contestId,
           type: "GET",
