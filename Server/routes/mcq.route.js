@@ -23,7 +23,7 @@ module.exports = (app) => {
   // Retrieve all questions with contestId
   app.post(
     "/mcqs/question/contest/:contestId",
-    middleware.checkTokenAdmin,
+    middleware.checkToken,
     mcqs.findOneQuestion
   );
   
