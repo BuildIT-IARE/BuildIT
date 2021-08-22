@@ -60,10 +60,6 @@
         min-height: 88vh;
         min-width: 100vw;
       }
-      #controls{
-        display: flex;
-        flex-direction: column;
-      }
       /*---------------- LEVEL 3 --------------*/
       #content {
         float: left;
@@ -71,11 +67,15 @@
         padding-right: 2vw;
         word-wrap: break-word;
       }
+      #controls{
+        display: flex;
+        flex-direction: column;
+      }
+      /*---------------- NAV DIVISION --------------*/
       #nav {
         float: right;
         width: 21vw;
       }
-      /*---------------- NAV DIVISION --------------*/
       #nav {
         display: flex;
         flex-direction: column;
@@ -131,6 +131,10 @@
       }
       #labelTime {
         color: #009b77;
+      }
+      /*---------------- MAIN DIVISION --------------*/
+      #description-picture > img{
+        max-width: 100%;
       }
       /*---------------- BOOTSTRAP --------------*/
       .btn {
@@ -251,7 +255,6 @@
             <br>
             <div id="description-picture">
               <img
-                width="auto"
                 src="<%= 'data:image/jpeg;base64,' + data.photo %>"
                 id="description-pic"
               />
