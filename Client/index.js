@@ -1588,6 +1588,21 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
 
   request(options, (err, response, body) => {
     if (!body.message) {
+      const color = new Map([
+        [0, "black"],
+        [25, "red"],
+        [50, "orange"],
+        [100, "green"],
+      ]);
+      let colors = [];
+
+      for (let j = 0; j < body.coding.length; j++) {
+        colors[j] = color.get(body.coding[j].score);
+      }
+
+      body.codingScore = body.coding.reduce((sum, curr) => sum + curr.score, 0);
+
+      body.color = colors;
       body.answers = [
         ...body.answerKey[0],
         ...body.answerKey[1],
@@ -1595,6 +1610,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
         ...body.answerKey[3],
       ];
       body.alphabet = ["", "A", "B", "C", "D"];
+
       res.render("score", {
         imgUsername: req.cookies.username,
         imgBranch: req.cookies.branch,

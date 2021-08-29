@@ -107,24 +107,18 @@
   margin-right: -1vw;
 }
 /*---------------- LEVEL 4 CENTRAL--------------*/
-#score, #answer-key{
+.score{
   font-size: 3.5vh;
   font-weight: 900;
   padding: 6vh 0 2vh 0;
   height: 12vh;
 }
-#box1{
+.box1{
   display: flex;
   border: 2px solid #c3cfd9;
   width: 38vw;
   min-height: 23vh;
   padding: 1vh 0;
-}
-#box2{
-  /*border: 2px solid #dee2e6;*/
-  width: 38vw;
-  min-height: 23vh;
-  /* font-weight: bold; */
 }
 #print button{
   background-color: #2AAA8A;
@@ -136,23 +130,26 @@
   padding: .375rem .75rem;
 }
 /*---------------- LEVEL 5 BOX1--------------*/
-#total-score{
+.total-score{
   font-family: 'Baloo', sans-serif;
   border-right:  2px solid #ddd;
   font-size: 3.8vh;
   font-weight: bolder;
   width: 10vw;
-  height: 21vh;
+  min-height: 21vh;
   padding: 6vh 2vw;
 }
-#statistic1{
+.coding-socre{
+  font-weight: normal;
+}
+.statistic1{
   width: 28vw;
-  height: 19vh;
+  min-height: 19vh;
   padding: 1vh 1vw;
   /*display: table*/
 }
 /*---------------- LEVEL 6 TOTAL SCORE--------------*/
-#line{
+.line{
     border-bottom: 2px solid #ddd;
     -webkit-transform:
                 translateY(0)
@@ -160,10 +157,10 @@
                 rotate(-45deg);
     width: 5vw;
 }
-#left{
+.left{
   color: #2AAA8A;
 }
-#right{
+.right{
   text-indent: 3.6vw;
 }
 /*---------------- LEVEL 6 STATISTICS--------------*/
@@ -180,25 +177,15 @@ table {
   max-width: 100%;
   line-height: 1.5;
 }
-#box1 table {
+table {
   font-family: 'Baloo', sans-serif;
   font-size: 12px;
 }
-#box1 .correct{
+.correct{
   color: #1aae9f;
 }
-#box1 .wrong{
+.wrong{
   color: #d44a5f;
-}
-#box2 table{
-  font-size: 15px;
-  table-layout:fixed;
-}
-#box2 td{
-  height: 4.5vh;
-}
-#box2 > table > tbody > tr > td:last-child {
-  padding: 2.8px;
 }
     </style>
   </head>
@@ -231,16 +218,16 @@ table {
   
       <div id="central">
         <div id="up">
-          <div id="score">
-            <p>SCORE</p>
+          <div class="score">
+            <p>QUIZ</p>
           </div>
-          <div id="box1">
-            <div id="total-score">
-              <p id="left"><%= data.totalScore %></p>
-              <div id="line"></div>
-              <p id="right"><%= data.totalCount %></p>
+          <div class="box1">
+            <div class="total-score">
+              <p class="left"><%= data.totalScore %></p>
+              <div class="line"></div>
+              <p class="right"><%= data.totalCount %></p>
             </div>
-            <div id="statistic1">
+            <div class="statistic1">
               <table>
                 <thead>
                 <tr>
@@ -286,24 +273,38 @@ table {
           </div>
         </div>
         <div id="down">
-          <div id="answer-key">
-            <p>ANSWER KEY</p>
+          <div class="score">
+            <p>CODING</p>
           </div>
           
-          <div id="box2">
-            <table>
-              <tbody>
-              <% for(let i=0; i < data.answers.length; i+=10){ %>
+          <div class="box1">
+            <div class="total-score coding-socre">
+              <p class="left"><%= data.codingScore %></p>
+              <div class="line"></div>
+              <p class="right"><%= data.coding.length*100 %></p>
+            </div>
+            <div class="statistic1">
+              <table>
+                <thead>
                 <tr>
-                  <% for(let j=i; j < i+10 && j < data.answers.length; j++){ %>
-                  <td>
-                    <%= j+1 %> - <%= data.alphabet[data.answers[j]] %>
-                  </td>
-                  <% } %>
+                  <th>Question</th>
+                  <th>&emsp;Score&emsp;</th>
                 </tr>
-                <% } %>
+                </thead>
+              <tbody>
+              <% for(let i=0; i < data.coding.length; i++){ %>
+                <tr>
+                  <td>
+                    <%= data.coding[i].questionId %>
+                  </td>
+                  <td style="color: <%= data.color[i] %>">
+                    <%= data.coding[i].score %>
+                  </td>
+                </tr>
+              <% } %>
               </tbody>
-            </table>
+              </table>
+            </div>
           </div>
         </div>
         <div id="print">

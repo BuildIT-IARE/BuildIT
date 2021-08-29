@@ -725,7 +725,9 @@ exports.saveResult = (req, res) => {
                     req.params.contestId,
                 });
               }
-              res.send(participations.mcqResults);
+              let participation = participations.mcqResults._doc;
+              participation.coding = participations.submissionResults;
+              res.send(participation);
             })
             .catch((err) => {
               console.log(err);
@@ -746,7 +748,9 @@ exports.saveResult = (req, res) => {
             });
         });
       } else {
-        res.send(participation[0].mcqResults);
+        let participations = participation[0].mcqResults._doc;
+        participations.coding = participation[0].submissionResults;
+        res.send(participations);
       }
     })
     .catch((err) => {
