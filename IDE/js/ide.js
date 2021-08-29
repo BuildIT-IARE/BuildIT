@@ -309,15 +309,21 @@ function run() {
   var sourceValue = encode(sourceEditor.getValue());
   var stdinValue = encode(stdinEditor.getValue());
   var languageId = $selectLanguage.val();
+  var compilerOptions = null;
 
   if (languageId === "44") {
     sourceValue = sourceEditor.getValue();
+  }
+
+  if(languageId === "4"){
+    compilerOptions = "-lm";
   }
 
   var data = {
     source_code: sourceValue,
     language_id: languageId,
     stdin: stdinValue,
+    compiler_options: compilerOptions,
   };
 
   timeStart = performance.now();
