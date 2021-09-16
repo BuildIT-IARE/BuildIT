@@ -228,6 +228,67 @@ exports.createSet = (req, res) => {
   }
 };
 
+exports.addSetGivenQIdArray = (req, res) => {
+  let questionIdString = req.body.questionIdsString;
+
+  let pattern = /[^A-Z&a-z&0-9]/;
+  let set = new Array();
+  let questionIds = new Array();
+
+  questionIds = questionIdString
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter((entry) => entry.match(pattern) === null);
+
+  let NO_OF_QUESTION_ID = questionIds.length;
+
+  for (let i = 0; i < NO_OF_QUESTION_ID; i++) {
+    Question.find({ questionId: questionIds[i] })
+      .then((question) => {
+        if (question.length !== 0) {
+          set.push(questionIds[i]);
+          
+          if (question[0].contestId !== req.params.contestId) {
+            question = question[0]._doc;
+            delete question._id;
+            delete question.__v;
+            question.contestId = req.params.contestId;
+            
+            let newQuestion = new Question({...question});
+            newQuestion.save();
+          }
+          
+          if(i === NO_OF_QUESTION_ID-1) updateSet();
+        }
+      })
+      .catch((err) => {
+        res.status(500).send({
+          success: false,
+          message:
+            err.message || "Some error occurred while retrieving questions.",
+        });
+      });
+    }
+
+  const updateSet = () => {
+    contests.findOneSet(req, (err, contest) => {
+      if (err) {
+        res.send({ success: false, message: "Error occured" });
+      }
+      let sets = contest.sets;
+      if (contest.sets) {
+        sets.push(set);
+      }
+      contests.updateOneSet(req, sets, (err, contest1) => {
+        if (err) {
+          res.send({ success: false, message: "Error occured" });
+        }
+        res.send("Done! Added to Set");
+      });
+    });
+  };
+};
+
 exports.createTutorials = (req, res) => {
   // Validate request
   if (!req.body.questionName) {

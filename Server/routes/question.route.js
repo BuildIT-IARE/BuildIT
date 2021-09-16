@@ -19,6 +19,13 @@ module.exports = (app) => {
     middleware.checkTokenAdmin,
     questions.createSet
   );
+
+  // Create a new set
+  app.post(
+    "/questionIds/:contestId",
+    middleware.checkTokenAdmin,
+    questions.addSetGivenQIdArray
+  );
   
   // Create a new question for Tutorials
   app.post(
