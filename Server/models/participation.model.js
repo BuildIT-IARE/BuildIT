@@ -39,7 +39,8 @@ var mcqParticipationSchema = new Schema({
   participationTime: String,
   validTill: String,
   questions: Array,
-  submissionResults: result,
+  submissionResults: Array,
+  mcqResults: result,
   responses: response,
 });
 

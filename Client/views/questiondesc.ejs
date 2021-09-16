@@ -27,204 +27,249 @@
 
 </head>
 <style>
-.button1 {
-  border-radius: 4px;
-  background-color: #454fd4;
-  border: none;
-  color: white;
-  text-align: center;
-  font-size:  15px;
-  padding: 5px;
-  width: 110px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
+  .button1 {
+    border-radius: 4px;
+    background-color: #454fd4;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    padding: 5px;
+    width: 110px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  .button1 span {
+    cursor: pointer;
+    display: inline-block;
+    transition: 1s;
+  }
+  .button1 span:after {
+    content: '\21B6';
+    opacity: 0;
+    top: 50px;
+    right: 20px;
+    transition: 0.3s;
+  }
+  .button1:hover span {
+    padding-right: 20px;
+  }
+  .button1:hover span:after {
+    opacity: 1;
+    right: 0;
+    padding-bottom: 20px;
+  }
 
-.button1 span {
-  cursor: pointer;
-  display: inline-block;
-  transition: 1s;
-}
-
-.button1 span:after {
-  content: '\21B6';
-  opacity: 0;
-  top: 50px;
-  right: 20px;
-  transition: 0.3s;
-}
-
-.button1:hover span {
-  padding-right: 20px;
-}
-
-.button1:hover span:after {
-  opacity: 1;
-  right: 0;
-  padding-bottom:20px;  
-}
-p{
-  font-size: 130%;
-}
-.button {
-  border-radius: 4px;
-  background-color: #454fd4;
-  border: none;
-  color: white;
-  /* text-align: center; */
-  font-size:  px;
-  padding: 20px;
-  width: 160px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 1s;
-}
-.button span:after {
-  content: '\00bb';
-  position: "relative";
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-.button:hover span {
-  padding-left: 25px;
-}
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-div .border {
-  border-color: red;
-  margin: 4px;
-  padding: 4px;
-  border-width: 3px;
-
-
+  p {
+    font-size: 130%;
+  }
+  .button {
+    border-radius: 4px;
+    background-color: #454fd4;
+    border: none;
+    color: white;
+    /* text-align: center; */
+    /* font-size: px; */
+    padding: 20px;
+    width: 160px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 1s;
+  }
+  .button span:after {
+    content: '\00bb';
+    position: "relative";
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  .button:hover span {
+    padding-left: 25px;
+  }
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  div .border {
+    border-color: red;
+    margin: 4px;
+    padding: 4px;
+    border-width: 3px;
+  }
 </style>
 
+<style>
+  .border{
+    background: #f7f4e7;
+  }
+  .cars-text{
+    white-space: pre-line;
+  }
+  blockquote{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    white-space: pre-line;
+  }
+  pre{
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    font-size: 18px;
+  }
+  p{
+    font-family: "Roboto", sans-serif;
+  }
+</style>
 <body>
 
-<script>
-function close_window() {
-    close();
-}
-</script>
-<!-- about -->
-<section class="section pt-8">
+  <script>
+    function close_window() {
+      close();
+    }
+  </script>
+  <!-- about -->
+  <section class="section pt-8">
     <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-          <a href="javascript:close_window();"><button onclick="close()" class = "button1" ><span style="color: #ffffff" >Close</span></button></a><br><br>
-        <a href= "<%= data.url %>/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><button class = "button" style = "float: right" position = "right"><span>Online Editor</span></button></a>
+      <div class="row">
+        <div class="col-md-12">
 
-        <h3 class="section-title"><%= data[0].questionName %> - #<%= data[0].questionId %></h3>
+          <a href="javascript:close_window();">
+            <button onclick="close()" class="button1">
+              <span style="color: #ffffff;">Close</span>
+            </button>
+          </a><br /><br />
+          <a href="<%= data.url %>/ide/<%= data[0].questionId %>" style="color: white" target="_blank">
+            <button class="button" style="float: right" position="right">
+              <span>Online Editor</span>
+            </button>
+          </a>
 
-      <div class="border" style="background: #F7F4E7; font-family: Verdana, Geneva, Tahoma, sans-serif;">
-        <div class = "font-tertiary text-white">
-            <p class="cars-text" style="font-size: 130%; white-space: pre-line;"><%= data[0].questionDescriptionText %></p>
-        </div>
-        <% if(data[0].questionInputText) { %>
-      <div>          
-            <h4><b>Input:</b></h4>
-            <blockquote style="font-size: 20px; white-space: pre-line;">
-              <%= data[0].questionInputText %>
-            </blockquote>
-          </div>
-          <br>
-          <% } %>
-          <% if(data[0].questionOutputText) { %>
+          <h3 class="section-title">
+            <%= data[0].questionName %> - #<%= data[0].questionId %>
+          </h3>
+
+          <div class="border">
+            <div class="font-tertiary text-white">
+              <p class="cars-text" style="font-size: 130%;"><%= data[0].questionDescriptionText %></p>
+            </div>
+
+            <% if(data[0].questionInputText) { %>
+            <div>
+              <h4><b>Input:</b></h4>
+              <blockquote>
+                <%= data[0].questionInputText %>
+              </blockquote>
+            </div>
+            <br />
+            <% } %>
+            <% if(data[0].questionOutputText) { %>
             <div>
               <h4><b>Output:</b></h4>
-              <blockquote style="font-size: 20px; white-space: pre-line;">
+              <blockquote>
                 <%= data[0].questionOutputText %>
               </blockquote>
             </div>
-            <br>
+            <br />
             <% } %>
-        <% if(data[0].questionExampleInput1) { %>
-        <div>
-          <h4><b>Sample Input 1:</b></h4>
-            <pre style="font-size: 18px"><%= data[0].questionExampleInput1 %></pre>
+
+            <% if(data[0].questionExampleInput1) { %>
+            <div>
+              <h4><b>Sample Input 1:</b></h4>
+              <pre><%= data[0].questionExampleInput1 %></pre>
+            </div>
+            <br />
+            <% } %>
+            <% if(data[0].questionExampleOutput1) { %>
+            <div>
+              <h4><b>Sample Output 1:</b></h4>
+              <pre><%= data[0].questionExampleOutput1 %></pre>
+            </div>
+            <br />
+            <% } %>
+            <% if(data[0].questionExampleInput2) { %>
+            <div>
+              <h4><b>Sample Input 2:</b></h4>
+              <pre><%= data[0].questionExampleInput2 %></pre>
+            </div>
+            <br />
+            <% } %>
+            <% if(data[0].questionExampleOutput2) { %>
+            <div>
+              <h4><b>Sample Output 2:</b></h4>
+              <pre><%= data[0].questionExampleOutput2 %></pre>
+            </div>
+            <br />
+            <% } %>
+            <% if(data[0].questionExampleInput3) { %>
+            <div>
+              <h4><b>Sample Input 3:</b></h4>
+              <pre><%= data[0].questionExampleInput3 %></pre>
+            </div>
+            <br />
+            <% } %>
+            <% if(data[0].questionExampleOutput3) { %>
+            <div>
+              <h4><b>Sample Output 3:</b></h4>
+              <pre><%= data[0].questionExampleOutput3 %></pre>
+            </div>
+            <br />
+            <% } %>
+
+            <% if (data[0].questionExplanation) { %>
+            <div>
+              <h4><b>Explanation:</b></h4>
+              <p class="cars-text"><%= data[0].questionExplanation %></p>
+            </div>
+            <br />
+            <% } %>
+            <% if (data[0].author) { %>
+            <div>
+              <h4><b>Author:</b></h4>
+              <p><%= data[0].author %></p>
+            </div>
+            <% } %>
           </div>
-        <br>
-        <% } %>
-        <% if(data[0].questionExampleOutput1) { %>
-          <div>
-            <h4><b>Sample Output 1:</b></h4>
-            <pre style="font-size: 18px"><%= data[0].questionExampleOutput1 %></pre>
-          </div>
-          <br>
-          <% } %>
-        <% if(data[0].questionExampleInput2) { %>
-        <div>
-          <h4><b>Sample Input 2:</b></h4>
-            <pre style="font-size: 18px"><%= data[0].questionExampleInput2 %></pre>
-          </div>
-        <br>
-        <% } %>
-        <% if(data[0].questionExampleOutput2) { %>
-          <div>
-            <h4><b>Sample Output 2:</b></h4>
-            <pre style="font-size: 18px"><%= data[0].questionExampleOutput2 %></pre>
-          </div>
-          <br>
-          <% } %>
-        <% if(data[0].questionExampleInput3) { %>
-        <div>
-          <h4><b>Sample Input 3:</b></h4>
-            <pre style="font-size: 18px"><%= data[0].questionExampleInput3 %></pre>
-          </div>
-        <br>
-        <% } %>
-          <% if(data[0].questionExampleOutput3) { %>
-          <div>
-            <h4><b>Sample Output 3:</b></h4>
-            <pre style="font-size: 18px"><%= data[0].questionExampleOutput3 %></pre>
-          </div>
-          <br>
-          <% } %>
-          <% if (data[0].questionExplanation) { %>
-          <div>    
-          <h4><b>Explanation:</b></h4>
-          <p class="cars-text" style="white-space: pre-line;"><%= data[0].questionExplanation %></p>
+          <br />
+
+          <a href="<%= data.url %>/ide/<%= data[0].questionId %>" style="color: white" target="_blank">
+            <button class="button" position="right">
+              <span>Online Editor</span>
+            </button>
+          </a>
+          <a href="<%= data.url %>/registerComplaint/<%= data[0].questionId %>" 
+            style="color: white" target="_blank">
+            <button class="button" position="right">
+              <span>Report Issue</span>
+            </button>
+          </a>
+          <a href="<%= data.url %>/complaints_public" style="color: white" target="_blank">
+            <button class="button" position="right">
+              <span>Existing Complaints</span>
+            </button>
+          </a>
+
         </div>
-        <br>  
-        <% } %>
-        <% if (data[0].author) { %>
-        <div>
-          <h4><b>Author:</b></h4>
-          <p class="cars-text"><%= data[0].author %></p>
-        </div>
-        <% } %>
       </div>
-      <br>
-      <a href= "<%= data.url %>/ide/<%= data[0].questionId %>" style="color:white" target="_blank"><button class = "button" position = "right"><span>Online Editor</span></button></a>
-      <a href= "<%= data.url %>/registerComplaint/<%= data[0].questionId %>" style="color:white" target="_blank"><button class = "button" position = "right"><span>Report Issue</span></button></a>
-      <a href= "<%= data.url %>/complaints_public" style="color:white" target="_blank"><button class = "button" position = "right"><span>Existing Complaints</span></button></a>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- jQuery -->
-<script src="plugins/jQuery/jquery.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="plugins/bootstrap/bootstrap.min.js"></script>
-<!-- slick slider -->
-<script src="plugins/slick/slick.min.js"></script>
-<!-- filter -->
-<script src="plugins/shuffle/shuffle.min.js"></script>
+  <!-- jQuery -->
+  <script src="plugins/jQuery/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="plugins/bootstrap/bootstrap.min.js"></script>
+  <!-- slick slider -->
+  <script src="plugins/slick/slick.min.js"></script>
+  <!-- filter -->
+  <script src="plugins/shuffle/shuffle.min.js"></script>
 
-<!-- Main Script -->
-<script src="js/script.js"></script>
+  <!-- Main Script -->
+  <script src="js/script.js"></script>
 
 </body>
 </html>

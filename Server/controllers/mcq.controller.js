@@ -1,4 +1,5 @@
 const Mcq = require("../models/mcq.model.js");
+const Question = require("../models/question.model.js");
 const inarray = require("inarray");
 const xlsx = require("xlsx");
 const fs = require("fs");
@@ -201,6 +202,46 @@ exports.findAllContest = (req, res) => {
     });
 };
 // testing end-------------------------------------------------------------------------------
+
+// Find all questions for a contestId
+exports.findOneQuestion = async (req, res) => {
+  Question.find({ contestId: req.params.contestId })
+    .then((mcqs) => {
+      if (!mcqs) {
+        return res.status(404).send({
+          success: false,
+          message: "Question not found with id " + req.params.contestId,
+        });
+      }
+      let index = parseInt(req.body.questionNum);
+      let mcq = mcqs[index]._doc;
+
+      mcq.ids = mcqs.map((v, index) => [v.questionId, index]);
+      mcq.section = 5;
+      mcq.questionNum = index + 1;
+      mcq.sectionLen = mcqs.length;
+      mcq.isPartial = req.body.isPartial;
+      
+      if (mcq.isPartial)
+      {
+        mcq.sections = req.body.sections;
+      }
+
+      res.send(mcq);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          success: false,
+          message: err+ "Question not found with id " + req.params.contestId,
+        });
+      }
+      return res.status(500).send({
+        success: false,
+        message: err +"Error retrieving question with id " + req.params.contestId,
+      });
+    });
+};
 
 exports.findOneContest = (req, res) => {
   Mcq.find({
