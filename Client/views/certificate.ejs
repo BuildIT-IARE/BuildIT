@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <title id="demo1">SkillUP365: Skill Enhancement Program</title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+
+    <!-- ** Plugins Needed for the Project ** -->
+    <!--Favicon-->
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Spartan:wght@500;600;700;800&display=swap');
+    </style>
+
+    <style>
+      body, html {
+        height: 98vh;
+        overflow: hidden;
+        /* background-color: lavender; */
+        background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
+      }
+
+      .bg {
+        background-image: url("./images/certificate.png");
+        aspect-ratio: auto 983 / 698;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin: auto;
+        height: 100vh;
+      }
+
+      .centered {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        min-width: 72vw;
+        height: 17vh;
+        top: 28vh;
+        /* left: 31vw; */
+      }
+
+      .name, .number{
+        color: #1c3055;
+      }
+
+      .name{
+        font-family: 'Spartan', sans-serif;
+        font-size: 54px;
+        font-weight: 700;
+      }
+
+      .number{
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 28px;
+        font-weight: 400;
+        margin-left: 15vw;
+        margin-top: 1vh;
+      }
+
+      .bottom{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        min-width: 55vw;
+        height: 5vh;
+        top: 65vh;
+        bottom: 30vh;
+        left: 21.5vw;
+      }
+
+      .score{
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 24px;
+      }
+
+      .score:nth-child(7){
+        padding-left: 2vw;
+      }
+
+      .score:nth-child(6){
+        padding-left: 1vw;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="bg">
+      <div class="centered">
+        <span class="name"><%= imgUsername %></span>
+        <span class="number"><%= data["rollNumber"] %></span>
+      </div>
+      <div class="bottom">
+        <span class="score"><%= data["hackerRank"] %></span>
+        <span class="score"><%= data["codeChef"] %></span>
+        <span class="score"><%= data["codeforces"] %></span>
+        <span class="score"><%= data["interviewBit"] %></span>
+        <span class="score"><%= data["spoj"] %></span>
+        <span class="score"><%= data["geeksForGeeks"] %></span>
+        <span class="score"><%= data["buildIT"] %></span>
+      </div>
+    </div>
+    
+  </body>
+</html>

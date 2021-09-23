@@ -33,4 +33,10 @@ module.exports = (app) => {
     "/weeks",
     skills.findAllWeeks
   );
+
+  // Retrieve a skill with Username
+  app.get(
+    "/skills/:username",
+    skills.findSkillByUsername
+  );
 };

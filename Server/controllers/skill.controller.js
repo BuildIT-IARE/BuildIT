@@ -257,3 +257,63 @@ exports.findAllWeeks = (req, res) => {
       });
     });
 };
+
+exports.findSkillByUsername = (req, res) => {
+  Skill.aggregate([
+    {
+      $group: {
+        _id: null,
+        latestDocId: { $max: "$weekId" },
+        data: { $push: "$$ROOT" },
+      },
+    },
+
+    { $unwind: "$data" },
+    {
+      $project: {
+        _id: 0,
+        data: 1,
+        latestDocId: 1,
+        isWeekEqual: {
+          $eq: ["$data.weekId", "$latestDocId"],
+        },
+        isEqual: {
+          $eq: ["$data.rollNumber", req.params.username],
+        },
+      },
+    },
+    {
+      $match: {
+        isWeekEqual: true,
+        isEqual: true,
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        data: 1,
+      },
+    },
+  ])
+    .then((skill) => {
+      if (!skill) {
+        return res.status(404).send({
+          success: false,
+          message: "Week not found with week Id",
+        });
+      }
+      res.send(skill[0].data);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          success: false,
+          message: "Week not found with week Id",
+        });
+      }
+      return res.status(500).send({
+        success: false,
+        message: "Error retrieving user with id " + req.params.username,
+      });
+    });
+};

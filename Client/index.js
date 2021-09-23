@@ -2148,5 +2148,42 @@ app.get("/tutorials/:courseId", async (req, res) => {
   });
 });
 
+app.get("/certificate", async (req, res) => {
+  let options = {
+    url: serverRoute + "/users/" + req.cookies.username.toLowerCase(),
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    let options = {
+      url: serverRoute + "/skills/" + req.cookies.username,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+
+    request(options, (err, response, body2) => {
+      if (!body2.message) {
+        res.render("certificate", {
+          imgUsername: body.name,
+          imgBranch: req.cookies.branch,
+          data: body2,
+        });
+      } else {
+        res.render("error", {
+          data: body2,
+          imgUsername: body.name,
+        });
+      }
+    });
+  });
+});
+
 app.listen(4000);
 console.log("Server @ port 4000");
