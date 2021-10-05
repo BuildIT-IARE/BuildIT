@@ -2187,5 +2187,9 @@ app.get("/certificate", async (req, res) => {
   });
 });
 
+app.get("/codechef-iare-chapter", async (req, res) => {
+  res.render("iare_chapter", { imgUsername: req.cookies.username });
+});
+
 app.listen(4000);
 console.log("Server @ port 4000");
