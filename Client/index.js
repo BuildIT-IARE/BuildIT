@@ -2169,11 +2169,13 @@ app.get("/certificate", async (req, res) => {
     };
 
     request(options, (err, response, body2) => {
+
       if (!body2.message) {
         res.render("certificate", {
-          imgUsername: body.name,
+          imgUsername: req.cookies.username,
           imgBranch: req.cookies.branch,
           data: body2,
+          name: body.name,
         });
       } else {
         res.render("error", {

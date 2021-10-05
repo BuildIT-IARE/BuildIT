@@ -302,6 +302,13 @@ exports.findSkillByUsername = (req, res) => {
           message: "Week not found with week Id",
         });
       }
+      if (skill.length === 0) {
+        return res.status(404).send({
+          success: false,
+          message: "You have not applied for SkillUp 365!",
+        });
+      }
+      
       res.send(skill[0].data);
     })
     .catch((err) => {
