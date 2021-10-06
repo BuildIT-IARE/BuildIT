@@ -27,10 +27,7 @@ var userSchema = new Schema(
     },
     phone: {
       type: Number,
-      default: 0,
-      unique: true,
-      required: [true, "can't be blank"],
-      index: true,
+      default: 0
     },
     photo: { data: Buffer, contentType: String },
     admin: String,
