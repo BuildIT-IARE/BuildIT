@@ -207,10 +207,10 @@ exports.findAllContest = (req, res) => {
 exports.findOneQuestion = async (req, res) => {
   Question.find({ contestId: req.params.contestId })
     .then((mcqs) => {
-      if (!mcqs) {
+      if (!mcqs || mcqs.length === 0) {
         return res.status(404).send({
           success: false,
-          message: "Question not found with id " + req.params.contestId,
+          message: "Question not found with contest Id " + req.params.contestId,
         });
       }
       let index = parseInt(req.body.questionNum);

@@ -1601,7 +1601,7 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
   }
 });
 
-app.get("/qualifierTestScore/:contestId", async (req, res) => {
+app.get("/qualifierTestScore/:contestId/:NO_OF_CODING_QUESTIONS", async (req, res) => {
   let options = {
     url: serverRoute + "/generate_score/" + req.params.contestId,
     method: "get",
@@ -1611,7 +1611,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
     json: true,
   };
 
-  request(options, (err, response, body) => {
+  request(options, (err, response, body) => { 
     if (!body.message) {
       const color = new Map([
         [0, "black"],
@@ -1635,6 +1635,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
         ...body.answerKey[3],
       ];
       body.alphabet = ["", "A", "B", "C", "D"];
+      body.codingLength = req.params.NO_OF_CODING_QUESTIONS;
 
       res.render("score", {
         imgUsername: req.cookies.username,
@@ -2146,6 +2147,49 @@ app.get("/tutorials/:courseId", async (req, res) => {
       });
     });
   });
+});
+
+app.get("/certificate", async (req, res) => {
+  let options = {
+    url: serverRoute + "/users/" + req.cookies.username.toLowerCase(),
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    let options = {
+      url: serverRoute + "/skills/" + req.cookies.username,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+
+    request(options, (err, response, body2) => {
+
+      if (!body2.message) {
+        res.render("certificate", {
+          imgUsername: req.cookies.username,
+          imgBranch: req.cookies.branch,
+          data: body2,
+          name: body.name,
+        });
+      } else {
+        res.render("error", {
+          data: body2,
+          imgUsername: body.name,
+        });
+      }
+    });
+  });
+});
+
+app.get("/codechef-iare-chapter", async (req, res) => {
+  res.render("iare_chapter", { imgUsername: req.cookies.username });
 });
 
 app.listen(4000);

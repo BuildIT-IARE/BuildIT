@@ -84,14 +84,19 @@
         width: 120px !important;
       }
 
-      .b {
+      .dropdown {
+        margin-left: -2.5vw;
+        width: inherit;
+      }
+
+      #submit {
         display: none;
       }
 
-      .dropdown {
-        position: relative;
-        left: 121px;
-        width: 130px;
+      .btn {
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
       }
     </style>
   </head>
@@ -163,18 +168,22 @@
         </div>
       </div>
     </section>
-    <div>
-      <form action="<%= data.clientAddress %>/skill/" method="POST">
-        <select class="dropdown custom-select" name="weekId" onchange="javascript:$('#submit').click();">
-            <option value="">Select Week</option>
-            <% for (let i = week.length-1; i >= 0; i--){ %>
-              <option value="<%= week[i].weekId %>"><%= week[i].weekId %></option>
-            <% } %>
-        </select>
-        <input class="b" id="submit" type="submit" name="submit" value="Submit">
-      </form>
-    </div>
-    <section class="section" style="padding-top: 1rem">
+    
+    <section>
+      <div class="container">
+        <form action="<%= data.clientAddress %>/skill/" method="POST">
+          <select class="dropdown custom-select" name="weekId" onchange="javascript:$('#submit').click();">
+              <option value="">Select Week</option>
+              <% for (let i = week.length-1; i >= 0; i--){ %>
+                <option value="<%= week[i].weekId %>"><%= week[i].weekId %></option>
+              <% } %>
+          </select>
+          <input class="b" id="submit" type="submit" name="submit" value="Submit">
+        </form>
+      </div>
+    </section>
+
+    <section class="section mt-3 pb-3" style="padding-top: 1rem">
       <div class="container d-flex flex-column align-items-center">
         <table
           id="leaderboard"
@@ -230,6 +239,14 @@
       </div>
     </section>
 
+    <% if(imgUsername) {%>
+    <section class="m-0">
+      <div class="d-flex flex-column align-items-center mb-5">
+        <a class="btn btn-sm btn-dark white" href="/certificate" target="_blank" role="button">Print Certificate</a>
+      </div>
+    </section>
+    <% } %>
+    
     <!-- jQuery -->
     <script src="/plugins/jQuery/jquery.min.js"></script>
     <script type="text/javascript" src="/datatables/datatables.min.js"></script>
