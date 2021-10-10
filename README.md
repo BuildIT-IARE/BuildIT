@@ -21,3 +21,9 @@ Set up:
 - Your instance is now available on [http://localhost:4000](http://localhost:4000)
 
 Work in progress.
+
+Credits
+- Tayeeb Hasan (@flozender)
+- Krishna Chandra Boyapati (@JethroGibbsN)
+- Abubakar Jaleel (@focusblast)
+- Mohammed Talha (@nightsailor)
