@@ -5,6 +5,22 @@
       <div class="gn-scroller">
         <ul class="gn-menu">
           <li>
+            <a
+              class="gn-icon gn-icon-download"
+              href="<%= data.url %>/admin/add/pdf"
+              >IARE Codechef Chapter</a
+            >
+            <!-- Add Events -->
+          </li>
+          <li>
+            <a
+              class="gn-icon gn-icon-download"
+              href="<%= data.url %>/admin/add/skillup"
+              >Skill Up 365</a
+            >
+            <!-- Add Skill Up Scores -->
+          </li>
+          <li>
             <a class="gn-icon gn-icon-download">Qualifier Test</a>
             <ul class="gn-submenu">
               <li>
@@ -16,7 +32,7 @@
               </li>
               <li>
                 <a
-                  class="gn-icon gn-icon-add"
+                  class="gn-icon gn-icon-update"
                   href="<%= data.url %>/admin/edit/mcq"
                   >Edit MCQ's</a
                 >
@@ -36,20 +52,6 @@
               <li>
                 <a
                   class="gn-icon gn-icon-add"
-                  href="<%= data.url %>/admin/add/sets"
-                  >Add Sets</a
-                >
-              </li>
-              <li>
-                <a
-                  class="gn-icon gn-icon-add"
-                  href="<%= data.url %>/admin/add/set"
-                  >Add Question Ids</a
-                >
-              </li>
-              <li>
-                <a
-                  class="gn-icon gn-icon-add"
                   href="<%= data.url %>/admin/add/contest"
                   >Add Contests</a
                 >
@@ -65,25 +67,47 @@
             </ul>
           </li>
           <li>
-            <a class="gn-icon gn-icon-download">Upload Files</a>
+            <a class="gn-icon gn-icon-download">Multiset Contests</a>
             <ul class="gn-submenu">
               <li>
                 <a
                   class="gn-icon gn-icon-add"
-                  href="<%= data.url %>/admin/add/pdf"
-                  >Add Flipped Class PDF</a
+                  href="<%= data.url %>/admin/add/sets"
+                  >Add Sets</a
+                >
+              </li>
+              <li>
+                <a
+                  class="gn-icon gn-icon-add"
+                  href="<%= data.url %>/admin/add/set"
+                  >Add Question Ids</a
                 >
               </li>
             </ul>
           </li>
           <li>
-            <a class="gn-icon gn-icon-download">Manage Skill Up</a>
+            <a class="gn-icon gn-icon-download">Manage Questions</a>
             <ul class="gn-submenu">
               <li>
                 <a
                   class="gn-icon gn-icon-add"
-                  href="<%= data.url %>/admin/add/skillup"
-                  >Add Skill Up 365</a
+                  href="<%= data.url %>/admin/add/question"
+                  >Add Questions</a
+                >
+              </li>
+              <!-- <li><a class="gn-icon gn-icon-update" href="<%= data.url %>/admin/update/question">Update Questions</a></li> -->
+              <li>
+                <a
+                  class="gn-icon gn-icon-update"
+                  href="<%= data.url %>/admin/edit/question"
+                  >Edit Questions</a
+                >
+              </li>
+              <li>
+                <a
+                  class="gn-icon gn-icon-trashcan"
+                  href="<%= data.url %>/admin/delete/question"
+                  >Delete Questions</a
                 >
               </li>
             </ul>
@@ -113,28 +137,13 @@
             </ul>
           </li>
           <li>
-            <a class="gn-icon gn-icon-download">Manage Questions</a>
+            <a class="gn-icon gn-icon-download">Upload Files</a>
             <ul class="gn-submenu">
               <li>
                 <a
                   class="gn-icon gn-icon-add"
-                  href="<%= data.url %>/admin/add/question"
-                  >Add Questions</a
-                >
-              </li>
-              <!-- <li><a class="gn-icon gn-icon-update" href="<%= data.url %>/admin/update/question">Update Questions</a></li> -->
-              <li>
-                <a
-                  class="gn-icon gn-icon-update"
-                  href="<%= data.url %>/admin/edit/question"
-                  >Edit Questions</a
-                >
-              </li>
-              <li>
-                <a
-                  class="gn-icon gn-icon-trashcan"
-                  href="<%= data.url %>/admin/delete/question"
-                  >Delete Questions</a
+                  href="<%= data.url %>/admin/add/pdf"
+                  >Add Flipped Class PDF</a
                 >
               </li>
             </ul>
