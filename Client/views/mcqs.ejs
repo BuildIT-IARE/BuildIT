@@ -183,7 +183,8 @@
       }
       p {
         display: inline-flex;
-        height: 5vh;
+        align-items: center;
+        margin-top: 10px;
       }
       .activeQuestion {
         background-color: #96c3eb;
@@ -219,10 +220,13 @@
       .content a{
         text-decoration: none;
       }
-      .border p{
+      .border > .font-tertiary > p{
         font-family: "Roboto", sans-serif;
-        min-height: 8vh;
         height: auto;
+        margin-bottom: 30px;
+      }
+      .explanation{
+        margin-bottom: 20px;
       }
       .content h3, .border h4 {
         font-weight: 700;
@@ -315,8 +319,7 @@
                 </blockquote>
               </div>
               <br />
-              <% } %>
-              <% if(data.questionOutputText) { %>
+              <% } if(data.questionOutputText) { %>
               <div>
                 <h4><b>Output:</b></h4>
                 <blockquote>
@@ -324,62 +327,53 @@
                 </blockquote>
               </div>
               <br />
-              <% } %>
 
-              <% if(data.questionExampleInput1) { %>
+              <% } if(data.questionExampleInput1) { %>
               <div>
                 <h4><b>Sample Input 1:</b></h4>
                 <pre><%= data.questionExampleInput1 %></pre>
               </div>
               <br />
-              <% } %>
-              <% if(data.questionExampleOutput1) { %>
+              <% } if(data.questionExampleOutput1) { %>
               <div>
                 <h4><b>Sample Output 1:</b></h4>
                 <pre><%= data.questionExampleOutput1 %></pre>
               </div>
               <br />
-              <% } %>
-              <% if(data.questionExampleInput2) { %>
+              <% } if(data.questionExampleInput2) { %>
               <div>
                 <h4><b>Sample Input 2:</b></h4>
                 <pre><%= data.questionExampleInput2 %></pre>
               </div>
               <br />
-              <% } %>
-              <% if(data.questionExampleOutput2) { %>
+              <% } if(data.questionExampleOutput2) { %>
               <div>
                 <h4><b>Sample Output 2:</b></h4>
                 <pre><%= data.questionExampleOutput2 %></pre>
               </div>
               <br />
-              <% } %>
-              <% if(data.questionExampleInput3) { %>
+              <% } if(data.questionExampleInput3) { %>
               <div>
                 <h4><b>Sample Input 3:</b></h4>
                 <pre><%= data.questionExampleInput3 %></pre>
               </div>
               <br />
-              <% } %>
-              <% if(data.questionExampleOutput3) { %>
+              <% } if(data.questionExampleOutput3) { %>
               <div>
                 <h4><b>Sample Output 3:</b></h4>
                 <pre><%= data.questionExampleOutput3 %></pre>
               </div>
               <br />
-              <% } %>
 
-              <% if (data.questionExplanation) { %>
+              <% } if (data.questionExplanation) { %>
               <div>
                 <h4><b>Explanation:</b></h4>
-                <p class="cars-text"><%= data.questionExplanation %></p>
+                <p class="cars-text explanation"><%= data.questionExplanation %></p>
               </div>
-              <br />
-              <% } %>
-              <% if (data.author) { %>
+              <% } if (data.author) { %>
               <div>
                 <h4><b>Author:</b></h4>
-                <p><%= data.author %></p>
+                <p class="explanation"><%= data.author %></p>
               </div>
               <% } %>
             </div>
