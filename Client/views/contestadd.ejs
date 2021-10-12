@@ -32,6 +32,15 @@
 			#mcq {
 				margin-left: 50px;
 			}
+			.answer {
+				display: none;
+			}
+			.is_specific {
+				width: fit-content;
+			}
+			.question > .comments{
+				display: inline;
+			}
 		</style>
 	</head>
 	<body>
@@ -41,7 +50,7 @@
 				<h1>Manage Contests<span style="color:white">Add Contests</span></h1>	
 			</header> 
 			<div class="main-block">
-				<form action="<%= data.serverurl %>/contests" method = "POST">
+				<form action="<%= data.serverurl %>/contests" onsubmit="return handleSubmit()" method = "POST">
 				  <h4>Contest ID</h4>
 				  <textarea name="contestId" rows = "5"></textarea>
 				  <p class="comments">Contest Name</p>
@@ -54,6 +63,17 @@
 				  <textarea placeholder="24 Hours HHMM format" name="contestStartTime" rows="5"></textarea>
 				  <p class="comments">Contest End Time</p>
 				  <textarea placeholder="24 Hours HHMM format" name="contestEndTime" rows="5"></textarea>
+
+					<div class="question">
+						<p class="comments">Is Roll Number Specific?&emsp;</p>
+						<input class="is_specific" type="checkbox" name="is_specific" value="1" onchange="valueChanged()"/>
+						<span class="item-text">Yes</span>
+					</div>
+					<fieldset class="answer">
+						<p class="comments">Roll Number Format:</p>
+						<input type="text" name="roll_no_format" id="roll_no_format" placeholder="Format : XX 951A XX"/>
+					</fieldset>
+
 					<p class="comments" style="float: left;">Challenge</p>
 					<div class="new">
 						<input type="checkbox" name="mcq" value=false id="coding">
@@ -80,9 +100,37 @@
 			document.getElementById("token").value = "<%= token %>";
 		</script>
 		<script>
-			$('input[type="checkbox"]').on('change', function() {
-				$('input[type="checkbox"]').not(this).prop('checked', false);
+			$('.new > input[type="checkbox"]').on('change', function() {
+				$('.new > input[type="checkbox"]').not(this).prop('checked', false);
 			});
+		</script>
+		<script>
+			function valueChanged() {
+				if ($('.is_specific').is(":checked"))
+					$(".answer").show();
+				else
+					$(".answer").hide();
+			};
+
+			const isNumeric = (value) => /^\d\d$/.test(value);
+
+			function handleSubmit() {
+				let is_specific = document.querySelector(".is_specific").checked;
+
+				if (is_specific === true) {
+					let roll_no_format = document.getElementById("roll_no_format").value;
+
+					let year = roll_no_format.substr(0, 2);
+					let branch = roll_no_format.substr(6, 8);
+					let isValid = roll_no_format.length === 8 && isNumeric(year) && isNumeric(branch);
+					if (!isValid) {
+						window.alert("Invalid format!");
+						return false;
+					}
+				}
+
+				return true;
+			}
 		</script>
 	</body>
 </html>

@@ -1120,7 +1120,7 @@ app.get("/ide/:questionId", async (req, res) => {
 
 app.get("/contest", async (req, res) => {
   let options = {
-    url: serverRoute + "/contests",
+    url: serverRoute + "/contests/user/" + req.cookies.username.toLowerCase(),
     method: "get",
     headers: {
       authorization: req.cookies.token,
