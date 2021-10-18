@@ -1120,7 +1120,7 @@ app.get("/ide/:questionId", async (req, res) => {
 
 app.get("/contest", async (req, res) => {
   let options = {
-    url: serverRoute + "/contests",
+    url: serverRoute + "/contests/user/" + req.cookies.username.toLowerCase(),
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -1601,46 +1601,69 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
   }
 });
 
-app.get("/qualifierTestScore/:contestId/:NO_OF_CODING_QUESTIONS", async (req, res) => {
+app.get("/qualifierTestScore/:contestId", async (req, res) => {
   let options = {
-    url: serverRoute + "/generate_score/" + req.params.contestId,
-    method: "get",
+    url: serverRoute + "/mcqs/question/contest/" + req.params.contestId,
+    method: "post",
     headers: {
       authorization: req.cookies.token,
+    },
+    body: {
+      isPartial: false,
+      questionNum: 0,
     },
     json: true,
   };
 
-  request(options, (err, response, body) => { 
-    if (!body.message) {
-      const color = new Map([
-        [0, "black"],
-        [25, "red"],
-        [50, "orange"],
-        [100, "green"],
-      ]);
-      let colors = [];
+  // get one MCQ
+  request(options, (err, response, body1) => {
+    if (!body1.message) {
+      let options = {
+        url: serverRoute + "/generate_score/" + req.params.contestId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
 
-      for (let j = 0; j < body.coding.length; j++) {
-        colors[j] = color.get(body.coding[j].score);
-      }
+      request(options, (err, response, body) => { 
+        if (!body.message) {
+          const color = new Map([
+            [0, "black"],
+            [25, "red"],
+            [50, "orange"],
+            [100, "green"],
+          ]);
+          let colors = [];
 
-      body.codingScore = body.coding.reduce((sum, curr) => sum + curr.score, 0);
+          for (let j = 0; j < body.coding.length; j++) {
+            colors[j] = color.get(body.coding[j].score);
+          }
 
-      body.color = colors;
-      body.answers = [
-        ...body.answerKey[0],
-        ...body.answerKey[1],
-        ...body.answerKey[2],
-        ...body.answerKey[3],
-      ];
-      body.alphabet = ["", "A", "B", "C", "D"];
-      body.codingLength = req.params.NO_OF_CODING_QUESTIONS;
+          body.codingScore = body.coding.reduce((sum, curr) => sum + curr.score, 0);
 
-      res.render("score", {
-        imgUsername: req.cookies.username,
-        imgBranch: req.cookies.branch,
-        data: body,
+          body.color = colors;
+          body.answers = [
+            ...body.answerKey[0],
+            ...body.answerKey[1],
+            ...body.answerKey[2],
+            ...body.answerKey[3],
+          ];
+          body.alphabet = ["", "A", "B", "C", "D"];
+          body.codingLength = body1.sectionLen;
+
+          res.render("score", {
+            imgUsername: req.cookies.username,
+            imgBranch: req.cookies.branch,
+            data: body,
+          });
+        } else {
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
       });
     } else {
       res.render("error", {

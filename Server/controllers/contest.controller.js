@@ -17,6 +17,12 @@ exports.create = (req, res) => {
     });
   }
 
+  let usernameFormat = "";
+  if (req.body?.is_specific) {
+    const format = req.body.roll_no_format;
+    usernameFormat = format.substr(0, 2) + "951a" + format.substr(6, 8);
+  }
+  
   // Create a Contest
   const contest = new Contest({
     contestId: req.body.contestId,
@@ -26,6 +32,7 @@ exports.create = (req, res) => {
     contestStartTime: req.body.contestStartTime,
     contestEndTime: req.body.contestEndTime,
     mcq: req.body.mcq,
+    usernameRange: usernameFormat,
   });
 
   // SaveContest in the database
@@ -68,6 +75,26 @@ exports.findAll = (req, res) => {
         });
       });
   }
+};
+
+// Retrieve and return all contests from the database.
+exports.findAllUser = (req, res) => {
+  const username = req.params.username;
+  const usernameFormat = username.substr(0,8);
+
+  Contest.find({
+    mcq: req.body.mcq ? true : { $in: [false, null] },
+    usernameRange: { $in: [null, "", new RegExp(usernameFormat)] },
+  })
+    .then((contests) => {
+      res.send(contests);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving contests.",
+      });
+    });
 };
 
 // Find a single contest with a contestId
