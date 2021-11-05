@@ -196,5 +196,53 @@
       }
     });
   </script>
+
+  <script>
+    function checkKeyCode(evt) {
+      var evt = evt ? evt : evt ? evt : null;
+      console.log(evt.keyCode);
+
+      if ( //F12, F5
+        evt.keyCode == 123 ||
+        evt.keyCode == 116
+      ) {
+        evt.keyCode = 0;
+        return false;
+      }
+
+      //Prevent Ctrl+S, Ctrl+P, Ctrl+U (and Ctrl+W for old browsers and Edge)
+      // evt = evt || window.event;
+      if (!evt.ctrlKey) return;
+      var code = evt.which || evt.keyCode;
+
+      switch (code) {
+        case 67: // copy
+        case 86: // paste
+        case 83: //Block Ctrl+S
+        case 80: //Block Ctrl+P
+        case 85: //Block Ctrl+U
+        case 87: //Block Ctrl+W -- Not work in Chrome and new Firefox
+          evt.preventDefault();
+          evt.stopPropagation();
+          break;
+      }
+
+      if (
+        event.ctrlKey && event.shiftKey &&
+        (event.keyCode == 73 || event.keyCode == 74 || event.keyCode == 67)
+      ) {
+        return false;
+      }
+    }
+
+    document.onkeydown = checkKeyCode;
+
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    window.onbeforeunload = function (e) {
+      e.preventDefault();
+      e.returnValue = 'Really want to quit the contest?';
+    };
+  </script>
 </html>
 <!-- 41228e -->
