@@ -50,7 +50,8 @@
 				<h1>Manage Contests<span style="color:white">Add Contests</span></h1>	
 			</header> 
 			<div class="main-block">
-				<form action="<%= data.serverurl %>/contests" onsubmit="return handleSubmit()" method = "POST">
+				<form action="<%= data.serverurl %>/contests" enctype="multipart/form-data" onsubmit="return handleSubmit()"
+					method="POST">
 				  <h4>Contest ID</h4>
 				  <textarea name="contestId" rows = "5"></textarea>
 				  <p class="comments">Contest Name</p>
@@ -70,8 +71,8 @@
 						<span class="item-text">Yes</span>
 					</div>
 					<fieldset class="answer">
-						<p class="comments">Roll Number Format:</p>
-						<input type="text" name="roll_no_format" id="roll_no_format" placeholder="Format : XX 951A XX"/>
+						<p class="comments">Upload Excel File Here</p>
+						<input type="file" name="upfile" value="">
 					</fieldset>
 
 					<p class="comments" style="float: left;">Challenge</p>
