@@ -13,7 +13,7 @@ var contestSchema = new Schema({
   multiset: { type: Boolean, default: false },
   sets: Array,
   mcq: { type: Boolean, default: false },
-  usernameRange: String
+  usernames: [ String ]
 });
 
 module.exports = mongoose.model("Contest", contestSchema);

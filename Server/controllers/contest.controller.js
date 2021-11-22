@@ -1,4 +1,6 @@
 const Contest = require("../models/contest.model.js");
+const inarray = require("inarray");
+const xlsx = require("xlsx");
 
 // Create and Save a new contest
 exports.create = (req, res) => {
@@ -17,37 +19,61 @@ exports.create = (req, res) => {
     });
   }
 
-  let usernameFormat = "";
-  if (req.body?.is_specific) {
-    const format = req.body.roll_no_format;
-    usernameFormat = format.substr(0, 2) + "951a" + format.substr(6, 8);
-  }
-  
-  // Create a Contest
-  const contest = new Contest({
-    contestId: req.body.contestId,
-    contestName: req.body.contestName,
-    contestDate: req.body.contestDate,
-    contestDuration: req.body.contestDuration,
-    contestStartTime: req.body.contestStartTime,
-    contestEndTime: req.body.contestEndTime,
-    mcq: req.body.mcq,
-    usernameRange: usernameFormat,
-  });
+  let usernames = [""];
 
-  // SaveContest in the database
-  contest
-    .save()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        success: false,
-        message:
-          err.message || "Some error occurred while creating the Contest.",
-      });
+  const move = (callback) => {
+    var file = req.files.upfile;
+    var name = file.name;
+    var type = file.mimetype;
+    var uploadpath = "../contxlsx" + name;
+
+    file.mv(uploadpath, function (err) {
+      if (err) {
+        console.log("File Upload Failed", name, err);
+        res.send("Error Occured!");
+      } else {
+        let wb = xlsx.readFile("../contxlsx" + name);
+        let ws = wb.Sheets["Sheet1"];
+        let data = xlsx.utils.sheet_to_json(ws);
+        usernames = data.map((ele) => ele.username);
+        callback();
+      }
     });
+  };
+
+  const createContest = () => {
+    // Create a Contest
+    const contest = new Contest({
+      contestId: req.body.contestId,
+      contestName: req.body.contestName,
+      contestDate: req.body.contestDate,
+      contestDuration: req.body.contestDuration,
+      contestStartTime: req.body.contestStartTime,
+      contestEndTime: req.body.contestEndTime,
+      mcq: req.body.mcq,
+      usernames: usernames,
+    });
+
+    // SaveContest in the database
+    contest
+      .save()
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          success: false,
+          message:
+            err.message || "Some error occurred while creating the Contest.",
+        });
+      });
+  };
+
+  if (req.body?.is_specific && req.files.upfile) {
+    move(createContest);
+  } else {
+    createContest();
+  }
 };
 
 // Retrieve and return all contests from the database.
@@ -80,11 +106,10 @@ exports.findAll = (req, res) => {
 // Retrieve and return all contests from the database.
 exports.findAllUser = (req, res) => {
   const username = req.params.username;
-  const usernameFormat = username.substr(0,8);
 
   Contest.find({
     mcq: req.body.mcq ? true : { $in: [false, null] },
-    usernameRange: { $in: [null, "", new RegExp(usernameFormat)] },
+    usernames: { $in: [username, ""] },
   })
     .then((contests) => {
       res.send(contests);
