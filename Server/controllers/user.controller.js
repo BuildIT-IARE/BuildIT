@@ -5,12 +5,11 @@ const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
 const fs = require("fs");
 const path = require("path");
-let config = require("../util/config");
 let domains = require("../util/email");
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 
-let clientAddress = config.clientAddress;
+let clientAddress = process.env.clientAddress;
 let emailDomains = domains.domains;
 
 // Retrieve and return all users from the database.
@@ -229,13 +228,13 @@ exports.create = (req, res) => {
         }
         // Oauth2 set up
         const oauth2Client = new OAuth2(
-          config.OAuthClientID, // ClientID
-          config.OAuthClientSecret, // Client Secret
+          process.env.OAuthClientID, // ClientID
+          process.env.OAuthClientSecret, // Client Secret
           "https://developers.google.com/oauthplayground" // Redirect URL
         );
 
         oauth2Client.setCredentials({
-          refresh_token: config.OAuthRefreshToken,
+          refresh_token: process.env.OAuthRefreshToken,
         });
         const accessToken = oauth2Client.getAccessToken();
 
@@ -244,9 +243,9 @@ exports.create = (req, res) => {
           auth: {
             type: "OAuth2",
             user: "buildit.iare@gmail.com",
-            clientId: config.OAuthClientID,
-            clientSecret: config.OAuthClientSecret,
-            refreshToken: config.OAuthRefreshToken,
+            clientId: process.env.OAuthClientID,
+            clientSecret: process.env.OAuthClientSecret,
+            refreshToken: process.env.OAuthRefreshToken,
             accessToken: accessToken,
           },
           tls: {
@@ -546,13 +545,13 @@ exports.forgotPass = (req, res) => {
       }
       // Oauth2 set up
       const oauth2Client = new OAuth2(
-        config.OAuthClientID, // ClientID
-        config.OAuthClientSecret, // Client Secret
+        process.env.OAuthClientID, // ClientID
+        process.env.OAuthClientSecret, // Client Secret
         "https://developers.google.com/oauthplayground" // Redirect URL
       );
 
       oauth2Client.setCredentials({
-        refresh_token: config.OAuthRefreshToken,
+        refresh_token: process.env.OAuthRefreshToken,
       });
       const accessToken = oauth2Client.getAccessToken();
 
@@ -561,9 +560,9 @@ exports.forgotPass = (req, res) => {
         auth: {
           type: "OAuth2",
           user: "buildit.iare@gmail.com",
-          clientId: config.OAuthClientID,
-          clientSecret: config.OAuthClientSecret,
-          refreshToken: config.OAuthRefreshToken,
+          clientId: process.env.OAuthClientID,
+          clientSecret: process.env.OAuthClientSecret,
+          refreshToken: process.env.OAuthRefreshToken,
           accessToken: accessToken,
         },
         tls: {
@@ -620,7 +619,7 @@ exports.checkPass = (req, res) => {
               isVerified: user[0].isVerified,
               admin: user[0].admin,
             },
-            config.secret,
+            process.env.secret,
             { expiresIn: "730h" }
           );
           res.cookie("token", token);

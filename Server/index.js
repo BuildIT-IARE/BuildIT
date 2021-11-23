@@ -10,7 +10,10 @@ var path = require("path");
 const archiver = require("archiver");
 const fs = require("fs");
 const requestIp = require("request-ip");
-let config = require("./util/config");
+const dotenv = require('dotenv');
+
+dotenv.config({ path: '../Server/util/config.env' });
+
 let middleware = require("./util/middleware.js");
 
 const User = require("./models/user.model");
@@ -19,13 +22,13 @@ const McqParticipation = require("./models/participation.model").McqParticipatio
 const ParticipationTut = require("./models/participationTut.model");
 
 // API Address
-const localServer = config.localServer;
+const localServer = process.env.localServer;
 const port = process.env.PORT || 5000;
-let apiAddress = config.apiAddress;
+let apiAddress = process.env.apiAddress;
 let timeOut = 3000;
 
 if (localServer) {
-  apiAddress = config.localAPI;
+  apiAddress = process.env.localAPI;
   timeOut = 0;
 }
 
@@ -61,7 +64,7 @@ mongoose.set("useFindAndModify", false);
 moment.suppressDeprecationWarnings = true;
 
 dbConfig = {
-  url: config.dbURL,
+  url: process.env.dbURL,
 };
 // Connecting to the database
 mongoose
