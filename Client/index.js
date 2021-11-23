@@ -41,6 +41,8 @@ app.use("/qualifier_tests", express.static(__dirname + "/"));
 app.use("/contests/questions", express.static(__dirname + "/"));
 app.use("/tutorials/questions", express.static(__dirname + "/"));
 
+app.use("/admin/manageusers", express.static(__dirname + "/"));
+
 app.use("/admin", express.static(__dirname + "/"));
 
 app.get("/", async (req, res) => {
