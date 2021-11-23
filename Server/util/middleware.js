@@ -1,5 +1,4 @@
 let jwt = require("jsonwebtoken");
-const config = require("./config.js");
 
 let checkToken = (req, res, next) => {
   let token =
@@ -14,7 +13,7 @@ let checkToken = (req, res, next) => {
       token = token.slice(7, token.length);
     }
 
-    jwt.verify(token, config.secret, (err, decoded) => {
+    jwt.verify(token, process.env.secret, (err, decoded) => {
       if (err) {
         return res.json({
           success: false,
@@ -56,7 +55,7 @@ let checkTokenAdmin = (req, res, next) => {
       token = token.slice(7, token.length);
     }
 
-    jwt.verify(token, config.secret, (err, decoded) => {
+    jwt.verify(token, process.env.secret, (err, decoded) => {
       if (err) {
         return res.json({
           success: false,

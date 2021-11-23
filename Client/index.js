@@ -6,14 +6,17 @@ const request = require("request");
 const urlExists = require("url-exists");
 const cookieParser = require("cookie-parser");
 var path = require("path");
-let config = require("../Server/util/config");
 const xlsx = require("xlsx");
 const fs = require("fs");
 const fetch = require("node-fetch");
 var _ = require("lodash");
+const dotenv = require('dotenv');
 
-let serverRoute = config.serverAddress;
-let clientRoute = config.clientAddress;
+// Load config
+dotenv.config({ path: '../Server/util/config.env' });
+
+let serverRoute = process.env.serverAddress;
+let clientRoute = process.env.clientAddress;
 
 const app = express();
 app.options("*", cors());
