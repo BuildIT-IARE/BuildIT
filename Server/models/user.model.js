@@ -2,7 +2,6 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
-mongoose.set("useCreateIndex", true);
 
 var Schema = mongoose.Schema;
 

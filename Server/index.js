@@ -59,8 +59,6 @@ if (process.env.NODE_ENV === "production") {
 // CODE STARTS HERE
 
 mongoose.Promise = global.Promise;
-mongoose.set("useUnifiedTopology", true);
-mongoose.set("useFindAndModify", false);
 moment.suppressDeprecationWarnings = true;
 
 dbConfig = {
