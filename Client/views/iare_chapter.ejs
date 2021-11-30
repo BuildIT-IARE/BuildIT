@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CodeChef IARE Chapter tries in every possible way to improvise the coding culture by organising various activities and events that ensures the right growth of a student in terms of competitive programming">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,7 +13,7 @@
     />
     <title>CodeChef IARE Chapter</title>
     <link rel="stylesheet" href="./css/iare-chapter.css" />
-    <link rel="shortcut icon" href="images/iare-logo.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="./images/iare-chapter//iare-logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -31,10 +32,43 @@
       <div class="chapter-nav-btn">
         <button class="nav-btn"><a href="#Home-section">Home</a></button>
         <button class="nav-btn"><a href="#timeline-section">Timeline</a></button>
-        <button class="nav-btn"><a href="#leaders-section">Leaders</a></button>
+        <button class="nav-btn"><a href="#bootcamps">BootCamps</a></button>
+        <button class="nav-btn"><a href="#leaders-title-section">Leaders</a></button>
+        <button class="nav-btn"><a href="#footers">Feedback</a></button>
+      </div>
+      <button type="button" class="mbutton" id="menu-open"><span class="material-icons">menu</span></button>
+    </section>
+    <section class="chapter-navigation2">
+      <div class="topbar">
+        <div class="nav2images">
+          <img src="./images/iare-chapter/iare-logo2.jpg" alt="iare-logo">
+          <img src="./images/iare-chapter/Codechef-chapter-logo.svg" alt="codechef chapter logo">
+        </div>
+        <button type="button" class="mbutton" id="menu-close"><span class="material-icons">close</span></button>
+      </div>
+      <div class="chapter-nav-btn2">
+        <button class="nav-btn2"><a href="#Home-section">Home <span class="material-icons">arrow_forward<span></a></button>
+        <button class="nav-btn2"><a href="#timeline-section">Timeline <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2"><a href="#bootcamps">BootCamps <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2"><a href="#leaders-title-section">Leaders <span class="material-icons">arrow_forward<span></span></a></button>
+      </div>
+      <div class="chnav2end">
+        <div class="footer-left-titles">
+        <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+      </div>
+        <button class="nav-btn3"><a href="#footers">Feedback</a></button>
       </div>
     </section>
     <script>
+      var mop=document.getElementById("menu-open")
+      var mcl=document.getElementById("menu-close");
+      var chna2 = document.querySelector(".chapter-navigation2");
+      mop.onclick=function(){
+        chna2.style.transform='translateX(0)'
+      }
+      mcl.onclick=function(){
+        chna2.style.transform="translateX(101vw)"
+      }
       var navigation = document.querySelector(".chapter-navigation");
       var navLogo = document.querySelector(".nav-chapter-logo");
       var th = document.body.scrollHeight - window.innerHeight;
@@ -66,10 +100,10 @@
       };
     </script>
     <section class="content-top" id="Home-section">
-      <div class="content-title"><h2>CodeChef IARE Chapter</h2></div>
+      <div class="content-title"><h1>CodeChef IARE Chapter</h1></div>
       <div class="content-desc">
         <div class="content-logo">
-          <img src="./images/iare-chapter/Codechef-chapter-logo.svg" alt="Codechef Chapter" />
+          <img src="./images/iare-chapter//Codechef-chapter-logo.svg" alt="Codechef Chapter" />
         </div>
         <div class="content-text">
           <div class="codechef-desc">
@@ -175,20 +209,20 @@
       <div class="events-contests">
         <div class="present-contests-title"><p>Present Events/Contests</p></div>
         <div class="present-contests">
-          <img src="./images/iare-chapter/Long Challenge Poster.jpg" alt="poster" />
+          <img src="https://drive.google.com/uc?export=view&id=<%= qr.Eventposter %>" alt="poster" />
           <div class="present-contest-details">
             <div class="present-contest-title">
-              <p>OCT Long Challenge</p>
+              <p><%= qr.EventName%></p>
             </div>
             <div class="present-contest-information">
-              <p>Starts on 1st OCT 2021 15:00 IST</p>
-              <p>Ends on 11th OCT 2021 15:00 IST</p>
-              <p>Contest duration: 10 days</p>
-              <p>Rated for Div 3 only</p>
+              <p>Starts on <%= qr.Eventday[0] %> <%= qr.Eventmonth[0] %> <%= qr.Eventyear[0] %> <%=qr.Starttime %> IST</p>
+              <p>Ends on <%= qr.Eventday[1] %> <%= qr.Eventmonth[1] %> <%= qr.Eventyear[1] %> <%=qr.Endtime %> IST</p>
+              <p>Contest duration: <%= qr.Duration %></p>
+              <p><%= qr.Rating %></p>
             </div>
             <div class="present-contest-link">
               <a
-                href="https://www.codechef.com/OCT21?itm_medium=hpbanner&itm_campaign=OctLC"
+                href= "<%= qr.Contestlink %>"
                 target="_blank"
                 >Participate</a
               >
@@ -199,76 +233,20 @@
         <div class="past-contests-title"><p>Past Events/Contests</p></div>
         <div class="past-contests">
           <div class="past-contest-body">
-            <img src="./images/iare-chapter/Starters 14 Poster.jpg" alt="poster" />
-            <div class="past-contest-details" id="paco-1">
-              <div class="past-contest-title"><p>Starters 14</p></div>
-              <div class="past-contest-information">
-                <p>Starts on 29th SEPT 2021 20:00 IST</p>
-                <p>Ends on 29th SEPT 2021 23:00 IST</p>
-                <p>Contest duration: 3hrs</p>
-                <p>Rated for Div 3 only</p>
-                <div class="past-contest-link">
-                  <a
-                    href="https://www.codechef.com/START14?itm_campaign=navmenu"
-                    target="_blank"
-                    id="paco-btn1"
-                    >Visit Contest</a
-                  >
-                  <div class="leaderboards">
-                    <div class="leaderboards-title"><p>IARE Leaderboards</p></div>
-                  <div class="leaderboards-data" id="lead-1">
-                    <a href="#" target="_blank">D/1</a>
-                    <a href="https://www.codechef.com/rankings/START14B?filterBy=Institution%3DInstitute%20of%20Aeronautical%20Engineering%2C%20Hyderabad&order=asc&sortBy=rank" target="_blank">D/2</a>
-                    <a href="https://www.codechef.com/rankings/START14C?filterBy=Institution%3DInstitute%20of%20Aeronautical%20Engineering%2C%20Hyderabad&order=asc&sortBy=rank" target="_blank" >D/3</a>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="past-contest-body">
-            <img src="./images/iare-chapter/Starters 14 Poster.jpg" alt="poster" />
-            <div class="past-contest-details" id="paco-2">
-              <div class="past-contest-title"><p>Starters 13</p></div>
-              <div class="past-contest-information">
-                <p>Starts on 26th SEPT 2021 16:00 IST</p>
-                <p>Ends on 26th SEPT 2021 19:00 IST</p>
-                <p>Contest duration: 3hrs</p>
-                <p>Rated for Div 2 and Div 3 only</p>
-                <div class="past-contest-link">
-                  <a
-                    href="https://www.codechef.com/START13?itm_campaign=contest_listing"
-                    target="_blank"
-                    id="paco-btn2"
-                    >Visit Contest</a
-                  >
-                  <div class="leaderboards">
-                    <div class="leaderboards-title"><p>IARE Leaderboards</p></div>
-                  <div class="leaderboards-data" id="lead-2">
-                    <a href="#" target="_blank">D/1</a>
-                    <a href="https://www.codechef.com/rankings/START13B?filterBy=Institution%3DInstitute%20of%20Aeronautical%20Engineering%2C%20Hyderabad&order=asc&sortBy=rank" target="_blank">D/2</a>
-                    <a href="https://www.codechef.com/rankings/START13C?filterBy=Institution%3DInstitute%20of%20Aeronautical%20Engineering%2C%20Hyderabad&order=asc&sortBy=rank" target="_blank" >D/3</a>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="past-contest-body">
             <img
-              src="./images/iare-chapter/Copy of CodeChef Chapter Contest Poster 2.jpg"
+              src="https://drive.google.com/uc?export=view&id=<%=qr.Eventposterpc1 %>"
               alt="poster"
             />
             <div class="past-contest-details" id="paco-3">
-              <div class="past-contest-title"><p>Chapter Appetizer</p></div>
+              <div class="past-contest-title"><p><%=qr.EventNamepc1 %></p></div>
               <div class="past-contest-information">
-                <p>Starts on 25th SEPT 2021 17:00 IST</p>
-                <p>Ends on 26th SEPT 2021 17:00 IST</p>
-                <p>Contest duration: 24hrs</p>
-                <p>Unrated contest</p>
+                <p>Started on <%= qr.Eventdaypc1[0] %> <%= qr.Eventmonthpc1[0] %> <%= qr.Eventyearpc1[0] %> <%=qr.Starttimepc1 %> IST</p>
+                <p>Ends on <%= qr.Eventdaypc1[1] %> <%= qr.Eventmonthpc1[1] %> <%= qr.Eventyearpc1[1] %> <%=qr.Endtimepc1 %> IST</p>
+              <p>Contest duration: <%= qr.Durationpc1 %></p>
+              <p><%= qr.Ratingpc1 %></p>
                 <div class="past-contest-link">
                   <a
-                    href="https://www.codechef.com/CHAPTZ01"
+                    href="<%= qr.Contestlinkpc1 %>"
                     target="_blank"
                     id="paco-btn3"
                     >Visit Contest</a
@@ -276,9 +254,65 @@
                   <div class="leaderboards">
                     <div class="leaderboards-title"><p>IARE Leaderboards</p></div>
                   <div class="leaderboards-data" id="lead-3">
-                    <a href="https://www.codechef.com/rankings/CHAPTZ01?filterBy=Institution%3DInstitute%20of%20Aeronautical%20Engineering%2C%20Hyderabad&order=asc&sortBy=rank" target="_blank">D/1</a>
-                    <a href="https://www.codechef.com/rankings/CHAPTZ01?filterBy=Institution%3DInstitute%20of%20Aeronautical%20Engineering%2C%20Hyderabad&order=asc&sortBy=rank" target="_blank">D/2</a>
-                    <a href="https://www.codechef.com/rankings/CHAPTZ01?filterBy=Institution%3DInstitute%20of%20Aeronautical%20Engineering%2C%20Hyderabad&order=asc&sortBy=rank" target="_blank" >D/3</a>
+                    <a href="<%= qr.DIV1pc1 %>" target="_blank">D/1</a>
+                    <a href="<%= qr.DIV2pc1 %>" target="_blank">D/2</a>
+                    <a href="<%= qr.DIV3pc1 %>" target="_blank" >D/3</a>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="past-contest-body">
+            <img src="https://drive.google.com/uc?export=view&id=<%=qr.Eventposterpc2 %>" alt="poster" />
+            <div class="past-contest-details" id="paco-1">
+              <div class="past-contest-title"><p><%=qr.EventNamepc2 %></p></div>
+              <div class="past-contest-information">
+                <p>Started on <%= qr.Eventdaypc2[0] %> <%= qr.Eventmonthpc2[0] %> <%= qr.Eventyearpc2[0] %> <%=qr.Starttimepc2 %> IST</p>
+                <p>Ends on <%= qr.Eventdaypc2[1] %> <%= qr.Eventmonthpc2[1] %> <%= qr.Eventyearpc2[1] %> <%=qr.Endtimepc2 %> IST</p>
+              <p>Contest duration: <%= qr.Durationpc2 %></p>
+              <p><%= qr.Ratingpc2 %></p>
+                <div class="past-contest-link">
+                  <a
+                    href="<%= qr.Contestlinkpc2 %>"
+                    target="_blank"
+                    id="paco-btn1"
+                    >Visit Contest</a
+                  >
+                  <div class="leaderboards">
+                    <div class="leaderboards-title"><p>IARE Leaderboards</p></div>
+                  <div class="leaderboards-data" id="lead-1">
+                    <a href="<%= qr.DIV1pc2 %>" target="_blank">D/1</a>
+                    <a href="<%= qr.DIV2pc2 %>" target="_blank">D/2</a>
+                    <a href="<%= qr.DIV3pc2 %>" target="_blank" >D/3</a>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="past-contest-body">
+            <img src="https://drive.google.com/uc?export=view&id=<%=qr.Eventposterpc3 %>" alt="poster" />
+            <div class="past-contest-details" id="paco-2">
+              <div class="past-contest-title"><p><%=qr.EventNamepc3 %></p></div>
+              <div class="past-contest-information">
+                <p>Started on <%= qr.Eventdaypc3[0] %> <%= qr.Eventmonthpc3[0] %> <%= qr.Eventyearpc3[0] %> <%=qr.Starttimepc3 %> IST</p>
+                <p>Ends on <%= qr.Eventdaypc3[1] %> <%= qr.Eventmonthpc3[1] %> <%= qr.Eventyearpc3[1] %> <%=qr.Endtimepc3 %> IST</p>
+              <p>Contest duration: <%= qr.Durationpc3 %></p>
+              <p><%= qr.Ratingpc3 %></p>
+                <div class="past-contest-link">
+                  <a
+                    href="<%= qr.Contestlinkpc3 %>"
+                    target="_blank"
+                    id="paco-btn2"
+                    >Visit Contest</a
+                  >
+                  <div class="leaderboards">
+                    <div class="leaderboards-title"><p>IARE Leaderboards</p></div>
+                  <div class="leaderboards-data" id="lead-2">
+                    <a href="<%= qr.DIV1pc3 %>" target="_blank">D/1</a>
+                    <a href="<%= qr.DIV2pc3 %>" target="_blank">D/2</a>
+                    <a href="<%= qr.DIV3pc3 %>" target="_blank" >D/3</a>
                   </div>
                   </div>
                 </div>
@@ -286,6 +320,7 @@
             </div>
           </div>
         </div>
+        <a href="https://docs.google.com/document/d/1pfDFjTLZLrGfc7DgobyrnLh4_9XIun5FCX0pY1o_cBg/edit?usp=sharing" class="pclink">View more contests <span class="material-icons">arrow_forward</span></a>
         <div class="line3"></div>
         <div class="future-contests">
           <div class="future-contests-title"><p>Future Contest/Events</p></div>
@@ -338,6 +373,51 @@
         </ul>
       </div>
     </section>
+    <section class="BootCamps" id="bootcamps">
+      <div class="shape" id="shape"></div>
+      <div class="Bcamps">
+        <div class="btitle"><h2>BootCamps</h2><p>Explore the different types of problems collected from differnt platforms</p></div>
+      <div class="camps">
+        <div id="locate1"></div>
+        <a href="https://docs.google.com/document/d/1ulvLx_cSvIW2NmluQJTpOaWHIhPOD3LK/edit?usp=sharing&ouid=104980054851357316483&rtpof=true&sd=true" class="camp">
+          <div class="camptitle">Greedy</div>
+          <button type="button"><p>Explore</p></button>
+        </a>
+        <a href="https://docs.google.com/document/d/1t2yWYQW-7YjSI50qtkPOoKt_QCt4iwvL/edit?usp=sharing&ouid=104980054851357316483&rtpof=true&sd=true" class="camp">
+          <div class="camptitle">Data Structures</div>
+          <button type="button"><p>Explore</p></button>
+        </a>
+        <a href="https://www.codechef.com/problems/school?itm_medium=navmenu&itm_campaign=problems" class="camp">
+          <div class="camptitle">CodeChef Practice</div>
+          <button type="button"><p>Explore</p></button>
+        </a>
+        <a href="https://www.geeksforgeeks.org/must-do-coding-questions-for-companies-like-amazon-microsoft-adobe/" class="camp">
+          <div class="camptitle">Geeks for Geeks Must do Questions</div>
+          <button type="button"><p>Explore</p></button>
+        </a>
+        <a href="https://codeforces.com/problemset" class="camp">
+          <div class="camptitle">Codeforces Practice</div>
+          <button type="button"><p>Explore</p></button>
+        </a>
+        <div id="locate"></div>
+      </div>
+      <div class="camp-nav">
+      <a href="#locate1" id="lb1"><span class="material-icons">west</span></a>
+      <a href="#locate" id="lb2"><span class="material-icons">east</span></a>
+      </div>
+      </div>
+      <script>
+        var sha=document.getElementById('shape')
+        var bc=document.getElementById('bootcamps')
+        z=bc.clientHeight
+        zx=bc.clientWidth
+        sha.style.height=z+'px'
+        if (window.innerWidth<700){
+          sha.style.height=z/2+'px'
+          sha.style.width=zx-20+'px'
+        }
+      </script>
+    </section>
     <section class="chapter-leaders" id="leaders-section">
       <p id="contact1">9703962233</p>
         <p id="contact2">6304341895</p>
@@ -346,16 +426,17 @@
         <p id="contact5">7893236014</p>
         <p id="contact6">9703618753</p>
       <div class="leaders-text">
-        <p>
-          Well, coming to the task of self- appraisal;</p>
-           <p>We the Chapter Leaders have been working on competitive programming and DSA since 2020, doing which was a lot fun and self-satisfactory. Every Chapter Leader is quite zealous not only in problem solving but also shows interest in interacting and connecting with people from various backgrounds and inspiring them towards the field of Competitive Programming. Each Leader shows great enthusiasm towards organising events, meetups, building networks and engaging students in social media by means of which the main purpose of this College Chapter would be fulfilled.  
+        <span class="material-icons" id="ltimg">accessibility_new</span>
+        <p id="lp1">Well, coming to the task of self- appraisal;</p>
+        <p>We the Chapter Leaders have been working on competitive programming and DSA since 2020, doing which was a lot fun and self-satisfactory. Every Chapter Leader is quite zealous not only in problem solving but also shows interest in interacting and connecting with people from various backgrounds and inspiring them towards the field of Competitive Programming. Each Leader shows great enthusiasm towards organising events, meetups, building networks and engaging students in social media by means of which the main purpose of this College Chapter would be fulfilled.  
         </p>
+        <a href="#leaders-title-section">Know More</a>
       </div>
-      <div class="members-title"><h2>Chapter Leaders</h2></div>
+      <div class="members-title" id="leaders-title-section"><h2>Chapter Leaders</h2></div>
     <div id="members">
       <div class="member-row">
         <div class="member" data-aos="fade-up">
-          <img src="./images/iare-chapter/Principal-sir.png" alt="avatar" class="imag"/>
+          <img src="./images/iare-chapter//Principal-sir.png" alt="avatar" class="imag"/>
           <div class="mem-details">
           <div class="mem-text">
             <div class="mem-name">Dr. L V Narasimha Prasad</div>
@@ -364,9 +445,9 @@
           <div class="mem-social">
             <a href="#"><i class="fab fa-hackerrank" title="Hackerrank"></i></a>
             <a href="#"
-               title="CodeChef"><img src="./images/iare-chapter/codechef.svg" alt="CodeChef"></span
+               title="CodeChef"><img src="./images/iare-chapter//codechef.svg" alt="CodeChef"></span
             ></a>
-            <a href="#" title="Codeforces"><img src="./images/iare-chapter/Codeforces.svg" alt="Codeforces"></a>
+            <a href="#" title="Codeforces"><img src="./images/iare-chapter//Codeforces.svg" alt="Codeforces"></a>
             <a href="mailto:principal@iare.ac.in" title="Gmail"><i class="fab fa-google"></i></a>
             <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
             <button onclick="copyToClipboard('#contact1')" title="Copy Phone Number"><i class="fas fa-phone-alt"></i></button>
@@ -375,7 +456,7 @@
           </div>
         </div>
         <div class="member" data-aos="fade-up">
-          <img src="./images/iare-chapter/Ramu-sir.jpg" alt="avatar" class="imag" style="border-radius: 50%;"/>
+          <img src="./images/iare-chapter//Ramu-sir.jpg" alt="avatar" class="imag" style="border-radius: 50%;"/>
           <div class="mem-details">
           <div class="mem-text">
             <div class="mem-name">Dr. Gandikota Ramu</div>
@@ -385,9 +466,9 @@
           <div class="mem-social">
             <a href="#"><i class="fab fa-hackerrank" title="Hackerrank"></i></a>
             <a href="#"
-               title="CodeChef"><img src="./images/iare-chapter/codechef.svg" alt="CodeChef"></span
+               title="CodeChef"><img src="./images/iare-chapter//codechef.svg" alt="CodeChef"></span
             ></a>
-            <a href="#" title="Codeforces"><img src="./images/iare-chapter/Codeforces.svg" alt="Codeforces"></a>
+            <a href="#" title="Codeforces"><img src="./images/iare-chapter//Codeforces.svg" alt="Codeforces"></a>
             <a href="mailto:g.ramu@iare.ac.in" title="Gmail"><i class="fab fa-google"></i></a>
             <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
             <button onclick="copyToClipboard('#contact1')" title="Copy Phone Number"><i class="fas fa-phone-alt"></i></button>
@@ -398,7 +479,7 @@
       </div>
       <div class="member-row">
         <div class="member" data-aos="fade-right">
-          <img src="./images/iare-chapter/mem-img2.svg" alt="avatar" class="imag"/>
+          <img src="./images/iare-chapter//mem-img2.svg" alt="avatar" class="imag"/>
           <div class="mem-details">
           <div class="mem-text">
             <div class="mem-name">Vytla Avinash</div>
@@ -407,9 +488,9 @@
           <div class="mem-social">
             <a href="https://www.hackerrank.com/avinashvytla351" title="Hackerrank" target="_blank"><i class="fab fa-hackerrank"></i></a>
             <a href="https://www.codechef.com/users/avinash351"
-              title="CodeChef" target="_blank"><img src="./images/iare-chapter/codechef.svg" alt="CodeChef"></span
+              title="CodeChef" target="_blank"><img src="./images/iare-chapter//codechef.svg" alt="CodeChef"></span
             ></a>
-            <a href="https://codeforces.com/profile/avinashvytla351" title="Codeforces" target="_blank"><img src="./images/iare-chapter/Codeforces.svg" alt="Codeforces"></a>
+            <a href="https://codeforces.com/profile/avinashvytla351" title="Codeforces" target="_blank"><img src="./images/iare-chapter//Codeforces.svg" alt="Codeforces"></a>
             <a href="mailto:avinashvytla351@gmail.com" target="_blank"><i class="fab fa-google"></i></a>
             <a href="https://www.linkedin.com/in/avinash-vytla-5b79aa217/" title="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
             <button onclick="copyToClipboard('#contact2')" title="Copy Phone Number"><i class="fas fa-phone-alt"></i></button>
@@ -418,7 +499,7 @@
           </div>
         </div>
         <div class="member" data-aos="fade-left">
-          <img src="./images/iare-chapter/mem-img3.svg" alt="avatar" class="imag"/>
+          <img src="./images/iare-chapter//mem-img3.svg" alt="avatar" class="imag"/>
           <div class="mem-details">
           <div class="mem-text">
             <div class="mem-name">Konne Srikanth</div>
@@ -427,9 +508,9 @@
           <div class="mem-social">
             <a href="https://www.hackerrank.com/konnesrikanth201?h_r=internal-search&hr_r=1" title="Hackerrank" target="_blank"><i class="fab fa-hackerrank"></i></a>
             <a href="https://www.codechef.com/users/konnesrikanth"
-              title="CodeChef" target="_blank"><img src="./images/iare-chapter/codechef.svg" alt="CodeChef"></span
+              title="CodeChef" target="_blank"><img src="./images/iare-chapter//codechef.svg" alt="CodeChef"></span
             ></a>
-            <a href="https://codeforces.com/profile/Srikanth31" title="Codeforces" target="_blank"><img src="./images/iare-chapter/Codeforces.svg" alt="Codeforces"></a>
+            <a href="https://codeforces.com/profile/Srikanth31" title="Codeforces" target="_blank"><img src="./images/iare-chapter//Codeforces.svg" alt="Codeforces"></a>
             <a href="mailto:Konnesrikanth2001@gmail.com" title="Gmail"><i class="fab fa-google"></i></a>
             <a href="https://www.instagram.com/konne__srikanth/" title="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.linkedin.com/in/konne-srikanth-7b98a01a5/" title="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
@@ -441,7 +522,7 @@
       </div>
       <div class="member-row">
         <div class="member" data-aos="fade-right">
-          <img src="./images/iare-chapter/mem-img4.svg" alt="avatar" class="imag"/>
+          <img src="./images/iare-chapter//mem-img4.svg" alt="avatar" class="imag"/>
           <div class="mem-details">
           <div class="mem-text">
             <div class="mem-name">Adiraju Chaya Srikruthi</div>
@@ -450,9 +531,9 @@
           <div class="mem-social">
             <a href="https://www.hackerrank.com/SRIKRUTHI_A?h_r=internal-search&hr_r=1" title="Hackerrank" target="_blank"><i class="fab fa-hackerrank"></i></a>
             <a href="https://www.codechef.com/users/srikruthi_28" title="CodeChef"
-              target="_blank"><img src="./images/iare-chapter/codechef.svg" alt="CodeChef"></span
+              target="_blank"><img src="./images/iare-chapter//codechef.svg" alt="CodeChef"></span
             ></a>
-            <a href="https://codeforces.com/profile/srikruthi_28" title="Codeforces" target="_blank"><img src="./images/iare-chapter/Codeforces.svg" alt="codeforces"></a>
+            <a href="https://codeforces.com/profile/srikruthi_28" title="Codeforces" target="_blank"><img src="./images/iare-chapter//Codeforces.svg" alt="codeforces"></a>
             <a href="mailto:chayasri32@gmail.com" title="Gmail"><i class="fab fa-google"></i></a>
             <a href="https://www.instagram.com/srikruthi_a/" title="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.linkedin.com/in/srikruthi-adiraju-59a8a61a5/" title="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
@@ -461,7 +542,7 @@
           </div>
         </div>
         <div class="member" data-aos="fade-left">
-          <img src="./images/iare-chapter/mem-img5.svg" alt="avatar" class="imag"/>
+          <img src="./images/iare-chapter//mem-img5.svg" alt="avatar" class="imag"/>
           <div class="mem-details">
           <div class="mem-text">
             <div class="mem-name">Palayanur Srinivasan</div>
@@ -470,9 +551,9 @@
           <div class="mem-social">
             <a href="https://www.hackerrank.com/18951a05j7?h_r=internal-search&hr_r=1" title="Hackerrank" target="_blank"><i class="fab fa-hackerrank"></i></a>
             <a href="https://www.codechef.com/users/srinivaspalay"
-               title="CodeChef" target="_blank"><img src="./images/iare-chapter/codechef.svg" alt="CodeChef"></span
+               title="CodeChef" target="_blank"><img src="./images/iare-chapter//codechef.svg" alt="CodeChef"></span
             ></a>
-            <a href="https://codeforces.com/profile/srinivasanpalay" title="Codeforces" target="_blank"><img src="./images/iare-chapter/Codeforces.svg" alt="Codeforces"></a>
+            <a href="https://codeforces.com/profile/srinivasanpalay" title="Codeforces" target="_blank"><img src="./images/iare-chapter//Codeforces.svg" alt="Codeforces"></a>
             <a href="mailto:srinuvamsi4@gmail.com" title="Gmail"><i class="fab fa-google"></i></a>
             <a href="https://www.instagram.com/srinivasan.palayanur/" title="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.linkedin.com/in/palayanur-srinivasan-0538a01a5/" title="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
@@ -506,7 +587,7 @@ content_copy
       }
     </script>
     </section>
-    <footer class="bg-dark">
+    <footer class="bg-dark" id="footers">
       <div class="footer-social">
         <div class="footer-social-elements">
         <p>

@@ -35,7 +35,6 @@ body {
   overflow: hidden;
 }
 .nav-chapter-logo {
-  width: 70%;
   transform: translateY(200px);
   transition: 0.35s;
   display: flex;
@@ -43,7 +42,7 @@ body {
   justify-content: center;
 }
 .nav-chapter-logo2 {
-  width: 30%;
+  width: 40%;
   margin-left: 1vw;
 }
 .nav-chapter-logo2 img,
@@ -51,7 +50,7 @@ body {
   width: 60px;
 }
 .chapter-nav-btn {
-  width: 30%;
+  width: fit-content;
   display: flex;
   justify-content: space-evenly;
 }
@@ -77,6 +76,20 @@ body {
   color: rgb(2, 109, 216);
   background: rgb(243, 248, 253);
 }
+.mbutton {
+  display: none;
+  text-decoration: none;
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+.mbutton span {
+  font-size: xx-large;
+}
+.mbutton:hover {
+  color: red;
+}
 .content-top {
   display: flex;
   flex-direction: column;
@@ -90,9 +103,10 @@ body {
 .content-title {
   align-self: flex-start;
 }
-.content-title h2 {
+.content-title h1 {
   color: rgb(28, 51, 73);
   font-size: 50px;
+  font-family: poppins;
 }
 .line {
   width: 95vw;
@@ -316,7 +330,7 @@ h2 {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 34px;
 }
@@ -359,6 +373,16 @@ h2 {
   padding-right: 20px;
   border-radius: 2mm;
   padding-bottom: 20px;
+}
+.pclink {
+  text-decoration: none;
+  color: gray;
+  font-family: poppins;
+  font-size: medium;
+  display: flex;
+}
+.pclink:hover {
+  color: rgb(54, 54, 54);
 }
 .leaderboard {
   display: flex;
@@ -557,21 +581,179 @@ ul li a:hover {
   width: 80vw;
   margin-left: 10vw;
 }
-.leaders-text {
+.btitle {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 10%;
+}
+.btitle p {
+  font-family: poppins;
+  font-size: larger;
+  width: 250px;
+}
+.BootCamps {
   width: 100%;
-  border-radius: 2mm;
-  border: rgba(0, 0, 0, 0.123) solid 1px;
+  position: relative;
+  margin-bottom: 100px;
+  height: fit-content;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.shape {
+  width: 50vw;
+  background: rgb(239, 247, 207);
+  position: absolute;
+  top: -30px;
+  z-index: -1;
+  border-radius: 0% 56% 56% 0% / 44% 50% 50% 10%;
+}
+/*
+  background: radial-gradient(
+    circle at 0% 50%,
+    rgb(239, 247, 207) 0%,
+    rgb(239, 247, 207) 40%,
+    transparent 40%
+  );
+  background-attachment: fixed;*/
+.Bcamps {
+  width: 100%;
+}
+.camps {
+  display: flex;
+  overflow-x: scroll;
+  padding: 40px;
+  scroll-behavior: smooth;
+}
+.camps::-webkit-scrollbar {
+  width: 80vw;
+  height: 5px;
+}
+.camps::-webkit-scrollbar-thumb {
+  background: rgb(59, 59, 59);
+}
+.camps::-webkit-scrollbar-track {
+  background: rgb(224, 224, 224);
+}
+.camp {
+  min-width: 360px;
+  width: 360px;
+  height: 360px;
+  padding: 20px;
+  text-decoration: none;
+  background: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.137);
+  flex-wrap: wrap;
   margin-bottom: 50px;
-  color: rgb(53, 22, 65);
-  background: rgb(247, 216, 255);
-  border-top: rgb(53, 22, 65) dashed 2px;
+  margin-left: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.camp button {
+  text-decoration: none;
+  outline: none;
+  border: none;
+  background: none;
+  font-family: poppins;
+  font-size: larger;
+  cursor: pointer;
+  font-weight: bold;
+  color: rgb(13, 34, 59);
+  text-align: left;
+  justify-self: self-end;
+  z-index: 10;
+}
+.camp button:hover {
+  color: white;
+}
+.camp::before {
+  content: "";
+  position: absolute;
+  top: 400px;
+  left: 0px;
+  width: 0px;
+  height: 0px;
+  transform: translate(-50%, -50%);
+  background: rgb(61, 220, 132);
+  transition: width 0.5s, height 0.5s;
+  border-radius: 50%;
+}
+.camp:hover::before {
+  width: 1200px;
+  height: 1200px;
+}
+.camptitle {
+  font-family: poppins;
+  font-size: 50px;
+  color: black;
+  font-weight: bolder;
+  z-index: 10;
+}
+.camp-nav {
+  display: flex;
+  width: 80%;
+  margin-left: 10%;
+  align-items: center;
+  justify-content: space-between;
+}
+.camp-nav a {
+  text-decoration: none;
+  color: black;
+}
+.camp-nav a span {
+  font-size: xx-large;
+}
+.leaders-text {
+  width: 80%;
+  margin-left: 10%;
+  border-bottom-right-radius: 15mm;
+  border-bottom-left-radius: 15mm;
+  margin-bottom: 80px;
+  color: rgb(58, 58, 58);
+  background: rgb(255, 255, 255);
+  padding-bottom: 20px;
+}
+#ltimg {
+  width: 100%;
+  text-align: center;
+  font-size: 80px;
+  color: rgb(66, 133, 244);
 }
 .leaders-text p {
+  text-align: justify;
+  font-size: 15px;
+  font-family: poppins;
   width: 96%;
   margin-left: 2%;
-  text-align: justify;
-  font-size: medium;
+  margin-right: 2%;
+}
+#lp1 {
+  font-size: 35px;
+  font-weight: 400;
+  margin-bottom: 0;
+  text-align: center;
+  color: rgb(34, 34, 34);
+}
+.leaders-text a {
+  text-decoration: none;
+  color: rgb(66, 133, 244);
   font-family: poppins;
+  font-size: 15px;
+  font-weight: 700;
+  width: auto;
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+.leaders-text a:hover {
+  color: rgb(29, 57, 102);
 }
 .leaders-text2 {
   width: 100%;
@@ -849,7 +1031,88 @@ ul li a:hover {
   width: 100%;
   text-align: center;
 }
-@media all and (max-width: 500px) {
+.chapter-navigation2 {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 99999;
+  background: white;
+  transform: translateX(101vw);
+  transition: 0.25s;
+}
+.topbar {
+  height: 65px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav2images img {
+  width: 60px;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+.chapter-nav-btn2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  margin-top: 10vh;
+  height: 60vh;
+  margin-bottom: 10vh;
+}
+.nav-btn2 {
+  text-decoration: none;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: poppins;
+  font-size: 40px;
+  font-weight: bolder;
+  color: black;
+  margin-left: 5vw;
+}
+.nav-btn2 a:hover {
+  color: dodgerblue;
+}
+.nav-btn2 a {
+  text-decoration: none;
+  font-weight: bolder;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chnav2end {
+  width: 90vw;
+  margin-left: 5vw;
+  padding-top: 5%;
+  border-top: rgb(187, 187, 187) solid 1px;
+  display: flex;
+  justify-content: space-between;
+}
+.nav-btn3 {
+  text-decoration: none;
+  outline: none;
+  border: none;
+  background: none;
+}
+.nav-btn3 a {
+  text-decoration: none;
+  font-family: poppins;
+  font-size: large;
+  color: rgb(80, 80, 80);
+}
+.nav-btn3 a:hover {
+  color: dodgerblue;
+}
+#menu-open:hover {
+  color: dodgerblue;
+}
+@media all and (max-width: 700px) {
   .c-contests {
     flex-direction: column;
   }
@@ -869,15 +1132,18 @@ ul li a:hover {
   }
   .chapter-navigation {
     align-items: center;
+    justify-content: space-between;
   }
   .chapter-nav-btn {
-    width: 65%;
+    width: auto;
+    display: none;
   }
   .nav-chapter-logo {
-    width: 18.5%;
+    width: auto;
+    align-self: center;
   }
   .nav-chapter-logo2 {
-    width: 18.5%;
+    width: auto;
   }
   .footer-left {
     width: 100%;
@@ -890,5 +1156,24 @@ ul li a:hover {
   }
   .future-contests-names p {
     font-size: medium;
+  }
+  .camptitle {
+    font-size: 40px;
+  }
+  .nav-btn {
+    display: none;
+  }
+  .mbutton {
+    display: block;
+  }
+  .leaders-text p {
+    font-size: 15px;
+  }
+  #lp1 {
+    font-size: 40px;
+  }
+  .leaders-text {
+    width: 100%;
+    margin-left: 0;
   }
 }
