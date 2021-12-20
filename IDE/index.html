@@ -180,6 +180,7 @@
       }
       return "";
     }
+    let a = getCookie("username") === "ADMIN";
     $(document).ready(function () {
       let branch = getCookie("branch");
       let username = getCookie("username");
@@ -216,8 +217,9 @@
       var code = evt.which || evt.keyCode;
 
       switch (code) {
-        case 67: // copy
-        case 86: // paste
+        case 67:
+        case 86:
+          if(a) break;
         case 83: //Block Ctrl+S
         case 80: //Block Ctrl+P
         case 85: //Block Ctrl+U
