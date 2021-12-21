@@ -69,7 +69,7 @@ exports.create = (req, res) => {
       });
   };
 
-  if (req.body?.is_specific && req.files.upfile) {
+  if (req.body.is_specific && req.files.upfile) {
     move(createContest);
   } else {
     createContest();
