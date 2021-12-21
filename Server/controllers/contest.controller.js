@@ -109,7 +109,7 @@ exports.findAllUser = (req, res) => {
 
   Contest.find({
     mcq: req.body.mcq ? true : { $in: [false, null] },
-    usernames: { $in: [username, ""] },
+    usernames: { $in: [username, "", null] }
   })
     .then((contests) => {
       res.send(contests);
