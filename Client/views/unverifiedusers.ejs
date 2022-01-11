@@ -169,25 +169,20 @@
     <section class="bg-white">
       <div class="container">
         <div class="row col-12 pb-3">
-          <button class="btn btn-sm" onclick="exportTableToCSV('users.csv')">
-            Download User Details
-          </button>
-          <button class="btn btn-sm" style="margin-left: 605px;">
+          <button class="btn btn-sm">
             <a href="<%= data.url %>/admin/deleteusers/all">Delete All Unverified Users</a>
           </button>
         </div>
       </div>
     </section>
-    <section class="bg-white">
-      <form action="<%= data.serverurl %>/users/delete/multiple" name="delusersform" id="delusersform" method='post'>
-        <div class="form-group">
-          <label for="Hours">Enter time in hours:</label>
-          <br>
-          <label for="explaination">(users created before this time will be deleted)</label>
-          <input type="text" id='hours' name="hours" placeholder="Example - 3">
-          <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
-          <button class="btn btn-sm" action="submit" >Click to Delete</button>
-        </div>
+    <section class="section py-5 bg-white" style="padding-top: 1rem; border-style:hidden;">
+      <form class="align-items-center" action="<%= data.serverurl %>/users/delete/multiple" name="delusersform" id="delusersform" method='post'>
+        <label for="Hours" style="margin-left: 12rem; font-size: 1.5rem;">Enter time in hours:</label>
+        <br>
+        <label for="explaination" style="margin-left: 12rem;">(users created before this time will be deleted)</label>
+        <input style="margin-left: 12rem; width: 75%; margin-bottom: 1rem;" type="number" id='hours' name="hours" placeholder="Example - 3">
+        <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
+        <button style="margin-left: 12rem;" class="btn btn-sm" action="submit" >Click to Delete</button>
       </form>
     </section>
     <section class="section py-5 bg-white" style="padding-top: 1rem">
@@ -267,38 +262,8 @@
     <script src="/adminjs/gnmenu.js"></script>
     <script>
       new gnMenu(document.getElementById("gn-menu"));
-    </script>
-    <script>
 			document.getElementById("token").value = "<%= token %>";
 		</script>
-    <script>
-        function downloadCSV(csv, filename) {
-            var csvFile;
-            var downloadLink;
-            csvFile = new Blob([csv], { type: "text/csv" });
-            downloadLink = document.createElement("a");
-            downloadLink.download = filename;
-            downloadLink.href = window.URL.createObjectURL(csvFile);
-            downloadLink.style.display = "none";
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-        }
-        function exportTableToCSV(filename) {
-            var csv = [];
-            var rows = document.querySelectorAll("table tr");
-
-            for (var i = 0; i < rows.length; i++) {
-            var row = [],
-                cols = rows[i].querySelectorAll("td, th");
-
-            for (var j = 0; j < cols.length; j++) row.push(cols[j].innerText);
-
-            csv.push(row.join(","));
-            }
-
-            downloadCSV(csv.join("\n"), filename);
-        }
-    </script>
 
     <!-- jQuery -->
     <script src="/plugins/jQuery/jquery.min.js"></script>
