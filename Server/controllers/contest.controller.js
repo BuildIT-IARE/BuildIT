@@ -69,7 +69,7 @@ exports.create = (req, res) => {
       });
   };
 
-  if (req.body?.is_specific && req.files.upfile) {
+  if (req.body.is_specific && req.files.upfile) {
     move(createContest);
   } else {
     createContest();
@@ -109,7 +109,7 @@ exports.findAllUser = (req, res) => {
 
   Contest.find({
     mcq: req.body.mcq ? true : { $in: [false, null] },
-    usernames: { $in: [username, ""] },
+    usernames: { $in: [username, "", null] }
   })
     .then((contests) => {
       res.send(contests);

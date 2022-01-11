@@ -1,0 +1,15 @@
+# plagiarism
+
+Public/source_codes/*
+Public/!source_codes/jplag.jar
+
+# additional files
+Public/pdf/license.txt
+
+# uploads
+
+Public/current_leaderboard
+*.xlsx
+*.csv
+sdsdsd
+npm-debug.log
