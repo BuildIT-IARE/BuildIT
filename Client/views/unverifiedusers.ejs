@@ -154,14 +154,13 @@
   <body>
     <% include ../views/partials/adminpanel %>
     <br /><br /><br /><br /><br />
-    <!-- page title -->
     <section class="page-title bg-white position-relative" 
       style="height: 8vh"
     >
       <div class="container">
         <div class="row">
           <div class="col-12 text-center">
-            <h3>BuildIT Users</h3>
+            <h3>BuildIT Unverified Users</h3>
           </div>
         </div>
       </div>
@@ -169,21 +168,31 @@
 
     <section class="bg-white">
       <div class="container">
-        <div class="row pb-3">
+        <div class="row col-12 pb-3">
           <button class="btn btn-sm" onclick="exportTableToCSV('users.csv')">
             Download User Details
+          </button>
+          <button class="btn btn-sm" style="margin-left: 605px;">
+            <a href="<%= data.url %>/admin/deleteusers/all">Delete All Unverified Users</a>
           </button>
         </div>
       </div>
     </section>
-
+    <section class="bg-white">
+      <form action="<%= data.serverurl %>/users/delete/multiple" name="delusersform" id="delusersform" method='post'>
+        <div class="form-group">
+          <label for="Hours">Enter time in hours:</label>
+          <br>
+          <label for="explaination">(users created before this time will be deleted)</label>
+          <input type="text" id='hours' name="hours" placeholder="Example - 3">
+          <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
+          <button class="btn btn-sm" action="submit" >Click to Delete</button>
+        </div>
+      </form>
+    </section>
     <section class="section py-5 bg-white" style="padding-top: 1rem">
       <div class="container d-flex flex-column align-items-center">
-        <table
-          id="leaderboard"
-          class="table table-striped table-bordered dt-center"
-          style="width: 100%"
-        >
+        <table id="leaderboard" class="table table-striped table-bordered dt-center" style="width: 100%">
           <thead>
             <tr>
               <!-- headers -->
@@ -193,12 +202,14 @@
               <th>Name</th>
               <th>Branch</th>
               <th>Email</th>
+              <th>After Created(HH:MM)</th>
               <th>Delete</th>
             </tr>
           </thead>
           <tbody>
+            <%var date = new Date();%>
             <% for (let i=0; i < data.length; i++ ){ %>
-						<% if (!data[i].admin){ %>
+						<% if (!data[i].admin && !data[i].isVerified){ %>
             <tr style="background: <%= data[i].color %>">
               <td><%= i+1 %></td>
               <td><%= data[i].username %></td>
@@ -206,6 +217,28 @@
               <td><%= data[i].name %></td>
               <td><%= data[i].branch %></td>
               <td><%= data[i].email %></td>
+                <%var createDate = new Date(data[i].createdAt);%>
+                <%let diffInMilliSeconds = Math.abs(createDate - date) / 1000;%>
+                <%let hours = (Math.floor(diffInMilliSeconds/(60*60)));%>
+                <%let hours_string=String(hours)%>
+                <% if(hours <= 9){%>
+                <%      hours_string="0"+String(hours);%>
+                <%  } else if(hours >= 99) {%>
+                <%      hours_string="99";%>
+                <%  } else {%>
+                <%      hours_string="0"+String(hours);%>
+                <%  }%>
+                <% let minutes =Math.floor(diffInMilliSeconds/60) - hours*60; %>
+                <% let minutes_string; %>
+                <% if(minutes <= 9) { %>
+                <%   minutes_string=(":0"+String(minutes))%>
+                <% }else if(minutes >= 99) { %>
+                <%   minutes_string=(":99");%>
+                <% }else { %>
+                <%   minutes_string=(":"+String(minutes));%>
+                <% } %>
+                <%data[i].createdAt = hours+Math.floor(minutes/60);%>
+              <td><%= hours_string +minutes_string%></td>
               <td>
                 <a href="<%= data[i].url %>/admin/deleteuser/<%= data[i].username %>">Delete User</a>
               </td>
@@ -221,6 +254,7 @@
               <th>Name</th>
               <th>Branch</th>
               <th>Email</th>
+              <th>After Created(HH:MM)</th>
               <th>Delete</th>
             </tr>
           </tfoot>
@@ -235,40 +269,35 @@
       new gnMenu(document.getElementById("gn-menu"));
     </script>
     <script>
-      function downloadCSV(csv, filename) {
-        var csvFile;
-        var downloadLink;
-
-        csvFile = new Blob([csv], { type: "text/csv" });
-
-        downloadLink = document.createElement("a");
-
-        downloadLink.download = filename;
-
-        downloadLink.href = window.URL.createObjectURL(csvFile);
-
-        downloadLink.style.display = "none";
-
-        document.body.appendChild(downloadLink);
-
-        downloadLink.click();
-      }
-
-      function exportTableToCSV(filename) {
-        var csv = [];
-        var rows = document.querySelectorAll("table tr");
-
-        for (var i = 0; i < rows.length; i++) {
-          var row = [],
-            cols = rows[i].querySelectorAll("td, th");
-
-          for (var j = 0; j < cols.length; j++) row.push(cols[j].innerText);
-
-          csv.push(row.join(","));
+			document.getElementById("token").value = "<%= token %>";
+		</script>
+    <script>
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+            csvFile = new Blob([csv], { type: "text/csv" });
+            downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
         }
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
 
-        downloadCSV(csv.join("\n"), filename);
-      }
+            for (var i = 0; i < rows.length; i++) {
+            var row = [],
+                cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++) row.push(cols[j].innerText);
+
+            csv.push(row.join(","));
+            }
+
+            downloadCSV(csv.join("\n"), filename);
+        }
     </script>
 
     <!-- jQuery -->

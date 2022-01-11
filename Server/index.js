@@ -68,6 +68,8 @@ dbConfig = {
 mongoose
   .connect(dbConfig.url, {
     useNewUrlParser: true,
+    //to remove deprication message
+    useUnifiedTopology: true
   })
   .then(() => {
     console.log("Successfully connected to the database");
@@ -1107,5 +1109,9 @@ app.get("/plagreport/:languageId/:questionId", async (req, res) => {
     .then(res.sendFile(p + "/result.zip"))
     .catch(res.send("Failed"));
 });
+
+app.use((req, res) => {
+  res.render('404.ejs');
+})
 
 app.listen(port, () => console.log("Server @ port", port));

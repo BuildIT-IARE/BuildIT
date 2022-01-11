@@ -13,7 +13,9 @@ var _ = require("lodash");
 const dotenv = require('dotenv');
 
 // Load config
-dotenv.config({ path: '../Server/util/config.env' });
+dotenv.config({
+  path: '../Server/util/config.env'
+});
 
 let serverRoute = process.env.serverAddress;
 let clientRoute = process.env.clientAddress;
@@ -45,21 +47,30 @@ app.use("/contests/questions", express.static(__dirname + "/"));
 app.use("/tutorials/questions", express.static(__dirname + "/"));
 
 app.use("/admin/manageusers", express.static(__dirname + "/"));
+app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
 app.use("/admin/add/test", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
 app.get("/", async (req, res) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  res.render("home", {
+    imgUsername: req.cookies.username
+  });
 });
 app.get("/index", async (req, res) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  res.render("home", {
+    imgUsername: req.cookies.username
+  });
 });
 app.get("/home", async (req, res) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  res.render("home", {
+    imgUsername: req.cookies.username
+  });
 });
 app.get("/about", async (req, res) => {
-  res.render("about", { imgUsername: req.cookies.username });
+  res.render("about", {
+    imgUsername: req.cookies.username
+  });
 });
 
 app.post("/skill", async (req, res) => {
@@ -79,30 +90,30 @@ app.post("/skill", async (req, res) => {
   ];
 
   let options = {
-	  url: serverRoute + "/weeks",
-	  method: "get",
-	  headers: {
-		authorization: req.cookies.token,
-	  },
-	  json: true,
+    url: serverRoute + "/weeks",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
   };
-  
-  request(options, async(err, response, week) => {
+
+  request(options, async (err, response, week) => {
     let options = {
       url: serverRoute + "/skill",
       method: "get",
       headers: {
-      authorization: req.cookies.token,
+        authorization: req.cookies.token,
       },
       json: true,
     };
 
-    if( req.body.weekId !== undefined ) {
+    if (req.body.weekId !== undefined) {
       options.url = serverRoute + "/skill/" + req.body.weekId;
     }
-    
-    request(options, async(err, response, body) => {
-      if(!err) {
+
+    request(options, async (err, response, body) => {
+      if (!err) {
         const ordered = _.orderBy(
           body,
           function (item) {
@@ -126,9 +137,9 @@ app.post("/skill", async (req, res) => {
         const first = await firstResponse.json();
         const second = await secondResponse.json();
         const third = await thirdResponse.json();
-    
+
         const topperData = [first, second, third];
-        
+
         body.clientAddress = clientRoute;
 
         res.render("leaderboard", {
@@ -140,7 +151,9 @@ app.post("/skill", async (req, res) => {
         });
       } else {
         res.render("error", {
-          data: { message: "Leaderboard not initialised" },
+          data: {
+            message: "Leaderboard not initialised"
+          },
           imgUsername: req.cookies.username,
         });
       }
@@ -165,10 +178,16 @@ app.get("/admin/add/skillup", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("uploadcsv", { data: url, token: req.cookies.token });
+      res.render("uploadcsv", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -224,7 +243,7 @@ app.post("/editProfile", async (req, res) => {
     },
     json: true,
   };
-  
+
   request(options, function (err, response, body) {
     if (body.success) {
       res.redirect("/profile");
@@ -234,21 +253,25 @@ app.post("/editProfile", async (req, res) => {
         imgUsername: req.cookies.username,
       });
     }
-  });  
+  });
 });
 
 app.get("/login", async (req, res) => {
   let url = {
     url: clientRoute,
   };
-  res.render("login", { data: url });
+  res.render("login", {
+    data: url
+  });
 });
 
 app.get("/forgotpassword_", async (req, res) => {
   let url = {
     url: clientRoute + "/fp",
   };
-  res.render("forgotPassword", { data: url });
+  res.render("forgotPassword", {
+    data: url
+  });
 });
 
 app.get("/admin/add/test", async (req, res) => {
@@ -267,7 +290,10 @@ app.get("/admin/add/test", async (req, res) => {
       serverurl: serverRoute,
     };
     if (body.success) {
-      res.render("tests", { data: url, token: req.cookies.token });
+      res.render("tests", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
       console.log("token " + req.cookies.token);
@@ -296,10 +322,16 @@ app.get("/admin/add/tutQuestion", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("tutQuestionAdd", { data: url, token: req.cookies.token });
+      res.render("tutQuestionAdd", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -321,10 +353,16 @@ app.get("/admin/add/question", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("questionadd", { data: url, token: req.cookies.token });
+      res.render("questionadd", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -346,10 +384,16 @@ app.get("/admin/add/mcq", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("mcqadd", { data: url, token: req.cookies.token });
+      res.render("mcqadd", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -363,7 +407,9 @@ app.get("/admin/edit/mcq", async (req, res) => {
     title: "Editing",
   };
 
-  res.render("search", { data: body });
+  res.render("search", {
+    data: body
+  });
 });
 
 app.post("/mcqEdit", async (req, res) => {
@@ -390,11 +436,17 @@ app.post("/mcqEdit", async (req, res) => {
 
       request(options, function (err, response, body) {
         body[0].serverurl = serverRoute;
-        res.render("mcqedit", { data: body[0], token: req.cookies.token });
+        res.render("mcqedit", {
+          data: body[0],
+          token: req.cookies.token
+        });
       });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -416,7 +468,9 @@ app.get("/admin/delete/mcq", async (req, res) => {
     body.class = "btn-danger";
     body.title = "Delete";
     body.subtitle = "MCQ's";
-    res.render("dropdown", { data: body });
+    res.render("dropdown", {
+      data: body
+    });
   });
 });
 
@@ -456,10 +510,16 @@ app.get("/admin/add/pdf", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("uploadpdf", { data: url, token: req.cookies.token });
+      res.render("uploadpdf", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -481,10 +541,16 @@ app.get("/admin/add/sets", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("sets", { data: url, token: req.cookies.token });
+      res.render("sets", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -506,10 +572,16 @@ app.get("/admin/add/set", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("sets2", { data: url, token: req.cookies.token });
+      res.render("sets2", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -530,7 +602,10 @@ app.get("/admin/add/contest", async (req, res) => {
       serverurl: serverRoute,
     };
     if (body.success) {
-      res.render("contestadd", { data: url, token: req.cookies.token });
+      res.render("contestadd", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
       console.log("token " + req.cookies.token);
@@ -557,10 +632,15 @@ app.get("/admin/update/question", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("questionupdate", { data: url });
+      res.render("questionupdate", {
+        data: url
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -581,10 +661,15 @@ app.get("/admin/update/contest", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("contestupdate", { data: url });
+      res.render("contestupdate", {
+        data: url
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -606,7 +691,9 @@ app.get("/admin/edit/question", async (req, res) => {
     body.class = "btn-green";
     body.title = "Editing";
     body.subtitle = "Questions";
-    res.render("search", { data: body });
+    res.render("search", {
+      data: body
+    });
   });
 });
 
@@ -634,11 +721,17 @@ app.post("/questionEdit", async (req, res) => {
 
       request(options, function (err, response, body) {
         body[0].serverurl = serverRoute;
-        res.render("questionedit", { data: body[0], token: req.cookies.token });
+        res.render("questionedit", {
+          data: body[0],
+          token: req.cookies.token
+        });
       });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -660,10 +753,16 @@ app.get("/admin/add/questionTut", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("questionTutAdd", { data: url, token: req.cookies.token });
+      res.render("questionTutAdd", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -684,10 +783,16 @@ app.get("/admin/add/course", async (req, res) => {
       serverurl: serverRoute,
     };
     if (body.success) {
-      res.render("courseAdd", { data: url, token: req.cookies.token });
+      res.render("courseAdd", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -708,7 +813,9 @@ app.get("/admin/delete/contest", async (req, res) => {
     body.method = "POST";
     body.class = "btn-danger";
     body.title = "Delete";
-    res.render("dropdown", { data: body });
+    res.render("dropdown", {
+      data: body
+    });
   });
 });
 
@@ -729,7 +836,9 @@ app.get("/admin/delete/question", async (req, res) => {
     body.class = "btn-danger";
     body.title = "Delete";
     body.subtitle = "Questions";
-    res.render("dropdown", { data: body });
+    res.render("dropdown", {
+      data: body
+    });
   });
 });
 
@@ -786,10 +895,15 @@ app.get("/admin/update/questionTut", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("questionTutUpdate", { data: url });
+      res.render("questionTutUpdate", {
+        data: url
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -810,10 +924,15 @@ app.get("/admin/update/course", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("courseUpdate", { data: url });
+      res.render("courseUpdate", {
+        data: url
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -835,7 +954,32 @@ app.get("/admin/manageusers", async (req, res) => {
         body[i].color = "pink";
       }
     }
-    res.render("manageusers", { data: body });
+    res.render("manageusers", {
+      data: body
+    });
+  });
+});
+app.get("/admin/unverifiedusers", async (req, res) => {
+  let options = {
+    url: serverRoute + "/admin/users",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    body.url = clientRoute;
+    body.serverurl = serverRoute;
+    for (let i = 0; i < body.length; i++) {
+      if (!body[i].isVerified) {
+        body[i].color = "pink";
+      }
+    }
+    res.render("unverifiedusers", {
+      data: body,
+      token: req.cookies.token,
+    });
   });
 });
 
@@ -851,7 +995,9 @@ app.get("/admin/complaints", async (req, res) => {
   request(options, function (err, response, body) {
     body.url = clientRoute;
     body.serverurl = serverRoute;
-    res.render("admincomplain", { data: body });
+    res.render("admincomplain", {
+      data: body
+    });
   });
 });
 
@@ -867,10 +1013,26 @@ app.get("/complaints_public", async (req, res) => {
   request(options, function (err, response, body) {
     body.url = clientRoute;
     body.serverurl = serverRoute;
-    res.render("complains_public", { data: body });
+    res.render("complains_public", {
+      data: body
+    });
   });
 });
 
+//delete all users
+app.get("/admin/deleteusers/all", async (req, res) => {
+  let options = {
+    url: serverRoute + "/users/delete/all",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.redirect("/admin/unverifiedusers");
+  });
+});
 app.get("/admin/deleteuser/:username", async (req, res) => {
   let options = {
     url: serverRoute + "/users/" + req.params.username,
@@ -884,6 +1046,21 @@ app.get("/admin/deleteuser/:username", async (req, res) => {
     res.redirect("/admin/manageusers");
   });
 });
+//delete multiple users
+app.get("/admin/deleteusers/:hours", async (req, res) => {
+  let options = {
+    url: serverRoute + "/users/multiple/" + req.params.hours,
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.redirect("/admin/unverifiedusers");
+  });
+});
+
 
 app.get("/admin/deletecomplain/:questionId", async (req, res) => {
   let options = {
@@ -913,7 +1090,9 @@ app.get("/admin/results", async (req, res) => {
     body.posturl = clientRoute + "/admin/results/contest";
     body.url = clientRoute;
     body.method = "POST";
-    res.render("dropdown", { data: body });
+    res.render("dropdown", {
+      data: body
+    });
   });
 });
 
@@ -931,7 +1110,9 @@ app.get("/admin/resultsTut", async (req, res) => {
     body.posturl = clientRoute + "/admin/resultsTut/course";
     body.url = clientRoute;
     body.method = "POST";
-    res.render("dropdown2", { data: body });
+    res.render("dropdown2", {
+      data: body
+    });
   });
 });
 
@@ -957,7 +1138,10 @@ app.get("/admin/move", async (req, res) => {
     request(options, function (err, response, bodyCourses) {
       body.posturl = serverRoute + "/questions/mergeCourse";
       body.method = "POST";
-      res.render("moveToCourse", { data: body, dataCourse: bodyCourses });
+      res.render("moveToCourse", {
+        data: body,
+        dataCourse: bodyCourses
+      });
     });
   });
 });
@@ -1083,7 +1267,10 @@ app.post("/admin/resultsTut/course", async (req, res) => {
         j = j + 1;
       }
 
-      res.render("results1", { datac: course, data: bodytimer });
+      res.render("results1", {
+        datac: course,
+        data: bodytimer
+      });
     });
   });
 });
@@ -1139,10 +1326,16 @@ app.get("/admin", async (req, res) => {
       serverurl: serverRoute,
     };
     if (body.success) {
-      res.render("contestadd", { data: url, token: req.cookies.token });
+      res.render("contestadd", {
+        data: url,
+        token: req.cookies.token
+      });
     } else {
       body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -1167,7 +1360,10 @@ app.get("/contest", async (req, res) => {
 
   request(options, function (err, response, body) {
     res.clearCookie("courseId");
-    res.render("contest", { imgUsername: req.cookies.username, data: body });
+    res.render("contest", {
+      imgUsername: req.cookies.username,
+      data: body
+    });
   });
 });
 
@@ -1268,7 +1464,10 @@ app.get("/contests/:contestId", async (req, res) => {
         });
       });
     } else {
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -1383,7 +1582,10 @@ app.get("/qualifier_test/:contestId", async (req, res) => {
         });
       });
     } else {
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -1424,8 +1626,7 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
         }
       }
       let options = {
-        url:
-          serverRoute +
+        url: serverRoute +
           "/mcqs/" +
           req.params.contestId +
           "/" +
@@ -1661,7 +1862,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
         json: true,
       };
 
-      request(options, (err, response, body) => { 
+      request(options, (err, response, body) => {
         if (!body.message) {
           const color = new Map([
             [0, "black"],
@@ -1729,7 +1930,10 @@ app.post("/signup_", async (req, res) => {
         "Sign up successful, Account verification has been sent to your email";
     }
     body.url = clientRoute;
-    res.render("error", { data: body, imgUsername: req.cookies.username });
+    res.render("error", {
+      data: body,
+      imgUsername: req.cookies.username
+    });
   });
 });
 
@@ -1739,7 +1943,10 @@ app.get("/registerComplaint/:questionId", async (req, res) => {
   body.url = clientRoute;
   body.questionId = req.params.questionId;
   body.method = "POST";
-  res.render("complain", { data: body, imgUsername: req.cookies.username });
+  res.render("complain", {
+    data: body,
+    imgUsername: req.cookies.username
+  });
 });
 
 app.post("/complaint", async (req, res) => {
@@ -1768,7 +1975,10 @@ app.post("/complaint", async (req, res) => {
       body.message = "Report Successfully Registered";
     }
     body.url = clientRoute;
-    res.render("error", { data: body, imgUsername: req.cookies.username });
+    res.render("error", {
+      data: body,
+      imgUsername: req.cookies.username
+    });
   });
 });
 
@@ -1794,10 +2004,16 @@ app.post("/login_", async (req, res) => {
         let url = {
           url: clientRoute,
         };
-        res.render("temp", { data: url, imgUsername: req.cookies.username });
+        res.render("temp", {
+          data: url,
+          imgUsername: req.cookies.username
+        });
       }
     } else {
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -1813,9 +2029,15 @@ app.post("/fp", async (req, res) => {
   };
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     } else {
-      res.render("error", { data: body, imgUsername: req.cookies.username });
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
     }
   });
 });
@@ -1834,7 +2056,10 @@ app.get("/pdf/:setNo", async (req, res) => {
 });
 
 app.get("/error", async (req, res) => {
-  res.render("error", { data: req.query, imgUsername: req.cookies.username });
+  res.render("error", {
+    data: req.query,
+    imgUsername: req.cookies.username
+  });
 });
 
 app.get("/contests/questions/:questionId", async (req, res) => {
@@ -1885,7 +2110,10 @@ app.get("/verify", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    res.render("error", { data: body, imgUsername: req.cookies.username });
+    res.render("error", {
+      data: body,
+      imgUsername: req.cookies.username
+    });
   });
 });
 
@@ -1902,7 +2130,10 @@ app.get("/flipClass", async (req, res) => {
     url: clientRoute,
     surl: serverRoute,
   };
-  res.render("flipClass", { imgUsername: req.cookies.username, data: url });
+  res.render("flipClass", {
+    imgUsername: req.cookies.username,
+    data: url
+  });
 });
 
 app.get("/tutorials", async (req, res) => {
@@ -1916,7 +2147,10 @@ app.get("/tutorials", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    res.render("tutorials", { imgUsername: req.cookies.username, data: body });
+    res.render("tutorials", {
+      imgUsername: req.cookies.username,
+      data: body
+    });
   });
 });
 
@@ -2004,8 +2238,7 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
   let reqConcept = subjectMap.indexOf(concept);
 
   let options = {
-    url:
-      serverRoute +
+    url: serverRoute +
       "/questions/courses/" +
       req.params.courseId +
       "/" +
@@ -2081,8 +2314,7 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
 
 app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
   let options = {
-    url:
-      serverRoute +
+    url: serverRoute +
       "/questions/courses/" +
       req.params.courseId +
       "/" +
@@ -2246,7 +2478,9 @@ app.get("/certificate", async (req, res) => {
 });
 
 app.get("/codechef-iare-chapter", async (req, res) => {
-  res.render("iare_chapter", { imgUsername: req.cookies.username });
+  res.render("iare_chapter", {
+    imgUsername: req.cookies.username
+  });
 });
 
 app.listen(4000);
