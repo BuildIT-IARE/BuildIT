@@ -748,7 +748,7 @@ exports.delete = (req, res) => {
 };
 
 //delete multiple users
-exports.deleteusers = (req, res) => {
+exports.deleteMultiple = (req, res) => {
   var hours = 0;
   if (req.body.hours) {
     hours = Number(req.body.hours);
