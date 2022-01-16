@@ -6,9 +6,7 @@ const handlebars = require("handlebars");
 const fs = require("fs");
 const path = require("path");
 let domains = require("../util/email");
-const {
-  google
-} = require("googleapis");
+const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 
 let clientAddress = process.env.clientAddress;
@@ -30,9 +28,7 @@ exports.findAll = (req, res) => {
 
 // Find a single user with a username
 exports.findOne = (req, res) => {
-  User.find({
-      username: req.params.username
-    })
+  User.find({ username: req.params.username })
     .then((user) => {
       if (!user) {
         return res.status(404).send({
@@ -58,9 +54,7 @@ exports.findOne = (req, res) => {
 
 // Find a single user with a username
 exports.findOnePublic = (req, res) => {
-  User.find({
-      username: req.params.username
-    })
+  User.find({ username: req.params.username })
     .then((user) => {
       if (!user) {
         return res.status(404).send({
@@ -95,9 +89,7 @@ exports.findOnePublic = (req, res) => {
 
 // Find the branch with a username
 exports.findBranch = (req, res) => {
-  User.find({
-      username: req.params.username
-    })
+  User.find({ username: req.params.username })
     .then((user) => {
       if (!user) {
         return res.status(404).send({
@@ -177,7 +169,8 @@ exports.create = (req, res) => {
     ) {
       return res.status(400).send({
         success: false,
-        message: "We do not support this email provider, please try another email ID.",
+        message:
+          "We do not support this email provider, please try another email ID.",
       });
     }
 
@@ -219,9 +212,7 @@ exports.create = (req, res) => {
     // Gen token & send email here
     async function mail(user) {
       var readHTMLFile = async function (path, callback) {
-        fs.readFile(path, {
-          encoding: "utf-8"
-        }, function (err, html) {
+        fs.readFile(path, { encoding: "utf-8" }, function (err, html) {
           if (err) {
             callback(err);
           } else {
@@ -308,22 +299,21 @@ exports.update = (req, res) => {
   }
 
   // Find user and update it with the request body
-  User.findOneAndUpdate({
-        username: req.body.username
-      }, {
-        $set: {
-          username: req.body.username,
-          password: req.body.password,
-        },
-      }, {
-        new: true
+  User.findOneAndUpdate(
+    { username: req.body.username },
+    {
+      $set: {
+        username: req.body.username,
+        password: req.body.password,
       },
-      (err, doc) => {
-        if (err) {
-          console.log(err);
-        }
+    },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log(err);
       }
-    )
+    }
+  )
     .then((user) => {
       if (!user) {
         return res.status(404).send({
@@ -370,23 +360,22 @@ exports.updateImage = (req, res) => {
       }
     });
   }
-
+  
   const uploadImage = async (img) => {
-    return User.findOneAndUpdate({
-          username: req.params.username
-        }, {
-          $set: {
-            photo: img,
-          },
-        }, {
-          new: true
+    return User.findOneAndUpdate(
+      { username: req.params.username },
+      {
+        $set: {
+          photo: img,
         },
-        (err, doc) => {
-          if (err) {
-            console.log(err);
-          }
+      },
+      { new: true },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
         }
-      )
+      }
+    )
       .then((user) => {
         if (!user) {
           return "User not found with username  " + req.params.username;
@@ -425,14 +414,13 @@ exports.updateOne = async (req, res) => {
   ) {
     return res.status(400).send({
       success: false,
-      message: "We do not support this email provider, please try another email ID.",
+      message:
+        "We do not support this email provider, please try another email ID.",
     });
   }
 
   // 3
-  User.find({
-      username: req.params.username
-    })
+  User.find({ username: req.params.username })
     .then(async (user) => {
       if (!user) {
         return res.status(404).send({
@@ -465,24 +453,23 @@ exports.updateOne = async (req, res) => {
   // 4
   // Find user and update it with the request body
   const updateProfile = async (error, resolve) => {
-    return User.findOneAndUpdate({
-          username: req.params.username
-        }, {
-          $set: {
-            name: req.body.name,
-            email: req.body.email,
-            phone: req.body.phone,
-            password: req.body.newPassword,
-          },
-        }, {
-          new: true
+    return User.findOneAndUpdate(
+      { username: req.params.username },
+      {
+        $set: {
+          name: req.body.name,
+          email: req.body.email,
+          phone: req.body.phone,
+          password: req.body.newPassword,
         },
-        (err, doc) => {
-          if (err) {
-            console.log(err);
-          }
+      },
+      { new: true },
+      (err, doc) => {
+        if (err) {
+          console.log(err);
         }
-      )
+      }
+    )
       .then((user) => {
         if (!user) {
           return res.status(404).send({
@@ -512,16 +499,14 @@ exports.updateOne = async (req, res) => {
         }
         return res.status(500).send({
           success: false,
-          message: err.message, //"Error updating user with id " + req.params.username,
+          message: err.message,//"Error updating user with id " + req.params.username,
         });
       });
   };
 };
 
 exports.forgotPass = (req, res) => {
-  User.findOne({
-      username: req.body.username
-    })
+  User.findOne({ username: req.body.username })
     .then((user) => {
       if (user.length === 0) {
         return res.status(404).send({
@@ -530,10 +515,7 @@ exports.forgotPass = (req, res) => {
         });
       }
       console.log("USER", user);
-      res.send({
-        success: true,
-        message: "Check your Mail for Password"
-      });
+      res.send({ success: true, message: "Check your Mail for Password" });
       mailUser(user).catch((err) => console.log(err));
     })
     .catch((err) => {
@@ -547,9 +529,7 @@ exports.forgotPass = (req, res) => {
   // Gen token & send email here
   async function mailUser(user) {
     var readHTMLFile = async function (path, callback) {
-      fs.readFile(path, {
-        encoding: "utf-8"
-      }, function (err, html) {
+      fs.readFile(path, { encoding: "utf-8" }, function (err, html) {
         if (err) {
           callback(err);
         } else {
@@ -622,9 +602,7 @@ exports.forgotPass = (req, res) => {
 
 // Find username and check pass
 exports.checkPass = (req, res) => {
-  User.find({
-      username: req.body.username
-    })
+  User.find({ username: req.body.username })
     .then((user) => {
       if (user.length === 0) {
         return res.status(404).send({
@@ -635,14 +613,14 @@ exports.checkPass = (req, res) => {
       if (user[0].password === req.body.password) {
         if (user[0].isVerified === true) {
           // Login successful
-          let token = jwt.sign({
+          let token = jwt.sign(
+            {
               username: user[0].username,
               isVerified: user[0].isVerified,
               admin: user[0].admin,
             },
-            process.env.secret, {
-              expiresIn: "730h"
-            }
+            process.env.secret,
+            { expiresIn: "730h" }
           );
           res.cookie("token", token);
           res.cookie("username", user[0].username.toUpperCase());
@@ -682,7 +660,8 @@ exports.checkPass = (req, res) => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
           success: false,
-          message: "[caught] User not found with username  " + req.body.username,
+          message:
+            "[caught] User not found with username  " + req.body.username,
         });
       }
       return res.status(404).send({
@@ -694,25 +673,23 @@ exports.checkPass = (req, res) => {
 
 // Check Token and activate account
 exports.checkToken = (req, res) => {
-  User.findOneAndUpdate({
-        email: req.body.email,
-        verifyToken: req.body.token
-      }, {
-        $set: {
-          isVerified: true,
-        },
-      }, {
-        new: true
+  User.findOneAndUpdate(
+    { email: req.body.email, verifyToken: req.body.token },
+    {
+      $set: {
+        isVerified: true,
       },
-      (err, doc) => {
-        if (err) {
-          return res.status(404).send({
-            success: false,
-            message: "Could not verify account " + req.body.email,
-          });
-        }
+    },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        return res.status(404).send({
+          success: false,
+          message: "Could not verify account " + req.body.email,
+        });
       }
-    )
+    }
+  )
     .then((user) => {
       if (!user) {
         return res.status(404).send({
@@ -746,9 +723,7 @@ exports.checkToken = (req, res) => {
 
 // Delete a user with username
 exports.delete = (req, res) => {
-  User.findOneAndRemove({
-      username: req.params.username
-    })
+  User.findOneAndRemove({ username: req.params.username })
     .then((user) => {
       if (!user) {
         return res.status(404).send({
@@ -756,9 +731,7 @@ exports.delete = (req, res) => {
           message: "User not found with username  " + req.params.username,
         });
       }
-      res.send({
-        message: "user deleted successfully!"
-      });
+      res.send({ message: "user deleted successfully!" });
     })
     .catch((err) => {
       if (err.kind === "ObjectId" || err.name === "NotFound") {
@@ -784,22 +757,6 @@ exports.deleteusers = (req, res) => {
       createdAt: {
         $lte: new Date(Date.now() - (hours) * 60 * 60 * 1000)
       },
-      isVerified: false
-    })
-    .then((deletedUsers) => {
-      res.send(deletedUsers);
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        success: false,
-        message: "Could not delete users",
-      });
-    });
-};
-
-//delete all users
-exports.deleteAllUsers = (req, res) => {
-  User.deleteMany({
       isVerified: false
     })
     .then((deletedUsers) => {

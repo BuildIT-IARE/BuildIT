@@ -1110,8 +1110,4 @@ app.get("/plagreport/:languageId/:questionId", async (req, res) => {
     .catch(res.send("Failed"));
 });
 
-app.use((req, res) => {
-  res.render('404.ejs');
-})
-
 app.listen(port, () => console.log("Server @ port", port));

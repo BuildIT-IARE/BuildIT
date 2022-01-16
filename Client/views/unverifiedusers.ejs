@@ -169,9 +169,11 @@
     <section class="bg-white">
       <div class="container">
         <div class="row col-12 pb-3">
-          <button class="btn btn-sm">
-            <a href="<%= data.url %>/admin/deleteusers/all">Delete All Unverified Users</a>
-          </button>
+          <form action="<%= data.serverurl %>/users/delete/multiple" method="post" style="box-shadow: none;">
+            <button class="btn btn-sm">
+              Delete All Unverified Users
+            </button>
+          </form>
         </div>
       </div>
     </section>

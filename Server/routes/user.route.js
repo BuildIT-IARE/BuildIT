@@ -39,9 +39,6 @@ module.exports = (app) => {
   // Delete Multiple users
   app.post("/users/delete/multiple", middleware.checkTokenAdmin, users.deleteusers);
 
-  // Delete All Unverified users
-  app.post("/users/delete/all", middleware.checkTokenAdmin, users.deleteAllUsers);
-
   // Forgot Password
   app.post("/forgotPass", users.forgotPass);
 };
