@@ -896,10 +896,3 @@ blockquote {
 .filter-controls li.active {
   font-weight: bold;
 }
-
-/* for a tag in button of delete unverified users */
-.noDecoration,
-a:link,
-a:visited {
-  text-decoration: none;
-}
