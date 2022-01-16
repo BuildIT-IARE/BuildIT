@@ -205,7 +205,6 @@
           <tbody>
             <%var date = new Date();%>
             <% for (let i=0; i < data.length; i++ ){ %>
-						<% if (!data[i].admin && !data[i].isVerified){ %>
             <tr style="background: <%= data[i].color %>">
               <td><%= i+1 %></td>
               <td><%= data[i].username %></td>
@@ -239,7 +238,7 @@
                 <a href="<%= data[i].url %>/admin/deleteuser/<%= data[i].username %>">Delete User</a>
               </td>
             </tr>
-            <% } %> <% } %>
+            <% } %>
           </tbody>
           <tfoot>
             <tr>

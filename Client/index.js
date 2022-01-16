@@ -852,13 +852,15 @@ app.get("/admin/unverifiedusers", async (req, res) => {
   request(options, function (err, response, body) {
     body.url = clientRoute;
     body.serverurl = serverRoute;
+    var unverified_users=[];
     for (let i = 0; i < body.length; i++) {
-      if (!body[i].isVerified) {
+      if (!body[i].isVerified && !body[i].admin) {
         body[i].color = "pink";
+        unverified_users.push(body[i]);
       }
     }
     res.render("unverifiedusers", {
-      data: body,
+      data: unverified_users,
       token: req.cookies.token,
     });
   });
