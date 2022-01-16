@@ -850,8 +850,6 @@ app.get("/admin/unverifiedusers", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    body.url = clientRoute;
-    body.serverurl = serverRoute;
     var unverified_users=[];
     for (let i = 0; i < body.length; i++) {
       if (!body[i].isVerified && !body[i].admin) {
@@ -859,6 +857,8 @@ app.get("/admin/unverifiedusers", async (req, res) => {
         unverified_users.push(body[i]);
       }
     }
+    unverified_users.url = clientRoute;
+    unverified_users.serverurl = serverRoute;
     res.render("unverifiedusers", {
       data: unverified_users,
       token: req.cookies.token,

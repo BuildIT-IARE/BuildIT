@@ -178,10 +178,10 @@
       </div>
     </section>
     <section class="section py-5 bg-white" style="padding-top: 1rem; border-style:hidden;">
-      <form class="align-items-center" action="<%= data.serverurl %>/users/delete/multiple" name="delusersform" id="delusersform" method='post' style="width: 74%;margin-left: 13%;">
+      <form class="align-items-center" action="<%= data.serverurl %>/users/delete/multiple" name="delusersform" id="delusersform" method='POST' style="width: 74%;margin-left: 13%;">
         <label for="Hours" style=" font-size: 1.5rem;">Enter time in hours:</label>
         <input style="width: 75%; margin-left: 2rem;" type="number" id='hours' name="hours" placeholder="Example - 3">
-        <label for="explaination" style="">(users created before this time will be deleted)</label>
+        <label for="explaination">(users created before this time will be deleted)</label>
         <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
         <button style="margin-top: 1rem;margin-left: 12rem;" class="btn btn-sm" action="submit" >Delete</button>
       </form>
