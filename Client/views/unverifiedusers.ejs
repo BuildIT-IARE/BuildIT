@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Manage Users</title>
+    <title>Manage Unverified Users</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="../css/navadmin.css" />
@@ -9,7 +9,8 @@
     <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../plugins/bootstrap-5/css/bootstrap.min.css"/>
+    <!-- <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css" /> -->
 
     <!-- Main Stylesheet -->
     <link href="/css/style.css" rel="stylesheet" />
@@ -41,7 +42,7 @@
 
       /* Some left and right padding inside the container */
       .container {
-        padding: 0 16px;
+        padding: 0 96px;
       }
 
       /* Clear floats */
@@ -70,6 +71,7 @@
       th,
       td {
         width: 120px !important;
+        height: 20px;
       }
 
       .dropdown {
@@ -168,9 +170,9 @@
 
     <section class="bg-white">
       <div class="container">
-        <div class="row col-12 pb-3">
+        <div class="row col-15 pb-3">
           <form action="<%= data.serverurl %>/users/delete/multiple" method="post" style="box-shadow: none;">
-            <button class="btn btn-sm">
+            <button class="btn btn-light" style="border: 1px solid rgb(237 235 235);">
               Delete All Unverified Users
             </button>
           </form>
@@ -183,7 +185,7 @@
         <input style="width: 75%; margin-left: 2rem;" type="number" id='hours' name="hours" placeholder="Example - 3">
         <label for="explaination">(users created before this time will be deleted)</label>
         <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
-        <button style="margin-top: 1rem;margin-left: 12rem;" class="btn btn-sm" action="submit" >Delete</button>
+        <button style="margin-top: 2rem;margin-left: 12rem; border: 1px solid rgb(237 235 235);" class="btn btn-light" action="submit" >Delete</button>
       </form>
     </section>
     <section class="section py-5 bg-white" style="padding-top: 1rem">
