@@ -2275,7 +2275,6 @@ app.get("/certificate", async (req, res) => {
 });
 
 app.get("/codechef-iare-chapter", async (req, res) => {
-  res.render("iare_chapter", { imgUsername: req.cookies.username });
   let options = {
     url: serverRoute + "/codechef-events/",
     method: "get",
