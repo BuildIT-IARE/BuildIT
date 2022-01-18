@@ -457,13 +457,17 @@
           </div>
         </div>
         <a href="#top-loader" id="mark-link"></a>
-        <form action="<%= data.serverurl %>/codechef-events" method="post">
+        <form
+          action="<%= data.serverurl %>/codechef-events"
+          method="post"
+          onsubmit="return validateForm()"
+        >
           <h2>CodeChef IARE Chapter</h2>
           <p>Upload Event Details</p>
           <div class="form-input">
             <input
               type="text"
-              name="EventName"
+              name="eventName"
               id="name"
               class="inputs error"
               placeholder="Event Name"
@@ -480,7 +484,7 @@
           <div class="form-poster">
             <input
               type="text"
-              name="Eventposter"
+              name="eventPoster"
               id="poster-upload"
               class="inputs"
             />
@@ -494,7 +498,7 @@
             <div class="day">
               <input
                 type="number"
-                name="Eventday"
+                name="eventDay"
                 id="day"
                 placeholder="Day"
                 class="inputs2"
@@ -502,7 +506,7 @@
               <span class="label">Day</span>
             </div>
             <div class="month">
-              <select name="Eventmonth" id="month" class="inputs2">
+              <select name="eventMonth" id="month" class="inputs2">
                 <option value="" hidden>Month</option>
                 <option value="JAN">January</option>
                 <option value="FEB">February</option>
@@ -522,7 +526,7 @@
             <div class="year">
               <input
                 type="number"
-                name="Eventyear"
+                name="eventYear"
                 id="year"
                 placeholder="Year"
                 class="inputs2"
@@ -535,14 +539,14 @@
             >
           </div>
           <div class="setime">
-            <input type="time" name="Starttime" id="stime" class="inputs2" />
+            <input type="time" name="startTime" id="stime" class="inputs2" />
           </div>
           <div class="date-title">End Date</div>
           <div class="end-date">
             <div class="day">
               <input
                 type="number"
-                name="Eventday"
+                name="eventDay"
                 id="day2"
                 placeholder="Day"
                 class="inputs2"
@@ -550,7 +554,7 @@
               <span class="label">Day</span>
             </div>
             <div class="month">
-              <select name="Eventmonth" id="month2" class="inputs2">
+              <select name="eventMonth" id="month2" class="inputs2">
                 <option value="" hidden>Month</option>
                 <option value="JAN">January</option>
                 <option value="FEB">February</option>
@@ -570,7 +574,7 @@
             <div class="year">
               <input
                 type="number"
-                name="Eventyear"
+                name="eventYear"
                 id="year2"
                 placeholder="Year"
                 class="inputs2"
@@ -587,14 +591,14 @@
             </div>
           </div>
           <div class="setime">
-            <input type="time" name="Endtime" id="etime" class="inputs2" />
+            <input type="time" name="endTime" id="etime" class="inputs2" />
           </div>
           <div class="form-duration">
             <input
               type="text"
-              name="Duration"
+              name="duration"
               id="duration"
-              placeholder="Duration"
+              placeholder="duration"
               class="inputs"
             />
             <span class="label">Duration</span>
@@ -606,7 +610,7 @@
           <div class="form-rating">
             <input
               type="text"
-              name="Rating"
+              name="rating"
               id="rating"
               placeholder="Rating Details"
               class="inputs"
@@ -620,7 +624,7 @@
           <div class="form-link">
             <input
               type="url"
-              name="Contestlink"
+              name="contestLink"
               id="link"
               placeholder="Event Link"
               class="inputs"
@@ -634,7 +638,7 @@
           <div class="form-link">
             <input
               type="url"
-              name="DIV1"
+              name="div1"
               id="pc1div1"
               placeholder="DIV-1 Link"
               class="inputs"
@@ -648,7 +652,7 @@
           <div class="form-link">
             <input
               type="url"
-              name="DIV2"
+              name="div2"
               id="pc1div2"
               placeholder="DIV-2 Link"
               class="inputs"
@@ -662,7 +666,7 @@
           <div class="form-link">
             <input
               type="url"
-              name="DIV3"
+              name="div3"
               id="pc1div3"
               placeholder="DIV-3 Link"
               class="inputs"
@@ -732,7 +736,7 @@
               );
               return pattern.test(myURL);
             }
-            sub.onclick = function () {
+            function validateForm() {
               f1.className = "form-input";
               f2[0].className = "day";
               f2[1].className = "day";
@@ -759,26 +763,31 @@
                 name1.focus();
                 al3.style.opacity = "1";
                 f1.className += " error";
+                return false;
               }
               if (yr.value == "") {
                 yr.focus();
                 al1.style.opacity = "1";
                 f4[0].className += " error";
+                return false;
               }
               if (day.value == "" || day.value <= 0) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "") {
                 mon.focus();
                 al1.style.opacity = "1";
                 f3[0].className += " error";
+                return false;
               }
               if (mon.value == "JAN" && day.value > 31) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "FEB") {
                 if (
@@ -789,81 +798,97 @@
                   day.focus();
                   al1.style.opacity = "1";
                   f2[0].className += " error";
+                  return false;
                 } else if (day.value > 28) {
                   day.focus();
                   al1.style.opacity = "1";
                   f2[0].className += " error";
+                  return false;
                 }
               }
               if (mon.value == "MAR" && day.value > 31) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "APR" && day.value > 30) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "MAY" && day.value > 31) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "JUNE" && day.value > 30) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "JULY" && day.value > 31) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "AUG" && day.value > 31) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "SEPT" && day.value > 30) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "OCT" && day.value > 31) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "NOV" && day.value > 30) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (mon.value == "DEC" && day.value > 31) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (yr2.value == "") {
                 yr2.focus();
                 al2.style.opacity = "1";
                 f4[1].className += " error";
+                return false;
               }
               if (day2.value == "" || day2.value <= 0) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "") {
                 mon2.focus();
                 al2.style.opacity = "1";
                 f3[1].className += " error";
+                return false;
               }
               if (mon2.value == "JAN" && day2.value > 31) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "FEB") {
                 if (
@@ -874,83 +899,100 @@
                   day2.focus();
                   al2.style.opacity = "1";
                   f2[1].className += " error";
+                  return false;
                 } else if (day2.value > 28) {
                   day2.focus();
                   al2.style.opacity = "1";
                   f2[1].className += " error";
+                  return false;
                 }
               }
               if (mon2.value == "MAR" && day2.value > 31) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "APR" && day2.value > 30) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "MAY" && day2.value > 31) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "JUNE" && day2.value > 30) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "JULY" && day2.value > 31) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "AUG" && day2.value > 31) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "SEPT" && day2.value > 30) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "OCT" && day2.value > 31) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "NOV" && day2.value > 30) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (mon2.value == "DEC" && day2.value > 31) {
                 day2.focus();
                 al2.style.opacity = "1";
                 f2[1].className += " error";
+                return false;
               }
               if (c) {
                 day.focus();
                 al1.style.opacity = "1";
                 f2[0].className += " error";
+                return false;
               }
               if (dur.value == "") {
                 dur.focus();
                 al4.style.opacity = "1";
                 f5.className += " error";
+                return false;
               }
               if (rate.value == "") {
                 rate.focus();
                 al5.style.opacity = "1";
                 f6.className += " error";
+                return false;
               }
               if (link.value == "" || !validURL(z)) {
                 link.focus();
                 al6.style.opacity = "1";
                 f7.className += " error";
+                return false;
               }
-            };
+              return true;
+            }
             yr.value = new Date().getFullYear();
             yr2.value = new Date().getFullYear();
           </script>

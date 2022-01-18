@@ -4,19 +4,19 @@ const Event = require("../models/codechefEvents.model.js");
 exports.create = (req, res) => {
   console.log("done");
   const event = new Event({
-    EventName: req.body.EventName,
-    Eventposter: req.body.Eventposter,
-    Eventday: req.body.Eventday,
-    Eventmonth: req.body.Eventmonth,
-    Eventyear: req.body.Eventyear,
-    Starttime: req.body.Starttime,
-    Endtime: req.body.Endtime,
-    Duration: req.body.Duration,
-    Rating: req.body.Rating,
-    Contestlink: req.body.Contestlink,
-    DIV1: req.body.DIV1,
-    DIV2: req.body.DIV2,
-    DIV3: req.body.DIV3,
+    eventName: req.body.eventName,
+    eventPoster: req.body.eventPoster,
+    eventDay: req.body.eventDay,
+    eventMonth: req.body.eventMonth,
+    eventYear: req.body.eventYear,
+    startTime: req.body.startTime,
+    endTime: req.body.endTime,
+    duration: req.body.duration,
+    rating: req.body.rating,
+    contestLink: req.body.contestLink,
+    div1: req.body.div1,
+    div2: req.body.div2,
+    div3: req.body.div3,
   });
   event
     .save()
