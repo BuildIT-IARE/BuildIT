@@ -326,15 +326,30 @@ h2 {
   margin-bottom: 60px;
   border-radius: 1mm;
 }
-.past-contests {
+.past-contests-scroll {
   width: 100%;
+  overflow-x: scroll;
+}
+.past-contests-scroll::-webkit-scrollbar {
+  width: 80vw;
+  height: 5px;
+}
+.past-contests-scroll::-webkit-scrollbar-thumb {
+  background: rgb(59, 59, 59);
+}
+.past-contests-scroll::-webkit-scrollbar-track {
+  background: rgba(224, 224, 224, 0);
+}
+.past-contests {
+  width: fit-content;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  flex-wrap: wrap;
+  overflow-y: scroll;
   margin-bottom: 34px;
 }
 .past-contest-body {
+  min-width: 320px;
   width: 320px;
   display: flex;
   flex-direction: column;
@@ -429,6 +444,12 @@ h2 {
 #lead-3 a:hover {
   background: rgb(201, 229, 255);
 }
+#lead-4 a {
+  color: rgb(65, 59, 25);
+}
+#lead-4 a:hover {
+  background: rgb(255, 238, 142);
+}
 #paco-1 {
   background: rgb(229, 255, 229);
   color: rgb(25, 65, 25);
@@ -458,6 +479,16 @@ h2 {
 }
 #paco-btn3:hover {
   background: rgb(0, 51, 99);
+}
+#paco-4 {
+  background: rgb(254, 255, 223);
+  color: rgb(65, 59, 25);
+}
+#paco-btn4 {
+  background: rgb(161, 118, 0);
+}
+#paco-btn4:hover {
+  background: rgb(99, 84, 0);
 }
 .future-contests {
   width: 100%;

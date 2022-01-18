@@ -1,3 +1,4 @@
+const { events } = require("../models/codechefEvents.model.js");
 const Event = require("../models/codechefEvents.model.js");
 
 //create or update the event in database
@@ -32,9 +33,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  Event.find({})
-    .sort({ _id: -1 })
-    .limit(4)
+  Event.find()
     .then((events) => {
       res.send(events);
     })

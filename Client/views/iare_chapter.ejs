@@ -212,20 +212,20 @@
       <div class="events-contests">
         <div class="present-contests-title"><p>Present Events/Contests</p></div>
         <div class="present-contests">
-          <img src="https://drive.google.com/uc?export=view&id=<%= data[0].eventPoster %>" alt="poster" />
+          <img src="https://drive.google.com/uc?export=view&id=<%= data[data.length-1].eventPoster %>" alt="poster" />
           <div class="present-contest-details">
             <div class="present-contest-title">
-              <p><%= data[0].EventName%></p>
+              <p><%= data[data.length-1].eventName%></p>
             </div>
             <div class="present-contest-information">
-              <p>Starts on <%= data[0].Eventday[0] %> <%= data[0].Eventmonth[0] %> <%= data[0].Eventyear[0] %> <%=data[0].Starttime %> IST</p>
-              <p>Ends on <%= data[0].Eventday[1] %> <%= data[0].Eventmonth[1] %> <%= data[0].Eventyear[1] %> <%=data[0].Endtime %> IST</p>
-              <p>Contest duration: <%= data[0].Duration %></p>
-              <p><%= data[0].Rating %></p>
+              <p>Starts on <%= data[data.length-1].eventDay[data.length-1] %> <%= data[data.length-1].eventMonth[data.length-1] %> <%= data[data.length-1].eventYear[data.length-1] %> <%=data[data.length-1].startTime %> IST</p>
+              <p>Ends on <%= data[data.length-1].eventDay[1] %> <%= data[data.length-1].eventMonth[1] %> <%= data[data.length-1].eventYear[1] %> <%=data[data.length-1].endTime %> IST</p>
+              <p>Contest duration: <%= data[data.length-1].duration %></p>
+              <p><%= data[data.length-1].rating %></p>
             </div>
             <div class="present-contest-link">
               <a
-                href= "<%= data[0].Contestlink %>"
+                href= "<%= data[data.length-1].contestLink %>"
                 target="_blank"
                 >Participate</a
               >
@@ -234,96 +234,43 @@
         </div>
         <div class="line3"></div>
         <div class="past-contests-title"><p>Past Events/Contests</p></div>
+        <div class="past-contests-scroll">
         <div class="past-contests">
+          <% for(var i=data.length-2; i>=0; i--) {%>
           <div class="past-contest-body">
             <img
-              src="https://drive.google.com/uc?export=view&id=<%=data[1].eventPoster %>"
+              src="https://drive.google.com/uc?export=view&id=<%=data[i].eventPoster %>"
               alt="poster"
             />
-            <div class="past-contest-details" id="paco-3">
-              <div class="past-contest-title"><p><%=data[1].EventName %></p></div>
+            <div class="past-contest-details" id="paco-<%= i%4+1 %>">
+              <div class="past-contest-title"><p><%=data[i].eventName %></p></div>
               <div class="past-contest-information">
-                <p>Started on <%= data[1].Eventday[0] %> <%= data[1].Eventmonth[0] %> <%= data[1].Eventyear[0] %> <%=data[1].Starttime %> IST</p>
-                <p>Ends on <%= data[1].Eventday[1] %> <%= data[1].Eventmonth[1] %> <%= data[1].Eventyear[1] %> <%=data[1].Endtime %> IST</p>
-              <p>Contest duration: <%= data[1].Duration %></p>
-              <p><%= data[1].Rating %></p>
+                <p>Started on <%= data[i].eventDay[0] %> <%= data[i].eventMonth[0] %> <%= data[i].eventYear[0] %> <%=data[i].startTime %> IST</p>
+                <p>Ends on <%= data[i].eventDay[1] %> <%= data[i].eventMonth[1] %> <%= data[i].eventYear[1] %> <%=data[i].endTime %> IST</p>
+              <p>Contest duration: <%= data[i].duration %></p>
+              <p><%= data[i].rating %></p>
                 <div class="past-contest-link">
                   <a
-                    href="<%= data[1].Contestlink %>"
+                    href="<%= data[i].contestLink %>"
                     target="_blank"
-                    id="paco-btn3"
+                    id="paco-btn<%= i%4+1 %>"
                     >Visit Contest</a
                   >
                   <div class="leaderboards">
                     <div class="leaderboards-title"><p>IARE Leaderboards</p></div>
-                  <div class="leaderboards-data" id="lead-3">
-                    <a href="<%= data[1].DIV1 %>" target="_blank">D/1</a>
-                    <a href="<%= data[1].DIV2 %>" target="_blank">D/2</a>
-                    <a href="<%= data[1].DIV3 %>" target="_blank" >D/3</a>
+                  <div class="leaderboards-data" id="lead-<%= i%4+1 %>">
+                    <a href="<%= data[i].div1 %>" target="_blank">D/1</a>
+                    <a href="<%= data[i].div2 %>" target="_blank">D/2</a>
+                    <a href="<%= data[i].div3 %>" target="_blank" >D/3</a>
                   </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="past-contest-body">
-            <img src="https://drive.google.com/uc?export=view&id=<%=data[2].eventPoster %>" alt="poster" />
-            <div class="past-contest-details" id="paco-1">
-              <div class="past-contest-title"><p><%=data[2].EventName %></p></div>
-              <div class="past-contest-information">
-                <p>Started on <%= data[2].Eventday[0] %> <%= data[2].Eventmonth[0] %> <%= data[2].Eventyear[0] %> <%=data[2].Starttime %> IST</p>
-                <p>Ends on <%= data[2].Eventday[1] %> <%= data[2].Eventmonth[1] %> <%= data[2].Eventyear[1] %> <%=data[2].Endtime %> IST</p>
-              <p>Contest duration: <%= data[2].Duration %></p>
-              <p><%= data[2].Rating %></p>
-                <div class="past-contest-link">
-                  <a
-                    href="<%= data[2].Contestlink %>"
-                    target="_blank"
-                    id="paco-btn1"
-                    >Visit Contest</a
-                  >
-                  <div class="leaderboards">
-                    <div class="leaderboards-title"><p>IARE Leaderboards</p></div>
-                  <div class="leaderboards-data" id="lead-1">
-                    <a href="<%= data[2].DIV1 %>" target="_blank">D/1</a>
-                    <a href="<%= data[2].DIV2 %>" target="_blank">D/2</a>
-                    <a href="<%= data[2].DIV3 %>" target="_blank" >D/3</a>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="past-contest-body">
-            <img src="https://drive.google.com/uc?export=view&id=<%=data[3].eventPoster %>" alt="poster" />
-            <div class="past-contest-details" id="paco-2">
-              <div class="past-contest-title"><p><%=data[3].EventName %></p></div>
-              <div class="past-contest-information">
-                <p>Started on <%= data[3].Eventday[0] %> <%= data[3].Eventmonth[0] %> <%= data[3].Eventyear[0] %> <%=data[3].Starttime %> IST</p>
-                <p>Ends on <%= data[3].Eventday[1] %> <%= data[3].Eventmonth[1] %> <%= data[3].Eventyear[1] %> <%=data[3].Endtime %> IST</p>
-              <p>Contest duration: <%= data[3].Duration %></p>
-              <p><%= data[3].Rating %></p>
-                <div class="past-contest-link">
-                  <a
-                    href="<%= data[3].Contestlink %>"
-                    target="_blank"
-                    id="paco-btn2"
-                    >Visit Contest</a
-                  >
-                  <div class="leaderboards">
-                    <div class="leaderboards-title"><p>IARE Leaderboards</p></div>
-                  <div class="leaderboards-data" id="lead-2">
-                    <a href="<%= data[3].DIV1 %>" target="_blank">D/1</a>
-                    <a href="<%= data[3].DIV2 %>" target="_blank">D/2</a>
-                    <a href="<%= data[3].DIV3 %>" target="_blank" >D/3</a>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <% } %>
         </div>
-        <a href="https://docs.google.com/document/d/1pfDFjTLZLrGfc7DgobyrnLh4_9XIun5FCX0pY1o_cBg/edit?usp=sharing" class="pclink">View more contests <span class="material-icons">arrow_forward</span></a>
+      </div>
         <div class="line3"></div>
         <div class="future-contests">
           <div class="future-contests-title"><p>Future Contest/Events</p></div>
