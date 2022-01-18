@@ -68,6 +68,8 @@ dbConfig = {
 mongoose
   .connect(dbConfig.url, {
     useNewUrlParser: true,
+    //to remove deprication message
+    useUnifiedTopology: true
   })
   .then(() => {
     console.log("Successfully connected to the database");

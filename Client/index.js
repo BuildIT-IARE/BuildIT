@@ -45,6 +45,7 @@ app.use("/contests/questions", express.static(__dirname + "/"));
 app.use("/tutorials/questions", express.static(__dirname + "/"));
 
 app.use("/admin/manageusers", express.static(__dirname + "/"));
+app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
 app.use("/admin/add/test", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
@@ -836,6 +837,32 @@ app.get("/admin/manageusers", async (req, res) => {
       }
     }
     res.render("manageusers", { data: body });
+  });
+});
+
+app.get("/admin/unverifiedusers", async (req, res) => {
+  let options = {
+    url: serverRoute + "/admin/users",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    var unverified_users=[];
+    for (let i = 0; i < body.length; i++) {
+      if (!body[i].isVerified && !body[i].admin) {
+        body[i].color = "pink";
+        unverified_users.push(body[i]);
+      }
+    }
+    unverified_users.url = clientRoute;
+    unverified_users.serverurl = serverRoute;
+    res.render("unverifiedusers", {
+      data: unverified_users,
+      token: req.cookies.token,
+    });
   });
 });
 

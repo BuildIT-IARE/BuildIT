@@ -746,3 +746,26 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+//delete multiple users
+exports.deleteMultiple = (req, res) => {
+  var hours = 0;
+  if (req.body.hours) {
+    hours = Number(req.body.hours);
+  }
+  User.deleteMany({
+      createdAt: {
+        $lte: new Date(Date.now() - (hours) * 60 * 60 * 1000)
+      },
+      isVerified: false
+    })
+    .then((deletedUsers) => {
+      res.send(deletedUsers);
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        success: false,
+        message: "Could not delete users",
+      });
+    });
+};

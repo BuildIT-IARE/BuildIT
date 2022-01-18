@@ -32,9 +32,12 @@ module.exports = (app) => {
 
   // Update Photo
   app.post("/users/photo/:username", middleware.checkToken, users.updateImage);
-    
+
   // Delete a user with userId
   app.delete("/users/:username", middleware.checkTokenAdmin, users.delete);
+
+  // Delete Multiple users
+  app.post("/users/delete/multiple", middleware.checkTokenAdmin, users.deleteMultiple);
 
   // Forgot Password
   app.post("/forgotPass", users.forgotPass);
