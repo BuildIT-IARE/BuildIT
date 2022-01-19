@@ -1,9 +1,7 @@
-const { events } = require("../models/codechefEvents.model.js");
 const Event = require("../models/codechefEvents.model.js");
 
 //create or update the event in database
 exports.create = (req, res) => {
-  console.log("done");
   const event = new Event({
     eventName: req.body.eventName,
     eventPoster: req.body.eventPoster,
