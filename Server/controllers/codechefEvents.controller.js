@@ -34,7 +34,7 @@ exports.create = (req, res) => {
   });
   event
     .save()
-    .then((data) => {
+    .then((events) => {
       res.send("Successfully updated");
     })
     .catch((err) => {
