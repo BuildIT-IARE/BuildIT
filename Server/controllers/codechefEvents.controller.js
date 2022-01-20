@@ -35,7 +35,7 @@ exports.create = (req, res) => {
   event
     .save()
     .then((events) => {
-      res.send("Successfully updated");
+      res.send(events);
     })
     .catch((err) => {
       res.status(500).send({
