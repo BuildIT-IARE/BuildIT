@@ -2,6 +2,21 @@ const Event = require("../models/codechefEvents.model.js");
 
 //create or update the event in database
 exports.create = (req, res) => {
+
+  let username = req.decoded.username;
+  if (
+    !(
+      username === "admin" ||
+      username === "21951A05Z9" ||
+      username === "19951A0535"
+    )
+  ) {
+    return res.status(400).send({
+      success: false,
+      message: "Unauthorized access!",
+    });
+  }
+
   const event = new Event({
     eventName: req.body.eventName,
     eventPoster: req.body.eventPoster,
