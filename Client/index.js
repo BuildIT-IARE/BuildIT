@@ -174,6 +174,35 @@ app.get("/admin/add/skillup", async (req, res) => {
   });
 });
 
+app.get("/admin/add/event", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (
+      body.success ||
+      req.cookies.username === "21951A05Z9" ||
+      req.cookies.username === "19951A0535"
+    ) {
+      res.render("codechefForm", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
 app.get("/profile", async (req, res) => {
   let options = {
     url: serverRoute + "/users/" + req.cookies.username.toLowerCase(),
@@ -2273,7 +2302,28 @@ app.get("/certificate", async (req, res) => {
 });
 
 app.get("/codechef-iare-chapter", async (req, res) => {
-  res.render("iare_chapter", { imgUsername: req.cookies.username });
+  let options = {
+    url: serverRoute + "/codechef-events/",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, (err, response, body) => {
+    if (!body.message) {
+      res.render("iare_chapter", { data: body });
+    } else {
+      res.render("error", {
+        data: body,
+      });
+    }
+  });
+});
+
+app.get("*", async (req, res) => {
+  res.render("404page");
 });
 
 app.listen(4000);

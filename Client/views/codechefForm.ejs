@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Event Details | CodeChef IARE Chapter</title>
+    <link
+      rel="shortcut icon"
+      href="../images/iare-chapter/iare-logo.png"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+      }
+      .details-form {
+        position: relative;
+        overflow-x: hidden;
+      }
+      .logo-images {
+        width: 99vw;
+        height: 65px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .iare-logo img {
+        height: 65px;
+        margin-left: 10px;
+        margin-top: 10px;
+      }
+      .chapter-logo img {
+        height: 65px;
+        margin-right: 10px;
+        margin-top: 10px;
+        display: none;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      .form {
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: auto;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 2mm;
+        padding: 50px 0;
+        flex-wrap: wrap;
+        position: relative;
+        background: white;
+        overflow: hidden;
+      }
+      form {
+        padding: 0 40px;
+        padding-bottom: 10px;
+      }
+      .form-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .form-logo img {
+        width: 250px;
+        padding: 30px;
+      }
+      .form-logo span {
+        font-size: 250px;
+        color: rgb(164, 210, 255);
+        margin-top: 30px;
+      }
+      form h2 {
+        font-family: poppins;
+        font-size: larger;
+        color: rgb(66, 66, 66);
+        color: dodgerblue;
+      }
+      form p {
+        font-family: poppins;
+        font-size: x-large;
+      }
+      .inputs {
+        width: 350px;
+        border: rgb(180, 180, 180) solid 1px;
+        border-radius: 1mm;
+        font-size: 13px;
+        font-family: poppins;
+        padding: 6px 0;
+        margin-bottom: 35px;
+        padding-left: 5px;
+        position: relative;
+      }
+      .start-date,
+      .end-date {
+        display: flex;
+        width: 350px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        position: relative;
+      }
+      .inputs2 {
+        border: rgb(180, 180, 180) solid 1px;
+        border-radius: 1mm;
+        font-size: 13px;
+        font-family: poppins;
+        width: 90px;
+        margin-bottom: 35px;
+        padding: 6px 0;
+        padding-left: 5px;
+        position: relative;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+
+      #form-sub {
+        background: rgb(50, 142, 235);
+        color: white;
+        outline: none;
+        border: none;
+        padding: 7px 12px;
+        font-family: poppins;
+        border-radius: 1mm;
+        font-size: small;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.15s;
+      }
+      #form-sub:hover {
+        background: rgb(39, 109, 179);
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+      }
+      #poster-label {
+        font-family: poppins;
+        font-size: 12px;
+        color: white;
+        background: dodgerblue;
+        padding: 0px 3px;
+      }
+      .poster-text,
+      .date-text {
+        margin-top: 5px;
+        margin-bottom: 35px;
+        font-family: poppins;
+        font-size: 13px;
+        color: gray;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .poster-text span,
+      .date-text span {
+        font-size: 14px;
+        margin-right: 5px;
+      }
+      .form-input,
+      .day,
+      .month,
+      .year,
+      .form-duration,
+      .form-rating,
+      .form-link {
+        position: relative;
+      }
+      .label {
+        position: absolute;
+        top: 0px;
+        left: 5px;
+        font-size: 12px;
+        font-family: poppins;
+        color: rgb(1, 120, 238);
+        opacity: 0;
+        transition: 0.25s;
+      }
+      .inputs:focus + .label {
+        opacity: 1;
+        top: -20px;
+        left: 0;
+      }
+      .inputs:focus::placeholder {
+        opacity: 0;
+      }
+      .inputs:not(:placeholder-shown) + .label {
+        opacity: 1;
+        top: -25px;
+        left: 0;
+      }
+      .inputs:focus {
+        outline: rgb(1, 120, 238) solid 2px;
+        border: none;
+      }
+      .inputs2:focus + .label {
+        opacity: 1;
+        top: -20px;
+        left: 0;
+      }
+      .inputs2:focus::placeholder {
+        opacity: 0;
+      }
+      .inputs2:not(:placeholder-shown) + .label {
+        opacity: 1;
+        top: -25px;
+        left: 0;
+      }
+      .inputs2:focus {
+        outline: rgb(1, 120, 238) solid 2px;
+        border: none;
+      }
+      .alert {
+        position: absolute;
+        top: 32px;
+        left: 0;
+        font-size: 11px;
+        font-family: poppins;
+        color: red;
+        opacity: 0;
+        display: flex;
+        align-items: center;
+      }
+      .alert span {
+        margin-right: 5px;
+        font-size: 14px;
+      }
+      .date-title {
+        margin-bottom: 25px;
+        font-family: poppins;
+        font-size: large;
+        color: rgb(65, 65, 65);
+      }
+      .date-text {
+        position: absolute;
+        bottom: -40px;
+        left: 0;
+      }
+      .end-date {
+        margin-bottom: 40px;
+      }
+      .footer-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .bg-dark {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 75px;
+        background-color: #f7f7f7;
+      }
+      .footer-social {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-social-elements {
+        width: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .footer-social-elements p {
+        font-family: poppins;
+        font-size: large;
+        color: rgb(54, 54, 54);
+      }
+      .footer-social-elements a {
+        text-decoration: none;
+        color: rgb(63, 63, 63);
+        font-size: larger;
+      }
+      .line2 {
+        width: 95vw;
+        margin-left: 2.5vw;
+        height: 1px;
+        background: rgba(37, 37, 37, 0.123);
+        border-radius: 1mm;
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+      .footer-section a:hover {
+        color: rgb(34, 34, 34);
+      }
+      .footer-left {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+      .footer-right {
+        width: 20%;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-left-titles a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: x-large;
+        color: rgb(54, 54, 54);
+        font-weight: 600;
+      }
+      .footer-left-links a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+      }
+      .footer-right p {
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+        width: 100%;
+        text-align: center;
+      }
+      .loader {
+        width: 100%;
+        height: 6px;
+        background: rgb(230, 230, 230);
+        position: absolute;
+        top: 0;
+        display: none;
+      }
+      .loading {
+        width: 100%;
+        height: 100%;
+        animation: move linear 2s infinite;
+      }
+      .load-bar {
+        width: 15%;
+        height: 100%;
+        background: rgb(11, 133, 255);
+        animation: load linear 2s infinite;
+      }
+      @keyframes load {
+        0% {
+          width: 15%;
+        }
+        70% {
+          width: 30%;
+        }
+        100% {
+          width: 27.5%;
+        }
+      }
+      @keyframes move {
+        0% {
+          transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+      #mark-link {
+        display: none;
+      }
+      .error .label {
+        color: red;
+      }
+      .error input:focus {
+        outline: red solid 2px;
+      }
+      .error input {
+        border: red 1px solid;
+      }
+      .error select:focus {
+        outline: red solid 2px;
+      }
+      .error select {
+        border: red 1px solid;
+      }
+      select {
+        background: none;
+      }
+      @media all and (max-width: 500px) {
+        .form-logo {
+          display: none;
+        }
+        .chapter-logo img {
+          display: block;
+        }
+        .form {
+          width: 100vw;
+          padding: 10px 0;
+        }
+        .footer-left {
+          width: 100%;
+        }
+        .footer-right {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="details-form">
+      <div class="logo-images">
+        <div class="iare-logo">
+          <img src="../images/iare-chapter/iare-logo2.jpg" alt="logo" />
+        </div>
+        <div class="chapter-logo">
+          <img
+            src="../images/iare-chapter/Codechef-chapter-logo.svg"
+            alt="logo"
+          />
+        </div>
+      </div>
+      <div class="form">
+        <div class="loader" id="top-loader">
+          <div class="loading">
+            <div class="load-bar"></div>
+          </div>
+        </div>
+        <a href="#top-loader" id="mark-link"></a>
+        <form
+          action="<%= data.serverurl %>/codechef-events"
+          method="post"
+          onsubmit="return validateForm()"
+        >
+          <h2>CodeChef IARE Chapter</h2>
+          <p>Upload Event Details</p>
+          <div class="form-input">
+            <input
+              type="text"
+              name="eventName"
+              id="name"
+              class="inputs error"
+              placeholder="Event Name"
+            />
+            <span class="label">Event Name</span>
+            <span class="alert" id="al3"
+              ><span class="material-icons"> info </span>Please enter a event
+              name</span
+            >
+          </div>
+          <label for="Event-poster" id="poster-label"
+            >Upload Event Poster</label
+          >
+          <div class="form-poster">
+            <input
+              type="text"
+              name="eventPoster"
+              id="poster-upload"
+              class="inputs"
+            />
+          </div>
+          <div class="poster-text">
+            <span class="material-icons"> info </span>Upload the Event Poster in
+            potrait way
+          </div>
+          <div class="date-title">Start Date</div>
+          <div class="start-date">
+            <div class="day">
+              <input
+                type="number"
+                name="eventDay"
+                id="day"
+                placeholder="Day"
+                class="inputs2"
+              />
+              <span class="label">Day</span>
+            </div>
+            <div class="month">
+              <select name="eventMonth" id="month" class="inputs2">
+                <option value="" hidden>Month</option>
+                <option value="JAN">January</option>
+                <option value="FEB">February</option>
+                <option value="MAR">March</option>
+                <option value="APR">April</option>
+                <option value="MAY">May</option>
+                <option value="JUNE">June</option>
+                <option value="JULY">July</option>
+                <option value="AUG">August</option>
+                <option value="SEPT">September</option>
+                <option value="OCT">October</option>
+                <option value="NOV">November</option>
+                <option value="DEC">December</option>
+              </select>
+              <span class="label">Month</span>
+            </div>
+            <div class="year">
+              <input
+                type="number"
+                name="eventYear"
+                id="year"
+                placeholder="Year"
+                class="inputs2"
+              />
+              <span class="label">Year</span>
+            </div>
+            <span class="alert" id="al1"
+              ><span class="material-icons"> info </span>Please enter a valid
+              date</span
+            >
+          </div>
+          <div class="setime">
+            <input type="time" name="startTime" id="stime" class="inputs2" />
+          </div>
+          <div class="date-title">End Date</div>
+          <div class="end-date">
+            <div class="day">
+              <input
+                type="number"
+                name="eventDay"
+                id="day2"
+                placeholder="Day"
+                class="inputs2"
+              />
+              <span class="label">Day</span>
+            </div>
+            <div class="month">
+              <select name="eventMonth" id="month2" class="inputs2">
+                <option value="" hidden>Month</option>
+                <option value="JAN">January</option>
+                <option value="FEB">February</option>
+                <option value="MAR">March</option>
+                <option value="APR">April</option>
+                <option value="MAY">May</option>
+                <option value="JUNE">June</option>
+                <option value="JULY">July</option>
+                <option value="AUG">August</option>
+                <option value="SEPT">September</option>
+                <option value="OCT">October</option>
+                <option value="NOV">November</option>
+                <option value="DEC">December</option>
+              </select>
+              <span class="label">Month</span>
+            </div>
+            <div class="year">
+              <input
+                type="number"
+                name="eventYear"
+                id="year2"
+                placeholder="Year"
+                class="inputs2"
+              />
+              <span class="label">Year</span>
+            </div>
+            <span class="alert" id="al2"
+              ><span class="material-icons"> info </span>Please enter a valid
+              date</span
+            >
+            <div class="date-text">
+              <span class="material-icons"> info </span>Make sure that end date
+              is after the start date
+            </div>
+          </div>
+          <div class="setime">
+            <input type="time" name="endTime" id="etime" class="inputs2" />
+          </div>
+          <div class="form-duration">
+            <input
+              type="text"
+              name="duration"
+              id="duration"
+              placeholder="Duration"
+              class="inputs"
+            />
+            <span class="label">Duration</span>
+            <span class="alert" id="al4"
+              ><span class="material-icons"> info </span>Please enter contest
+              duration</span
+            >
+          </div>
+          <div class="form-rating">
+            <input
+              type="text"
+              name="rating"
+              id="rating"
+              placeholder="Rating Details"
+              class="inputs"
+            />
+            <span class="label">Rating Details</span>
+            <span class="alert" id="al5"
+              ><span class="material-icons"> info </span>Please enter rating
+              detals</span
+            >
+          </div>
+          <div class="form-link">
+            <input
+              type="url"
+              name="contestLink"
+              id="link"
+              placeholder="Event Link"
+              class="inputs"
+            />
+            <span class="label">Event link</span>
+            <span class="alert" id="al6"
+              ><span class="material-icons"> info </span>Please enter a valid
+              URL</span
+            >
+          </div>
+          <div class="form-link">
+            <input
+              type="url"
+              name="div1"
+              id="pc1div1"
+              placeholder="DIV-1 Link"
+              class="inputs"
+            />
+            <span class="label">DIV-1 link</span>
+            <span class="alert" id="al6"
+              ><span class="material-icons"> info </span>Please enter a valid
+              URL</span
+            >
+          </div>
+          <div class="form-link">
+            <input
+              type="url"
+              name="div2"
+              id="pc1div2"
+              placeholder="DIV-2 Link"
+              class="inputs"
+            />
+            <span class="label">DIV-2 link</span>
+            <span class="alert" id="al6"
+              ><span class="material-icons"> info </span>Please enter a valid
+              URL</span
+            >
+          </div>
+          <div class="form-link">
+            <input
+              type="url"
+              name="div3"
+              id="pc1div3"
+              placeholder="DIV-3 Link"
+              class="inputs"
+            />
+            <span class="label">DIV-3 link</span>
+            <span class="alert" id="al6"
+              ><span class="material-icons"> info </span>Please enter a valid
+              URL</span
+            >
+          </div>
+          <textarea
+            type="hidden"
+            name="token"
+            id="token"
+            value="<%= token %>"
+            style="display: none"
+          ></textarea>
+          <button id="form-sub" type="submit">Submit</button>
+          <script>
+            var yr = document.getElementById("year");
+            var yr2 = document.getElementById("year2");
+            var name1 = document.getElementById("name");
+            var day = document.getElementById("day");
+            var mon = document.getElementById("month");
+            var day2 = document.getElementById("day2");
+            var mon2 = document.getElementById("month2");
+            var dur = document.getElementById("duration");
+            var rate = document.getElementById("rating");
+            var link = document.getElementById("link");
+            var sub = document.getElementById("form-sub");
+            var al1 = document.getElementById("al1");
+            var al2 = document.getElementById("al2");
+            var al3 = document.getElementById("al3");
+            var al4 = document.getElementById("al4");
+            var al5 = document.getElementById("al5");
+            var al6 = document.getElementById("al6");
+            var f1 = document.querySelector(".form-input");
+            var f2 = document.querySelectorAll(".day");
+            var f3 = document.querySelectorAll(".month");
+            var f4 = document.querySelectorAll(".year");
+            var f5 = document.querySelector(".form-duration");
+            var f6 = document.querySelector(".form-rating");
+            var f7 = document.querySelector(".form-link");
+            var d = {
+              JAN: 1,
+              FEB: 2,
+              MAR: 3,
+              APR: 4,
+              MAY: 5,
+              JUNE: 6,
+              JULY: 7,
+              AUG: 8,
+              SEPT: 9,
+              OCT: 10,
+              NOV: 11,
+              DEC: 12,
+            };
+            function validURL(myURL) {
+              var pattern = new RegExp(
+                "^(https?:\\/\\/)?" + // protocol
+                  "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+                  "((\\d{1,3}\\.){3}\\d{1,3}))" + // ip (v4) address
+                  "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + //port
+                  "(\\?[;&amp;a-z\\d%_.~+=-]*)?" + // query string
+                  "(\\#[-a-z\\d_]*)?$",
+                "i"
+              );
+              return pattern.test(myURL);
+            }
+            function validateForm() {
+              f1.className = "form-input";
+              f2[0].className = "day";
+              f2[1].className = "day";
+              f3[0].className = "month";
+              f3[1].className = "month";
+              f4[0].className = "year";
+              f4[1].className = "year";
+              f5.className = "form-duration";
+              f6.className = "form-rating";
+              f7.className = "form-link";
+              al1.style.opacity = "0";
+              al2.style.opacity = "0";
+              al3.style.opacity = "0";
+              al4.style.opacity = "0";
+              al5.style.opacity = "0";
+              al6.style.opacity = "0";
+              var z = link.value;
+              var a = yr.value + d[mon.value] + day.value;
+              var b = yr2.value + d[mon2.value] + day2.value;
+              a = Number(a);
+              b = Number(b);
+              c = a > b;
+              if (name1.value == "") {
+                name1.focus();
+                al3.style.opacity = "1";
+                f1.className += " error";
+                return false;
+              }
+              if (yr.value == "") {
+                yr.focus();
+                al1.style.opacity = "1";
+                f4[0].className += " error";
+                return false;
+              }
+              if (day.value == "" || day.value <= 0) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "") {
+                mon.focus();
+                al1.style.opacity = "1";
+                f3[0].className += " error";
+                return false;
+              }
+              if (mon.value == "JAN" && day.value > 31) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "FEB") {
+                if (
+                  yr.value % 4 == 0 &&
+                  yr.value % 100 != 0 &&
+                  day.value > 29
+                ) {
+                  day.focus();
+                  al1.style.opacity = "1";
+                  f2[0].className += " error";
+                  return false;
+                } else if (day.value > 28) {
+                  day.focus();
+                  al1.style.opacity = "1";
+                  f2[0].className += " error";
+                  return false;
+                }
+              }
+              if (mon.value == "MAR" && day.value > 31) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "APR" && day.value > 30) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "MAY" && day.value > 31) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "JUNE" && day.value > 30) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "JULY" && day.value > 31) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "AUG" && day.value > 31) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "SEPT" && day.value > 30) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "OCT" && day.value > 31) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "NOV" && day.value > 30) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (mon.value == "DEC" && day.value > 31) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (yr2.value == "") {
+                yr2.focus();
+                al2.style.opacity = "1";
+                f4[1].className += " error";
+                return false;
+              }
+              if (day2.value == "" || day2.value <= 0) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "") {
+                mon2.focus();
+                al2.style.opacity = "1";
+                f3[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "JAN" && day2.value > 31) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "FEB") {
+                if (
+                  yr2.value % 4 == 0 &&
+                  yr2.value % 100 != 0 &&
+                  day2.value > 29
+                ) {
+                  day2.focus();
+                  al2.style.opacity = "1";
+                  f2[1].className += " error";
+                  return false;
+                } else if (day2.value > 28) {
+                  day2.focus();
+                  al2.style.opacity = "1";
+                  f2[1].className += " error";
+                  return false;
+                }
+              }
+              if (mon2.value == "MAR" && day2.value > 31) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "APR" && day2.value > 30) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "MAY" && day2.value > 31) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "JUNE" && day2.value > 30) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "JULY" && day2.value > 31) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "AUG" && day2.value > 31) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "SEPT" && day2.value > 30) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "OCT" && day2.value > 31) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "NOV" && day2.value > 30) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (mon2.value == "DEC" && day2.value > 31) {
+                day2.focus();
+                al2.style.opacity = "1";
+                f2[1].className += " error";
+                return false;
+              }
+              if (c) {
+                day.focus();
+                al1.style.opacity = "1";
+                f2[0].className += " error";
+                return false;
+              }
+              if (dur.value == "") {
+                dur.focus();
+                al4.style.opacity = "1";
+                f5.className += " error";
+                return false;
+              }
+              if (rate.value == "") {
+                rate.focus();
+                al5.style.opacity = "1";
+                f6.className += " error";
+                return false;
+              }
+              if (link.value == "" || !validURL(z)) {
+                link.focus();
+                al6.style.opacity = "1";
+                f7.className += " error";
+                return false;
+              }
+              return true;
+            }
+            yr.value = new Date().getFullYear();
+            yr2.value = new Date().getFullYear();
+          </script>
+        </form>
+        <div class="form-logo">
+          <img
+            src="../images/iare-chapter/Codechef-chapter-logo.svg"
+            alt="logo"
+          />
+          <span class="material-icons-outlined"> event </span>
+        </div>
+      </div>
+    </section>
+    <footer class="bg-dark">
+      <div class="footer-social">
+        <div class="footer-social-elements">
+          <p>Follow Us</p>
+          <a
+            href="https://www.instagram.com/codechef_iare_chapter/"
+            target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a
+            href="https://www.youtube.com/channel/UCrN2YGajq0ITaokeOn2LEpQ"
+            target="_blank"
+            ><i class="fab fa-youtube"></i
+          ></a>
+          <a
+            href="https://www.facebook.com/profile.php?id=100073395844447"
+            target="_blank"
+            ><i class="fab fa-facebook-square"></i
+          ></a>
+        </div>
+      </div>
+      <div class="line2"></div>
+      <div class="footer-section">
+        <div class="footer-left">
+          <div class="footer-left-titles">
+            <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://www.iare.ac.in" target="_blank">IARE</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://www.codechef.com/" target="_blank">CodeChef</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank"
+              >Feedback</a
+            >
+          </div>
+        </div>
+        <div class="footer-right">
+          <p>
+            Copyright ©
+            <script>
+              var CurrentYear = new Date().getFullYear();
+              document.write(CurrentYear);
+            </script>
+          </p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      document.getElementById("token").value = "<%= token %>";
+    </script>
+  </body>
+</html>
