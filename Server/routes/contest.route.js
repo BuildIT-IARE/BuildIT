@@ -12,6 +12,9 @@ module.exports = (app) => {
   // Retrieve all contests
   app.get("/contests/user/:username", middleware.checkToken, contests.findAllUser);
 
+  // Retrieve all contests
+  app.get("/contests/test/:testId", middleware.checkToken, contests.findAllTest);
+
   // Retrieve a single contest with contestId
   app.get("/contests/:contestId", middleware.checkToken, contests.findOne);
 

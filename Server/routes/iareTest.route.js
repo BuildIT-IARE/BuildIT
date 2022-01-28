@@ -4,20 +4,17 @@ module.exports = (app) => {
   const iareTests = require("../controllers/iareTest.controller.js");
 
   // Create a new iareTest
-  app.post("/iareTests", middleware.checkTokenAdmin, iareTests.create);
+  app.post("/iare_tests", middleware.checkTokenAdmin, iareTests.create);
 
   // Retrieve all iareTests
-  app.get("/iareTests", middleware.checkToken, iareTests.findAll);
-
-  // Retrieve all iareSections of an iareTestId
-  app.get("/iareTests/getIareSections/:iareTestId", middleware.checkToken, iareTests.findAllSections);
+  app.get("/iare_tests", middleware.checkToken, iareTests.findAll);
 
   // Retrieve a single iareTest with iareTestId
-  app.get("/iareTests/:iareTestId", middleware.checkToken, iareTests.findOne);
+  app.get("/iare_tests/:testId", middleware.checkToken, iareTests.findOne);
 
   // Update a iareTest with iareTestId
-  app.put("/iareTests", middleware.checkTokenAdmin, iareTests.update);
+  app.put("/iare_tests", middleware.checkTokenAdmin, iareTests.update);
 
   // Delete a iareTest with iareTestId
-  app.delete("/iareTests/:iareTestId", middleware.checkTokenAdmin, iareTests.delete);
+  app.delete("/iare_tests/:testId", middleware.checkTokenAdmin, iareTests.delete);
 };
