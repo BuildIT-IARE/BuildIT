@@ -1,0 +1,56 @@
+    <section class="chapter-navigation">
+      <div class="nav-chapter-logo2">
+        <img src="./images/iare_logo_black.png" alt="iare-logo">
+      </div>
+      <div class="chapter-nav-btn">
+        <button class="nav-btn"><a href="/">Home</a></button>
+        <button class="nav-btn"><a href="/about">About</a></button>
+        <button class="nav-btn"><a href="/codechef-iare-chapter">CodeChef Chapter</a></button>
+        <button class="nav-btn"><form action="/skill" method="POST">
+            <a class="nav-link" onclick="this.parentNode.submit();">SkillUP365</a>
+          </form></button>
+          <% if (1){ %>
+        <div class="nav-dots">
+          <button type="button" class="threedots"><span class="material-icons">more_vert</span></button>
+          <div class="dots-nav">
+            <a href="/contest" class="nav-btn4">BuildIT Lab</a>
+            <a href="/courses" class="nav-btn4">Courses</a>
+            <a href="/tutorials" class="nav-btn4">Tutorials</a>
+            <a href="/qualifier_tests" class="nav-btn4">Qualifier Test</a>
+            <a href="/profile" class="nav-btn4">Profile</a>
+            <a href="/logout" class="nav-btn4">Logout</a>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <button type="button" class="mbutton" id="menu-open"><span class="material-icons">menu</span></button>
+    </section>
+    <section class="chapter-navigation2">
+      <div class="topbar">
+        <div class="nav2images">
+          <img src="./images/iare_logo_black.png" alt="iare-logo">
+        </div>
+        <button type="button" class="mbutton" id="menu-close"><span class="material-icons">close</span></button>
+      </div>
+      <div class="chapter-nav-btn2">
+        <button class="nav-btn2" onclick="navslide()"><a href="#">Home <span class="material-icons">arrow_forward<span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="#">About <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="#">CodeChef Chapter <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><form action="/skill" method="POST">
+            <a class="nav-link" onclick="this.parentNode.submit();">SkillUP365 <span class="material-icons">arrow_forward<span></span></a>
+          </form></button>
+          <% if (1){ %>
+        <button class="nav-btn2" onclick="navslide()"><a href="#">BuildIT Lab <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="#">Tutorials <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="#">Qualifier Test <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="#">Profile <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="#">Logout <span class="material-icons">arrow_forward<span></span></a></button>
+        <% } %>
+      </div>
+      <div class="chnav2end">
+        <div class="footer-left-titles">
+        <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+      </div>
+        <button class="nav-btn3"><a href="#footers">Feedback</a></button>
+      </div>
+    </section>
