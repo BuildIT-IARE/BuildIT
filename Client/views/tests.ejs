@@ -58,7 +58,6 @@
 	<body class="bg-dark">
 		<div class="">
 			<% include ../views/partials/adminpanel %>
-
 			<div class="b-example-divider border-bottom mb-2"></div>
 			<div class="d-flex justify-content-end">
 				<button class="card" onclick="darkMode()">Darkmode</button>
@@ -84,31 +83,21 @@
 				<div class="tab-content border p-2 bg-light" id="pills-tabContent">
 					<div class="tab-pane fade show active" id="course" role="tabpanel" aria-labelledby="pills-home-tab">
 						<!--One-->
-						<form>
+						<form action="<%= data.serverurl %>/iareTests" method = "POST">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">Course Id</span>
-								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-							</div>
-							<button type="submit" class="btn btn-primary">Submit</button>
-						</form>
-						<!--One-->
-					</div>
-					<div class="tab-pane fade" id="exam" role="tabpanel" aria-labelledby="pills-profile-tab">
-						<!--One-->
-						<form>
-							<div class="input-group mb-3">
-								<button class="btn btn-outline-secondary" type="button">Course Id</button>
-								<select class="form-select" id="inputGroupSelect03" aria-label="Example select with button addon">
-									<option selected>Choose...</option>
-									<option value="1">One</option>
-									<option value="2">Two</option>
-									<option value="3">Three</option>
-								</select>
+								<input name="iareTestId" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 							</div>
 							<div class="input-group mb-3">
-								<span class="input-group-text" id="inputGroup-sizing-default">Section Id</span>
-								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+								<span class="input-group-text" id="inputGroup-sizing-default">Course Name</span>
+								<input name="iareTestName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 							</div>
+							<textarea
+								type="hidden"
+								name="token"
+								id="token"
+								value="<%= token %>"
+								style="display: none"></textarea>
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</form>
 						<!--One-->
@@ -116,6 +105,25 @@
 					<div class="tab-pane fade" id="section" role="tabpanel" aria-labelledby="pills-contact-tab">
 						<!--One-->
 						<form>
+							<div class="input-group mb-3">
+								<button class="btn btn-outline-secondary" type="button">Course Id</button>
+								<input name="iareTestId" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Section Id</span>
+								<input name="iareTestSectionId" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Section Name</span>
+								<input name="iareTestSectionName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+						<!--One-->
+					</div>
+					<div class="tab-pane fade" id="exam" role="tabpanel" aria-labelledby="pills-profile-tab">
+						<!--One-->
+						<form action="<%= data.serverurl %>/iareTestSections" method = "POST">
 							<div class="input-group mb-3">
 								<button class="btn btn-outline-secondary" type="button">Course Id</button>
 								<select class="form-select" id="inputGroupSelect03" aria-label="Example select with button addon">
@@ -138,6 +146,10 @@
 								<span class="input-group-text" id="inputGroup-sizing-default">Exam Id</span>
 								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Exam Name</span>
+								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</form>
 						<!--One-->
@@ -158,12 +170,16 @@
 								<input type="text" class="form-control" id="validationDefault03" required>
 							</div>
 							<hr>
+							<div class="input-group mt-7">
+								<span class="input-group-text" id="inputGroupPrepend2">Question Name</span>
+								<input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required>
+							</div>
 							<div class="input-group mt-5">
-								<span class="input-group-text" id="inputGroupPrepend2">Question Id</span>
+								<span class="input-group-text" id="inputGroupPrepend2">Question Id  </span>
 								<input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required>
 							</div>
 							<div class="">
-								<label for="exampleFormControlTextarea1" class="form-label">Qestion Description</label>
+								<label for="exampleFormControlTextarea1" class="form-label">Question Description</label>
 								<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
 							</div>
 							<div class="col-md-3">
