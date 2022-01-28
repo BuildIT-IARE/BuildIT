@@ -91,6 +91,8 @@ const courses = require("./controllers/course.controller.js");
 const skills = require("./controllers/skill.controller.js");
 const mcqs = require("./controllers/mcq.controller.js");
 const codechefEvents = require("../Server/controllers/codechefEvents.controller.js");
+const iareTests = require("./controllers/iareTest.controller.js");
+const iareTestSections = require("./controllers/iareTestSection.controller.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -115,6 +117,11 @@ require("./routes/skill.route.js")(app);
 require("./routes/mcq.route.js")(app);
 // Require events routes
 require("./routes/codechefEvents.route.js")(app);
+//Require iareTest routes
+require("./routes/iareTest.route.js")(app);
+//Require iareTestSection routes
+require("./routes/iareTestSection.route.js")(app);
+
 
 // Examples
 app.get("/testGet", async (req, res) => {

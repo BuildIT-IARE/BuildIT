@@ -46,7 +46,7 @@ app.use("/tutorials/questions", express.static(__dirname + "/"));
 
 app.use("/admin/manageusers", express.static(__dirname + "/"));
 app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
-app.use("/admin/add/test", express.static(__dirname + "/"));
+app.use("/admin/add/iareTest", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
@@ -282,7 +282,7 @@ app.get("/forgotpassword_", async (req, res) => {
   res.render("forgotPassword", { data: url });
 });
 
-app.get("/admin/add/test", async (req, res) => {
+app.get("/admin/add/iareTest", async (req, res) => {
   let options = {
     url: serverRoute + "/isAdmin",
     method: "get",
