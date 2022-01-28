@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Courses</title>
+    <title>Course Name</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -37,22 +37,20 @@
         <span class="material-icons-round ri"> code </span>
       </div>
       <div class="random_icons2">
-        <span class="material-icons-round ri"> emoji_events </span>
+        <span class="material-icons ri"> laptop_chromebook </span>
       </div>
       <div class="title-division">
         <div class="title-texts">
           <div class="smallname">BuildIT</div>
-          <div class="title">Courses</div>
-          <div class="smalltext">Explore the essential courses from IARE</div>
+          <div class="Contest-title"><%= data.courseName %></div>
+          <div class="smalltext">#<%= data.courseId %></div>
         </div>
       </div>
     </section>
     <script>
-      document.querySelector(".title-section").style.background =
-        "rgb(239, 247, 207)";
       var ri = document.querySelectorAll(".ri");
       for (var i = 0; i < ri.length; i++) {
-        ri[i].style.color = "rgb(200, 209, 162)";
+        ri[i].style.color = "rgba(120, 120, 120,0.7)";
       }
     </script>
     <script>
@@ -114,27 +112,72 @@
         if (p > 10) {
           navigation.style.background = "rgb(255,255,255)";
         } else {
-          navigation.style.background = "rgb(239, 247, 207)";
+          navigation.style.background = "rgb(255,255,255)";
         }
       };
     </script>
-    <section class="courses-list-section">
+    <section class="contests-list-section">
       <div class="headTexts">
         <div class="topimg">
-          <span class="material-icons-round"> auto_stories </span>
+          <span class="material-icons-round"> category </span>
         </div>
-        <div class="toptext">Introducing new BuildIT Courses</div>
+        <div class="toptext">
+          Participate and practice in the contests related to Course Name
+        </div>
       </div>
-      <div class="courses-list">
-        <% for(var i=0; i<6; i++) {%>
-        <a href="/coursename" class="course">
-          <div class="courseName">Course Name</div>
-          <button type="button"><p>Explore</p></button>
-          <span class="material-icons-round ctri"> change_history </span>
-          <span class="material-icons-round cplay"> play_arrow </span>
+      <div class="contests-list">
+        <% for(var i=0; i<data.length; i++) {%>
+        <a href="/courses/contest/<%= data[i].contestId %>" class="contest">
+          <div class="contest-status">
+            <div class="material-icons-round active">fiber_manual_record</div>
+          </div>
+          <div class="contest-name"><%= data[i].contestName %></div>
+          <div class="contestID">#<%= data[i].contestId %></div>
+          <div class="contest-startDate">
+            <strong>Start Date:</strong> <%= (data[i].contestDate).split('-').reverse().join('/'); %>
+          </div>
+          <div class="contest-startTime">
+            <strong>Start Time:</strong> 9:30AM
+          </div>
+          <div class="contest-endDate"><strong>End Date:</strong> 12/01/22</div>
+          <div class="contest-endTime"><strong>End Time:</strong> 3:30PM</div>
+          <div class="contest-Duration"><strong>Duration:</strong> 18Hrs</div>
+          <button type="button">
+            Participate <span class="material-icons-round">east</span>
+          </button>
+        </a>
+        <% } %> <% for(var i=0; i<data.length; i++) {%>
+        <a href="/courses/contest/<%= data[i].contestId %>" class="contest">
+          <div class="contest-status">
+            <div class="material-icons-round completed">done_all</div>
+          </div>
+          <div class="contest-name"><%= data[i].contestName %></div>
+          <div class="contestID">#<%= data[i].contestId %></div>
+          <div class="contest-startDate">
+            <strong>Start Date:</strong> 11/01/22
+          </div>
+          <div class="contest-startTime">
+            <strong>Start Time:</strong> 9:30AM
+          </div>
+          <div class="contest-endDate"><strong>End Date:</strong> 12/01/22</div>
+          <div class="contest-endTime"><strong>End Time:</strong> 3:30PM</div>
+          <div class="contest-Duration"><strong>Duration:</strong> 18Hrs</div>
+          <button type="button">
+            Participate <span class="material-icons-round">east</span>
+          </button>
         </a>
         <% } %>
       </div>
+      <script>
+        var complete = document.querySelectorAll(".completed");
+        var active = document.querySelectorAll(".active");
+        for (var i = 0; i < active.length; i++) {
+          active[i].innerHTML = "fiber_manual_record";
+        }
+        for (var i = 0; i < complete.length; i++) {
+          complete[i].innerHTML = "done_all";
+        }
+      </script>
     </section>
     <% include ../views/partials/footer2%>
   </body>

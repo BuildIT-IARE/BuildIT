@@ -128,23 +128,12 @@
       </div>
       <div class="contest-sections">
         <div class="material-icons-round trophy-shape">emoji_events</div>
-        <% for(var i=0; i<2; i++) {%>
+        <% for(var i=0; i<data.length; i++) {%>
         <a href="" class="contest-section">
           <div class="contest-status">
             <div class="material-icons-round active">fiber_manual_record</div>
           </div>
-          <div class="section-name">Mathematics</div>
-          <div class="question-count">
-            <div class="questions-title">Questions</div>
-            <div class="questions-number">10</div>
-          </div>
-        </a>
-        <% } %> <% for(var i=0; i<2; i++) {%>
-        <a href="" class="contest-section">
-          <div class="contest-status">
-            <div class="material-icons-round completed">check_circle</div>
-          </div>
-          <div class="section-name">Reasoning</div>
+          <div class="section-name"><%= data[i].sectionName %></div>
           <div class="question-count">
             <div class="questions-title">Questions</div>
             <div class="questions-number">10</div>

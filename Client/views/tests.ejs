@@ -106,8 +106,8 @@
 						<!--One-->
 						<form>
 							<div class="input-group mb-3">
-								<button class="btn btn-outline-secondary" type="button">Course Id</button>
-								<input name="iareTestId" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+								<span class="input-group-text" id="inputGroup-sizing-default">Exam Id</span>
+								<input name="iareTestSectionId" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 							</div>
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">Section Id</span>
@@ -125,22 +125,8 @@
 						<!--One-->
 						<form action="<%= data.serverurl %>/iareTestSections" method = "POST">
 							<div class="input-group mb-3">
-								<button class="btn btn-outline-secondary" type="button">Course Id</button>
-								<select class="form-select" id="inputGroupSelect03" aria-label="Example select with button addon">
-									<option selected>Choose...</option>
-									<option value="1">One</option>
-									<option value="2">Two</option>
-									<option value="3">Three</option>
-								</select>
-							</div>
-							<div class="input-group mb-3">
-								<button class="btn btn-outline-secondary" type="button">Section Id</button>
-								<select class="form-select" id="inputGroupSelect03" aria-label="Example select with button addon">
-									<option selected>Choose...</option>
-									<option value="1">One</option>
-									<option value="2">Two</option>
-									<option value="3">Three</option>
-								</select>
+								<span class="input-group-text" id="inputGroup-sizing-default">Course Id</span>
+								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 							</div>
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">Exam Id</span>
@@ -148,6 +134,22 @@
 							</div>
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">Exam Name</span>
+								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Exam Date</span>
+								<input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Exam Duration</span>
+								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Exam Start Time</span>
+								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Exam End Time</span>
 								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 							</div>
 							<button type="submit" class="btn btn-primary">Submit</button>
@@ -159,14 +161,14 @@
 						<form class="row g-3">
 							<div class="col-md-4">
 								<label for="validationDefault01" class="form-label">Course Id</label>
-								<input type="text" class="form-control" id="validationDefault01" value="Mark" required>
+								<input type="text" class="form-control" id="validationDefault01" value="IARE123" required>
 							</div>
 							<div class="col-md-4">
-								<label for="validationDefault02" class="form-label">Source Id</label>
-								<input type="text" class="form-control" id="validationDefault02" value="Otto" required>
+								<label for="validationDefault02" class="form-label">Exam Id</label>
+								<input type="text" class="form-control" id="validationDefault02" value="IARE123" required>
 							</div>
 							<div class="col-md-4">
-								<label for="validationDefault03" class="form-label">Exam Id</label>
+								<label for="validationDefault03" class="form-label">Section Id</label>
 								<input type="text" class="form-control" id="validationDefault03" required>
 							</div>
 							<hr>
