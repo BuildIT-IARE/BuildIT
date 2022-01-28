@@ -47,7 +47,6 @@ app.use("/tutorials/questions", express.static(__dirname + "/"));
 app.use("/admin/manageusers", express.static(__dirname + "/"));
 app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
 app.use("/admin/add/iareTest", express.static(__dirname + "/"));
-app.use("/admin/add/iareTestSection", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
