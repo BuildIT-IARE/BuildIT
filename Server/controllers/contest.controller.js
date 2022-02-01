@@ -122,6 +122,23 @@ exports.findAllUser = (req, res) => {
     });
 };
 
+// Retrieve and return all contests from the database.
+exports.findAllTest = (req, res) => {
+  Contest.find({
+    mcq: true,
+    testId: req.params.testId
+  })
+    .then((contests) => {
+      res.send(contests);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving contests.",
+      });
+    });
+};
+
 // Find a single contest with a contestId
 exports.findOne = (req, res) => {
   Contest.find({ contestId: req.params.contestId })

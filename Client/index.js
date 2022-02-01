@@ -37,6 +37,8 @@ app.use("/ide", express.static(path.resolve("../IDE")));
 
 app.use("/tutorials", express.static(__dirname + "/"));
 app.use("/contests", express.static(__dirname + "/"));
+app.use("/courses", express.static(__dirname + "/"));
+app.use("/courses/contest", express.static(__dirname + "/"));
 app.use("/qualifier_test/:contestId", express.static(__dirname + "/"));
 app.use("/qualifierTestScore", express.static(__dirname + "/"));
 app.use("/qualifier_tests", express.static(__dirname + "/"));
@@ -2326,19 +2328,123 @@ app.get("/codechef-iare-chapter", async (req, res) => {
 });
 
 app.get("/courses", async (req, res) => {
-  res.render("courses");
+  let options = {
+    url: serverRoute + "/iare_tests",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, (err, response, body) => {
+    if (!body.message) {
+      res.render("iare_tests", {
+        data: body,
+        imgUsername: req.cookies.username 
+      });
+    } else {
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
+    }
+  });
 });
 
-app.get("/coursename", async (req, res) => {
-  res.render("courseContests");
+app.get("/courses/:courseId", async (req, res) => {
+  let options1 = {
+    url: serverRoute + "/iare_tests/" + req.params.courseId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options1, (err, response, body1) => {
+    if (!body1.message) {
+      let options = {
+        url: serverRoute + "/contests/test/" + req.params.courseId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+
+      request(options, (err, response, body) => {
+        body.courseId = body1[0].testId;
+        body.courseName = body1[0].testName;
+
+        if (!body.message) {
+          res.render("test_contests", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        } else {
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
+      });
+    } else {
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
+    }
+  });
 });
 
-app.get("/contestname", async (req, res) => {
-  res.render("contestSections");
+app.get("/courses/contest/:contestId", async (req, res) => {
+  let options1 = {
+    url: serverRoute + "/contests/" + req.params.contestId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options1, (err, response, body1) => {
+    if (!body1.message) {
+      let options = {
+        url: serverRoute + "/sections/contest/" + req.params.contestId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+
+      request(options, (err, response, body) => {
+        if (!body.message) {
+          res.render("test_sections", {
+            data: body,
+            contest: body1[0],
+            imgUsername: req.cookies.username
+          });
+        } else {
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username
+          });
+        }
+      });
+    } else {
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
+    }
+  });
 });
 
 app.get("*", async (req, res) => {
   res.render("404page");
 });
+
 app.listen(4000);
 console.log("Server @ port 4000");
