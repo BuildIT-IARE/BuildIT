@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var contestSchema = new Schema({
+  testId: { type: String, default: "" },
   contestId: String,
   contestName: String,
   contestDate: String,

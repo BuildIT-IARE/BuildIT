@@ -37,6 +37,8 @@ app.use("/ide", express.static(path.resolve("../IDE")));
 
 app.use("/tutorials", express.static(__dirname + "/"));
 app.use("/contests", express.static(__dirname + "/"));
+app.use("/courses", express.static(__dirname + "/"));
+app.use("/courses/contest", express.static(__dirname + "/"));
 app.use("/qualifier_test/:contestId", express.static(__dirname + "/"));
 app.use("/qualifierTestScore", express.static(__dirname + "/"));
 app.use("/qualifier_tests", express.static(__dirname + "/"));
@@ -46,7 +48,8 @@ app.use("/tutorials/questions", express.static(__dirname + "/"));
 
 app.use("/admin/manageusers", express.static(__dirname + "/"));
 app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
-app.use("/admin/add/test", express.static(__dirname + "/"));
+app.use("/admin/add/iareTest", express.static(__dirname + "/"));
+app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
@@ -282,7 +285,7 @@ app.get("/forgotpassword_", async (req, res) => {
   res.render("forgotPassword", { data: url });
 });
 
-app.get("/admin/add/test", async (req, res) => {
+app.get("/admin/add/iareTest", async (req, res) => {
   let options = {
     url: serverRoute + "/isAdmin",
     method: "get",
@@ -328,6 +331,31 @@ app.get("/admin/add/tutQuestion", async (req, res) => {
   request(options, function (err, response, body) {
     if (body.success) {
       res.render("tutQuestionAdd", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.get("/admin/add/practiceQuestion", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.render("practiceQuestionAdd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -2089,7 +2117,6 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
     };
     request(options3, function (err, response, bodytimer) {
       bodytimer = bodytimer[0];
-
       for (let i = 0; i < body.length; i++) {
         if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1) {
           body[i].solved = "Solved";
@@ -2162,6 +2189,7 @@ app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
       },
       json: true,
     };
+    console.log(data);
     request(options3, function (err, response, bodytimer) {
       bodytimer = bodytimer[0];
 
@@ -2330,6 +2358,121 @@ app.get("/codechef-iare-chapter", async (req, res) => {
     } else {
       res.render("error", {
         data: body,
+      });
+    }
+  });
+});
+
+app.get("/courses", async (req, res) => {
+  let options = {
+    url: serverRoute + "/iare_tests",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, (err, response, body) => {
+    if (!body.message) {
+      res.render("iare_tests", {
+        data: body,
+        imgUsername: req.cookies.username 
+      });
+    } else {
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username
+      });
+    }
+  });
+});
+
+app.get("/courses/:courseId", async (req, res) => {
+  let options1 = {
+    url: serverRoute + "/iare_tests/" + req.params.courseId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options1, (err, response, body1) => {
+    if (!body1.message) {
+      let options = {
+        url: serverRoute + "/contests/test/" + req.params.courseId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+
+      request(options, (err, response, body) => {
+        body.courseId = body1[0].testId;
+        body.courseName = body1[0].testName;
+
+        if (!body.message) {
+          res.render("test_contests", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        } else {
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
+      });
+    } else {
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
+    }
+  });
+});
+
+app.get("/courses/contest/:contestId", async (req, res) => {
+  let options1 = {
+    url: serverRoute + "/contests/" + req.params.contestId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options1, (err, response, body1) => {
+    if (!body1.message) {
+      let options = {
+        url: serverRoute + "/sections/contest/" + req.params.contestId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+
+      request(options, (err, response, body) => {
+        if (!body.message) {
+          res.render("test_sections", {
+            data: body,
+            contest: body1[0],
+            imgUsername: req.cookies.username
+          });
+        } else {
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username
+          });
+        }
+      });
+    } else {
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
       });
     }
   });
