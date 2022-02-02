@@ -908,7 +908,7 @@ app.get("/admin/unverifiedusers", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    var unverified_users=[];
+    var unverified_users = [];
     for (let i = 0; i < body.length; i++) {
       if (!body[i].isVerified && !body[i].admin) {
         body[i].color = "pink";
@@ -2221,10 +2221,20 @@ app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
       }
       // console.log(body, "\n ____________________________________________________________________");
       // console.log(bodytimer);
-      res.render("displayTutQuestions", {
-        imgUsername: req.cookies.username,
-        data: body,
-      });
+      if (
+        req.params.difficulty != "topics" &&
+        req.params.difficulty != "compaines"
+      ) {
+        res.render("displayTutQuestions", {
+          imgUsername: req.cookies.username,
+          data: body,
+        });
+      } else {
+        res.render("practiceTutList", {
+          imgUsername: req.cookies.username,
+          title: req.params.difficulty,
+        });
+      }
     });
   });
 });

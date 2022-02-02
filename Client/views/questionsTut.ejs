@@ -129,6 +129,25 @@ div .border {
   bottom: 0;
   right: 500;
 }
+#practice1,#practice2{
+  text-decoration: none;
+  width: 300px;
+  height: 300px;
+  color: white;
+  min-width: 300px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 45px;
+  font-weight: bold;
+}
+#practice1{
+  background: rgb(255, 70, 70);
+}
+#practice2{
+  background: rgb(8, 209, 25);
+}
 </style>
 </head>
 
@@ -197,6 +216,16 @@ div .border {
           <li data-flip-title="Progress" data-flip-category="Progress">
             <a href = "<%= data.clientRoute %>/tutorials/<%= data.courseId %>/progress" >
               <img src="/images/Progress.png">
+            </a>
+          </li>
+          <li data-flip-title="Topics" data-flip-category="Practice">
+            <a href = "<%= data.clientRoute %>/tutorials/<%= data.courseId %>/topics" id="practice1">
+              Topics
+            </a>
+          </li>
+          <li data-flip-title="Companies" data-flip-category="Practice">
+            <a href = "<%= data.clientRoute %>/tutorials/<%= data.courseId %>/companies" id="practice2">
+              Companies
             </a>
           </li>
       </ul>
