@@ -368,7 +368,32 @@ exports.createPractice = (req, res) => {
     .then((questions) => {
       let currQuestions = questions.length + 1;
       req.body.questionId = "IARE" + currQuestions.toString();
-
+      var companies1=[];
+      var topics1 = [];
+      var temp="";
+      var companystr = req.body.company;
+      var topicstr = req.body.topic;
+      for (let j = 0; j < companystr.length; j++) {
+        if(companystr[j]!=","){
+          temp+=companystr[j];
+        }
+        else{
+          companies1.push(temp);
+          temp="";
+        }
+      }
+      companies1.push(temp);
+      temp="";
+      for (let j = 0; j < topicstr.length; j++) {
+        if(topicstr[j]!=","){
+          temp+=topicstr[j];
+        }
+        else{
+          topics1.push(temp);
+          temp="";
+        }
+      }
+      topics1.push(temp);
       // Create a Question
       const question = new Question({
         questionId: req.body.questionId,
@@ -385,8 +410,8 @@ exports.createPractice = (req, res) => {
         questionHiddenOutput2: req.body.questionHiddenOutput2,
         questionHiddenOutput3: req.body.questionHiddenOutput3,
         questionExplanation: req.body.questionExplanation,
-        company: req.body.company,
-        topic: req.body.topic,
+        company: companies1,
+        topic: topics1,
         difficulty: "topics",
         courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
       });
@@ -501,6 +526,30 @@ exports.createPracticeExcel = (req, res) => {
           .then((questions) => {
             let currQuestions = questions.length;
             for (let i = 0; i < data.length; i++) {
+              companies=[]
+              topics=[]
+              var temp = "";
+              for (let j = 0; j < data[i].company.length; j++) {
+                if(data[i].company[j]!=","){
+                  temp+=data[i].company[j];
+                }
+                else{
+                  companies.push(temp);
+                  temp="";
+                }
+              }
+              companies.push(temp);
+              temp="";
+              for (let j = 0; j < data[i].topic.length; j++) {
+                if(data[i].topic[j]!=","){
+                  temp+=data[i].topic[j];
+                }
+                else{
+                  topics.push(temp);
+                  temp="";
+                }
+              }
+              topics.push(temp);
               question = new Question({
                 questionId: "IARE" + (currQuestions + (i + 1)).toString(),
                 questionName: data[i].questionName,
@@ -517,8 +566,8 @@ exports.createPracticeExcel = (req, res) => {
                 questionHiddenOutput2: data[i].questionHiddenOutput2,
                 questionHiddenOutput3: data[i].questionHiddenOutput3,
                 questionExplanation: data[i].questionExplanation,
-                company: data[i].company,
-                topic: data[i].topic,
+                company: companies,
+                topic: topics,
                 difficulty: "topics",
                 courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
               });
