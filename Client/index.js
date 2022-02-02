@@ -2205,6 +2205,7 @@ app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
         res.render("practiceTutList", {
           imgUsername: req.cookies.username,
           title: req.params.difficulty,
+          data: body,
         });
       }
     });
