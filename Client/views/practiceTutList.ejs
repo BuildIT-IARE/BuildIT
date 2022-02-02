@@ -51,7 +51,7 @@
         margin: 20px 0;
         border-radius: 3mm;
         color: rgb(56, 56, 56);
-        box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.178);
+        box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.178);
       }
       .practiceItem:hover {
         color: dodgerblue;
@@ -69,12 +69,22 @@
     </section>
     <!-- /page title -->
     <section class="section">
-      <% for(var i=0;i<6;i++){ %>
+      <% var myList = [] %>
+      <% for(var i =0;i<data.length;i++) { %>
+      <%   if(title == "topics") { %>
+      <%  myList = myList.concat(myList,data[i].topic);%>
+      <% } else { %>
+      <% myList = myList.concat(myList,data[i].company);%>
+      <%} %>
+      <%} %>
+      <%const unique =new Set(myList); %> 
+      <% var myArr = Array.from(unique) %>
+      <% for(var i=0; i<myArr.length;i++) {%>
       <a
-        href="<%= data.clientRoute %>/tutorials/<%= data.courseId %>/level_0/al"
+        href="<%= data.clientRoute %>/tutorials/practice/<%= data.courseId %>/<%= title%>/<%= myArr[i] %>"
         class="practiceItem"
       >
-        Dynamic Programming
+      <%= myArr[i] %>
       </a>
       <% } %>
     </section>

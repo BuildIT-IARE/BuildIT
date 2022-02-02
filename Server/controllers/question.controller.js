@@ -373,7 +373,6 @@ exports.createPractice = (req, res) => {
       const question = new Question({
         questionId: req.body.questionId,
         questionName: req.body.questionName,
-        contestId: "level_0",
         questionDescriptionText: req.body.questionDescriptionText,
         questionInputText: req.body.questionInputText,
         questionOutputText: req.body.questionOutputText,
@@ -388,6 +387,7 @@ exports.createPractice = (req, res) => {
         questionExplanation: req.body.questionExplanation,
         company: req.body.company,
         topic: req.body.topic,
+        difficulty: "topics",
         courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
       });
 
@@ -519,6 +519,7 @@ exports.createPracticeExcel = (req, res) => {
                 questionExplanation: data[i].questionExplanation,
                 company: data[i].company,
                 topic: data[i].topic,
+                difficulty: "topics",
                 courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
               });
               // Save Question in the database
@@ -878,6 +879,7 @@ exports.findAllCourse = (req, res) => {
 };
 
 exports.findAllCourseDifficulty = (req, res) => {
+  console.log(req.params.difficulty);
   Question.find({
     courseId: req.params.courseId,
     difficulty: req.params.difficulty,
@@ -903,6 +905,65 @@ exports.findAllCourseDifficulty = (req, res) => {
         message: "Error retrieving question with id " + req.params.questionId,
       });
     });
+};
+
+exports.findAllCourseTopicWise = (req, res) => {
+  title = req.params.title;
+  if (title == "topics") {
+    Question.find({
+      courseId: req.params.courseId,
+      topic: req.params.name,
+    })
+      .then((question) => {
+        console.log(question);
+        if (!question) {
+          return res.status(404).send({
+            success: false,
+            message: "Question not found with id " + req.params.questionId,
+          });
+        }
+        res.send(question);
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return res.status(404).send({
+            success: false,
+            message: "Question not found with id " + req.params.questionId,
+          });
+        }
+        return res.status(500).send({
+          success: false,
+          message: "Error retrieving question with id " + req.params.questionId,
+        });
+      });
+  } else {
+    Question.find({
+      courseId: req.params.courseId,
+      company: req.params.name,
+    })
+      .then((question) => {
+        console.log(question);
+        if (!question) {
+          return res.status(404).send({
+            success: false,
+            message: "Question not found with id " + req.params.questionId,
+          });
+        }
+        res.send(question);
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return res.status(404).send({
+            success: false,
+            message: "Question not found with id " + req.params.questionId,
+          });
+        }
+        return res.status(500).send({
+          success: false,
+          message: "Error retrieving question with id " + req.params.questionId,
+        });
+      });
+  }
 };
 
 exports.findAllCourseConceptWise = (req, res) => {
