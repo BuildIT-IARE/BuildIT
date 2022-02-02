@@ -26,7 +26,7 @@ module.exports = (app) => {
     middleware.checkTokenAdmin,
     questions.addSetGivenQIdArray
   );
-  
+
   // Create a new question for Tutorials
   app.post(
     "/questiontutorials",
@@ -90,6 +90,12 @@ module.exports = (app) => {
     "/questions/courses/:courseId/:difficulty/:conceptLevel",
     middleware.checkToken,
     questions.findAllCourseConceptWise
+  );
+
+  app.get(
+    "/questions/practice/:courseId/:title/:name",
+    middleware.checkToken,
+    questions.findAllCourseTopicWise
   );
 
   // Update a question with questionId
