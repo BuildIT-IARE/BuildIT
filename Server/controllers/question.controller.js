@@ -368,29 +368,27 @@ exports.createPractice = (req, res) => {
     .then((questions) => {
       let currQuestions = questions.length + 1;
       req.body.questionId = "IARE" + currQuestions.toString();
-      var companies1=[];
+      var companies1 = [];
       var topics1 = [];
-      var temp="";
+      var temp = "";
       var companystr = req.body.company;
       var topicstr = req.body.topic;
       for (let j = 0; j < companystr.length; j++) {
-        if(companystr[j]!=","){
-          temp+=companystr[j];
-        }
-        else{
+        if (companystr[j] != ",") {
+          temp += companystr[j];
+        } else {
           companies1.push(temp);
-          temp="";
+          temp = "";
         }
       }
       companies1.push(temp);
-      temp="";
+      temp = "";
       for (let j = 0; j < topicstr.length; j++) {
-        if(topicstr[j]!=","){
-          temp+=topicstr[j];
-        }
-        else{
+        if (topicstr[j] != ",") {
+          temp += topicstr[j];
+        } else {
           topics1.push(temp);
-          temp="";
+          temp = "";
         }
       }
       topics1.push(temp);
@@ -526,27 +524,25 @@ exports.createPracticeExcel = (req, res) => {
           .then((questions) => {
             let currQuestions = questions.length;
             for (let i = 0; i < data.length; i++) {
-              companies=[]
-              topics=[]
+              companies = [];
+              topics = [];
               var temp = "";
               for (let j = 0; j < data[i].company.length; j++) {
-                if(data[i].company[j]!=","){
-                  temp+=data[i].company[j];
-                }
-                else{
+                if (data[i].company[j] != ",") {
+                  temp += data[i].company[j];
+                } else {
                   companies.push(temp);
-                  temp="";
+                  temp = "";
                 }
               }
               companies.push(temp);
-              temp="";
+              temp = "";
               for (let j = 0; j < data[i].topic.length; j++) {
-                if(data[i].topic[j]!=","){
-                  temp+=data[i].topic[j];
-                }
-                else{
+                if (data[i].topic[j] != ",") {
+                  temp += data[i].topic[j];
+                } else {
                   topics.push(temp);
-                  temp="";
+                  temp = "";
                 }
               }
               topics.push(temp);
@@ -928,7 +924,6 @@ exports.findAllCourse = (req, res) => {
 };
 
 exports.findAllCourseDifficulty = (req, res) => {
-  console.log(req.params.difficulty);
   Question.find({
     courseId: req.params.courseId,
     difficulty: req.params.difficulty,
@@ -964,7 +959,6 @@ exports.findAllCourseTopicWise = (req, res) => {
       topic: req.params.name,
     })
       .then((question) => {
-        console.log(question);
         if (!question) {
           return res.status(404).send({
             success: false,
@@ -991,7 +985,6 @@ exports.findAllCourseTopicWise = (req, res) => {
       company: req.params.name,
     })
       .then((question) => {
-        console.log(question);
         if (!question) {
           return res.status(404).send({
             success: false,

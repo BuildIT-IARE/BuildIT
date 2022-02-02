@@ -2233,7 +2233,6 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
 });
 
 app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
-  console.log(req.params.difficulty);
   var options;
   if (
     req.params.difficulty == "Topics" ||
