@@ -909,7 +909,7 @@ exports.findAllCourseDifficulty = (req, res) => {
 
 exports.findAllCourseTopicWise = (req, res) => {
   title = req.params.title;
-  if (title == "topics") {
+  if (title == "Topics") {
     Question.find({
       courseId: req.params.courseId,
       topic: req.params.name,

@@ -2233,10 +2233,11 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
 });
 
 app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
+  console.log(req.params.difficulty);
   var options;
   if (
-    req.params.difficulty == "topics" ||
-    req.params.difficulty == "companies"
+    req.params.difficulty == "Topics" ||
+    req.params.difficulty == "Companies"
   ) {
     options = {
       url:
@@ -2307,8 +2308,8 @@ app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
       // console.log(body, "\n ____________________________________________________________________");
       // console.log(bodytimer);
       if (
-        req.params.difficulty != "topics" &&
-        req.params.difficulty != "companies"
+        req.params.difficulty != "Topics" &&
+        req.params.difficulty != "Companies"
       ) {
         res.render("displayTutQuestions", {
           imgUsername: req.cookies.username,
@@ -2316,7 +2317,7 @@ app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
         });
       } else {
         var practiceTitle = "";
-        if (req.params.difficulty === "topics") {
+        if (req.params.difficulty === "Topics") {
           practiceTitle = "Select a topic";
         } else {
           practiceTitle = " Select a company";
