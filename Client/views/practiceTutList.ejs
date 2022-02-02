@@ -30,18 +30,63 @@
     />
     <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
     <title><%= title %></title>
+    <style>
+      .section {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+      }
+      .practiceItem {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 35px;
+        width: 350px;
+        height: 200px;
+        border: rgba(0, 0, 0, 0.178) solid 1px;
+        text-align: center;
+        margin: 20px 0;
+        border-radius: 3mm;
+        color: rgb(56, 56, 56);
+        box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.178);
+      }
+      .practiceItem:hover {
+        color: dodgerblue;
+      }
+    </style>
   </head>
   <body>
     <% include ../views/partials/header %>
-    <section>
+    <!-- page title -->
+    <section class="page-title bg-primary position-relative">
+      <center>
+        <h2 class="text-white font-tertiary"><%= data.courseName %></h2>
+      </center>
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+    </section>
+    <!-- /page title -->
+    <section class="section">
+      <% var myList = [] %>
+      <% for(var i =0;i<data.length;i++) { %>
+      <%   if(title == "topics") { %>
+      <%  myList = myList.concat(myList,data[i].topic);%>
+      <% } else { %>
+      <% myList = myList.concat(myList,data[i].company);%>
+      <%} %>
+      <%} %>
+      <%const unique =new Set(myList); %> 
+      <% var myArr = Array.from(unique) %>
+      <% for(var i=0; i<myArr.length;i++) {%>
+      <a
+        href="<%= data.clientRoute %>/tutorials/practice/<%= data.courseId %>/<%= title%>/<%= myArr[i] %>"
+        class="practiceItem"
+      >
+      <%= myArr[i] %>
+      </a>
+      <% } %>
     </section>
     <% include ../views/partials/aboutfooter %>
     <script src="../plugins/jQuery/jquery.min.js"></script>
