@@ -49,6 +49,7 @@ app.use("/tutorials/questions", express.static(__dirname + "/"));
 app.use("/admin/manageusers", express.static(__dirname + "/"));
 app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
 app.use("/admin/add/iareTest", express.static(__dirname + "/"));
+app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
@@ -330,6 +331,31 @@ app.get("/admin/add/tutQuestion", async (req, res) => {
   request(options, function (err, response, body) {
     if (body.success) {
       res.render("tutQuestionAdd", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.get("/admin/add/practiceQuestion", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.render("practiceQuestionAdd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -2091,7 +2117,6 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
     };
     request(options3, function (err, response, bodytimer) {
       bodytimer = bodytimer[0];
-
       for (let i = 0; i < body.length; i++) {
         if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1) {
           body[i].solved = "Solved";
@@ -2164,6 +2189,7 @@ app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
       },
       json: true,
     };
+    console.log(data);
     request(options3, function (err, response, bodytimer) {
       bodytimer = bodytimer[0];
 
