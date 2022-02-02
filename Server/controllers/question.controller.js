@@ -302,7 +302,6 @@ exports.createTutorials = (req, res) => {
     .then((questions) => {
       let currQuestions = questions.length + 1;
       req.body.questionId = "IARE" + currQuestions.toString();
-
       // Create a Question
       const question = new Question({
         questionId: req.body.questionId,
@@ -354,6 +353,66 @@ exports.createTutorials = (req, res) => {
       });
     });
 };
+
+exports.createPractice = (req, res) => {
+  // Validate request
+  if (!req.body.questionName) {
+    return res.status(400).send({
+      success: false,
+      message: "Question name can not be empty",
+    });
+  }
+
+  Question.find()
+    .then((questions) => {
+      let currQuestions = questions.length + 1;
+      req.body.questionId = "IARE" + currQuestions.toString();
+
+      // Create a Question
+      const question = new Question({
+        questionId: req.body.questionId,
+        questionName: req.body.questionName,
+        contestId: "level_0",
+        questionDescriptionText: req.body.questionDescriptionText,
+        questionInputText: req.body.questionInputText,
+        questionOutputText: req.body.questionOutputText,
+        questionExampleInput1: req.body.questionExampleInput1,
+        questionExampleOutput1: req.body.questionExampleOutput1,
+        questionHiddenInput1: req.body.questionHiddenInput1,
+        questionHiddenInput2: req.body.questionHiddenInput2,
+        questionHiddenInput3: req.body.questionHiddenInput3,
+        questionHiddenOutput1: req.body.questionHiddenOutput1,
+        questionHiddenOutput2: req.body.questionHiddenOutput2,
+        questionHiddenOutput3: req.body.questionHiddenOutput3,
+        questionExplanation: req.body.questionExplanation,
+        company : req.body.company,
+        topic : req.body.topic,
+        courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
+      });
+
+      // Save Question in the database
+      question
+        .save()
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message || "Some error occurred while creating the Question.",
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message:
+          err.message || "Some error occurred while retrieving questions.",
+      });
+    });
+};
+
 exports.createTutorialsExcel = (req, res) => {
   if (req.files.upfile) {
     var file = req.files.upfile,
@@ -398,6 +457,67 @@ exports.createTutorialsExcel = (req, res) => {
                 difficulty: data[i].level,
                 language: data[i].language,
                 conceptLevel: data[i].sublevel,
+                courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
+              });
+              // Save Question in the database
+              question.save();
+            }
+            res.send("Done! Uploaded files");
+          })
+          .catch((err) => {
+            res.status(500).send({
+              success: false,
+              message:
+                err.message ||
+                "Some error occurred while retrieving questions.",
+            });
+          });
+      }
+    });
+  } else {
+    res.send("No File selected !");
+    res.end();
+  }
+};
+
+//create a question for practice excel
+exports.createPracticeExcel = (req, res) => {
+  if (req.files.upfile) {
+    var file = req.files.upfile,
+      name = file.name,
+      type = file.mimetype;
+    var uploadpath = "../quesxlsx" + name;
+    file.mv(uploadpath, function (err) {
+      if (err) {
+        console.log("File Upload Failed", name, err);
+        res.send("Error Occured!");
+      } else {
+        let wb = xlsx.readFile("../quesxlsx" + name);
+        let ws = wb.Sheets["Sheet1"];
+        let data = xlsx.utils.sheet_to_json(ws);
+        let question;
+        Question.find()
+          .then((questions) => {
+            let currQuestions = questions.length;
+            for (let i = 0; i < data.length; i++) {
+              question = new Question({
+                questionId: "IARE" + (currQuestions + (i + 1)).toString(),
+                questionName: data[i].questionName,
+                contestId: data[i].contestId,
+                questionDescriptionText: data[i].questionDescriptionText,
+                questionInputText: data[i].questionInputText,
+                questionOutputText: data[i].questionOutputText,
+                questionExampleInput1: data[i].questionExampleInput1,
+                questionExampleOutput1: data[i].questionExampleOutput1,
+                questionHiddenInput1: data[i].questionHiddenInput1,
+                questionHiddenInput2: data[i].questionHiddenInput2,
+                questionHiddenInput3: data[i].questionHiddenInput3,
+                questionHiddenOutput1: data[i].questionHiddenOutput1,
+                questionHiddenOutput2: data[i].questionHiddenOutput2,
+                questionHiddenOutput3: data[i].questionHiddenOutput3,
+                questionExplanation: data[i].questionExplanation,
+                company : data[i].company,
+                topic : data[i].topic,
                 courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
               });
               // Save Question in the database

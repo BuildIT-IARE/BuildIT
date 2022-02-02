@@ -7,8 +7,8 @@ exports.create = (req, res) => {
   if (
     !(
       username === "admin" ||
-      username === "21951A05Z9" ||
-      username === "19951A0535"
+      username === "21951a05Z9" ||
+      username === "19951a0535"
     )
   ) {
     return res.status(400).send({

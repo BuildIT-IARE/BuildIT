@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contest Name</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link
+      rel="shortcut icon"
+      href="./images/iare-chapter/iare-logo.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="./css/courses.css" />
+  </head>
+  <body>
+    <section class="title-section">
+      <% include ../views/partials/header2 %>
+      <div class="random_icons">
+        <span class="material-icons-round ri"> code </span>
+      </div>
+      <div class="random_icons2">
+        <span class="material-icons-round ri"> category </span>
+      </div>
+      <div class="title-division">
+        <div class="title-texts">
+          <div class="smallname">BuildIT</div>
+          <div class="Section-title">Contest Name</div>
+          <div class="smalltext">StartDate StartTime to EndDate EndTime</div>
+        </div>
+      </div>
+    </section>
+    <script>
+      document.querySelector(".title-section").style.background =
+        "rgb(219, 255, 229)";
+      var ri = document.querySelectorAll(".ri");
+      for (var i = 0; i < ri.length; i++) {
+        ri[i].style.color = "rgb(182, 211, 190)";
+      }
+    </script>
+    <script>
+      var mop = document.getElementById("menu-open");
+      var mcl = document.getElementById("menu-close");
+      var chna2 = document.querySelector(".chapter-navigation2");
+      var dotsmenu = document.querySelector(".dots-nav");
+      var dots = document.querySelector(".threedots");
+      var toggle = 0;
+      var press = 0;
+      dots.onclick = function () {
+        if (toggle == 0) {
+          dotsmenu.style.display = "flex";
+          toggle = 1;
+        } else {
+          dotsmenu.style.display = "none";
+          toggle = 0;
+        }
+        press = 1;
+      };
+      window.onclick = function () {
+        if (toggle == 1 && press == 0) {
+          dotsmenu.style.display = "none";
+          toggle = 0;
+        } else {
+          press = 0;
+        }
+      };
+      function navslide() {
+        chna2.style.transform = "translateX(101vw)";
+      }
+      mop.onclick = function () {
+        chna2.style.transform = "translateX(0)";
+      };
+      mcl.onclick = function () {
+        chna2.style.transform = "translateX(101vw)";
+      };
+      var navigation = document.querySelector(".chapter-navigation");
+      var th = document.body.scrollHeight - window.innerHeight;
+      var ij = 0;
+      window.onscroll = function () {
+        let p =
+          (window.pageYOffset /
+            (document.body.scrollHeight - window.innerHeight)) *
+          100;
+        if (p > 5) {
+          navigation.style.transition = "all 0.25s";
+          navigation.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+        } else {
+          navigation.style.transition = "all 0.25s";
+          navigation.style.boxShadow = "0 0 0px rgba(0,0,0,0.5)";
+        }
+        if (p > ij && p > 15) {
+          navigation.style.transform = "translateY(-100px)";
+        } else if (p < ij) {
+          navigation.style.transform = "translateY(0px)";
+        }
+        ij = p;
+        if (p > 10) {
+          navigation.style.background = "rgb(255,255,255)";
+        } else {
+          navigation.style.background = "rgb(219, 255, 229)";
+        }
+      };
+    </script>
+    <section class="sections">
+      <div class="material-icons-round send-shape">send</div>
+      <div class="headTexts">
+        <div class="topimg">
+          <span class="material-icons-round"> dashboard </span>
+        </div>
+        <div class="toptext">Go through the different sections</div>
+      </div>
+      <div class="contest-sections">
+        <div class="material-icons-round trophy-shape">emoji_events</div>
+        <% for(var i=0; i<data.length; i++) {%>
+        <a href="" class="contest-section">
+          <div class="contest-status">
+            <div class="material-icons-round active">fiber_manual_record</div>
+          </div>
+          <div class="section-name"><%= data[i].sectionName %></div>
+          <div class="question-count">
+            <div class="questions-title">Questions</div>
+            <div class="questions-number">10</div>
+          </div>
+        </a>
+        <% } %>
+      </div>
+      <script>
+        var complete = document.querySelectorAll(".completed");
+        var active = document.querySelectorAll(".active");
+        for (var i = 0; i < active.length; i++) {
+          active[i].innerHTML = "fiber_manual_record";
+        }
+        for (var i = 0; i < complete.length; i++) {
+          complete[i].innerHTML = "check_circle";
+          complete[i].style.fontSize = "16px";
+        }
+      </script>
+      <section class="contest-review">
+        <div class="review-box">
+          <div class="small-review-title">Student Review</div>
+          <div class="main-review-title">
+            Check your score and write your feedback on the contest
+          </div>
+          <div class="review-buttons">
+            <a href="http://" target="_blank">LeaderBoard</a>
+            <a href="http://" target="_blank">Feedback</a>
+          </div>
+        </div>
+      </section>
+    </section>
+    <% include ../views/partials/footer2%>
+  </body>
+</html>
