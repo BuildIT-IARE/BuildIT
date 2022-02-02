@@ -196,7 +196,8 @@ exports.createSet = (req, res) => {
               let initialLength = questions.length;
               let finalLength = initialLength + data.length;
               let set = [];
-              let i, j = 0;
+              let i,
+                j = 0;
               for (i = initialLength + 1; i <= finalLength; i++) {
                 set[j++] = "IARE" + i.toString();
               }
@@ -207,7 +208,7 @@ exports.createSet = (req, res) => {
                 if (err) {
                   res.send({ success: false, message: "Error occured" });
                 }
-              })
+              });
             });
 
             res.send("Done! Uploaded files");
@@ -247,18 +248,18 @@ exports.addSetGivenQIdArray = (req, res) => {
       .then((question) => {
         if (question.length !== 0) {
           set.push(questionIds[i]);
-          
+
           if (question[0].contestId !== req.params.contestId) {
             question = question[0]._doc;
             delete question._id;
             delete question.__v;
             question.contestId = req.params.contestId;
-            
-            let newQuestion = new Question({...question});
+
+            let newQuestion = new Question({ ...question });
             newQuestion.save();
           }
-          
-          if(i === NO_OF_QUESTION_ID-1) updateSet();
+
+          if (i === NO_OF_QUESTION_ID - 1) updateSet();
         }
       })
       .catch((err) => {
@@ -268,7 +269,7 @@ exports.addSetGivenQIdArray = (req, res) => {
             err.message || "Some error occurred while retrieving questions.",
         });
       });
-    }
+  }
 
   const updateSet = () => {
     contests.findOneSet(req, (err, contest) => {
@@ -385,8 +386,8 @@ exports.createPractice = (req, res) => {
         questionHiddenOutput2: req.body.questionHiddenOutput2,
         questionHiddenOutput3: req.body.questionHiddenOutput3,
         questionExplanation: req.body.questionExplanation,
-        company : req.body.company,
-        topic : req.body.topic,
+        company: req.body.company,
+        topic: req.body.topic,
         courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
       });
 
@@ -516,8 +517,8 @@ exports.createPracticeExcel = (req, res) => {
                 questionHiddenOutput2: data[i].questionHiddenOutput2,
                 questionHiddenOutput3: data[i].questionHiddenOutput3,
                 questionExplanation: data[i].questionExplanation,
-                company : data[i].company,
-                topic : data[i].topic,
+                company: data[i].company,
+                topic: data[i].topic,
                 courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
               });
               // Save Question in the database
@@ -742,7 +743,6 @@ exports.delete = (req, res) => {
 };
 
 exports.findAllContest = async (req, res) => {
-
   contests.findOneSet(req, async (err, contest) => {
     if (err) {
       res.send({ success: false, message: "Error occured" });
@@ -776,12 +776,14 @@ exports.findAllContest = async (req, res) => {
             success: false,
             message: "Question not found with id " + req.params.questionId,
           });
-        };
+        }
 
         if (questionArray !== null) {
           let questions = [];
           let i;
-          questions = question.filter(question => questionArray.includes(question.questionId));
+          questions = question.filter((question) =>
+            questionArray.includes(question.questionId)
+          );
           res.send(questions);
           return;
         }
@@ -794,13 +796,19 @@ exports.findAllContest = async (req, res) => {
           let index = Math.floor(Math.random() * sets[i].length);
           questionId[i] = sets[i][index];
         }
-        questions = question.filter(question => questionId.includes(question.questionId))
+        questions = question.filter((question) =>
+          questionId.includes(question.questionId)
+        );
 
-        participations.updateParticipation(req, questionId, async (err, participation) => {
-          if (err) {
-            res.send({ success: false, message: "Error occured" });
+        participations.updateParticipation(
+          req,
+          questionId,
+          async (err, participation) => {
+            if (err) {
+              res.send({ success: false, message: "Error occured" });
+            }
           }
-        })
+        );
 
         res.send(questions);
       })
@@ -816,7 +824,7 @@ exports.findAllContest = async (req, res) => {
           message: "Error retrieving question with id " + req.params.questionId,
         });
       });
-  }
+  };
 
   const findContest = async () => {
     return Question.find({ contestId: req.params.contestId })
@@ -841,7 +849,7 @@ exports.findAllContest = async (req, res) => {
           message: "Error retrieving question with id " + req.params.questionId,
         });
       });
-  }
+  };
 };
 
 exports.findAllCourse = (req, res) => {
@@ -898,7 +906,6 @@ exports.findAllCourseDifficulty = (req, res) => {
 };
 
 exports.findAllCourseConceptWise = (req, res) => {
-  console.log(req.params);
   Question.find({
     courseId: req.params.courseId,
     difficulty: req.params.difficulty,
