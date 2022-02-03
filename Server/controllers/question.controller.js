@@ -547,7 +547,7 @@ exports.createPracticeExcel = (req, res) => {
               }
               topics.push(temp);
               question = new Question({
-                questionId: "IARE" + (currQuestions + (i + 1)).toString(),
+                questionId: data[i].questionId,
                 questionName: data[i].questionName,
                 contestId: data[i].contestId,
                 questionDescriptionText: data[i].questionDescriptionText,
