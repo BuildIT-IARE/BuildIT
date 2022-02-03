@@ -26,7 +26,7 @@ module.exports = (app) => {
     middleware.checkTokenAdmin,
     questions.addSetGivenQIdArray
   );
-  
+
   // Create a new question for Tutorials
   app.post(
     "/questiontutorials",
@@ -34,11 +34,25 @@ module.exports = (app) => {
     questions.createTutorials
   );
 
+  // Create a new question for Practice
+  app.post(
+    "/questionpractice",
+    middleware.checkTokenAdmin,
+    questions.createPractice
+  );
+
   // Create a new question for Tutorials
   app.post(
     "/questiontutorialsExcel",
     middleware.checkTokenAdmin,
     questions.createTutorialsExcel
+  );
+
+  // Create a new question for Practice
+  app.post(
+    "/questionpracticeExcel",
+    middleware.checkTokenAdmin,
+    questions.createPracticeExcel
   );
 
   // Retrieve all questions
@@ -76,6 +90,12 @@ module.exports = (app) => {
     "/questions/courses/:courseId/:difficulty/:conceptLevel",
     middleware.checkToken,
     questions.findAllCourseConceptWise
+  );
+
+  app.get(
+    "/questions/practice/:courseId/:title/:name",
+    middleware.checkToken,
+    questions.findAllCourseTopicWise
   );
 
   // Update a question with questionId
