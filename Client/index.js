@@ -10,10 +10,12 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const fetch = require("node-fetch");
 var _ = require("lodash");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
+const { token } = require("morgan");
+const { cookie } = require("request");
 
 // Load config
-dotenv.config({ path: '../Server/util/config.env' });
+dotenv.config({ path: "../Server/util/config.env" });
 
 let serverRoute = process.env.serverAddress;
 let clientRoute = process.env.clientAddress;
@@ -80,30 +82,30 @@ app.post("/skill", async (req, res) => {
   ];
 
   let options = {
-	  url: serverRoute + "/weeks",
-	  method: "get",
-	  headers: {
-		authorization: req.cookies.token,
-	  },
-	  json: true,
+    url: serverRoute + "/weeks",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
   };
-  
-  request(options, async(err, response, week) => {
+
+  request(options, async (err, response, week) => {
     let options = {
       url: serverRoute + "/skill",
       method: "get",
       headers: {
-      authorization: req.cookies.token,
+        authorization: req.cookies.token,
       },
       json: true,
     };
 
-    if( req.body.weekId !== undefined ) {
+    if (req.body.weekId !== undefined) {
       options.url = serverRoute + "/skill/" + req.body.weekId;
     }
-    
-    request(options, async(err, response, body) => {
-      if(!err) {
+
+    request(options, async (err, response, body) => {
+      if (!err) {
         const ordered = _.orderBy(
           body,
           function (item) {
@@ -118,18 +120,19 @@ app.post("/skill", async (req, res) => {
           ordered[2]["rollNumber"],
         ];
 
-        const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-          fetch(`${serverRoute}/users/branch/${toppers[0]}`),
-          fetch(`${serverRoute}/users/branch/${toppers[1]}`),
-          fetch(`${serverRoute}/users/branch/${toppers[2]}`),
-        ]);
+        const [firstResponse, secondResponse, thirdResponse] =
+          await Promise.all([
+            fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+            fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+            fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+          ]);
 
         const first = await firstResponse.json();
         const second = await secondResponse.json();
         const third = await thirdResponse.json();
-    
+
         const topperData = [first, second, third];
-        
+
         body.clientAddress = clientRoute;
 
         res.render("leaderboard", {
@@ -145,8 +148,8 @@ app.post("/skill", async (req, res) => {
           imgUsername: req.cookies.username,
         });
       }
-    })
-  })
+    });
+  });
 });
 
 app.get("/admin/add/skillup", async (req, res) => {
@@ -254,7 +257,7 @@ app.post("/editProfile", async (req, res) => {
     },
     json: true,
   };
-  
+
   request(options, function (err, response, body) {
     if (body.success) {
       res.redirect("/profile");
@@ -264,7 +267,7 @@ app.post("/editProfile", async (req, res) => {
         imgUsername: req.cookies.username,
       });
     }
-  });  
+  });
 });
 
 app.get("/login", async (req, res) => {
@@ -879,7 +882,7 @@ app.get("/admin/unverifiedusers", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    var unverified_users=[];
+    var unverified_users = [];
     for (let i = 0; i < body.length; i++) {
       if (!body[i].isVerified && !body[i].admin) {
         body[i].color = "pink";
@@ -1717,7 +1720,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
         json: true,
       };
 
-      request(options, (err, response, body) => { 
+      request(options, (err, response, body) => {
         if (!body.message) {
           const color = new Map([
             [0, "black"],
@@ -1731,7 +1734,10 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
             colors[j] = color.get(body.coding[j].score);
           }
 
-          body.codingScore = body.coding.reduce((sum, curr) => sum + curr.score, 0);
+          body.codingScore = body.coding.reduce(
+            (sum, curr) => sum + curr.score,
+            0
+          );
 
           body.color = colors;
           body.answers = [
@@ -2283,7 +2289,6 @@ app.get("/certificate", async (req, res) => {
     };
 
     request(options, (err, response, body2) => {
-
       if (!body2.message) {
         res.render("certificate", {
           imgUsername: req.cookies.username,
