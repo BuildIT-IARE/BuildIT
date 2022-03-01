@@ -10,15 +10,16 @@ var path = require("path");
 const archiver = require("archiver");
 const fs = require("fs");
 const requestIp = require("request-ip");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
-dotenv.config({ path: '../Server/util/config.env' });
+dotenv.config({ path: "../Server/util/config.env" });
 
 let middleware = require("./util/middleware.js");
 
 const User = require("./models/user.model");
 const Participation = require("./models/participation.model").Participation;
-const McqParticipation = require("./models/participation.model").McqParticipation;
+const McqParticipation =
+  require("./models/participation.model").McqParticipation;
 const ParticipationTut = require("./models/participationTut.model");
 
 // API Address
@@ -69,7 +70,7 @@ mongoose
   .connect(dbConfig.url, {
     useNewUrlParser: true,
     //to remove deprication message
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
   .then(() => {
     console.log("Successfully connected to the database");
@@ -201,7 +202,7 @@ app.post("/isOngoing", middleware.checkToken, async (req, res) => {
   });
 });
 
-app.post("/validateMcq", middleware.checkToken, async(req, res) => {
+app.post("/validateMcq", middleware.checkToken, async (req, res) => {
   if (req.body.contestId) {
     contests.getDuration(req, (err, duration) => {
       if (err) {
@@ -272,35 +273,28 @@ app.post("/validateMcq", middleware.checkToken, async(req, res) => {
           participation = participation[0];
           let momentDate = new moment();
           let validTime = participation.validTill;
-          
+
           if (
             momentDate.isBefore(participation.validTill) ||
             req.decoded.admin
           ) {
-              participations.acceptSelection(
-                result,
-                (err, doc) => {
-                  if (err) {
-                    res
-                      .status(404)
-                      .send({ message: err });
-                  } else {
-                    res.send(doc);
-                  }
-                }
-              )
-              // .catch((err)=>{
-              //   res.status(500).send({
-              //     message:
-              //       "Server is Busy, try again later! or check your code for any compilation errors, and try again.",
-              //   });
-              // });
+            participations.acceptSelection(result, (err, doc) => {
+              if (err) {
+                res.status(404).send({ message: err });
+              } else {
+                res.send(doc);
+              }
+            });
+            // .catch((err)=>{
+            //   res.status(500).send({
+            //     message:
+            //       "Server is Busy, try again later! or check your code for any compilation errors, and try again.",
+            //   });
+            // });
           } else {
-            res
-              .status(403)
-              .send({ message: "Your test duration has expired" });
+            res.status(403).send({ message: "Your test duration has expired" });
           }
-        })
+        });
         // .catch((err)=>{
         //   res.status(500).send({
         //     message:
@@ -310,7 +304,7 @@ app.post("/validateMcq", middleware.checkToken, async(req, res) => {
       } else {
         res.status(403).send({ message: "The contest window is not open" });
       }
-    })
+    });
     // .catch((err)=>{
     //   res.status(500).send({
     //     message:
@@ -552,9 +546,8 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
                                                 result.participationId =
                                                   result.username +
                                                   result.contestId;
-                                                result.clientIp = requestIp.getClientIp(
-                                                  req
-                                                );
+                                                result.clientIp =
+                                                  requestIp.getClientIp(req);
                                                 var testcasesPassed = 0;
                                                 if (
                                                   result.response1 ===

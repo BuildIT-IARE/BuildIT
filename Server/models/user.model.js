@@ -42,7 +42,7 @@ var userSchema = new Schema(
       default: false,
     },
     loginStatus: {
-      type: Boolean,
+      type: String,
       default: false,
     },
     verifyToken: String,

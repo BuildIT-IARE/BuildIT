@@ -13,6 +13,7 @@ var _ = require("lodash");
 const dotenv = require("dotenv");
 const { token } = require("morgan");
 const { cookie } = require("request");
+const session = require("express-session");
 
 // Load config
 dotenv.config({ path: "../Server/util/config.env" });
@@ -25,6 +26,14 @@ app.options("*", cors());
 app.use(
   bodyParser.urlencoded({
     extended: false,
+  })
+);
+
+app.use(
+  session({
+    secret: "some value",
+    resave: false,
+    saveUninitialized: false,
   })
 );
 
@@ -1835,12 +1844,15 @@ app.post("/complaint", async (req, res) => {
 });
 
 app.post("/login_", async (req, res) => {
+  req.session.isAuth = true;
+  console.log(req.session.id);
   let options = {
     url: serverRoute + "/login",
     method: "post",
     body: {
       username: req.body.username,
       password: req.body.password,
+      loginStatus: req.session.id,
     },
     json: true,
   };
@@ -1849,6 +1861,7 @@ app.post("/login_", async (req, res) => {
       res.cookie("token", body.token);
       res.cookie("username", body.username);
       res.cookie("branch", body.branch);
+      res.cookie("loginStatus", body.loginStatus);
       if (body.admin) {
         res.clearCookie("branch");
         res.redirect("admin");
@@ -1863,7 +1876,6 @@ app.post("/login_", async (req, res) => {
     }
   });
 });
-
 app.post("/fp", async (req, res) => {
   let options = {
     url: serverRoute + "/forgotPass",

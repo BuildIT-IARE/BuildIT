@@ -612,52 +612,53 @@ exports.checkPass = (req, res) => {
       }
       if (user[0].password === req.body.password) {
         if (user[0].isVerified === true) {
-          if (user[0].loginStatus == false) {
-            User.findOneAndUpdate(
-              { username: req.body.username },
-              {
-                $set: {
-                  loginStatus: true,
-                },
+          var user2 = user[0].username;
+          User.findOneAndUpdate(
+            { username: req.body.username },
+            {
+              $set: {
+                loginStatus: req.body.loginStatus,
               },
-              { new: true },
-              (err, doc) => {
-                if (err) {
-                  console.log("Error Occured");
-                }
+            },
+            { new: true },
+            (err, doc) => {
+              if (err) {
+                console.log("Error Occured");
               }
-            );
-            // Login successful
-            var token = jwt.sign(
-              {
-                username: user[0].username,
-                isVerified: user[0].isVerified,
-                admin: user[0].admin,
-              },
-              process.env.secret,
-              { expiresIn: "730h" }
-            );
-            res.cookie("token", token);
-            res.cookie("username", user[0].username.toUpperCase());
-
-            // return the JWT token for the future API calls
-            if (user[0].admin) {
-              res.send({
-                success: true,
-                admin: true,
-                token: token,
-                username: user[0].username.toUpperCase(),
-                message: "Auth successful",
-              });
-            } else {
-              res.send({
-                success: true,
-                token: token,
-                username: user[0].username.toUpperCase(),
-                message: "Auth successful",
-                branch: user[0].branch.toLowerCase(),
-              });
             }
+          );
+          // Login successful
+          var token = jwt.sign(
+            {
+              username: user[0].username,
+              isVerified: user[0].isVerified,
+              admin: user[0].admin,
+            },
+            process.env.secret,
+            { expiresIn: "730h" }
+          );
+          res.cookie("token", token);
+          res.cookie("username", user[0].username.toUpperCase());
+
+          // return the JWT token for the future API calls
+          if (user[0].admin) {
+            res.send({
+              success: true,
+              admin: true,
+              token: token,
+              username: user[0].username.toUpperCase(),
+              message: "Auth successful",
+              loginStatus: req.body.loginStatus,
+            });
+          } else {
+            res.send({
+              success: true,
+              token: token,
+              username: user[0].username.toUpperCase(),
+              message: "Auth successful",
+              branch: user[0].branch.toLowerCase(),
+              loginStatus: req.body.loginStatus,
+            });
           }
         } else {
           res.status(404).send({
