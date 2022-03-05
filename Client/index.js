@@ -10,10 +10,14 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const fetch = require("node-fetch");
 var _ = require("lodash");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
+const { token } = require("morgan");
+const { cookie } = require("request");
+const session = require("express-session");
+let middleware = require("../Server/util/middleware.js");
 
 // Load config
-dotenv.config({ path: '../Server/util/config.env' });
+dotenv.config({ path: "../Server/util/config.env" });
 
 let serverRoute = process.env.serverAddress;
 let clientRoute = process.env.clientAddress;
@@ -23,6 +27,14 @@ app.options("*", cors());
 app.use(
   bodyParser.urlencoded({
     extended: false,
+  })
+);
+
+app.use(
+  session({
+    secret: "some value",
+    resave: false,
+    saveUninitialized: false,
   })
 );
 
@@ -80,30 +92,30 @@ app.post("/skill", async (req, res) => {
   ];
 
   let options = {
-	  url: serverRoute + "/weeks",
-	  method: "get",
-	  headers: {
-		authorization: req.cookies.token,
-	  },
-	  json: true,
+    url: serverRoute + "/weeks",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
   };
-  
-  request(options, async(err, response, week) => {
+
+  request(options, async (err, response, week) => {
     let options = {
       url: serverRoute + "/skill",
       method: "get",
       headers: {
-      authorization: req.cookies.token,
+        authorization: req.cookies.token,
       },
       json: true,
     };
 
-    if( req.body.weekId !== undefined ) {
+    if (req.body.weekId !== undefined) {
       options.url = serverRoute + "/skill/" + req.body.weekId;
     }
-    
-    request(options, async(err, response, body) => {
-      if(!err) {
+
+    request(options, async (err, response, body) => {
+      if (!err) {
         const ordered = _.orderBy(
           body,
           function (item) {
@@ -118,18 +130,19 @@ app.post("/skill", async (req, res) => {
           ordered[2]["rollNumber"],
         ];
 
-        const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-          fetch(`${serverRoute}/users/branch/${toppers[0]}`),
-          fetch(`${serverRoute}/users/branch/${toppers[1]}`),
-          fetch(`${serverRoute}/users/branch/${toppers[2]}`),
-        ]);
+        const [firstResponse, secondResponse, thirdResponse] =
+          await Promise.all([
+            fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+            fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+            fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+          ]);
 
         const first = await firstResponse.json();
         const second = await secondResponse.json();
         const third = await thirdResponse.json();
-    
+
         const topperData = [first, second, third];
-        
+
         body.clientAddress = clientRoute;
 
         res.render("leaderboard", {
@@ -145,8 +158,8 @@ app.post("/skill", async (req, res) => {
           imgUsername: req.cookies.username,
         });
       }
-    })
-  })
+    });
+  });
 });
 
 app.get("/admin/add/skillup", async (req, res) => {
@@ -213,28 +226,38 @@ app.get("/profile", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    body.branchCaps = body.branch.toUpperCase();
-    let branch = body.branch;
-    let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
-    let rollno = req.cookies.username;
-    let testUrl = imageUrl + branch + "/" + rollno + ".jpg";
-    urlExists(testUrl, function (err, exists) {
-      if (exists) {
-        body.imgUrl = testUrl;
-        body.serverUrl = serverRoute;
-        res.render("editProfile", {
-          data: body,
-          imgUsername: req.cookies.username,
-        });
-      } else {
-        body.imgUrl = "./images/defaultuser.png";
-        body.serverUrl = serverRoute;
-        res.render("editProfile", {
-          data: body,
-          imgUsername: req.cookies.username,
-        });
-      }
-    });
+    if (!("success" in body && body.success == false)) {
+      body.branchCaps = body.branch.toUpperCase();
+
+      let branch = body.branch;
+      let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
+      let rollno = req.cookies.username;
+      let testUrl = imageUrl + branch + "/" + rollno + ".jpg";
+      urlExists(testUrl, function (err, exists) {
+        if (exists) {
+          body.imgUrl = testUrl;
+          body.serverUrl = serverRoute;
+          res.render("editProfile", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        } else {
+          body.imgUrl = "./images/defaultuser.png";
+          body.serverUrl = serverRoute;
+          res.render("editProfile", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
+      });
+    } else {
+      res.clearCookie("token");
+      res.clearCookie("username");
+      res.clearCookie("contestId");
+      res.clearCookie("courseId");
+      res.clearCookie("branch");
+      res.redirect("/");
+    }
   });
 });
 
@@ -254,7 +277,7 @@ app.post("/editProfile", async (req, res) => {
     },
     json: true,
   };
-  
+
   request(options, function (err, response, body) {
     if (body.success) {
       res.redirect("/profile");
@@ -264,7 +287,7 @@ app.post("/editProfile", async (req, res) => {
         imgUsername: req.cookies.username,
       });
     }
-  });  
+  });
 });
 
 app.get("/login", async (req, res) => {
@@ -879,7 +902,7 @@ app.get("/admin/unverifiedusers", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    var unverified_users=[];
+    var unverified_users = [];
     for (let i = 0; i < body.length; i++) {
       if (!body[i].isVerified && !body[i].admin) {
         body[i].color = "pink";
@@ -1222,8 +1245,17 @@ app.get("/contest", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    res.clearCookie("courseId");
-    res.render("contest", { imgUsername: req.cookies.username, data: body });
+    if (!("success" in body && body.success == false)) {
+      res.clearCookie("courseId");
+      res.render("contest", { imgUsername: req.cookies.username, data: body });
+    } else {
+      res.clearCookie("token");
+      res.clearCookie("username");
+      res.clearCookie("contestId");
+      res.clearCookie("courseId");
+      res.clearCookie("branch");
+      res.redirect("/");
+    }
   });
 });
 
@@ -1343,11 +1375,20 @@ app.get("/qualifier_tests", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    res.clearCookie("courseId");
-    res.render("qualifier_test", {
-      imgUsername: req.cookies.username,
-      data: body,
-    });
+    if (!("success" in body && body.success == false)) {
+      res.clearCookie("courseId");
+      res.render("qualifier_test", {
+        imgUsername: req.cookies.username,
+        data: body,
+      });
+    } else {
+      res.clearCookie("token");
+      res.clearCookie("username");
+      res.clearCookie("contestId");
+      res.clearCookie("courseId");
+      res.clearCookie("branch");
+      res.redirect("/");
+    }
   });
 });
 
@@ -1717,7 +1758,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
         json: true,
       };
 
-      request(options, (err, response, body) => { 
+      request(options, (err, response, body) => {
         if (!body.message) {
           const color = new Map([
             [0, "black"],
@@ -1731,7 +1772,10 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
             colors[j] = color.get(body.coding[j].score);
           }
 
-          body.codingScore = body.coding.reduce((sum, curr) => sum + curr.score, 0);
+          body.codingScore = body.coding.reduce(
+            (sum, curr) => sum + curr.score,
+            0
+          );
 
           body.color = colors;
           body.answers = [
@@ -1829,12 +1873,14 @@ app.post("/complaint", async (req, res) => {
 });
 
 app.post("/login_", async (req, res) => {
+  req.session.isAuth = true;
   let options = {
     url: serverRoute + "/login",
     method: "post",
     body: {
       username: req.body.username,
       password: req.body.password,
+      loginStatus: req.session.id,
     },
     json: true,
   };
@@ -1843,6 +1889,7 @@ app.post("/login_", async (req, res) => {
       res.cookie("token", body.token);
       res.cookie("username", body.username);
       res.cookie("branch", body.branch);
+      res.cookie("loginStatus", body.loginStatus);
       if (body.admin) {
         res.clearCookie("branch");
         res.redirect("admin");
@@ -1857,7 +1904,6 @@ app.post("/login_", async (req, res) => {
     }
   });
 });
-
 app.post("/fp", async (req, res) => {
   let options = {
     url: serverRoute + "/forgotPass",
@@ -1972,7 +2018,19 @@ app.get("/tutorials", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    res.render("tutorials", { imgUsername: req.cookies.username, data: body });
+    if (!("success" in body && body.success == false)) {
+      res.render("tutorials", {
+        imgUsername: req.cookies.username,
+        data: body,
+      });
+    } else {
+      res.clearCookie("token");
+      res.clearCookie("username");
+      res.clearCookie("contestId");
+      res.clearCookie("courseId");
+      res.clearCookie("branch");
+      res.redirect("/");
+    }
   });
 });
 
@@ -2283,7 +2341,6 @@ app.get("/certificate", async (req, res) => {
     };
 
     request(options, (err, response, body2) => {
-
       if (!body2.message) {
         res.render("certificate", {
           imgUsername: req.cookies.username,

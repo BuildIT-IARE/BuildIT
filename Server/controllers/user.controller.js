@@ -69,7 +69,7 @@ exports.findOnePublic = (req, res) => {
         email: user.email,
         branch: user.branch,
         phone: user.phone ? user.phone : "",
-        photo: user.photo.contentType ? user.photo.data.toString('base64') : "",
+        photo: user.photo.contentType ? user.photo.data.toString("base64") : "",
       };
       res.send(sendUser);
     })
@@ -354,13 +354,13 @@ exports.updateImage = (req, res) => {
         };
         const result = await uploadImage(img);
         if (result) {
-          res.redirect(clientAddress + '/error' + '?message=' + result);
+          res.redirect(clientAddress + "/error" + "?message=" + result);
         }
         fs.unlinkSync(`../Public/${username}`, console.log(err));
       }
     });
   }
-  
+
   const uploadImage = async (img) => {
     return User.findOneAndUpdate(
       { username: req.params.username },
@@ -380,7 +380,7 @@ exports.updateImage = (req, res) => {
         if (!user) {
           return "User not found with username  " + req.params.username;
         }
-        res.redirect(clientAddress + '/profile');
+        res.redirect(clientAddress + "/profile");
       })
       .catch((err) => {
         if (err.kind === "ObjectId") {
@@ -388,7 +388,7 @@ exports.updateImage = (req, res) => {
         }
         return "Error updating user with id " + req.params.username;
       });
-  }
+  };
 };
 
 exports.updateOne = async (req, res) => {
@@ -499,7 +499,7 @@ exports.updateOne = async (req, res) => {
         }
         return res.status(500).send({
           success: false,
-          message: err.message,//"Error updating user with id " + req.params.username,
+          message: err.message, //"Error updating user with id " + req.params.username,
         });
       });
   };
@@ -612,11 +612,27 @@ exports.checkPass = (req, res) => {
       }
       if (user[0].password === req.body.password) {
         if (user[0].isVerified === true) {
+          var user2 = user[0].username;
+          User.findOneAndUpdate(
+            { username: req.body.username },
+            {
+              $set: {
+                loginStatus: req.body.loginStatus,
+              },
+            },
+            { new: true },
+            (err, doc) => {
+              if (err) {
+                console.log("Error Occured");
+              }
+            }
+          );
           // Login successful
-          let token = jwt.sign(
+          var token = jwt.sign(
             {
               username: user[0].username,
               isVerified: user[0].isVerified,
+              loginStatus: req.body.loginStatus,
               admin: user[0].admin,
             },
             process.env.secret,
@@ -633,6 +649,7 @@ exports.checkPass = (req, res) => {
               token: token,
               username: user[0].username.toUpperCase(),
               message: "Auth successful",
+              loginStatus: req.body.loginStatus,
             });
           } else {
             res.send({
@@ -641,6 +658,7 @@ exports.checkPass = (req, res) => {
               username: user[0].username.toUpperCase(),
               message: "Auth successful",
               branch: user[0].branch.toLowerCase(),
+              loginStatus: req.body.loginStatus,
             });
           }
         } else {
@@ -754,11 +772,11 @@ exports.deleteMultiple = (req, res) => {
     hours = Number(req.body.hours);
   }
   User.deleteMany({
-      createdAt: {
-        $lte: new Date(Date.now() - (hours) * 60 * 60 * 1000)
-      },
-      isVerified: false
-    })
+    createdAt: {
+      $lte: new Date(Date.now() - hours * 60 * 60 * 1000),
+    },
+    isVerified: false,
+  })
     .then((deletedUsers) => {
       res.send(deletedUsers);
     })

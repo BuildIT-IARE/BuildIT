@@ -1,3 +1,4 @@
+const User = require("../models/user.model.js");
 let jwt = require("jsonwebtoken");
 
 let checkToken = (req, res, next) => {
@@ -13,7 +14,7 @@ let checkToken = (req, res, next) => {
       token = token.slice(7, token.length);
     }
 
-    jwt.verify(token, process.env.secret, (err, decoded) => {
+    jwt.verify(token, process.env.secret, async (err, decoded) => {
       if (err) {
         return res.json({
           success: false,
@@ -21,8 +22,21 @@ let checkToken = (req, res, next) => {
         });
       } else {
         if (decoded.isVerified || decoded.admin) {
+          const verifiedLogin = await User.findOne({
+            username: decoded.username,
+          });
           req.decoded = decoded;
-          next();
+          if (
+            verifiedLogin &&
+            verifiedLogin.loginStatus === decoded.loginStatus
+          ) {
+            next();
+          } else {
+            return res.json({
+              success: false,
+              message: "Unauthorized Access",
+            });
+          }
         } else {
           return res.json({
             success: false,
@@ -55,7 +69,7 @@ let checkTokenAdmin = (req, res, next) => {
       token = token.slice(7, token.length);
     }
 
-    jwt.verify(token, process.env.secret, (err, decoded) => {
+    jwt.verify(token, process.env.secret, async (err, decoded) => {
       if (err) {
         return res.json({
           success: false,
@@ -63,8 +77,18 @@ let checkTokenAdmin = (req, res, next) => {
         });
       } else {
         if (decoded.admin) {
+          const verifiedLogin = await User.findOne({
+            loginStatus: decoded.loginStatus,
+          });
           req.decoded = decoded;
-          next();
+          if (verifiedLogin) {
+            next();
+          } else {
+            return res.json({
+              success: false,
+              message: "Unauthorized Access",
+            });
+          }
         } else {
           return res.json({
             success: false,

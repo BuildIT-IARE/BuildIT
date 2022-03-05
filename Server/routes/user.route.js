@@ -37,7 +37,11 @@ module.exports = (app) => {
   app.delete("/users/:username", middleware.checkTokenAdmin, users.delete);
 
   // Delete Multiple users
-  app.post("/users/delete/multiple", middleware.checkTokenAdmin, users.deleteMultiple);
+  app.post(
+    "/users/delete/multiple",
+    middleware.checkTokenAdmin,
+    users.deleteMultiple
+  );
 
   // Forgot Password
   app.post("/forgotPass", users.forgotPass);
