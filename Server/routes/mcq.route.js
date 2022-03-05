@@ -21,11 +21,11 @@ module.exports = (app) => {
   // testing end-------------------------------------------------------------------------------
   
   // Retrieve all questions with contestId
-  app.post(
+  /* app.post(
     "/mcqs/question/contest/:contestId",
     middleware.checkToken,
     mcqs.findOneQuestion
-  );
+  ); */
   
   // Retrieve a single mcq with contestId
   app.post(

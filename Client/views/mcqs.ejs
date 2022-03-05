@@ -243,46 +243,15 @@
           <h2 id="labelTime"></h2>
         </div>
         <div id="section">
-          <% if(!data.isPartial || (data.isPartial && data.sections[1]!=='0') ) {%>
-          <button
-            type="button"
-            class="btn <% if(data.section===1){ %>active<%}%>"
-            onclick="jump(0,1)"
-          >
-            Numeral</button
-          >
-          <% } if(!data.isPartial || (data.isPartial && data.sections[2]!=='0') ) {%>
-          <button
-            type="button"
-            class="btn <% if(data.section===2){ %>active<%}%>"
-            onclick="jump(0,2)"
-          >
-            Reasoning</button
-          >
-          <% } if(!data.isPartial || (data.isPartial && data.sections[3]!=='0') ) {%>
-          <button
-            type="button"
-            class="btn <% if(data.section===3){ %>active<%}%>"
-            onclick="jump(0,3)"
-          >
-            Verbal</button
-          >
-          <% } if(!data.isPartial || (data.isPartial && data.sections[4]!=='0') ) {%>
-          <button
-            type="button"
-            class="btn <% if(data.section===4){ %>active<%}%>"
-            onclick="jump(0,4)"
-          >
-            Programming
-          </button>
+          <% for(let i=0; i<datatimer.sections.length; i++) { %>
+            <button
+              type="button"
+              class="btn active"
+              onclick="jump(0,'<%= i+1 %>')"
+            >
+            <%= datatimer.sections[i] %></button
+            >
           <% } %>
-          <button
-            type="button"
-            class="btn <% if(data.section===5){ %>active<%}%>"
-            onclick="jump(0,5)"
-          >
-            Coding
-          </button>
         </div>
         <div id="image">
           <h4 id="username"><%= imgUsername %>&emsp;</h4>
@@ -295,97 +264,6 @@
         </div>
       </div>
       <div id="main">
-        <% if(data.section===5) { %>
-          <div class="col-md-12 content">
-
-            <h3 class="section-title">
-              <%= data.questionName %> - #<%= data.questionId %>
-              <span style="float: right; color: <%= datatimer.color %>">
-                score:&nbsp;<%= datatimer.score %>
-              </span>
-            </h3>
-            <br />
-
-            <div class="border">
-              <div class="font-tertiary text-white">
-                <p class="cars-text" style="font-size: 130%;"><%= data.questionDescriptionText %></p>
-              </div>
-
-              <% if(data.questionInputText) { %>
-              <div>
-                <h4><b>Input:</b></h4>
-                <blockquote>
-                  <%= data.questionInputText %>
-                </blockquote>
-              </div>
-              <br />
-              <% } if(data.questionOutputText) { %>
-              <div>
-                <h4><b>Output:</b></h4>
-                <blockquote>
-                  <%= data.questionOutputText %>
-                </blockquote>
-              </div>
-              <br />
-
-              <% } if(data.questionExampleInput1) { %>
-              <div>
-                <h4><b>Sample Input 1:</b></h4>
-                <pre><%= data.questionExampleInput1 %></pre>
-              </div>
-              <br />
-              <% } if(data.questionExampleOutput1) { %>
-              <div>
-                <h4><b>Sample Output 1:</b></h4>
-                <pre><%= data.questionExampleOutput1 %></pre>
-              </div>
-              <br />
-              <% } if(data.questionExampleInput2) { %>
-              <div>
-                <h4><b>Sample Input 2:</b></h4>
-                <pre><%= data.questionExampleInput2 %></pre>
-              </div>
-              <br />
-              <% } if(data.questionExampleOutput2) { %>
-              <div>
-                <h4><b>Sample Output 2:</b></h4>
-                <pre><%= data.questionExampleOutput2 %></pre>
-              </div>
-              <br />
-              <% } if(data.questionExampleInput3) { %>
-              <div>
-                <h4><b>Sample Input 3:</b></h4>
-                <pre><%= data.questionExampleInput3 %></pre>
-              </div>
-              <br />
-              <% } if(data.questionExampleOutput3) { %>
-              <div>
-                <h4><b>Sample Output 3:</b></h4>
-                <pre><%= data.questionExampleOutput3 %></pre>
-              </div>
-              <br />
-
-              <% } if (data.questionExplanation) { %>
-              <div>
-                <h4><b>Explanation:</b></h4>
-                <p class="cars-text explanation"><%= data.questionExplanation %></p>
-              </div>
-              <% } if (data.author) { %>
-              <div>
-                <h4><b>Author:</b></h4>
-                <p class="explanation"><%= data.author %></p>
-              </div>
-              <% } %>
-            </div>
-            <br />
-
-            <a href="<%= data.url %>/ide/<%= data.questionId %>" target="_blank">
-              <button id="editor" class="btn submit" position="right">
-                <span>Online Editor</span>
-              </button>
-            </a>
-          </div>
-        <% } else { %>
         <div id="content">
           <h4>
             Q&nbsp;<%= data.questionNum %>.&nbsp;<%= data.mcqDescriptionText %>
@@ -444,6 +322,11 @@
               value="<%= data.questionNum %>"
             >
             <input
+              type="hidden"
+              name="sectionCount"
+              value="<%= datatimer.sections.length %>"
+            >
+            <input
               type="submit"
               name="submit"
               id="submit"
@@ -452,7 +335,6 @@
             />
           </form>
         </div>
-        <% } %> 
         <div id="controls">
           <div id="nav">
             <% for(let i=1; i <= data.sectionLen; i+=4){ %>
@@ -469,7 +351,7 @@
             <% } %>
           </div>
           <a
-            href="/qualifierTestScore/<%= data.contestId %>/<%= data.sectionLen %>"
+            href="/qualifierTestScore/<%= data.contestId %>"
             onclick="return timer()"
             class="btn active end"
             id="end"
@@ -653,8 +535,7 @@
             <input type="hidden" name="section" value=` +
           sec +
           `>
-            <input type="hidden" name="isPartial" value="<%= data.isPartial %>" >
-            <input type="hidden" name="sections" value="<%= data.sections %>" >
+            <input type="hidden" name="sectionCount" value="<%= datatimer.sections.length %>" >
           </form>`;
         document.getElementById("dynForm").submit();
       }

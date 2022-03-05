@@ -37,7 +37,7 @@ exports.create = (req, res) => {
       question
         .save()
         .then((data) => {
-          if (req.files.photo) {
+          if (req.files && req.files.photo) {
             updateImage(req.body.questionId);
             return;
           }
@@ -263,15 +263,9 @@ exports.findOneContest = (req, res) => {
       mcq.answer = null;
       mcq.questionNum = index + 1;
       mcq.sectionLen = mcqs.length;
-      mcq.isPartial = req.body.isPartial;
       mcq.photo = mcq.photo.contentType
         ? mcq.photo.data.toString("base64")
         : "";
-
-      if (mcq.isPartial)
-      {
-        mcq.sections = req.body.sections;
-      }
 
       res.send(mcq);
     })
@@ -317,23 +311,12 @@ exports.findRecent = (req, res) => {
       let mcq = mcqs[0].resp;
       mcq.answer = null;
       mcq.questionNum = 1;
-      mcq.isPartial = false;
       mcq.sectionLen = mcqs[0].myCount;
       mcq.photo = mcq.photo
         ? mcq.photo.contentType
           ? mcq.photo.data.toString("base64")
           : ""
         : "";
-
-      if (mcqs.length < 4)
-      {
-        let division = Array(5).fill(0);
-        let existingDiv = mcqs.map((v) => v._id);
-        existingDiv.forEach((c) => division[c] = c);
-        
-        mcq.sections = division.join("");
-        mcq.isPartial = true;
-      }
 
       res.send(mcq);
     })

@@ -103,6 +103,10 @@ exports.createMcq = (req, res) => {
 
           let date = moment();
           let d = duration.duration;
+          let sections = duration.sections.map((e) => ({
+            section: e,
+            responses: [],
+          }));
           let endTime = moment(date, "HH:mm:ss").add(d, "minutes");
           // Create a Participation
           const participation = new McqParticipation({
@@ -113,12 +117,8 @@ exports.createMcq = (req, res) => {
             submissionResults: [],
             mcqResults: {},
             validTill: endTime,
-            responses: {
-              numeral: [],
-              reasoning: [],
-              verbal: [],
-              programming: [],
-            },
+            responses: sections,
+            sections: duration.sections,
           });
           // Save participation in the database
           participation
@@ -153,10 +153,8 @@ exports.acceptSelection = (sub, callback) => {
   McqParticipation.find({ participationId: sub.participationId })
     .then((participation) => {
       // Check prev selection
-      const sec = ["", "numeral", "reasoning", "verbal", "programming"][
-        sub.section
-      ];
-      const selections = participation[0].responses[sec];
+      const sec = participation[0].responses[sub.section-1].section;
+      const selections = participation[0].responses[sub.section-1].responses;
       found = false;
       if (selections.length !== 0) {
         selections.forEach((selection) => {
@@ -165,8 +163,8 @@ exports.acceptSelection = (sub, callback) => {
 
             // Update selection
             console.log("Came here");
-            const query_field = `responses.${sec}.mcqId`;
-            const field = `responses.${sec}.$.selection`;
+            const query_field = `responses.${sub.section-1}.responses.mcqId`;
+            const field = `responses.${sub.section-1}.responses.$.selection`;
             const value = sub.answer;
             const obj = { [field]: value };
             McqParticipation.updateOne(
@@ -201,7 +199,8 @@ exports.acceptSelection = (sub, callback) => {
         });
       }
       if (!found) {
-        const field = `responses.${sec}`;
+        // const field = `responses.${sec}`;
+        const field = `responses.${sub.section-1}.responses`;
         McqParticipation.findOneAndUpdate(
           { participationId: sub.participationId },
           {
@@ -236,7 +235,7 @@ exports.acceptSelection = (sub, callback) => {
       }
     })
     .catch((err) => {
-      // console.log(err);
+      console.log(err);
       res.status(500).send({
         success: false,
         message:

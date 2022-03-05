@@ -572,6 +572,34 @@ app.get("/admin/add/contest", async (req, res) => {
   });
 });
 
+app.get("/admin/add/qualifier_test", async (req, res) => {
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    let url = {
+      url: clientRoute,
+      serverurl: serverRoute,
+    };
+    if (body.success) {
+      res.render("qualifier_test_add", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      console.log("token " + req.cookies.token);
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
+    }
+  });
+});
+
 app.get("/admin/update/question", async (req, res) => {
   let url = {
     url: clientRoute,
@@ -1402,16 +1430,16 @@ app.get("/qualifier_test/:contestId", async (req, res) => {
             // Get participation details
             request(options3, function (err, response, bodytimer) {
               if (Array.isArray(bodytimer)) {
-                let sec = ["", "numeral", "reasoning", "verbal", "programming"][
-                  body.section
-                ];
                 bodytimer = bodytimer[0];
-                let currSection = bodytimer.responses[sec];
+                bodytimer.responses = bodytimer.responses[body.section - 1].responses;
+
+                let currSection = bodytimer.responses;
                 currSection = currSection.map((v) => v.questionNum);
                 let index = currSection.indexOf(body.questionNum);
                 if (index !== -1) currSection.splice(index, 1);
+
                 bodytimer.selection =
-                  index === -1 ? 0 : bodytimer.responses[sec][index].selection;
+                  index === -1 ? 0 : bodytimer.responses[index].selection;
                 bodytimer.questionNums = currSection;
                 bodytimer.submissionResults = null;
                 bodytimer.responses = null;
@@ -1450,30 +1478,10 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
       let section = Number(req.body.section);
       let sectionLen = Number(req.body.sectionLen);
       let questionNum = Number(req.body.questionNum);
-      let sections = req.body.sections;
-      if (req.body.isPartial === "true") {
-        if (questionNum === sectionLen) {
-          if (section === 4) {
-            questionNum -= 1;
-          } else {
-            let str = "00000";
-            let ind = sections.indexOf(section.toString());
-            // let rem = sections.substring(ind+1, 5);
-            // let ini = str.substring(ind+1, 5);
-            if (str.substring(ind + 1, 5) === sections.substring(ind + 1, 5)) {
-              questionNum -= 1;
-            } else {
-              questionNum = 0;
-              let sec = section + 1;
-              while (sections[sec] === "0" && sec < 4) {
-                sec += 1;
-              }
-              section = sec;
-            }
-          }
-        }
-      } else if (questionNum === sectionLen) {
-        if (section === 4) questionNum -= 1;
+      let sectionCount = Number(req.body.sectionCount);
+
+      if (questionNum === sectionLen) {
+        if (section === sectionCount) questionNum -= 1;
         else {
           questionNum = 0;
           section += 1;
@@ -1491,10 +1499,6 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
         method: "post",
         headers: {
           authorization: req.cookies.token,
-        },
-        body: {
-          isPartial: req.body.isPartial === "true" ? true : false,
-          sections: req.body.sections,
         },
         json: true,
       };
@@ -1515,24 +1519,17 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
             if (Array.isArray(bodytimer)) {
               bodytimer = bodytimer[0];
 
-              let sections1 = [
-                "",
-                "numeral",
-                "reasoning",
-                "verbal",
-                "programming",
-              ];
-              let sec = sections1[body.section];
               let currSection = [];
               let selection = 0;
               let index = 0;
 
-              currSection = bodytimer.responses[sec];
+              bodytimer.responses = bodytimer.responses[body.section - 1].responses;
+              currSection = bodytimer.responses;
               currSection = currSection.map((v) => v.questionNum);
               index = currSection.indexOf(body.questionNum);
               if (index !== -1) {
                 currSection.splice(index, 1);
-                selection = bodytimer.responses[sec][index].selection;
+                selection = bodytimer.responses[index].selection;
               }
 
               bodytimer.selection = selection;
@@ -1593,98 +1590,8 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
     });
   };
 
-  const fetchQuestion = () => {
-    return new Promise(() => {
-      let sectionLen = Number(req.body.sectionLen);
-      let questionNum = Number(req.body.questionNum);
-      if (questionNum === sectionLen) questionNum -= 1;
-
-      let options = {
-        url: serverRoute + "/mcqs/question/contest/" + req.params.contestId,
-        method: "post",
-        headers: {
-          authorization: req.cookies.token,
-        },
-        body: {
-          isPartial: req.body.isPartial === "true" ? true : false,
-          sections: req.body.sections,
-          questionNum: questionNum,
-        },
-        json: true,
-      };
-
-      // get one MCQ
-      request(options, (err, response, body) => {
-        if (!body.message) {
-          res.cookie("contestId", req.params.contestId);
-          let options3 = {
-            url: serverRoute + "/mcqParticipations/" + req.params.contestId,
-            method: "get",
-            headers: {
-              authorization: req.cookies.token,
-            },
-            json: true,
-          };
-
-          // get participation details
-          request(options3, (err, response, bodytimer) => {
-            if (Array.isArray(bodytimer)) {
-              bodytimer = bodytimer[0];
-
-              const mcqIds = new Map(body.ids);
-              const color = new Map([
-                [0, "black"],
-                [25, "red"],
-                [50, "orange"],
-                [100, "green"],
-              ]);
-              let currSection = [];
-              let score = 0;
-              let index = 0;
-              let i = 0;
-
-              for (let j = 0; j < bodytimer.submissionResults.length; j++) {
-                index =
-                  mcqIds.get(bodytimer.submissionResults[j].questionId) + 1;
-                if (index === body.questionNum)
-                  score = bodytimer.submissionResults[j].score;
-                else currSection[i++] = index;
-              }
-
-              bodytimer.score = score;
-              bodytimer.color = color.get(score);
-              bodytimer.questionNums = currSection;
-              bodytimer.responses = null;
-              bodytimer.mcqResults = null;
-              bodytimer.submissionResults = null;
-
-              res.render("mcqs", {
-                imgUsername: req.cookies.username,
-                imgBranch: req.cookies.branch,
-                data: body,
-                datatimer: bodytimer,
-              });
-            } else {
-              res.render("error", {
-                data: body,
-                imgUsername: req.cookies.username,
-              });
-            }
-          });
-        } else {
-          res.render("error", {
-            data: body,
-            imgUsername: req.cookies.username,
-          });
-        }
-      });
-    });
-  };
-
   // check whether retrieve or update and retrieve
-  if (req.body.section === "5") {
-    const first = await fetchQuestion();
-  } else if (req.body.answer) {
+  if (req.body.answer) {
     const first = await addSelection();
   } else {
     const first = await doRequest();
@@ -1757,7 +1664,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
       });
     } else {
       res.render("error", {
-        data: body,
+        data: body1,
         imgUsername: req.cookies.username,
       });
     }

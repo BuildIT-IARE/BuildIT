@@ -74,14 +74,7 @@
 						<p class="comments">Upload Excel File Here</p>
 						<input type="file" name="upfile" value="">
 					</fieldset>
-
-					<p class="comments" style="float: left;">Challenge</p>
-					<div class="new">
-						<input type="checkbox" name="mcq" value=false id="coding">
-						<label for="coding">&nbsp;Coding</label>
-						<input type="checkbox" name="mcq" value=true id="mcq">
-						<label for="mcq">&nbsp;Qualifier Test</label>
-					</div>
+					<input type="hidden" name="mcq" value=false id="coding">
 					<br><hr>
 				  <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
 				  <div class="btn-block">
@@ -99,11 +92,6 @@
 		</script>
 		<script>
 			document.getElementById("token").value = "<%= token %>";
-		</script>
-		<script>
-			$('.new > input[type="checkbox"]').on('change', function() {
-				$('.new > input[type="checkbox"]').not(this).prop('checked', false);
-			});
 		</script>
 		<script>
 			function valueChanged() {

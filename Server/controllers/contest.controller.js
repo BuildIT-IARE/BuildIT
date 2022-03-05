@@ -20,6 +20,10 @@ exports.create = (req, res) => {
   }
 
   let usernames = [""];
+  let sections = [""];
+
+  if (req.body.contestSections)
+    sections = req.body.contestSections.split(",").map((e) => e.trim());
 
   const move = (callback) => {
     var file = req.files.upfile;
@@ -52,6 +56,7 @@ exports.create = (req, res) => {
       contestEndTime: req.body.contestEndTime,
       mcq: req.body.mcq,
       usernames: usernames,
+      sections: sections,
     });
 
     // SaveContest in the database
@@ -162,6 +167,7 @@ exports.getDuration = (req, callback) => {
         duration: contest.contestDuration,
         date: contest.contestDate,
         mcq: contest.mcq,
+        sections: contest.sections,
       };
       return callback(null, durationData);
     })

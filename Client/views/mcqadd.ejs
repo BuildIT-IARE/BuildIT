@@ -72,23 +72,20 @@
         >
           <h1>Add Question Manually</h1>
           <br />
+          <h4>Contest ID</h4>
+          <input name="contestId" id="get_sections" type="text" />
+          <p class="button" onclick="getSection()">Show Sections</p>
+          <br>
+
           <p class="comments"><b>Section</b></p>
-          <div class="new">
-            <input type="radio" name="section" value="1" id="5" />
-            <label for="5">&emsp;Numerical Ability</label>
-            <input type="radio" name="section" value="2" id="6" />
-            <label for="6">&emsp;Reasoning Ability</label>
-            <input type="radio" name="section" value="3" id="7" />
-            <label for="7">&emsp;Verbal Ability</label>
-            <input type="radio" name="section" value="4" id="8" />
-            <label for="8">&emsp;Programming Logic</label>
+          <div class="new" id="sectionInput">
           </div>
           <h4>Add Picture</h4>
           <div class="wrapper" style="margin: 0">
             <input type="file" name="photo" id="input-files" accept="image/*"/>
           </div>
-          <h4>Contest ID</h4>
-          <input name="contestId" type="text" />
+          <!-- <h4>Contest ID</h4> -->
+          <!-- <input name="contestId2" type="text" /> -->
           <p class="comments">Description</p>
           <textarea name="questionDescriptionText" rows="30"></textarea>
           <p class="comments">Option 1</p>
@@ -127,6 +124,7 @@
     <!-- /container -->
     <script src="/adminjs/classie.js"></script>
     <script src="/adminjs/gnmenu.js"></script>
+    <script src="/plugins/jQuery/jquery.min.js"></script>
     <script>
       new gnMenu(document.getElementById("gn-menu"));
     </script>
@@ -153,5 +151,55 @@
         return true;
       }
     </script>
+    <script>
+      function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      const getSection = () => {
+        var url = '<%= data.serverurl %>/contests/' + document.getElementById("get_sections").value;
+        console.log(url);
+        $.ajax({
+          url: url,
+          headers: {"Authorization": getCookie("token")},
+          type: "GET",
+          success: function (data) {
+            // var x = JSON.stringify(data);
+            var sections = data[0].sections;
+            console.log(sections);
+            var tex = document.getElementById("sectionInput");
+            let str = "";
+
+            for(let i=0; i<sections.length; i++) {
+              str +=
+              `
+              <input type="radio" name="section" value="${i+1}" id="${11+i}" />
+              <label for="${11+i}">&emsp;${sections[i]}</label>
+              `;
+            }
+            tex.innerHTML = str;
+          },
+          error: function (error) {
+              console.log(`Error ${error}`);
+          }
+        });
+        return false;
+      }
+    </script>
+    <script>
+      
+    </script>
+    
   </body>
 </html>

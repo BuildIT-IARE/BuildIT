@@ -26,10 +26,10 @@ var result = new Schema({
 });
 
 var response = new Schema({
-  numeral:   [{ mcqId: String, questionNum: Number, selection: Number }],
-  reasoning: [{ mcqId: String, questionNum: Number, selection: Number }],
-  verbal:    [{ mcqId: String, questionNum: Number, selection: Number }],
-  programming: [{ mcqId: String, questionNum: Number, selection: Number }],
+  section: [{
+    name: String,
+    responses: [{ mcqId: String, questionNum: Number, selection: Number }]
+  }],
 });
 
 var mcqParticipationSchema = new Schema({
@@ -41,7 +41,11 @@ var mcqParticipationSchema = new Schema({
   questions: Array,
   submissionResults: Array,
   mcqResults: result,
-  responses: response,
+  responses: [{
+    section: String,
+    responses: [{ mcqId: String, questionNum: Number, selection: Number }]
+  }],
+  sections: [ String ],
 });
 
 module.exports = {
