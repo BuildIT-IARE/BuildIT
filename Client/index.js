@@ -14,6 +14,7 @@ const dotenv = require("dotenv");
 const { token } = require("morgan");
 const { cookie } = require("request");
 const session = require("express-session");
+let middleware = require("../Server/util/middleware.js");
 
 // Load config
 dotenv.config({ path: "../Server/util/config.env" });
@@ -225,28 +226,38 @@ app.get("/profile", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    body.branchCaps = body.branch.toUpperCase();
-    let branch = body.branch;
-    let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
-    let rollno = req.cookies.username;
-    let testUrl = imageUrl + branch + "/" + rollno + ".jpg";
-    urlExists(testUrl, function (err, exists) {
-      if (exists) {
-        body.imgUrl = testUrl;
-        body.serverUrl = serverRoute;
-        res.render("editProfile", {
-          data: body,
-          imgUsername: req.cookies.username,
-        });
-      } else {
-        body.imgUrl = "./images/defaultuser.png";
-        body.serverUrl = serverRoute;
-        res.render("editProfile", {
-          data: body,
-          imgUsername: req.cookies.username,
-        });
-      }
-    });
+    if (!("success" in body && body.success == false)) {
+      body.branchCaps = body.branch.toUpperCase();
+
+      let branch = body.branch;
+      let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
+      let rollno = req.cookies.username;
+      let testUrl = imageUrl + branch + "/" + rollno + ".jpg";
+      urlExists(testUrl, function (err, exists) {
+        if (exists) {
+          body.imgUrl = testUrl;
+          body.serverUrl = serverRoute;
+          res.render("editProfile", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        } else {
+          body.imgUrl = "./images/defaultuser.png";
+          body.serverUrl = serverRoute;
+          res.render("editProfile", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
+      });
+    } else {
+      res.clearCookie("token");
+      res.clearCookie("username");
+      res.clearCookie("contestId");
+      res.clearCookie("courseId");
+      res.clearCookie("branch");
+      res.redirect("/");
+    }
   });
 });
 
@@ -1234,8 +1245,17 @@ app.get("/contest", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    res.clearCookie("courseId");
-    res.render("contest", { imgUsername: req.cookies.username, data: body });
+    if (!("success" in body && body.success == false)) {
+      res.clearCookie("courseId");
+      res.render("contest", { imgUsername: req.cookies.username, data: body });
+    } else {
+      res.clearCookie("token");
+      res.clearCookie("username");
+      res.clearCookie("contestId");
+      res.clearCookie("courseId");
+      res.clearCookie("branch");
+      res.redirect("/");
+    }
   });
 });
 
@@ -1355,11 +1375,20 @@ app.get("/qualifier_tests", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    res.clearCookie("courseId");
-    res.render("qualifier_test", {
-      imgUsername: req.cookies.username,
-      data: body,
-    });
+    if (!("success" in body && body.success == false)) {
+      res.clearCookie("courseId");
+      res.render("qualifier_test", {
+        imgUsername: req.cookies.username,
+        data: body,
+      });
+    } else {
+      res.clearCookie("token");
+      res.clearCookie("username");
+      res.clearCookie("contestId");
+      res.clearCookie("courseId");
+      res.clearCookie("branch");
+      res.redirect("/");
+    }
   });
 });
 
@@ -1845,7 +1874,6 @@ app.post("/complaint", async (req, res) => {
 
 app.post("/login_", async (req, res) => {
   req.session.isAuth = true;
-  console.log(req.session.id);
   let options = {
     url: serverRoute + "/login",
     method: "post",
@@ -1990,7 +2018,19 @@ app.get("/tutorials", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    res.render("tutorials", { imgUsername: req.cookies.username, data: body });
+    if (!("success" in body && body.success == false)) {
+      res.render("tutorials", {
+        imgUsername: req.cookies.username,
+        data: body,
+      });
+    } else {
+      res.clearCookie("token");
+      res.clearCookie("username");
+      res.clearCookie("contestId");
+      res.clearCookie("courseId");
+      res.clearCookie("branch");
+      res.redirect("/");
+    }
   });
 });
 

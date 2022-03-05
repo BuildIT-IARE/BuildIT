@@ -632,6 +632,7 @@ exports.checkPass = (req, res) => {
             {
               username: user[0].username,
               isVerified: user[0].isVerified,
+              loginStatus: req.body.loginStatus,
               admin: user[0].admin,
             },
             process.env.secret,
