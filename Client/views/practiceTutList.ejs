@@ -90,18 +90,17 @@
     <!-- /page title -->
     <section class="section">
       <% var myList = [] %>
-      <% for(var i =0;i<data.length;i++) { %>
-      <%   if(title == "Topics") { %>
-      <%  myList = myList.concat(myList,data[i].topic);%>
-      <% } else { %>
-      <% myList = myList.concat(myList,data[i].company);%>
-      <%} %>
-      <%} %>
-      <%const unique =new Set(myList); %> 
-      <% var myArr = Array.from(unique) %>
+      <% if(title == "Topics") { %>
+        <% for(var i =0;i<data.length;i++) { %>
+          <%  myList = myList.concat(myList,data[i].topic);%>
+      <% } } else { %>
+        <% for(var i =0;i<data.length;i++) { %>
+          <% myList = myList.concat(myList,data[i].company);%>
+      <% } } %>
+      <%const myArr = myList.filter((v, i, a) => a.indexOf(v) === i) %>
       <% for(var i=0; i<myArr.length;i++) {%>
       <a
-        href="<%= data.clientRoute %>/tutorials/practice/<%= data.courseId %>/<%= title%>/<%= myArr[i] %>"
+        href="<%= data.clientRoute %>/tutorials/<%= data.courseId %>/<%= title%>-<%= myArr[i] %>"
         class="practiceItem"
       >
       <span class="material-icons play">play_arrow</span>

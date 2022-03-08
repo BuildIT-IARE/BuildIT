@@ -301,11 +301,27 @@ exports.createTutorials = (req, res) => {
 
   Question.find()
     .then((questions) => {
-      if(!req.body.company){
+      let isTopicBased = req.body.company || req.body.topic ? true : false;
+      let companies = [];
+      let topics = [];
+      if (req.body.company) {
+        companies = req.body.company
+          .split(",")
+          .filter((item) => !item.includes("-"))
+          .map((item) => item.trim());
+      }
+      if (req.body.topic) {
+        topics = req.body.topic
+          .split(",")
+          .filter((item) => !item.includes("-"))
+          .map((item) => item.trim());
+      }
+
       let currQuestions = questions.length + 1;
       req.body.questionId = "IARE" + currQuestions.toString();
+
       // Create a Question
-      var question = new Question({
+      const question = new Question({
         questionId: req.body.questionId,
         questionName: req.body.questionName,
         contestId: req.body.contestId,
@@ -325,67 +341,20 @@ exports.createTutorials = (req, res) => {
         questionHiddenOutput2: req.body.questionHiddenOutput2,
         questionHiddenOutput3: req.body.questionHiddenOutput3,
         questionExplanation: req.body.questionExplanation,
-        author: req.body.author,
-        editorial: req.body.editorial,
-        difficulty: req.body.level,
-        language: req.body.language,
-        conceptLevel: req.body.sublevel,
+        company: companies,
+        topic: topics,
+        difficulty: isTopicBased ? "topics" : req.body.level,
+        author: isTopicBased ? "" : req.body.author,
+        editorial: isTopicBased ? "" : req.body.editorial,
+        language: isTopicBased ? "" : req.body.language,
+        conceptLevel: isTopicBased ? "" : req.body.sublevel,
         courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
-      });}
-      else{
-        let currQuestions = questions.length + 1;
-        req.body.questionId = "IARE" + currQuestions.toString();
-        var companies1 = [];
-        var topics1 = [];
-        var temp = "";
-        var companystr = req.body.company;
-        var topicstr = req.body.topic;
-        for (let j = 0; j < companystr.length; j++) {
-          if (companystr[j] != ",") {
-            temp += companystr[j];
-          } else {
-            companies1.push(temp);
-            temp = "";
-          }
-        }
-        companies1.push(temp);
-        temp = "";
-        for (let j = 0; j < topicstr.length; j++) {
-          if (topicstr[j] != ",") {
-            temp += topicstr[j];
-          } else {
-            topics1.push(temp);
-            temp = "";
-          }
-        }
-        topics1.push(temp);
-        // Create a Question
-        var question = new Question({
-          questionId: req.body.questionId,
-          questionName: req.body.questionName,
-          questionDescriptionText: req.body.questionDescriptionText,
-          questionInputText: req.body.questionInputText,
-          questionOutputText: req.body.questionOutputText,
-          questionExampleInput1: req.body.questionExampleInput1,
-          questionExampleOutput1: req.body.questionExampleOutput1,
-          questionHiddenInput1: req.body.questionHiddenInput1,
-          questionHiddenInput2: req.body.questionHiddenInput2,
-          questionHiddenInput3: req.body.questionHiddenInput3,
-          questionHiddenOutput1: req.body.questionHiddenOutput1,
-          questionHiddenOutput2: req.body.questionHiddenOutput2,
-          questionHiddenOutput3: req.body.questionHiddenOutput3,
-          questionExplanation: req.body.questionExplanation,
-          company: companies1,
-          topic: topics1,
-          difficulty: "topics",
-          courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
-        });
-      }
+      });
+
       // Save Question in the database
       question
         .save()
         .then((data) => {
-          console.log("sdgdfg")
           res.send(data);
         })
         .catch((err) => {
@@ -404,7 +373,6 @@ exports.createTutorials = (req, res) => {
       });
     });
 };
-
 
 exports.createTutorialsExcel = (req, res) => {
   if (req.files.upfile) {
@@ -425,7 +393,23 @@ exports.createTutorialsExcel = (req, res) => {
           .then((questions) => {
             let currQuestions = questions.length;
             for (let i = 0; i < data.length; i++) {
-              if(!data[i].company){
+              let isTopicBased =
+                data[i].company || data[i].topic ? true : false;
+              let companies = [];
+              let topics = [];
+              if (data[i].company) {
+                companies = data[i].company
+                  .split(",")
+                  .filter((item) => !item.includes("-"))
+                  .map((item) => item.trim());
+              }
+              if (data[i].topic) {
+                topics = data[i].topic
+                  .split(",")
+                  .filter((item) => !item.includes("-"))
+                  .map((item) => item.trim());
+              }
+
               question = new Question({
                 questionId: "IARE" + (currQuestions + (i + 1)).toString(),
                 questionName: data[i].questionName,
@@ -446,59 +430,15 @@ exports.createTutorialsExcel = (req, res) => {
                 questionHiddenOutput2: data[i].questionHiddenOutput2,
                 questionHiddenOutput3: data[i].questionHiddenOutput3,
                 questionExplanation: data[i].questionExplanation,
-                author: data[i].author,
-                editorial: data[i].editorial,
-                difficulty: data[i].level,
-                language: data[i].language,
-                conceptLevel: data[i].sublevel,
-                courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
-              });
-            }
-            else{
-              companies = [];
-              topics = [];
-              var temp = "";
-              for (let j = 0; j < data[i].company.length; j++) {
-                if (data[i].company[j] != ",") {
-                  temp += data[i].company[j];
-                } else {
-                  companies.push(temp);
-                  temp = "";
-                }
-              }
-              companies.push(temp);
-              temp = "";
-              for (let j = 0; j < data[i].topic.length; j++) {
-                if (data[i].topic[j] != ",") {
-                  temp += data[i].topic[j];
-                } else {
-                  topics.push(temp);
-                  temp = "";
-                }
-              }
-              topics.push(temp);
-              question = new Question({
-                questionId: data[i].questionId,
-                questionName: data[i].questionName,
-                contestId: data[i].contestId,
-                questionDescriptionText: data[i].questionDescriptionText,
-                questionInputText: data[i].questionInputText,
-                questionOutputText: data[i].questionOutputText,
-                questionExampleInput1: data[i].questionExampleInput1,
-                questionExampleOutput1: data[i].questionExampleOutput1,
-                questionHiddenInput1: data[i].questionHiddenInput1,
-                questionHiddenInput2: data[i].questionHiddenInput2,
-                questionHiddenInput3: data[i].questionHiddenInput3,
-                questionHiddenOutput1: data[i].questionHiddenOutput1,
-                questionHiddenOutput2: data[i].questionHiddenOutput2,
-                questionHiddenOutput3: data[i].questionHiddenOutput3,
-                questionExplanation: data[i].questionExplanation,
                 company: companies,
                 topic: topics,
-                difficulty: "topics",
+                difficulty: isTopicBased ? "topics" : data[i].level,
+                author: isTopicBased ? "" : data[i].author,
+                editorial: isTopicBased ? "" : data[i].editorial,
+                language: isTopicBased ? "" : data[i].language,
+                conceptLevel: isTopicBased ? "" : data[i].sublevel,
                 courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
               });
-            }
               // Save Question in the database
               question.save();
             }
@@ -519,8 +459,6 @@ exports.createTutorialsExcel = (req, res) => {
     res.end();
   }
 };
-
-
 
 // Retrieve and return all questions from the database.
 exports.findAll = (req, res) => {
@@ -886,60 +824,32 @@ exports.findAllCourseDifficulty = (req, res) => {
 };
 
 exports.findAllCourseTopicWise = (req, res) => {
-  title = req.params.title;
-  if (title == "Topics") {
-    Question.find({
-      courseId: req.params.courseId,
-      topic: req.params.name,
-    })
-      .then((question) => {
-        if (!question) {
-          return res.status(404).send({
-            success: false,
-            message: "Question not found with id " + req.params.questionId,
-          });
-        }
-        res.send(question);
-      })
-      .catch((err) => {
-        if (err.kind === "ObjectId") {
-          return res.status(404).send({
-            success: false,
-            message: "Question not found with id " + req.params.questionId,
-          });
-        }
-        return res.status(500).send({
+  let param = req.params.title === "Topics" ? "topic": "company";
+  Question.find({
+    courseId: req.params.courseId,
+    [param]: req.params.name,
+  })
+    .then((question) => {
+      if (!question) {
+        return res.status(404).send({
           success: false,
-          message: "Error retrieving question with id " + req.params.questionId,
+          message: "Question not found with id " + req.params.questionId,
         });
-      });
-  } else {
-    Question.find({
-      courseId: req.params.courseId,
-      company: req.params.name,
+      }
+      res.send(question);
     })
-      .then((question) => {
-        if (!question) {
-          return res.status(404).send({
-            success: false,
-            message: "Question not found with id " + req.params.questionId,
-          });
-        }
-        res.send(question);
-      })
-      .catch((err) => {
-        if (err.kind === "ObjectId") {
-          return res.status(404).send({
-            success: false,
-            message: "Question not found with id " + req.params.questionId,
-          });
-        }
-        return res.status(500).send({
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
           success: false,
-          message: "Error retrieving question with id " + req.params.questionId,
+          message: "Question not found with id " + req.params.questionId,
         });
+      }
+      return res.status(500).send({
+        success: false,
+        message: "Error retrieving question with id " + req.params.questionId,
       });
-  }
+    });
 };
 
 exports.findAllCourseConceptWise = (req, res) => {
