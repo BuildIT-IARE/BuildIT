@@ -301,10 +301,11 @@ exports.createTutorials = (req, res) => {
 
   Question.find()
     .then((questions) => {
+      if(!req.body.company){
       let currQuestions = questions.length + 1;
       req.body.questionId = "IARE" + currQuestions.toString();
       // Create a Question
-      const question = new Question({
+      var question = new Question({
         questionId: req.body.questionId,
         questionName: req.body.questionName,
         contestId: req.body.contestId,
@@ -330,12 +331,61 @@ exports.createTutorials = (req, res) => {
         language: req.body.language,
         conceptLevel: req.body.sublevel,
         courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
-      });
-
+      });}
+      else{
+        let currQuestions = questions.length + 1;
+        req.body.questionId = "IARE" + currQuestions.toString();
+        var companies1 = [];
+        var topics1 = [];
+        var temp = "";
+        var companystr = req.body.company;
+        var topicstr = req.body.topic;
+        for (let j = 0; j < companystr.length; j++) {
+          if (companystr[j] != ",") {
+            temp += companystr[j];
+          } else {
+            companies1.push(temp);
+            temp = "";
+          }
+        }
+        companies1.push(temp);
+        temp = "";
+        for (let j = 0; j < topicstr.length; j++) {
+          if (topicstr[j] != ",") {
+            temp += topicstr[j];
+          } else {
+            topics1.push(temp);
+            temp = "";
+          }
+        }
+        topics1.push(temp);
+        // Create a Question
+        var question = new Question({
+          questionId: req.body.questionId,
+          questionName: req.body.questionName,
+          questionDescriptionText: req.body.questionDescriptionText,
+          questionInputText: req.body.questionInputText,
+          questionOutputText: req.body.questionOutputText,
+          questionExampleInput1: req.body.questionExampleInput1,
+          questionExampleOutput1: req.body.questionExampleOutput1,
+          questionHiddenInput1: req.body.questionHiddenInput1,
+          questionHiddenInput2: req.body.questionHiddenInput2,
+          questionHiddenInput3: req.body.questionHiddenInput3,
+          questionHiddenOutput1: req.body.questionHiddenOutput1,
+          questionHiddenOutput2: req.body.questionHiddenOutput2,
+          questionHiddenOutput3: req.body.questionHiddenOutput3,
+          questionExplanation: req.body.questionExplanation,
+          company: companies1,
+          topic: topics1,
+          difficulty: "topics",
+          courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
+        });
+      }
       // Save Question in the database
       question
         .save()
         .then((data) => {
+          console.log("sdgdfg")
           res.send(data);
         })
         .catch((err) => {
@@ -355,87 +405,6 @@ exports.createTutorials = (req, res) => {
     });
 };
 
-exports.createPractice = (req, res) => {
-  // Validate request
-  if (!req.body.questionName) {
-    return res.status(400).send({
-      success: false,
-      message: "Question name can not be empty",
-    });
-  }
-
-  Question.find()
-    .then((questions) => {
-      let currQuestions = questions.length + 1;
-      req.body.questionId = "IARE" + currQuestions.toString();
-      var companies1 = [];
-      var topics1 = [];
-      var temp = "";
-      var companystr = req.body.company;
-      var topicstr = req.body.topic;
-      for (let j = 0; j < companystr.length; j++) {
-        if (companystr[j] != ",") {
-          temp += companystr[j];
-        } else {
-          companies1.push(temp);
-          temp = "";
-        }
-      }
-      companies1.push(temp);
-      temp = "";
-      for (let j = 0; j < topicstr.length; j++) {
-        if (topicstr[j] != ",") {
-          temp += topicstr[j];
-        } else {
-          topics1.push(temp);
-          temp = "";
-        }
-      }
-      topics1.push(temp);
-      // Create a Question
-      const question = new Question({
-        questionId: req.body.questionId,
-        questionName: req.body.questionName,
-        questionDescriptionText: req.body.questionDescriptionText,
-        questionInputText: req.body.questionInputText,
-        questionOutputText: req.body.questionOutputText,
-        questionExampleInput1: req.body.questionExampleInput1,
-        questionExampleOutput1: req.body.questionExampleOutput1,
-        questionHiddenInput1: req.body.questionHiddenInput1,
-        questionHiddenInput2: req.body.questionHiddenInput2,
-        questionHiddenInput3: req.body.questionHiddenInput3,
-        questionHiddenOutput1: req.body.questionHiddenOutput1,
-        questionHiddenOutput2: req.body.questionHiddenOutput2,
-        questionHiddenOutput3: req.body.questionHiddenOutput3,
-        questionExplanation: req.body.questionExplanation,
-        company: companies1,
-        topic: topics1,
-        difficulty: "topics",
-        courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
-      });
-
-      // Save Question in the database
-      question
-        .save()
-        .then((data) => {
-          res.send(data);
-        })
-        .catch((err) => {
-          res.status(500).send({
-            success: false,
-            message:
-              err.message || "Some error occurred while creating the Question.",
-          });
-        });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        success: false,
-        message:
-          err.message || "Some error occurred while retrieving questions.",
-      });
-    });
-};
 
 exports.createTutorialsExcel = (req, res) => {
   if (req.files.upfile) {
@@ -456,6 +425,7 @@ exports.createTutorialsExcel = (req, res) => {
           .then((questions) => {
             let currQuestions = questions.length;
             for (let i = 0; i < data.length; i++) {
+              if(!data[i].company){
               question = new Question({
                 questionId: "IARE" + (currQuestions + (i + 1)).toString(),
                 questionName: data[i].questionName,
@@ -483,47 +453,8 @@ exports.createTutorialsExcel = (req, res) => {
                 conceptLevel: data[i].sublevel,
                 courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
               });
-              // Save Question in the database
-              question.save();
             }
-            res.send("Done! Uploaded files");
-          })
-          .catch((err) => {
-            res.status(500).send({
-              success: false,
-              message:
-                err.message ||
-                "Some error occurred while retrieving questions.",
-            });
-          });
-      }
-    });
-  } else {
-    res.send("No File selected !");
-    res.end();
-  }
-};
-
-//create a question for practice excel
-exports.createPracticeExcel = (req, res) => {
-  if (req.files.upfile) {
-    var file = req.files.upfile,
-      name = file.name,
-      type = file.mimetype;
-    var uploadpath = "../quesxlsx" + name;
-    file.mv(uploadpath, function (err) {
-      if (err) {
-        console.log("File Upload Failed", name, err);
-        res.send("Error Occured!");
-      } else {
-        let wb = xlsx.readFile("../quesxlsx" + name);
-        let ws = wb.Sheets["Sheet1"];
-        let data = xlsx.utils.sheet_to_json(ws);
-        let question;
-        Question.find()
-          .then((questions) => {
-            let currQuestions = questions.length;
-            for (let i = 0; i < data.length; i++) {
+            else{
               companies = [];
               topics = [];
               var temp = "";
@@ -567,6 +498,7 @@ exports.createPracticeExcel = (req, res) => {
                 difficulty: "topics",
                 courseId: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"],
               });
+            }
               // Save Question in the database
               question.save();
             }
@@ -587,6 +519,8 @@ exports.createPracticeExcel = (req, res) => {
     res.end();
   }
 };
+
+
 
 // Retrieve and return all questions from the database.
 exports.findAll = (req, res) => {

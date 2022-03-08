@@ -38,7 +38,7 @@ module.exports = (app) => {
   app.post(
     "/questionpractice",
     middleware.checkTokenAdmin,
-    questions.createPractice
+    questions.createTutorials
   );
 
   // Create a new question for Tutorials
@@ -52,7 +52,7 @@ module.exports = (app) => {
   app.post(
     "/questionpracticeExcel",
     middleware.checkTokenAdmin,
-    questions.createPracticeExcel
+    questions.createTutorialsExcel
   );
 
   // Retrieve all questions
