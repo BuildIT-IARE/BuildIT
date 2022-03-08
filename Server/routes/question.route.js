@@ -33,24 +33,11 @@ module.exports = (app) => {
     middleware.checkTokenAdmin,
     questions.createTutorials
   );
-
-  // Create a new question for Practice
-  app.post(
-    "/questionpractice",
-    middleware.checkTokenAdmin,
-    questions.createTutorials
-  );
+ 
 
   // Create a new question for Tutorials
   app.post(
     "/questiontutorialsExcel",
-    middleware.checkTokenAdmin,
-    questions.createTutorialsExcel
-  );
-
-  // Create a new question for Practice
-  app.post(
-    "/questionpracticeExcel",
     middleware.checkTokenAdmin,
     questions.createTutorialsExcel
   );

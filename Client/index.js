@@ -37,8 +37,6 @@ app.use("/ide", express.static(path.resolve("../IDE")));
 
 app.use("/tutorials", express.static(__dirname + "/"));
 app.use("/contests", express.static(__dirname + "/"));
-app.use("/courses", express.static(__dirname + "/"));
-app.use("/courses/contest", express.static(__dirname + "/"));
 app.use("/qualifier_test/:contestId", express.static(__dirname + "/"));
 app.use("/qualifierTestScore", express.static(__dirname + "/"));
 app.use("/qualifier_tests", express.static(__dirname + "/"));
