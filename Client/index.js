@@ -10,10 +10,10 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const fetch = require("node-fetch");
 var _ = require("lodash");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
 // Load config
-dotenv.config({ path: '../Server/util/config.env' });
+dotenv.config({ path: "../Server/util/config.env" });
 
 let serverRoute = process.env.serverAddress;
 let clientRoute = process.env.clientAddress;
@@ -46,7 +46,8 @@ app.use("/tutorials/questions", express.static(__dirname + "/"));
 
 app.use("/admin/manageusers", express.static(__dirname + "/"));
 app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
-app.use("/admin/add/test", express.static(__dirname + "/"));
+app.use("/admin/add/iareTest", express.static(__dirname + "/"));
+app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
@@ -80,30 +81,30 @@ app.post("/skill", async (req, res) => {
   ];
 
   let options = {
-	  url: serverRoute + "/weeks",
-	  method: "get",
-	  headers: {
-		authorization: req.cookies.token,
-	  },
-	  json: true,
+    url: serverRoute + "/weeks",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
   };
-  
-  request(options, async(err, response, week) => {
+
+  request(options, async (err, response, week) => {
     let options = {
       url: serverRoute + "/skill",
       method: "get",
       headers: {
-      authorization: req.cookies.token,
+        authorization: req.cookies.token,
       },
       json: true,
     };
 
-    if( req.body.weekId !== undefined ) {
+    if (req.body.weekId !== undefined) {
       options.url = serverRoute + "/skill/" + req.body.weekId;
     }
-    
-    request(options, async(err, response, body) => {
-      if(!err) {
+
+    request(options, async (err, response, body) => {
+      if (!err) {
         const ordered = _.orderBy(
           body,
           function (item) {
@@ -118,18 +119,19 @@ app.post("/skill", async (req, res) => {
           ordered[2]["rollNumber"],
         ];
 
-        const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-          fetch(`${serverRoute}/users/branch/${toppers[0]}`),
-          fetch(`${serverRoute}/users/branch/${toppers[1]}`),
-          fetch(`${serverRoute}/users/branch/${toppers[2]}`),
-        ]);
+        const [firstResponse, secondResponse, thirdResponse] =
+          await Promise.all([
+            fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+            fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+            fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+          ]);
 
         const first = await firstResponse.json();
         const second = await secondResponse.json();
         const third = await thirdResponse.json();
-    
+
         const topperData = [first, second, third];
-        
+
         body.clientAddress = clientRoute;
 
         res.render("leaderboard", {
@@ -145,8 +147,8 @@ app.post("/skill", async (req, res) => {
           imgUsername: req.cookies.username,
         });
       }
-    })
-  })
+    });
+  });
 });
 
 app.get("/admin/add/skillup", async (req, res) => {
@@ -254,7 +256,7 @@ app.post("/editProfile", async (req, res) => {
     },
     json: true,
   };
-  
+
   request(options, function (err, response, body) {
     if (body.success) {
       res.redirect("/profile");
@@ -264,7 +266,7 @@ app.post("/editProfile", async (req, res) => {
         imgUsername: req.cookies.username,
       });
     }
-  });  
+  });
 });
 
 app.get("/login", async (req, res) => {
@@ -281,7 +283,7 @@ app.get("/forgotpassword_", async (req, res) => {
   res.render("forgotPassword", { data: url });
 });
 
-app.get("/admin/add/test", async (req, res) => {
+app.get("/admin/add/iareTest", async (req, res) => {
   let options = {
     url: serverRoute + "/isAdmin",
     method: "get",
@@ -327,6 +329,34 @@ app.get("/admin/add/tutQuestion", async (req, res) => {
   request(options, function (err, response, body) {
     if (body.success) {
       res.render("tutQuestionAdd", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.get("/admin/add/practiceQuestion", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.render("practiceQuestionAdd", {
+        data: url,
+        token: req.cookies.token,
+      });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -907,7 +937,7 @@ app.get("/admin/unverifiedusers", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    var unverified_users=[];
+    var unverified_users = [];
     for (let i = 0; i < body.length; i++) {
       if (!body[i].isVerified && !body[i].admin) {
         body[i].color = "pink";
@@ -1624,7 +1654,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
         json: true,
       };
 
-      request(options, (err, response, body) => { 
+      request(options, (err, response, body) => {
         if (!body.message) {
           const color = new Map([
             [0, "black"],
@@ -1638,7 +1668,10 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
             colors[j] = color.get(body.coding[j].score);
           }
 
-          body.codingScore = body.coding.reduce((sum, curr) => sum + curr.score, 0);
+          body.codingScore = body.coding.reduce(
+            (sum, curr) => sum + curr.score,
+            0
+          );
 
           body.color = colors;
           body.answers = [
@@ -1992,7 +2025,6 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
     };
     request(options3, function (err, response, bodytimer) {
       bodytimer = bodytimer[0];
-
       for (let i = 0; i < body.length; i++) {
         if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1) {
           body[i].solved = "Solved";
@@ -2043,20 +2075,52 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
 });
 
 app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
+  let difficulty = req.params.difficulty;
+  let categoryBased = difficulty.includes("-");
+  let ifTopicsOrCompanies =
+    req.params.difficulty === "Topics" || req.params.difficulty === "Companies";
+
+  let param = ifTopicsOrCompanies
+    ? "topics"
+    : categoryBased
+    ? difficulty.split("-").join("/")
+    : difficulty;
+
   let options = {
     url:
       serverRoute +
-      "/questions/courses/" +
+      "/questions/" +
+      (categoryBased ? "practice/" : "courses/") +
       req.params.courseId +
       "/" +
-      req.params.difficulty,
+      param,
     method: "get",
     headers: {
       authorization: req.cookies.token,
     },
     json: true,
   };
+
   request(options, function (err, response, body) {
+    if (ifTopicsOrCompanies) {
+      let courseIds = ["IARE_PY", "IARE_C", "IARE_JAVA", "IARE_CPP"];
+      let isCourseValid = courseIds.includes(req.params.courseId);
+      let ifTopics = difficulty === "Topics";
+
+      body.courseId = req.params.courseId;
+      body.courseName = isCourseValid
+        ? ifTopics
+          ? "Select a topic"
+          : "Select a company"
+        : "Invalid Course";
+
+      res.render("practiceTutList", {
+        imgUsername: req.cookies.username,
+        title: difficulty,
+        data: body,
+      });
+    } else {
+
     let options3 = {
       url: serverRoute + "/tparticipations/" + req.params.courseId,
       method: "get",
@@ -2101,6 +2165,7 @@ app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
         data: body,
       });
     });
+  }
   });
 });
 
@@ -2190,7 +2255,6 @@ app.get("/certificate", async (req, res) => {
     };
 
     request(options, (err, response, body2) => {
-
       if (!body2.message) {
         res.render("certificate", {
           imgUsername: req.cookies.username,
