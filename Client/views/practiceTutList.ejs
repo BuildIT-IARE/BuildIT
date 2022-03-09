@@ -97,7 +97,7 @@
         <% for(var i =0;i<data.length;i++) { %>
           <% myList = myList.concat(myList,data[i].company);%>
       <% } } %>
-      <%const myArr = myList.filter((v, i, a) => a.indexOf(v) === i) %>
+      <%var myArr = myList.filter((v, i, a) => a.indexOf(v) === i) %>
       <% for(var i=0; i<myArr.length;i++) {%>
       <a
         href="<%= data.clientRoute %>/tutorials/<%= data.courseId %>/<%= title%>-<%= myArr[i] %>"
