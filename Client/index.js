@@ -46,7 +46,6 @@ app.use("/tutorials/questions", express.static(__dirname + "/"));
 
 app.use("/admin/manageusers", express.static(__dirname + "/"));
 app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
-app.use("/admin/add/iareTest", express.static(__dirname + "/"));
 app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
@@ -281,34 +280,6 @@ app.get("/forgotpassword_", async (req, res) => {
     url: clientRoute + "/fp",
   };
   res.render("forgotPassword", { data: url });
-});
-
-app.get("/admin/add/iareTest", async (req, res) => {
-  let options = {
-    url: serverRoute + "/isAdmin",
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-
-  request(options, function (err, response, body) {
-    let url = {
-      url: clientRoute,
-      serverurl: serverRoute,
-    };
-    if (body.success) {
-      res.render("tests", { data: url, token: req.cookies.token });
-    } else {
-      body.message = "Unauthorized access";
-      console.log("token " + req.cookies.token);
-      res.render("error", {
-        data: body,
-        imgUsername: req.cookies.username,
-      });
-    }
-  });
 });
 
 app.get("/admin/add/tutQuestion", async (req, res) => {
