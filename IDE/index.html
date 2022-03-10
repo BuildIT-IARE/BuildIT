@@ -243,9 +243,6 @@
           event.preventDefault();
           event.clipboardData.setData('text/plain', "NOT ALLOWED!");
       });
-      document.addEventListener('paste', (event) => {
-        event.preventDefault();
-      });
       document.addEventListener('contextmenu', event => event.preventDefault());
     }
 
