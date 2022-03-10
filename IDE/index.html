@@ -196,12 +196,9 @@
         document.getElementById("username").innerHTML = username;
       }
     });
-  </script>
-
-  <script>
+    let CopyPastePerms = (getCookie("username") === "ADMIN" || getCookie("username") === "19951A0566" || getCookie("username") === "19951A0535");
     function checkKeyCode(evt) {
       var evt = evt ? evt : evt ? evt : null;
-      console.log(evt.keyCode);
 
       if ( //F12, F5
         evt.keyCode == 123 ||
@@ -236,10 +233,22 @@
         return false;
       }
     }
+    if(CopyPastePerms == false){
+      document.onkeydown = checkKeyCode;
+      document.addEventListener('cut', (event) => {
+        event.preventDefault();
+        event.clipboardData.setData('text/plain', "NOT ALLOffWED!");
+      });
+      document.addEventListener('copy', (event) => {
+          event.preventDefault();
+          event.clipboardData.setData('text/plain', "NOT ALLOWED!");
+      });
+      document.addEventListener('paste', (event) => {
+        event.preventDefault();
+      });
+      document.addEventListener('contextmenu', event => event.preventDefault());
+    }
 
-    document.onkeydown = checkKeyCode;
-
-    document.addEventListener('contextmenu', event => event.preventDefault());
 
     window.onbeforeunload = function (e) {
       e.preventDefault();
