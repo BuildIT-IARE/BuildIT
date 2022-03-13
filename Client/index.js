@@ -17,7 +17,7 @@ const session = require("express-session");
 let middleware = require("../Server/util/middleware.js");
 
 // Load config
-dotenv.config({ path: "../Server/util/config.env" });
+dotenv.config({ path: '../Server/util/config.env' });
 
 let serverRoute = process.env.serverAddress;
 let clientRoute = process.env.clientAddress;
