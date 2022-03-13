@@ -10,10 +10,10 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const fetch = require("node-fetch");
 var _ = require("lodash");
-const dotenv = require("dotenv");
+const dotenv = require('dotenv');
 
 // Load config
-dotenv.config({ path: "../Server/util/config.env" });
+dotenv.config({ path: '../Server/util/config.env' });
 
 let serverRoute = process.env.serverAddress;
 let clientRoute = process.env.clientAddress;
@@ -46,7 +46,7 @@ app.use("/tutorials/questions", express.static(__dirname + "/"));
 
 app.use("/admin/manageusers", express.static(__dirname + "/"));
 app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
-app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
+app.use("/admin/add/test", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
@@ -80,30 +80,30 @@ app.post("/skill", async (req, res) => {
   ];
 
   let options = {
-    url: serverRoute + "/weeks",
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
+	  url: serverRoute + "/weeks",
+	  method: "get",
+	  headers: {
+		authorization: req.cookies.token,
+	  },
+	  json: true,
   };
-
-  request(options, async (err, response, week) => {
+  
+  request(options, async(err, response, week) => {
     let options = {
       url: serverRoute + "/skill",
       method: "get",
       headers: {
-        authorization: req.cookies.token,
+      authorization: req.cookies.token,
       },
       json: true,
     };
 
-    if (req.body.weekId !== undefined) {
+    if( req.body.weekId !== undefined ) {
       options.url = serverRoute + "/skill/" + req.body.weekId;
     }
-
-    request(options, async (err, response, body) => {
-      if (!err) {
+    
+    request(options, async(err, response, body) => {
+      if(!err) {
         const ordered = _.orderBy(
           body,
           function (item) {
@@ -118,19 +118,18 @@ app.post("/skill", async (req, res) => {
           ordered[2]["rollNumber"],
         ];
 
-        const [firstResponse, secondResponse, thirdResponse] =
-          await Promise.all([
-            fetch(`${serverRoute}/users/branch/${toppers[0]}`),
-            fetch(`${serverRoute}/users/branch/${toppers[1]}`),
-            fetch(`${serverRoute}/users/branch/${toppers[2]}`),
-          ]);
+        const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+          fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+          fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+          fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+        ]);
 
         const first = await firstResponse.json();
         const second = await secondResponse.json();
         const third = await thirdResponse.json();
-
+    
         const topperData = [first, second, third];
-
+        
         body.clientAddress = clientRoute;
 
         res.render("leaderboard", {
@@ -146,8 +145,8 @@ app.post("/skill", async (req, res) => {
           imgUsername: req.cookies.username,
         });
       }
-    });
-  });
+    })
+  })
 });
 
 app.get("/admin/add/skillup", async (req, res) => {
@@ -255,7 +254,7 @@ app.post("/editProfile", async (req, res) => {
     },
     json: true,
   };
-
+  
   request(options, function (err, response, body) {
     if (body.success) {
       res.redirect("/profile");
@@ -265,7 +264,7 @@ app.post("/editProfile", async (req, res) => {
         imgUsername: req.cookies.username,
       });
     }
-  });
+  });  
 });
 
 app.get("/login", async (req, res) => {
@@ -280,6 +279,34 @@ app.get("/forgotpassword_", async (req, res) => {
     url: clientRoute + "/fp",
   };
   res.render("forgotPassword", { data: url });
+});
+
+app.get("/admin/add/test", async (req, res) => {
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    let url = {
+      url: clientRoute,
+      serverurl: serverRoute,
+    };
+    if (body.success) {
+      res.render("tests", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      console.log("token " + req.cookies.token);
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
+    }
+  });
 });
 
 app.get("/admin/add/tutQuestion", async (req, res) => {
@@ -300,34 +327,6 @@ app.get("/admin/add/tutQuestion", async (req, res) => {
   request(options, function (err, response, body) {
     if (body.success) {
       res.render("tutQuestionAdd", { data: url, token: req.cookies.token });
-    } else {
-      body.message = "Unauthorized access";
-      res.render("error", { data: body, imgUsername: req.cookies.username });
-    }
-  });
-});
-
-app.get("/admin/add/practiceQuestion", async (req, res) => {
-  let url = {
-    url: clientRoute,
-    serverurl: serverRoute,
-  };
-
-  let options = {
-    url: serverRoute + "/isAdmin",
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-
-  request(options, function (err, response, body) {
-    if (body.success) {
-      res.render("practiceQuestionAdd", {
-        data: url,
-        token: req.cookies.token,
-      });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -562,34 +561,6 @@ app.get("/admin/add/contest", async (req, res) => {
     };
     if (body.success) {
       res.render("contestadd", { data: url, token: req.cookies.token });
-    } else {
-      body.message = "Unauthorized access";
-      console.log("token " + req.cookies.token);
-      res.render("error", {
-        data: body,
-        imgUsername: req.cookies.username,
-      });
-    }
-  });
-});
-
-app.get("/admin/add/qualifier_test", async (req, res) => {
-  let options = {
-    url: serverRoute + "/isAdmin",
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-
-  request(options, function (err, response, body) {
-    let url = {
-      url: clientRoute,
-      serverurl: serverRoute,
-    };
-    if (body.success) {
-      res.render("qualifier_test_add", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       console.log("token " + req.cookies.token);
@@ -908,7 +879,7 @@ app.get("/admin/unverifiedusers", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    var unverified_users = [];
+    var unverified_users=[];
     for (let i = 0; i < body.length; i++) {
       if (!body[i].isVerified && !body[i].admin) {
         body[i].color = "pink";
@@ -1431,16 +1402,16 @@ app.get("/qualifier_test/:contestId", async (req, res) => {
             // Get participation details
             request(options3, function (err, response, bodytimer) {
               if (Array.isArray(bodytimer)) {
+                let sec = ["", "numeral", "reasoning", "verbal", "programming"][
+                  body.section
+                ];
                 bodytimer = bodytimer[0];
-                bodytimer.responses = bodytimer.responses[body.section - 1].responses;
-
-                let currSection = bodytimer.responses;
+                let currSection = bodytimer.responses[sec];
                 currSection = currSection.map((v) => v.questionNum);
                 let index = currSection.indexOf(body.questionNum);
                 if (index !== -1) currSection.splice(index, 1);
-
                 bodytimer.selection =
-                  index === -1 ? 0 : bodytimer.responses[index].selection;
+                  index === -1 ? 0 : bodytimer.responses[sec][index].selection;
                 bodytimer.questionNums = currSection;
                 bodytimer.submissionResults = null;
                 bodytimer.responses = null;
@@ -1479,10 +1450,30 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
       let section = Number(req.body.section);
       let sectionLen = Number(req.body.sectionLen);
       let questionNum = Number(req.body.questionNum);
-      let sectionCount = Number(req.body.sectionCount);
-
-      if (questionNum === sectionLen) {
-        if (section === sectionCount) questionNum -= 1;
+      let sections = req.body.sections;
+      if (req.body.isPartial === "true") {
+        if (questionNum === sectionLen) {
+          if (section === 4) {
+            questionNum -= 1;
+          } else {
+            let str = "00000";
+            let ind = sections.indexOf(section.toString());
+            // let rem = sections.substring(ind+1, 5);
+            // let ini = str.substring(ind+1, 5);
+            if (str.substring(ind + 1, 5) === sections.substring(ind + 1, 5)) {
+              questionNum -= 1;
+            } else {
+              questionNum = 0;
+              let sec = section + 1;
+              while (sections[sec] === "0" && sec < 4) {
+                sec += 1;
+              }
+              section = sec;
+            }
+          }
+        }
+      } else if (questionNum === sectionLen) {
+        if (section === 4) questionNum -= 1;
         else {
           questionNum = 0;
           section += 1;
@@ -1500,6 +1491,10 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
         method: "post",
         headers: {
           authorization: req.cookies.token,
+        },
+        body: {
+          isPartial: req.body.isPartial === "true" ? true : false,
+          sections: req.body.sections,
         },
         json: true,
       };
@@ -1520,17 +1515,24 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
             if (Array.isArray(bodytimer)) {
               bodytimer = bodytimer[0];
 
+              let sections1 = [
+                "",
+                "numeral",
+                "reasoning",
+                "verbal",
+                "programming",
+              ];
+              let sec = sections1[body.section];
               let currSection = [];
               let selection = 0;
               let index = 0;
 
-              bodytimer.responses = bodytimer.responses[body.section - 1].responses;
-              currSection = bodytimer.responses;
+              currSection = bodytimer.responses[sec];
               currSection = currSection.map((v) => v.questionNum);
               index = currSection.indexOf(body.questionNum);
               if (index !== -1) {
                 currSection.splice(index, 1);
-                selection = bodytimer.responses[index].selection;
+                selection = bodytimer.responses[sec][index].selection;
               }
 
               bodytimer.selection = selection;
@@ -1591,8 +1593,98 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
     });
   };
 
+  const fetchQuestion = () => {
+    return new Promise(() => {
+      let sectionLen = Number(req.body.sectionLen);
+      let questionNum = Number(req.body.questionNum);
+      if (questionNum === sectionLen) questionNum -= 1;
+
+      let options = {
+        url: serverRoute + "/mcqs/question/contest/" + req.params.contestId,
+        method: "post",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        body: {
+          isPartial: req.body.isPartial === "true" ? true : false,
+          sections: req.body.sections,
+          questionNum: questionNum,
+        },
+        json: true,
+      };
+
+      // get one MCQ
+      request(options, (err, response, body) => {
+        if (!body.message) {
+          res.cookie("contestId", req.params.contestId);
+          let options3 = {
+            url: serverRoute + "/mcqParticipations/" + req.params.contestId,
+            method: "get",
+            headers: {
+              authorization: req.cookies.token,
+            },
+            json: true,
+          };
+
+          // get participation details
+          request(options3, (err, response, bodytimer) => {
+            if (Array.isArray(bodytimer)) {
+              bodytimer = bodytimer[0];
+
+              const mcqIds = new Map(body.ids);
+              const color = new Map([
+                [0, "black"],
+                [25, "red"],
+                [50, "orange"],
+                [100, "green"],
+              ]);
+              let currSection = [];
+              let score = 0;
+              let index = 0;
+              let i = 0;
+
+              for (let j = 0; j < bodytimer.submissionResults.length; j++) {
+                index =
+                  mcqIds.get(bodytimer.submissionResults[j].questionId) + 1;
+                if (index === body.questionNum)
+                  score = bodytimer.submissionResults[j].score;
+                else currSection[i++] = index;
+              }
+
+              bodytimer.score = score;
+              bodytimer.color = color.get(score);
+              bodytimer.questionNums = currSection;
+              bodytimer.responses = null;
+              bodytimer.mcqResults = null;
+              bodytimer.submissionResults = null;
+
+              res.render("mcqs", {
+                imgUsername: req.cookies.username,
+                imgBranch: req.cookies.branch,
+                data: body,
+                datatimer: bodytimer,
+              });
+            } else {
+              res.render("error", {
+                data: body,
+                imgUsername: req.cookies.username,
+              });
+            }
+          });
+        } else {
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
+      });
+    });
+  };
+
   // check whether retrieve or update and retrieve
-  if (req.body.answer) {
+  if (req.body.section === "5") {
+    const first = await fetchQuestion();
+  } else if (req.body.answer) {
     const first = await addSelection();
   } else {
     const first = await doRequest();
@@ -1625,7 +1717,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
         json: true,
       };
 
-      request(options, (err, response, body) => {
+      request(options, (err, response, body) => { 
         if (!body.message) {
           const color = new Map([
             [0, "black"],
@@ -1639,10 +1731,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
             colors[j] = color.get(body.coding[j].score);
           }
 
-          body.codingScore = body.coding.reduce(
-            (sum, curr) => sum + curr.score,
-            0
-          );
+          body.codingScore = body.coding.reduce((sum, curr) => sum + curr.score, 0);
 
           body.color = colors;
           body.answers = [
@@ -1668,7 +1757,7 @@ app.get("/qualifierTestScore/:contestId", async (req, res) => {
       });
     } else {
       res.render("error", {
-        data: body1,
+        data: body,
         imgUsername: req.cookies.username,
       });
     }
@@ -1996,6 +2085,7 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
     };
     request(options3, function (err, response, bodytimer) {
       bodytimer = bodytimer[0];
+
       for (let i = 0; i < body.length; i++) {
         if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1) {
           body[i].solved = "Solved";
@@ -2046,52 +2136,20 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
 });
 
 app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
-  let difficulty = req.params.difficulty;
-  let categoryBased = difficulty.includes("-");
-  let ifTopicsOrCompanies =
-    req.params.difficulty === "Topics" || req.params.difficulty === "Companies";
-
-  let param = ifTopicsOrCompanies
-    ? "topics"
-    : categoryBased
-    ? difficulty.split("-").join("/")
-    : difficulty;
-
   let options = {
     url:
       serverRoute +
-      "/questions/" +
-      (categoryBased ? "practice/" : "courses/") +
+      "/questions/courses/" +
       req.params.courseId +
       "/" +
-      param,
+      req.params.difficulty,
     method: "get",
     headers: {
       authorization: req.cookies.token,
     },
     json: true,
   };
-
   request(options, function (err, response, body) {
-    if (ifTopicsOrCompanies) {
-      let courseIds = ["IARE_PY", "IARE_C", "IARE_JAVA", "IARE_CPP"];
-      let isCourseValid = courseIds.includes(req.params.courseId);
-      let ifTopics = difficulty === "Topics";
-
-      body.courseId = req.params.courseId;
-      body.courseName = isCourseValid
-        ? ifTopics
-          ? "Select a topic"
-          : "Select a company"
-        : "Invalid Course";
-
-      res.render("practiceTutList", {
-        imgUsername: req.cookies.username,
-        title: difficulty,
-        data: body,
-      });
-    } else {
-
     let options3 = {
       url: serverRoute + "/tparticipations/" + req.params.courseId,
       method: "get",
@@ -2136,7 +2194,6 @@ app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
         data: body,
       });
     });
-  }
   });
 });
 
@@ -2226,6 +2283,7 @@ app.get("/certificate", async (req, res) => {
     };
 
     request(options, (err, response, body2) => {
+
       if (!body2.message) {
         res.render("certificate", {
           imgUsername: req.cookies.username,
