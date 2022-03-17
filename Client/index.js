@@ -10,7 +10,7 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const fetch = require("node-fetch");
 var _ = require("lodash");
-const dotenv = require("dotenv");
+const dotenv = require('dotenv');
 
 const { token } = require("morgan");
 const { cookie } = require("request");
