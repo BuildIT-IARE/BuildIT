@@ -54,13 +54,15 @@ let userSessions = [];
 let userSessions2 = [];
 
 let sessionText = fs. readFileSync("./store.txt", 'utf-8');
-userSessions2 = sessionText === ''? []: sessionText. split('\n');
 
-for(let i=0; i<userSessions2.length; i++){
-  userSessions.push({
-    username: userSessions2[i].substring(0, 10),
-    val: Number(userSessions2[i].substring(10, 11))
-  })
+if(sessionText !== ''){
+  userSessions2 = sessionText. split('\n');
+  for(let i=0; i<userSessions2.length; i++){
+    userSessions.push({
+      username: userSessions2[i].substring(0, 10),
+      val: Number(userSessions2[i].substring(10, 11))
+    })
+  }
 }
 
 function checkSignIn(req, res, next){
