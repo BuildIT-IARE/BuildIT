@@ -321,6 +321,16 @@ app.post("/validateMcq", middleware.checkToken, async(req, res) => {
 });
 
 app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
+  let options11 = {
+    method: "get",
+    json: true,
+    url: process.env.clientAddress + "/userSession/" + req.body.user,
+  };
+  request(options11, function (err, response, body) {
+    if (!body.status || err)
+      return res.status(404).send({ message: "user logged out!" });
+  });
+
   if (req.body.contestId.length !== 0) {
     contests.getDuration(req, (err, duration) => {
       if (err) {

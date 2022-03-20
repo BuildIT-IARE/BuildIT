@@ -50,20 +50,41 @@ app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
+let userSessions = [];
+let userSessions2 = [];
+
+let sessionText = fs. readFileSync("./store.txt", 'utf-8');
+userSessions2 = sessionText === ''? []: sessionText. split('\n');
+
+for(let i=0; i<userSessions2.length; i++){
+  userSessions.push({
+    username: userSessions2[i].substring(0, 10),
+    val: Number(userSessions2[i].substring(10, 11))
+  })
+}
+
+function checkSignIn(req, res, next){
+  if(userSessions2.includes(req.cookies.user)){
+    next();     //If session exists, proceed to page
+  } else {
+    res.redirect("/logout")  //Error, trying to access unauthorized page!
+  }
+}
+
 app.get("/", async (req, res) => {
   res.render("home", { imgUsername: req.cookies.username });
 });
 app.get("/index", async (req, res) => {
   res.render("home", { imgUsername: req.cookies.username });
 });
-app.get("/home", async (req, res) => {
+app.get("/home", checkSignIn, async (req, res, next) => {
   res.render("home", { imgUsername: req.cookies.username });
 });
-app.get("/about", async (req, res) => {
+app.get("/about", checkSignIn, async (req, res, next) => {
   res.render("about", { imgUsername: req.cookies.username });
 });
 
-app.post("/skill", async (req, res) => {
+app.post("/skill", checkSignIn, async (req, res, next) => {
   let headers = [
     "rank",
     "rollNumber",
@@ -204,7 +225,7 @@ app.get("/admin/add/event", async (req, res) => {
   });
 });
 
-app.get("/profile", async (req, res) => {
+app.get("/profile", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/users/" + req.cookies.username.toLowerCase(),
     method: "get",
@@ -1173,7 +1194,7 @@ app.post("/admin/resultsTut/course", async (req, res) => {
   });
 });
 
-app.get("/contests/:contestId/leaderboard", async (req, res) => {
+app.get("/contests/:contestId/leaderboard", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/participations/all",
     method: "post",
@@ -1208,7 +1229,7 @@ app.get("/contests/:contestId/leaderboard", async (req, res) => {
   });
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/isAdmin",
     method: "get",
@@ -1232,12 +1253,12 @@ app.get("/admin", async (req, res) => {
   });
 });
 
-app.get("/ide/:questionId", async (req, res) => {
+app.get("/ide/:questionId", checkSignIn, async (req, res, next) => {
   let questionId = req.params.questionId;
   res.sendFile(path.resolve("../IDE/index.html"));
 });
 
-app.get("/contest", async (req, res) => {
+app.get("/contest", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/contests/user/" + req.cookies.username.toLowerCase(),
     method: "get",
@@ -1256,7 +1277,7 @@ app.get("/contest", async (req, res) => {
   });
 });
 
-app.get("/contests/:contestId", async (req, res) => {
+app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
   // check if contest is open
   let options = {
     url: serverRoute + "/isOngoing",
@@ -1358,7 +1379,7 @@ app.get("/contests/:contestId", async (req, res) => {
   });
 });
 
-app.get("/qualifier_tests", async (req, res) => {
+app.get("/qualifier_tests", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/contests",
     method: "get",
@@ -1380,7 +1401,7 @@ app.get("/qualifier_tests", async (req, res) => {
   });
 });
 
-app.get("/qualifier_test/:contestId", async (req, res) => {
+app.get("/qualifier_test/:contestId", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/isOngoing",
     method: "post",
@@ -1473,7 +1494,7 @@ app.get("/qualifier_test/:contestId", async (req, res) => {
   });
 });
 
-app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
+app.post("/qualifier_test/:contestId/mcq", checkSignIn, async (req, res, next) => {
   const doRequest = () => {
     return new Promise(() => {
       let section = Number(req.body.section);
@@ -1599,7 +1620,7 @@ app.post("/qualifier_test/:contestId/mcq", async (req, res) => {
   }
 });
 
-app.get("/qualifierTestScore/:contestId", async (req, res) => {
+app.get("/qualifierTestScore/:contestId", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/generate_score/" + req.params.contestId,
     method: "get",
@@ -1711,6 +1732,38 @@ app.post("/login_", async (req, res) => {
       res.cookie("token", body.token);
       res.cookie("username", body.username);
       res.cookie("branch", body.branch);
+
+      try {
+        let userCookie;
+        let ind = userSessions.findIndex((e) => e.username === body.username);
+        if (ind > -1) {
+          let val = userSessions[ind].val;
+          userSessions[ind].val = ++val;
+          userCookie = body.username + val.toString();
+          userSessions2[ind] = userCookie;
+        } else {
+          userSessions.push({
+            username: body.username,
+            val: 1,
+          });
+          userCookie = body.username + "1";
+          userSessions2.push(userCookie);
+        }
+        res.cookie("user", userCookie);
+
+        fs.writeFile("./store.txt", userSessions2.join("\n"), (err) => {
+          if (err) return res.redirect("/logout");
+        });
+      } catch (err) {
+        userSessions = [];
+        userSessions2 = [];
+        unlink("./store.txt", (err) => {
+          if (err) console.log("error: delete file");
+        });
+        console.log("error occurred");
+        return res.redirect("/logout");
+      }
+
       if (body.admin) {
         res.clearCookie("branch");
         res.redirect("admin");
@@ -1745,11 +1798,22 @@ app.post("/fp", async (req, res) => {
 });
 
 app.get("/logout", async (req, res) => {
+  /*
+  try{
+    let ind = userSessions.findIndex(e => e.username === req.cookie.username);
+    let ind2 = userSessions2.indexOf(req.cookie.user);
+    userSessions.split(ind, 1);
+    userSessions2.split(ind2, 1);
+  } catch(err){
+    console.log("some error");
+  }
+  */
   res.clearCookie("token");
   res.clearCookie("username");
   res.clearCookie("contestId");
   res.clearCookie("courseId");
   res.clearCookie("branch");
+  res.clearCookie("user");
   res.redirect("/");
 });
 
@@ -1761,7 +1825,7 @@ app.get("/error", async (req, res) => {
   res.render("error", { data: req.query, imgUsername: req.cookies.username });
 });
 
-app.get("/contests/questions/:questionId", async (req, res) => {
+app.get("/contests/questions/:questionId", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/questions/" + req.params.questionId,
     method: "get",
@@ -1779,7 +1843,7 @@ app.get("/contests/questions/:questionId", async (req, res) => {
   });
 });
 
-app.get("/tutorials/questions/:questionId", async (req, res) => {
+app.get("/tutorials/questions/:questionId", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/questions/" + req.params.questionId,
     method: "get",
@@ -1829,7 +1893,7 @@ app.get("/flipClass", async (req, res) => {
   res.render("flipClass", { imgUsername: req.cookies.username, data: url });
 });
 
-app.get("/tutorials", async (req, res) => {
+app.get("/tutorials", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/courses",
     method: "get",
@@ -1844,7 +1908,7 @@ app.get("/tutorials", async (req, res) => {
   });
 });
 
-app.get("/tutorials/:courseId/progress", async (req, res) => {
+app.get("/tutorials/:courseId/progress", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/questions/courses/" + req.params.courseId,
     method: "get",
@@ -1920,7 +1984,7 @@ app.get("/tutorials/:courseId/progress", async (req, res) => {
   });
 });
 
-app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
+app.get("/tutorials/:courseId/:difficulty/:concept", checkSignIn, async (req, res, next) => {
   let concept = req.params.concept;
 
   let subjectMap = ["bs", "cs", "al", "fn", "po", "so"];
@@ -2002,7 +2066,7 @@ app.get("/tutorials/:courseId/:difficulty/:concept", async (req, res) => {
   });
 });
 
-app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
+app.get("/tutorials/:courseId/:difficulty", checkSignIn, async (req, res, next) => {
   let difficulty = req.params.difficulty;
   let categoryBased = difficulty.includes("-");
   let ifTopicsOrCompanies =
@@ -2097,7 +2161,7 @@ app.get("/tutorials/:courseId/:difficulty", async (req, res) => {
   });
 });
 
-app.get("/tutorials/:courseId", async (req, res) => {
+app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
   res.clearCookie("contestId");
   res.cookie("courseId", req.params.courseId);
   // Add participation
@@ -2200,7 +2264,7 @@ app.get("/certificate", async (req, res) => {
   });
 });
 
-app.get("/codechef-iare-chapter", async (req, res) => {
+app.get("/codechef-iare-chapter", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/codechef-events/",
     method: "get",
@@ -2219,6 +2283,12 @@ app.get("/codechef-iare-chapter", async (req, res) => {
       });
     }
   });
+});
+
+app.get("/userSession/:sessionId", (req, res) => {
+  if (userSessions2.includes(req.params.sessionId))
+    res.status(200).send({ status: true });
+  else res.status(404).send({ status: false, message: "user logged out!" });
 });
 
 app.get("*", async (req, res) => {

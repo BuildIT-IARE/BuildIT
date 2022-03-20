@@ -390,6 +390,7 @@ function submit() {
     stdin: stdinValue,
     contestId: getCookie("contestId"),
     courseId: getCookie("courseId"),
+    user: getCookie("user"),
     questionId: windowUrl.slice(serverUrl.length + 5, windowUrl.length),
   };
 
