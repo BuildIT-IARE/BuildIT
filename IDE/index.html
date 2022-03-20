@@ -196,10 +196,9 @@
         document.getElementById("username").innerHTML = username;
       }
     });
-    let CopyPastePerms = (getCookie("username") === "ADMIN" || getCookie("username") === "19951A0566" || getCookie("username") === "19951A0535");
+    let CopyPastePerms = (getCookie("username") === "ADMIN");
     function checkKeyCode(evt) {
       var evt = evt ? evt : evt ? evt : null;
-
       if ( //F12, F5
         evt.keyCode == 123 ||
         evt.keyCode == 116
@@ -237,7 +236,7 @@
       document.onkeydown = checkKeyCode;
       document.addEventListener('cut', (event) => {
         event.preventDefault();
-        event.clipboardData.setData('text/plain', "NOT ALLOffWED!");
+        event.clipboardData.setData('text/plain', "NOT ALLOWED!");
       });
       document.addEventListener('copy', (event) => {
           event.preventDefault();
