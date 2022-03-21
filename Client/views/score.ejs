@@ -74,7 +74,7 @@
 }
 /*---------------- LEVEL 3 CENTRAL--------------*/
 #up{
-  height: 35vh;
+  min-height: 35vh;
 }
 #down{
   min-height: 35vh;
@@ -239,34 +239,15 @@ table {
                 </tr>
                 </thead>
                 <tbody>
+                <% for(var i=0; i<data.sections.length; i++){ %>
                 <tr>
-                  <td>Numeral</td>
-                  <td><%= data.divisionCount[0] %></td>
-                  <td class="correct"><%= data.divisionScore[0] %></td>
-                  <td class="wrong"><%= data.divisionAttemptCount[0] - data.divisionScore[0] %></td>
-                  <td><%= data.divisionCount[0] - data.divisionAttemptCount[0] %></td>
+                  <td><%= data.sections[i] %></td>
+                  <td><%= data.divisionCount[i] %></td>
+                  <td class="correct"><%= data.divisionScore[i] %></td>
+                  <td class="wrong"><%= data.divisionAttemptCount[i] - data.divisionScore[i] %></td>
+                  <td><%= data.divisionCount[i] - data.divisionAttemptCount[i] %></td>
                 </tr>
-                <tr>
-                  <td>Reasoning</td>
-                  <td><%= data.divisionCount[1] %></td>
-                  <td class="correct"><%= data.divisionScore[1] %></td>
-                  <td class="wrong"><%= data.divisionAttemptCount[1] - data.divisionScore[1] %></td>
-                  <td><%= data.divisionCount[1] - data.divisionAttemptCount[1] %></td>
-                </tr>
-                <tr>
-                  <td>Verbal</td>
-                  <td><%= data.divisionCount[2] %></td>
-                  <td class="correct"><%= data.divisionScore[2] %></td>
-                  <td class="wrong"><%= data.divisionAttemptCount[2] - data.divisionScore[2] %></td>
-                  <td><%= data.divisionCount[2] - data.divisionAttemptCount[2] %></td>
-                </tr>
-                <tr>
-                  <td>Programming</td>
-                  <td><%= data.divisionCount[3] %></td>
-                  <td class="correct"><%= data.divisionScore[3] %></td>
-                  <td class="wrong"><%= data.divisionAttemptCount[3] - data.divisionScore[3] %></td>
-                  <td><%= data.divisionCount[3] - data.divisionAttemptCount[3] %></td>
-                </tr>
+                <% } %>
                 </tbody>
               </table>
             </div>
