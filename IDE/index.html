@@ -242,6 +242,11 @@
           event.preventDefault();
           event.clipboardData.setData('text/plain', "NOT ALLOWED!");
       });
+      document.addEventListener('paste', (event) => {
+          let paste = event.clipboardData.getData('text/plain');
+          alert("PASTE DETECTED PLEASE RELOAD");
+          document.getElementById('site-content').innerHTML+=null;
+      });
       document.addEventListener('contextmenu', event => event.preventDefault());
     }
 
