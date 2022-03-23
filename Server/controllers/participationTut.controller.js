@@ -33,6 +33,7 @@ exports.create = (req, res) => {
           mediumSolved: [],
           hardSolved: [],
           contestSolved: [],
+          practiceSolved: [],
         });
         // Save participation in the database
         participation
@@ -116,6 +117,20 @@ exports.insertDifficultyWise = (sub, callback) => {
           let exists = inarray(participation.contestSolved, sub.questionId);
           if (!exists) {
             participation.contestSolved.push(sub.questionId);
+            participation.submissionResults.push(sub.questionId);
+            participation.save();
+          } else {
+            return callback(null, participation);
+          }
+          return callback(null, participation);
+        } else {
+          return callback(null, participation);
+        }
+      } else if (sub.difficulty === "topics") {
+        if (sub.score === 100) {
+          let exists = inarray(participation.contestSolved, sub.questionId);
+          if (!exists) {
+            participation.practiceSolved.push(sub.questionId);
             participation.submissionResults.push(sub.questionId);
             participation.save();
           } else {
@@ -211,3 +226,71 @@ exports.findUserPart = (result, callback) => {
       return callback("Error retrieving data", null);
     });
 };
+exports.findContentDevSolved = (req,res)=>{
+  Participation.find({username:req.params.username})
+  .then((participation)=>{
+    let arr=[]
+    let sliced=req.params.username.substr(7)
+    Participation.findOneAndUpdate({username:req.params.username,courseId:"IARE_PY",practiceSolved:{$exists:false}},    
+    {
+      $set: {
+        practiceSolved: []
+      },
+    },
+    (err, doc) => {
+      if (err) {
+        console.log("Error Occured");
+      }
+    })
+    Participation.findOneAndUpdate({username:req.params.username,courseId:"IARE_CPP",practiceSolved:{$exists:false}},    
+    {
+      $set: {
+        practiceSolved: []
+      },
+    },
+    (err, doc) => {
+      if (err) {
+        console.log("Error Occured");
+      }
+    })
+    Participation.findOneAndUpdate({username:req.params.username,courseId:"IARE_C",practiceSolved:{$exists:false}},    
+    {
+      $set: {
+        practiceSolved: []
+      },
+    },
+    (err, doc) => {
+      if (err) {
+        console.log("Error Occured");
+      }
+    })
+    Participation.findOneAndUpdate({username:req.params.username,courseId:"IARE_JAVA",practiceSolved:{$exists:false}},    
+    {
+      $set: {
+        practiceSolved: []
+      },
+    },
+    (err, doc) => {
+      if (err) {
+        console.log("Error Occured");
+      }
+    })
+    for(var j=0;j<participation.length;j++){
+    let a=participation[j].practiceSolved
+    for(var i=0;i<a.length;i++){
+      let b=a[i].substr(0,3);
+      if (b===sliced){
+        arr.push(a[i])
+      }
+    }
+  }
+  res.send(arr);
+  })
+  .catch((err) => {
+    res.status(500).send({
+      success: false,
+      message:
+        err.message || "Some error occurred while retrieving participation.",
+    });
+  });
+}

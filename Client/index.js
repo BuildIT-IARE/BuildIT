@@ -46,6 +46,7 @@ app.use("/tutorials/questions", express.static(__dirname + "/"));
 
 app.use("/admin/manageusers", express.static(__dirname + "/"));
 app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
+app.use("/admin/contentDevProgress", express.static(__dirname + "/"));
 app.use("/admin/add/iareTest", express.static(__dirname + "/"));
 app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 
@@ -926,6 +927,53 @@ app.get("/admin/manageusers", async (req, res) => {
     res.render("manageusers", { data: body });
   });
 });
+
+app.get("/admin/contentDevProgress", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.render("contentDevProgress", {
+      data:url,
+      data2:[],
+      token: req.cookies.token,
+    });
+  });
+});
+
+app.post("/admin/contentDevProgress/",async(req,res)=>{
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/tparticipations/contentDevProgress/" + req.body.username,
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.render("contentDevProgress", {
+      data:url,
+      data2:body,
+      token: req.cookies.token,
+    });
+  });
+});
+
 
 app.get("/admin/unverifiedusers", async (req, res) => {
   let options = {

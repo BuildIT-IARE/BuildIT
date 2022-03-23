@@ -18,6 +18,11 @@ module.exports = (app) => {
     middleware.checkTokenAdmin,
     participation.findAll
   );
+
+  app.post("/tparticipations/contentDevProgress/:username",
+  middleware.checkTokenAdmin,
+  participation.findContentDevSolved);
+
   // Retrieve all participations per contestId in body
   // app.post('/tparticipations/all', middleware.checkToken, participation.findContestPart);
 
@@ -27,4 +32,5 @@ module.exports = (app) => {
     middleware.checkToken,
     participation.findUser
   );
+
 };

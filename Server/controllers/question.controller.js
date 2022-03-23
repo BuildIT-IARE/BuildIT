@@ -397,6 +397,7 @@ exports.createTutorialsExcel = (req, res) => {
                 data[i].company || data[i].topic ? true : false;
               let companies = [];
               let topics = [];
+              let isIdPresent=data[i].questionId? true: false
               if (data[i].company) {
                 companies = data[i].company
                   .split(",")
@@ -411,7 +412,7 @@ exports.createTutorialsExcel = (req, res) => {
               }
 
               question = new Question({
-                questionId: "IARE" + (currQuestions + (i + 1)).toString(),
+                questionId:(isIdPresent)?data[i].questionId : "IARE" + (currQuestions + (i + 1)).toString(),
                 questionName: data[i].questionName,
                 contestId: data[i].contestId,
                 questionDescriptionText: data[i].questionDescriptionText,
