@@ -196,9 +196,12 @@
         document.getElementById("username").innerHTML = username;
       }
     });
-    let CopyPastePerms = (getCookie("username") === "ADMIN");
+  </script>
+
+  <script>
     function checkKeyCode(evt) {
       var evt = evt ? evt : evt ? evt : null;
+
       if ( //F12, F5
         evt.keyCode == 123 ||
         evt.keyCode == 116
@@ -213,6 +216,7 @@
       var code = evt.which || evt.keyCode;
 
       switch (code) {
+        case 88:
         case 67:
         case 86:
           if(a) break;
@@ -232,24 +236,26 @@
         return false;
       }
     }
-    if(CopyPastePerms == false){
-      document.onkeydown = checkKeyCode;
-      document.addEventListener('cut', (event) => {
-        event.preventDefault();
-        event.clipboardData.setData('text/plain', "NOT ALLOWED!");
-      });
-      document.addEventListener('copy', (event) => {
-          event.preventDefault();
-          event.clipboardData.setData('text/plain', "NOT ALLOWED!");
-      });
-      document.addEventListener('paste', (event) => {
-          let paste = event.clipboardData.getData('text/plain');
-          alert("PASTE DETECTED PLEASE RELOAD");
-          document.getElementById('site-content').innerHTML+=null;
-      });
-      document.addEventListener('contextmenu', event => event.preventDefault());
+
+    function handle(event) {
+      event.preventDefault();
+      event.clipboardData.setData('text/plain', "NOT ALLOWED!");
     }
 
+    if (!a) {
+      document.onkeydown = checkKeyCode;
+
+      document.addEventListener('cut', handle);
+      document.addEventListener('copy', handle);
+      document.addEventListener('paste', (event) => {
+        event.preventDefault();
+        alert("PASTE DETECTED! PLEASE RELOAD");
+        document.getElementById("submit-btn").remove();
+        document.getElementById('site-content').innerHTML += null;
+      });
+    }
+
+    document.addEventListener('contextmenu', event => event.preventDefault());
 
     window.onbeforeunload = function (e) {
       e.preventDefault();
