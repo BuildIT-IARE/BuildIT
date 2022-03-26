@@ -201,7 +201,6 @@
   <script>
     function checkKeyCode(evt) {
       var evt = evt ? evt : evt ? evt : null;
-      console.log(evt.keyCode);
 
       if ( //F12, F5
         evt.keyCode == 123 ||
@@ -217,6 +216,7 @@
       var code = evt.which || evt.keyCode;
 
       switch (code) {
+        case 88:
         case 67:
         case 86:
           if(a) break;
@@ -237,7 +237,23 @@
       }
     }
 
-    document.onkeydown = checkKeyCode;
+    function handle(event) {
+      event.preventDefault();
+      event.clipboardData.setData('text/plain', "NOT ALLOWED!");
+    }
+
+    if (!a) {
+      document.onkeydown = checkKeyCode;
+
+      document.addEventListener('cut', handle);
+      document.addEventListener('copy', handle);
+      document.addEventListener('paste', (event) => {
+        event.preventDefault();
+        alert("PASTE DETECTED! PLEASE RELOAD");
+        document.getElementById("submit-btn").remove();
+        document.getElementById('site-content').innerHTML += null;
+      });
+    }
 
     document.addEventListener('contextmenu', event => event.preventDefault());
 
