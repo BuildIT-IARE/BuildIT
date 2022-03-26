@@ -231,40 +231,7 @@ exports.findContentDevSolved = (req,res)=>{
   .then((participation)=>{
     let arr=[]
     let sliced=req.params.username.substr(7)
-    Participation.findOneAndUpdate({username:req.params.username,courseId:"IARE_PY",practiceSolved:{$exists:false}},    
-    {
-      $set: {
-        practiceSolved: []
-      },
-    },
-    (err, doc) => {
-      if (err) {
-        console.log("Error Occured");
-      }
-    })
-    Participation.findOneAndUpdate({username:req.params.username,courseId:"IARE_CPP",practiceSolved:{$exists:false}},    
-    {
-      $set: {
-        practiceSolved: []
-      },
-    },
-    (err, doc) => {
-      if (err) {
-        console.log("Error Occured");
-      }
-    })
-    Participation.findOneAndUpdate({username:req.params.username,courseId:"IARE_C",practiceSolved:{$exists:false}},    
-    {
-      $set: {
-        practiceSolved: []
-      },
-    },
-    (err, doc) => {
-      if (err) {
-        console.log("Error Occured");
-      }
-    })
-    Participation.findOneAndUpdate({username:req.params.username,courseId:"IARE_JAVA",practiceSolved:{$exists:false}},    
+    Participation.findOneAndUpdate({username:req.params.username,courseId: { $in: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"]},practiceSolved:{$exists:false}},    
     {
       $set: {
         practiceSolved: []
