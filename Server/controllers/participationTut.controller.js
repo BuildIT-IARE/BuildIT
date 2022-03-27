@@ -231,17 +231,6 @@ exports.findContentDevSolved = (req,res)=>{
   .then((participation)=>{
     let arr=[]
     let sliced=req.params.username.substr(7)
-    Participation.findOneAndUpdate({username:req.params.username,courseId: { $in: ["IARE_PY", "IARE_C", "IARE_CPP", "IARE_JAVA"]},practiceSolved:{$exists:false}},    
-    {
-      $set: {
-        practiceSolved: []
-      },
-    },
-    (err, doc) => {
-      if (err) {
-        console.log("Error Occured");
-      }
-    })
     for(var j=0;j<participation.length;j++){
     let a=participation[j].practiceSolved
     for(var i=0;i<a.length;i++){

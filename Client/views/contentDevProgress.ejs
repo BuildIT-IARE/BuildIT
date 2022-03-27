@@ -20,6 +20,13 @@
     <link href="/datatables/dataTables.min.css" rel="stylesheet" />
 
     <style>
+      form{
+        border-radius: 2mm;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+      }
       /* Three columns side by side */
       .column {
         float: left;
@@ -190,11 +197,11 @@
           >Enter the Roll Number:</label
         >
         <input
-          style="width: 75%; margin-left: 2rem"
+          style="width: 75%;"
           type="text"
           id="username"
           name="username"
-          placeholder="ex: 21951a05z9"
+          placeholder="ex: 21951a05z9 (all letters in lowercase)"
           required
         />
         <textarea
@@ -207,8 +214,11 @@
         <button
           style="
             margin-top: 2rem;
-            margin-left: 12rem;
-            border: 1px solid rgb(237 235 235);
+            background: rgb(90, 56, 177);
+            color: white;
+            padding: 8px 20px;
+            font-size: larger;
+            box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
           "
           class="btn btn-light"
           action="submit"
