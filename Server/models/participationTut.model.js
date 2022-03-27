@@ -13,6 +13,7 @@ var participationTutSchema = new Schema({
   mediumSolved: Array,
   hardSolved: Array,
   contestSolved: Array,
+  practiceSolved: Array,
 });
 
 module.exports = mongoose.model(
