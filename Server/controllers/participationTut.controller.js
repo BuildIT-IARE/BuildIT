@@ -33,6 +33,7 @@ exports.create = (req, res) => {
           mediumSolved: [],
           hardSolved: [],
           contestSolved: [],
+          practiceSolved: [],
         });
         // Save participation in the database
         participation
@@ -116,6 +117,20 @@ exports.insertDifficultyWise = (sub, callback) => {
           let exists = inarray(participation.contestSolved, sub.questionId);
           if (!exists) {
             participation.contestSolved.push(sub.questionId);
+            participation.submissionResults.push(sub.questionId);
+            participation.save();
+          } else {
+            return callback(null, participation);
+          }
+          return callback(null, participation);
+        } else {
+          return callback(null, participation);
+        }
+      } else if (sub.difficulty === "topics") {
+        if (sub.score === 100) {
+          let exists = inarray(participation.contestSolved, sub.questionId);
+          if (!exists) {
+            participation.practiceSolved.push(sub.questionId);
             participation.submissionResults.push(sub.questionId);
             participation.save();
           } else {
@@ -209,5 +224,32 @@ exports.findUserPart = (result, callback) => {
         return callback("Couldn't find participation, caught exception", null);
       }
       return callback("Error retrieving data", null);
+    });
+};
+
+exports.findContentDevSolved = (req, res) => {
+  Participation.find({ username: req.params.username })
+    .then((participation) => {
+      if (!participation) {
+        return res.send({
+          status: false,
+          message: "Participation not found with Id",
+        });
+      }
+      let programmerId = req.params.username.substr(7);
+
+      let programmerSpecific = participation
+        .map((v) => v.practiceSolved)
+        .reduce((a, b) => a.concat(b), [])
+        .filter((v) => v.substr(0, 3) === programmerId);
+
+      res.send(programmerSpecific);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message:
+          err.message || "Some error occurred while retrieving participation.",
+      });
     });
 };
