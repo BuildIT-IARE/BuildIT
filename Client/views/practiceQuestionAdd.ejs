@@ -25,7 +25,9 @@
 
                 <form action="<%= data.serverurl %>/questiontutorialsExcel" method="POST" enctype="multipart/form-data">
                     <h1>Upload Excel File Here</h1>
+                    <a href="./images/sample-practice.csv">Sample CSV</a><br>
                     <input type="file" name="upfile" value="">
+                    <textarea type="hidden" name="token" id="token2" value="<%= token %>" style="display: none;"></textarea>
                     <div class="btn-block">
                         <button class="submit" type="submit" href="/">Send</button>
                     </div>
@@ -67,6 +69,8 @@
                     <textarea name="company" rows="10"></textarea>
                     <p class="comments">Topic:</p>
                     <textarea name="topic" rows="10"></textarea>
+                    <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
+                    <br><br>
                     <button class="submit" type="submit" href="/">Send</button>
                 </form>
             </div>
@@ -78,6 +82,7 @@
     </script>
     <script>
         document.getElementById("token").value = "<%= token %>";
+        document.getElementById("token2").value = "<%= token %>";
     </script>
 </body>
 

@@ -651,38 +651,45 @@ exports.saveResult = (req, res) => {
           if (err) {
             res.send({ success: false, message: "Error occured" });
           }
-          let responses = Object.values(participation[0].responses._doc); // array of 4 arrays
-          responses.shift();
-          let divs = mcq.map((v) => v._id);
+          let responses = participation[0].responses.map((e) => e.responses); // array of 4 arrays
           mcq = mcq.map((v) => v.books); // array of 4 arrays each having mcqs array from 1 section
 
-          let answer = [[], [], [], []];
-          let score = [[], [], [], []];
-          let scoreCnt = Array(4).fill(0);
-          let attemptCnt = Array(4).fill(0);
-          let divisionCnt = Array(4).fill(0);
-          for (let i = 0, l = 0; i < 4; i++, l++) {
-            if (divs.length < 4 && divs[l] > i + 1) {
-              --l;
-              continue;
-            }
-            let N = mcq[l].length;
-            let M = responses[i].length;
-            attemptCnt[i] = M;
-            divisionCnt[i] = N;
-            answer[i] = mcq[l].map((v) => v.answer);
-            score[i] = Array(N).fill(0);
+          if (mcq.length !== responses.length) {
+            return res.send({ success: false, message: "Error occured" });
+          }
+
+          let sectionCount = mcq.length;
+          let answer = Array(sectionCount).fill([]);
+          let score = Array(sectionCount).fill([]);
+          let scoreCnt = Array(sectionCount).fill(0);
+          let attemptCnt = Array(sectionCount).fill(0);
+          let divisionCnt = Array(sectionCount).fill(0);
+
+          for (let i = 0; i < sectionCount; i++) {
+            let sectionLen = mcq[i].length;
+            let sectionResponseLen = responses[i].length;
+
+            attemptCnt[i] = sectionResponseLen;
+            divisionCnt[i] = sectionLen;
+
+            answer[i] = mcq[i].map((v) => v.answer);
+            score[i] = Array(sectionLen).fill(0);
             responses[i].sort((v, w) => v.questionNum - w.questionNum);
+
             let k = 0;
-            for (let j = 0; j < N && k < M; j++) {
-              let obj = {};
-              if (responses[i][k].mcqId === mcq[l][j].mcqId) {
-                obj.questionNum = j + 1;
-                obj.selected = responses[i][k].selection;
-                obj.answer = mcq[l][j].answer;
-                obj.score = Number(obj.selected) === obj.answer ? 1 : 0;
-                scoreCnt[i] += obj.score;
-                score[i][j] = obj;
+            for (let j = 0; j < sectionLen && k < sectionResponseLen; j++) {
+              if (responses[i][k].mcqId === mcq[i][j].mcqId) {
+                let currScore =
+                  Number(responses[i][k].selection) === mcq[i][j].answer
+                    ? 1
+                    : 0;
+                scoreCnt[i] += currScore;
+                score[i][j] = {
+                  questionNum: j + 1,
+                  selected: responses[i][k].selection,
+                  answer: mcq[i][j].answer,
+                  score: currScore,
+                };
                 ++k;
               }
             }
@@ -725,7 +732,8 @@ exports.saveResult = (req, res) => {
                 });
               }
               let participation = participations.mcqResults._doc;
-              participation.coding = participations.submissionResults;
+              participation.sections = participations.sections;
+              // participation.coding = participations.submissionResults;
               res.send(participation);
             })
             .catch((err) => {
@@ -748,7 +756,8 @@ exports.saveResult = (req, res) => {
         });
       } else {
         let participations = participation[0].mcqResults._doc;
-        participations.coding = participation[0].submissionResults;
+        participations.sections = participation[0].sections;
+        // participations.coding = participation[0].submissionResults;
         res.send(participations);
       }
     })

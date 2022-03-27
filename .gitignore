@@ -9,7 +9,8 @@ Public/pdf/license.txt
 # uploads
 
 Public/current_leaderboard
-*.xlsx
-*.csv
+/*.xlsx
+/*.csv
 sdsdsd
 npm-debug.log
+Client/store.txt

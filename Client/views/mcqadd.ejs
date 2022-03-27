@@ -27,6 +27,12 @@
         margin-left: 5%;
         color: black;
       }
+      .button{
+        font-size: 16px;
+        text-align: center;
+        width: 150px;
+        padding: 10px;
+      }
     </style>
   </head>
   <body>
@@ -46,6 +52,7 @@
           enctype="multipart/form-data"
         >
           <h1>Upload Excel File Here</h1>
+          <a href="./images/sample-mcq.xlsx">Sample CSV</a><br>
           <input type="file" name="upfile" value="" />
           <textarea
             type="hidden"
@@ -73,7 +80,7 @@
           <h1>Add Question Manually</h1>
           <br />
           <h4>Contest ID</h4>
-          <input name="contestId" id="get_sections" type="text" />
+          <input name="contestId" id="get_sections" type="text" required />
           <p class="button" onclick="getSection()">Show Sections</p>
           <br>
 
@@ -87,24 +94,24 @@
           <!-- <h4>Contest ID</h4> -->
           <!-- <input name="contestId2" type="text" /> -->
           <p class="comments">Description</p>
-          <textarea name="questionDescriptionText" rows="30"></textarea>
+          <textarea name="questionDescriptionText" rows="30" required></textarea>
           <p class="comments">Option 1</p>
-          <textarea name="op1" rows="4"></textarea>
+          <textarea name="op1" rows="4" required></textarea>
           <p class="comments">Option 2</p>
-          <textarea name="op2" rows="4"></textarea>
+          <textarea name="op2" rows="4" required></textarea>
           <p class="comments">Option 3</p>
-          <textarea name="op3" rows="4"></textarea>
+          <textarea name="op3" rows="4" required></textarea>
           <p class="comments">Option 4</p>
-          <textarea name="op4" rows="4"></textarea>
+          <textarea name="op4" rows="4" required></textarea>
           <p class="comments"><b>Answer</b></p>
           <div class="new">
-            <input type="radio" name="answer" value="1" id="1" />
+            <input type="radio" name="answer" value="1" id="1" required />
             <label for="1">&emsp;ONE</label>
-            <input type="radio" name="answer" value="2" id="2" />
+            <input type="radio" name="answer" value="2" id="2" required />
             <label for="2">&emsp;TWO</label>
-            <input type="radio" name="answer" value="3" id="3" />
+            <input type="radio" name="answer" value="3" id="3" required />
             <label for="3">&emsp;THREE</label>
-            <input type="radio" name="answer" value="4" id="4" />
+            <input type="radio" name="answer" value="4" id="4" required />
             <label for="4">&emsp;FOUR</label>
           </div>
           <br />
@@ -184,7 +191,7 @@
             for(let i=0; i<sections.length; i++) {
               str +=
               `
-              <input type="radio" name="section" value="${i+1}" id="${11+i}" />
+              <input type="radio" name="section" value="${i+1}" id="${11+i}" required/>
               <label for="${11+i}">&emsp;${sections[i]}</label>
               `;
             }

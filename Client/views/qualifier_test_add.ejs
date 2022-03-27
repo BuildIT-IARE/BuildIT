@@ -12,72 +12,35 @@
 		<link rel="stylesheet" href="../../css/navadmin.css">
 		<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
 		<script src="/adminjs/modernizr.custom.js"></script>
-		<style>
-			.new {
-				font-family: sans-serif;
-				font-size: 18px;
-				color: black;
-				line-height: normal;
-				clear: both;
-			}
-			#mcq, #coding {
-				width: fit-content;
-				border: 1px solid #c4c4c4;
-				border-radius: 5px;
-				box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
-			}
-			/* #coding {
-				margin-left: 10%;
-			} */
-			#mcq {
-				margin-left: 50px;
-			}
-			.answer {
-				display: none;
-			}
-			.is_specific {
-				width: fit-content;
-			}
-			.question > .comments{
-				display: inline;
-			}
-		</style>
 	</head>
 	<body>
 		<div class="container">
 			<% include ../views/partials/adminpanel %>
 			<header>
-				<h1>Manage Contests<span style="color:white">Add Contests</span></h1>	
+				<h1>Manage Qualifier Test<span style="color:white">Add Qualifier Test</span></h1>
 			</header> 
 			<div class="main-block">
 				<form action="<%= data.serverurl %>/contests" enctype="multipart/form-data" onsubmit="return handleSubmit()"
 					method="POST">
 				  <h4>Exam ID</h4>
-				  <textarea name="contestId" rows = "5"></textarea>
+				  <textarea name="contestId" rows = "5" required></textarea>
 				  <p class="comments">Exam Name</p>
-				  <textarea name="contestName" rows="5"></textarea>
+				  <textarea name="contestName" rows="5" required></textarea>
 				  <p class="comments">Exam Date</p>
-				  <input name="contestDate" type="date"></textarea>
+				  <input name="contestDate" type="date" required>
 				  <p class="comments">Exam Duration</p>
-				  <textarea placeholder="in minutes" name="contestDuration" rows="5"></textarea>
+				  <textarea placeholder="in minutes" name="contestDuration" rows="5" required></textarea>
 				  <p class="comments">Exam Start Time</p>
-				  <textarea placeholder="24 Hours HHMM format" name="contestStartTime" rows="5"></textarea>
+				  <textarea placeholder="24 Hours HHMM format" name="contestStartTime" rows="5" required></textarea>
 				  <p class="comments">Exam End Time</p>
-				  <textarea placeholder="24 Hours HHMM format" name="contestEndTime" rows="5"></textarea>
+				  <textarea placeholder="24 Hours HHMM format" name="contestEndTime" rows="5" required></textarea>
 					<p class="comments">Exam Sections</p>
 				  <textarea required name="contestSections" rows="5"
 						placeholder="Enter Section Names Separated By Comma -
 
-Eg : Numeral, Reasoning, Verbal, Programming"
+Eg : Numeral, Reasoning, Verbal, Programming" required
 					></textarea>
 					<input type="hidden" name="mcq" value=true id="mcq">
-					<!-- <p class="comments" style="float: left;">Challenge</p>
-					<div class="new">
-						<input type="checkbox" name="mcq" value=false id="coding">
-						<label for="coding">&nbsp;Coding</label>
-						<input type="checkbox" name="mcq" value=true id="mcq">
-						<label for="mcq">&nbsp;Qualifier Test</label>
-					</div> -->
 					<br><hr>
 				  <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
 				  <div class="btn-block">
@@ -89,17 +52,11 @@ Eg : Numeral, Reasoning, Verbal, Programming"
 		<script src="/adminjs/classie.js"></script>
 		<script src="/adminjs/gnmenu.js"></script>
 		<script src="plugins/jQuery/jquery.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
 		<script>
 			document.getElementById("token").value = "<%= token %>";
-		</script>
-		<script>
-/* 			$('.new > input[type="checkbox"]').on('change', function() {
-				$('.new > input[type="checkbox"]').not(this).prop('checked', false);
-			}); */
 		</script>
 	</body>
 </html>
