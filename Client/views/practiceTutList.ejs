@@ -92,21 +92,21 @@
       <% var myList = [] %>
       <% if(title == "Topics") { %>
         <% for(var i =0;i<data.length;i++) { %>
-          <%  myList = myList.concat(myList,data[i].topic);%>
+          <%  myList=myList.concat(data[i].topic);%>
       <% } } else { %>
         <% for(var i =0;i<data.length;i++) { %>
           <% myList = myList.concat(myList,data[i].company);%>
       <% } } %>
-      <%var myArr = myList.filter((v, i, a) => a.indexOf(v) === i) %>
-      <% for(var i=0; i<myArr.length;i++) {%>
+      <%var myArr = new Set(myList) %>
+      <% myArr.forEach(i=>{ %>
       <a
-        href="<%= data.clientRoute %>/tutorials/<%= data.courseId %>/<%= title%>-<%= myArr[i] %>"
+        href="<%= data.clientRoute %>/tutorials/<%= data.courseId %>/<%= title%>-<%=i %>"
         class="practiceItem"
       >
       <span class="material-icons play">play_arrow</span>
-      <%= myArr[i] %>
+      <%= i %>
       </a>
-      <% } %>
+      <% }) %>
     </section>
     <% include ../views/partials/aboutfooter %>
     <script src="../plugins/jQuery/jquery.min.js"></script>

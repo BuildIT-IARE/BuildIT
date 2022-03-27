@@ -416,7 +416,7 @@ exports.createTutorialsExcel = (req, res) => {
               }
 
               question = new Question({
-                questionId: (contentDevId? contentDevId: "IARE") + (currQuestions + (i + 1)).toString(),
+                questionId: (data[i].contentDevId? data[i].contentDevId: ("IARE" + (currQuestions + (i + 1)).toString())),
                 questionName: data[i].questionName,
                 contestId: data[i].contestId,
                 questionDescriptionText: data[i].questionDescriptionText,
