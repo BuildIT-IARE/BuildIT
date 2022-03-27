@@ -389,7 +389,12 @@ exports.createTutorialsExcel = (req, res) => {
         let ws = wb.Sheets["Sheet1"];
         let data = xlsx.utils.sheet_to_json(ws);
         let question;
-        Question.find()
+        let query = {};
+        let contentDevId = data[0].contentDevId;
+        if (contentDevId) {
+          query = { questionId: new RegExp("^" + contentDevId) };
+        }
+        Question.find(query)
           .then((questions) => {
             let currQuestions = questions.length;
             for (let i = 0; i < data.length; i++) {
@@ -397,7 +402,6 @@ exports.createTutorialsExcel = (req, res) => {
                 data[i].company || data[i].topic ? true : false;
               let companies = [];
               let topics = [];
-              let isIdPresent=data[i].questionId? true: false
               if (data[i].company) {
                 companies = data[i].company
                   .split(",")
@@ -412,7 +416,7 @@ exports.createTutorialsExcel = (req, res) => {
               }
 
               question = new Question({
-                questionId:(isIdPresent)?data[i].questionId : "IARE" + (currQuestions + (i + 1)).toString(),
+                questionId: (contentDevId? contentDevId: "IARE") + (currQuestions + (i + 1)).toString(),
                 questionName: data[i].questionName,
                 contestId: data[i].contestId,
                 questionDescriptionText: data[i].questionDescriptionText,

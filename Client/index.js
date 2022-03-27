@@ -951,14 +951,15 @@ app.get("/admin/contentDevProgress", async (req, res) => {
   });
 });
 
-app.post("/admin/contentDevProgress/",async(req,res)=>{
+app.post("/admin/contentDevProgress/", async (req, res) => {
   let url = {
     url: clientRoute,
     serverurl: serverRoute,
   };
 
   let options = {
-    url: serverRoute + "/tparticipations/contentDevProgress/" + req.body.username,
+    url:
+      serverRoute + "/tparticipations/contentDevProgress/" + req.body.username,
     method: "post",
     headers: {
       authorization: req.cookies.token,
@@ -966,11 +967,15 @@ app.post("/admin/contentDevProgress/",async(req,res)=>{
     json: true,
   };
   request(options, function (err, response, body) {
-    res.render("contentDevProgress", {
-      data:url,
-      data2:body,
-      token: req.cookies.token,
-    });
+    if (!body.hasOwnProperty("success")) {
+      res.render("contentDevProgress", {
+        data: url,
+        data2: body,
+        token: req.cookies.token,
+      });
+    } else {
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
   });
 });
 
