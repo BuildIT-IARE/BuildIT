@@ -176,20 +176,16 @@ exports.acceptSelection = (sub, callback) => {
                 $set: obj,
               },
               { new: true },
-              (err, doc) => {
-                if (err) {
-                  console.log(err, "Something wrong when updating data!");
-                }
                 // console.log(doc);
-              }
             )
-              .then((participation) => {
-                if (!participation) {
+              .then((participations) => {
+                if (!participations) {
                   return callback("Participation not found with Id ", null);
                 }
-                return callback(null, participation);
+                return callback(null, participations);
               })
               .catch((err) => {
+                console.log(err)
                 if (err.kind === "ObjectId") {
                   return callback("Participation not found with Id ", null);
                 }
@@ -213,11 +209,6 @@ exports.acceptSelection = (sub, callback) => {
             },
           },
           { new: true },
-          (err, doc) => {
-            if (err) {
-              console.log("Something wrong when updating data!");
-            }
-          }
         )
           .then((participation) => {
             if (!participation) {
