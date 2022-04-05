@@ -198,7 +198,6 @@ exports.findAllContest = (req, res) => {
         success: false,
         message:
           "Error retrieving question with Contest id " + req.params.contestId,
-
       });
     });
 };
