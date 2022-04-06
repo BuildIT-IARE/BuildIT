@@ -660,6 +660,36 @@ exports.delete = (req, res) => {
     });
 };
 
+// Delete questions with the specified questionIds in the request
+exports.deleteMultiple = (req, res) => {
+  questionIds = req.params.questionIds
+  .split(",")
+  .filter((item) => !item.includes("-"))
+  .map((item) => item.trim());
+  Question.deleteMany({ questionId: {$in: questionIds }})
+    .then((question) => {
+      if (!question) {
+        return res.status(404).send({
+          success: false,
+          message: "question not found with id " + req.params.questionId,
+        });
+      }
+      res.send({ message: "questions deleted successfully!" });
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId" || err.name === "NotFound") {
+        return res.status(404).send({
+          success: false,
+          message: "question not found with id " + req.params.questionId,
+        });
+      }
+      return res.status(500).send({
+        success: false,
+        message: "Could not delete question with id " + req.params.questionId,
+      });
+    });
+};
+
 exports.findAllContest = async (req, res) => {
   contests.findOneSet(req, async (err, contest) => {
     if (err) {

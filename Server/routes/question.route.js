@@ -84,6 +84,13 @@ module.exports = (app) => {
     middleware.checkToken,
     questions.findAllCourseTopicWise
   );
+  
+  //Delete multiple questions
+  app.post(
+    "/deletequestions/multiple/:questionIds",
+    middleware.checkTokenAdmin,
+    questions.deleteMultiple
+  );
 
   // Update a question with questionId
   app.post(
