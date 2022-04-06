@@ -197,7 +197,7 @@ exports.findAllContest = (req, res) => {
       return res.status(500).send({
         success: false,
         message:
-          "Error retrieving question with Contest id (Please Reload)" + req.params.contestId,
+          "Error retrieving question with Contest id " + req.params.contestId,
       });
     });
 };

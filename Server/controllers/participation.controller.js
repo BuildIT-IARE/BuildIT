@@ -176,7 +176,6 @@ exports.acceptSelection = (sub, callback) => {
                 $set: obj,
               },
               { new: true },
-                // console.log(doc);
             )
               .then((participations) => {
                 if (!participations) {
@@ -185,7 +184,6 @@ exports.acceptSelection = (sub, callback) => {
                 return callback(null, participations);
               })
               .catch((err) => {
-                console.log(err)
                 if (err.kind === "ObjectId") {
                   return callback("Participation not found with Id ", null);
                 }
@@ -707,11 +705,6 @@ exports.saveResult = (req, res) => {
               },
             },
             { new: true },
-            (err, doc) => {
-              if (err) {
-                console.log("Something wrong when updating data!");
-              }
-            }
           )
             .then((participations) => {
               if (!participations) {
