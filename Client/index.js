@@ -47,6 +47,7 @@ app.use("/tutorials/questions", express.static(__dirname + "/"));
 app.use("/admin/manageusers", express.static(__dirname + "/"));
 app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
 app.use("/admin/contentDevProgress", express.static(__dirname + "/"));
+app.use("/admin/deletequestions/multiple", express.static(__dirname + "/"));
 app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
@@ -919,6 +920,55 @@ app.get("/admin/manageusers", async (req, res) => {
       }
     }
     res.render("manageusers", { data: body });
+  });
+});
+
+app.get("/admin/deletequestions/multiple", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.render("deleteMultipleQuestions", {
+      data:url,
+      token: req.cookies.token,
+    });
+  });
+});
+
+app.post("/admin/deletequestions/multiple", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url:
+      serverRoute + "/deletequestions/multiple/"+req.body.questionIds,
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    if (!body.hasOwnProperty("success")) {
+    res.render("deleteMultipleQuestions", {
+      data:url,
+      token: req.cookies.token,
+    });
+  } else {
+    res.send("Error Encountered!");
+  }
   });
 });
 
