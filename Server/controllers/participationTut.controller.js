@@ -237,7 +237,7 @@ exports.findContentDevSolved = (req, res) => {
         });
       }
       let programmerId = req.params.username.substr(7);
-
+      programmerId = programmerId.toUpperCase()
       let programmerSpecific = participation
         .map((v) => v.practiceSolved)
         .reduce((a, b) => a.concat(b), [])
