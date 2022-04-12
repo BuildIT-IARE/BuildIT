@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Maker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <style>
+        .resumeform{
+            width: 100%;
+        }
+        form{
+            display: flex;
+            width: 600%;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .formsection{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-evenly;
+            position: relative;
+        }
+        .content{
+            width: 80%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-evenly;
+            position: relative;
+            margin: 50px 0px;
+        }
+        .sectionheading{
+            float: left;
+            font-family: poppins;
+            font-size: xx-large;
+        }
+        .formspan{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .inputf{
+            width: 250px;
+            font-size:medium;
+            font-family: poppins;
+            color: dodgerblue;
+            outline: none;
+            border: none;
+            border: rgb(113, 113, 113) solid 1px;
+            border-bottom: rgb(113, 113, 113) solid 2px ;
+            border-radius: 2mm;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        #Profession{
+            width: 100%;
+            padding: 0;
+        }
+        .inputf::placeholder{
+            color: rgb(102, 102, 102);
+        }
+    </style>
+</head>
+<body>
+    <section class="resumeform">
+        <form action="" method="post">
+            <div class="formsection">
+                <div class="content">
+                <div class="sectionheading">Heading</div>
+                <span class="formspan">
+                    <input type="text" name="Fname" id="Fname" class="inputf" placeholder="First Name">
+                    <input type="text" name="Lname" id="Lname" class="inputf" placeholder="Last Name">
+                </span>
+                <input type="text" name="Profession" id="Profession" class="inputf" placeholder="Profession">
+                <span class="formspan">
+                    <input type="text" name="City" id="City" placeholder="City" class="inputf">
+                    <input type="text" name="Country" id="Country" placeholder="Country" class="inputf">
+                    <input type="text" name="Pin Code" id="Pin Code" placeholder="Pin Code" class="inputf">
+                </span>
+                <span class="formspan">
+                    <input type="number" name="Phone" id="Phone" placeholder="Phone" class="inputf">
+                    <input type="email" name="Email" id="Email" placeholder="Email" class="inputf">
+                </span>
+                <div class="buttons">
+                    <button type="button">Pre</button>
+                    <button type="button">Next</button>
+                </div>
+            </div>
+            </div>
+            <div class="formsection">
+                <div class="sectionheading">Heading</div>
+            </div>
+            <div class="formsection">
+                <div class="sectionheading">Heading</div>
+            </div>
+            <div class="formsection">
+                <div class="sectionheading">Heading</div>
+            </div>
+            <div class="formsection">
+                <div class="sectionheading">Heading</div>
+            </div>
+            <div class="formsection">
+                <div class="sectionheading">Heading</div>
+            </div>
+        </form>
+    </section>
+</body>
+</html>

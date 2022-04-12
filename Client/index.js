@@ -2345,7 +2345,9 @@ app.get("/userSession/:sessionId", (req, res) => {
     res.status(200).send({ status: true });
   else res.status(404).send({ status: false, message: "user logged out!" });
 });
-
+app.get('/resume',async(req,res)=>{
+  res.render("ResumeBuilderForm")
+})
 app.get("*", async (req, res) => {
   res.render("404page");
 });
