@@ -75,14 +75,33 @@ function checkSignIn(req, res, next){
   }
 }
 
+// app.get("/", async (req, res) => {
+//   console.log(req.cookies.imgUsername);
+//   res.render("home", { imgUsername: req.cookies.username, data: null });
+// });
+
 app.get("/", async (req, res) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+  let options = {
+    url: serverRoute + "/getCounters",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.render("home", { imgUsername: req.cookies.username, prevDay : body[0].prevDay, weeklyCount: body[0].weeklyCount,url });
+  });
 });
 app.get("/index", async (req, res) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  res.render("home", { imgUsername: req.cookies.username});
 });
 app.get("/home", checkSignIn, async (req, res, next) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  res.render("home", { imgUsername: req.cookies.username});
 });
 app.get("/about", checkSignIn, async (req, res, next) => {
   res.render("about", { imgUsername: req.cookies.username });
