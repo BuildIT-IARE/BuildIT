@@ -95,7 +95,7 @@
           <%  myList=myList.concat(data[i].topic);%>
       <% } } else { %>
         <% for(var i =0;i<data.length;i++) { %>
-          <% myList = myList.concat(myList,data[i].company);%>
+          <% myList = myList.concat(data[i].company);%>
       <% } } %>
       <%var myArr = new Set(myList) %>
       <% myArr.forEach(i=>{ %>
