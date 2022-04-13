@@ -119,7 +119,6 @@ let handleClicks = async () => {
       };
 
       request(options2, async (err, response, body2) => {
-        console.log(body2.old_value);
 
         prevDate = currDate;
         weekCount = await getWeekClicks();
@@ -144,7 +143,6 @@ let checkSignIn = async (req, res, next) => {
 
 app.get("/", async (req, res) => {
   await handleClicks();
-  console.log(totalCount)
   res.render("home", {
     imgUsername: req.cookies.username,
     weeklyCount: weekCount,
@@ -1349,7 +1347,6 @@ app.post("/admin/resultsTut/course", async (req, res) => {
         let totalSolMedium = 0;
         let totalSolHard = 0;
         let totalSolContest = 0;
-        // console.log(eCount,mCount,hCount,cCount);
         totalSolEasy = bodytimer[j].easySolved.length;
         totalSolMedium = bodytimer[j].mediumSolved.length;
         totalSolHard = bodytimer[j].hardSolved.length;
