@@ -52,6 +52,10 @@ app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
+let countApiKey = "buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d";
+let prevDate = new Date().getDate();
+let weekCount = 0;
+
 let userSessions = [];
 let userSessions2 = [];
 
@@ -67,41 +71,84 @@ if(sessionText !== ''){
   }
 }
 
-function checkSignIn(req, res, next){
-  if(userSessions2.includes(req.cookies.user)){
-    next();     //If session exists, proceed to page
-  } else {
-    res.redirect("/logout")  //Error, trying to access unauthorized page!
-  }
-}
+let getWeekClicks = async () => {
+  let secondResponse = await fetch(`${serverRoute}/counters`);
+  let allCounts = await secondResponse.json();
+  let weekCount2 = 0;
+  let len = allCounts.length;
 
-// app.get("/", async (req, res) => {
-//   console.log(req.cookies.imgUsername);
-//   res.render("home", { imgUsername: req.cookies.username, data: null });
-// });
+  for (let i = 0; i < len; i++) {
+    if (new Date(allCounts[i].date).getDay() === 0) break;
+    else weekCount2 += allCounts[i].count;
+  }
+  return weekCount2;
+};
+
+(async () => {
+  weekCount = await getWeekClicks();
+})();
+
+let handleClicks = async () => {
+  let currDate = new Date().getDate();
+
+  if (currDate !== prevDate) {
+    let firstResponse = await fetch(
+      "https://api.countapi.xyz/hit/" + countApiKey
+    );
+    let clicks = await firstResponse.json();
+
+    let options = {
+      body: {
+        count: clicks.value,
+      },
+      url: serverRoute + "/counters/add",
+      method: "post",
+      json: true,
+    };
+
+    request(options, async (err, response, body) => {
+      let options2 = {
+        url: "https://api.countapi.xyz/set/" + countApiKey + "?value=0",
+        method: "get",
+        json: true,
+      };
+
+      request(options2, async (err, response, body2) => {
+        console.log(body2.old_value);
+
+        prevDate = currDate;
+        weekCount = await getWeekClicks();
+      });
+    });
+  } else {
+    await fetch("https://api.countapi.xyz/hit/" + countApiKey);
+  }
+};
+
+let checkSignIn = async (req, res, next) => {
+  if (
+    userSessions2.includes(req.cookies.user) ||
+    Object.keys(req.cookies).length === 0
+  ) {
+    await handleClicks();
+    next(); //If session exists, proceed to page
+  } else {
+    res.redirect("/logout"); //Error, trying to access unauthorized page!
+  }
+};
 
 app.get("/", async (req, res) => {
-  let url = {
-    url: clientRoute,
-    serverurl: serverRoute,
-  };
-  let options = {
-    url: serverRoute + "/getCounters",
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    res.render("home", { imgUsername: req.cookies.username, prevDay : body[0].prevDay, weeklyCount: body[0].weeklyCount,url });
+  await handleClicks();
+  res.render("home", {
+    imgUsername: req.cookies.username,
+    weeklyCount: weekCount,
   });
 });
 app.get("/index", async (req, res) => {
-  res.render("home", { imgUsername: req.cookies.username});
+  res.render("home", { imgUsername: req.cookies.username });
 });
 app.get("/home", checkSignIn, async (req, res, next) => {
-  res.render("home", { imgUsername: req.cookies.username});
+  res.render("home", { imgUsername: req.cookies.username });
 });
 app.get("/about", checkSignIn, async (req, res, next) => {
   res.render("about", { imgUsername: req.cookies.username });
