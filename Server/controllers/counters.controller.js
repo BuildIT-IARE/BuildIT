@@ -24,7 +24,7 @@ exports.addDayCount = (req, res) => {
 exports.getAllCounts = (req, res) => {
   Counter.find({})
     .sort({ _id: -1 })
-    .limit(8)
+    // .limit(8)
     .then((counter) => {
       res.status(200).send(counter);
     })
@@ -35,3 +35,4 @@ exports.getAllCounts = (req, res) => {
       });
     });
 };
+

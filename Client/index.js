@@ -55,6 +55,7 @@ app.use("/admin", express.static(__dirname + "/"));
 let countApiKey = "buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d";
 let prevDate = new Date().getDate();
 let weekCount = 0;
+let totalCount = 0;
 
 let userSessions = [];
 let userSessions2 = [];
@@ -71,16 +72,20 @@ if(sessionText !== ''){
   }
 }
 
+
 let getWeekClicks = async () => {
   let secondResponse = await fetch(`${serverRoute}/counters`);
   let allCounts = await secondResponse.json();
   let weekCount2 = 0;
-  let len = allCounts.length;
+  let len = Math.min(8, allCounts.length);
 
   for (let i = 0; i < len; i++) {
     if (new Date(allCounts[i].date).getDay() === 0) break;
     else weekCount2 += allCounts[i].count;
   }
+
+  totalCount = allCounts.reduce((a, b) => a + b.count, 0);
+
   return weekCount2;
 };
 
@@ -114,7 +119,6 @@ let handleClicks = async () => {
       };
 
       request(options2, async (err, response, body2) => {
-        console.log(body2.old_value);
 
         prevDate = currDate;
         weekCount = await getWeekClicks();
@@ -142,6 +146,7 @@ app.get("/", async (req, res) => {
   res.render("home", {
     imgUsername: req.cookies.username,
     weeklyCount: weekCount,
+    totalCount: totalCount,
   });
 });
 app.get("/index", async (req, res) => {
@@ -1342,7 +1347,6 @@ app.post("/admin/resultsTut/course", async (req, res) => {
         let totalSolMedium = 0;
         let totalSolHard = 0;
         let totalSolContest = 0;
-        // console.log(eCount,mCount,hCount,cCount);
         totalSolEasy = bodytimer[j].easySolved.length;
         totalSolMedium = bodytimer[j].mediumSolved.length;
         totalSolHard = bodytimer[j].hardSolved.length;
