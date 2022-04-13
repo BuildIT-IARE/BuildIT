@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var counterSchema = new Schema({
-    prevDay: Number,
-    weeklyCount: Number
+  date: Date,
+  count: Number,
 });
 
 module.exports = mongoose.model("Counter", counterSchema);

@@ -39,7 +39,7 @@
     <div class="row">
 
       <div class="col-lg-11 mx-auto"><br><br><br><br><br>
-        <p class="text-white font-tertiary">Weekly Hits: <%=weeklyCount%></p>
+        <p class="text-white font-tertiary" id="weekly"></p>
         <p class="text-white font-tertiary" id="counter"></p>
         <h1 class="text-white font-tertiary">Welcome to<br>BuildIT<br>By Go-Labs</h1>
       </div>
@@ -106,59 +106,20 @@
 
 <!-- Main Script -->
 <script>
-  var prevDay = Number("<%= prevDay %>");
-  var weeklyCount = Number("<%= weeklyCount %>");
-</script>
-<script>
   const countEl = document.getElementById("counter");
-  counters();
-  var today = new Date();
-  var day = Number(today.getDay());
-  if(day != prevDay){
-    //set weekly count to 0 in sunday
-    if(day == 0){
-      //since it is sunday we will refresh the weekly counter
-      fetch('<%= url.serverurl %>/updateCountersWeek', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        })
-        .then(() => {
-          console.log("Updated weekly counter to 0!");
-        });
-    }
-    //otherwise update weekly counter after the day
-    else{
-      var current_count=0;
-      //this api call resets the website hits
-      fetch('https://api.countapi.xyz/set/buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d?value=0')
-      .then((res) => res.json())
-      .then((res) => {
-        current_count = res.old_value;
-        console.log("Counter reset for the day!");
-        //this call will add previous day view to week counter
-        fetch('<%= url.serverurl %>/updateCountersDay/'+current_count, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        })
-        .then(() => {
-          console.log("Updated weekly counter!");
-        })
-      });
-    }
-  }
   function counters() {
     //this api call increments website hits
-    fetch('https://api.countapi.xyz/hit/buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d')
-    .then((res) => res.json())
-    .then((res) => {
-      countEl.innerText = "Daily Hits: "+ res.value;
-    });
+    fetch('https://api.countapi.xyz/get/buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d')
+      .then((res) => res.json())
+      .then((res) => {
+        countEl.innerText = "Daily Hits: " + res.value;
+        document.getElementById("weekly").innerText =
+          "Weekly Hits: " + (Number('<%= weeklyCount %>') + res.value);
+      });
   }
+  counters();
 </script>
 <script src="js/script.js"></script>
+
 </body>
 </html>
