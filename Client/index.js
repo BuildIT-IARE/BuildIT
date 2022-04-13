@@ -47,9 +47,15 @@ app.use("/tutorials/questions", express.static(__dirname + "/"));
 app.use("/admin/manageusers", express.static(__dirname + "/"));
 app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
 app.use("/admin/contentDevProgress", express.static(__dirname + "/"));
+app.use("/admin/deletequestions/multiple", express.static(__dirname + "/"));
 app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
+
+let countApiKey = process.env.countApiKey;
+let prevDate = new Date().getDate();
+let weekCount = 0;
+let totalCount = 0;
 
 let userSessions = [];
 let userSessions2 = [];
@@ -66,16 +72,82 @@ if(sessionText !== ''){
   }
 }
 
-function checkSignIn(req, res, next){
-  if(userSessions2.includes(req.cookies.user)){
-    next();     //If session exists, proceed to page
-  } else {
-    res.redirect("/logout")  //Error, trying to access unauthorized page!
+
+let getWeekClicks = async () => {
+  let secondResponse = await fetch(`${serverRoute}/counters`);
+  let allCounts = await secondResponse.json();
+  let weekCount2 = 0;
+  let len = Math.min(8, allCounts.length);
+
+  for (let i = 0; i < len; i++) {
+    if (new Date(allCounts[i].date).getDay() === 0) break;
+    else weekCount2 += allCounts[i].count;
   }
-}
+
+  totalCount = allCounts.reduce((a, b) => a + b.count, 0);
+
+  return weekCount2;
+};
+
+(async () => {
+  weekCount = await getWeekClicks();
+})();
+
+let handleClicks = async () => {
+  let currDate = new Date().getDate();
+
+  if (currDate !== prevDate) {
+    let firstResponse = await fetch(
+      "https://api.countapi.xyz/hit/" + countApiKey
+    );
+    let clicks = await firstResponse.json();
+
+    let options = {
+      body: {
+        count: clicks.value,
+      },
+      url: serverRoute + "/counters/add",
+      method: "post",
+      json: true,
+    };
+
+    request(options, async (err, response, body) => {
+      let options2 = {
+        url: "https://api.countapi.xyz/set/" + countApiKey + "?value=0",
+        method: "get",
+        json: true,
+      };
+
+      request(options2, async (err, response, body2) => {
+
+        prevDate = currDate;
+        weekCount = await getWeekClicks();
+      });
+    });
+  } else {
+    await fetch("https://api.countapi.xyz/hit/" + countApiKey);
+  }
+};
+
+let checkSignIn = async (req, res, next) => {
+  if (
+    userSessions2.includes(req.cookies.user) ||
+    Object.keys(req.cookies).length === 0
+  ) {
+    await handleClicks();
+    next(); //If session exists, proceed to page
+  } else {
+    res.redirect("/logout"); //Error, trying to access unauthorized page!
+  }
+};
 
 app.get("/", async (req, res) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  await handleClicks();
+  res.render("home", {
+    imgUsername: req.cookies.username,
+    weeklyCount: weekCount,
+    totalCount: totalCount,
+  });
 });
 app.get("/index", async (req, res) => {
   res.render("home", { imgUsername: req.cookies.username });
@@ -922,6 +994,55 @@ app.get("/admin/manageusers", async (req, res) => {
   });
 });
 
+app.get("/admin/deletequestions/multiple", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.render("deleteMultipleQuestions", {
+      data:url,
+      token: req.cookies.token,
+    });
+  });
+});
+
+app.post("/admin/deletequestions/multiple", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url:
+      serverRoute + "/deletequestions/multiple/"+req.body.questionIds,
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    if (!body.hasOwnProperty("success")) {
+    res.render("deleteMultipleQuestions", {
+      data:url,
+      token: req.cookies.token,
+    });
+  } else {
+    res.send("Error Encountered!");
+  }
+  });
+});
+
 app.get("/admin/contentDevProgress", async (req, res) => {
   let url = {
     url: clientRoute,
@@ -1226,7 +1347,6 @@ app.post("/admin/resultsTut/course", async (req, res) => {
         let totalSolMedium = 0;
         let totalSolHard = 0;
         let totalSolContest = 0;
-        // console.log(eCount,mCount,hCount,cCount);
         totalSolEasy = bodytimer[j].easySolved.length;
         totalSolMedium = bodytimer[j].mediumSolved.length;
         totalSolHard = bodytimer[j].hardSolved.length;

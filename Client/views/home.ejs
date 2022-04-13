@@ -23,7 +23,45 @@
   <!--Favicon-->
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
   <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    .counters{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+      margin: 10px 0px;
+    }
+    .counter{
+      font-family: poppins;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: x-large;
+      background: rgb(243, 243, 243);
+      color: rgb(0, 110, 219);
+      padding: 25px;
+      border-radius: 2mm;
+      box-shadow: 15px 15px 0px rgba(33, 33, 33, 0.2);
+      font-weight: bold;
+      transition: 0.25s;
+    }
+    .counter:hover{
+      box-shadow: 2px 2px 0px rgba(33, 33, 33, 0.2);
+    }
+    .counter span{
+      font-size: medium;
+      font-weight: 400;
+      text-shadow:inset 1px 1px rgba(0, 18, 76, 0.2);
+    }
+  </style>
 </head>
 
 <body>
@@ -91,6 +129,11 @@
   </div>
 </footer> -->
 <!-- /footer -->
+<div class="counters">
+  <p class="counter" id="total"></p>
+  <p class="counter" id="weekly"></p>
+  <p class="counter" id="counter"></p>
+</div>
 <% include ../views/partials/footer %>
 
 <!-- jQuery -->
@@ -103,6 +146,49 @@
 <script src="plugins/shuffle/shuffle.min.js"></script>
 
 <!-- Main Script -->
+<form method="POST" autocomplete="off" name="google-sheet" style="display: none;">
+  <input type="text" name="date" id="date">
+  <input type="text" name="month" id="month">
+  <input type="text" name="time" id="time">
+  <input type="text" name="username" id="username">
+</form>
+<script>
+  console.log() 
+  var formdate=document.getElementById("date")
+  var formmonth=document.getElementById("month")
+  var formtime=document.getElementById("time")
+  var formuser=document.getElementById("username")
+  var dateObj = new Date();
+  var month = dateObj.getMonth() + 1; //months from 1-12
+  var day = dateObj.getDate();
+  var year = dateObj.getFullYear();
+  var time=dateObj.getHours()+":"+dateObj.getMinutes()+":"+dateObj.getSeconds()
+  newdate = year + "/" + month + "/" + day;
+  formdate.value=newdate
+  formmonth.value=month+"/"+dateObj.getFullYear()
+  formtime.value=time
+  formuser.value="<%=imgUsername%>"
+  const countEl = document.getElementById("counter");
+  function counters() {
+    //this api call increments website hits
+    fetch('https://api.countapi.xyz/get/buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d')
+      .then((res) => res.json())
+      .then((res) => {
+        countEl.innerHTML = "<span>Daily Views</span>" + res.value;
+        document.getElementById("weekly").innerHTML =
+        "<span>Weekly Views</span>" + (Number('<%= weeklyCount %>') + res.value);
+        document.getElementById("total").innerHTML =
+        "<span>Total Views</span>" + (Number('<%= totalCount %>') + res.value);
+      });
+  }
+  counters();
+  const scriptURL ="https://script.google.com/macros/s/AKfycbwb3QztKPUkTy1KL9I3mw6Lc9fdjZwcPQRsX-d34JZ2r1MyVKC6VCRmICAr25wY8aS_/exec";
+            const form = document.forms["google-sheet"];
+
+            fetch(scriptURL, { method: "POST", body: new FormData(form) })
+              .then()
+              .catch((error) => console.error("Error!", error.message));
+</script>
 <script src="js/script.js"></script>
 
 </body>
