@@ -171,7 +171,7 @@
   const countEl = document.getElementById("counter");
   function counters() {
     //this api call increments website hits
-    fetch("https://api.countapi.xyz/hit/" + countApiKey)
+    fetch("https://api.countapi.xyz/get/" + countApiKey)
       .then((res) => res.json())
       .then((res) => {
         countEl.innerHTML = "<span>Daily Views</span>" + res.value;
