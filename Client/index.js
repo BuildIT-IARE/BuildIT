@@ -55,6 +55,7 @@ app.use("/admin", express.static(__dirname + "/"));
 let countApiKey = "buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d";
 let prevDate = new Date().getDate();
 let weekCount = 0;
+let totalCount = 0;
 
 let userSessions = [];
 let userSessions2 = [];
@@ -71,16 +72,20 @@ if(sessionText !== ''){
   }
 }
 
+
 let getWeekClicks = async () => {
   let secondResponse = await fetch(`${serverRoute}/counters`);
   let allCounts = await secondResponse.json();
   let weekCount2 = 0;
-  let len = allCounts.length;
+  let len = Math.min(8, allCounts.length);
 
   for (let i = 0; i < len; i++) {
     if (new Date(allCounts[i].date).getDay() === 0) break;
     else weekCount2 += allCounts[i].count;
   }
+
+  totalCount = allCounts.reduce((a, b) => a + b.count, 0);
+
   return weekCount2;
 };
 
@@ -139,9 +144,11 @@ let checkSignIn = async (req, res, next) => {
 
 app.get("/", async (req, res) => {
   await handleClicks();
+  console.log(totalCount)
   res.render("home", {
     imgUsername: req.cookies.username,
     weeklyCount: weekCount,
+    totalCount: totalCount,
   });
 });
 app.get("/index", async (req, res) => {
