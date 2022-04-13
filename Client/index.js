@@ -52,7 +52,7 @@ app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
-let countApiKey = "buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d";
+let countApiKey = process.env.countApiKey;
 let prevDate = new Date().getDate();
 let weekCount = 0;
 let totalCount = 0;
