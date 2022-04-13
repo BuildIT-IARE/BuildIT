@@ -39,6 +39,8 @@
     <div class="row">
 
       <div class="col-lg-11 mx-auto"><br><br><br><br><br>
+        <p class="text-white font-tertiary" id="weekly"></p>
+        <p class="text-white font-tertiary" id="counter"></p>
         <h1 class="text-white font-tertiary">Welcome to<br>BuildIT<br>By Go-Labs</h1>
       </div>
     </div>
@@ -103,6 +105,20 @@
 <script src="plugins/shuffle/shuffle.min.js"></script>
 
 <!-- Main Script -->
+<script>
+  const countEl = document.getElementById("counter");
+  function counters() {
+    //this api call increments website hits
+    fetch('https://api.countapi.xyz/get/buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d')
+      .then((res) => res.json())
+      .then((res) => {
+        countEl.innerText = "Daily Hits: " + res.value;
+        document.getElementById("weekly").innerText =
+          "Weekly Hits: " + (Number('<%= weeklyCount %>') + res.value);
+      });
+  }
+  counters();
+</script>
 <script src="js/script.js"></script>
 
 </body>
