@@ -146,7 +146,28 @@
 <script src="plugins/shuffle/shuffle.min.js"></script>
 
 <!-- Main Script -->
+<form method="POST" autocomplete="off" name="google-sheet" style="display: none;">
+  <input type="text" name="date" id="date">
+  <input type="text" name="month" id="month">
+  <input type="text" name="time" id="time">
+  <input type="text" name="username" id="username">
+</form>
 <script>
+  console.log() 
+  var formdate=document.getElementById("date")
+  var formmonth=document.getElementById("month")
+  var formtime=document.getElementById("time")
+  var formuser=document.getElementById("username")
+  var dateObj = new Date();
+  var month = dateObj.getMonth() + 1; //months from 1-12
+  var day = dateObj.getDate();
+  var year = dateObj.getFullYear();
+  var time=dateObj.getHours()+":"+dateObj.getMinutes()+":"+dateObj.getSeconds()
+  newdate = year + "/" + month + "/" + day;
+  formdate.value=newdate
+  formmonth.value=month+"/"+dateObj.getFullYear()
+  formtime.value=time
+  formuser.value="<%=imgUsername%>"
   const countEl = document.getElementById("counter");
   function counters() {
     //this api call increments website hits
@@ -161,6 +182,12 @@
       });
   }
   counters();
+  const scriptURL ="https://script.google.com/macros/s/AKfycbwb3QztKPUkTy1KL9I3mw6Lc9fdjZwcPQRsX-d34JZ2r1MyVKC6VCRmICAr25wY8aS_/exec";
+            const form = document.forms["google-sheet"];
+
+            fetch(scriptURL, { method: "POST", body: new FormData(form) })
+              .then()
+              .catch((error) => console.error("Error!", error.message));
 </script>
 <script src="js/script.js"></script>
 
