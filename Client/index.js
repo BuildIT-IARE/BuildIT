@@ -147,6 +147,7 @@ app.get("/", async (req, res) => {
     imgUsername: req.cookies.username,
     weeklyCount: weekCount,
     totalCount: totalCount,
+    countApiKey,
   });
 });
 app.get("/index", async (req, res) => {

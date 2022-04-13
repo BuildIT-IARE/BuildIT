@@ -153,7 +153,7 @@
   <input type="text" name="username" id="username">
 </form>
 <script>
-  console.log() 
+  const countApiKey = "<%= countApiKey %>"
   var formdate=document.getElementById("date")
   var formmonth=document.getElementById("month")
   var formtime=document.getElementById("time")
@@ -171,7 +171,7 @@
   const countEl = document.getElementById("counter");
   function counters() {
     //this api call increments website hits
-    fetch('https://api.countapi.xyz/get/buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d')
+    fetch("https://api.countapi.xyz/hit/" + countApiKey)
       .then((res) => res.json())
       .then((res) => {
         countEl.innerHTML = "<span>Daily Views</span>" + res.value;
