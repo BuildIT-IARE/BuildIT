@@ -108,7 +108,7 @@ let handleClicks = async () => {
 
     request(options, async (err, response, body) => {
       let options2 = {
-        url: "https://api.countapi.xyz/set/" + countParams + "?value=0",
+        url: "https://api.countapi.xyz/set/" + countApiKey + "?value=0",
         method: "get",
         json: true,
       };
