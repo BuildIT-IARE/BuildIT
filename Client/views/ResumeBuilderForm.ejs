@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resume Maker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,108 +26,1796 @@
       href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="../images/iare-chapter/iare-logo.png" type="image/x-icon">
     <style>
-        .resumeform{
-            width: 100%;
+      body {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        flex-direction: column;
+        position: relative;
+        min-height: 100vh;
+      }
+      textarea{
+        resize: none;
+      }
+      .designpart {
+        position: fixed;
+        right: 5px;
+        bottom: 5px;
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        z-index: -1;
+        overflow: hidden;
+      }
+      .layer1 {
+        display: flex;
+        align-items: center;
+        color: rgb(255, 231, 93);
+        z-index: -2;
+        margin-bottom: 10px;
+      }
+      .layer2 {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        color: rgb(84, 84, 84);
+        bottom: 18px;
+        z-index: -1;
+        background: -webkit-linear-gradient(
+          rgb(44, 44, 44) 84%,
+          rgba(0, 0, 0, 0.059) 16%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px -2px rgba(255, 255, 0, 0.162);
+      }
+      .layer1 span {
+        font-size: 150px;
+        line-height: 150px;
+      }
+      .layer2 span {
+        font-size: 40px;
+      }
+      .layer3 {
+        position: absolute;
+        z-index: -2;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        bottom: 0px;
+        right: 0px;
+        animation: sail linear infinite 300s forwards;
+      }
+      @keyframes sail {
+        0%,
+        100% {
+          right: 0px;
         }
-        form{
-            display: flex;
-            width: 600%;
-            align-items: center;
-            justify-content: space-between;
+        50% {
+          right: -450px;
         }
-        .formsection{
-            width: 100%;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: space-evenly;
-            position: relative;
+      }
+      .layer3 span {
+        color: rgba(30, 143, 255, 0.498);
+        font-size: xx-large;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      .resumeform {
+        width: 700px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        position: relative;
+      }
+      form {
+        width: 700px;
+        position: relative;
+        border-radius: 2mm;
+      }
+      .formsection,
+      .formsection2,
+      .formsection3,
+      .formsection4,
+      .formsection5,
+      .formsection6 {
+        width: 700px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+        position: relative;
+        transition: 0.25s;
+        
+      }
+      .formsection {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+      }
+      .formsection3 {
+        position: absolute;
+        top: 0px;
+        left: -1000px;
+      }
+      .formsection4 {
+        position: absolute;
+        top: 0px;
+        left: -1000px;
+      }
+      .formsection5 {
+        position: absolute;
+        top: 0px;
+        left: -1000px;
+      }
+      .formsection6 {
+        position: absolute;
+        top: 0px;
+        left: -1000px;
+      }
+      .formsection2 {
+        position: absolute;
+        top: 0px;
+        left: -1000px;
+      }
+      .content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+        position: relative;
+        margin: 50px 0px;
+      }
+      .sectionheading {
+        float: left;
+        font-family: poppins;
+        font-size: 40px;
+        margin-bottom: 40px;
+        font-weight: bold;
+        color: rgb(40, 40, 40);
+      }
+      .formspan {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .inputfield {
+        width: fit-content;
+        height: fit-content;
+        position: relative;
+      }
+      .inputf {
+        width: 250px;
+        font-size: medium;
+        font-weight: 100;
+        font-family: poppins;
+        color: rgb(0, 0, 0);
+        outline: none;
+        border: none;
+        border-bottom: rgb(113, 113, 113) solid 0.5mm;
+        padding: 10px;
+        margin: 35px 0;
+        background: rgb(243, 243, 243);
+        border-top-left-radius: 1mm;
+        border-top-right-radius: 1mm;
+      }
+      .inputf:hover{
+        background: rgb(238, 238, 238);
+      }
+      .inputf:focus {
+        border-bottom: rgb(25, 129, 234) solid 2px;
+        background: rgb(225, 225, 225);
+      }
+      .inputf:focus::placeholder {
+        opacity: 0;
+      }
+      #Profession {
+        width: 680px;
+      }
+      #City,
+      #Country,
+      #PinCode,
+      .coding,
+      .intertrio {
+        width: 200px;
+      }
+      .inputf::placeholder {
+        color: rgb(145, 145, 145);
+      }
+      .label {
+        position: absolute;
+        top: 25px;
+        left: 5px;
+        font-size: 12px;
+        font-family: poppins;
+        color: rgb(1, 120, 238);
+        opacity: 0;
+        transition: 0.25s;
+      }
+      .inputf:focus + .label {
+        opacity: 1;
+        top: 10px;
+        left: 0;
+      }
+      .inputf:not(:placeholder-shown) + .label {
+        opacity: 1;
+        top: 10px;
+        left: 0;
+      }
+      .buttons {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .buttonf {
+        outline: none;
+        border: none;
+        font-family: poppins;
+        font-size: medium;
+        border-radius: 10mm;
+        padding: 8px 30px;
+        background: rgb(14, 117, 219);
+        color: white;
+        cursor: pointer;
+        margin-top: 25px;
+      }
+      .buttonf:hover {
+        background: rgb(12, 97, 182);
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+      }
+      .formfooter {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: fit-content;
+        height: 100vh;
+        background: rgb(45, 143, 241);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .formstatus {
+        width: fit-content;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .statusitems {
+        width: fit-content;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        position: relative;
+        flex-direction: column;
+      }
+      .statusboxes {
+        font-family: poppins;
+        font-size: small;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        color: white;
+        background: rgb(45, 143, 241);
+        z-index: 2;
+      }
+      .statusboxes span {
+        font-size: xx-large;
+      }
+      .line {
+        width: 100%;
+        height: 2px;
+        background: white;
+      }
+      .footerbottom {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: poppins;
+        font-size: large;
+        color: white;
+        font-weight: bold;
+      }
+      .lefttext,
+      .righttext {
+        padding: 15px;
+      }
+      .socialbutton {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: poppins;
+        background: rgb(183,243,151);
+        color: rgb(56,106,32);
+        font-weight: bold;
+        outline: none;
+        border: none;
+        padding: 7px 15px;
+        border-radius: 10mm;
+        cursor: pointer;
+      }
+      .socialbutton:hover {
+        background: rgb(174, 252, 132);
+      }
+      .sublabel {
+        font-family: poppins;
+        font-size: large;
+        color: rgb(0, 99, 198);
+        align-self: flex-start;
+        margin: 20px 0;
+        font-weight: bold;
+      }
+      #Brief,
+      .InternDesc,
+      .ProjectDesc,
+      .EActivity {
+        width: 680px;
+      }
+      .ProjectDesc {
+        margin-bottom: 100px;
+      }
+      .rating {
+        direction: rtl;
+      }
+      .rating input {
+        display: none;
+      }
+      .rating label {
+        display: inline-block;
+        width: 40px;
+        position: relative;
+        cursor: pointer;
+      }
+      .rating label::before {
+        font-family: "Material Icons round";
+        content: "\f0ec";
+        position: absolute;
+        font-size: 35px;
+        display: inline-block;
+        top: -15px;
+        left: 0;
+        color: rgb(110, 110, 110);
+      }
+      .rating label::after {
+        font-family: "Material Icons round";
+        content: "\f0ec";
+        position: absolute;
+        font-size: 35px;
+        display: inline-block;
+        top: -15px;
+        left: 0;
+        color: rgb(0, 128, 255);
+        opacity: 0;
+      }
+      .rating label:hover::after,
+      .rating label:hover ~ label:after,
+      .rating input:checked ~ label:after {
+        opacity: 1;
+      }
+      .label2 {
+        position: absolute;
+        top: -40px;
+        left: 0px;
+        font-family: poppins;
+        font-size: small;
+        color: dodgerblue;
+      }
+      #PersonalSkills,
+      #ProfessionalSkills,
+      #internshipdata,
+      #ProjectData,
+      #Achievementsdata,
+      #Extracurriculardata {
+        width: 100%;
+        position: relative;
+      }
+      .clear {
+        display: none;
+        cursor: pointer;
+        font-size: xx-large;
+        color: rgb(255, 61, 61);
+      }
+      .clear:hover {
+        color: rgb(196, 38, 38);
+      }
+      .buttons3 {
+        display: flex;
+        align-items: center;
+      }
+      #InternDateofStart,
+      #InternDateofEnd {
+        margin-bottom: 120px;
+      }
+      .formspan2 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .themes {
+        display: none;
+      }
+      .formspan2 label {
+        display: inline-block;
+        width: fit-content;
+        position: relative;
+        cursor: pointer;
+      }
+      .formspan2 label img {
+        width: 250px;
+        margin-bottom: 40px;
+        border: 1px solid rgba(0, 0, 0, 0.162);
+        box-shadow: 1px 1px 1px rgba(2, 82, 255, 0.16);
+        border-radius: 2mm;
+      }
+      .themes:checked + label img {
+        border: rgb(21, 172, 49) solid 7px;
+      }
+      .mobilehide{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: white;
+        z-index: -10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: poppins;
+        font-size: x-large;
+        display: none;
+      }
+      .designpart2{
+        position: fixed;
+        top: 0;
+        right: 0px;
+        overflow: hidden;
+      }
+      .designpart2 .layer2{
+        position: absolute;
+        bottom: 12px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        z-index: -1;
+      }
+      .designpart2 .layer2 span{
+        font-size: xx-large;
+      }
+      .designpart2 .layer3{
+        align-items:stretch;
+        animation: cycleit linear infinite 120s;
+      }
+      @keyframes cycleit{
+        0%{
+          right: -300px;
         }
-        .content{
-            width: 80%;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: space-evenly;
-            position: relative;
-            margin: 50px 0px;
+        100%{
+          right: 0;
         }
-        .sectionheading{
-            float: left;
-            font-family: poppins;
-            font-size: xx-large;
+      }
+      .designpart2 .layer1 span{
+        color: rgb(221, 235, 255);
+        line-height: 110px;
+        z-index: -2;
+        text-shadow: 1px 0px rgba(250, 212, 0, 0.683);
+      }
+      .designpart2 .layer3 span{
+        color: rgb(0, 201, 0);
+      }
+      .designpart2 .layer3 .material-icons-round{
+        font-size: medium;
+      }
+      @media all and (max-width: 880px){
+        .mobilehide{
+          display: flex;
+          z-index: 1000;
         }
-        .formspan{
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .inputf{
-            width: 250px;
-            font-size:medium;
-            font-family: poppins;
-            color: dodgerblue;
-            outline: none;
-            border: none;
-            border: rgb(113, 113, 113) solid 1px;
-            border-bottom: rgb(113, 113, 113) solid 2px ;
-            border-radius: 2mm;
-            padding: 10px;
-            margin: 15px 0;
-        }
-        #Profession{
-            width: 100%;
-            padding: 0;
-        }
-        .inputf::placeholder{
-            color: rgb(102, 102, 102);
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="mobilehide">
+      The Page you are viewing is not compatible with mobile
+    </div>
+    <div class="designpart2">
+      <div class="layer1">
+        <span class="material-icons-round">
+          landscape
+          </span>
+      </div>
+      <div class="layer2">
+        <span class="material-icons-round">
+          directions_bike
+          </span>
+      </div>
+      <div class="layer3">
+        <span class="material-icons-round">
+          forest
+          </span>
+          <span>===</span>
+          <span class="material-icons-round">
+            park
+            </span>
+            <span>===</span>
+            <span class="material-icons-round">
+              park
+              </span>
+              <span>===</span>
+              <span class="material-icons-round">
+                forest
+                </span>
+                <span>===</span>
+                <span class="material-icons-round">
+                  forest
+                  </span>
+                  <span>===</span>
+                  <span class="material-icons-round">
+                    park
+                    </span>
+                    <span>===</span>
+                    <span class="material-icons-round">
+                      park
+                      </span>
+                      <span>===</span>
+                      <span class="material-icons-round">
+                        forest
+                        </span>
+      </div>
+    </div>
+    <div class="designpart">
+      <div class="layer1">
+        <span class="material-icons"> fiber_manual_record </span>
+      </div>
+      <div class="layer2">
+        <span class="material-icons"> sailing </span>
+      </div>
+      <div class="layer3">
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+        <span class="material-icons-round"> water </span>
+      </div>
+    </div>
     <section class="resumeform">
-        <form action="" method="post">
-            <div class="formsection">
-                <div class="content">
-                <div class="sectionheading">Heading</div>
-                <span class="formspan">
-                    <input type="text" name="Fname" id="Fname" class="inputf" placeholder="First Name">
-                    <input type="text" name="Lname" id="Lname" class="inputf" placeholder="Last Name">
-                </span>
-                <input type="text" name="Profession" id="Profession" class="inputf" placeholder="Profession">
-                <span class="formspan">
-                    <input type="text" name="City" id="City" placeholder="City" class="inputf">
-                    <input type="text" name="Country" id="Country" placeholder="Country" class="inputf">
-                    <input type="text" name="Pin Code" id="Pin Code" placeholder="Pin Code" class="inputf">
-                </span>
-                <span class="formspan">
-                    <input type="number" name="Phone" id="Phone" placeholder="Phone" class="inputf">
-                    <input type="email" name="Email" id="Email" placeholder="Email" class="inputf">
-                </span>
-                <div class="buttons">
-                    <button type="button">Pre</button>
-                    <button type="button">Next</button>
-                </div>
-            </div>
-            </div>
-            <div class="formsection">
-                <div class="sectionheading">Heading</div>
-            </div>
-            <div class="formsection">
-                <div class="sectionheading">Heading</div>
-            </div>
-            <div class="formsection">
-                <div class="sectionheading">Heading</div>
-            </div>
-            <div class="formsection">
-                <div class="sectionheading">Heading</div>
-            </div>
-            <div class="formsection">
-                <div class="sectionheading">Heading</div>
-            </div>
-        </form>
+      <form action="" method="post" id="myForm">
+        <span class="formsection">
+          <span class="content">
+            <span class="sectionheading">Heading</span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="Fname"
+                  id="Fname"
+                  class="inputf"
+                  placeholder="First Name"
+                  required
+                />
+                <span class="label">First Name</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="Lname"
+                  id="Lname"
+                  class="inputf"
+                  placeholder="Last Name"
+                  required
+                />
+                <span class="label">Last Name</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="City"
+                  id="City"
+                  placeholder="City"
+                  class="inputf"
+                  required
+                />
+                <span class="label">City</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="Country"
+                  id="Country"
+                  placeholder="Country"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Country</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="number"
+                  name="Pin Code"
+                  id="PinCode"
+                  placeholder="Pin Code"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Pin Code</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="number"
+                  name="Phone"
+                  id="Phone"
+                  placeholder="Phone"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Phone</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="email"
+                  name="Email"
+                  id="Email"
+                  placeholder="Email"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Email</span>
+              </span>
+            </span>
+            <button type="button" class="socialbutton" id="sb1">
+              <span class="material-icons"> add_circle_outline </span>
+              Add Social Media Links
+            </button>
+            <% for(var i=1;i<=3;i++){ %>
+            <span class="formspan" id="socialspan<%=i%>">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="Social<%= i %>"
+                  placeholder="Social Website"
+                  class="inputf"
+                />
+                <span class="label">Social Website</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="url"
+                  name="SocialURL<%= i %>"
+                  placeholder="Social URL"
+                  class="inputf"
+                />
+                <span class="label">Social URL</span>
+              </span>
+            </span>
+            <% } %>
+            <span class="buttons">
+              <button type="button" class="buttonf" id="pre1">Back</button>
+              <button type="button" class="buttonf" id="nex1">Next</button>
+            </span>
+          </span>
+        </span>
+        <span class="formsection2">
+          <span class="content">
+            <span class="sectionheading">Education</span>
+            <span class="sublabel">Schooling Details</span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="SchoolName"
+                  id="SchoolName"
+                  placeholder="School Name"
+                  class="inputf"
+                  required
+                />
+                <span class="label">School Name</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="SchoolLocation"
+                  id="SchoolLocation"
+                  placeholder="School Location"
+                  class="inputf"
+                  required
+                />
+                <span class="label">School Location</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="month"
+                  name="ScDateofPass"
+                  id="ScDateofPass"
+                  placeholder="Date of Pass"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Date of Pass</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="number"
+                  name="ScFinalScore"
+                  id="ScFinalScore"
+                  placeholder="Final Score"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Final Score</span>
+              </span>
+              <span class="inputfield">
+                <select
+                  name="ScMarksType"
+                  id="ScMarksType"
+                  class="inputf"
+                  required
+                >
+                  <option value="" style="display: none">Select Type</option>
+                  <option value="Percentage">Percentage</option>
+                  <option value="CGPA">CGPA</option>
+                </select>
+              </span>
+            </span>
+            <span class="sublabel">Intermediate / Diploma Details</span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="IntCollegeName"
+                  id="IntCollegeName"
+                  placeholder="College Name"
+                  class="inputf"
+                  required
+                />
+                <span class="label">College Name</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="IntColllegeLocation"
+                  id="IntColllegeLocation"
+                  placeholder="College Location"
+                  class="inputf"
+                  required
+                />
+                <span class="label">College Location</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="month"
+                  name="IntDateofStart"
+                  id="IntDateofStart"
+                  placeholder="Date of Start"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Date of Start</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="month"
+                  name="IntDateofPass"
+                  id="IntDateofPass"
+                  placeholder="Date of Pass"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Date of Pass</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="number"
+                  name="IntFinalScore"
+                  id="IntFinalScore"
+                  placeholder="Final Score"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Final Score</span>
+              </span>
+              <span class="inputfield">
+                <select
+                  name="IntMarksType"
+                  id="IntMarksType"
+                  class="inputf"
+                  required
+                >
+                  <option value="" style="display: none">Select Type</option>
+                  <option value="Percentage">Percentage</option>
+                  <option value="CGPA">CGPA</option>
+                </select>
+              </span>
+            </span>
+            <span class="sublabel">Graduation Details</span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="GraCollegeName"
+                  id="GraCollegeName"
+                  placeholder="College Name"
+                  class="inputf"
+                  required
+                />
+                <span class="label">College Name</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="GraColllegeLocation"
+                  id="GraColllegeLocation"
+                  placeholder="College Location"
+                  class="inputf"
+                  required
+                />
+                <span class="label">College Location</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="month"
+                  name="GraDateofStart"
+                  id="GraDateofStart"
+                  placeholder="Date of Start"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Date of Start</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="month"
+                  name="GraDateofPass"
+                  id="GraDateofPass"
+                  placeholder="Date of Pass"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Date of Pass</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="number"
+                  name="GraFinalScore"
+                  id="GraFinalScore"
+                  placeholder="Final Score"
+                  class="inputf"
+                  required
+                />
+                <span class="label">Final Score</span>
+              </span>
+              <span class="inputfield">
+                <select
+                  name="GraMarksType"
+                  id="GraMarksType"
+                  class="inputf"
+                  required
+                >
+                  <option value="" style="display: none">Select Type</option>
+                  <option value="Percentage">Percentage</option>
+                  <option value="CGPA">CGPA</option>
+                </select>
+              </span>
+            </span>
+            <span class="buttons">
+              <button type="button" class="buttonf" id="pre2">Back</button>
+              <button type="button" class="buttonf" id="nex2">Next</button>
+            </span>
+          </span>
+        </span>
+        <span class="formsection3">
+          <span class="content">
+            <span class="sectionheading">Skills</span>
+            <span class="sublabel">Briefly tell about yourself</span>
+            <span class="formspan">
+              <span class="inputfield">
+                <textarea
+                  name="Brief"
+                  id="Brief"
+                  cols="50"
+                  rows="4"
+                  class="inputf"
+                  maxlength="200"
+                >
+A hardworking and passionate job seeker with strong organizational skills eager to secure an entry-level [Job Title] position. Ready to help the team achieve company goals.
+                </textarea>
+                <span class="label">Description</span>
+              </span>
+            </span>
+            <span class="sublabel">Personal Skills</span>
+            <span id="PersonalSkills"> </span>
+            <span class="buttons3">
+              <button type="button" class="socialbutton" id="sb2">
+                <span class="material-icons"> add_circle_outline </span>
+                Add another skill
+              </button>
+              <span class="material-icons-round clear" id="cl1"> cancel </span>
+            </span>
+            <span class="sublabel">Professional Skills</span>
+            <span id="ProfessionalSkills"> </span>
+            <span class="buttons3">
+              <button type="button" class="socialbutton" id="sb3">
+                <span class="material-icons"> add_circle_outline </span>
+                Add another skill
+              </button>
+              <span class="material-icons-round clear" id="cl2"> cancel </span>
+            </span>
+            <span class="buttons">
+              <button type="button" class="buttonf" id="pre3">Back</button>
+              <button type="button" class="buttonf" id="nex3">Next</button>
+            </span>
+          </span>
+        </span>
+        <span class="formsection4">
+          <span class="content">
+            <span class="sectionheading">Experience</span>
+            <span class="sublabel">Interships</span>
+            <span id="internshipdata">
+            </span>
+            <span class="buttons3">
+              <button type="button" class="socialbutton" id="sb4">
+                <span class="material-icons"> add_circle_outline </span>
+                Add Internship
+              </button>
+              <span class="material-icons-round clear" id="cl3"> cancel </span>
+            </span>
+            <span class="sublabel">Projects</span>
+            <span id="ProjectData"> </span>
+            <span class="buttons3">
+              <button type="button" class="socialbutton" id="sb5">
+                <span class="material-icons"> add_circle_outline </span>
+                Add Project
+              </button>
+              <span class="material-icons-round clear" id="cl4"> cancel </span>
+            </span>
+            <span class="buttons">
+              <button type="button" class="buttonf" id="pre4">Back</button>
+              <button type="button" class="buttonf" id="nex4">Next</button>
+            </span>
+          </span>
+        </span>
+        <span class="formsection5">
+          <span class="content">
+            <span class="sectionheading">Others</span>
+            <span class="sublabel">Coding Profiles</span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="CodeChef"
+                  id="CodeChef"
+                  placeholder="CodeChef Username"
+                  class="inputf coding"
+                />
+                <span class="label">CodeChef Username</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="url"
+                  name="CodeChefURL"
+                  id="CodeChefURL"
+                  placeholder="Profile Link"
+                  class="inputf coding"
+                />
+                <span class="label">Profile Link</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="CodeChefRating"
+                  id="CodeChefRating"
+                  placeholder="Rating"
+                  class="inputf coding"
+                />
+                <span class="label">Rating</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="Hackerrank"
+                  id="Hackerrank"
+                  placeholder="Hackerrank Username"
+                  class="inputf coding"
+                />
+                <span class="label">Hackerrank Username</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="url"
+                  name="HackerrankURL"
+                  id="HackerrankURL"
+                  placeholder="Profile Link"
+                  class="inputf coding"
+                />
+                <span class="label">Profile Link</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="HackerrankBadges"
+                  id="HackerrankBadges"
+                  placeholder="Total Badges"
+                  class="inputf coding"
+                />
+                <span class="label">Total Badges</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="Codeforces"
+                  id="Codeforces"
+                  placeholder="Codeforces Username"
+                  class="inputf coding"
+                />
+                <span class="label">Codeforces Username</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="url"
+                  name="CodeforcesURL"
+                  id="CodeforcesURL"
+                  placeholder="Profile Link"
+                  class="inputf coding"
+                />
+                <span class="label">Profile Link</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="CodeforcesRating"
+                  id="CodeforcesRating"
+                  placeholder="Rating"
+                  class="inputf coding"
+                />
+                <span class="label">Rating</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="GeeksforGeeks"
+                  id="GeeksforGeeks"
+                  placeholder="GeeksforGeeks Username"
+                  class="inputf coding"
+                />
+                <span class="label">GeeksforGeeks Username</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="url"
+                  name="GeeksforGeeksURL"
+                  id="GeeksforGeeksURL"
+                  placeholder="Profile Link"
+                  class="inputf coding"
+                />
+                <span class="label">Profile Link</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="GeeksforGeeksScore"
+                  id="GeeksforGeeksScore"
+                  placeholder="Total Score"
+                  class="inputf coding"
+                />
+                <span class="label">Total Score</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="InterviewBit"
+                  id="InterviewBit"
+                  placeholder="InterviewBit Username"
+                  class="inputf coding"
+                />
+                <span class="label">InterviewBit Username</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="url"
+                  name="InterviewBitURL"
+                  id="InterviewBitURL"
+                  placeholder="Profile Link"
+                  class="inputf coding"
+                />
+                <span class="label">Profile Link</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="InterviewBitScore"
+                  id="InterviewBitScore"
+                  placeholder="Total Score"
+                  class="inputf coding"
+                />
+                <span class="label">Total Score</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="LeetCode"
+                  id="LeetCode"
+                  placeholder="LeetCode Username"
+                  class="inputf coding"
+                />
+                <span class="label">LeetCode Username</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="url"
+                  name="LeetCodeURL"
+                  id="LeetCodeURL"
+                  placeholder="Profile Link"
+                  class="inputf coding"
+                />
+                <span class="label">Profile Link</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="LeetCodeProblems"
+                  id="LeetCodeProblems"
+                  placeholder="No. Problems Solved"
+                  class="inputf coding"
+                />
+                <span class="label">No. Problems Solved</span>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="Spoj"
+                  id="Spoj"
+                  placeholder="Spoj Username"
+                  class="inputf coding"
+                />
+                <span class="label">Spoj Username</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="url"
+                  name="SpojURL"
+                  id="SpojURL"
+                  placeholder="Profile Link"
+                  class="inputf coding"
+                />
+                <span class="label">Profile Link</span>
+              </span>
+              <span class="inputfield">
+                <input
+                  type="text"
+                  name="SpojProblems"
+                  id="SpojProblems"
+                  placeholder="No. Problems Solved"
+                  class="inputf coding"
+                />
+                <span class="label">No. Problems Solved</span>
+              </span>
+            </span>
+            <span class="sublabel">Achievements</span>
+            <span id="Achievementsdata"> </span>
+            <span class="buttons3">
+              <button type="button" class="socialbutton" id="sb6">
+                <span class="material-icons"> add_circle_outline </span>
+                Add Achievement
+              </button>
+              <span class="material-icons-round clear" id="cl5"> cancel </span>
+            </span>
+            <span class="sublabel">Extracurricular Activities</span>
+            <span id="Extracurriculardata"> </span>
+            <span class="buttons3">
+              <button type="button" class="socialbutton" id="sb7">
+                <span class="material-icons"> add_circle_outline </span>
+                Add Activity
+              </button>
+              <span class="material-icons-round clear" id="cl6"> cancel </span>
+            </span>
+            <span class="buttons">
+              <button type="button" class="buttonf" id="pre5">Back</button>
+              <button type="button" class="buttonf" id="nex5">Next</button>
+            </span>
+          </span>
+        </span>
+        <span class="formsection6">
+          <span class="content">
+            <span class="sectionheading">Themes</span>
+            <span class="sublabel">Select a Theme</span>
+            <span class="formspan2">
+              <% for(var i=1;i<=5;i++){ %>
+              <input
+                type="radio"
+                name="theme"
+                id="theme<%=i%>"
+                value="theme<%=i%>"
+                class="themes"
+                required
+              />
+              <label for="theme<%=i%>"
+                ><img src="../images/themes/theme1.png" alt="theme"
+              /></label>
+              <% } %>
+            </span>
+            <span class="buttons">
+              <button type="button" class="buttonf" id="pre6">Back</button>
+              <button type="submit" class="buttonf" id="nex6">Submit</button>
+            </span>
+          </span>
+        </span>
+      </form>
     </section>
-</body>
+    <section class="formfooter">
+      <div class="formstatus">
+        <div class="statusitems">
+          <div class="statusboxes">
+            <span class="material-icons-round sideicons">
+              person
+              </span>
+            <div class="statuscontent">Heading</div>
+          </div>
+          <div class="statusboxes">
+            <span class="material-icons-round sideicons">
+              school
+              </span>
+            <div class="statuscontent">Education</div>
+          </div>
+          <div class="statusboxes">
+            <span class="material-icons-round sideicons">
+              emoji_events
+              </span>
+            <div class="statuscontent">Skills</div>
+          </div>
+          <div class="statusboxes">
+            <span class="material-icons-round sideicons">
+              construction
+              </span>
+            <div class="statuscontent">Experience</div>
+          </div>
+          <div class="statusboxes">
+            <span class="material-icons-round sideicons">
+              add_circle
+              </span>
+            <div class="statuscontent">Others</div>
+          </div>
+          <div class="statusboxes">
+            <span class="material-icons-round sideicons">
+              grid_view
+              </span>
+            <div class="statuscontent">Themes</div>
+          </div>
+        </div>
+      </div>
+      <div class="line"></div>
+      <div class="footerbottom">
+        <div class="righttext">BuildIT</div>
+      </div>
+    </section>
+    <script>
+      var inputs = document.querySelectorAll(".inputf");
+      var sb1 = document.getElementById("sb1");
+      var sb2 = document.getElementById("sb2");
+      var sb3 = document.getElementById("sb3");
+      var sb4 = document.getElementById("sb4");
+      var sb5 = document.getElementById("sb5");
+      var sb6 = document.getElementById("sb6");
+      var sb7 = document.getElementById("sb7");
+      var ss1 = document.getElementById("socialspan1");
+      var ss2 = document.getElementById("socialspan2");
+      var ss3 = document.getElementById("socialspan3");
+      var myForm = document.getElementById("myForm");
+      var fs1 = document.querySelector(".formsection");
+      var fs2 = document.querySelector(".formsection2");
+      var fs3 = document.querySelector(".formsection3");
+      var fs4 = document.querySelector(".formsection4");
+      var fs5 = document.querySelector(".formsection5");
+      var fs6 = document.querySelector(".formsection6");
+      var ps = document.getElementById("PersonalSkills");
+      var pros = document.getElementById("ProfessionalSkills");
+      var intern = document.getElementById("internshipdata");
+      var project = document.getElementById("ProjectData");
+      var achieve = document.getElementById("Achievementsdata");
+      var eactive = document.getElementById("Extracurriculardata");
+      var pre1 = document.getElementById("pre1");
+      var nex1 = document.getElementById("nex1");
+      var pre2 = document.getElementById("pre2");
+      var nex2 = document.getElementById("nex2");
+      var pre3 = document.getElementById("pre3");
+      var nex3 = document.getElementById("nex3");
+      var pre4 = document.getElementById("pre4");
+      var nex4 = document.getElementById("nex4");
+      var pre5 = document.getElementById("pre5");
+      var nex5 = document.getElementById("nex5");
+      var pre6 = document.getElementById("pre6");
+      var nex6 = document.getElementById("nex6");
+      var cl1 = document.getElementById("cl1");
+      var cl2 = document.getElementById("cl2");
+      var cl3 = document.getElementById("cl3");
+      var cl4 = document.getElementById("cl4");
+      var cl5 = document.getElementById("cl5");
+      var cl6 = document.getElementById("cl6");
+      var sides = document.querySelectorAll(".sideicons");
+      var pspo = 0;
+      var prspo = 0;
+      var inpo = 0;
+      var propo = 0;
+      var achpo = 0;
+      var extpo = 0;
+      var arr=["person","school","emoji_events","construction","add_circle","grid_view"]
+      ss1.style.display = "none";
+      ss2.style.display = "none";
+      ss3.style.display = "none";
+      myForm.style.height = fs1.clientHeight + "px";
+      nex1.onclick = function () {
+        a = true;
+        for (var i = 0; i < 7; i++) {
+          if (!inputs[i].checkValidity()) {
+            a = false;
+            if (inputs[i].reportValidity()) {
+              inputs[i].reportValidity();
+            }
+            break;
+          }
+        }
+        if (a) {
+          fs1.style.left = "-1000px";
+          fs2.style.left = "0px";
+          myForm.style.height = fs2.clientHeight + "px";
+          for (var i = 0; i < 1; i++) {
+            sides[i].innerHTML = "check_circle";
+            sides[i].style.color = "rgb(174, 252, 132)";
+          }
+          for (var i = 1; i < 6; i++) {
+            sides[i].innerHTML = arr[i];
+            sides[i].style.color = "white";
+          }
+        }
+      };
+      pre2.onclick = function () {
+        fs2.style.left = "-1000px";
+        fs1.style.left = "0px";
+        myForm.style.height = fs1.clientHeight + "px";
+        for (var i = 0; i < 0; i++) {
+          sides[i].innerHTML = "check_circle";
+          sides[i].style.color = "rgb(174, 252, 132)";
+        }
+        for (var i = 0; i < 6; i++) {
+          sides[i].innerHTML = arr[i];
+          sides[i].style.color = "white";
+        }
+      };
+      nex2.onclick = function () {
+        a = true;
+        for (var i = 13; i < 30; i++) {
+          if (!inputs[i].checkValidity()) {
+            a = false;
+            if (inputs[i].reportValidity()) {
+              inputs[i].reportValidity();
+            }
+            break;
+          }
+        }
+        if (a) {
+          fs2.style.left = "-1000px";
+          fs3.style.left = "0px";
+          myForm.style.height = fs3.clientHeight + "px";
+          for (var i = 0; i < 2; i++) {
+            sides[i].innerHTML = "check_circle";
+            sides[i].style.color = "rgb(174, 252, 132)";
+          }
+          for (var i = 2; i < 6; i++) {
+            sides[i].innerHTML = arr[i];
+            sides[i].style.color = "white";
+          }
+        }
+      };
+      pre3.onclick = function () {
+        fs3.style.left = "-1000px";
+        fs2.style.left = "0px";
+        myForm.style.height = fs2.clientHeight + "px";
+        for (var i = 0; i < 1; i++) {
+          sides[i].innerHTML = "check_circle";
+          sides[i].style.color = "rgb(174, 252, 132)";
+        }
+        for (var i = 1; i < 6; i++) {
+          sides[i].innerHTML = arr[i];
+          sides[i].style.color = "white";
+        }
+      };
+      nex3.onclick = function () {
+        var Peskills = document.querySelectorAll(".Peskillname");
+        a = true;
+        for (var i = 0; i < Peskills.length; i++) {
+          if (!Peskills[i].checkValidity()) {
+            a = false;
+            if (Peskills[i].reportValidity()) {
+              Peskills[i].reportValidity();
+            }
+            break;
+          }
+        }
+        var Prskills = document.querySelectorAll(".Prskillname");
+        for (var i = 0; i < Prskills.length; i++) {
+          if (!Prskills[i].checkValidity()) {
+            a = false;
+            if (Prskills[i].reportValidity()) {
+              Prskills[i].reportValidity();
+            }
+            break;
+          }
+        }
+        if (a) {
+          fs3.style.left = "-1000px";
+          fs4.style.left = "0px";
+          myForm.style.height = fs4.clientHeight + "px";
+          for (var i = 0; i < 3; i++) {
+            sides[i].innerHTML = "check_circle";
+            sides[i].style.color = "rgb(174, 252, 132)";
+          }
+          for (var i = 3; i < 6; i++) {
+            sides[i].innerHTML = arr[i];
+            sides[i].style.color = "white";
+          }
+        }
+      };
+      pre4.onclick = function () {
+        fs4.style.left = "-1000px";
+        fs3.style.left = "0px";
+        myForm.style.height = fs3.clientHeight + "px";
+        for (var i = 0; i < 2; i++) {
+          sides[i].innerHTML = "check_circle";
+          sides[i].style.color = "rgb(174, 252, 132)";
+        }
+        for (var i = 2; i < 6; i++) {
+          sides[i].innerHTML = arr[i];
+          sides[i].style.color = "white";
+        }
+      };
+      nex4.onclick = function () {
+        var Interships = document.querySelectorAll(".Interships");
+        a = true;
+        for (var i = 0; i < Interships.length; i++) {
+          if (!Interships[i].checkValidity()) {
+            a = false;
+            if (Interships[i].reportValidity()) {
+              Interships[i].reportValidity();
+            }
+            break;
+          }
+        }
+        var Projects = document.querySelectorAll(".Projects");
+        for (var i = 0; i < Projects.length; i++) {
+          if (!Projects[i].checkValidity()) {
+            a = false;
+            if (Projects[i].reportValidity()) {
+              Projects[i].reportValidity();
+            }
+            break;
+          }
+        }
+        if (a) {
+          fs4.style.left = "-1000px";
+          fs5.style.left = "0px";
+          myForm.style.height = fs5.clientHeight + "px";
+          for (var i = 0; i < 4; i++) {
+            sides[i].innerHTML = "check_circle";
+            sides[i].style.color = "rgb(174, 252, 132)";
+          }
+          for (var i = 4; i < 6; i++) {
+            sides[i].innerHTML = arr[i];
+            sides[i].style.color = "white";
+          }
+        }
+      };
+      pre5.onclick = function () {
+        fs5.style.left = "-1000px";
+        fs4.style.left = "0px";
+        myForm.style.height = fs4.clientHeight + "px";
+        for (var i = 0; i < 3; i++) {
+          sides[i].innerHTML = "check_circle";
+          sides[i].style.color = "rgb(174, 252, 132)";
+        }
+        for (var i = 3; i < 6; i++) {
+          sides[i].innerHTML = arr[i];
+          sides[i].style.color = "white";
+        }
+      };
+      nex5.onclick = function () {
+        var Achievements = document.querySelectorAll(".Achievements");
+        a = true;
+        for (var i = 0; i < Achievements.length; i++) {
+          if (!Achievements[i].checkValidity()) {
+            a = false;
+            if (Achievements[i].reportValidity()) {
+              Achievements[i].reportValidity();
+            }
+            break;
+          }
+        }
+        var EActivity = document.querySelectorAll(".EActivity");
+        for (var i = 0; i < EActivity.length; i++) {
+          if (!EActivity[i].checkValidity()) {
+            a = false;
+            if (EActivity[i].reportValidity()) {
+              EActivity[i].reportValidity();
+            }
+            break;
+          }
+        }
+        if (a) {
+          fs5.style.left = "-1000px";
+          fs6.style.left = "0px";
+          myForm.style.height = fs6.clientHeight + "px";
+          for (var i = 0; i < 5; i++) {
+            sides[i].innerHTML = "check_circle";
+            sides[i].style.color = "rgb(174, 252, 132)";
+          }
+          for (var i = 5; i < 6; i++) {
+            sides[i].innerHTML = arr[i];
+            sides[i].style.color = "white";
+          }
+        }
+      };
+      pre6.onclick = function () {
+        fs6.style.left = "-1000px";
+        fs5.style.left = "0px";
+        myForm.style.height = fs5.clientHeight + "px";
+        for (var i = 0; i < 4; i++) {
+          sides[i].innerHTML = "check_circle";
+          sides[i].style.color = "rgb(174, 252, 132)";
+        }
+        for (var i = 4; i < 6; i++) {
+          sides[i].innerHTML = arr[i];
+          sides[i].style.color = "white";
+        }
+      };
+      cl1.onclick = function () {
+        cl1.style.display = "none";
+        ps.innerHTML = "";
+        myForm.style.height = fs3.clientHeight + "px";
+      };
+      cl2.onclick = function () {
+        cl2.style.display = "none";
+        pros.innerHTML = "";
+        myForm.style.height = fs3.clientHeight + "px";
+      };
+      cl3.onclick = function () {
+        cl3.style.display = "none";
+        intern.innerHTML = "";
+        myForm.style.height = fs4.clientHeight + "px";
+      };
+      cl4.onclick = function () {
+        cl4.style.display = "none";
+        project.innerHTML = "";
+        myForm.style.height = fs4.clientHeight + "px";
+      };
+      cl5.onclick = function () {
+        cl5.style.display = "none";
+        achieve.innerHTML = "";
+        myForm.style.height = fs5.clientHeight + "px";
+      };
+      cl6.onclick = function () {
+        cl6.style.display = "none";
+        eactive.innerHTML = "";
+        myForm.style.height = fs5.clientHeight + "px";
+      };
+      sb1.onclick = function () {
+        ss1.style.display = "flex";
+        ss2.style.display = "flex";
+        ss3.style.display = "flex";
+        myForm.style.height = fs1.clientHeight + "px";
+      };
+      sb2.onclick = function () {
+        pspo += 1;
+        ps.insertAdjacentHTML(
+          "beforeend",
+          '<span class="formspan" ><span class="inputfield"><input type="text" name="Peskillname' +
+            pspo +
+            '"  placeholder="Skill Name" class="inputf Peskillname" required><span class="label">Skill Name</span></span><span class="inputfield rating"><input type="radio" name="pes' +
+            pspo +
+            '" id="star' +
+            pspo +
+            '1" value="5"><label for="star' +
+            pspo +
+            '1"></label><input type="radio" name="pes' +
+            pspo +
+            '" id="star' +
+            pspo +
+            '2" value="4"><label for="star' +
+            pspo +
+            '2"></label><input type="radio" name="pes' +
+            pspo +
+            '" id="star' +
+            pspo +
+            '3" value="3"><label for="star' +
+            pspo +
+            '3"></label><input type="radio" name="pes' +
+            pspo +
+            '" id="star' +
+            pspo +
+            '4" value="2"><label for="star' +
+            pspo +
+            '4"></label><input type="radio" name="pes' +
+            pspo +
+            '" id="star' +
+            pspo +
+            '5" value="1" checked="checked"><label for="star' +
+            pspo +
+            '5"></label><span class="label2">Rating</span></span></span>'
+        );
+        myForm.style.height = fs3.clientHeight + "px";
+        cl1.style.display = "block";
+      };
+      sb3.onclick = function () {
+        prspo += 1;
+        pros.insertAdjacentHTML(
+          "beforeend",
+          '<span class="formspan" ><span class="inputfield"><input type="text" name="Prskillname' +
+            prspo +
+            '"  placeholder="Skill Name" class="inputf Prskillname" required><span class="label">Skill Name</span></span><span class="inputfield rating"><input type="radio" name="prs' +
+            prspo +
+            '" id="star' +
+            prspo +
+            '1" value="5"><label for="star' +
+            prspo +
+            '1"></label><input type="radio" name="prs' +
+            prspo +
+            '" id="star' +
+            prspo +
+            '2" value="4"><label for="star' +
+            prspo +
+            '2"></label><input type="radio" name="prs' +
+            prspo +
+            '" id="star' +
+            prspo +
+            '3" value="3"><label for="star' +
+            prspo +
+            '3"></label><input type="radio" name="prs' +
+            prspo +
+            '" id="star' +
+            prspo +
+            '4" value="2"><label for="star' +
+            prspo +
+            '4"></label><input type="radio" name="prs' +
+            prspo +
+            '" id="star' +
+            prspo +
+            '5" value="1" checked="checked"><label for="star' +
+            prspo +
+            '5"></label><span class="label2">Rating</span></span></span>'
+        );
+        myForm.style.height = fs3.clientHeight + "px";
+        cl2.style.display = "block";
+      };
+      sb4.onclick = function () {
+        inpo += 1;
+        intern.insertAdjacentHTML(
+          "beforeend",
+          '<span class="formspan"><span class="inputfield"><input type="text" name="IntershipName' +inpo+'" placeholder="Intership Name" class="inputf Interships intertrio" required><span class="label">Intership Name</span></span><span class="inputfield"><input type="text" name="CompanyName' +inpo +'" placeholder="Company Name" class="inputf Interships intertrio" required><span class="label">Company Name</span></span><span class="inputfield"><input type="url" name="CetificateURL' +inpo +'" placeholder="Certificate URL" class="inputf Interships intertrio" required><span class="label">Certificate URL</span></span></span><span class="formspan"><span class="inputfield"><textarea name="InternDesc' +inpo +'" cols="50" rows="3" class="inputf Interships InternDesc" placeholder="Intership Description (Start typing from here...)" required maxlength="100"></textarea><span class="label">Internship Description</span></span></span><span class="formspan"><span class="inputfield"><input type="month" name="InternDateofStart' +inpo +'" placeholder="Start Date" class="inputf Interships" required><span class="label">Start Date</span></span><span class="inputfield"><input type="month" name="InternDateofEnd' +inpo +'" placeholder="End Date" class="inputf Interships" required><span class="label">End Date</span></span></span>');
+        myForm.style.height = fs4.clientHeight + "px";
+        cl3.style.display = "block";
+      };
+      sb5.onclick = function () {
+        propo += 1;
+        project.insertAdjacentHTML(
+          "beforeend",
+          '<span class="formspan"><span class="inputfield"><input type="text" name="ProjectName' +
+            propo +
+            '" placeholder="Project Name" class="inputf Projects" required><span class="label">Project Name</span></span><span class="inputfield"><input type="url" name="ProjectURL' +
+            propo +
+            '" placeholder="Github Link" class="inputf Projects" required><span class="label">Github Link</span></span></span><span class="formspan"><span class="inputfield"><textarea name="ProjectDesc' +
+            propo +
+            '"  cols="50" rows="3" class="inputf ProjectDesc Projects" placeholder="Project Description (Start typing from here...)" required maxlength="100"></textarea><span class="label">Project Description</span></span></span>'
+        );
+        myForm.style.height = fs4.clientHeight + "px";
+        cl4.style.display = "block";
+      };
+      sb6.onclick = function () {
+        achpo += 1;
+        achieve.insertAdjacentHTML(
+          "beforeend",
+          '<span class="formspan"><span class="inputfield"><input type="text" name="Achievement' +
+            achpo +
+            '"  placeholder="Achievement" class="inputf Achievements" required><span class="label">Achievement</span></span><span class="inputfield"><input type="month" name="AchievementDate' +
+            achpo +
+            '" placeholder="Achievement Date" class="inputf Achievements" required><span class="label">Achievement Date</span></span></span>'
+        );
+        myForm.style.height = fs5.clientHeight + "px";
+        cl5.style.display = "block";
+      };
+      sb7.onclick = function () {
+        extpo += 1;
+        eactive.insertAdjacentHTML(
+          "beforeend",
+          '<span class="formspan"><span class="inputfield"><input type="text" name="EActivity' +
+            extpo +
+            '" placeholder="Activity Description" class="inputf EActivity" required maxlength="50"/><span class="label">Activity Description</span></span></span>'
+        );
+        myForm.style.height = fs5.clientHeight + "px";
+        cl6.style.display = "block";
+      };
+    </script>
+  </body>
 </html>
