@@ -53,6 +53,7 @@ app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 app.use("/admin", express.static(__dirname + "/"));
 
 let countApiKey = process.env.countApiKey;
+let googleSheetsApi = process.env.googleSheetsApi;
 let prevDate = new Date().getDate();
 let weekCount = 0;
 let totalCount = 0;
@@ -147,6 +148,8 @@ app.get("/", async (req, res) => {
     imgUsername: req.cookies.username,
     weeklyCount: weekCount,
     totalCount: totalCount,
+    countApiKey,
+    googleSheetsApi,
   });
 });
 app.get("/index", async (req, res) => {
