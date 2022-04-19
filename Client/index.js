@@ -2468,6 +2468,10 @@ app.get("/userSession/:sessionId", (req, res) => {
 app.get('/resume',async(req,res)=>{
   res.render("ResumeBuilderForm")
 })
+app.post('/resume',async(req,res)=>{
+  console.log(req.body)
+  res.render("ResumeBuilderForm")
+})
 app.get("*", async (req, res) => {
   res.render("404page");
 });
