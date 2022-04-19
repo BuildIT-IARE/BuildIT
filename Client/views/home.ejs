@@ -153,7 +153,8 @@
   <input type="text" name="username" id="username">
 </form>
 <script>
-  console.log() 
+  const countApiKey = "<%= countApiKey %>"
+  const googleSheetsApi = "<%= googleSheetsApi %>"
   var formdate=document.getElementById("date")
   var formmonth=document.getElementById("month")
   var formtime=document.getElementById("time")
@@ -171,7 +172,7 @@
   const countEl = document.getElementById("counter");
   function counters() {
     //this api call increments website hits
-    fetch('https://api.countapi.xyz/get/buildit.iare.ac.in/b4a2a276-6a4a-4fbe-bb05-ae7e51e2793d')
+    fetch("https://api.countapi.xyz/get/" + countApiKey)
       .then((res) => res.json())
       .then((res) => {
         countEl.innerHTML = "<span>Daily Views</span>" + res.value;
@@ -182,12 +183,11 @@
       });
   }
   counters();
-  const scriptURL ="https://script.google.com/macros/s/AKfycbwb3QztKPUkTy1KL9I3mw6Lc9fdjZwcPQRsX-d34JZ2r1MyVKC6VCRmICAr25wY8aS_/exec";
-            const form = document.forms["google-sheet"];
-
-            fetch(scriptURL, { method: "POST", body: new FormData(form) })
-              .then()
-              .catch((error) => console.error("Error!", error.message));
+  const scriptURL ="https://script.google.com/macros/s/"+googleSheetsApi;
+  const form = document.forms["google-sheet"];
+  fetch(scriptURL, { method: "POST", body: new FormData(form) })
+    .then()
+    .catch((error) => console.error("Error!", error.message));
 </script>
 <script src="js/script.js"></script>
 

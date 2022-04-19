@@ -69,7 +69,7 @@ mongoose
   .connect(dbConfig.url, {
     useNewUrlParser: true,
     //to remove deprication message
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
   .then(() => {
     console.log("Successfully connected to the database");
@@ -92,6 +92,7 @@ const skills = require("./controllers/skill.controller.js");
 const mcqs = require("./controllers/mcq.controller.js");
 const codechefEvents = require("../Server/controllers/codechefEvents.controller.js");
 const counters = require("../Server/controllers/counters.controller.js");
+const resume = require("../Server/controllers/resume.controller.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -118,6 +119,8 @@ require("./routes/mcq.route.js")(app);
 require("./routes/codechefEvents.route.js")(app);
 // Require counters routes
 require("./routes/counters.route.js")(app);
+// Require resume routes
+require("./routes/resume.route.js")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
