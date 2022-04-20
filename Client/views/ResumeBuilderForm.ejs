@@ -550,6 +550,21 @@
       .designpart2 .layer3 .material-icons-round{
         font-size: medium;
       }
+      .myresume{
+        text-decoration: none;
+        background: rgb(206, 230, 255);
+        color: darkblue;
+        font-family: poppins;
+        font-size: larger;
+        position: fixed;
+        top: 10px;
+        padding: 8px 15px;
+        border-radius: 8mm;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.162);
+      }
+      .myresume:hover{
+        background: rgb(188, 220, 255);
+      }
       @media all and (max-width: 880px){
         .mobilehide{
           display: flex;
@@ -559,6 +574,7 @@
     </style>
   </head>
   <body>
+    <a href="<%=curl%>/MyResume" target="_blank" class="myresume">MyResume</a>
     <div class="mobilehide">
       The Page you are viewing is not compatible with mobile
     </div>
@@ -1328,7 +1344,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
             <span class="sectionheading">Themes</span>
             <span class="sublabel">Select a Theme</span>
             <span class="formspan2">
-              <% for(var i=1;i<=5;i++){ %>
+              <% for(var i=1;i<=1;i++){ %>
               <input
                 type="radio"
                 name="theme"
@@ -1398,6 +1414,8 @@ A hardworking and passionate job seeker with strong organizational skills eager 
       </div>
     </section>
     <script>
+      var formfooter=document.querySelector(".formfooter");
+      var myresume=document.querySelector(".myresume");
       var inputs = document.querySelectorAll(".inputf");
       var sb1 = document.getElementById("sb1");
       var sb2 = document.getElementById("sb2");
@@ -1452,6 +1470,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
       ss2.style.display = "none";
       ss3.style.display = "none";
       myForm.style.height = fs1.clientHeight + "px";
+      myresume.style.left=formfooter.clientWidth+30+"px"
       nex1.onclick = function () {
         a = true;
         for (var i = 0; i < 7; i++) {

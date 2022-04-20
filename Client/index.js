@@ -2482,6 +2482,7 @@ app.get('/resume',checkSignIn,async(req,res)=>{
       url:serverRoute,
       imgUsername: req.cookies.username,
       token: req.cookies.token,
+      curl:clientRoute
     })
   })
   
