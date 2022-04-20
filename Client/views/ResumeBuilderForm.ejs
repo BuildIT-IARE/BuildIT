@@ -392,7 +392,7 @@
       #Brief,
       .InternDesc,
       .ProjectDesc,
-      .EActivity {
+      .EActivity,.fullwidth {
         width: 680px;
       }
       .ProjectDesc {
@@ -638,7 +638,8 @@
       </div>
     </div>
     <section class="resumeform">
-      <form action="" method="post" id="myForm">
+      <form action="<%= url%>/resumeCreate" method="post" id="myForm">
+        <input type="text" name="username" style="display: none;" value="<%= imgUsername %>">
         <span class="formsection">
           <span class="content">
             <span class="sectionheading">Heading</span>
@@ -692,7 +693,7 @@
               <span class="inputfield">
                 <input
                   type="number"
-                  name="Pin Code"
+                  name="PinCode"
                   id="PinCode"
                   placeholder="Pin Code"
                   class="inputf"
@@ -806,6 +807,7 @@
                   id="ScFinalScore"
                   placeholder="Final Score"
                   class="inputf"
+                  step="any"
                   required
                 />
                 <span class="label">Final Score</span>
@@ -821,6 +823,12 @@
                   <option value="Percentage">Percentage</option>
                   <option value="CGPA">CGPA</option>
                 </select>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input type="text" name="ScCourseDesc" id="ScCourseDesc" class="inputf fullwidth" required placeholder="Class/Course Description (ex: Class 10 (SSC))">
+                <span class="label">Class/Course Description</span>
               </span>
             </span>
             <span class="sublabel">Intermediate / Diploma Details</span>
@@ -880,6 +888,7 @@
                   id="IntFinalScore"
                   placeholder="Final Score"
                   class="inputf"
+                  step="any"
                   required
                 />
                 <span class="label">Final Score</span>
@@ -889,12 +898,19 @@
                   name="IntMarksType"
                   id="IntMarksType"
                   class="inputf"
+                  step="any"
                   required
                 >
                   <option value="" style="display: none">Select Type</option>
                   <option value="Percentage">Percentage</option>
                   <option value="CGPA">CGPA</option>
                 </select>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input type="text" name="IntCourseDesc" id="IntCourseDesc" class="inputf fullwidth" required placeholder="Class/Course Description (ex: Class 12/Diploma)">
+                <span class="label">Class/Course Description</span>
               </span>
             </span>
             <span class="sublabel">Graduation Details</span>
@@ -954,6 +970,7 @@
                   id="GraFinalScore"
                   placeholder="Final Score"
                   class="inputf"
+                  step="any"
                   required
                 />
                 <span class="label">Final Score</span>
@@ -969,6 +986,12 @@
                   <option value="Percentage">Percentage</option>
                   <option value="CGPA">CGPA</option>
                 </select>
+              </span>
+            </span>
+            <span class="formspan">
+              <span class="inputfield">
+                <input type="text" name="ColCourseDesc" id="ColCourseDesc" class="inputf fullwidth" required placeholder="Class/Course Description (ex: B-Tech (CSE))">
+                <span class="label">Class/Course Description</span>
               </span>
             </span>
             <span class="buttons">
@@ -1319,6 +1342,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
               /></label>
               <% } %>
             </span>
+            <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
             <span class="buttons">
               <button type="button" class="buttonf" id="pre6">Back</button>
               <button type="submit" class="buttonf" id="nex6">Submit</button>
@@ -1468,7 +1492,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
       };
       nex2.onclick = function () {
         a = true;
-        for (var i = 13; i < 30; i++) {
+        for (var i = 13; i < 33; i++) {
           if (!inputs[i].checkValidity()) {
             a = false;
             if (inputs[i].reportValidity()) {
@@ -1817,5 +1841,8 @@ A hardworking and passionate job seeker with strong organizational skills eager 
         cl6.style.display = "block";
       };
     </script>
+    <script>
+      document.getElementById("token").value = "<%= token %>";
+  </script>
   </body>
 </html>

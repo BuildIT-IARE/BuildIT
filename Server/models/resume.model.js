@@ -7,8 +7,9 @@ var personalInfoSchema = new Schema ({
     firstName : String,
     lastName : String,
     city : String,
-    pinCode : String,
-    phoneNumber : String,
+    country: String,
+    pinCode : Number,
+    phoneNumber : Number,
     emailId : String,
     socials : Array,
 })
@@ -20,18 +21,21 @@ var educationalInfoSchema = new Schema ({
     schoolPassingDate: String,
     schoolScore : String,
     schoolScoreType : String,
+    schoolDesc : String,
     interName : String,
     interLocation : String,
     interStartDate: String,
     interPassingDate: String,
     interScore : String,
     interScoreType : String,
+    interDesc : String,
     collegeName : String,
     collegeLocation : String,
     collegeStartDate: String,
     collegePassingDate: String,
     collegeScore : String,
     collegeScoreType : String,
+    collegeDesc : String,
 })
 
 var internshipInfoSchema = new Schema ({

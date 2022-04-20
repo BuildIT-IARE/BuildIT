@@ -93,7 +93,7 @@ exports.create  = (req,res) => {
         city : req.body.City,
         country : req.body.Country,
         pinCode : req.body.PinCode,
-        phone : req.body.Phone,
+        phoneNumber : req.body.Phone,
         emailId : req.body.Email,
         socials : socialsArray,
     })
@@ -105,18 +105,21 @@ exports.create  = (req,res) => {
         schoolPassingDate: req.body.ScDateofPass,
         schoolScore : req.body.ScFinalScore,
         schoolScoreType : req.body.ScMarksType,
+        schoolDesc : req.body.ScCourseDesc,
         interName : req.body.IntCollegeName,
         interLocation : req.body.IntColllegeLocation,
         interStartDate: req.body.IntDateofStart,
         interPassingDate: req.body.IntDateofPass,
         interScore : req.body.IntFinalScore,
         interScoreType : req.body.IntMarksType,
+        interDesc : req.body.IntCourseDesc,
         collegeName : req.body.GraCollegeName,
         collegeLocation : req.body.GraColllegeLocation,
         collegeStartDate : req.body.GraDateofStart,
         collegePassingDate: req.body.GraDateofPass,
         collegeScore : req.body.GraFinalScore,
         collegeScoreType : req.body.GraMarksType,
+        collegeDesc: req.body.ColCourseDesc
     })
 
     var internshipInfo = new InternshipInfo({
@@ -166,7 +169,7 @@ exports.create  = (req,res) => {
                 projects : projectsArray,
                 achievements : achievementsArray,
                 extraCurricular : extraCurricularArray,
-                brief: req.body.brief,
+                brief: req.body.Brief,
                 personalInfo : personalInfo,
                 educationalInfo : educationalInfo,
                 internshipInfo : internshipInfo,
@@ -193,7 +196,21 @@ exports.findAll = (req, res) => {
     })
     .catch((err) => {
         res.status(500).send({
+            success: false,
             message: err.message || "Some error occurred while retrieving Resumes.",
         });
     });
 };
+
+exports.findOne = (req,res)=>{
+    Resume.findOne({resumeId:req.params.username})
+    .then((resume)=>{
+        res.send(resume);
+    })
+    .catch((err)=>{
+        res.status(500).send({
+            success: false,
+            message: err.message || "You have no Resumes",
+        })
+    })
+}
