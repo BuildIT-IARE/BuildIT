@@ -3,7 +3,7 @@ let middleware = require("../util/middleware.js");
 module.exports = (app) => {
     const resume = require("../controllers/resume.controller.js");
 
-    app.post("/resumeCreate",middleware.checkToken,resume.create);
+    app.post("/resumeCreate",resume.create);
 
     // app.get("/allresumes",middleware.checkToken,resume.findAll);
 
