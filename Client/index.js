@@ -11,6 +11,7 @@ const fs = require("fs");
 const fetch = require("node-fetch");
 var _ = require("lodash");
 const dotenv = require("dotenv");
+const { cookie } = require("request");
 
 // Load config
 dotenv.config({ path: "../Server/util/config.env" });
@@ -2468,7 +2469,44 @@ app.get("/userSession/:sessionId", (req, res) => {
     res.status(200).send({ status: true });
   else res.status(404).send({ status: false, message: "user logged out!" });
 });
+app.get('/resume',checkSignIn,async(req,res)=>{
+  let options = {
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    res.render("ResumeBuilderForm",{
+      url:serverRoute,
+      imgUsername: req.cookies.username,
+      token: req.cookies.token,
+      curl:clientRoute
+    })
+  })
+  
+})
+app.get("/MyResume",checkSignIn,async(req,res)=>{
+  let options = {
+    url: serverRoute + "/MyResume/"+req.cookies.username,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
 
+  request(options, (err, response, body) => {
+    if (body){
+    res.render("../views/ResumeTemplates/theme1",{data:body})
+  }
+  else {res.render("error", {
+    imgUsername:req.cookies.username,
+    data: {message:"You have no resumes"},
+  });}
+  });
+})
 app.get("*", async (req, res) => {
   res.render("404page");
 });
