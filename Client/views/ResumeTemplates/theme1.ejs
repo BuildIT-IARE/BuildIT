@@ -278,6 +278,13 @@
         #print:hover{
             background: rgb(199, 228, 255);
         }
+        .inttop p a{
+          text-decoration: none;
+          color: dodgerblue;
+        }
+        .inttop p a span{
+          font-size: medium;
+        }
         @media print{
             #print{
                 visibility: hidden;
@@ -298,7 +305,7 @@
             </span>
             <span>
               <p class="high">Phone</p>
-              <p class="low"><%= data.personalInfo.city%></p>
+              <p class="low"><%= data.personalInfo.phoneNumber%></p>
             </span>
             <span>
               <p class="high">Email</p>
@@ -313,6 +320,7 @@
             <% }%>
           </div>
         </div>
+        <% if(data.personalSkills.length>0){%>
         <div class="peskills">
           <div class="label" style="margin-bottom: 5px;">Pesrsonal Skills</div>
           <% for(var i=0;i<data.personalSkills.length;i++){ %>
@@ -329,6 +337,8 @@
           </div>
           <%}%>
         </div>
+        <%}%>
+        <% if(data.professionalSkills.length>0){%>
         <div class="prskills">
           <div class="label" style="margin-bottom: 5px; margin-top: 5px;">
             Professional Skills
@@ -347,6 +357,7 @@
             </div>
             <%}%>
         </div>
+        <%}%>
         <% if(data.codingProfilesInfo.codeChefURL || data.codingProfilesInfo.codeForcesURL || data.codingProfilesInfo.hackerRankURL || data.codingProfilesInfo.geeksForGeeksURL || data.codingProfilesInfo.InterviewBitURL || data.codingProfilesInfo.leetCodeURL || data.codingProfilesInfo.spojURL){%>
             <div class="coding">
               <div class="label" style="margin-top: 5px;">Coding Profiles</div>
@@ -447,25 +458,27 @@
           <% for(var i=0;i<data.internshipInfo.internshipName.length-1;i++){ %>
           <div class="internship" style="margin-bottom: 20px">
             <div class="inttop">
-              <p><strong><%= data.internshipInfo.internshipName[i]%></strong>[<%= data.internshipInfo.internshipCompanyName[i]%>]</p>
+              <p><strong><%= data.internshipInfo.internshipName[i]%></strong>[<%= data.internshipInfo.internshipCompanyName[i]%>] <a href="<%= data.internshipInfo.internshipCertificate[i]%>" target="_blank"><span class="material-icons-outlined">
+                open_in_new
+                </span></a></p>
               <p><%= data.internshipInfo.internshipStartDate[i]%> to <%= data.internshipInfo.internshipEndDate[i]%></p>
             </div>
             <p class="desc">
                 <%= data.internshipInfo.internshipDesc[i]%>
             </p>
-            <p class="desc">Certificate: <%= data.internshipInfo.internshipCertificate[i]%></p>
           </div>
           <% }%>
           <div class="internship">
             <div class="inttop">
                 <% var n=data.internshipInfo.internshipName.length %>
-              <p><strong><%= data.internshipInfo.internshipName[n-1]%></strong>[<%= data.internshipInfo.internshipCompanyName[n-1]%>]</p>
+              <p><strong><%= data.internshipInfo.internshipName[n-1]%></strong>[<%= data.internshipInfo.internshipCompanyName[n-1]%>] <a href="<%= data.internshipInfo.internshipCertificate[n-1]%>" target="_blank"><span class="material-icons-outlined">
+                open_in_new
+                </span></a></p>
               <p><%= data.internshipInfo.internshipStartDate[n-1]%> to <%= data.internshipInfo.internshipEndDate[n-1]%></p>
             </div>
             <p class="desc">
                 <%= data.internshipInfo.internshipDesc[n-1]%>
             </p>
-            <p class="desc">Certificate: <%= data.internshipInfo.internshipCertificate[n-1]%></p>
           </div>
         </div>
         <div class="line"></div>

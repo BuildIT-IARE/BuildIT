@@ -471,6 +471,7 @@
         margin-bottom: 120px;
       }
       .formspan2 {
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -552,18 +553,25 @@
       }
       .myresume{
         text-decoration: none;
-        background: rgb(206, 230, 255);
-        color: darkblue;
+        background: rgb(11,87,208);
+        color: white;
         font-family: poppins;
         font-size: larger;
         position: fixed;
         top: 10px;
+        left: 30px;
         padding: 8px 15px;
         border-radius: 8mm;
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.162);
+        box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.308);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .myresume span{
+        font-size: larger;
       }
       .myresume:hover{
-        background: rgb(188, 220, 255);
+        background: rgb(0, 78, 155);
       }
       @media all and (max-width: 880px){
         .mobilehide{
@@ -574,7 +582,9 @@
     </style>
   </head>
   <body>
-    <a href="<%=curl%>/MyResume" target="_blank" class="myresume">MyResume</a>
+    <a href="<%=curl%>/MyResume" target="_blank" class="myresume">MyResume <span class="material-icons">
+      description
+      </span></a>
     <div class="mobilehide">
       The Page you are viewing is not compatible with mobile
     </div>
@@ -1344,7 +1354,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
             <span class="sectionheading">Themes</span>
             <span class="sublabel">Select a Theme</span>
             <span class="formspan2">
-              <% for(var i=1;i<=1;i++){ %>
+              <% for(var i=1;i<=2;i++){ %>
               <input
                 type="radio"
                 name="theme"
@@ -1354,7 +1364,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
                 required
               />
               <label for="theme<%=i%>"
-                ><img src="../images/themes/theme1.png" alt="theme"
+                ><img src="../images/themes/theme<%=i%>.png" alt="theme"
               /></label>
               <% } %>
             </span>
@@ -1470,7 +1480,6 @@ A hardworking and passionate job seeker with strong organizational skills eager 
       ss2.style.display = "none";
       ss3.style.display = "none";
       myForm.style.height = fs1.clientHeight + "px";
-      myresume.style.left=formfooter.clientWidth+30+"px"
       nex1.onclick = function () {
         a = true;
         for (var i = 0; i < 7; i++) {
@@ -1859,6 +1868,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
         myForm.style.height = fs5.clientHeight + "px";
         cl6.style.display = "block";
       };
+      myresume.style.left=formfooter.clientWidth+10+"px"
     </script>
     <script>
       document.getElementById("token").value = "<%= token %>";

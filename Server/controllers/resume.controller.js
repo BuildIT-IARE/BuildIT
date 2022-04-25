@@ -163,7 +163,7 @@ exports.create  = (req,res) => {
         {
             $set: {
                 resumeId: req.body.username,
-                themeId: req.body.themeId,
+                themeId: req.body.theme,
                 personalSkills : personalSkillsArray,
                 professionalSkills : professionalSkillsArray,
                 projects : projectsArray,
