@@ -2443,7 +2443,7 @@ app.get("/certificate", async (req, res) => {
   });
 });
 
-app.get("/codechef-iare-chapter", checkSignIn, async (req, res, next) => {
+app.get("/codechef-iare-chapter", async (req, res, next) => {
   let options = {
     url: serverRoute + "/codechef-events/",
     method: "get",
