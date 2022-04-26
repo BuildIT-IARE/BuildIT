@@ -2500,7 +2500,7 @@ app.get("/MyResume",checkSignIn,async(req,res)=>{
   request(options, (err, response, body) => {
     if (body){
       a=body.themeId
-    res.render("../views/ResumeTemplates/"+a,{data:body})
+    res.render("ResumeTemplates/"+a,{data:body})
   }
   else {res.render("error", {
     imgUsername:req.cookies.username,
