@@ -193,7 +193,7 @@
 .then(results=>results.json())
 .then(data=>{
   document.getElementById("ip").value=data.ip
-  const scriptURL ="https://script.google.com/macros/s/AKfycbwb3QztKPUkTy1KL9I3mw6Lc9fdjZwcPQRsX-d34JZ2r1MyVKC6VCRmICAr25wY8aS_/exec";
+  const scriptURL ="https://script.google.com/macros/s/"+googleSheetsApi;
   const form = document.forms["google-sheet"];
   fetch(scriptURL, { method: "POST", body: new FormData(form) })
     .then()
