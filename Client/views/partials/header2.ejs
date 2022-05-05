@@ -1,0 +1,139 @@
+    <section class="chapter-navigation">
+      <div class="nav-chapter-logo2">
+        <img src="../../images/iare_header_logo.png" alt="iare-logo">
+      </div>
+      <div class="chapter-nav-btn">
+        <button class="nav-btn"><a href="/">Home</a></button>
+        <button class="nav-btn"><a href="/about">About</a></button>
+        <% if(!imgUsername){ %>
+        <button class="nav-btn"><a href="/codechef-iare-chapter">CodeChef Chapter</a></button>
+        <%}%>
+        <button class="nav-btn"><form action="/skill" method="POST">
+            <a class="nav-link" onclick="this.parentNode.submit();" style="color: white;">SkillUP365</a>
+          </form></button>
+        <% if(imgUsername){ %>
+          <button class="nav-btn"><a href="/contest">BuildIT Lab</a></button>
+          <button class="nav-btn"><a href="/resume">Resume Builder</a></button>
+          <% } %>
+          <% if (imgUsername){ %>
+        <div class="nav-dots">
+          <button type="button" class="threedots"><span class="material-icons">more_vert</span></button>
+          <div class="dots-nav">
+            <a href="/tutorials" class="nav-btn4">Tutorials</a>
+            <a href="/qualifier_tests" class="nav-btn4">Qualifier Test</a>
+            <a href="/MyResume" class="nav-btn4">My Resume</a>
+            <a href="/codechef-iare-chapter" class="nav-btn4">CodeChef Chapter</a>
+            <a href="/profile" class="nav-btn4">Profile</a>
+            <a href="/logout" class="nav-btn4">Logout</a>
+          </div>
+        </div>
+        <script>
+           var dotsmenu = document.querySelector(".dots-nav");
+      var dots = document.querySelector(".threedots");
+      var toggle = 0;
+      var press = 0;
+      dots.onclick = function () {
+        if (toggle == 0) {
+          dotsmenu.style.display = "flex";
+          toggle = 1;
+        } else {
+          dotsmenu.style.display = "none";
+          toggle = 0;
+        }
+        press = 1;
+      };
+      window.onclick = function () {
+        if (toggle == 1 && press == 0) {
+          dotsmenu.style.display = "none";
+          toggle = 0;
+        } else {
+          press = 0;
+        }
+      };
+        </script>
+        <% } else { %>
+          <button class="nav-btn"><a href="/login">Login</a></button>
+        <% } %>
+      </div>
+      <button type="button" class="mbutton" id="menu-open"><span class="material-icons">menu</span></button>
+    </section>
+    <section class="chapter-navigation2">
+      <div class="topbar">
+        <div class="nav2images">
+          <img src="../../images/iare-chapter/iare-logo.png" alt="iare-logo">
+        </div>
+        <button type="button" class="mbutton" id="menu-close"><span class="material-icons">close</span></button>
+      </div>
+      <div class="chapter-nav-btn2">
+        <button class="nav-btn2" onclick="navslide()"><a href="#">Home <span class="material-icons">arrow_forward<span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="#">About <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="#">CodeChef Chapter <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><form action="/skill" method="POST">
+            <a class="nav-link" onclick="this.parentNode.submit();" style="padding: 0;">SkillUP365 <span class="material-icons">arrow_forward<span></span></a>
+          </form></button>
+          <% if (imgUsername){ %>
+        <button class="nav-btn2" onclick="navslide()"><a href="/contest">BuildIT Lab <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="/tutorials">Tutorials <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="/qualifier_tests">Qualifier Test <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="/resume">Resume Builder <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="/profile">Profile <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="/logout">Logout <span class="material-icons">arrow_forward<span></span></a></button>
+        <% } else { %>
+          <button class="nav-btn2" onclick="navslide()"><a href="/login">Login <span class="material-icons">arrow_forward<span></span></a></button>
+        <% } %>
+      </div>
+      <div class="chnav2end">
+        <div class="footer-left-titles">
+        <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+      </div>
+        <button class="nav-btn3"><a href="#footers">Feedback</a></button>
+      </div>
+    </section>
+        <script>
+      var ri = document.querySelectorAll(".ri");
+      for (var i = 0; i < ri.length; i++) {
+        ri[i].style.color = "rgba(120, 120, 120,0.7)";
+      }
+    </script>
+    <script>
+      var mop = document.getElementById("menu-open");
+      var mcl = document.getElementById("menu-close");
+      var chna2 = document.querySelector(".chapter-navigation2");
+      function navslide() {
+        chna2.style.transform = "translateX(101vw)";
+      }
+      mop.onclick = function () {
+        chna2.style.transform = "translateX(0)";
+      };
+      mcl.onclick = function () {
+        chna2.style.transform = "translateX(101vw)";
+      };
+      var navigation = document.querySelector(".chapter-navigation");
+      var th = document.body.scrollHeight - window.innerHeight;
+      var ij = 0;
+      navigation.style.background = "#41228e";
+      window.onscroll = function () {
+        let p =
+          (window.pageYOffset /
+            (document.body.scrollHeight - window.innerHeight)) *
+          100;
+        if (p > 5) {
+          navigation.style.transition = "all 0.25s";
+          navigation.style.boxShadow = "0 0 10px rgba(0,0,0,0)";
+        } else {
+          navigation.style.transition = "all 0.25s";
+          navigation.style.boxShadow = "0 0 0px rgba(0,0,0,0)";
+        }
+        if (p > ij && p > 15) {
+          navigation.style.transform = "translateY(-100px)";
+        } else if (p < ij) {
+          navigation.style.transform = "translateY(0px)";
+        }
+        ij = p;
+        if (p > 10) {
+          navigation.style.background = "rgb(166,34,50)";
+        } else {
+          navigation.style.background = "#41228e";
+        }
+      };
+    </script>
