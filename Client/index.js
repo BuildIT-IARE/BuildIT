@@ -2472,6 +2472,7 @@ app.get("/userSession/:sessionId", (req, res) => {
 });
 app.get('/resume',checkSignIn,async(req,res)=>{
   let options = {
+    url: serverRoute + "/MyResume/"+req.cookies.username,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -2483,7 +2484,8 @@ app.get('/resume',checkSignIn,async(req,res)=>{
       url:serverRoute,
       imgUsername: req.cookies.username,
       token: req.cookies.token,
-      curl:clientRoute
+      curl:clientRoute,
+      data:body
     })
   })
   
@@ -2500,7 +2502,8 @@ app.get("/MyResume",checkSignIn,async(req,res)=>{
 
   request(options, (err, response, body) => {
     if (body){
-    res.render("../views/ResumeTemplates/theme1",{data:body})
+      a=body.themeId
+    res.render("ResumeTemplates/"+a,{data:body})
   }
   else {res.render("error", {
     imgUsername:req.cookies.username,

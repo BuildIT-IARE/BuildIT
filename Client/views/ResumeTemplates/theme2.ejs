@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <title>Theme 2</title>
+    <style>
+      .main-container {
+        background: white;
+        width: 960px;
+        height: 1353px;
+        display: block;
+        margin: auto;
+        font-family: PT Sans;
+      }
+      .top {
+        width: 100%;
+        background: rgb(55, 61, 82);
+        margin-bottom: 20px;
+      }
+      .name {
+        padding: 20px;
+        font-size: xx-large;
+        color: white;
+        font-weight: bold;
+        display: block;
+        margin: auto;
+        text-align: center;
+      }
+      .brief {
+        padding: 0 20px;
+        color: white;
+        font-size: medium;
+        text-align: justify;
+      }
+      .brief p {
+        margin: 0;
+      }
+      .persdetails {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        background: rgb(0, 24, 41);
+        padding: 7px 0px;
+        color: white;
+        font-size: small;
+        margin-top: 20px;
+      }
+      .persdetails p {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .persdetails a {
+        text-decoration: none;
+        color: white;
+        background: rgb(67, 71, 83);
+        padding: 5px 10px;
+        border-radius: 5mm;
+      }
+      .persdetails span {
+        font-size: small;
+        margin: 0 3px;
+      }
+      .bottom {
+        width: 960px;
+        display: flex;
+      }
+      .left {
+        padding: 10px;
+        width: 460px;
+      }
+      .right {
+        padding: 10px;
+        width: 460px;
+        padding-left: 30px;
+      }
+      .label {
+        font-size: x-large;
+        color: rgb(58, 168, 86);
+        font-weight: bold;
+        margin: 15px 0px 15px 0px;
+      }
+      .intern p {
+        margin: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .intern p .title {
+        font-size: medium;
+      }
+      .intern {
+        margin-bottom: 20px;
+      }
+      .intern p a {
+        text-decoration: none;
+        color: rgb(58, 168, 86);
+      }
+      .intern p a span {
+        font-size: medium;
+      }
+      .project p {
+        margin: 5px;
+      }
+      .project p a {
+        text-decoration: none;
+        color: rgb(58, 168, 86);
+      }
+      .project p a span {
+        font-size: medium;
+      }
+      .date {
+        font-size: small;
+      }
+      .project {
+        margin-bottom: 20px;
+      }
+      .Education p {
+        margin: 5px;
+      }
+      .school {
+        margin-bottom: 20px;
+      }
+      .date {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .Achievements p {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 5px;
+      }
+      .skill {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .skill p {
+        margin: 0px;
+      }
+      .skill .rating span {
+        font-size: medium;
+      }
+      .profile {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .profile a {
+        text-decoration: none;
+        padding: 6px 15px;
+        background: rgb(58, 168, 86);
+        color: white;
+        border-radius: 5mm;
+        font-size: medium;
+        font-weight: bold;
+      }
+      .profile a span {
+        font-size: medium;
+      }
+      .profile p {
+        margin: 10px;
+      }
+      .Extras p {
+        margin: 5px;
+      }
+      .rating{
+        display: flex;
+        align-items: center;
+      }
+      #print{
+          align-self: center;
+          background: rgb(183, 255, 183);
+          color: rgb(0, 100, 0);
+          font-size: x-large;
+          padding: 3px 25px;
+          border: none;
+          border-radius: 10mm;
+          outline: none;
+          cursor: pointer;
+          margin-top: 10px;
+          margin: auto;
+          display: block;
+        }
+        #print:hover{
+            background: rgb(164, 255, 164);
+        }
+        @media print{
+            #print{
+                visibility: hidden;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="top">
+        <div class="name"><%= data.personalInfo.firstName%> <%= data.personalInfo.lastName%></div>
+        <div class="brief">
+          <p>
+            <%= data.brief%>
+          </p>
+        </div>
+        <div class="persdetails">
+          <p>
+            <span class="material-icons"> room </span> <%= data.personalInfo.city%> <%= data.personalInfo.country%> <%= data.personalInfo.pinCode%>
+          </p>
+          <p>
+            <span class="material-icons"> mail </span> <%= data.personalInfo.emailId%>
+          </p>
+          <p>
+            <span class="material-icons-outlined"> smartphone </span> <%= data.personalInfo.phoneNumber%>
+          </p>
+          <% for(var i=0;i<data.personalInfo.socials.length;i++){ %>
+          <a href="<%=data.personalInfo.socials[i][1]%>" class="social"
+            ><%=data.personalInfo.socials[i][0]%> <span class="material-icons-round"> open_in_new </span></a>
+          <% }%>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="left">
+          <div class="Education">
+            <div class="label">Education</div>
+            <div class="school">
+                <p><Strong><%= data.educationalInfo.collegeName%></Strong></p>
+                <p><%= data.educationalInfo.collegeDesc%> <%=data.educationalInfo.collegeScoreType %>: <%= data.educationalInfo.collegeScore%></p>
+                <p class="date">
+                  <span><%= data.educationalInfo.collegeLocation%></span
+                  ><span><%= data.educationalInfo.collegeStartDate%> to <%= data.educationalInfo.collegePassingDate%></span>
+                </p>
+              </div>
+            <div class="school">
+              <p><Strong><%= data.educationalInfo.interName%></Strong></p>
+              <p><%= data.educationalInfo.interDesc%> <%= data.educationalInfo.interScoreType%>: <%= data.educationalInfo.interScore%></p>
+              <p class="date">
+                <span><%= data.educationalInfo.interLocation%></span
+                ><span><%= data.educationalInfo.interStartDate%> to <%= data.educationalInfo.interPassingDate%></span>
+              </p>
+            </div>
+            <div class="school">
+                <p><Strong><%= data.educationalInfo.schoolName%></Strong></p>
+                <p><%= data.educationalInfo.schoolDesc%> <%= data.educationalInfo.schoolScoreType %>: <%= data.educationalInfo.schoolScore%></p>
+                <p class="date">
+                  <span><%= data.educationalInfo.schoolLocation%></span><span><%= data.educationalInfo.schoolPassingDate%></span>
+                </p>
+              </div>
+          </div>
+          <% if(data.internshipInfo.internshipName.length>0){%>
+          <div class="interships">
+            <div class="label">Internships</div>
+            <% for(var i=0;i<data.internshipInfo.internshipName.length;i++){ %>
+            <div class="intern">
+              <p>
+                <span
+                  ><span class="title"
+                    ><strong><%= data.internshipInfo.internshipName[i]%></strong>[<%= data.internshipInfo.internshipCompanyName[i]%>]</span
+                  ><a href="<%= data.internshipInfo.internshipCertificate[i]%>" target="_blank"
+                    ><span class="material-icons-outlined">
+                      open_in_new
+                    </span></a
+                  ></span
+                ><span class="date"><%= data.internshipInfo.internshipStartDate[i]%> to <%= data.internshipInfo.internshipEndDate[i]%></span>
+              </p>
+              <p>
+                <%= data.internshipInfo.internshipDesc[i]%>
+              </p>
+            </div>
+            <% }%>
+          </div>
+          <%}%>
+          <% if(data.projects.length>0){ %>
+          <div class="projects">
+            <div class="label">Projects</div>
+            <% for(var i=0;i<data.projects.length;i++){ %>
+            <div class="project">
+              <p>
+                <strong><%= data.projects[i][0]%></strong
+                ><a href="<%= data.projects[i][1]%>" target="_blank"
+                  ><span class="material-icons-outlined"> open_in_new </span></a
+                >
+              </p>
+              <p>
+                <%= data.projects[i][2]%>
+              </p>
+            </div>
+            <%}%>
+          </div>
+          <%}%>
+          <% if(data.achievements.length>0){ %>
+          <div class="Achievements">
+            <div class="label">Achievements</div>
+            <% for(var i=0;i<data.achievements.length;i++){ %>
+            <p>
+              <%= data.achievements[i][0]%>
+              <span class="date"><%= data.achievements[i][1]%></span>
+            </p>
+            <%}%>
+          </div>
+          <%}%>
+        </div>
+        <div class="right">
+          <% if(data.personalSkills.length>0){%>
+          <div class="pesskills">
+            <div class="label">Personal Skills</div>
+            <% for(var i=0;i<data.personalSkills.length;i++){ %>
+            <div class="skill">
+              <p><%=data.personalSkills[i][0] %></p>
+              <div class="rating">
+                <% for(j=0;j<Number(data.personalSkills[i][1]);j++){ %>
+                <span class="material-icons-outlined"> star </span>
+                <%}%>
+                <% for(j=0;j<5-Number(data.personalSkills[i][1]);j++){ %>
+                <span class="material-icons-outlined"> star_border </span>
+                <%}%>
+              </div>
+            </div>
+            <%}%>
+          </div>
+          <%}%>
+          <% if(data.professionalSkills.length>0){%>
+          <div class="prsskills">
+            <div class="label">Professional Skills</div>
+            <% for(var i=0;i<data.professionalSkills.length;i++){ %>
+            <div class="skill">
+              <p><%=data.professionalSkills[i][0] %></p>
+              <div class="rating">
+                <% for(j=0;j<Number(data.professionalSkills[i][1]);j++){ %>
+                <span class="material-icons-outlined"> star </span>
+                <%}%>
+                <% for(j=0;j<5-Number(data.professionalSkills[i][1]);j++){ %>
+                <span class="material-icons-outlined"> star_border </span>
+                <%}%>
+              </div>
+            </div>
+            <%}%>
+          </div>
+          <%}%>
+          <% if(data.codingProfilesInfo.codeChefURL || data.codingProfilesInfo.codeForcesURL || data.codingProfilesInfo.hackerRankURL || data.codingProfilesInfo.geeksForGeeksURL || data.codingProfilesInfo.InterviewBitURL || data.codingProfilesInfo.leetCodeURL || data.codingProfilesInfo.spojURL){%>
+          <div class="coding">
+            <div class="label">Coding Profiles</div>
+            <% if(data.codingProfilesInfo.codeChefURL){ %>
+            <div class="profile">
+              <a href="<%=data.codingProfilesInfo.codeChefURL%>" target="_blank"
+                >CodeChef
+                <span class="material-icons-outlined"> open_in_new </span></a
+              >
+              <p><strong><%=data.codingProfilesInfo.codeChefRating%></strong>(Rating)</p>
+              <p><%=data.codingProfilesInfo.codeChefUsername%></p>
+            </div>
+            <%}%>
+            <% if(data.codingProfilesInfo.hackerRankURL){ %>
+            <div class="profile">
+              <a href="<%=data.codingProfilesInfo.hackerRankURL%>" target="_blank"
+                >Hackerrank
+                <span class="material-icons-outlined"> open_in_new </span></a
+              >
+              <p><strong><%=data.codingProfilesInfo.hackerRankBadges%></strong>(Badges)</p>
+              <p><%=data.codingProfilesInfo.hackerRankUsername%></p>
+            </div>
+            <%}%>
+            <% if(data.codingProfilesInfo.codeForcesURL){ %>
+            <div class="profile">
+              <a href="<%=data.codingProfilesInfo.codeForcesURL%>" target="_blank"
+                >Codeforces
+                <span class="material-icons-outlined"> open_in_new </span></a
+              >
+              <p><strong><%=data.codingProfilesInfo.codeForcesRating%></strong>(Rating)</p>
+              <p><%=data.codingProfilesInfo.codeForcesUsername%></p>
+            </div>
+            <%}%>
+            <% if(data.codingProfilesInfo.geeksForGeeksURL){ %>
+            <div class="profile">
+              <a href="<%=data.codingProfilesInfo.geeksForGeeksURL%>" target="_blank"
+                >GeeksforGeeks
+                <span class="material-icons-outlined"> open_in_new </span></a
+              >
+              <p><strong><%=data.codingProfilesInfo.geeksForGeeksScore%></strong>(Score)</p>
+              <p><%=data.codingProfilesInfo.geeksForGeeksUsername%></p>
+            </div>
+            <%}%>
+            <% if(data.codingProfilesInfo.interViewBitURL){ %>
+            <div class="profile">
+              <a href="<%=data.codingProfilesInfo.interViewBitURL%>" target="_blank"
+                >Interview Bit
+                <span class="material-icons-outlined"> open_in_new </span></a
+              >
+              <p><strong><%=data.codingProfilesInfo.interViewBitScore%></strong>(Score)</p>
+              <p><%=data.codingProfilesInfo.interViewBitUsername%></p>
+            </div>
+            <%}%>
+            <% if(data.codingProfilesInfo.leetCodeURL){ %>
+            <div class="profile">
+              <a href="<%= data.codingProfilesInfo.leetCodeURL %>" target="_blank"
+                >LeetCode
+                <span class="material-icons-outlined"> open_in_new </span></a
+              >
+              <p><strong><%=data.codingProfilesInfo.leetCodeProblems%></strong>(Problems)</p>
+              <p><%=data.codingProfilesInfo.leetCodeUsername%></p>
+            </div>
+            <%}%>
+            <% if(data.codingProfilesInfo.spojURL){ %>
+            <div class="profile">
+              <a href="<%=data.codingProfilesInfo.spojURL%>" target="_blank"
+                >Spoj
+                <span class="material-icons-outlined"> open_in_new </span></a
+              >
+              <p><strong><%=data.codingProfilesInfo.spojProblems%></strong>(Problems)</p>
+              <p><%=data.codingProfilesInfo.spojUsername%></p>
+            </div>
+            <%}%>
+          </div>
+          <%}%>
+          <% if(data.extraCurricular.length>0){ %>
+          <div class="Extras">
+            <div class="label">Extracurricular Activities</div>
+            <% for(var i=0;i<data.extraCurricular.length;i++){ %>
+            <p><%= data.extraCurricular[i] %></p>
+            <%}%>
+          </div>
+          <%}%>
+        </div>
+      </div>
+    </div>
+    <button type="button" id="print" onclick="window.print()">Print</button>
+  </body>
+</html>

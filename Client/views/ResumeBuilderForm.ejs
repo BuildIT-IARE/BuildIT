@@ -41,7 +41,11 @@
       href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="../images/iare-chapter/iare-logo.png" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="../images/iare-chapter/iare-logo.png"
+      type="image/x-icon"
+    />
     <style>
       body {
         width: 100%;
@@ -54,7 +58,7 @@
         position: relative;
         min-height: 100vh;
       }
-      textarea{
+      textarea {
         resize: none;
       }
       .designpart {
@@ -162,7 +166,6 @@
         justify-content: space-evenly;
         position: relative;
         transition: 0.25s;
-        
       }
       .formsection {
         position: absolute;
@@ -237,7 +240,7 @@
         border-top-left-radius: 1mm;
         border-top-right-radius: 1mm;
       }
-      .inputf:hover{
+      .inputf:hover {
         background: rgb(238, 238, 238);
       }
       .inputf:focus {
@@ -369,8 +372,8 @@
         align-items: center;
         justify-content: space-between;
         font-family: poppins;
-        background: rgb(183,243,151);
-        color: rgb(56,106,32);
+        background: rgb(183, 243, 151);
+        color: rgb(56, 106, 32);
         font-weight: bold;
         outline: none;
         border: none;
@@ -392,7 +395,8 @@
       #Brief,
       .InternDesc,
       .ProjectDesc,
-      .EActivity,.fullwidth {
+      .EActivity,
+      .fullwidth {
         width: 680px;
       }
       .ProjectDesc {
@@ -471,6 +475,7 @@
         margin-bottom: 120px;
       }
       .formspan2 {
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -495,7 +500,7 @@
       .themes:checked + label img {
         border: rgb(21, 172, 49) solid 7px;
       }
-      .mobilehide{
+      .mobilehide {
         position: fixed;
         top: 0;
         left: 0;
@@ -510,63 +515,70 @@
         font-size: x-large;
         display: none;
       }
-      .designpart2{
+      .designpart2 {
         position: fixed;
         top: 0;
         right: 0px;
         overflow: hidden;
       }
-      .designpart2 .layer2{
+      .designpart2 .layer2 {
         position: absolute;
         bottom: 12px;
         left: 50%;
         transform: translate(-50%, 0);
         z-index: -1;
       }
-      .designpart2 .layer2 span{
+      .designpart2 .layer2 span {
         font-size: xx-large;
       }
-      .designpart2 .layer3{
-        align-items:stretch;
+      .designpart2 .layer3 {
+        align-items: stretch;
         animation: cycleit linear infinite 120s;
       }
-      @keyframes cycleit{
-        0%{
+      @keyframes cycleit {
+        0% {
           right: -300px;
         }
-        100%{
+        100% {
           right: 0;
         }
       }
-      .designpart2 .layer1 span{
+      .designpart2 .layer1 span {
         color: rgb(221, 235, 255);
         line-height: 110px;
         z-index: -2;
         text-shadow: 1px 0px rgba(250, 212, 0, 0.683);
       }
-      .designpart2 .layer3 span{
+      .designpart2 .layer3 span {
         color: rgb(0, 201, 0);
       }
-      .designpart2 .layer3 .material-icons-round{
+      .designpart2 .layer3 .material-icons-round {
         font-size: medium;
       }
-      .myresume{
+      .myresume {
         text-decoration: none;
-        background: rgb(206, 230, 255);
-        color: darkblue;
+        background: rgb(11, 87, 208);
+        color: white;
         font-family: poppins;
         font-size: larger;
         position: fixed;
         top: 10px;
+        left: 0px;
         padding: 8px 15px;
         border-radius: 8mm;
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.162);
+        box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.308);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
-      .myresume:hover{
-        background: rgb(188, 220, 255);
+      .myresume span {
+        font-size: larger;
       }
-      @media all and (max-width: 880px){
-        .mobilehide{
+      .myresume:hover {
+        background: rgb(0, 78, 155);
+      }
+      @media all and (max-width: 880px) {
+        .mobilehide {
           display: flex;
           z-index: 1000;
         }
@@ -574,53 +586,35 @@
     </style>
   </head>
   <body>
-    <a href="<%=curl%>/MyResume" target="_blank" class="myresume">MyResume</a>
+    <a href="<%=curl%>/MyResume" target="_blank" class="myresume"
+      >MyResume <span class="material-icons"> description </span></a
+    >
     <div class="mobilehide">
       The Page you are viewing is not compatible with mobile
     </div>
     <div class="designpart2">
       <div class="layer1">
-        <span class="material-icons-round">
-          landscape
-          </span>
+        <span class="material-icons-round"> landscape </span>
       </div>
       <div class="layer2">
-        <span class="material-icons-round">
-          directions_bike
-          </span>
+        <span class="material-icons-round"> directions_bike </span>
       </div>
       <div class="layer3">
-        <span class="material-icons-round">
-          forest
-          </span>
-          <span>===</span>
-          <span class="material-icons-round">
-            park
-            </span>
-            <span>===</span>
-            <span class="material-icons-round">
-              park
-              </span>
-              <span>===</span>
-              <span class="material-icons-round">
-                forest
-                </span>
-                <span>===</span>
-                <span class="material-icons-round">
-                  forest
-                  </span>
-                  <span>===</span>
-                  <span class="material-icons-round">
-                    park
-                    </span>
-                    <span>===</span>
-                    <span class="material-icons-round">
-                      park
-                      </span>
-                      <span>===</span>
-                      <span class="material-icons-round">
-                        forest
-                        </span>
+        <span class="material-icons-round"> forest </span>
+        <span>===</span>
+        <span class="material-icons-round"> park </span>
+        <span>===</span>
+        <span class="material-icons-round"> park </span>
+        <span>===</span>
+        <span class="material-icons-round"> forest </span>
+        <span>===</span>
+        <span class="material-icons-round"> forest </span>
+        <span>===</span>
+        <span class="material-icons-round"> park </span>
+        <span>===</span>
+        <span class="material-icons-round"> park </span>
+        <span>===</span>
+        <span class="material-icons-round"> forest </span>
       </div>
     </div>
     <div class="designpart">
@@ -655,7 +649,12 @@
     </div>
     <section class="resumeform">
       <form action="<%= url%>/resumeCreate" method="post" id="myForm">
-        <input type="text" name="username" style="display: none;" value="<%= imgUsername %>">
+        <input
+          type="text"
+          name="username"
+          style="display: none"
+          value="<%= imgUsername %>"
+        />
         <span class="formsection">
           <span class="content">
             <span class="sectionheading">Heading</span>
@@ -843,7 +842,14 @@
             </span>
             <span class="formspan">
               <span class="inputfield">
-                <input type="text" name="ScCourseDesc" id="ScCourseDesc" class="inputf fullwidth" required placeholder="Class/Course Description (ex: Class 10 (SSC))">
+                <input
+                  type="text"
+                  name="ScCourseDesc"
+                  id="ScCourseDesc"
+                  class="inputf fullwidth"
+                  required
+                  placeholder="Class/Course Description (ex: Class 10 (SSC))"
+                />
                 <span class="label">Class/Course Description</span>
               </span>
             </span>
@@ -925,7 +931,14 @@
             </span>
             <span class="formspan">
               <span class="inputfield">
-                <input type="text" name="IntCourseDesc" id="IntCourseDesc" class="inputf fullwidth" required placeholder="Class/Course Description (ex: Class 12/Diploma)">
+                <input
+                  type="text"
+                  name="IntCourseDesc"
+                  id="IntCourseDesc"
+                  class="inputf fullwidth"
+                  required
+                  placeholder="Class/Course Description (ex: Class 12/Diploma)"
+                />
                 <span class="label">Class/Course Description</span>
               </span>
             </span>
@@ -1006,7 +1019,14 @@
             </span>
             <span class="formspan">
               <span class="inputfield">
-                <input type="text" name="ColCourseDesc" id="ColCourseDesc" class="inputf fullwidth" required placeholder="Class/Course Description (ex: B-Tech (CSE))">
+                <input
+                  type="text"
+                  name="ColCourseDesc"
+                  id="ColCourseDesc"
+                  class="inputf fullwidth"
+                  required
+                  placeholder="Class/Course Description (ex: B-Tech (CSE))"
+                />
                 <span class="label">Class/Course Description</span>
               </span>
             </span>
@@ -1063,8 +1083,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
           <span class="content">
             <span class="sectionheading">Experience</span>
             <span class="sublabel">Interships</span>
-            <span id="internshipdata">
-            </span>
+            <span id="internshipdata"> </span>
             <span class="buttons3">
               <button type="button" class="socialbutton" id="sb4">
                 <span class="material-icons"> add_circle_outline </span>
@@ -1344,7 +1363,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
             <span class="sectionheading">Themes</span>
             <span class="sublabel">Select a Theme</span>
             <span class="formspan2">
-              <% for(var i=1;i<=1;i++){ %>
+              <% for(var i=1;i<=2;i++){ %>
               <input
                 type="radio"
                 name="theme"
@@ -1354,11 +1373,17 @@ A hardworking and passionate job seeker with strong organizational skills eager 
                 required
               />
               <label for="theme<%=i%>"
-                ><img src="../images/themes/theme1.png" alt="theme"
+                ><img src="../images/themes/theme<%=i%>.png" alt="theme"
               /></label>
               <% } %>
             </span>
-            <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
+            <textarea
+              type="hidden"
+              name="token"
+              id="token"
+              value="<%= token %>"
+              style="display: none"
+            ></textarea>
             <span class="buttons">
               <button type="button" class="buttonf" id="pre6">Back</button>
               <button type="submit" class="buttonf" id="nex6">Submit</button>
@@ -1371,39 +1396,27 @@ A hardworking and passionate job seeker with strong organizational skills eager 
       <div class="formstatus">
         <div class="statusitems">
           <div class="statusboxes">
-            <span class="material-icons-round sideicons">
-              person
-              </span>
+            <span class="material-icons-round sideicons"> person </span>
             <div class="statuscontent">Heading</div>
           </div>
           <div class="statusboxes">
-            <span class="material-icons-round sideicons">
-              school
-              </span>
+            <span class="material-icons-round sideicons"> school </span>
             <div class="statuscontent">Education</div>
           </div>
           <div class="statusboxes">
-            <span class="material-icons-round sideicons">
-              emoji_events
-              </span>
+            <span class="material-icons-round sideicons"> emoji_events </span>
             <div class="statuscontent">Skills</div>
           </div>
           <div class="statusboxes">
-            <span class="material-icons-round sideicons">
-              construction
-              </span>
+            <span class="material-icons-round sideicons"> construction </span>
             <div class="statuscontent">Experience</div>
           </div>
           <div class="statusboxes">
-            <span class="material-icons-round sideicons">
-              add_circle
-              </span>
+            <span class="material-icons-round sideicons"> add_circle </span>
             <div class="statuscontent">Others</div>
           </div>
           <div class="statusboxes">
-            <span class="material-icons-round sideicons">
-              grid_view
-              </span>
+            <span class="material-icons-round sideicons"> grid_view </span>
             <div class="statuscontent">Themes</div>
           </div>
         </div>
@@ -1414,9 +1427,10 @@ A hardworking and passionate job seeker with strong organizational skills eager 
       </div>
     </section>
     <script>
-      var formfooter=document.querySelector(".formfooter");
-      var myresume=document.querySelector(".myresume");
+      var formfooter = document.querySelector(".formfooter");
+      var myresume = document.querySelector(".myresume");
       var inputs = document.querySelectorAll(".inputf");
+      var coding = document.querySelectorAll(".coding");
       var sb1 = document.getElementById("sb1");
       var sb2 = document.getElementById("sb2");
       var sb3 = document.getElementById("sb3");
@@ -1465,12 +1479,18 @@ A hardworking and passionate job seeker with strong organizational skills eager 
       var propo = 0;
       var achpo = 0;
       var extpo = 0;
-      var arr=["person","school","emoji_events","construction","add_circle","grid_view"]
+      var arr = [
+        "person",
+        "school",
+        "emoji_events",
+        "construction",
+        "add_circle",
+        "grid_view",
+      ];
       ss1.style.display = "none";
       ss2.style.display = "none";
       ss3.style.display = "none";
       myForm.style.height = fs1.clientHeight + "px";
-      myresume.style.left=formfooter.clientWidth+30+"px"
       nex1.onclick = function () {
         a = true;
         for (var i = 0; i < 7; i++) {
@@ -1816,7 +1836,20 @@ A hardworking and passionate job seeker with strong organizational skills eager 
         inpo += 1;
         intern.insertAdjacentHTML(
           "beforeend",
-          '<span class="formspan"><span class="inputfield"><input type="text" name="IntershipName' +inpo+'" placeholder="Intership Name" class="inputf Interships intertrio" required><span class="label">Intership Name</span></span><span class="inputfield"><input type="text" name="CompanyName' +inpo +'" placeholder="Company Name" class="inputf Interships intertrio" required><span class="label">Company Name</span></span><span class="inputfield"><input type="url" name="CetificateURL' +inpo +'" placeholder="Certificate URL" class="inputf Interships intertrio" required><span class="label">Certificate URL</span></span></span><span class="formspan"><span class="inputfield"><textarea name="InternDesc' +inpo +'" cols="50" rows="3" class="inputf Interships InternDesc" placeholder="Intership Description (Start typing from here...)" required maxlength="100"></textarea><span class="label">Internship Description</span></span></span><span class="formspan"><span class="inputfield"><input type="month" name="InternDateofStart' +inpo +'" placeholder="Start Date" class="inputf Interships" required><span class="label">Start Date</span></span><span class="inputfield"><input type="month" name="InternDateofEnd' +inpo +'" placeholder="End Date" class="inputf Interships" required><span class="label">End Date</span></span></span>');
+          '<span class="formspan"><span class="inputfield"><input type="text" name="IntershipName' +
+            inpo +
+            '" placeholder="Intership Name" class="inputf Interships intertrio" required><span class="label">Intership Name</span></span><span class="inputfield"><input type="text" name="CompanyName' +
+            inpo +
+            '" placeholder="Company Name" class="inputf Interships intertrio" required><span class="label">Company Name</span></span><span class="inputfield"><input type="url" name="CetificateURL' +
+            inpo +
+            '" placeholder="Certificate URL" class="inputf Interships intertrio" required><span class="label">Certificate URL</span></span></span><span class="formspan"><span class="inputfield"><textarea name="InternDesc' +
+            inpo +
+            '" cols="50" rows="3" class="inputf Interships InternDesc" placeholder="Intership Description (Start typing from here...)" required maxlength="100"></textarea><span class="label">Internship Description</span></span></span><span class="formspan"><span class="inputfield"><input type="month" name="InternDateofStart' +
+            inpo +
+            '" placeholder="Start Date" class="inputf Interships" required><span class="label">Start Date</span></span><span class="inputfield"><input type="month" name="InternDateofEnd' +
+            inpo +
+            '" placeholder="End Date" class="inputf Interships" required><span class="label">End Date</span></span></span>'
+        );
         myForm.style.height = fs4.clientHeight + "px";
         cl3.style.display = "block";
       };
@@ -1859,9 +1892,146 @@ A hardworking and passionate job seeker with strong organizational skills eager 
         myForm.style.height = fs5.clientHeight + "px";
         cl6.style.display = "block";
       };
+
+      //Filling the form with existing data in database
+      ("<% if(data){%>");
+      ("<% var socialgetarr=['','','','','','']%>");
+      ("<% var j=0%>");
+      ("<% for(var i=0;i<data.personalInfo.socials.length;i++){%>");
+      ("<% socialgetarr[j]=data.personalInfo.socials[i][0] %>");
+      ("<% socialgetarr[j+1]=data.personalInfo.socials[i][1]%>");
+      ("<% j=j+2 }%>");
+      ("<% var mygetarr=[data.personalInfo.firstName, data.personalInfo.lastName, data.personalInfo.city, data.personalInfo.country, data.personalInfo.pinCode, data.personalInfo.phoneNumber, data.personalInfo.emailId, socialgetarr[0], socialgetarr[1], socialgetarr[2], socialgetarr[3], socialgetarr[4], socialgetarr[5], data.educationalInfo.schoolName, data.educationalInfo.schoolLocation, data.educationalInfo.schoolPassingDate, data.educationalInfo.schoolScore, data.educationalInfo.schoolScoreType, data.educationalInfo.schoolDesc, data.educationalInfo.interName, data.educationalInfo.interLocation, data.educationalInfo.interStartDate, data.educationalInfo.interPassingDate, data.educationalInfo.interScore, data.educationalInfo.interScoreType, data.educationalInfo.interDesc, data.educationalInfo.collegeName, data.educationalInfo.collegeLocation, data.educationalInfo.collegeStartDate, data.educationalInfo.collegePassingDate, data.educationalInfo.collegeScore, data.educationalInfo.collegeScoreType, data.educationalInfo.collegeDesc]%>");
+      ("<% for(var i=0;i<33;i++){%>");
+      inputs["<%=i%>"].value = "<%=mygetarr[i]%>";
+      ("<%}%>");
+      ("<% if(data.personalInfo.socials.length>0){%>");
+      sb1.click();
+      ("<% for(var i=7;i<13;i++){%>");
+      inputs["<%=i%>"].value = "<%=socialgetarr[i-7]%>";
+      ("<%}}%>");
+
+      ("<% if(data.personalSkills.length>0){%>");
+      ("<% for(var i=0;i<data.personalSkills.length;i++){ %>");
+      sb2.click();
+      ("<%}%>");
+      var Peskills = document.querySelectorAll(".Peskillname");
+      ("<% for(var i=0;i<data.personalSkills.length;i++){ %>");
+      ("<%var psgetval=6-data.personalSkills[i][1]%>");
+      document.getElementById("star<%=i+1%><%=psgetval%>").checked = "true";
+      Peskills["<%=i%>"].value = "<%=data.personalSkills[i][0]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.professionalSkills.length>0){%>");
+      ("<% for(var i=0;i<data.professionalSkills.length;i++){ %>");
+      sb3.click();
+      ("<%}%>");
+      var Prskills = document.querySelectorAll(".Prskillname");
+      ("<% for(var i=0;i<data.professionalSkills.length;i++){ %>");
+      ("<%var psgetval=6-data.professionalSkills[i][1]%>");
+      document.getElementById("star1<%=i+1%><%=psgetval%>").checked = "true";
+      Prskills["<%=i%>"].value = "<%=data.professionalSkills[i][0]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.internshipInfo.internshipName.length>0){%>");
+      ("<% var interngetarr=[]%>");
+      ("<% for(var i=0;i<data.internshipInfo.internshipName.length;i++){ %>");
+      ("<% interngetarr.push(data.internshipInfo.internshipName[i])%>");
+      ("<% interngetarr.push(data.internshipInfo.internshipCompanyName[i])%>");
+      ("<% interngetarr.push(data.internshipInfo.internshipCertificate[i])%>");
+      ("<% interngetarr.push(data.internshipInfo.internshipDesc[i])%>");
+      ("<% interngetarr.push(data.internshipInfo.internshipStartDate[i])%>");
+      ("<% interngetarr.push(data.internshipInfo.internshipEndDate[i])%>");
+      sb4.click();
+      ("<%}%>");
+      var Interships = document.querySelectorAll(".Interships");
+      ("<% for(var i=0;i<interngetarr.length;i++){%>");
+      Interships["<%=i%>"].value = "<%=interngetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.projects.length>0){ %>");
+      ("<% var projgetarr=[]%>");
+      ("<% for(var i=0;i<data.projects.length;i++){ %>");
+      ("<% projgetarr.push(data.projects[i][0]) %>");
+      ("<% projgetarr.push(data.projects[i][1]) %>");
+      ("<% projgetarr.push(data.projects[i][2]) %>");
+      sb5.click();
+      ("<%}%>");
+      var Projects = document.querySelectorAll(".Projects");
+      ("<%for(var i=0;i<projgetarr.length;i++){%>");
+      Projects["<%=i%>"].value = "<%=projgetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.codingProfilesInfo.codeChefURL || data.codingProfilesInfo.codeForcesURL || data.codingProfilesInfo.hackerRankURL || data.codingProfilesInfo.geeksForGeeksURL || data.codingProfilesInfo.InterviewBitURL || data.codingProfilesInfo.leetCodeURL || data.codingProfilesInfo.spojURL){%>");
+      ("<% if(data.codingProfilesInfo.codeChefURL){%>");
+      coding[0].value = "<%=data.codingProfilesInfo.codeChefUsername%>";
+      coding[1].value = "<%=data.codingProfilesInfo.codeChefURL%>";
+      coding[2].value = "<%=data.codingProfilesInfo.codeChefRating%>";
+      ("<%}%>");
+      ("<% if(data.codingProfilesInfo.hackerRankURL){ %>");
+      coding[3].value = "<%=data.codingProfilesInfo.hackerRankUsername%>";
+      coding[4].value = "<%=data.codingProfilesInfo.hackerRankURL%>";
+      coding[5].value = "<%=data.codingProfilesInfo.hackerRankBadges%>";
+      ("<%}%>");
+      ("<% if(data.codingProfilesInfo.codeForcesURL){ %>");
+      coding[6].value = "<%=data.codingProfilesInfo.codeForcesUsername%>";
+      coding[7].value = "<%=data.codingProfilesInfo.codeForcesURL%>";
+      coding[8].value = "<%=data.codingProfilesInfo.codeForcesRating%>";
+      ("<%}%>");
+      ("<% if(data.codingProfilesInfo.geeksForGeeksURL){ %>");
+      coding[9].value = "<%=data.codingProfilesInfo.geeksForGeeksUsername%>";
+      coding[10].value = "<%=data.codingProfilesInfo.geeksForGeeksURL%>";
+      coding[11].value = "<%=data.codingProfilesInfo.geeksForGeeksScore%>";
+      ("<%}%>");
+      ("<% if(data.codingProfilesInfo.interViewBitURL){ %>");
+      coding[12].value = "<%=data.codingProfilesInfo.interViewBitUsername%>";
+      coding[13].value = "<%=data.codingProfilesInfo.interViewBitURL%>";
+      coding[14].value = "<%=data.codingProfilesInfo.interViewBitScore%>";
+      ("<%}%>");
+      ("<% if(data.codingProfilesInfo.leetCodeURL){ %>");
+      coding[15].value = "<%=data.codingProfilesInfo.leetCodeUsername%>";
+      coding[16].value = "<%=data.codingProfilesInfo.leetCodeURL%>";
+      coding[17].value = "<%=data.codingProfilesInfo.leetCodeProblems%>";
+      ("<%}%>");
+      ("<% if(data.codingProfilesInfo.spojURL){ %>");
+      coding[18].value = "<%=data.codingProfilesInfo.spojUsername%>";
+      coding[19].value = "<%=data.codingProfilesInfo.spojURL%>";
+      coding[20].value = "<%=data.codingProfilesInfo.spojProblems%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.achievements.length>0){ %>");
+      ("<% var achgetarr=[]%>");
+      ("<% for(var i=0;i<data.achievements.length;i++){ %>");
+      sb6.click();
+      ("<% achgetarr.push(data.achievements[i][0])%>");
+      ("<% achgetarr.push(data.achievements[i][1])%>");
+      ("<%}%>");
+      var Achievements = document.querySelectorAll(".Achievements");
+      ("<% for(var i=0;i<achgetarr.length;i++){%>");
+      Achievements["<%=i%>"].value = "<%=achgetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.extraCurricular.length>0){ %>");
+      ("<% for(var i=0;i<data.extraCurricular.length;i++){ %>");
+      sb7.click();
+      ("<%}%>");
+      var EActivity = document.querySelectorAll(".EActivity");
+      ("<% for(var i=0;i<data.extraCurricular.length;i++){ %>");
+      EActivity["<%=i%>"].value = "<%=data.extraCurricular[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+      ("<%}%>");
+      myForm.style.height = fs1.clientHeight + "px";
+      myresume.style.left = formfooter.clientWidth +10+"px";
     </script>
     <script>
       document.getElementById("token").value = "<%= token %>";
-  </script>
+    </script>
   </body>
 </html>

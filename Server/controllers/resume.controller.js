@@ -163,7 +163,7 @@ exports.create  = (req,res) => {
         {
             $set: {
                 resumeId: req.body.username,
-                themeId: req.body.themeId,
+                themeId: req.body.theme,
                 personalSkills : personalSkillsArray,
                 professionalSkills : professionalSkillsArray,
                 projects : projectsArray,
@@ -179,7 +179,7 @@ exports.create  = (req,res) => {
         { upsert: true }
     )
     .then((resume) => {
-        res.status(200).send(resume);
+        res.status(200).send("Your Resume is Created! Go Back and click on My Resume");
     })
     .catch((err) => {
         return res.status(500).send({
