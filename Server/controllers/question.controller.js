@@ -17,9 +17,17 @@ exports.create = (req, res) => {
 
   Question.find()
     .then((questions) => {
-      let currQuestions = questions.length + 1;
+      var currQuestions = questions[0].CountValue + 1;
       req.body.questionId = "IARE" + currQuestions.toString();
-
+      Question.findOneAndUpdate({questionId:questions[0].questionId},{$set:{CountValue:currQuestions}})
+      .then()
+      .catch((err) => {
+        res.status(500).send({
+          success: false,
+          message:
+            err.message || "Some error occurred while retrieving questions.",
+        });
+      })
       // Create a Question
       const question = new Question({
         questionId: req.body.questionId,

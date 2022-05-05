@@ -31,6 +31,7 @@ var questionSchema = new Schema({
   conceptLevel: String,
   company: Array,
   topic: Array,
+  CountValue:Number,
 });
 
 module.exports = mongoose.model("Question", questionSchema);
