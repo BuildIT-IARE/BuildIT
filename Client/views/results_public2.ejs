@@ -107,6 +107,7 @@ function close_window() {
     <tr>
       <th>Roll No</th>
       <th>Total Score</th>
+      <th>Branch</th>
     </tr>
   <% for(let i=0; i < datap.length; i++){ %>    
       <tr>
@@ -120,6 +121,7 @@ function close_window() {
         <% } %>
 
         <td><%= k %></td>
+        <td><%= datap[i].branch %></td>
       </tr>
   <% } %>
   </table>

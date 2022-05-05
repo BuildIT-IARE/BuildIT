@@ -16,6 +16,13 @@ exports.create = (req, res) => {
     });
   }
 
+  if (!req.body.branch && req.body.username !== "admin") {
+    return res.status(400).send({
+      success: false,
+      message: "user Branch can not be empty",
+    });
+  }
+
   if (!req.body.contestId) {
     return res.status(400).send({
       success: false,
@@ -41,6 +48,7 @@ exports.create = (req, res) => {
           const participation = new Participation({
             participationId: req.body.username + req.body.contestId,
             username: req.body.username,
+            branch: req.body.branch,
             contestId: req.body.contestId,
             participationTime: date,
             submissionResults: [],

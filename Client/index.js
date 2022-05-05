@@ -1480,6 +1480,7 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
         },
         body: {
           contestId: req.params.contestId,
+          branch: req.cookies.branch? req.cookies.branch: "",
         },
         json: true,
       };
