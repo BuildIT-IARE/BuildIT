@@ -236,39 +236,12 @@ body {
 #menu-open{
   color: white;
 }
-.footer-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
 .bg-light {
   padding-top: 20px;
   padding-bottom: 20px;
   background-color: #f7f7f7;
 }
-.footer-social {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.footer-social-elements {
-  width: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.footer-social-elements p {
-  font-family: poppins;
-  font-size: large;
-  color: rgb(54, 54, 54);
-}
-.footer-social-elements a {
-  text-decoration: none;
-  color: rgb(63, 63, 63);
-  font-size: larger;
-}
+
 .line2 {
   width: 95vw;
   margin-left: 2.5vw;
@@ -277,40 +250,6 @@ body {
   border-radius: 1mm;
   margin-top: 10px;
   margin-bottom: 20px;
-}
-.footer-section a:hover {
-  color: rgb(34, 34, 34);
-}
-.footer-left {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-.footer-right {
-  width: 20%;
-  align-items: center;
-  justify-content: center;
-}
-.footer-left-titles a {
-  text-decoration: none;
-  font-family: poppins;
-  font-size: x-large;
-  color: rgb(54, 54, 54);
-  font-weight: 600;
-}
-.footer-left-links a {
-  text-decoration: none;
-  font-family: poppins;
-  font-size: 14px;
-  color: rgb(97, 97, 97);
-}
-.footer-right p {
-  font-family: poppins;
-  font-size: 14px;
-  color: rgb(97, 97, 97);
-  width: 100%;
-  text-align: center;
 }
 .title-section {
   width: 100%;

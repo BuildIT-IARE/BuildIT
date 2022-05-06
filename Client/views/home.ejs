@@ -19,7 +19,6 @@
 
   <!-- Main Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
-  
   <!--Favicon-->
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
   <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
@@ -155,8 +154,11 @@
   <input type="text" name="month" id="month">
   <input type="text" name="time" id="time">
   <input type="text" name="username" id="username">
+  <input type="text" id="ip" name="ip" style="display: none" />
 </form>
 <script>
+
+
   const countApiKey = "<%= countApiKey %>"
   const googleSheetsApi = "<%= googleSheetsApi %>"
   var formdate=document.getElementById("date")
@@ -187,12 +189,19 @@
       });
   }
   counters();
+  fetch("https://api.ipify.org/?format=json")
+.then(results=>results.json())
+.then(data=>{
+  document.getElementById("ip").value=data.ip
   const scriptURL ="https://script.google.com/macros/s/"+googleSheetsApi;
   const form = document.forms["google-sheet"];
   fetch(scriptURL, { method: "POST", body: new FormData(form) })
     .then()
     .catch((error) => console.error("Error!", error.message));
+})
+
 </script>
+
 <script src="js/script.js"></script>
 
 </body>
