@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     app.post("/resumeCreate",resume.create);
 
-    // app.get("/allresumes",middleware.checkToken,resume.findAll);
+    app.get("/allResumes",middleware.checkTokenAdmin,resume.findAll);
 
     app.get("/MyResume/:username",middleware.checkToken,resume.findOne);
 }

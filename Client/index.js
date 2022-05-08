@@ -50,6 +50,7 @@ app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
 app.use("/admin/contentDevProgress", express.static(__dirname + "/"));
 app.use("/admin/deletequestions/multiple", express.static(__dirname + "/"));
 app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
+app.use("/admin/viewResumes", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
@@ -2490,9 +2491,9 @@ app.get('/resume',checkSignIn,async(req,res)=>{
   })
   
 })
-app.get("/MyResume",checkSignIn,async(req,res)=>{
+app.get("/MyResume/:username",checkSignIn,async(req,res)=>{
   let options = {
-    url: serverRoute + "/MyResume/"+req.cookies.username,
+    url: serverRoute + "/MyResume/"+req.params.username,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -2511,6 +2512,29 @@ app.get("/MyResume",checkSignIn,async(req,res)=>{
   });}
   });
 })
+
+app.get("/admin/viewResumes", async (req, res) => {
+  let options = {
+    url: serverRoute + "/allResumes",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    body.url = clientRoute;
+    body.serverurl = serverRoute;
+    for (let i = 0; i < body.length; i++) {
+      body[i].branch = body[i].educationalInfo.collegeDesc;
+      body[i].firstName = body[i].personalInfo.firstName;
+      body[i].lastName = body[i].personalInfo.lastName;
+      // console.log(body[i]);
+    }
+    res.render("viewResumes", { data: body});
+  });
+});
+
 app.get("*", async (req, res) => {
   res.render("404page");
 });
