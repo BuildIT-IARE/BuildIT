@@ -76,6 +76,7 @@
         <button class="nav-btn2" onclick="navslide()"><a href="/tutorials">Tutorials <span class="material-icons">arrow_forward<span></span></a></button>
         <button class="nav-btn2" onclick="navslide()"><a href="/qualifier_tests">Qualifier Test <span class="material-icons">arrow_forward<span></span></a></button>
         <button class="nav-btn2" onclick="navslide()"><a href="/resume">Resume Builder <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="/MyResume">My Resume <span class="material-icons">arrow_forward<span></span></a></button>
         <button class="nav-btn2" onclick="navslide()"><a href="/profile">Profile <span class="material-icons">arrow_forward<span></span></a></button>
         <button class="nav-btn2" onclick="navslide()"><a href="/logout">Logout <span class="material-icons">arrow_forward<span></span></a></button>
         <% } else { %>
@@ -99,6 +100,7 @@
       var mop = document.getElementById("menu-open");
       var mcl = document.getElementById("menu-close");
       var chna2 = document.querySelector(".chapter-navigation2");
+      chna2.style.transform = "translateX(101vw)";
       function navslide() {
         chna2.style.transform = "translateX(101vw)";
       }
