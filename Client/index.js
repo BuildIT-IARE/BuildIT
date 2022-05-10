@@ -2557,6 +2557,26 @@ app.get("/admin/viewResumes", async (req, res) => {
       {
         body[i].branch = "CSE";
       }
+      else if(branch == '66')
+      {
+        body[i].branch = "CSE AIML";
+      }
+      else if(branch == '67')
+      {
+        body[i].branch = "CSE DS";
+      }
+      else if(branch == '62')
+      {
+        body[i].branch = "CSE CS";
+      }
+      else if(branch == '33')
+      {
+        body[i].branch = "CSE IT";
+      }
+      else
+      {
+        body[i].branch = "INVALID";
+      }
     }
     res.render("viewResumes", { data: body});
   });
