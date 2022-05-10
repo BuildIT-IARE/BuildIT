@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Manage Users</title>
+    <title>Resumes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="../css/navadmin.css" />
@@ -184,7 +184,7 @@
               <th>No</th>
               <th>Username</th>
               <th>Name</th>
-              <!-- <th>Branch</th> -->
+              <th>Branch</th>
               <th>Resume</th>
             </tr>
           </thead>
@@ -195,10 +195,11 @@
               <td><%= i+1 %></td>
               <td><%= data[i].resumeId %></td>
               <td><%= data[i].firstName  %> <%= data[i].lastName  %></td>
-              <!-- <td><%= data[i].branch %></td> -->
+              <td><%= data[i].branch %></td>
               <td>
                 <a
                   href="<%= data[i].url %>/MyResume/<%= data[i].resumeId %>"
+                  target="_blank"
                   >View Resume</a
                 >
               </td>
@@ -211,7 +212,7 @@
               <th>No</th>
               <th>Username</th>
               <th>Name</th>
-              <!-- <th>Branch</th> -->
+              <th>Branch</th>
               <th>Resume</th>
             </tr>
           </tfoot>

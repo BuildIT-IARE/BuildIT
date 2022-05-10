@@ -2526,10 +2526,37 @@ app.get("/admin/viewResumes", async (req, res) => {
     body.url = clientRoute;
     body.serverurl = serverRoute;
     for (let i = 0; i < body.length; i++) {
-      body[i].branch = body[i].educationalInfo.collegeDesc;
       body[i].firstName = body[i].personalInfo.firstName;
       body[i].lastName = body[i].personalInfo.lastName;
-      // console.log(body[i]);
+      var branch = body[i].resumeId.substring(6,8);
+      if(branch == '05')
+      {
+        body[i].branch = "CSE";
+      }
+      else if(branch == '12')
+      {
+        body[i].branch = "IT";
+      }
+      else if(branch == '04')
+      {
+        body[i].branch = "ECE";
+      }
+      else if(branch == '01')
+      {
+        body[i].branch = "CIV";
+      }
+      else if(branch == '02')
+      {
+        body[i].branch = "EEE";
+      }
+      else if(branch == '03')
+      {
+        body[i].branch = "ME";
+      }
+      else if(branch == '21')
+      {
+        body[i].branch = "CSE";
+      }
     }
     res.render("viewResumes", { data: body});
   });
