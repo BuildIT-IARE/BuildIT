@@ -2473,7 +2473,7 @@ app.get("/userSession/:sessionId", (req, res) => {
 });
 app.get('/resume',checkSignIn,async(req,res)=>{
   let options = {
-    url: serverRoute + "/MyResume/"+req.cookies.username,
+    url: serverRoute + "/resume/"+req.cookies.username,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -2491,9 +2491,9 @@ app.get('/resume',checkSignIn,async(req,res)=>{
   })
   
 })
-app.get("/MyResume/:username",checkSignIn,async(req,res)=>{
+app.get("/resume/:username",checkSignIn,async(req,res)=>{
   let options = {
-    url: serverRoute + "/MyResume/"+req.params.username,
+    url: serverRoute + "/resume/"+req.params.username,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -2515,7 +2515,7 @@ app.get("/MyResume/:username",checkSignIn,async(req,res)=>{
 
 app.get("/admin/viewResumes", async (req, res) => {
   let options = {
-    url: serverRoute + "/allResumes",
+    url: serverRoute + "/resumes",
     method: "get",
     headers: {
       authorization: req.cookies.token,
