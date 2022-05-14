@@ -27,3 +27,5 @@ Credits
 - Krishna Chandra Boyapati (@JethroGibbsN)
 - Abubakar Jaleel (@focusblast)
 - Mohammed Talha (@nightsailor)
+- Jayanth Naidu (@noobguy77)
+- Avinash Vytla (@Avinashvytla351)
