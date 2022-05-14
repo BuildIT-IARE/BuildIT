@@ -50,6 +50,7 @@ app.use("/admin/unverifiedusers", express.static(__dirname + "/"));
 app.use("/admin/contentDevProgress", express.static(__dirname + "/"));
 app.use("/admin/deletequestions/multiple", express.static(__dirname + "/"));
 app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
+app.use("/admin/viewResumes", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
 
@@ -2472,7 +2473,7 @@ app.get("/userSession/:sessionId", (req, res) => {
 });
 app.get('/resume',checkSignIn,async(req,res)=>{
   let options = {
-    url: serverRoute + "/MyResume/"+req.cookies.username,
+    url: serverRoute + "/resume/"+req.cookies.username,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -2490,9 +2491,9 @@ app.get('/resume',checkSignIn,async(req,res)=>{
   })
   
 })
-app.get("/MyResume",checkSignIn,async(req,res)=>{
+app.get("/resume/:username",checkSignIn,async(req,res)=>{
   let options = {
-    url: serverRoute + "/MyResume/"+req.cookies.username,
+    url: serverRoute + "/resume/"+req.params.username,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -2511,6 +2512,76 @@ app.get("/MyResume",checkSignIn,async(req,res)=>{
   });}
   });
 })
+
+app.get("/admin/viewResumes", async (req, res) => {
+  let options = {
+    url: serverRoute + "/resumes",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    body.url = clientRoute;
+    body.serverurl = serverRoute;
+    for (let i = 0; i < body.length; i++) {
+      body[i].firstName = body[i].personalInfo.firstName;
+      body[i].lastName = body[i].personalInfo.lastName;
+      var branch = body[i].resumeId.substring(6,8);
+      if(branch == '05')
+      {
+        body[i].branch = "CSE";
+      }
+      else if(branch == '12')
+      {
+        body[i].branch = "IT";
+      }
+      else if(branch == '04')
+      {
+        body[i].branch = "ECE";
+      }
+      else if(branch == '01')
+      {
+        body[i].branch = "CIV";
+      }
+      else if(branch == '02')
+      {
+        body[i].branch = "EEE";
+      }
+      else if(branch == '03')
+      {
+        body[i].branch = "ME";
+      }
+      else if(branch == '21')
+      {
+        body[i].branch = "CSE";
+      }
+      else if(branch == '66')
+      {
+        body[i].branch = "CSE AIML";
+      }
+      else if(branch == '67')
+      {
+        body[i].branch = "CSE DS";
+      }
+      else if(branch == '62')
+      {
+        body[i].branch = "CSE CS";
+      }
+      else if(branch == '33')
+      {
+        body[i].branch = "CSE IT";
+      }
+      else
+      {
+        body[i].branch = "INVALID";
+      }
+    }
+    res.render("viewResumes", { data: body});
+  });
+});
+
 app.get("*", async (req, res) => {
   res.render("404page");
 });
