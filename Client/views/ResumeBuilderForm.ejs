@@ -563,7 +563,7 @@
         font-size: larger;
         position: fixed;
         top: 10px;
-        left: 0px;
+        left: -100px;
         padding: 8px 15px;
         border-radius: 8mm;
         box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.308);
@@ -1363,7 +1363,18 @@ A hardworking and passionate job seeker with strong organizational skills eager 
             <span class="sectionheading">Themes</span>
             <span class="sublabel">Select a Theme</span>
             <span class="formspan2">
-              <% for(var i=1;i<=3;i++){ %>
+              <input
+                type="radio"
+                name="theme"
+                id="theme1"
+                value="theme1"
+                class="themes"
+                required
+                checked              />
+              <label for="theme1"
+                ><img src="../images/themes/theme1.png" alt="theme"
+              /></label>
+              <% for(var i=2;i<=3;i++){ %>
               <input
                 type="radio"
                 name="theme"
