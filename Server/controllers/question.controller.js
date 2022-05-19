@@ -256,17 +256,6 @@ exports.addSetGivenQIdArray = (req, res) => {
       .then((question) => {
         if (question.length !== 0) {
           set.push(questionIds[i]);
-
-          if (question[0].contestId !== req.params.contestId) {
-            question = question[0]._doc;
-            delete question._id;
-            delete question.__v;
-            question.contestId = req.params.contestId;
-
-            let newQuestion = new Question({ ...question });
-            newQuestion.save();
-          }
-
           if (i === NO_OF_QUESTION_ID - 1) updateSet();
         }
       })
@@ -284,7 +273,7 @@ exports.addSetGivenQIdArray = (req, res) => {
       if (err) {
         res.send({ success: false, message: "Error occured" });
       }
-      let sets = contest.sets;
+      let sets = req.body.randomQuestion === "true" ? [] : contest.sets;
       if (contest.sets) {
         sets.push(set);
       }
@@ -710,13 +699,30 @@ exports.findAllContest = async (req, res) => {
           res.send({ success: false, message: "Error occured" });
         }
 
-        if (participation.questions.length === 0) {
-          let result = await findSet(contest, null);
+        if (participation.questions.length !== 0) {
+          const result = await findSet(participation.questions);
           return result;
         }
 
-        const result = await findSet(contest, participation.questions);
-        return result;
+        let sets = contest.sets;
+        let questionIds = [];
+        let index, i;
+        for (i = 0; i < contest.sets.length; i++) {
+          let index = Math.floor(Math.random() * sets[i].length);
+          questionIds[i] = sets[i][index];
+        }
+
+        participations.updateParticipation(
+          req,
+          questionIds,
+          async (err, participation) => {
+            if (err) {
+              res.send({ success: false, message: "Error occured" });
+            }
+            let result = await findSet(questionIds);
+            return result;
+          }
+        );
       });
     } else {
       const result = await findContest();
@@ -724,60 +730,27 @@ exports.findAllContest = async (req, res) => {
     }
   });
 
-  const findSet = async (contest, questionArray) => {
-    return Question.find({ contestId: req.params.contestId })
+  const findSet = async (questionIdArray) => {
+    return Question.find({ questionId: { $in: questionIdArray } })
       .then(async (question) => {
         if (!question) {
           return res.status(404).send({
             success: false,
-            message: "Question not found with id " + req.params.questionId,
+            message: "Question not found with id " + req.params.contestId,
           });
         }
-
-        if (questionArray !== null) {
-          let questions = [];
-          let i;
-          questions = question.filter((question) =>
-            questionArray.includes(question.questionId)
-          );
-          res.send(questions);
-          return;
-        }
-
-        let sets = contest.sets;
-        let questionId = [];
-        let questions = [];
-        let index, i;
-        for (i = 0; i < contest.sets.length; i++) {
-          let index = Math.floor(Math.random() * sets[i].length);
-          questionId[i] = sets[i][index];
-        }
-        questions = question.filter((question) =>
-          questionId.includes(question.questionId)
-        );
-
-        participations.updateParticipation(
-          req,
-          questionId,
-          async (err, participation) => {
-            if (err) {
-              res.send({ success: false, message: "Error occured" });
-            }
-          }
-        );
-
-        res.send(questions);
+        res.send(question);
       })
       .catch((err) => {
         if (err.kind === "ObjectId") {
           return res.status(404).send({
             success: false,
-            message: "Question not found with id " + req.params.questionId,
+            message: "Question not found with id " + req.params.contestId,
           });
         }
         return res.status(500).send({
           success: false,
-          message: "Error retrieving question with id " + req.params.questionId,
+          message: "Error retrieving question with id " + req.params.contestId,
         });
       });
   };
@@ -788,7 +761,7 @@ exports.findAllContest = async (req, res) => {
         if (!question) {
           return res.status(404).send({
             success: false,
-            message: "Question not found with id " + req.params.questionId,
+            message: "Question not found with id " + req.params.contestId,
           });
         }
         res.send(question);
@@ -797,12 +770,12 @@ exports.findAllContest = async (req, res) => {
         if (err.kind === "ObjectId") {
           return res.status(404).send({
             success: false,
-            message: "Question not found with id " + req.params.questionId,
+            message: "Question not found with id " + req.params.contestId,
           });
         }
         return res.status(500).send({
           success: false,
-          message: "Error retrieving question with id " + req.params.questionId,
+          message: "Error retrieving question with id " + req.params.contestId,
         });
       });
   };
