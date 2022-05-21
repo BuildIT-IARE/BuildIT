@@ -1485,8 +1485,12 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
         },
         json: true,
       };
-
+      
       request(options1, function (err, response, body) {
+        if(!("success" in body) && body.success === false)
+        {
+          return res.render("error",{date:body});
+        }
         let options = {
           url: serverRoute + "/questions/contests/" + req.params.contestId,
           method: "get",

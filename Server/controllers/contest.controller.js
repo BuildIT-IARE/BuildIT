@@ -190,6 +190,7 @@ exports.findOneSet = async (req, callback) => {
       return callback(null, contest);
     })
     .catch((err) => {
+      console.log(err);
       if (err.kind === "ObjectId") {
         return callback("Contest not found", null);
       }
@@ -208,11 +209,11 @@ exports.updateOneSet = (req, sets, callback) => {
       },
     },
     { new: true },
-    (err, doc) => {
-      if (err) {
-        console.log("Error Occured");
-      }
-    }
+    // (err, doc) => {
+    //   if (err) {
+    //     console.log("Error Occured");
+    //   }
+    // }
   )
     .then((contest) => {
       if (!contest) {
@@ -222,6 +223,7 @@ exports.updateOneSet = (req, sets, callback) => {
       return callback(null, contest);
     })
     .catch((err) => {
+      console.log(err);
       if (err.kind === "ObjectId") {
         return callback("Contest not found", null);
       }
