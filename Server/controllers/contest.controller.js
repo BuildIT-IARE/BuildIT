@@ -190,7 +190,6 @@ exports.findOneSet = async (req, callback) => {
       return callback(null, contest);
     })
     .catch((err) => {
-      console.log(err);
       if (err.kind === "ObjectId") {
         return callback("Contest not found", null);
       }
@@ -223,7 +222,6 @@ exports.updateOneSet = (req, sets, callback) => {
       return callback(null, contest);
     })
     .catch((err) => {
-      console.log(err);
       if (err.kind === "ObjectId") {
         return callback("Contest not found", null);
       }

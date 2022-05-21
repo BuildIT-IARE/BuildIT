@@ -269,7 +269,6 @@ exports.addSetGivenQIdArray = (req, res) => {
   const updateSet = (set) => {
     contests.findOneSet(req, (err, contest) => {
       if (err) {
-        console.log(err);
         res.send({ success: false, message: "Error occured" });
       }
       let sets = contest.sets || [];
@@ -278,7 +277,6 @@ exports.addSetGivenQIdArray = (req, res) => {
       }
       contests.updateOneSet(req, sets, (err, contest1) => {
         if (err) {
-          console.log(err);
           res.send({ success: false, message: "Error occured" });
         }
         res.send("Done! Added to Set");
