@@ -2582,6 +2582,10 @@ app.get("/admin/viewResumes", async (req, res) => {
   });
 });
 
+app.get("/POTDReport", checkSignIn, async(req,res)=>{
+  res.render("potdReport",{imgUsername:req.cookies.username})
+})
+
 app.get("*", async (req, res) => {
   res.render("404page");
 });
