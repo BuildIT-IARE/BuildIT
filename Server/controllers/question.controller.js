@@ -241,39 +241,37 @@ exports.addSetGivenQIdArray = (req, res) => {
   let questionIdString = req.body.questionIdsString;
 
   let pattern = /[^A-Z&a-z&0-9]/;
-  let set = new Array();
-  let questionIds = new Array();
-
-  questionIds = questionIdString
+  let questionIds = questionIdString
     .split(",")
     .map((entry) => entry.trim())
     .filter((entry) => entry.match(pattern) === null);
 
-  let NO_OF_QUESTION_ID = questionIds.length;
-
-  for (let i = 0; i < NO_OF_QUESTION_ID; i++) {
-    Question.find({ questionId: questionIds[i] })
-      .then((question) => {
-        if (question.length !== 0) {
-          set.push(questionIds[i]);
-          if (i === NO_OF_QUESTION_ID - 1) updateSet();
-        }
-      })
-      .catch((err) => {
-        res.status(500).send({
+  Question.find({ questionId: { $in: questionIds } })
+    .then((question) => {
+      if (question.length === 0) {
+        return res.status(400).send({
           success: false,
-          message:
-            err.message || "Some error occurred while retrieving questions.",
+          message: "Question id does not exists!",
         });
-      });
-  }
+      }
 
-  const updateSet = () => {
+      let set = question.map((e) => e.questionId);
+      updateSet(set);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message:
+          err.message || "Some error occurred while retrieving questions.",
+      });
+    });
+
+  const updateSet = (set) => {
     contests.findOneSet(req, (err, contest) => {
       if (err) {
         res.send({ success: false, message: "Error occured" });
       }
-      let sets = req.body.randomQuestion === "true" ? [] : contest.sets;
+      let sets = contest.sets || [];
       if (contest.sets) {
         sets.push(set);
       }

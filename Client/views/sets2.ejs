@@ -8,7 +8,10 @@
 
     <!-- ** Plugins Needed for the Project ** -->
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="../plugins/bootstrap-5/css/bootstrap.min.css"
+    />
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="../../css/navadmin.css" />
@@ -17,159 +20,162 @@
     <link rel="shortcut icon" href="../favicon.ico" />
     <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
 
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+    />
 
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
     </style>
     <style>
-    body{
-      font-family: 'Roboto', sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.5;
-      color: #212529!important;
-      background-color: #fff;
-      -webkit-text-size-adjust: 100%;
-      -webkit-tap-highlight-color: transparent;
-    }
-    h1{
-      color: black;
-      line-height: normal;
-      text-align: center;
-      font-weight: 400;
-      font-size: 24px;
-    }
-    .main{
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-    .gn-menu-main{
-      flex: 1;
-    }
-    .header{
-      display: flex;
-      background-color: SlateBlue;
-      justify-content: center;
-      margin-top: 60px;
-      flex: 1;
-    }
-    .page{
-      display: flex;
-      flex-direction: column;
-      flex: 10;
-    }
-    .pageTop{
-      display: flex;
-      justify-content: center;
-      align-content: center;
-      flex: 1;
-    }
-    .pageCenter{
-      flex: 2;
-    }
-    .pageBottom{
-      flex: 6;
-    }
-    .searchBar{
-      display: flex;
-      /* border: 1px solid #ced4da; */
-      background-color: #fff;
-      align-items: center;
-      border-radius: 30px;
-      width: 33vw;
-      height: 37px;
-    }
-    .searchIcon{
-      font-size: 20px !important;
-      margin-left: 6vw;
-      cursor: pointer;
-    }
-    .searchInput{
-      margin-left: 10px;
-      width: 70%;
-    }
-    .searchInput > input[type="text"]{
-      border: none;
-      height: 35px;
-      font-size: 16px;
-    }
-    .searchInput > input:focus{
-      outline: none;
-    }
-    input, label{
-      margin: 5px;
-      color: #212529;
-    }
-    form {
-      padding: 0;
-      box-shadow: none;
-      background: inherit;
-    }
-    .btn{
-      background-color: dodgerblue;
-      margin: 15px 15px 15px 5px;
-    }
-    .bg-light {
-      background-color: #f8f9fa!important;
-    }
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529 !important;
+        background-color: #fff;
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .main {
+        display: flex;
+        flex-direction: column;
+        /* height: 100vh; */
+      }
+
+      .header {
+        display: flex;
+        /* background-color: SlateBlue; */
+        justify-content: center;
+        margin-top: 60px;
+      }
+
+      /* ==-====-===-==== */
+
+      .box {
+        width: 98%;
+        /* height: 58px; */
+        height: auto;
+        background-color: #fff;
+        margin: 20px auto;
+        box-shadow: 0 2px 33px rgba(0, 0, 0, 0.22);
+      }
+
+      .search-bar {
+        width: 55%;
+        margin: 40px auto;
+        line-height: 56px;
+        position: relative;
+      }
+
+      .sinput[type="text"] {
+        margin-top: 13.1px;
+        width: 89%;
+        height: 33px;
+        padding: 0 10px;
+        color: #000;
+        border: 1px solid #bebebe;
+        border-radius: 2px 0 0 2px;
+        z-index: 2;
+      }
+
+      .sinput:focus {
+        border: 1.1px solid #1c62b9;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+      }
+
+      .sbutton {
+        position: absolute;
+        width: 11%;
+        height: 33px;
+        border: 1px solid #bebebe;
+        border-left: 0;
+        top: 14px;
+        right: 0;
+        border-radius: 0px 2px 2px 0;
+        cursor: pointer;
+        font-size: 14px;
+        text-align: center;
+        background-color: #f0f0f0;
+        z-index: 1;
+      }
+
+      .sbutton i {
+        opacity: 0.5;
+        transition: all 0.07s ease-in-out;
+      }
+
+      .sbutton:hover i {
+        opacity: 0.95;
+      }
+
+      .sbutton:hover {
+        background-color: #e4e4e4;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15),
+          inset 0 0 2px rgba(0, 0, 0, 0.05);
+        transition: all 0.07s ease-in-out;
+      }
+
+      /* ==-====-===-==== */
+      form {
+        box-shadow: none;
+      }
     </style>
   </head>
+
   <body>
     <div class="main">
       <% include ../views/partials/adminpanel %>
-      <div class="header">
+      <div class="header bg-secondary">
         <header>
-          <h1>Manage Multi Set Contests<br><span style="color: white;">Add Sets</span></h1>
+          <h1>
+            Manage Multi Set Contests<br /><span style="color: white"
+              >Add Sets</span
+            >
+          </h1>
         </header>
       </div>
-      
-      <div class="page">
-        <div class="pageTop p-3 m-2 row">
-          <div class="searchBar border">
-            <div class="searchInput">
-              <input
-                class=""
-                placeholder="Search contest with contest id.."
-                type="text"
-                id="contestId"
-              >
-            </input>
-            </div>
-            <div class="searchIcon" onclick="getSubmission()">
-              <i class="fa fa-search"></i>
-            </div>
-          </div>
+
+      <div class="box">
+        <div class="search-bar">
+          <input
+            class="sinput"
+            type="text"
+            placeholder="Enter Contest Id"
+            id="contestId"
+            required
+          />
+          <button class="sbutton" onclick="getSubmission()">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
 
-        <div class="pageCenter bg-light p-3 m-2 row border">
-          <form
-            method="POST"
-            id="form1"
-          >
-            <label id="setNumber">Add Question's to Set&nbsp;</label>
-            <input 
-              class="form-control"
-              placeholder="Enter question id's seperated by comma..";
-              type="text"
-              name="questionIdsString"
-            >
-            </input>
-            <textarea
-              type="hidden"
-              name="token"
-              id="token2"
-              value="<%= token %>"
-              style="display: none"
-            ></textarea>
-            <button class="btn btn-primary" type="submit">Add Set</button>
-          </form>
-        </div>
+        <form class="" method="POST" id="form1">
+          <label id="setNumber">Add Question's to Set&nbsp;</label>
+          <input
+            class="form-control"
+            placeholder="Enter question id's seperated by comma.."
+            type="text"
+            name="questionIdsString"
+            required
+          />
 
-        <div class="pageBottom bg-light p-3 m-2 row border">
-          <div id="sets"></div>
-        </div>
+          <textarea
+            type="hidden"
+            name="token"
+            id="token2"
+            value="<%= token %>"
+            style="display: none"
+          ></textarea>
+          <button class="btn btn-secondary" type="submit">Add Set</button>
+        </form>
+      </div>
+      <div class="box p-5">
+        <div id="sets"></div>
       </div>
     </div>
     <!-- /container -->
@@ -190,39 +196,57 @@
       document.getElementById("token2").value = "<%= token %>";
     </script>
 
-<script>
-  function getSubmission() {
-    let contestId = document.getElementById("contestId").value;
-    
-    if(contestId === "") return false;
+    <script>
+      function getSubmission() {
+        let contestId = document.getElementById("contestId").value;
 
-    $.ajax({
-      url: "<%=data.serverurl%>" + "/contests/" + contestId,
-      type: "GET",
-      async: true,
-      headers: {
-        authorization: "<%= token %>",
-      },
-      success: function (data) {
-        if (data.length > 0) {
-          document.getElementById("form1").action
-            = "<%= data.serverurl %>/questionIds/" + data[0].contestId;
-          let sets = "";
+        if (contestId === "") {
+          document.getElementById("form1").action = "";
+          return false;
+        }
 
-          for(let i=data[0].sets.length-1; i>=0; i-- ) {
-            sets += "<p>Set " + (i+1).toString() + "&ensp;--&emsp;"+ (data[0].sets[i]).toString().split(",").join(" / ") +"</p></br>"
-          }
-          
-          document.getElementById("sets").innerHTML = sets;
-          let str = document.getElementById("setNumber").innerText.substr(0,22);
-          document.getElementById("setNumber").innerHTML = str + (data[0].sets.length+1).toString() + ":";
-        }
-        else {
-          document.getElementById("sets").innerHTML = "<h3>Contest not found!</h3>";
-        }
+        $.ajax({
+          url: "<%=data.serverurl%>" + "/contests/" + contestId,
+          type: "GET",
+          async: true,
+          headers: {
+            authorization: "<%= token %>",
+          },
+          success: function (data) {
+            if (data.length > 0) {
+              document.getElementById("form1").action =
+                "<%= data.serverurl %>/questionIds/" + data[0].contestId;
+
+              if (!data[0].multiset) {
+                document.getElementById("sets").innerHTML =
+                  "<h3>No sets found!</h3>";
+                return false;
+              }
+
+              let sets = "";
+              for (let i = data[0].sets.length - 1; i >= 0; i--) {
+                sets +=
+                  "<p>Set " +
+                  (i + 1).toString() +
+                  "&ensp;--&emsp;" +
+                  data[0].sets[i].toString().split(",").join(", ") +
+                  "</p></br>";
+              }
+
+              document.getElementById("sets").innerHTML = sets;
+              let str = document
+                .getElementById("setNumber")
+                .innerText.substr(0, 22);
+              document.getElementById("setNumber").innerHTML =
+                str + (data[0].sets.length + 1).toString() + ":";
+            } else {
+              document.getElementById("form1").action = "";
+              document.getElementById("sets").innerHTML =
+                "<h3>Contest not found!</h3>";
+            }
+          },
+        });
       }
-    });
-  }
-  </script>
+    </script>
   </body>
 </html>
