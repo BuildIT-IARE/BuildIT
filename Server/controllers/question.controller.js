@@ -694,7 +694,7 @@ exports.findAllContest = async (req, res) => {
     if (contest.multiset === true) {
       participations.findParticipation(req, async (err, participation) => {
         if (err) {
-          res.send({ success: false, message: "Error occured" });
+          return res.send({ success: false, message: err || "Error occured" });
         }
 
         if (participation.questions.length !== 0) {
@@ -715,7 +715,7 @@ exports.findAllContest = async (req, res) => {
           questionIds,
           async (err, participation) => {
             if (err) {
-              res.send({ success: false, message: "Error occured" });
+              return res.send({ success: false, message: err || "Error occured" });
             }
             let result = await findSet(questionIds);
             return result;

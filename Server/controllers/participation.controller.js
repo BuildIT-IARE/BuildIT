@@ -505,7 +505,7 @@ exports.findParticipation = (req, callback) => {
     participationId: req.decoded.username + req.params.contestId,
   })
     .then((participation) => {
-      if (!participation) {
+      if (participation.length === 0) {
         return callback("participation not found ", null);
       }
 
@@ -513,10 +513,7 @@ exports.findParticipation = (req, callback) => {
       return callback(null, participation);
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return callback("Contest not found", null);
-      }
-      return callback("Error retrieving contest", null);
+      return callback(err || "Error retrieving contest", null);
     });
 };
 
@@ -530,11 +527,6 @@ exports.updateParticipation = (req, questions, callback) => {
       },
     },
     { new: true },
-    (err, doc) => {
-      if (err) {
-        console.log("Error Occured");
-      }
-    }
   )
     .then((participation) => {
       if (!participation) {
