@@ -208,11 +208,6 @@ exports.updateOneSet = (req, sets, callback) => {
       },
     },
     { new: true },
-    (err, doc) => {
-      if (err) {
-        console.log("Error Occured");
-      }
-    }
   )
     .then((contest) => {
       if (!contest) {
