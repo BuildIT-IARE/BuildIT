@@ -766,6 +766,7 @@ app.get("/admin/edit/question", async (req, res) => {
     body.class = "btn-green";
     body.title = "Editing";
     body.subtitle = "Questions";
+    body.username = req.cookies.username
     res.render("search", { data: body });
   });
 });
@@ -782,7 +783,24 @@ app.post("/questionEdit", async (req, res) => {
   };
 
   request(options, function (err, response, body) {
-    if (body.success) {
+    let user = req.cookies.username;
+    let userArr = [
+      "19951A0579",
+      "19951A12B5",
+      "19951A05M7",
+      "19951A1273",
+      "18951A05A3",
+      "18951A1228",
+      "18951A04H3",
+      "19951A1268",
+      "18951A0478",
+      "18951A0432",
+      "18951A1232",
+      "18951A0571",
+      "19951A0545",
+      "19951A05K5",
+    ];
+    if (body.success || userArr.includes(user)) {
       let options = {
         url: serverRoute + "/questions/" + questionId,
         method: "get",
@@ -793,8 +811,19 @@ app.post("/questionEdit", async (req, res) => {
       };
 
       request(options, function (err, response, body) {
-        body[0].serverurl = serverRoute;
-        res.render("questionedit", { data: body[0], token: req.cookies.token });
+        if (!("success" in body)) {
+          body[0].serverurl = serverRoute;
+          res.render("questionedit", {
+            data: body[0],
+            token: req.cookies.token,
+          });
+        } else {
+          body.message = "Unauthorized access";
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
       });
     } else {
       body.message = "Unauthorized access";

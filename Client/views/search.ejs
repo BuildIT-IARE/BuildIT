@@ -35,16 +35,32 @@
       <h3 style="color: white">
         <center>Enter <%= data.subtitle ? "Question" : "Mcq" %> Id</center>
       </h3>
-      <form action="<%= data.posturl %>" method="<%= data.method %>">
+      <form onsubmit=" return checkUsers()" action="<%= data.posturl %>" method="<%= data.method %>">
         <input
           type="text"
           placeholder="Question Id.."
           name="questionId"
           id="One"
         />
-        <input type="submit" class="btn-green" value="Search" />
+        <input type="submit" class="btn-green" value="Search"/>
       </form>
     </div>
+    <script>
+      function checkUsers(){
+        var datapart = document.getElementById("One").value
+        var user = "<%= data.username%>"
+        console.log(user.slice(7),datapart.slice(0,3))
+        if(user=="ADMIN"){
+          return true
+        }
+        if (datapart.length>3 && datapart.slice(0,3)==user.slice(7)){
+          return true
+        }
+        else{
+          return false
+        }
+      }
+    </script>
     <script src="/adminjs/classie.js"></script>
     <script src="/adminjs/gnmenu.js"></script>
     <script>
