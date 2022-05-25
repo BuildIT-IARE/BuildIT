@@ -567,6 +567,38 @@ exports.update = (req, res) => {
     });
   }
 
+  let username = req.decoded.username;
+  let qid = req.body.questionId;
+  let userArr = [
+    "admin",
+    "19951a0579",
+    "19951a12b5",
+    "19951a05m7",
+    "19951a1268",
+    "19951a1273",
+    "18951a05a3",
+    "18951a1228",
+    "18951a04h3",
+    "18951a0478",
+    "18951a0432",
+    "18951a1232",
+    "18951a0571",
+    "19951a0545",
+    "19951a05k5",
+  ];
+  qid = qid.slice(0, 3);
+  userSlice = username.slice(7);
+  if (req.decoded.admin) {
+    qid = "admin";
+    username = "admin";
+    userSlice = "admin";
+  }
+  if (!userArr.includes(username) || qid != userSlice) {
+    return res.status(400).send({
+      success: false,
+      message: "Unauthorized access!",
+    });
+  }
   // Find question and update it with the request body
   Question.findOneAndUpdate(
     { questionId: req.params.questionId },
@@ -598,13 +630,7 @@ exports.update = (req, res) => {
         conceptLevel: req.body.conceptLevel,
       },
     },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        console.log("Something wrong when updating data!");
-      }
-      console.log(doc);
-    }
+    { new: true }
   )
     .then((question) => {
       if (!question) {
@@ -613,7 +639,7 @@ exports.update = (req, res) => {
           message: "Question not found with id " + req.params.questionId,
         });
       }
-      res.send(question);
+      res.send("Updated Successfully, Go Back");
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
