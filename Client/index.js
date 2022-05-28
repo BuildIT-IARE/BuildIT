@@ -78,19 +78,23 @@ if(sessionText !== ''){
 
 
 let getWeekClicks = async () => {
-  let secondResponse = await fetch(`${serverRoute}/counters`);
-  let allCounts = await secondResponse.json();
-  let weekCount2 = 0;
-  let len = Math.min(8, allCounts.length);
+  try {
+    let secondResponse = await fetch(`${serverRoute}/counters`);
+    let allCounts = await secondResponse.json();
+    let weekCount2 = 0;
+    let len = Math.min(8, allCounts.length);
 
-  for (let i = 0; i < len; i++) {
-    if (new Date(allCounts[i].date).getDay() === 0) break;
-    else weekCount2 += allCounts[i].count;
+    for (let i = 0; i < len; i++) {
+      if (new Date(allCounts[i].date).getDay() === 0) break;
+      else weekCount2 += allCounts[i].count;
+    }
+
+    totalCount = allCounts.reduce((a, b) => a + b.count, 0);
+
+    return weekCount2;
+  } catch (err) {
+    return 0;
   }
-
-  totalCount = allCounts.reduce((a, b) => a + b.count, 0);
-
-  return weekCount2;
 };
 
 (async () => {
@@ -98,38 +102,34 @@ let getWeekClicks = async () => {
 })();
 
 let handleClicks = async () => {
-  let currDate = new Date().getDate();
+  try {
+    let currDate = new Date().getDate();
 
-  if (currDate !== prevDate) {
-    let firstResponse = await fetch(
-      "https://api.countapi.xyz/hit/" + countApiKey
-    );
-    let clicks = await firstResponse.json();
+    if (currDate !== prevDate) {
+      let firstResponse = await fetch(
+        "https://api.countapi.xyz/hit/" + countApiKey
+      );
+      let clicks = await firstResponse.json();
 
-    let options = {
-      body: {
-        count: clicks.value,
-      },
-      url: serverRoute + "/counters/add",
-      method: "post",
-      json: true,
-    };
-
-    request(options, async (err, response, body) => {
-      let options2 = {
-        url: "https://api.countapi.xyz/set/" + countApiKey + "?value=0",
-        method: "get",
+      let options = {
+        body: {
+          count: clicks.value,
+        },
+        url: serverRoute + "/counters/add",
+        method: "post",
         json: true,
       };
 
-      request(options2, async (err, response, body2) => {
-
+      request(options, async (err, response, body) => {
+        await fetch("https://api.countapi.xyz/set/" + countApiKey + "?value=0");
         prevDate = currDate;
         weekCount = await getWeekClicks();
       });
-    });
-  } else {
-    await fetch("https://api.countapi.xyz/hit/" + countApiKey);
+    } else {
+      await fetch("https://api.countapi.xyz/hit/" + countApiKey);
+    }
+  } catch (err) {
+    console.log("count api error");
   }
 };
 
