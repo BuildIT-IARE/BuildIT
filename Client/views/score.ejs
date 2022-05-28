@@ -195,14 +195,14 @@ table {
   
       <div id="header">
         <div id="home">
-          <a href="/"><button>HOME</button></a>
+          <a href="/qualifier_tests/leaderboard/<%= data.contestId %>"><button>LEADERBOARD</button></a>
         </div>
         <div id="banner">
           <div id="result">
             <p>Results</p>
           </div>
           <div id="contest">
-            <p>IARE34 - NQT QUIZ</p>
+            <p><%= data.contestId %> - <%= data.contestName %></p>
           </div>
         </div>
         <div id="image">

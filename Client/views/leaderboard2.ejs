@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard</title>
+
+    <link rel="stylesheet" href="/css/mcqs/style.css" />
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="header">
+        <div id="home">
+          <a href="/"><button>HOME</button></a>
+        </div>
+        <div id="banner">
+          <div id="result">
+            <p>Leaderboard</p>
+          </div>
+          <div id="contest">
+            <p><%= url.contestId %> - <span id="contestName"></span></p>
+          </div>
+        </div>
+        <div id="image">
+          <p id="username"><%= imgUsername %>&emsp;</p>
+          <img
+            id="img"
+            alt="No Image );"
+            width="50"
+            src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/<%= imgBranch %>/<%= imgUsername %>.jpg"
+          />
+        </div>
+      </div>
+      <div id="main">
+        <table>
+          <tbody id="user-leaderboard" class="content-center"></tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+      function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      async function getUsers() {
+        let position, score, username, user, userData;
+        var data = JSON.parse(`<%- JSON.stringify(data) %>`);
+        data.sort((a, b) => b.totalScore - a.totalScore);
+
+        for (let i = 0; i < data.length; i++) {
+          position = i + 1;
+          score = data[i].totalScore;
+          username = data[i].username;
+
+          user = await fetch("<%= url.serverurl %>/users/" + username, {
+            headers: { Authorization: getCookie("token") },
+          });
+
+          userData = await user.json();
+
+          duplicate(
+            position,
+            username,
+            username.toUpperCase(),
+            userData.name,
+            userData.branch,
+            score
+          );
+        }
+      }
+
+      function duplicate(position, username, username2, name, branch, score) {
+        var item = document.createElement("tr");
+        item.classList.add("row");
+        item.innerHTML = `
+<td><p class="position">${position}</p></td>
+<td class="image">
+	<img src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/${branch}/${username2}.jpg" alt="">
+</td>
+<td><p class="name">${name}</p></td>
+<td><p class="username">${username}</p></td>
+<td><p class="branch">${branch}</p></td>
+<td><p class="points">${score} PTS</p></td>
+  `;
+        document.getElementById("user-leaderboard").appendChild(item);
+      }
+
+      async function addContestName() {
+        let contest = await fetch(
+          "<%= url.serverurl %>/contests/<%= url.contestId %>",
+          {
+            headers: { Authorization: getCookie("token") },
+          }
+        );
+        let res = await contest.json();
+        document.getElementById("contestName").innerText = res[0].contestName;
+      }
+      addContestName();
+      getUsers();
+    </script>
+  </body>
+</html>

@@ -41,6 +41,7 @@ app.use("/contests", express.static(__dirname + "/"));
 app.use("/qualifier_test/:contestId", express.static(__dirname + "/"));
 app.use("/qualifierTestScore", express.static(__dirname + "/"));
 app.use("/qualifier_tests", express.static(__dirname + "/"));
+app.use("/qualifier_tests/leaderboard/:contestId", express.static(__dirname + "/"));
 
 app.use("/contests/questions", express.static(__dirname + "/"));
 app.use("/tutorials/questions", express.static(__dirname + "/"));
@@ -478,7 +479,7 @@ app.get("/admin/add/mcq", async (req, res) => {
 
   request(options, function (err, response, body) {
     if (body.success) {
-      res.render("mcqadd", { data: url, token: req.cookies.token });
+      res.render("newmcqadd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
       res.render("error", { data: body, imgUsername: req.cookies.username });
@@ -1843,6 +1844,7 @@ app.get("/qualifierTestScore/:contestId", checkSignIn, async (req, res, next) =>
   request(options, (err, response, body) => {
     if (!body.message) {
       let noOfSections = body.sections.length;
+      body.contestId = req.params.contestId;
 
       /*
       body.answers = Array.prototype.concat.apply([], body.answerKey);
@@ -1853,6 +1855,38 @@ app.get("/qualifierTestScore/:contestId", checkSignIn, async (req, res, next) =>
         imgUsername: req.cookies.username,
         imgBranch: req.cookies.branch,
         data: body,
+      });
+    } else {
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
+    }
+  });
+});
+
+app.get("/qualifier_tests/leaderboard/:contestId", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+  let options = {
+    url: serverRoute + "/participations/leaderboard/" + req.params.contestId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, (err, response, body) => {
+    if (!body.message) {
+      url.contestId = req.params.contestId;
+      res.render("leaderboard2", {
+        imgUsername: req.cookies.username,
+        imgBranch: req.cookies.branch,
+        data: body,
+        url,
       });
     } else {
       res.render("error", {

@@ -1,0 +1,158 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500&display=swap");
+
+::selection {
+  color: #16325c;
+  background: #8be0e6;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f9fbfe;
+}
+
+/*---------------- LEVEL 1 --------------*/
+#container {
+  /* min-height: 100vh; */
+  width: 100%;
+}
+/*---------------- LEVEL 2 --------------*/
+#header {
+  font-family: "Barlow", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  border-top: 0.5vh solid #7b68ee;
+  border-bottom: 0.5vh solid #7b68ee;
+  background-color: #b3acfa;
+  color: white;
+  padding: 0 2vh;
+  min-height: 12vh;
+  min-width: 100vw;
+  letter-spacing: 1px;
+}
+/*---------------- LEVEL 3 HEADER--------------*/
+#home {
+  display: flex;
+  align-items: center;
+  width: 20vw;
+}
+#banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 60vw;
+}
+#image {
+  display: flex;
+  align-items: center;
+  width: 20vw;
+  padding-left: 5.5vw;
+}
+/*---------------- LEVEL 4 HEADER--------------*/
+#home button {
+  background-color: #fff;
+  font-family: "Barlow", sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: #50606f;
+  border: 2px solid #8d8fc7;
+  padding: 0.3rem 0.9rem;
+  border-radius: 3px;
+}
+#result {
+  font-size: 18px;
+  padding-bottom: 0.5vh;
+}
+#contest {
+  font-size: 28px;
+}
+#username {
+  font-family: "Barlow", sans-serif;
+  font-size: 20px;
+  margin-right: -1vw;
+}
+/* -=-=-=-=-=-=-=-=-=-=-=-=-=-=-= CONTENT CENTER -=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
+#main,
+#main * {
+  font-family: "Lato", sans-serif;
+  color: #5876a3;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+.row p {
+  font-size: 20px;
+  color: #16325c !important;
+  /* width: 100%; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+#main {
+  margin-top: 4rem;
+}
+
+table {
+  width: 100%;
+}
+
+.content-center {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-gap: 1rem 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 8rem;
+  padding-right: 8rem;
+  color: #16325c !important;
+  height: 60px !important;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  -webkit-tap-highlight-color: #29242400;
+  box-shadow: none;
+  border-radius: 2px;
+}
+
+.row:nth-child(even) {
+  background-color: #fafbfb;
+}
+
+.row:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+img {
+  height: 60px;
+  width: 60px;
+  margin-top: 8px;
+}
+
+p.position {
+  font-size: 28px;
+}
+
+.username,
+.name {
+  font-size: 20px;
+}
+
+p.points {
+  font-size: 22px;
+}
