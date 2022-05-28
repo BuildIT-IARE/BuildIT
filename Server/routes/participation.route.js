@@ -16,6 +16,13 @@ module.exports = (app) => {
     participation.findContestPart
   );
 
+  // leaderboard
+  app.get(
+    "/participations/leaderboard/:contestId",
+    middleware.checkToken,
+    participation.leaderboard
+  );
+
   // Retrieve all participations for users in a contest
   app.get(
     "/participations/:contestId",

@@ -168,6 +168,7 @@ exports.getDuration = (req, callback) => {
         date: contest.contestDate,
         mcq: contest.mcq,
         sections: contest.sections,
+        contestName: contest.contestName,
       };
       return callback(null, durationData);
     })

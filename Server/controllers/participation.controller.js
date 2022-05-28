@@ -121,6 +121,7 @@ exports.createMcq = (req, res) => {
             participationId: req.body.username + req.body.contestId,
             username: req.body.username,
             contestId: req.body.contestId,
+            contestName: duration.contestName,
             participationTime: date,
             submissionResults: [],
             mcqResults: {},
@@ -717,6 +718,7 @@ exports.saveResult = (req, res) => {
               }
               let participation = participations.mcqResults._doc;
               participation.sections = participations.sections;
+              participation.contestName = participations.contestName;
               // participation.coding = participations.submissionResults;
               res.send(participation);
             })
@@ -741,6 +743,7 @@ exports.saveResult = (req, res) => {
       } else {
         let participations = participation[0].mcqResults._doc;
         participations.sections = participation[0].sections;
+        participations.contestName = participation[0].contestName;
         // participations.coding = participation[0].submissionResults;
         res.send(participations);
       }
@@ -752,4 +755,21 @@ exports.saveResult = (req, res) => {
           err.message || "Some error occurred while retrieving participation.",
       });
     });
+};
+
+// create and save a new score
+exports.leaderboard = async (req, res) => {
+  try {
+    let participation1 = await McqParticipation.find({contestId: req.params.contestId});
+
+    let leaderboard = participation1.map(e => ({username: e.username, totalScore: e.mcqResults.totalScore}) );
+
+    res.send(leaderboard);
+  } catch(err) {console.log(err)
+    res.status(500).send({
+      success: false,
+      message:
+        err.message || "Error occurred!",
+    });
+  }
 };
