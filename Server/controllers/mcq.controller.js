@@ -3,6 +3,7 @@ const Question = require("../models/question.model.js");
 const inarray = require("inarray");
 const xlsx = require("xlsx");
 const fs = require("fs");
+var Binary = require('mongodb').Binary;
 
 // Create and Save a new question
 exports.create = (req, res) => {
@@ -109,6 +110,42 @@ exports.create = (req, res) => {
         return "Error updating mcq with id " + mcqId;
       });
   };
+};
+
+// Create and Save a new question
+exports.createMultiple = async(req, res) => {
+  // Validate request
+  if (!req.params.contestId) {
+    return res.status(400).send({
+      success: false,
+      message: "contest Id name can not be empty",
+    });
+  }
+
+  try {
+    let count = await Mcq.countDocuments();
+    ++count;
+    let body = JSON.parse(req.body.arr);
+    let fileKeys = Object.keys(req.files).map(e => Number(e.charAt(5)));
+
+    for (let i = 0; i < body.length; i++) {
+      body[i].mcqId = "IARE" + (count + i).toString();
+      if(fileKeys.includes(i)) {
+        body[i].photo = {};
+        body[i].photo.data = Binary(req.files["photo" + i].data);
+        body[i].photo.contentType = "image/png";
+      }
+    }
+
+    let result = await Mcq.insertMany(body);
+    res.send(result);
+  } catch (err) {
+
+    res.status(500).send({
+      success: false,
+      message: err.message || "Error occurred!",
+    });
+  }
 };
 
 exports.createExcel = (req, res) => {

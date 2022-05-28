@@ -6,6 +6,13 @@ module.exports = (app) => {
   // Create a new question
   app.post("/mcq", middleware.checkTokenAdmin, mcqs.create);
 
+  // Create multiple questions
+  app.post(
+    "/mcqs/multiple/:contestId",
+    middleware.checkTokenAdmin,
+    mcqs.createMultiple
+  );
+
   // Create a new question using Excel
   app.post("/mcqsExcel", middleware.checkTokenAdmin, mcqs.createExcel);
   // testing start-----------------------------------------------------------------------------
@@ -19,14 +26,14 @@ module.exports = (app) => {
     mcqs.findAllContest
   );
   // testing end-------------------------------------------------------------------------------
-  
+
   // Retrieve all questions with contestId
   /* app.post(
     "/mcqs/question/contest/:contestId",
     middleware.checkToken,
     mcqs.findOneQuestion
   ); */
-  
+
   // Retrieve a single mcq with contestId
   app.post(
     "/mcqs/:contestId/:section/:questionNum",

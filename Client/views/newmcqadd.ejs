@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add MCQ</title>
+
+  <meta name="author" content="Codrops" />
+  <link rel="shortcut icon" href="../favicon.ico" />
+  <link rel="stylesheet" href="../../css/navadmin.css" />
+  <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+  <script src="/adminjs/modernizr.custom.js"></script>
+  <link href="/plugins/bootstrap-5/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .b-example-divider {
+      height: 3rem;
+      height: 61px;
+    }
+
+    form {
+      width: initial;
+      padding: initial;
+      box-shadow: none;
+      background: inherit;
+    }
+
+    input[type="text"],
+    select {
+      margin: 0;
+      box-sizing: inherit;
+      display: block;
+      width: 100%;
+      padding: 0.375rem 0.75rem;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+    }
+
+    .input-group .btn {
+      position: relative;
+      z-index: 0;
+    }
+
+    .w-5 {
+      width: 10%;
+    }
+
+    .bg-blue {
+      background-color: #0076ce;
+    }
+  </style>
+</head>
+
+<body>
+  <% include ../views/partials/adminpanel %>
+    <div class="b-example-divider border-bottom"></div>
+    <div class="mb-5">
+      <div class="bg-blue py-5 mb-2">
+        <div class="mx-auto w-50">
+          <p class="h1">Manage Multiple Choice Questions</p>
+          <p class="h3 text-white">Add MCQ's</p>
+        </div>
+      </div>
+
+      <ul class="nav nav-tabs mx-5" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+            role="tab" aria-controls="home" aria-selected="true">
+            &emsp;Multiple MCQ&emsp;
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+            role="tab" aria-controls="profile" aria-selected="false">
+            &emsp;Excel Sheet&emsp;
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content mt-2 mx-5" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <p class="h4 my-5">Add Question Manually</p>
+          <form class="" name="myForm" id="form" onsubmit="validateSubmit(); return false;">
+            <div class="">
+              <label for="validationDefault01" class="form-label">Contest Id</label>
+              <div class="input-group">
+                <input name="contestId" id="get_sections" type="text" class="form-control" aria-label="Contest Id"
+                  aria-describedby="button-addon2" required />
+                <input onclick="getSection()" class="w-5 btn btn-outline-secondary" type="button" id="button-addon2"
+                  value="Search" />
+              </div>
+            </div>
+            <div class="my-4">
+              <label for="sectionInput" class="form-label mb-3">Sections</label>
+              <div class="row gy-3 ms-5" id="sectionInput"></div>
+            </div>
+            <div id="merge-new-mcq">
+            </div>
+
+            <div class="my-4">
+              <input onclick="duplicate()" id="add-new-question" class="w-auto btn btn-warning" type="button"
+                value="Add New Question" />
+            </div>
+            <hr />
+            <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none"></textarea>
+            <div class="mt-4 col-12 text-center">
+              <button class="d-none btn btn-primary px-5" id="spinner" type="button" disabled>
+                <span class="spinner-border" role="status" aria-hidden="true"></span>
+              </button>
+              <button class="btn btn-primary" id="submit-all" type="submit">
+                Submit All
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <p class="h4 my-5">Upload Excel File Here</p>
+          <form action="<%= data.serverurl %>/mcqsExcel" method="POST" enctype="multipart/form-data">
+            <div class="w-75 input-group mb-5">
+              <input name="upfile" type="file" class="form-control" id="inputGroupFile04"
+                aria-describedby="inputGroupFileAddon04" aria-label="Upload" />
+              <textarea type="hidden" name="token" id="token2" value="<%= token %>" style="display: none"></textarea>
+              <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">
+                Upload
+              </button>
+            </div>
+            <a href="./images/sample-mcq.xlsx">Sample CSV</a><br />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- /container -->
+    <script src="/adminjs/classie.js"></script>
+    <script src="/adminjs/gnmenu.js"></script>
+    <script src="/plugins/jQuery/jquery.min.js"></script>
+    <script src="/plugins/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+    <script>
+      new gnMenu(document.getElementById("gn-menu"));
+    </script>
+    <script>
+      document.getElementById("token").value = "<%= token %>";
+      document.getElementById("token2").value = "<%= token %>";
+    </script>
+    <script>
+      let i = 0;
+      // const sleep = m => new Promise(r => setTimeout(r, m));
+
+      function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      function getSection() {
+        var url = '<%= data.serverurl %>/contests/' + document.getElementById("get_sections").value;
+        $.ajax({
+          url: url,
+          headers: { "Authorization": getCookie("token") },
+          type: "GET",
+          success: function (data) {
+            // var x = JSON.stringify(data);
+            var sections = data[0].sections;
+            var tex = document.getElementById("sectionInput");
+            let str = "";
+
+            for (let i = 0; i < sections.length; i++) {
+              str += `
+              <div class="form-check col-md-3">
+                <input class="form-check-input" type="radio" name="section" value="${i + 1
+                }" id="${11 + i}" required/>
+                <label class="form-check-label" for="${11 + i}">&emsp;${sections[i]
+                }</label>
+              </div>
+              `;
+            }
+            tex.innerHTML = str;
+          },
+          error: function (error) {
+            console.log(`Error ${error}`);
+          },
+        });
+        return false;
+      };
+
+      function verifyImage() {
+        let photo = document.querySelectorAll(".photo");
+        var input = document.getElementById("input-files");
+
+        for (let i = 0; i < photo.length; i++) {
+          try {
+            let oFile = photo[i].files[0];
+
+            if (!oFile.type.includes("image")) {
+              // Allowed Extensions
+              window.alert("Allowed Extensions are : *.jpeg,*.jpg,*.png");
+              return false;
+            }
+
+            if (oFile.size > 204800) {
+              // 200 KiB for bytes.
+              window.alert("File size must be under 200KiB!");
+              return false;
+            }
+          } catch (err) {
+            continue;
+          }
+        }
+
+        return true;
+      }
+
+      function handleLoading() {
+        document.getElementById("submit-all").classList.toggle("d-none");
+        document.getElementById("spinner").classList.toggle("d-none");
+      }
+
+      async function validateSubmit() {
+        event.preventDefault();
+
+        if (!verifyImage()) {
+          return false;
+        }
+
+        let myForm = document.forms["myForm"];
+        if (!("section" in myForm)) {
+          window.alert("Section must be selected");
+          return false;
+        }
+        if (!("questionDescriptionText" in myForm)) {
+          window.alert("Description must not be empty");
+          return false;
+        }
+
+        handleLoading();
+        // console.time("Slept for")
+        // await sleep(10000)
+        addSubmission();
+        // console.timeEnd("Slept for");
+        handleLoading();
+        return false;
+      }
+    </script>
+
+    <script>
+      function addSubmission() {
+        try {
+          let section = document.forms["myForm"]["section"].value;
+          let contestId = document.getElementById("get_sections").value;
+          let url = '<%= data.serverurl %>/mcqs/multiple/' + contestId;
+
+          let photo = [...document.querySelectorAll(".photo")].map(e => e.files[0]);
+          let description = [...document.querySelectorAll(".questionDescriptionText")].map(e => e.value);
+          let option1 = [...document.querySelectorAll(".op1")].map(e => e.value);
+          let option2 = [...document.querySelectorAll(".op2")].map(e => e.value);
+          let option3 = [...document.querySelectorAll(".op3")].map(e => e.value);
+          let option4 = [...document.querySelectorAll(".op4")].map(e => e.value);
+          let answer = [...document.querySelectorAll(".answer")].map(e => e.value);
+
+          let body1 = [];
+          for (let i = 0; i < answer.length; i++) {
+            body1[i] = {
+              contestId,
+              section,
+              mcqDescriptionText: description[i],
+              option1: option1[i],
+              option2: option2[i],
+              option3: option3[i],
+              option4: option4[i],
+              answer: answer[i]
+            };
+          }
+
+          var ajaxData = new FormData();
+          for (let i = 0; i < answer.length; i++)
+            if (photo[i])
+              ajaxData.append('photo' + i, photo[i]);
+          ajaxData.append('arr', JSON.stringify(body1));
+          $.ajax({
+            // data: { arr: body1 },
+            async: false,
+            // enctype: 'multipart/form-data',
+            url: url,
+            headers: { "Authorization": getCookie("token") },
+            type: "POST",
+            data: ajaxData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function (response) {
+              // var x = JSON.stringify(data);
+              removeAll();
+            },
+            error: function (error) {
+              console.log(`Error ${JSON.stringify(error)}`);
+            }
+          });
+        }
+        catch (err) {
+          console.log(err);
+        }
+      }
+    </script>
+
+    <script>
+      function duplicate() {
+        var id = "duplic" + ++i;
+        var mcq = document.createElement("div");
+        mcq.id = id;
+        mcq.innerHTML = `
+<div class="mt-4 row g-4" id="duplic${i}">
+<hr />
+<div class="">
+<label for="input-files${i}" class="form-label">${i}. Add Picture</label>
+<input class="photo form-control" type="file" name="photo[]" id="input-files${i}" accept="image/*" />
+</div>
+<div class="">
+<label for="desc${i}" class="form-label">Question Description</label>
+<textarea name="questionDescriptionText" class="questionDescriptionText form-control" id="desc${i}"
+  rows="3" required></textarea>
+</div>
+<div class="col-md-3">
+<label for="op1${i}" class="form-label">Option 1</label>
+<textarea name="op1" class="op1 form-control" id="op1${i}" rows="1" required></textarea>
+</div>
+<div class="col-md-3">
+<label for="op2${i}" class="form-label">Option 2</label>
+<textarea name="op2" class="op2 form-control" id="op2${i}" rows="1" required></textarea>
+</div>
+<div class="col-md-3">
+<label for="op3${i}" class="form-label">Option 3</label>
+<textarea name="op3" class="op3 form-control" id="op3${i}" rows="1" required></textarea>
+</div>
+<div class="col-md-3">
+<label for="op4${i}" class="form-label">Option 4</label>
+<textarea name="op4" class="op4 form-control" id="op4${i}" rows="1" required></textarea>
+</div>
+<div class="input-group">
+<span class="input-group-text" id="keyLabel${i}">Answer</span>
+<input name="answer" type="number" min="1" max="4" class="answer form-control" id="answer${i}"
+  aria-describedby="keyLabel${i}" required />
+</div>
+<div class="d-flex justify-content-between">
+<div>
+  <input onclick="removeQuestion(${i})" id="add-new-question" class="d-none w-auto btn btn-secondary" type="button"
+  value="Submit Question" />
+</div>
+<input onclick="removeQuestion(${i})" id="add-new-question" class="w-auto btn btn-danger" type="button"
+  value="Remove Question" />
+</div>
+</div>
+`;
+        document.getElementById("merge-new-mcq").appendChild(mcq);
+      }
+
+      function removeQuestion(position) {
+        let currId = "duplic" + position;
+        document.getElementById(currId).remove();
+      }
+
+      function cloneQuestion() {
+        var elmnt = document.getElementById("duplic1");
+        var cln = elmnt.cloneNode(true);
+        document.getElementById("merge-new-mcq").appendChild(cln);
+      }
+
+      function removeAll() {
+        document.getElementById("merge-new-mcq").innerHTML = "";
+        i = 0;
+      }
+    </script>
+</body>
+
+</html>
