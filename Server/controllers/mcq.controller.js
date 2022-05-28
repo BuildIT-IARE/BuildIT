@@ -126,11 +126,13 @@ exports.createMultiple = async(req, res) => {
     let count = await Mcq.countDocuments();
     ++count;
     let body = JSON.parse(req.body.arr);
-    let fileKeys = Object.keys(req.files).map(e => Number(e.charAt(5)));
+    let fileKeys = [];
+    if(req.files)
+      fileKeys = Object.keys(req.files).map(e => Number(e.charAt(5)));
 
     for (let i = 0; i < body.length; i++) {
       body[i].mcqId = "IARE" + (count + i).toString();
-      if(fileKeys.includes(i)) {
+      if(req.files && fileKeys.includes(i)) {
         body[i].photo = {};
         body[i].photo.data = Binary(req.files["photo" + i].data);
         body[i].photo.contentType = "image/png";
