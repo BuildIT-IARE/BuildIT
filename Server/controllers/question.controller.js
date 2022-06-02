@@ -588,6 +588,7 @@ exports.update = (req, res) => {
   ];
   qid = qid.slice(0, 3);
   userSlice = username.slice(7);
+  userSlice.toUpperCase()
   if (req.decoded.admin) {
     qid = "admin";
     username = "admin";
