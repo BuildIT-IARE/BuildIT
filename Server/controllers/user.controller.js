@@ -1,5 +1,5 @@
 const User = require("../models/user.model.js");
-const Count = require("../models/count.model.js")
+const Count = require("../models/count.model.js");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
