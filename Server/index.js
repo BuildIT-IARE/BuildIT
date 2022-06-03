@@ -11,7 +11,8 @@ const archiver = require("archiver");
 const fs = require("fs");
 const requestIp = require("request-ip");
 const dotenv = require('dotenv');
-
+const schedule = require('node-schedule');
+const count = require("./models/count.model.js")
 dotenv.config({ path: '../Server/util/config.env' });
 
 let middleware = require("./util/middleware.js");
@@ -1128,5 +1129,9 @@ app.get("/plagreport/:languageId/:questionId", async (req, res) => {
     .then(res.sendFile(p + "/result.zip"))
     .catch(res.send("Failed"));
 });
+
+schedule.scheduleJob("* * * * *",(async function () {
+  console.log("helo")
+}));
 
 app.listen(port, () => console.log("Server @ port", port));
