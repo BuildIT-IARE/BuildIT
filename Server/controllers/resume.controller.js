@@ -31,7 +31,11 @@ exports.create  = (req,res) => {
         internshipNamesArray.push(req.body["IntershipName"+internshipCount]);
         internshipCompanyNamesArray.push(req.body["CompanyName"+internshipCount]);
         internshipCertificatesArray.push(req.body["CetificateURL"+internshipCount]);
-        var InternDesc = req.body["InternDesc"+internshipCount].replace(/(\r\n|\n|\r)/gm, "");
+        var InternDesc;
+        if(req.body["InternDesc"+internshipCount]!= undefined)
+        {
+            InternDesc = req.body["InternDesc"+internshipCount].replace(/(\r\n|\n|\r)/gm, "");
+        }
         internshipDescArray.push(InternDesc);
         internshipStartDatesArray.push(req.body["InternDateofStart"+internshipCount]);
         internshipEndDatesArray.push(req.body["InternDateofEnd"+internshipCount]);
@@ -73,7 +77,11 @@ exports.create  = (req,res) => {
     var projectsCount = 1;
     while(req.body["ProjectName"+projectsCount])
     {
-        var ProjectDesc = req.body["ProjectDesc"+projectsCount].replace(/(\r\n|\n|\r)/gm, "");
+        var ProjectDesc;
+        if(req.body["ProjectDesc"+projectsCount]!= undefined)
+        {
+            ProjectDesc = req.body["ProjectDesc"+projectsCount].replace(/(\r\n|\n|\r)/gm, "");
+        }
         var project = [req.body["ProjectName"+projectsCount],req.body["ProjectURL"+projectsCount],ProjectDesc];
         projectsArray.push(project);
         projectsCount++;
@@ -156,10 +164,12 @@ exports.create  = (req,res) => {
         spojURL : req.body.SpojURL,
         spojProblems : req.body.SpojProblems,
     })
-
+    var brief;
+    if(req.body.Brief != undefined)
+    {
+        brief = req.body.Brief.replace(/(\r\n|\n|\r)/gm, "");
+    }
     
-    
-    var brief = req.body.Brief.replace(/(\r\n|\n|\r)/gm, "");
     Resume
     //findOneAndUpdate creates a new Doc if query is not found or updates the existing if found
     .findOneAndUpdate(
