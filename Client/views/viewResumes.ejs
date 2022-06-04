@@ -17,6 +17,17 @@
 
     <style>
       /* Three columns side by side */
+      .resumedel
+      {
+        padding: 0;
+        background: none;
+        border: none;
+        border-radius: 0;
+        outline: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
       .column {
         float: left;
         width: 25%;
@@ -185,7 +196,8 @@
               <th>Username</th>
               <th>Name</th>
               <th>Branch</th>
-              <th>Resume</th>
+              <th>View</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -203,6 +215,11 @@
                   >View Resume</a
                 >
               </td>
+              <td>
+                <form id="resumedel" action="<%= data[i].url %>/resume/<%= data[i].resumeId %>" method="post">
+                  <a onclick="document.getElementById('resumedel').submit();">Delete Resume</a>
+                </form>
+              </td>
             </tr>
             <% } %> <% } %>
           </tbody>
@@ -213,7 +230,8 @@
               <th>Username</th>
               <th>Name</th>
               <th>Branch</th>
-              <th>Resume</th>
+              <th>View</th>
+              <th>Delete</th>
             </tr>
           </tfoot>
         </table>

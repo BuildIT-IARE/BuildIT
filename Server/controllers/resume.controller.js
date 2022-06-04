@@ -31,7 +31,8 @@ exports.create  = (req,res) => {
         internshipNamesArray.push(req.body["IntershipName"+internshipCount]);
         internshipCompanyNamesArray.push(req.body["CompanyName"+internshipCount]);
         internshipCertificatesArray.push(req.body["CetificateURL"+internshipCount]);
-        internshipDescArray.push(req.body["InternDesc"+internshipCount])
+        var InternDesc = req.body["InternDesc"+internshipCount].replace(/(\r\n|\n|\r)/gm, "");
+        internshipDescArray.push(InternDesc);
         internshipStartDatesArray.push(req.body["InternDateofStart"+internshipCount]);
         internshipEndDatesArray.push(req.body["InternDateofEnd"+internshipCount]);
         internshipCount++;
@@ -72,7 +73,8 @@ exports.create  = (req,res) => {
     var projectsCount = 1;
     while(req.body["ProjectName"+projectsCount])
     {
-        var project = [req.body["ProjectName"+projectsCount],req.body["ProjectURL"+projectsCount],req.body["ProjectDesc"+projectsCount]];
+        var ProjectDesc = req.body["ProjectDesc"+projectsCount].replace(/(\r\n|\n|\r)/gm, "");
+        var project = [req.body["ProjectName"+projectsCount],req.body["ProjectURL"+projectsCount],ProjectDesc];
         projectsArray.push(project);
         projectsCount++;
     }
@@ -155,7 +157,9 @@ exports.create  = (req,res) => {
         spojProblems : req.body.SpojProblems,
     })
 
-
+    
+    
+    var brief = req.body.Brief.replace(/(\r\n|\n|\r)/gm, "");
     Resume
     //findOneAndUpdate creates a new Doc if query is not found or updates the existing if found
     .findOneAndUpdate(
@@ -169,7 +173,7 @@ exports.create  = (req,res) => {
                 projects : projectsArray,
                 achievements : achievementsArray,
                 extraCurricular : extraCurricularArray,
-                brief: req.body.Brief,
+                brief: brief,
                 personalInfo : personalInfo,
                 educationalInfo : educationalInfo,
                 internshipInfo : internshipInfo,
@@ -211,6 +215,24 @@ exports.findOne = (req,res)=>{
         res.status(500).send({
             success: false,
             message: err.message || "You have no Resumes",
+        })
+    })
+}
+
+exports.delete = (req,res)=>{
+    Resume.remove(
+    {
+        resumeId: req.params.username
+    })
+    .then(()=>
+    {
+        res.status(200).send("Resume Deleted!");
+    })
+    .catch((err)=>
+    {
+        res.status(500).send({
+            success: false,
+            message: err.message || "Resume not found",
         })
     })
 }
