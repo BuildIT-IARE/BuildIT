@@ -563,7 +563,7 @@
         font-size: larger;
         position: fixed;
         top: 10px;
-        left: -100px;
+        left: 100px;
         padding: 8px 15px;
         border-radius: 8mm;
         box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.308);
@@ -1048,7 +1048,7 @@
                   cols="50"
                   rows="4"
                   class="inputf"
-                  maxlength="200"
+                  maxlength="300"
                 >
 A hardworking and passionate job seeker with strong organizational skills eager to secure an entry-level [Job Title] position. Ready to help the team achieve company goals.
                 </textarea>
@@ -1855,7 +1855,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
             inpo +
             '" placeholder="Certificate URL" class="inputf Interships intertrio" required><span class="label">Certificate URL</span></span></span><span class="formspan"><span class="inputfield"><textarea name="InternDesc' +
             inpo +
-            '" cols="50" rows="3" class="inputf Interships InternDesc" placeholder="Intership Description (Start typing from here...)" required maxlength="100"></textarea><span class="label">Internship Description</span></span></span><span class="formspan"><span class="inputfield"><input type="month" name="InternDateofStart' +
+            '" cols="50" rows="3" class="inputf Interships InternDesc" placeholder="Intership Description (Start typing from here...)" required maxlength="200"></textarea><span class="label">Internship Description</span></span></span><span class="formspan"><span class="inputfield"><input type="month" name="InternDateofStart' +
             inpo +
             '" placeholder="Start Date" class="inputf Interships" required><span class="label">Start Date</span></span><span class="inputfield"><input type="month" name="InternDateofEnd' +
             inpo +
@@ -1874,7 +1874,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
             propo +
             '" placeholder="Github Link" class="inputf Projects" required><span class="label">Github Link</span></span></span><span class="formspan"><span class="inputfield"><textarea name="ProjectDesc' +
             propo +
-            '"  cols="50" rows="3" class="inputf ProjectDesc Projects" placeholder="Project Description (Start typing from here...)" required maxlength="100"></textarea><span class="label">Project Description</span></span></span>'
+            '"  cols="50" rows="3" class="inputf ProjectDesc Projects" placeholder="Project Description (Start typing from here...)" required maxlength="200"></textarea><span class="label">Project Description</span></span></span>'
         );
         myForm.style.height = fs4.clientHeight + "px";
         cl4.style.display = "block";
@@ -2039,7 +2039,6 @@ A hardworking and passionate job seeker with strong organizational skills eager 
       ("<%}%>");
       ("<%}%>");
       myForm.style.height = fs1.clientHeight + "px";
-      myresume.style.left = formfooter.clientWidth +10+"px";
     </script>
     <script>
       document.getElementById("token").value = "<%= token %>";
