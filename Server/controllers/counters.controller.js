@@ -1,5 +1,4 @@
 const Counter = require("../models/counters.model.js");
-const Count = require("../models/count.model.js")
 var today = new Date();
 
 exports.addDayCount = (req, res) => {
@@ -48,3 +47,4 @@ exports.getCounts = (req, res)=>{
     res.send(sendData)
   })
 }
+
