@@ -8,6 +8,4 @@ module.exports = (app) => {
     app.get("/resumes",middleware.checkTokenAdmin,resume.findAll);
 
     app.get("/resume/:username",middleware.checkToken,resume.findOne);
-
-    app.delete("/resume/:username",middleware.checkTokenAdmin,resume.delete);
 }
