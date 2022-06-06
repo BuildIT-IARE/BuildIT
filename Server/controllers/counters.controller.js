@@ -36,15 +36,3 @@ exports.getAllCounts = (req, res) => {
     });
 };
 
-exports.getCounts = (req, res)=>{
-  Count.find({})
-  .then((count)=>{
-    sendData={success:true, data:count}
-    res.send(sendData)
-  })
-  .catch((err)=>{
-    sendData={success:true}
-    res.send(sendData)
-  })
-}
-
