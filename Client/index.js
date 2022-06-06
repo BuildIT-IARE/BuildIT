@@ -76,90 +76,58 @@ if(sessionText !== ''){
   }
 }
 
-
-let getWeekClicks = async () => {
-  try {
-    let secondResponse = await fetch(`${serverRoute}/counters`);
-    let allCounts = await secondResponse.json();
-    let weekCount2 = 0;
-    let len = Math.min(8, allCounts.length);
-
-    for (let i = 0; i < len; i++) {
-      if (new Date(allCounts[i].date).getDay() === 0) break;
-      else weekCount2 += allCounts[i].count;
-    }
-
-    totalCount = allCounts.reduce((a, b) => a + b.count, 0);
-
-    return weekCount2;
-  } catch (err) {
-    return 0;
-  }
-};
-
-(async () => {
-  weekCount = await getWeekClicks();
-})();
-
-let handleClicks = async () => {
-  try {
-    let currDate = new Date().getDate();
-
-    if (currDate !== prevDate) {
-      let firstResponse = await fetch(
-        "https://api.countapi.xyz/hit/" + countApiKey
-      );
-      let clicks = await firstResponse.json();
-
-      let options = {
-        body: {
-          count: clicks.value,
-        },
-        url: serverRoute + "/counters/add",
-        method: "post",
-        json: true,
-      };
-
-      request(options, async (err, response, body) => {
-        await fetch("https://api.countapi.xyz/set/" + countApiKey + "?value=0");
-        prevDate = currDate;
-        weekCount = await getWeekClicks();
-      });
-    } else {
-      await fetch("https://api.countapi.xyz/hit/" + countApiKey);
-    }
-  } catch (err) {
-    console.log("count api error");
-  }
-};
-
 let checkSignIn = async (req, res, next) => {
   if (
     userSessions2.includes(req.cookies.user) ||
     Object.keys(req.cookies).length === 0
   ) {
-    await handleClicks();
     next(); //If session exists, proceed to page
   } else {
     res.redirect("/logout"); //Error, trying to access unauthorized page!
   }
 };
 
+
+function loginCounts(req,res){
+  let options = {
+    url: serverRoute + "/counters",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    if (body.success){
+      
+      res.render("home", {
+        imgUsername: req.cookies.username,
+        dayCount:body.data[0].day,
+        weeklyCount: body.data[0].week,
+        totalCount: body.data[0].total,
+        googleSheetsApi,
+      });
+    }
+    else{
+      res.render("home", {
+        imgUsername: req.cookies.username,
+        dayCount:0,
+        weeklyCount: 0,
+        totalCount: 0,
+        googleSheetsApi,
+      });
+    }
+  })
+}
+
 app.get("/", async (req, res) => {
-  await handleClicks();
-  res.render("home", {
-    imgUsername: req.cookies.username,
-    weeklyCount: weekCount,
-    totalCount: totalCount,
-    countApiKey,
-    googleSheetsApi,
-  });
+  loginCounts(req,res)
 });
 app.get("/index", async (req, res) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  loginCounts(req,res)
 });
 app.get("/home", checkSignIn, async (req, res, next) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  loginCounts(req,res)
 });
 app.get("/about", checkSignIn, async (req, res, next) => {
   res.render("about", { imgUsername: req.cookies.username });
@@ -2552,87 +2520,8 @@ app.get('/resume',checkSignIn,async(req,res)=>{
       data:body
     })
   })
+  
 })
-
-app.post("/resume/:username" ,async(req,res)=>{
-  let options = {
-    url: serverRoute + "/resume/"+req.params.username,
-    method: "delete",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    let options = {
-      url: serverRoute + "/resumes",
-      method: "get",
-      headers: {
-        authorization: req.cookies.token,
-      },
-      json: true,
-    };
-    request(options, function (err, response, body) {
-      body.url = clientRoute;
-      body.serverurl = serverRoute;
-      for (let i = 0; i < body.length; i++) {
-        body[i].firstName = body[i].personalInfo.firstName;
-        body[i].lastName = body[i].personalInfo.lastName;
-        var branch = body[i].resumeId.substring(6,8);
-        if(branch == '05')
-        {
-          body[i].branch = "CSE";
-        }
-        else if(branch == '12')
-        {
-          body[i].branch = "IT";
-        }
-        else if(branch == '04')
-        {
-          body[i].branch = "ECE";
-        }
-        else if(branch == '01')
-        {
-          body[i].branch = "CIV";
-        }
-        else if(branch == '02')
-        {
-          body[i].branch = "EEE";
-        }
-        else if(branch == '03')
-        {
-          body[i].branch = "ME";
-        }
-        else if(branch == '21')
-        {
-          body[i].branch = "CSE";
-        }
-        else if(branch == '66')
-        {
-          body[i].branch = "CSE AIML";
-        }
-        else if(branch == '67')
-        {
-          body[i].branch = "CSE DS";
-        }
-        else if(branch == '62')
-        {
-          body[i].branch = "CSE CS";
-        }
-        else if(branch == '33')
-        {
-          body[i].branch = "CSE IT";
-        }
-        else
-        {
-          body[i].branch = "INVALID";
-        }
-      }
-      res.render("viewResumes", { data: body});
-    });
-  });
-});
-
 app.get("/resume/:username",checkSignIn,async(req,res)=>{
   let options = {
     url: serverRoute + "/resume/"+req.params.username,
