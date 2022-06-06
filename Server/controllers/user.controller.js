@@ -1,5 +1,5 @@
 const User = require("../models/user.model.js");
-const Count = require("../models/count.model.js");
+
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
@@ -603,7 +603,7 @@ exports.forgotPass = (req, res) => {
 // Find username and check pass
 exports.checkPass = (req, res) => {
   User.find({ username: req.body.username })
-    .then(async (user) => {
+    .then((user) => {
       if (user.length === 0) {
         return res.status(404).send({
           success: false,
@@ -613,13 +613,6 @@ exports.checkPass = (req, res) => {
       if (user[0].password === req.body.password) {
         if (user[0].isVerified === true) {
           // Login successful
-          let currDate = user[0].countDate
-          let date = new Date()
-          let tdate = date.getDate()+":"+date.getMonth()
-          if (currDate!=tdate){
-            await Count.updateOne({},{$inc:{day:1, week:1, total:1}})
-            await User.findOneAndUpdate({username:req.body.username},{$set:{countDate:tdate}})
-          }
           let token = jwt.sign(
             {
               username: user[0].username,
