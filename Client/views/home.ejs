@@ -133,9 +133,9 @@
 </footer> -->
 <!-- /footer -->
 <div class="counters">
-  <p class="counter" id="total"><span>Total Views</span> <%=totalCount%></p>
-  <p class="counter" id="weekly"><span>Daily Views</span><%= dayCount%></p>
-  <p class="counter" id="counter"><span>Weekly Views</span><%= weeklyCount%></p>
+  <p class="counter" id="total"></p>
+  <p class="counter" id="weekly"></p>
+  <p class="counter" id="counter"></p>
 </div>
 <% include ../views/partials/footer %>
 
@@ -157,6 +157,9 @@
   <input type="text" id="ip" name="ip" style="display: none" />
 </form>
 <script>
+
+
+  const countApiKey = "<%= countApiKey %>"
   const googleSheetsApi = "<%= googleSheetsApi %>"
   var formdate=document.getElementById("date")
   var formmonth=document.getElementById("month")
@@ -173,6 +176,19 @@
   formtime.value=time
   formuser.value="<%=imgUsername%>"
   const countEl = document.getElementById("counter");
+  function counters() {
+    //this api call increments website hits
+    fetch("https://api.countapi.xyz/get/" + countApiKey)
+      .then((res) => res.json())
+      .then((res) => {
+        countEl.innerHTML = "<span>Daily Views</span>" + res.value;
+        document.getElementById("weekly").innerHTML =
+        "<span>Weekly Views</span>" + (Number('<%= weeklyCount %>') + res.value);
+        document.getElementById("total").innerHTML =
+        "<span>Total Views</span>" + (Number('<%= totalCount %>') + res.value);
+      });
+  }
+  counters();
   fetch("https://api.ipify.org/?format=json")
 .then(results=>results.json())
 .then(data=>{
