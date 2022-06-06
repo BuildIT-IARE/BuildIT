@@ -76,90 +76,58 @@ if(sessionText !== ''){
   }
 }
 
-
-let getWeekClicks = async () => {
-  try {
-    let secondResponse = await fetch(`${serverRoute}/counters`);
-    let allCounts = await secondResponse.json();
-    let weekCount2 = 0;
-    let len = Math.min(8, allCounts.length);
-
-    for (let i = 0; i < len; i++) {
-      if (new Date(allCounts[i].date).getDay() === 0) break;
-      else weekCount2 += allCounts[i].count;
-    }
-
-    totalCount = allCounts.reduce((a, b) => a + b.count, 0);
-
-    return weekCount2;
-  } catch (err) {
-    return 0;
-  }
-};
-
-(async () => {
-  weekCount = await getWeekClicks();
-})();
-
-let handleClicks = async () => {
-  try {
-    let currDate = new Date().getDate();
-
-    if (currDate !== prevDate) {
-      let firstResponse = await fetch(
-        "https://api.countapi.xyz/hit/" + countApiKey
-      );
-      let clicks = await firstResponse.json();
-
-      let options = {
-        body: {
-          count: clicks.value,
-        },
-        url: serverRoute + "/counters/add",
-        method: "post",
-        json: true,
-      };
-
-      request(options, async (err, response, body) => {
-        await fetch("https://api.countapi.xyz/set/" + countApiKey + "?value=0");
-        prevDate = currDate;
-        weekCount = await getWeekClicks();
-      });
-    } else {
-      await fetch("https://api.countapi.xyz/hit/" + countApiKey);
-    }
-  } catch (err) {
-    console.log("count api error");
-  }
-};
-
 let checkSignIn = async (req, res, next) => {
   if (
     userSessions2.includes(req.cookies.user) ||
     Object.keys(req.cookies).length === 0
   ) {
-    await handleClicks();
     next(); //If session exists, proceed to page
   } else {
     res.redirect("/logout"); //Error, trying to access unauthorized page!
   }
 };
 
+
+function loginCounts(req,res){
+  let options = {
+    url: serverRoute + "/counters",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    if (body.success){
+      
+      res.render("home", {
+        imgUsername: req.cookies.username,
+        dayCount:body.data[0].day,
+        weeklyCount: body.data[0].week,
+        totalCount: body.data[0].total,
+        googleSheetsApi,
+      });
+    }
+    else{
+      res.render("home", {
+        imgUsername: req.cookies.username,
+        dayCount:0,
+        weeklyCount: 0,
+        totalCount: 0,
+        googleSheetsApi,
+      });
+    }
+  })
+}
+
 app.get("/", async (req, res) => {
-  await handleClicks();
-  res.render("home", {
-    imgUsername: req.cookies.username,
-    weeklyCount: weekCount,
-    totalCount: totalCount,
-    countApiKey,
-    googleSheetsApi,
-  });
+  loginCounts(req,res)
 });
 app.get("/index", async (req, res) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  loginCounts(req,res)
 });
 app.get("/home", checkSignIn, async (req, res, next) => {
-  res.render("home", { imgUsername: req.cookies.username });
+  loginCounts(req,res)
 });
 app.get("/about", checkSignIn, async (req, res, next) => {
   res.render("about", { imgUsername: req.cookies.username });
