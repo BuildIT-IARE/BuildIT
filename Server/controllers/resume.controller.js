@@ -230,7 +230,7 @@ exports.findOne = (req,res)=>{
 }
 
 exports.delete = (req,res)=>{
-    Resume.remove(
+    Resume.deleteOne(
     {
         resumeId: req.params.username
     })
