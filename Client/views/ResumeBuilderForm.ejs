@@ -1050,7 +1050,10 @@
                   class="inputf"
                   maxlength="300"
                 >
-A hardworking and passionate job seeker with strong organizational skills eager to secure an entry-level [Job Title] position. Ready to help the team achieve company goals.
+                <% if(data){ %>
+                  <%= data.brief %>
+                <% }else{ %>
+A hardworking and passionate job seeker with strong organizational skills eager to secure an entry-level [Job Title] position. Ready to help the team achieve company goals.<% } %>
                 </textarea>
                 <span class="label">Description</span>
               </span>
@@ -1484,6 +1487,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
       var cl5 = document.getElementById("cl5");
       var cl6 = document.getElementById("cl6");
       var sides = document.querySelectorAll(".sideicons");
+      var bri = document.getElementById("Brief")
       var pspo = 0;
       var prspo = 0;
       var inpo = 0;
