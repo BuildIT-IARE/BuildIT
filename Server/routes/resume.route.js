@@ -10,4 +10,6 @@ module.exports = (app) => {
     app.get("/resume/:username",middleware.checkToken,resume.findOne);
 
     app.delete("/resume/:username",middleware.checkTokenAdmin,resume.delete);
+
+    app.post("/getAllResumes", middleware.checkTokenAdmin, resume.findAll)
 }

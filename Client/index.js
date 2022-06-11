@@ -2690,6 +2690,20 @@ app.get("/admin/viewResumes", async (req, res) => {
   });
 });
 
+app.post("/getAllResumes", async(req,res)=>{
+  let options = {
+    url: serverRoute + "/getAllResumes",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function(err,response,body){
+    res.render("allResumes",{resumes:body})
+  })
+})
+
 app.get("/potdReport", checkSignIn, async(req,res)=>{
   res.render("potdReport",{imgUsername:req.cookies.username})
 })

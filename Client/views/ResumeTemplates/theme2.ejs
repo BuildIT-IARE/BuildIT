@@ -16,20 +16,20 @@
     />
     <title>Theme 2</title>
     <style>
-      .main-container {
+      .main-container2 {
         background: white;
         width: 960px;
-        height: 1353px;
+        height: 1363px;
         display: block;
         margin: auto;
         font-family: PT Sans;
       }
-      .top {
+      .top2 {
         width: 100%;
         background: rgb(55, 61, 82);
         margin-bottom: 20px;
       }
-      .name {
+      .name2 {
         padding: 20px;
         font-size: xx-large;
         color: white;
@@ -38,16 +38,16 @@
         margin: auto;
         text-align: center;
       }
-      .brief {
+      .brief2 {
         padding: 0 20px;
         color: white;
         font-size: medium;
         text-align: justify;
       }
-      .brief p {
+      .brief2 p {
         margin: 0;
       }
-      .persdetails {
+      .persdetails2 {
         width: 100%;
         display: flex;
         align-items: center;
@@ -58,75 +58,75 @@
         font-size: small;
         margin-top: 20px;
       }
-      .persdetails p {
+      .persdetails2 p {
         margin: 0;
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      .persdetails a {
+      .persdetails2 a {
         text-decoration: none;
         color: white;
         background: rgb(67, 71, 83);
         padding: 5px 10px;
         border-radius: 5mm;
       }
-      .persdetails span {
+      .persdetails2 span {
         font-size: small;
         margin: 0 3px;
       }
-      .bottom {
+      .bottom2 {
         width: 960px;
         display: flex;
       }
-      .left {
+      .left2 {
         padding: 10px;
         width: 460px;
       }
-      .right {
+      .right2 {
         padding: 10px;
         width: 460px;
         padding-left: 30px;
       }
-      .label {
+      .label2002 {
         font-size: x-large;
         color: rgb(58, 168, 86);
         font-weight: bold;
         margin: 15px 0px 15px 0px;
       }
-      .intern p {
+      .intern2 p {
         margin: 5px;
         display: flex;
         align-items: center;
         justify-content: space-between;
       }
-      .intern p .title {
+      .intern2 p .title {
         font-size: medium;
       }
-      .intern {
+      .intern2 {
         margin-bottom: 20px;
       }
-      .intern p a {
+      .intern2 p a {
         text-decoration: none;
         color: rgb(58, 168, 86);
       }
-      .intern p a span {
+      .intern2 p a span {
         font-size: medium;
       }
-      .project p {
+      .project2 p {
         margin: 5px;
       }
-      .project p a {
+      .project2 p a {
         text-decoration: none;
         color: rgb(58, 168, 86);
       }
-      .project p a span {
+      .project2 p a span {
         font-size: medium;
       }
       .date {
         font-size: small;
       }
-      .project {
+      .project2 {
         margin-bottom: 20px;
       }
       .Education p {
@@ -209,15 +209,15 @@
     </style>
   </head>
   <body>
-    <div class="main-container">
-      <div class="top">
-        <div class="name"><%= data.personalInfo.firstName%> <%= data.personalInfo.lastName%></div>
-        <div class="brief">
+    <div class="main-container2">
+      <div class="top2">
+        <div class="name2"><%= data.personalInfo.firstName%> <%= data.personalInfo.lastName%></div>
+        <div class="brief2">
           <p>
             <%= data.brief%>
           </p>
         </div>
-        <div class="persdetails">
+        <div class="persdetails2">
           <p>
             <span class="material-icons"> room </span> <%= data.personalInfo.city%> <%= data.personalInfo.country%> <%= data.personalInfo.pinCode%>
           </p>
@@ -233,10 +233,10 @@
           <% }%>
         </div>
       </div>
-      <div class="bottom">
-        <div class="left">
+      <div class="bottom2">
+        <div class="left2">
           <div class="Education">
-            <div class="label">Education</div>
+            <div class="label2002">Education</div>
             <div class="school">
                 <p><Strong><%= data.educationalInfo.collegeName%></Strong></p>
                 <p><%= data.educationalInfo.collegeDesc%> <%=data.educationalInfo.collegeScoreType %>: <%= data.educationalInfo.collegeScore%></p>
@@ -263,9 +263,9 @@
           </div>
           <% if(data.internshipInfo.internshipName.length>0){%>
           <div class="interships">
-            <div class="label">Internships</div>
+            <div class="label2002">Internships</div>
             <% for(var i=0;i<data.internshipInfo.internshipName.length;i++){ %>
-            <div class="intern">
+            <div class="intern2">
               <p>
                 <span
                   ><span class="title"
@@ -285,10 +285,10 @@
           </div>
           <%}%>
           <% if(data.projects.length>0){ %>
-          <div class="projects">
-            <div class="label">Projects</div>
+          <div class="projects2">
+            <div class="label2002">Projects</div>
             <% for(var i=0;i<data.projects.length;i++){ %>
-            <div class="project">
+            <div class="project2">
               <p>
                 <strong><%= data.projects[i][0]%></strong
                 ><a href="<%= data.projects[i][1]%>" target="_blank"
@@ -304,7 +304,7 @@
           <%}%>
           <% if(data.achievements.length>0){ %>
           <div class="Achievements">
-            <div class="label">Achievements</div>
+            <div class="label2002">Achievements</div>
             <% for(var i=0;i<data.achievements.length;i++){ %>
             <p>
               <%= data.achievements[i][0]%>
@@ -314,10 +314,10 @@
           </div>
           <%}%>
         </div>
-        <div class="right">
+        <div class="right2">
           <% if(data.personalSkills.length>0){%>
           <div class="pesskills">
-            <div class="label">Personal Skills</div>
+            <div class="label2002">Personal Skills</div>
             <% for(var i=0;i<data.personalSkills.length;i++){ %>
             <div class="skill">
               <p><%=data.personalSkills[i][0] %></p>
@@ -335,7 +335,7 @@
           <%}%>
           <% if(data.professionalSkills.length>0){%>
           <div class="prsskills">
-            <div class="label">Professional Skills</div>
+            <div class="label2002">Professional Skills</div>
             <% for(var i=0;i<data.professionalSkills.length;i++){ %>
             <div class="skill">
               <p><%=data.professionalSkills[i][0] %></p>
@@ -353,7 +353,7 @@
           <%}%>
           <% if(data.codingProfilesInfo.codeChefURL || data.codingProfilesInfo.codeForcesURL || data.codingProfilesInfo.hackerRankURL || data.codingProfilesInfo.geeksForGeeksURL || data.codingProfilesInfo.InterviewBitURL || data.codingProfilesInfo.leetCodeURL || data.codingProfilesInfo.spojURL){%>
           <div class="coding">
-            <div class="label">Coding Profiles</div>
+            <div class="label2002">Coding Profiles</div>
             <% if(data.codingProfilesInfo.codeChefURL){ %>
             <div class="profile">
               <a href="<%=data.codingProfilesInfo.codeChefURL%>" target="_blank"
@@ -428,7 +428,7 @@
           <%}%>
           <% if(data.extraCurricular.length>0){ %>
           <div class="Extras">
-            <div class="label">Extracurricular Activities</div>
+            <div class="label2002">Extracurricular Activities</div>
             <% for(var i=0;i<data.extraCurricular.length;i++){ %>
             <p><%= data.extraCurricular[i] %></p>
             <%}%>
