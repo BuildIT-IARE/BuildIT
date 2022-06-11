@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumes</title>
+</head>
+<body>
+    <% for(var i=0;i<resumes.length;i++) {%>
+        <% var data=resumes[i] %>
+        <% if(data.themeId=="theme1"){ %>
+        <% include ../views/ResumeTemplates/theme1 %>
+        <%}%>
+        <% if(data.themeId=="theme2"){ %>
+            <% include ../views/ResumeTemplates/theme2 %>
+            <%}%>
+            <% if(data.themeId=="theme3"){ %>
+                <% include ../views/ResumeTemplates/theme3 %>
+                <%}%>  
+    <%}%>
+</body>
+</html>

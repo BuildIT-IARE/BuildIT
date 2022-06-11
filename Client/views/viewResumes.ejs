@@ -17,6 +17,17 @@
 
     <style>
       /* Three columns side by side */
+      .part2{
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-left: 5%;
+      }
+      .part2 form{
+        width: 300px;
+      }
       #resumedel
       {
         padding: 0;
@@ -245,6 +256,16 @@
           </tfoot>
         </table>
       </div>
+      <div class="part2">
+      <h3>Print all resumes Branch-wise</h3>
+      <form action="/getAllResumes" method="POST">
+        <select name="Branch" id="">
+          <option value="all">All</option>
+          <option value="cse">CSE</option>
+        </select>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
     </section>
     <br />
     <br />

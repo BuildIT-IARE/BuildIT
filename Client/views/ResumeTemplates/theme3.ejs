@@ -23,7 +23,7 @@
       body {
         display: block;
       }
-      .main-container {
+      .main-container3 {
         width: 960px;
         height: 1353px;
         display: flex;
@@ -39,13 +39,13 @@
         left: -15px;
         background: rgb(255, 0, 0);
       }
-      .left {
+      .left3 {
         width: 510px;
         padding-left: 20px;
         height: 1353px;
         padding-right: 20px;
       }
-      .right {
+      .right3 {
         width: 450px;
         padding-right: 10px;
         background: rgb(241, 241, 241);
@@ -54,25 +54,25 @@
         border-bottom-right-radius: 75mm;
         border-top: solid rgb(255, 0, 0) 7px;
       }
-      .name {
+      .name3 {
         padding: 5px;
         padding-top: 15px;
         font-size: 45px;
         font-weight: 500;
       }
-      .contactDetails {
+      .contactDetails3 {
         padding: 5px;
       }
-      .contactDetails p {
+      .contactDetails3 p {
         margin: 0;
       }
-      .contactDetails .high {
+      .contactDetails3 .high {
         font-weight: bold;
       }
-      .contactDetails .low {
+      .contactDetails3 .low {
         margin-bottom: 15px;
       }
-      .label {
+      .label3 {
         font-size: xx-large;
         font-weight: 500;
         color: rgb(255, 0, 0);
@@ -84,10 +84,10 @@
         padding-left: 15px;
         margin: 20px 0px;
       }
-      .socialmedia{
+      .socialmedia3{
           padding: 2px 0;
       }
-      .socialmedia a{
+      .socialmedia3 a{
           text-decoration: none;
           color:rgb(255, 0, 0);
           background:rgb(241, 241, 241);
@@ -96,7 +96,7 @@
           font-weight: 500;
           box-shadow: 1px 2px 0px rgba(0,0,0,0.25);
       }
-      .socialmedia a span{
+      .socialmedia3 a span{
           font-size: small;
           margin-left: 3px;
       }
@@ -162,7 +162,7 @@
       .block2 span{
           margin: 0;
       }
-      .label2{
+      .label32{
           color: black;
           font-size: 30px;
           font-weight: 500;
@@ -173,10 +173,10 @@
           padding-bottom: 15px;
           margin-top: 35px;
       }
-      .label2 .bullet{
+      .label32 .bullet{
           display: flex;
       }
-      .label2 .bullet span{
+      .label32 .bullet span{
           font-size: 40px;
           padding: 0;
       }
@@ -189,16 +189,16 @@
       .brief p{
           margin: 0;
       }
-      .skills{
+      .skills3{
           padding: 0px 15px;
           display: flex;
           align-items: center;
           flex-wrap: wrap;
       }
-      .skills p{
+      .skills3 p{
           margin: 0;
       }
-      .skill{
+      .skill3{
           padding: 3px 12px;
           border-radius: 6mm;
           background: rgb(255, 0, 0);
@@ -277,7 +277,7 @@
     </style>
   </head>
   <body>
-    <div class="main-container">
+    <div class="main-container3">
       <div class="block"></div>
       <div class="block2">
           <span class="material-icons-outlined">
@@ -296,12 +296,12 @@ expand_more
         expand_more
         </span>
       </div>
-      <div class="left">
-        <div class="name">
+      <div class="left3">
+        <div class="name3">
           <%= data.personalInfo.firstName%> <%= data.personalInfo.lastName%>
         </div>
-        <div class="contactDetails">
-          <div class="label">Contact</div>
+        <div class="contactDetails3">
+          <div class="label3">Contact</div>
           <span class="details">
             <p class="high">Address</p>
             <p class="low">
@@ -318,7 +318,7 @@ expand_more
             <p class="low"><%= data.personalInfo.emailId%></p>
           </span>
           <% for(var i=0;i<data.personalInfo.socials.length;i++){ %>
-            <span class="socialmedia">
+            <span class="socialmedia3">
               <a href="<%=data.personalInfo.socials[i][1]%>" target="_blank"><%=data.personalInfo.socials[i][0]%><span class="material-icons-outlined">
                 open_in_new
                 </span></a>
@@ -326,7 +326,7 @@ expand_more
             <% }%>
         </div>
         <div class="education">
-            <div class="label">Education</div>
+            <div class="label3">Education</div>
             <div class="edupart">
                 <p class="edurow2">
                      <span>
@@ -363,7 +363,7 @@ expand_more
         </div>
         <% if(data.internshipInfo.internshipName.length>0){%>
           <div class="interships">
-            <div class="label">Internships</div>
+            <div class="label3">Internships</div>
             <% for(var i=0;i<data.internshipInfo.internshipName.length;i++){ %>
             <div class="intern">
                 <p>
@@ -389,7 +389,7 @@ expand_more
           <%}%>
         <% if(data.projects.length>0){ %>
           <div class="projects">
-            <div class="label">Projects</div>
+            <div class="label3">Projects</div>
             <% for(var i=0;i<data.projects.length;i++){ %>
             <div class="project">
               <p>
@@ -406,7 +406,7 @@ expand_more
           </div>
           <%}%>
       </div>
-      <div class="right">
+      <div class="right3">
         <% if(data.brief){ %>
             <div class="brief">
               <p>
@@ -415,8 +415,8 @@ expand_more
             </div>
             <%}%>
             <% if(data.personalSkills.length>0){%>
-                <div class="pesskills">
-                    <div class="label2">
+                <div class="pesskills3">
+                    <div class="label32">
                         <div class="bullet">
                           <span class="material-icons-outlined">
                               arrow_right
@@ -424,9 +424,9 @@ expand_more
                                   Personal Skills
                         </div>
                     </div>
-                    <div class="skills">
+                    <div class="skills3">
                   <% for(var i=0;i<data.personalSkills.length;i++){ %>
-                  <div class="skill">
+                  <div class="skill3">
                     <p><%=data.personalSkills[i][0] %></p>
                   </div>
                   <%}%>
@@ -434,8 +434,8 @@ expand_more
                 </div>
                 <%}%>
                 <% if(data.professionalSkills.length>0){%>
-                    <div class="pesskills">
-                        <div class="label2">
+                    <div class="pesskills3">
+                        <div class="label32">
                             <div class="bullet">
                               <span class="material-icons-outlined">
                                   arrow_right
@@ -443,9 +443,9 @@ expand_more
                                       Professional Skills
                             </div>
                         </div>
-                        <div class="skills">
+                        <div class="skills3">
                       <% for(var i=0;i<data.professionalSkills.length;i++){ %>
-                      <div class="skill">
+                      <div class="skill3">
                         <p><%=data.professionalSkills[i][0] %></p>
                       </div>
                       <%}%>
@@ -454,7 +454,7 @@ expand_more
                     <%}%>
                     <% if(data.codingProfilesInfo.codeChefURL || data.codingProfilesInfo.codeForcesURL || data.codingProfilesInfo.hackerRankURL || data.codingProfilesInfo.geeksForGeeksURL || data.codingProfilesInfo.InterviewBitURL || data.codingProfilesInfo.leetCodeURL || data.codingProfilesInfo.spojURL){%>
                         <div class="coding">
-                            <div class="label2">
+                            <div class="label32">
                                 <div class="bullet">
                                   <span class="material-icons-outlined">
                                       arrow_right
@@ -517,7 +517,7 @@ expand_more
                         <%}%>
                         <% if(data.achievements.length>0){ %>
                             <div class="Achievements">
-                                <div class="label2">
+                                <div class="label32">
                                     <div class="bullet">
                                       <span class="material-icons-outlined">
                                           arrow_right
@@ -535,7 +535,7 @@ expand_more
                             <%}%>
                             <% if(data.extraCurricular.length>0){ %>
                                 <div class="Extras">
-                                  <div class="label2">
+                                  <div class="label32">
                                     <div class="bullet">
                                       <span class="material-icons-outlined">
                                           arrow_right
