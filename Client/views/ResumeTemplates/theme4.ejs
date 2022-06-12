@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme4</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <style>
+        body{
+            display: block;
+            font-family: EB Garamond;
+        }
+        .main-con{
+        width: 960px;
+        min-height: 1353px;
+        margin: auto;
+        position: relative;
+        }
+        .name4{
+            width: 100%;
+            text-align: center;
+            font-size:50px;
+            font-weight: 400;
+        }
+        .social-list{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: fit-content;
+        }
+        .item{
+            display: flex;
+            align-items: center;
+            font-size: medium;
+            margin: 10px;
+            font-weight: 500;
+        }
+        .item span{
+            font-size: medium;
+            margin: 0 3px;
+        }
+        .item a{
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+            padding: 5px 10px;
+            background: rgba(209, 209, 209, 0.687);
+            border-radius: 5mm;
+            box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.331);
+        }
+        .line44{
+            width: 100%;
+            height: 1px;
+            background: black;
+            margin: 10px 0;
+        }
+        .label4{
+            font-size: xx-large;
+            font-weight: 400;
+            margin-left: 5px;
+        }
+        .epart{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            font-size:large;
+        }
+        .epart .boldit{
+            font-weight: bold;
+        }
+        .edu-part{
+            margin-bottom: 10px;
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+        .epart .material-icons-outlined{
+            font-size: medium;
+            color: rgb(92, 92, 92);
+        }
+        .epart a{
+            text-decoration: none;
+        }
+        .pers-skills{
+            font-size: large;
+            margin-bottom: 10px;
+            font-weight: 500;
+            margin: 10px 25px;
+        }
+        .profile44{
+            font-size: large;
+            font-weight: 500;
+            margin-bottom: 2mm;
+            margin: 5px;
+        }
+        .profile44 a{
+            text-decoration: none;
+            padding: 1px 10px;
+            background: rgba(209, 209, 209, 0.687);
+            border-radius: 5mm;
+            box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.331);
+            color: black;
+            
+        }
+        .profile44 a span{
+            font-size: medium;
+        }
+        .coding4{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+        .res-achieve{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 5px 25px;
+            font-size: large;
+            font-weight: 500;
+        }
+        #print{
+          align-self: center;
+          background: rgb(70, 70, 70);
+          color: rgb(255, 255, 255);
+          font-size: x-large;
+          padding: 3px 25px;
+          border: none;
+          border-radius: 10mm;
+          outline: none;
+          cursor: pointer;
+          margin-top: 10px;
+          margin: auto;
+          display: block;
+        }
+        #print:hover{
+            background: rgb(28, 28, 28);
+        }
+        .rollnumber3{
+          position: absolute;
+          left: 20px;
+          top: 5px;
+          color: rgba(44, 44, 44, 0.63);
+        }
+        @media print{
+          .pagebreak { page-break-before: always; }
+            #print{
+                visibility: hidden;
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-con">
+        <div class="rollnumber3">
+            <%= data.resumeId %>
+          </div>
+        <div class="res-sec">
+            <div class="name4"><%= data.personalInfo.firstName%> <%= data.personalInfo.lastName%></div>
+            <div class="social-list">
+                <div class="item">
+                    <span class="material-icons-round">
+                        phone
+                        </span>
+                        <%= data.personalInfo.phoneNumber%>
+                </div>
+                &nbsp|&nbsp
+                <div class="item">
+                    <span class="material-icons-round">
+                        email
+                        </span>
+                        <%= data.personalInfo.emailId%>
+                </div>
+                <% for(var i=0;i<data.personalInfo.socials.length;i++){ %>
+                    &nbsp|&nbsp
+                    <div class="item">
+                      <a href="<%=data.personalInfo.socials[i][1]%>" target="_blank"><%=data.personalInfo.socials[i][0]%><span class="material-icons-outlined">
+                        open_in_new
+                        </span></a>
+                    </div>
+                    <% }%>
+            </div>
+        </div>
+        <% if(data.brief){ %>
+            <div class="res-sec">
+                <div style="margin: 10px 5px; font-size: large; font-weight: 500; ">
+              <span>
+                <%= data.brief%>
+              </span>
+            </div>
+            </div>
+            <%}%>
+        <div class="res-sec">
+            <div class="label4">Education</div>
+        <div class="line44"></div>
+        <div class="edu-part">
+            <div class="epart">
+            <span class="boldit"><%= data.educationalInfo.collegeName%></span>
+            <span><%= data.educationalInfo.collegeLocation%></span>
+        </div>
+        <div class="epart" style="font-style:italic ;">
+            <span><%= data.educationalInfo.collegeDesc%>: <%= data.educationalInfo.collegeScore%> (<%= data.educationalInfo.collegeScoreType %>)</span>
+            <span><%= data.educationalInfo.collegeStartDate%> to <%= data.educationalInfo.collegePassingDate%></span>
+        </div>
+        </div>
+        <div class="edu-part">
+            <div class="epart">
+                <span class="boldit"><%= data.educationalInfo.interName%></span>
+                <span><%= data.educationalInfo.interLocation%></span>
+            </div>
+            <div class="epart" style="font-style:italic ;">
+                <span><%= data.educationalInfo.interDesc%>: <%= data.educationalInfo.interScore%> (<%= data.educationalInfo.interScoreType %>)</span>
+                <span><%= data.educationalInfo.interStartDate%> to <%= data.educationalInfo.interPassingDate%></span>
+            </div>
+        </div>
+        <div class="edu-part">
+            <div class="epart">
+                <span class="boldit"><%= data.educationalInfo.schoolName%></span>
+                <span>
+                    <%= data.educationalInfo.schoolLocation%>
+                </span>
+            </div>
+            <div class="epart" style="font-style:italic ;">
+                <span><%= data.educationalInfo.schoolDesc%>: <%= data.educationalInfo.schoolScore%> (<%= data.educationalInfo.schoolScoreType %>)</span>
+                <span ><%= data.educationalInfo.schoolPassingDate%></span>
+            </div>
+        </div>
+    </div>
+    <% if(data.internshipInfo.internshipName.length>0){%>
+    <div class="res-sec">
+        <div class="label4">Internships</div>
+        <div class="line44"></div>
+        
+            <% for(var i=0;i<data.internshipInfo.internshipName.length;i++){ %>
+                <div class="edu-part">
+            <div class="epart">
+                <span><span class="boldit"
+                    ><%= data.internshipInfo.internshipName[i]%> [<%= data.internshipInfo.internshipCompanyName[i]%>]</span
+                  ><a href="<%= data.internshipInfo.internshipCertificate[i]%>" target="_blank"
+                    ><span class="material-icons-outlined">
+                      open_in_new
+                    </span></a
+                  ></span>
+                  <span style="font-style:italic ;"><%= data.internshipInfo.internshipStartDate[i]%> to <%= data.internshipInfo.internshipEndDate[i]%></span>
+            </div>
+            <div class="epart">
+                <%= data.internshipInfo.internshipDesc[i]%>
+            </div>
+        </div>
+            <% }%>
+          
+    </div>
+    <%}%>
+    <% if(data.projects.length>0){ %>
+        <div class="res-sec">
+                <div class="label4">Projects</div>
+                <div class="line44"></div>
+                <% for(var i=0;i<data.projects.length;i++){ %>
+                    <div class="edu-part">
+                <div class="epart">
+                    <span class="boldit">
+                    <%= data.projects[i][0]%><a href="<%= data.projects[i][1]%>" target="_blank"
+                      ><span class="material-icons-outlined"> open_in_new </span></a
+                    >
+                </span>
+            </div>
+            <div class="epart">
+                  <span>
+                    <%= data.projects[i][2]%>
+                  </span>
+                </div>
+            </div>
+                <%}%>
+              
+        </div>
+        <%}%>
+
+        <% if(data.personalSkills.length>0 || data.professionalSkills.length>0){%>
+        <div class="res-sec">
+            <div class="label4">Relavent Skills</div>
+            <div class="line44"></div>
+            <% if(data.personalSkills.length>0){%>
+            <div class="pers-skills">
+                <span> <strong>Personal Skills: </strong>
+                <% for(var i=0;i<data.personalSkills.length-1;i++){ %>
+                     <%=data.personalSkills[i][0] %> &nbsp|&nbsp
+                    <%}%>
+                    <%=data.personalSkills[data.personalSkills.length-1][0] %>
+                </span>
+            </div>
+            <%}%>
+            <% if(data.professionalSkills.length>0){%>
+                <div class="pers-skills">
+                    <span> <strong>Professional Skills: </strong>
+                        <% for(var i=0;i<data.professionalSkills.length-1;i++){ %>
+                              <%=data.professionalSkills[i][0] %> &nbsp|&nbsp
+                            <%}%>
+                            <%=data.professionalSkills[data.professionalSkills.length-1][0] %>
+                        </span>
+                </div>
+                <%}%>
+        </div>
+        <%}%>
+        <% if(data.codingProfilesInfo.codeChefURL || data.codingProfilesInfo.codeForcesURL || data.codingProfilesInfo.hackerRankURL || data.codingProfilesInfo.geeksForGeeksURL || data.codingProfilesInfo.InterviewBitURL || data.codingProfilesInfo.leetCodeURL || data.codingProfilesInfo.spojURL){%>
+        <div class="res-sec">
+            <div class="label4">Coding Profiles</div>
+            <div class="line44"></div>
+            <div class="coding4">
+                <% if(data.codingProfilesInfo.codeChefURL){ %>
+                <div class="profile44">
+                  <a href="<%=data.codingProfilesInfo.codeChefURL%>" target="_blank"
+                    >CodeChef - <%=data.codingProfilesInfo.codeChefRating%>(Rating) 
+                     </a
+                  >
+                </div>
+                <%}%>
+                <% if(data.codingProfilesInfo.hackerRankURL){ %>
+                <div class="profile44">
+                  <a href="<%=data.codingProfilesInfo.hackerRankURL%>" target="_blank"
+                    >Hackerrank - <strong><%=data.codingProfilesInfo.hackerRankBadges%></strong>(Badges)
+                    </a
+                  >
+                </div>
+                <%}%>
+                <% if(data.codingProfilesInfo.codeForcesURL){ %>
+                <div class="profile44">
+                  <a href="<%=data.codingProfilesInfo.codeForcesURL%>" target="_blank"
+                    >Codeforces - <strong><%=data.codingProfilesInfo.codeForcesRating%></strong>(Rating)
+                    </a
+                  >
+                </div>
+                <%}%>
+                <% if(data.codingProfilesInfo.geeksForGeeksURL){ %>
+                <div class="profile44">
+                  <a href="<%=data.codingProfilesInfo.geeksForGeeksURL%>" target="_blank"
+                    >GeeksforGeeks - <strong><%=data.codingProfilesInfo.geeksForGeeksScore%></strong>(Score)
+                    </a
+                  >
+                </div>
+                <%}%>
+                <% if(data.codingProfilesInfo.interViewBitURL){ %>
+                <div class="profile44">
+                  <a href="<%=data.codingProfilesInfo.interViewBitURL%>" target="_blank"
+                    >Interview Bit - <strong><%=data.codingProfilesInfo.interViewBitScore%></strong>(Score)
+                    </a
+                  >
+                </div>
+                <%}%>
+                <% if(data.codingProfilesInfo.leetCodeURL){ %>
+                <div class="profile44">
+                  <a href="<%= data.codingProfilesInfo.leetCodeURL %>" target="_blank"
+                    >LeetCode - <strong><%=data.codingProfilesInfo.leetCodeProblems%></strong>(Problems)
+                    </a
+                  >
+                </div>
+                <%}%>
+                <% if(data.codingProfilesInfo.spojURL){ %>
+                <div class="profile44">
+                  <a href="<%=data.codingProfilesInfo.spojURL%>" target="_blank"
+                    >Spoj - <strong><%=data.codingProfilesInfo.spojProblems%></strong>(Problems)
+                    </a
+                  >
+                </div>
+                <%}%>
+              </div>
+        </div>
+        <%}%>
+        <% if(data.achievements.length>0){ %>
+        <div class="res-sec">
+            <div class="label4">Achievements</div>
+            <div class="line44"></div>
+            <% for(var i=0;i<data.achievements.length;i++){ %>
+            <div class="res-achieve">
+                <span class="boldit">
+                    <%= data.achievements[i][0]%>
+                </span>
+                <span><%= data.achievements[i][1]%></span>
+            </div>
+            <%}%>
+        </div>
+        <%}%>
+        <% if(data.extraCurricular.length>0){ %>
+            <div class="res-sec" >
+                <div class="label4">Extracurricular Activities</div>
+            <div class="line44"></div>
+            <% for(var i=0;i<data.extraCurricular.length;i++){ %>
+                <div class="res-achieve">
+                <span class=" boldit"><%= data.extraCurricular[i] %></span>
+            </div>
+                <%}%>
+            
+            </div>
+            <%}%>
+            <button type="button" id="print" onclick="window.print()">Print</button>
+    </div>
+    <div class="pagebreak"> </div>
+    
+</body>
+</html>

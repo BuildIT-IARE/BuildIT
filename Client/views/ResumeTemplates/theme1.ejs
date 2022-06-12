@@ -23,11 +23,12 @@
       .main-container {
         margin: 0 auto;
         width: 960px;
-        height: 1363px;
+        height: 1353px;
         background: white;
         display: flex;
         align-items: center;
         justify-content: space-around;
+        position: relative;
       }
       .side1 {
         width: 300px;
@@ -285,15 +286,26 @@
         .inttop p a span{
           font-size: medium;
         }
+        .rollnumber{
+          position: absolute;
+          left: 20px;
+          bottom: 5px;
+          color: rgba(255, 255, 255, 0.79);
+        }
         @media print{
+          .pagebreak { page-break-before: always; }
             #print{
                 visibility: hidden;
+                display: none;
             }
         }
     </style>
   </head>
   <body>
     <div class="main-container">
+      <div class="rollnumber">
+        <%= data.resumeId %>
+      </div>
       <div class="side1">
         <div class="name"><%= data.personalInfo.firstName%> <%= data.personalInfo.lastName%></div>
         <div class="contact">
@@ -534,6 +546,7 @@
         <%}%>
       </div>
     </div>
+    <div class="pagebreak"> </div>
     <button type="button" id="print" onclick="window.print()">Print</button>
   </body>
 </html>

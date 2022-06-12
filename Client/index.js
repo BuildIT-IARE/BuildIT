@@ -2693,6 +2693,10 @@ app.get("/admin/viewResumes", async (req, res) => {
 app.post("/getAllResumes", async(req,res)=>{
   let options = {
     url: serverRoute + "/getAllResumes",
+    body: {
+      year:req.body.Year,
+      branch:req.body.Branch
+    },
     method: "post",
     headers: {
       authorization: req.cookies.token,

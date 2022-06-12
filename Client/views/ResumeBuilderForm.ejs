@@ -485,14 +485,21 @@
         display: none;
       }
       .formspan2 label {
-        display: inline-block;
+        display: flex;
         width: fit-content;
         position: relative;
         cursor: pointer;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        margin-bottom: 40px;
+        font-family: poppins;
+        font-style: italic;
+        color: black;
       }
       .formspan2 label img {
         width: 250px;
-        margin-bottom: 40px;
+        
         border: 1px solid rgba(0, 0, 0, 0.162);
         box-shadow: 1px 1px 1px rgba(2, 82, 255, 0.16);
         border-radius: 2mm;
@@ -1376,20 +1383,40 @@ A hardworking and passionate job seeker with strong organizational skills eager 
                 checked              />
               <label for="theme1"
                 ><img src="../images/themes/theme1.png" alt="theme"
-              /></label>
-              <% for(var i=2;i<=3;i++){ %>
+              /> Moderate Content</label>
               <input
                 type="radio"
                 name="theme"
-                id="theme<%=i%>"
-                value="theme<%=i%>"
+                id="theme2"
+                value="theme2"
                 class="themes"
                 required
-              />
-              <label for="theme<%=i%>"
-                ><img src="../images/themes/theme<%=i%>.png" alt="theme"
-              /></label>
-              <% } %>
+                checked              />
+              <label for="theme2"
+                ><img src="../images/themes/theme2.png" alt="theme"
+              />More Content</label>
+              <input
+                type="radio"
+                name="theme"
+                id="theme3"
+                value="theme3"
+                class="themes"
+                required
+                checked              />
+              <label for="theme3"
+                ><img src="../images/themes/theme3.png" alt="theme"
+              />Moderate Content</label>
+              <input
+                type="radio"
+                name="theme"
+                id="theme4"
+                value="theme4"
+                class="themes"
+                required
+                checked              />
+              <label for="theme4"
+                ><img src="../images/themes/theme4.png" alt="theme"
+              />Less Content</label>
             </span>
             <textarea
               type="hidden"

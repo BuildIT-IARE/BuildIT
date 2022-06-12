@@ -206,7 +206,19 @@ exports.create  = (req,res) => {
 exports.findAll = (req, res) => {
     Resume.find()
     .then((resumes) => {
-        res.send(resumes);
+        if("branch" in req.body)
+        {
+            var myArr = new Array()
+            for(var i=0;i<resumes.length;i++){
+                if(resumes[i].resumeId.slice(0,2)==req.body.year && resumes[i].resumeId.slice(6,8)==req.body.branch){
+                    myArr.push(resumes[i])
+                }
+            }
+            res.send(myArr)
+        }
+        else{
+            res.send(resumes);
+        }
     })
     .catch((err) => {
         res.status(500).send({

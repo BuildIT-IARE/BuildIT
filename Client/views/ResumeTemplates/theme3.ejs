@@ -208,32 +208,32 @@
           font-weight: 500;
           box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.20);
       }
-      .codelink{
+      .codelink3{
           display: flex;
           align-items: center;
       }
-      .codelink a{
+      .codelink3 a{
           text-decoration: none;
           color: rgb(54, 54, 54);
       }
-      .codelink a span{
+      .codelink3 a span{
           font-size: small;
           margin-left: 3px;
       }
-      .platforms{
+      .platform3s3{
           padding: 0 10px;
           display: flex;
           align-items: center;
           flex-wrap: wrap;
       }
-      .platforms p{
+      .platform3s3 p{
           margin: 0;
       }
-      .platforms a{
+      .platform3s3 a{
           text-decoration: none;
           color: white;
       }
-      .platform{
+      .platform3{
         padding: 3px 12px;
           border-radius: 6mm;
           background: rgb(255, 0, 0);
@@ -269,15 +269,26 @@
         #print:hover{
             background: rgb(255, 167, 167);
         }
+        .rollnumber3{
+          position: absolute;
+          left: 20px;
+          bottom: 5px;
+          color: rgba(44, 44, 44, 0.63);
+        }
         @media print{
+          .pagebreak { page-break-before: always; }
             #print{
                 visibility: hidden;
+                display: none;
             }
         }
     </style>
   </head>
   <body>
     <div class="main-container3">
+      <div class="rollnumber3">
+        <%= data.resumeId %>
+      </div>
       <div class="block"></div>
       <div class="block2">
           <span class="material-icons-outlined">
@@ -453,7 +464,7 @@ expand_more
                     </div>
                     <%}%>
                     <% if(data.codingProfilesInfo.codeChefURL || data.codingProfilesInfo.codeForcesURL || data.codingProfilesInfo.hackerRankURL || data.codingProfilesInfo.geeksForGeeksURL || data.codingProfilesInfo.InterviewBitURL || data.codingProfilesInfo.leetCodeURL || data.codingProfilesInfo.spojURL){%>
-                        <div class="coding">
+                        <div class="coding3">
                             <div class="label32">
                                 <div class="bullet">
                                   <span class="material-icons-outlined">
@@ -462,52 +473,52 @@ expand_more
                                           Coding Profiles
                                 </div>
                             </div>
-                          <div class="platforms">
+                          <div class="platform3s3">
                           <% if(data.codingProfilesInfo.codeChefURL){ %>
-                          <div class="platform">
-                            <p class="codelink"><a href="<%=data.codingProfilesInfo.codeChefURL%>" target="_blank">CodeChef <span class="material-icons-outlined">
+                          <div class="platform3">
+                            <p class="codelink3"><a href="<%=data.codingProfilesInfo.codeChefURL%>" target="_blank">CodeChef <span class="material-icons-outlined">
                                 open_in_new
                                 </span></a></p>
                           </div>
                         <%}%>
                         <% if(data.codingProfilesInfo.hackerRankURL){ %>
-                          <div class="platform">
-                            <p class="codelink"><a href="<%=data.codingProfilesInfo.hackerRankURL%>" target="_blank">Hackerrank <span class="material-icons-outlined">
+                          <div class="platform3">
+                            <p class="codelink3"><a href="<%=data.codingProfilesInfo.hackerRankURL%>" target="_blank">Hackerrank <span class="material-icons-outlined">
                                 open_in_new
                                 </span></a></p>
                           </div>
                           <%}%>
                         <% if(data.codingProfilesInfo.codeForcesURL){ %>
-                          <div class="platform">
-                            <p class="codelink"><a href="<%=data.codingProfilesInfo.codeForcesURL%>" target="_blank">Codeforces <span class="material-icons-outlined">
+                          <div class="platform3">
+                            <p class="codelink3"><a href="<%=data.codingProfilesInfo.codeForcesURL%>" target="_blank">Codeforces <span class="material-icons-outlined">
                                 open_in_new
                                 </span></a></p>
                           </div>
                           <%}%>
                         <% if(data.codingProfilesInfo.geeksForGeeksURL){ %>
-                          <div class="platform">
-                            <p class="codelink"><a href="<%=data.codingProfilesInfo.geeksForGeeksURL%>" target="_blank">GeeksforGeeks <span class="material-icons-outlined">
+                          <div class="platform3">
+                            <p class="codelink3"><a href="<%=data.codingProfilesInfo.geeksForGeeksURL%>" target="_blank">GeeksforGeeks <span class="material-icons-outlined">
                                 open_in_new
                                 </span></a></p>
                           </div>
                           <%}%>
                           <% if(data.codingProfilesInfo.interViewBitURL){ %>
-                          <div class="platform">
-                            <p class="codelink"><a href="<%=data.codingProfilesInfo.interViewBitURL%>" target="_blank">InterviewBit <span class="material-icons-outlined">
+                          <div class="platform3">
+                            <p class="codelink3"><a href="<%=data.codingProfilesInfo.interViewBitURL%>" target="_blank">InterviewBit <span class="material-icons-outlined">
                                 open_in_new
                                 </span></a></p>
                           </div>
                           <%}%>
                           <% if(data.codingProfilesInfo.leetCodeURL){ %>
-                          <div class="platform">
-                            <p class="codelink"><a href="<%=data.codingProfilesInfo.leetCodeURL%>" target="_blank">LeetCode <span class="material-icons-outlined">
+                          <div class="platform3">
+                            <p class="codelink3"><a href="<%=data.codingProfilesInfo.leetCodeURL%>" target="_blank">LeetCode <span class="material-icons-outlined">
                                 open_in_new
                                 </span></a></p>
                           </div>
                           <%}%>
                           <% if(data.codingProfilesInfo.spojURL){ %>
-                          <div class="platform">
-                            <p class="codelink"><a href="<%=data.codingProfilesInfo.spojURL%>" target="_blank">Spoj <span class="material-icons-outlined">
+                          <div class="platform3">
+                            <p class="codelink3"><a href="<%=data.codingProfilesInfo.spojURL%>" target="_blank">Spoj <span class="material-icons-outlined">
                                 open_in_new
                                 </span></a></p>
                           </div>
@@ -550,6 +561,7 @@ expand_more
                                 <%}%>
       </div>
     </div>
+    <div class="pagebreak"> </div>
     <button type="button" id="print" onclick="window.print()">Print</button>
   </body>
 </html>
