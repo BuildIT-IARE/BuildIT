@@ -257,11 +257,31 @@
         </table>
       </div>
       <div class="part2">
+        <br>
+        <br>
       <h3>Print all resumes Branch-wise</h3>
+      <br>
       <form action="/getAllResumes" method="POST">
-        <select name="Branch" id="">
-          <option value="all">All</option>
-          <option value="cse">CSE</option>
+        <select name="Branch" id="" required>
+          <option value="05">CSE</option>
+          <option value="12">IT</option>
+          <option value="04">ECE</option>
+          <option value="01">CIV</option>
+          <option value="02">EEE</option>
+          <option value="03">ME</option>
+          <option value="21">AE</option>
+          <option value="66">CSE AIML</option>
+          <option value="67">CSE DS</option>
+          <option value="62">CSE CS</option>
+          <option value="33">CSE IT</option>
+        </select>
+        <br>
+        <br>
+        <select name="Year" id="" required>
+          <option value="18">18 series</option>
+          <option value="19">19 series</option>
+          <option value="20">20 series</option>
+          <option value="21">21 series</option>
         </select>
         <input type="submit" value="Submit">
       </form>

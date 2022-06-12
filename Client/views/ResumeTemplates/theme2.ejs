@@ -19,10 +19,11 @@
       .main-container2 {
         background: white;
         width: 960px;
-        height: 1363px;
+        height: 1353px;
         display: block;
         margin: auto;
         font-family: PT Sans;
+        position: relative;
       }
       .top2 {
         width: 100%;
@@ -201,15 +202,26 @@
         #print:hover{
             background: rgb(164, 255, 164);
         }
+        .rollnumber2{
+          position: absolute;
+          left: 20px;
+          bottom: 5px;
+          color: rgba(44, 44, 44, 0.63);
+        }
         @media print{
+          .pagebreak { page-break-before: always; }
             #print{
                 visibility: hidden;
+                display: none;
             }
         }
     </style>
   </head>
   <body>
     <div class="main-container2">
+      <div class="rollnumber2">
+        <%= data.resumeId %>
+      </div>
       <div class="top2">
         <div class="name2"><%= data.personalInfo.firstName%> <%= data.personalInfo.lastName%></div>
         <div class="brief2">
@@ -352,7 +364,7 @@
           </div>
           <%}%>
           <% if(data.codingProfilesInfo.codeChefURL || data.codingProfilesInfo.codeForcesURL || data.codingProfilesInfo.hackerRankURL || data.codingProfilesInfo.geeksForGeeksURL || data.codingProfilesInfo.InterviewBitURL || data.codingProfilesInfo.leetCodeURL || data.codingProfilesInfo.spojURL){%>
-          <div class="coding">
+          <div class="coding2">
             <div class="label2002">Coding Profiles</div>
             <% if(data.codingProfilesInfo.codeChefURL){ %>
             <div class="profile">
@@ -437,6 +449,7 @@
         </div>
       </div>
     </div>
+    <div class="pagebreak"> </div>
     <button type="button" id="print" onclick="window.print()">Print</button>
   </body>
 </html>
