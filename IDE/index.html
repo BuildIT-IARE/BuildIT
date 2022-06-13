@@ -181,6 +181,9 @@
       return "";
     }
     let a = getCookie("username") === "ADMIN";
+    let b = getCookie("username")
+    b=b.slice(0,4)
+    let c=(b=="IARE" || b=="iare")
     $(document).ready(function () {
       let branch = getCookie("branch");
       let username = getCookie("username");
@@ -242,7 +245,7 @@
       event.clipboardData.setData('text/plain', "NOT ALLOWED!");
     }
 
-    if (!a) {
+    if (!a && !c) {
       document.onkeydown = checkKeyCode;
 
       document.addEventListener('cut', handle);
