@@ -593,6 +593,11 @@
     </style>
   </head>
   <body>
+    <% if(data.brief.length){ %>
+      <% var q = data.brief %>
+      <% }else{ %>
+        var q = A hardworking and passionate job seeker with strong organizational skills eager to secure an entry-level [Job Title] position. Ready to help the team achieve company goals.
+        <% } %>
     <a href="<%=curl%>/resume/<%=imgUsername %>" target="_blank" class="myresume"
       >MyResume <span class="material-icons"> description </span></a
     >
@@ -1057,10 +1062,6 @@
                   class="inputf"
                   maxlength="300"
                 >
-                <% if(data){ %>
-                  <%= data.brief %>
-                <% }else{ %>
-A hardworking and passionate job seeker with strong organizational skills eager to secure an entry-level [Job Title] position. Ready to help the team achieve company goals.<% } %>
                 </textarea>
                 <span class="label">Description</span>
               </span>
@@ -1389,8 +1390,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
                 name="theme"
                 id="theme2"
                 value="theme2"
-                class="themes"
-                checked              />
+                class="themes"              />
               <label for="theme2"
                 ><img src="../images/themes/theme2.png" alt="theme"
               />More Content</label>
@@ -1400,7 +1400,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
                 id="theme3"
                 value="theme3"
                 class="themes"
-                checked              />
+                             />
               <label for="theme3"
                 ><img src="../images/themes/theme3.png" alt="theme"
               />Moderate Content</label>
@@ -1410,7 +1410,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
                 id="theme4"
                 value="theme4"
                 class="themes"
-                checked              />
+                             />
               <label for="theme4"
                 ><img src="../images/themes/theme4.png" alt="theme"
               />Less Content</label>
@@ -1465,6 +1465,7 @@ A hardworking and passionate job seeker with strong organizational skills eager 
       </div>
     </section>
     <script>
+      document.getElementById("Brief").value="<%=q%>"
       var formfooter = document.querySelector(".formfooter");
       var myresume = document.querySelector(".myresume");
       var inputs = document.querySelectorAll(".inputf");
