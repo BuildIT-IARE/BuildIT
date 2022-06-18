@@ -499,7 +499,7 @@
       }
       .formspan2 label img {
         width: 250px;
-        
+
         border: 1px solid rgba(0, 0, 0, 0.162);
         box-shadow: 1px 1px 1px rgba(2, 82, 255, 0.16);
         border-radius: 2mm;
@@ -593,12 +593,10 @@
     </style>
   </head>
   <body>
-    <% if(data.brief.length){ %>
-      <% var q = data.brief %>
-      <% }else{ %>
-        var q = "A hardworking and passionate job seeker with strong organizational skills eager to secure an entry-level [Job Title] position. Ready to help the team achieve company goals."
-        <% } %>
-    <a href="<%=curl%>/resume/<%=imgUsername %>" target="_blank" class="myresume"
+    <a
+      href="<%=curl%>/resume/<%=imgUsername %>"
+      target="_blank"
+      class="myresume"
       >MyResume <span class="material-icons"> description </span></a
     >
     <div class="mobilehide">
@@ -1381,39 +1379,45 @@
                 value="theme1"
                 class="themes"
                 required
-                checked              />
+                checked
+              />
               <label for="theme1"
-                ><img src="../images/themes/theme1.png" alt="theme"
-              /> Moderate Content</label>
+                ><img src="../images/themes/theme1.png" alt="theme" /> Moderate
+                Content</label
+              >
               <input
                 type="radio"
                 name="theme"
                 id="theme2"
                 value="theme2"
-                class="themes"              />
+                class="themes"
+              />
               <label for="theme2"
-                ><img src="../images/themes/theme2.png" alt="theme"
-              />More Content</label>
+                ><img src="../images/themes/theme2.png" alt="theme" />More
+                Content</label
+              >
               <input
                 type="radio"
                 name="theme"
                 id="theme3"
                 value="theme3"
                 class="themes"
-                             />
+              />
               <label for="theme3"
-                ><img src="../images/themes/theme3.png" alt="theme"
-              />Moderate Content</label>
+                ><img src="../images/themes/theme3.png" alt="theme" />Moderate
+                Content</label
+              >
               <input
                 type="radio"
                 name="theme"
                 id="theme4"
                 value="theme4"
                 class="themes"
-                             />
+              />
               <label for="theme4"
-                ><img src="../images/themes/theme4.png" alt="theme"
-              />Less Content</label>
+                ><img src="../images/themes/theme4.png" alt="theme" />Less
+                Content</label
+              >
             </span>
             <textarea
               type="hidden"
@@ -1465,7 +1469,12 @@
       </div>
     </section>
     <script>
-      document.getElementById("Brief").value="<%=q%>"
+      "<% if(data && data.brief.length){ %>";
+      "<% var q = data.brief %>";
+      "<% }else{ %>";
+      "<% var q = 'A hardworking and passionate job seeker with strong organizational skills eager to secure an entry-level [Job Title] position. Ready to help the team achieve company goals.'%>";
+      "<% } %>";
+      document.getElementById("Brief").value = "<%=q%>";
       var formfooter = document.querySelector(".formfooter");
       var myresume = document.querySelector(".myresume");
       var inputs = document.querySelectorAll(".inputf");
@@ -1512,7 +1521,7 @@
       var cl5 = document.getElementById("cl5");
       var cl6 = document.getElementById("cl6");
       var sides = document.querySelectorAll(".sideicons");
-      var bri = document.getElementById("Brief")
+      var bri = document.getElementById("Brief");
       var pspo = 0;
       var prspo = 0;
       var inpo = 0;
