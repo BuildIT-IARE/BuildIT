@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="../images/iare-chapter/iare-logo.png"
+      type="image/x-icon"
+    />
+    <style>
+      body {
+        background: rgb(248, 248, 250);
+        font-family: poppins;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      span {
+        display: block;
+      }
+      .main-container {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav {
+        width: 230px;
+        position: relative;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        background-color: #fff;
+        border-radius: 0.25rem;
+        box-shadow: 0 0 0.125rem 0 rgba(0, 0, 0, 0.15);
+        display: block;
+      }
+      .navigation {
+        width: 100%;
+        height: 98vh;
+        display: flex;
+        flex-direction: column;
+        padding: 7px 0;
+        overflow: hidden;
+      }
+      .links {
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+        font-weight: 400;
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 16px 15px;
+        border-bottom: 0.25mm rgba(0, 0, 0, 0.1) solid;
+        display: flex;
+        align-items: center;
+      }
+      .links span {
+        font-size: larger;
+        margin-left: 5px;
+      }
+      .links:hover {
+        background: rgb(1, 120, 238);
+        color: white;
+        box-shadow: 0 0 0.335rem 0 rgba(0, 0, 0, 0.322);
+      }
+      .links:nth-child(1) {
+        background: rgb(79, 79, 79);
+        color: white;
+      }
+      .nonepartrequired {
+        flex-basis: 265px;
+        width: 265px;
+        height: 100vh;
+        float: left;
+      }
+      .form-container {
+        width: 100%;
+      }
+      form {
+        margin: auto;
+        display: block;
+        width: 740px;
+      }
+      .cover {
+        display: block;
+        background-color: #fff;
+        border-radius: 0.25rem;
+        box-shadow: 0 0 0.125rem 0 rgba(0, 0, 0, 0.15);
+        padding: 40px;
+        width: 700px;
+        border-top: rgb(1, 120, 238) solid 5px;
+        border-bottom: dashed rgb(79, 79, 79) 2px;
+        margin-bottom: 75px;
+      }
+      .title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        margin-top: 20px;
+      }
+      .long {
+        width: 680px;
+      }
+      .inputs {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .inputfield {
+        width: fit-content;
+        height: max-content;
+        position: relative;
+      }
+      .inputf {
+        font-size: medium;
+        font-weight: 400;
+        font-family: poppins;
+        color: rgb(0, 0, 0);
+        outline: none;
+        border: none;
+        border: rgb(143, 143, 143) solid 0.25mm;
+        padding: 10px;
+        margin: 25px 0;
+        background: rgb(255, 255, 255);
+        border-radius: 1mm;
+      }
+      .inputf:hover {
+        border: rgb(0, 0, 0) solid 0.25mm;
+      }
+      .inputf:focus {
+        border: rgb(25, 129, 234) solid 2px;
+      }
+      .inputf:focus::placeholder {
+        opacity: 0;
+      }
+      .inputf::placeholder {
+        color: rgb(145, 145, 145);
+      }
+      .label {
+        position: absolute;
+        top: 25px;
+        left: 5px;
+        font-size: 12px;
+        font-family: poppins;
+        color: rgb(1, 120, 238);
+        opacity: 0;
+        transition: 0.25s;
+      }
+      .inputf:focus + .label {
+        opacity: 1;
+        top: 5px;
+        left: 0;
+      }
+      .inputf:not(:placeholder-shown) + .label {
+        opacity: 1;
+        top: 5px;
+        left: 0;
+      }
+      .small {
+        width: 250px;
+      }
+      .vsmall {
+        width: 50px;
+      }
+      .imagefield {
+        width: fit-content;
+        height: fit-content;
+      }
+      .imagefield img {
+        width: 140px;
+        height: 160px;
+        border: 0.25mm rgba(0, 0, 0, 0.167) solid;
+      }
+      .mlong {
+        width: 400px;
+      }
+      .button-block {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+      .button-block button {
+        background: rgb(1, 120, 238);
+        outline: none;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 1mm;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        font-size: medium;
+        cursor: pointer;
+        box-shadow: 1px 1px 0.143rem 0 rgba(0, 0, 0, 0.279);
+      }
+      .button-block button span {
+        font-size: larger;
+        margin-left: 3px;
+      }
+      .button-block button:hover {
+        background: rgb(0, 90, 179);
+      }
+      .button-block button:nth-child(2) {
+        background: rgb(79, 79, 79);
+      }
+      .button-block button:nth-child(2):hover {
+        background: rgb(55, 55, 55);
+      }
+      footer {
+        width: 100%;
+      }
+      .footer-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .bg-dark {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 75px;
+        background-color: #383838;
+      }
+      .footer-section a:hover {
+        color: rgb(255, 255, 255);
+      }
+      .footer-left {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+      .footer-right {
+        width: 20%;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-left-titles a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: x-large;
+        color: rgb(232, 232, 232);
+        font-weight: 600;
+      }
+      .footer-left-links a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(232, 232, 232);
+      }
+      .footer-right p {
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(232, 232, 232);
+        width: 100%;
+        text-align: center;
+      }
+      @media all and (max-width: 1000px) {
+        .nav {
+          display: none;
+        }
+        .nonepartrequired {
+          width: 0;
+          flex-basis: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <span class="main-container">
+      <div class="nav">
+        <div class="navigation">
+          <a href="#" target="_blank" class="links"
+            >My Resume
+            <span class="material-icons-outlined"> description </span></a
+          >
+          <a href="#l1" class="links"
+            >Personal Details <span class="material-icons"> east </span></a
+          >
+          <a href="#l2" class="links"
+            >Educational Details <span class="material-icons"> east </span></a
+          >
+          <a href="#l3" class="links"
+            >Employment Details <span class="material-icons"> east </span></a
+          >
+          <a href="#l4" class="links"
+            >Administrative Roles <span class="material-icons"> east </span></a
+          >
+          <a href="#l5" class="links"
+            >Research Interest <span class="material-icons"> east </span></a
+          >
+          <a href="#l6" class="links"
+            >Academic Identity <span class="material-icons"> east </span></a
+          >
+          <a href="#l7" class="links"
+            >Publications <span class="material-icons"> east </span></a
+          >
+          <a href="#l8" class="links"
+            >Conferences <span class="material-icons"> east </span></a
+          >
+          <a href="#l9" class="links"
+            >Patents <span class="material-icons"> east </span></a
+          >
+          <a href="#l10" class="links"
+            >Text Books <span class="material-icons"> east </span></a
+          >
+        </div>
+      </div>
+      <div class="nonepartrequired"></div>
+      <div class="form-container">
+        <form action="/sendit" method="post">
+          <span class="cover" id="l1">
+            <div class="title">Personal Details</div>
+            <span class="form-section" id="fs1">
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="imageURL"
+                    id="imageURL"
+                    class="mlong inputf"
+                    required
+                    placeholder="Profile Image (Drive Link Only)"
+                  />
+                  <span class="label">Profile Image (Drive Link Only)</span>
+                </span>
+                <span class="imagefield">
+                  <img src="" alt="" id="profile" />
+                </span>
+                <script>
+                  var a = document.getElementById("imageURL");
+                  var i = document.getElementById("profile");
+                  a.onchange = function () {
+                    b = a.value;
+                    c = b.indexOf("file/d/");
+                    c = c + 7;
+                    d = b.indexOf("/view");
+                    b = b.slice(c, d);
+                    s = "http://drive.google.com/uc?export=view&id=" + b;
+                    i.src = s;
+                  };
+                </script>
+              </span>
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="Name"
+                    id="Name"
+                    class="long inputf"
+                    required
+                    placeholder="Full Name"
+                  />
+                  <span class="label">Full Name</span>
+                </span>
+              </span>
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="FatherName"
+                    id="FatherName"
+                    class="long inputf"
+                    required
+                    placeholder="Father Name"
+                  />
+                  <span class="label">Father Name</span>
+                </span>
+              </span>
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="Designation"
+                    id="Designation"
+                    class="small inputf"
+                    required
+                    placeholder="Designation"
+                  />
+                  <span class="label">Designation</span>
+                </span>
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="Department"
+                    id="Department"
+                    class="small inputf"
+                    required
+                    placeholder="Department"
+                  />
+                  <span class="label">Department</span>
+                </span>
+              </span>
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="OfficeAddress"
+                    id="OfficeAddress"
+                    class="long inputf"
+                    required
+                    placeholder="Office Address"
+                  />
+                  <span class="label">Office Address</span>
+                </span>
+              </span>
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="date"
+                    name="DOB"
+                    id="DOB"
+                    class="small inputf"
+                    required
+                    placeholder="Date of Birth"
+                  />
+                  <span class="label">Date of Birth</span>
+                </span>
+                <span class="inputfield">
+                  <input
+                    type="number"
+                    name="Age"
+                    id="Age"
+                    class="vsmall inputf"
+                    required
+                    placeholder="Age"
+                    step="any"
+                  />
+                  <span class="label">Age</span>
+                </span>
+                <span class="inputfield">
+                  <input
+                    type="number"
+                    name="MobileNumber"
+                    id="MobileNumber"
+                    class="small inputf"
+                    required
+                    placeholder="Mobile Number"
+                  />
+                  <span class="label">Mobile Number</span>
+                </span>
+              </span>
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="email"
+                    name="Email1"
+                    id="Email1"
+                    class="small inputf"
+                    required
+                    placeholder="Email"
+                  />
+                  <span class="label">Email</span>
+                </span>
+                <span class="inputfield">
+                  <input
+                    type="email"
+                    name="Email2"
+                    id="Email2"
+                    class="small inputf"
+                    placeholder="Alternate Email"
+                  />
+                  <span class="label">Alternate Email</span>
+                </span>
+              </span>
+              <div class="line"></div>
+            </span>
+          </span>
+          <span class="cover" id="l2">
+            <div class="title">Educational Details</div>
+            <span class="form-section" id="fs2">
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="Degree"
+                    id="Degree"
+                    class="small inputf"
+                    required
+                    placeholder="Degree"
+                  />
+                  <span class="label">Degree</span>
+                </span>
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="Specialization"
+                    id="Specialization"
+                    class="small inputf"
+                    required
+                    placeholder="Specialization"
+                  />
+                  <span class="label">Specialization</span>
+                </span>
+              </span>
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="YearOfPass"
+                    id="YearOfPass"
+                    class="small inputf"
+                    required
+                    placeholder="Year Of Pass"
+                  />
+                  <span class="label">Year Of Pass</span>
+                </span>
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="marks"
+                    id="marks"
+                    class="small inputf"
+                    required
+                    placeholder="Percentage/CGPA"
+                  />
+                  <span class="label">Percentage/CGPA</span>
+                </span>
+              </span>
+              <span class="inputs" style="margin-bottom: 25px; display: block">
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="University"
+                    id="University"
+                    class="long inputf"
+                    required
+                    placeholder="University/Institute"
+                  />
+                  <span class="label">University/Institute</span>
+                </span>
+              </span>
+            </span>
+            <span class="button-block">
+              <button type="button" id="add1">
+                Add Degree <span class="material-icons"> add_circle </span>
+              </button>
+              <button type="button" id="rem1">
+                Remove All <span class="material-icons"> cancel </span>
+              </button>
+            </span>
+          </span>
+
+          <span class="cover" id="l3">
+            <div class="title">Employment Details</div>
+            <span class="form-section" id="fs3">
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="date"
+                    name="empStartDate"
+                    id="empStartDate"
+                    class="small inputf"
+                    required
+                    placeholder="Start-Date"
+                  />
+                  <span class="label">Start-Date</span>
+                </span>
+                <span class="inputfield">
+                  <input
+                    type="date"
+                    name="empEndDate"
+                    id="empEndDate"
+                    class="small inputf"
+                    required
+                    placeholder="End-Date"
+                  />
+                  <span class="label">End-Date</span>
+                </span>
+              </span>
+              <span class="inputs">
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="Experience"
+                    id="Experience"
+                    class="small inputf"
+                    required
+                    placeholder="Experience"
+                  />
+                  <span class="label">Experience</span>
+                </span>
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="Role"
+                    id="Role"
+                    class="small inputf"
+                    required
+                    placeholder="Role"
+                  />
+                  <span class="label">Role</span>
+                </span>
+              </span>
+              <span class="inputs" style="margin-bottom: 25px; display: block">
+                <span class="inputfield">
+                  <input
+                    type="text"
+                    name="WorkAddress"
+                    id="WorkAddress"
+                    class="long inputf"
+                    required
+                    placeholder="Work Address"
+                  />
+                  <span class="label">Work Address</span>
+                </span>
+              </span>
+            </span>
+            <span class="button-block">
+              <button type="button" id="add2">
+                Add Experience <span class="material-icons"> add_circle </span>
+              </button>
+              <button type="button" id="rem2">
+                Remove All <span class="material-icons"> cancel </span>
+              </button>
+            </span>
+          </span>
+
+          <span class="cover" id="l4">
+            <div class="title">Administrative Roles</div>
+            <span class="form-section" id="fs4"> </span>
+            <span class="button-block">
+              <button type="button" id="add3">
+                Add Role <span class="material-icons"> add_circle </span>
+              </button>
+              <button type="button" id="rem3">
+                Remove All <span class="material-icons"> cancel </span>
+              </button>
+            </span>
+          </span>
+          <span class="cover" id="l5">
+            <div class="title">Research Interest</div>
+            <span class="form-section" id="RI">
+              <span class="inputs">
+                <span class="inputfield">
+                  <textarea
+                    name="Research"
+                    id="Research"
+                    cols="30"
+                    rows="10"
+                    class="long inputf"
+                    placeholder="Write Here"
+                  ></textarea>
+                  <span class="label">Write Here</span>
+                </span>
+              </span>
+            </span>
+          </span>
+
+          <span class="cover" id="l6">
+            <div class="title">Academic Identity</div>
+            <span class="form-section" id="fs5"> </span>
+            <span class="button-block">
+              <button type="button" id="add4">
+                Add More <span class="material-icons"> add_circle </span>
+              </button>
+              <button type="button" id="rem4">
+                Remove All <span class="material-icons"> cancel </span>
+              </button>
+            </span>
+          </span>
+
+          <span class="cover" id="l7">
+            <div class="title">Publications</div>
+            <span class="form-section" id="fs6"> </span>
+            <span class="button-block">
+              <button type="button" id="add5">
+                Add More <span class="material-icons"> add_circle </span>
+              </button>
+              <button type="button" id="rem5">
+                Remove All <span class="material-icons"> cancel </span>
+              </button>
+            </span>
+          </span>
+
+          <span class="cover" id="l8">
+            <div class="title">Conferences</div>
+            <span class="form-section" id="fs7"> </span>
+            <span class="button-block">
+              <button type="button" id="add6">
+                Add More <span class="material-icons"> add_circle </span>
+              </button>
+              <button type="button" id="rem6">
+                Remove All <span class="material-icons"> cancel </span>
+              </button>
+            </span>
+          </span>
+
+          <span class="cover" id="l9">
+            <div class="title">Patents</div>
+            <span class="form-section" id="fs8"> </span>
+            <span class="button-block">
+              <button type="button" id="add7">
+                Add More <span class="material-icons"> add_circle </span>
+              </button>
+              <button type="button" id="rem7">
+                Remove All <span class="material-icons"> cancel </span>
+              </button>
+            </span>
+          </span>
+
+          <span class="cover" id="l10">
+            <div class="title">Text Books</div>
+            <span class="form-section" id="fs9"> </span>
+            <span class="button-block">
+              <button type="button" id="add8">
+                Add Book <span class="material-icons"> add_circle </span>
+              </button>
+              <button type="button" id="rem8">
+                Remove All <span class="material-icons"> cancel </span>
+              </button>
+            </span>
+          </span>
+          <span class="cover">
+            <span class="button-block" style="justify-content: center">
+              <button type="submit">
+                Submit <span class="material-icons-outlined"> task </span>
+              </button>
+            </span>
+          </span>
+        </form>
+        <footer class="bg-dark" id="footers">
+          <div class="footer-section">
+            <div class="footer-left">
+              <div class="footer-left-titles">
+                <a href="http://buildit.iare.ac.in/" target="_blank"
+                  >Build-IT</a
+                >
+              </div>
+              <div class="footer-left-links">
+                <a href="https://www.iare.ac.in" target="_blank">IARE</a>
+              </div>
+              <div class="footer-left-links">
+                <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank"
+                  >Feedback</a
+                >
+              </div>
+            </div>
+            <div class="footer-right">
+              <p>
+                Copyright ©
+                <script>
+                  var CurrentYear = new Date().getFullYear();
+                  document.write(CurrentYear);
+                </script>
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </span>
+    <script>
+      var add1 = document.getElementById("add1");
+      var edu1 = 0;
+      var fs2 = document.getElementById("fs2");
+      var add2 = document.getElementById("add2");
+      var emp = 0;
+      var fs3 = document.getElementById("fs3");
+      var add3 = document.getElementById("add3");
+      var admin = 0;
+      var fs4 = document.getElementById("fs4");
+      var add4 = document.getElementById("add4");
+      var aci = 0;
+      var fs5 = document.getElementById("fs5");
+      var fs6 = document.getElementById("fs6");
+      var pub = 0;
+      var fs7 = document.getElementById("fs7");
+      var cof = 0;
+      var fs8 = document.getElementById("fs8");
+      var pat = 0;
+      var fs9 = document.getElementById("fs9");
+      var book = 0;
+      var add5 = document.getElementById("add5");
+      var add6 = document.getElementById("add6");
+      var add7 = document.getElementById("add7");
+      var add8 = document.getElementById("add8");
+      var rem1 = document.getElementById("rem1");
+      var rem2 = document.getElementById("rem2");
+      var rem3 = document.getElementById("rem3");
+      var rem4 = document.getElementById("rem4");
+      var rem5 = document.getElementById("rem5");
+      var rem6 = document.getElementById("rem6");
+      var rem7 = document.getElementById("rem7");
+      var rem8 = document.getElementById("rem8");
+      rem1.onclick = function () {
+        fs2.innerHTML = "";
+        edu1 = 0;
+      };
+      rem2.onclick = function () {
+        fs3.innerHTML = "";
+        emp = 0;
+      };
+      rem3.onclick = function () {
+        fs4.innerHTML = "";
+        admin = 0;
+      };
+      rem4.onclick = function () {
+        fs5.innerHTML = "";
+        aci = 0;
+      };
+      rem5.onclick = function () {
+        fs6.innerHTML = "";
+        pub = 0;
+      };
+      rem6.onclick = function () {
+        fs7.innerHTML = "";
+        cof = 0;
+      };
+      rem7.onclick = function () {
+        fs8.innerHTML = "";
+        pat = 0;
+      };
+      rem8.onclick = function () {
+        fs9.innerHTML = "";
+        book = 0;
+      };
+      add1.onclick = function () {
+        edu1 += 1;
+        fs2.insertAdjacentHTML(
+          "beforeend",
+          '<span class="inputs"> <span class="inputfield"> <input type="text" name="Degree' +
+            edu1 +
+            '" id="Degree" class="small inputf" required placeholder="Degree" /> <span class="label">Degree</span> </span> <span class="inputfield"> <input type="text" name="Specialization' +
+            edu1 +
+            '" id="Specialization" class="small inputf" required placeholder="Specialization" /> <span class="label">Specialization</span> </span> </span>  <span class="inputs"> <span class="inputfield"> <input type="text" name="YearOfPass' +
+            edu1 +
+            '" id="YearOfPass" class="small inputf" required placeholder="Year Of Pass" /> <span class="label">Year Of Pass</span> </span> <span class="inputfield"> <input type="text" name="marks' +
+            edu1 +
+            '" id="marks" class="small inputf" required placeholder="Percentage/CGPA" /> <span class="label">Percentage/CGPA</span> </span> </span><span class="inputs" style="margin-bottom: 25px; display: block"> <span class="inputfield"> <input type="text" name="University' +
+            edu1 +
+            '" id="University" class="long inputf" required placeholder="University/Institute" /> <span class="label">University/Institute</span> </span> </span>'
+        );
+      };
+
+      add2.onclick = function () {
+        emp += 1;
+        fs3.insertAdjacentHTML(
+          "beforeend",
+          '<span class="inputs"> <span class="inputfield"> <input type="date" name="empStartDate' +
+            emp +
+            '" id="empStartDate" class="small inputf" required placeholder="Start-Date" /> <span class="label">Start-Date</span> </span> <span class="inputfield"> <input type="date" name="empEndDate' +
+            emp +
+            '" id="empEndDate" class="small inputf" required placeholder="End-Date" /> <span class="label">End-Date</span> </span> </span> <span class="inputs"> <span class="inputfield"> <input type="text" name="Experience' +
+            emp +
+            '" id="Experience" class="small inputf" required placeholder="Experience" /> <span class="label">Experience</span> </span> <span class="inputfield"> <input type="text" name="Role' +
+            emp +
+            '" id="Role" class="small inputf" required placeholder="Role" /> <span class="label">Role</span> </span> </span> <span class="inputs" style="margin-bottom: 25px; display: block"> <span class="inputfield"> <input type="text" name="WorkAddress' +
+            emp +
+            '" id="WorkAddress" class="long inputf" required placeholder="Work Address" /> <span class="label">Work Address</span> </span> </span>'
+        );
+      };
+      add3.onclick = function () {
+        admin += 1;
+        fs4.insertAdjacentHTML(
+          "beforeend",
+          '<span class="inputs"> <span class="inputfield"> <input type="date" name="adminStartDate' +
+            admin +
+            '" id="adminStartDate" class="small inputf" required placeholder="Start-Date" /> <span class="label">Start-Date</span> </span> <span class="inputfield"> <input type="date" name="adminEndDate' +
+            admin +
+            '" id="adminEndDate" class="small inputf" required placeholder="End-Date" /> <span class="label">End-Date</span> </span> </span> <span class="inputs"> <span class="inputfield"> <input type="text" name="Period' +
+            admin +
+            '" id="Period" class="small inputf" required placeholder="Period" /> <span class="label">Period</span> </span> <span class="inputfield"> <input type="text" name="adminRole' +
+            admin +
+            '" id="adminRole" class="small inputf" required placeholder="Role" /> <span class="label">Role</span> </span> </span> <span class="inputs" style="margin-bottom: 25px; display: block"> <span class="inputfield"> <input type="text" name="adminWorkAddress' +
+            admin +
+            '" id="adminWorkAddress" class="long inputf" required placeholder="Work Address" /> <span class="label">Work Address</span> </span> </span>'
+        );
+      };
+
+      add4.onclick = function () {
+        aci += 1;
+        fs5.insertAdjacentHTML(
+          "beforeend",
+          '<span class="inputs"> <span class="inputfield"> <input type="text" name="IdentityWebsite' +
+            aci +
+            '" id="IdentityWebsite" class="small inputf" placeholder="Website Name" required /> <span class="label">Website Name</span> </span> <span class="inputfield"> <input type="url" name="IdentityURL' +
+            aci +
+            '" id="IdentityURL" class="small inputf" placeholder="URL" required /> <span class="label">URL</span> </span> </span>'
+        );
+      };
+      add5.onclick = function () {
+        pub += 1;
+        fs6.insertAdjacentHTML(
+          "beforeend",
+          '<span class="inputs"> <span class="inputfield"> <textarea name="Publication' +
+            pub +
+            '" id="Publication" cols="30" rows="5" class="long inputf" required placeholder="Publication" ></textarea> <span class="label">Publication</span> </span> </span>'
+        );
+      };
+
+      add6.onclick = function () {
+        cof += 1;
+        fs7.insertAdjacentHTML(
+          "beforeend",
+          '<span class="inputs"> <span class="inputfield"> <textarea name="Conference' +
+            cof +
+            '" id="Conference" cols="30" rows="5" class="long inputf" required placeholder="Conference" ></textarea> <span class="label">Conference</span> </span> </span>'
+        );
+      };
+
+      add7.onclick = function () {
+        pat += 1;
+        fs8.insertAdjacentHTML(
+          "beforeend",
+          '<span class="inputs"> <span class="inputfield"> <textarea name="Patent' +
+            pat +
+            '" id="Patent" cols="30" rows="5" class="long inputf" required placeholder="Patent" ></textarea> <span class="label">Patent</span> </span> </span>'
+        );
+      };
+
+      add8.onclick = function () {
+        book += 1;
+        fs9.insertAdjacentHTML(
+          "beforeend",
+          '<span class="inputs"> <span class="inputfield"> <textarea name="TextBooks' +
+            book +
+            '" id="TextBooks" cols="30" rows="5" class="long inputf" required placeholder="Text Books" ></textarea> <span class="label">Text Books</span> </span> </span>'
+        );
+      };
+    </script>
+  </body>
+</html>

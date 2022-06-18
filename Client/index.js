@@ -41,7 +41,10 @@ app.use("/contests", express.static(__dirname + "/"));
 app.use("/qualifier_test/:contestId", express.static(__dirname + "/"));
 app.use("/qualifierTestScore", express.static(__dirname + "/"));
 app.use("/qualifier_tests", express.static(__dirname + "/"));
-app.use("/qualifier_tests/leaderboard/:contestId", express.static(__dirname + "/"));
+app.use(
+  "/qualifier_tests/leaderboard/:contestId",
+  express.static(__dirname + "/")
+);
 
 app.use("/contests/questions", express.static(__dirname + "/"));
 app.use("/tutorials/questions", express.static(__dirname + "/"));
@@ -64,15 +67,15 @@ let totalCount = 0;
 let userSessions = [];
 let userSessions2 = [];
 
-let sessionText = fs. readFileSync("./store.txt", 'utf-8');
+let sessionText = fs.readFileSync("./store.txt", "utf-8");
 
-if(sessionText !== ''){
-  userSessions2 = sessionText. split('\n');
-  for(let i=0; i<userSessions2.length; i++){
+if (sessionText !== "") {
+  userSessions2 = sessionText.split("\n");
+  for (let i = 0; i < userSessions2.length; i++) {
     userSessions.push({
       username: userSessions2[i].substring(0, 10),
-      val: Number(userSessions2[i].substring(10, 11))
-    })
+      val: Number(userSessions2[i].substring(10, 11)),
+    });
   }
 }
 
@@ -87,8 +90,7 @@ let checkSignIn = async (req, res, next) => {
   }
 };
 
-
-function loginCounts(req,res){
+function loginCounts(req, res) {
   let options = {
     url: serverRoute + "/counters",
     method: "get",
@@ -98,36 +100,34 @@ function loginCounts(req,res){
     json: true,
   };
   request(options, function (err, response, body) {
-    if (body.success){
-      
+    if (body.success) {
       res.render("home", {
         imgUsername: req.cookies.username,
-        dayCount:body.data[0].day,
+        dayCount: body.data[0].day,
         weeklyCount: body.data[0].week,
         totalCount: body.data[0].total,
         googleSheetsApi,
       });
-    }
-    else{
+    } else {
       res.render("home", {
         imgUsername: req.cookies.username,
-        dayCount:0,
+        dayCount: 0,
         weeklyCount: 0,
         totalCount: 0,
         googleSheetsApi,
       });
     }
-  })
+  });
 }
 
 app.get("/", async (req, res) => {
-  loginCounts(req,res)
+  loginCounts(req, res);
 });
 app.get("/index", async (req, res) => {
-  loginCounts(req,res)
+  loginCounts(req, res);
 });
 app.get("/home", checkSignIn, async (req, res, next) => {
-  loginCounts(req,res)
+  loginCounts(req, res);
 });
 app.get("/about", checkSignIn, async (req, res, next) => {
   res.render("about", { imgUsername: req.cookies.username });
@@ -735,7 +735,7 @@ app.get("/admin/edit/question", async (req, res) => {
     body.class = "btn-green";
     body.title = "Editing";
     body.subtitle = "Questions";
-    body.username = req.cookies.username
+    body.username = req.cookies.username;
     res.render("search", { data: body });
   });
 });
@@ -1013,7 +1013,7 @@ app.get("/admin/deletequestions/multiple", async (req, res) => {
   };
   request(options, function (err, response, body) {
     res.render("deleteMultipleQuestions", {
-      data:url,
+      data: url,
       token: req.cookies.token,
     });
   });
@@ -1026,8 +1026,7 @@ app.post("/admin/deletequestions/multiple", async (req, res) => {
   };
 
   let options = {
-    url:
-      serverRoute + "/deletequestions/multiple/"+req.body.questionIds,
+    url: serverRoute + "/deletequestions/multiple/" + req.body.questionIds,
     method: "post",
     headers: {
       authorization: req.cookies.token,
@@ -1036,13 +1035,13 @@ app.post("/admin/deletequestions/multiple", async (req, res) => {
   };
   request(options, function (err, response, body) {
     if (!body.hasOwnProperty("success")) {
-    res.render("deleteMultipleQuestions", {
-      data:url,
-      token: req.cookies.token,
-    });
-  } else {
-    res.send("Error Encountered!");
-  }
+      res.render("deleteMultipleQuestions", {
+        data: url,
+        token: req.cookies.token,
+      });
+    } else {
+      res.send("Error Encountered!");
+    }
   });
 });
 
@@ -1062,8 +1061,8 @@ app.get("/admin/contentDevProgress", async (req, res) => {
   };
   request(options, function (err, response, body) {
     res.render("contentDevProgress", {
-      data:url,
-      data2:[],
+      data: url,
+      data2: [],
       token: req.cookies.token,
     });
   });
@@ -1096,7 +1095,6 @@ app.post("/admin/contentDevProgress/", async (req, res) => {
     }
   });
 });
-
 
 app.get("/admin/unverifiedusers", async (req, res) => {
   let options = {
@@ -1372,40 +1370,44 @@ app.post("/admin/resultsTut/course", async (req, res) => {
   });
 });
 
-app.get("/contests/:contestId/leaderboard", checkSignIn, async (req, res, next) => {
-  let options = {
-    url: serverRoute + "/participations/all",
-    method: "post",
-    body: {
-      contestId: req.params.contestId,
-    },
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, bodyparticipation) {
+app.get(
+  "/contests/:contestId/leaderboard",
+  checkSignIn,
+  async (req, res, next) => {
     let options = {
-      url: serverRoute + "/questions/contests/" + req.params.contestId,
-      method: "get",
+      url: serverRoute + "/participations/all",
+      method: "post",
+      body: {
+        contestId: req.params.contestId,
+      },
       headers: {
         authorization: req.cookies.token,
       },
       json: true,
     };
-
-    request(options, function (err, response, bodyquestion) {
-      let url = {
-        url: clientRoute,
+    request(options, function (err, response, bodyparticipation) {
+      let options = {
+        url: serverRoute + "/questions/contests/" + req.params.contestId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
       };
-      res.render("results_public2", {
-        data: url,
-        datap: bodyparticipation,
-        dataq: bodyquestion,
+
+      request(options, function (err, response, bodyquestion) {
+        let url = {
+          url: clientRoute,
+        };
+        res.render("results_public2", {
+          data: url,
+          datap: bodyparticipation,
+          dataq: bodyquestion,
+        });
       });
     });
-  });
-});
+  }
+);
 
 app.get("/admin", checkSignIn, async (req, res, next) => {
   let options = {
@@ -1479,7 +1481,7 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
         },
         body: {
           contestId: req.params.contestId,
-          branch: req.cookies.branch? req.cookies.branch: "",
+          branch: req.cookies.branch ? req.cookies.branch : "",
         },
         json: true,
       };
@@ -1632,7 +1634,8 @@ app.get("/qualifier_test/:contestId", checkSignIn, async (req, res, next) => {
             request(options3, function (err, response, bodytimer) {
               if (Array.isArray(bodytimer)) {
                 bodytimer = bodytimer[0];
-                bodytimer.responses = bodytimer.responses[body.section - 1].responses;
+                bodytimer.responses =
+                  bodytimer.responses[body.section - 1].responses;
 
                 let currSection = bodytimer.responses;
                 currSection = currSection.map((v) => v.questionNum);
@@ -1673,165 +1676,174 @@ app.get("/qualifier_test/:contestId", checkSignIn, async (req, res, next) => {
   });
 });
 
-app.post("/qualifier_test/:contestId/mcq", checkSignIn, async (req, res, next) => {
-  const doRequest = () => {
-    return new Promise(() => {
-      let section = Number(req.body.section);
-      let sectionLen = Number(req.body.sectionLen);
-      let questionNum = Number(req.body.questionNum);
-      let sectionCount = Number(req.body.sectionCount);
+app.post(
+  "/qualifier_test/:contestId/mcq",
+  checkSignIn,
+  async (req, res, next) => {
+    const doRequest = () => {
+      return new Promise(() => {
+        let section = Number(req.body.section);
+        let sectionLen = Number(req.body.sectionLen);
+        let questionNum = Number(req.body.questionNum);
+        let sectionCount = Number(req.body.sectionCount);
 
-      if (questionNum === sectionLen) {
-        if (section === sectionCount) questionNum -= 1;
-        else {
-          questionNum = 0;
-          section += 1;
+        if (questionNum === sectionLen) {
+          if (section === sectionCount) questionNum -= 1;
+          else {
+            questionNum = 0;
+            section += 1;
+          }
         }
-      }
-      let options = {
-        url:
-          serverRoute +
-          "/mcqs/" +
-          req.params.contestId +
-          "/" +
-          section +
-          "/" +
-          questionNum,
-        method: "post",
-        headers: {
-          authorization: req.cookies.token,
-        },
-        json: true,
-      };
-      // get one MCQ
-      request(options, (err, response, body) => {
-        if (!body.message) {
-          res.cookie("contestId", req.params.contestId);
-          let options3 = {
-            url: serverRoute + "/mcqParticipations/" + req.params.contestId,
-            method: "get",
-            headers: {
-              authorization: req.cookies.token,
-            },
-            json: true,
-          };
-          // get participation details
-          request(options3, (err, response, bodytimer) => {
-            if (Array.isArray(bodytimer)) {
-              bodytimer = bodytimer[0];
+        let options = {
+          url:
+            serverRoute +
+            "/mcqs/" +
+            req.params.contestId +
+            "/" +
+            section +
+            "/" +
+            questionNum,
+          method: "post",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        // get one MCQ
+        request(options, (err, response, body) => {
+          if (!body.message) {
+            res.cookie("contestId", req.params.contestId);
+            let options3 = {
+              url: serverRoute + "/mcqParticipations/" + req.params.contestId,
+              method: "get",
+              headers: {
+                authorization: req.cookies.token,
+              },
+              json: true,
+            };
+            // get participation details
+            request(options3, (err, response, bodytimer) => {
+              if (Array.isArray(bodytimer)) {
+                bodytimer = bodytimer[0];
 
-              let currSection = [];
-              let selection = 0;
-              let index = 0;
+                let currSection = [];
+                let selection = 0;
+                let index = 0;
 
-              bodytimer.responses = bodytimer.responses[body.section - 1].responses;
-              currSection = bodytimer.responses;
-              currSection = currSection.map((v) => v.questionNum);
-              index = currSection.indexOf(body.questionNum);
-              if (index !== -1) {
-                currSection.splice(index, 1);
-                selection = bodytimer.responses[index].selection;
+                bodytimer.responses =
+                  bodytimer.responses[body.section - 1].responses;
+                currSection = bodytimer.responses;
+                currSection = currSection.map((v) => v.questionNum);
+                index = currSection.indexOf(body.questionNum);
+                if (index !== -1) {
+                  currSection.splice(index, 1);
+                  selection = bodytimer.responses[index].selection;
+                }
+
+                bodytimer.selection = selection;
+                bodytimer.questionNums = currSection;
+                bodytimer.submissionResults = null;
+                bodytimer.responses = null;
+
+                res.render("mcqs", {
+                  imgUsername: req.cookies.username,
+                  imgBranch: req.cookies.branch,
+                  data: body,
+                  datatimer: bodytimer,
+                });
+              } else {
+                res.render("error", {
+                  data: body,
+                  imgUsername: req.cookies.username,
+                });
               }
-
-              bodytimer.selection = selection;
-              bodytimer.questionNums = currSection;
-              bodytimer.submissionResults = null;
-              bodytimer.responses = null;
-
-              res.render("mcqs", {
-                imgUsername: req.cookies.username,
-                imgBranch: req.cookies.branch,
-                data: body,
-                datatimer: bodytimer,
-              });
-            } else {
-              res.render("error", {
-                data: body,
-                imgUsername: req.cookies.username,
-              });
-            }
-          });
-        } else {
-          res.render("error", {
-            data: body,
-            imgUsername: req.cookies.username,
-          });
-        }
+            });
+          } else {
+            res.render("error", {
+              data: body,
+              imgUsername: req.cookies.username,
+            });
+          }
+        });
       });
-    });
-  };
+    };
 
-  const addSelection = () => {
-    return new Promise(() => {
-      let options = {
-        url: serverRoute + "/validateMcq",
-        method: "post",
-        body: {
-          mcqId: req.body.mcqId,
-          answer: req.body.answer,
-          section: req.body.section,
-          contestId: req.params.contestId,
-          questionNum: req.body.questionNum,
-        },
-        headers: {
-          authorization: req.cookies.token,
-        },
-        json: true,
-      };
-      request(options, async (error, response, body) => {
-        if (!body.message) {
-          const second = await doRequest();
-        } else {
-          res.render("error", {
-            data: body,
-            imgUsername: req.cookies.username,
-          });
-        }
+    const addSelection = () => {
+      return new Promise(() => {
+        let options = {
+          url: serverRoute + "/validateMcq",
+          method: "post",
+          body: {
+            mcqId: req.body.mcqId,
+            answer: req.body.answer,
+            section: req.body.section,
+            contestId: req.params.contestId,
+            questionNum: req.body.questionNum,
+          },
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        request(options, async (error, response, body) => {
+          if (!body.message) {
+            const second = await doRequest();
+          } else {
+            res.render("error", {
+              data: body,
+              imgUsername: req.cookies.username,
+            });
+          }
+        });
       });
-    });
-  };
+    };
 
-  // check whether retrieve or update and retrieve
-  if (req.body.answer) {
-    const first = await addSelection();
-  } else {
-    const first = await doRequest();
+    // check whether retrieve or update and retrieve
+    if (req.body.answer) {
+      const first = await addSelection();
+    } else {
+      const first = await doRequest();
+    }
   }
-});
+);
 
-app.get("/qualifierTestScore/:contestId", checkSignIn, async (req, res, next) => {
-  let options = {
-    url: serverRoute + "/generate_score/" + req.params.contestId,
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
+app.get(
+  "/qualifierTestScore/:contestId",
+  checkSignIn,
+  async (req, res, next) => {
+    let options = {
+      url: serverRoute + "/generate_score/" + req.params.contestId,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
 
-  request(options, (err, response, body) => {
-    if (!body.message) {
-      let noOfSections = body.sections.length;
-      body.contestId = req.params.contestId;
+    request(options, (err, response, body) => {
+      if (!body.message) {
+        let noOfSections = body.sections.length;
+        body.contestId = req.params.contestId;
 
-      /*
+        /*
       body.answers = Array.prototype.concat.apply([], body.answerKey);
       body.alphabet = ["", "A", "B", "C", "D"];
       */
 
-      res.render("score", {
-        imgUsername: req.cookies.username,
-        imgBranch: req.cookies.branch,
-        data: body,
-      });
-    } else {
-      res.render("error", {
-        data: body,
-        imgUsername: req.cookies.username,
-      });
-    }
-  });
-});
+        res.render("score", {
+          imgUsername: req.cookies.username,
+          imgBranch: req.cookies.branch,
+          data: body,
+        });
+      } else {
+        res.render("error", {
+          data: body,
+          imgUsername: req.cookies.username,
+        });
+      }
+    });
+  }
+);
 
 app.get("/qualifier_tests/leaderboard/:contestId", async (req, res) => {
   let url = {
@@ -2037,41 +2049,49 @@ app.get("/error", async (req, res) => {
   res.render("error", { data: req.query, imgUsername: req.cookies.username });
 });
 
-app.get("/contests/questions/:questionId", checkSignIn, async (req, res, next) => {
-  let options = {
-    url: serverRoute + "/questions/" + req.params.questionId,
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    body.url = clientRoute;
-    res.render("questiondesc", {
-      imgUsername: req.cookies.username,
-      data: body,
+app.get(
+  "/contests/questions/:questionId",
+  checkSignIn,
+  async (req, res, next) => {
+    let options = {
+      url: serverRoute + "/questions/" + req.params.questionId,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+    request(options, function (err, response, body) {
+      body.url = clientRoute;
+      res.render("questiondesc", {
+        imgUsername: req.cookies.username,
+        data: body,
+      });
     });
-  });
-});
+  }
+);
 
-app.get("/tutorials/questions/:questionId", checkSignIn, async (req, res, next) => {
-  let options = {
-    url: serverRoute + "/questions/" + req.params.questionId,
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    body.url = clientRoute;
-    res.render("questionTutDesc", {
-      imgUsername: req.cookies.username,
-      data: body,
+app.get(
+  "/tutorials/questions/:questionId",
+  checkSignIn,
+  async (req, res, next) => {
+    let options = {
+      url: serverRoute + "/questions/" + req.params.questionId,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+    request(options, function (err, response, body) {
+      body.url = clientRoute;
+      res.render("questionTutDesc", {
+        imgUsername: req.cookies.username,
+        data: body,
+      });
     });
-  });
-});
+  }
+);
 
 app.get("/verify", async (req, res) => {
   // res.render('/home');
@@ -2120,258 +2140,272 @@ app.get("/tutorials", checkSignIn, async (req, res, next) => {
   });
 });
 
-app.get("/tutorials/:courseId/progress", checkSignIn, async (req, res, next) => {
-  let options = {
-    url: serverRoute + "/questions/courses/" + req.params.courseId,
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  // Get questions for contest
-  request(options, function (err, response, body) {
-    let options3 = {
-      url: serverRoute + "/tparticipations/" + req.params.courseId,
+app.get(
+  "/tutorials/:courseId/progress",
+  checkSignIn,
+  async (req, res, next) => {
+    let options = {
+      url: serverRoute + "/questions/courses/" + req.params.courseId,
       method: "get",
       headers: {
         authorization: req.cookies.token,
       },
       json: true,
     };
-    // get participation details
-    request(options3, function (err, response, bodytimer) {
-      bodytimer = bodytimer[0];
+    // Get questions for contest
+    request(options, function (err, response, body) {
+      let options3 = {
+        url: serverRoute + "/tparticipations/" + req.params.courseId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      // get participation details
+      request(options3, function (err, response, bodytimer) {
+        bodytimer = bodytimer[0];
 
-      let totalSolEasy = 0;
-      let totalSolMedium = 0;
-      let totalSolHard = 0;
-      let totalSolContest = 0;
-      let eCount = 0;
-      let mCount = 0;
-      let hCount = 0;
-      let cCount = 0;
-      for (let i = 0; i < body.length; i++) {
-        if (body[i].difficulty === "level_0") {
-          eCount++;
-        } else if (body[i].difficulty === "level_1") {
-          mCount++;
-        } else if (body[i].difficulty === "level_2") {
-          hCount++;
-        } else if (body[i].difficulty === "contest") {
-          cCount++;
+        let totalSolEasy = 0;
+        let totalSolMedium = 0;
+        let totalSolHard = 0;
+        let totalSolContest = 0;
+        let eCount = 0;
+        let mCount = 0;
+        let hCount = 0;
+        let cCount = 0;
+        for (let i = 0; i < body.length; i++) {
+          if (body[i].difficulty === "level_0") {
+            eCount++;
+          } else if (body[i].difficulty === "level_1") {
+            mCount++;
+          } else if (body[i].difficulty === "level_2") {
+            hCount++;
+          } else if (body[i].difficulty === "contest") {
+            cCount++;
+          }
         }
-      }
-      totalSolEasy = bodytimer.easySolved.length;
-      totalSolMedium = bodytimer.mediumSolved.length;
-      totalSolHard = bodytimer.hardSolved.length;
-      totalSolContest = bodytimer.contestSolved.length;
-      req.params.courseId = req.params.courseId;
-      body.easyPercentage = Math.ceil((totalSolEasy / eCount) * 100);
-      body.mediumPercentage = Math.ceil((totalSolMedium / mCount) * 100);
-      body.hardPercentage = Math.ceil((totalSolHard / hCount) * 100);
-      body.contestPercentage = Math.ceil((totalSolContest / cCount) * 100);
+        totalSolEasy = bodytimer.easySolved.length;
+        totalSolMedium = bodytimer.mediumSolved.length;
+        totalSolHard = bodytimer.hardSolved.length;
+        totalSolContest = bodytimer.contestSolved.length;
+        req.params.courseId = req.params.courseId;
+        body.easyPercentage = Math.ceil((totalSolEasy / eCount) * 100);
+        body.mediumPercentage = Math.ceil((totalSolMedium / mCount) * 100);
+        body.hardPercentage = Math.ceil((totalSolHard / hCount) * 100);
+        body.contestPercentage = Math.ceil((totalSolContest / cCount) * 100);
 
-      if (req.params.courseId === "IARE_PY") {
-        body.courseName = "Python Proficiency";
-        body.courseId = "IARE_PY";
-      } else if (req.params.courseId === "IARE_C") {
-        body.courseName = "C Proficiency";
-        body.courseId = "IARE_C";
-      } else if (req.params.courseId === "IARE_JAVA") {
-        body.courseName = "Java Proficiency";
-        body.courseId = "IARE_JAVA";
-      } else if (req.params.courseId === "IARE_CPP") {
-        body.courseName = "C++ Proficiency";
-        body.courseId = "IARE_CPP";
-      } else {
-        body.courseName = "Invalid Course";
-      }
-      res.render("tutProgress", {
-        imgUsername: req.cookies.username,
-        data: body,
-        datatimer: bodytimer,
-      });
-    });
-  });
-});
-
-app.get("/tutorials/:courseId/:difficulty/:concept", checkSignIn, async (req, res, next) => {
-  let concept = req.params.concept;
-
-  let subjectMap = ["bs", "cs", "al", "fn", "po", "so"];
-
-  let reqConcept = subjectMap.indexOf(concept);
-
-  let options = {
-    url:
-      serverRoute +
-      "/questions/courses/" +
-      req.params.courseId +
-      "/" +
-      req.params.difficulty +
-      "/" +
-      reqConcept,
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    let options3 = {
-      url: serverRoute + "/tparticipations/" + req.params.courseId,
-      method: "get",
-      headers: {
-        authorization: req.cookies.token,
-      },
-      json: true,
-    };
-    request(options3, function (err, response, bodytimer) {
-      bodytimer = bodytimer[0];
-      for (let i = 0; i < body.length; i++) {
-        if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1) {
-          body[i].solved = "Solved";
-          body[i].color = "#DFF0D8";
+        if (req.params.courseId === "IARE_PY") {
+          body.courseName = "Python Proficiency";
+          body.courseId = "IARE_PY";
+        } else if (req.params.courseId === "IARE_C") {
+          body.courseName = "C Proficiency";
+          body.courseId = "IARE_C";
+        } else if (req.params.courseId === "IARE_JAVA") {
+          body.courseName = "Java Proficiency";
+          body.courseId = "IARE_JAVA";
+        } else if (req.params.courseId === "IARE_CPP") {
+          body.courseName = "C++ Proficiency";
+          body.courseId = "IARE_CPP";
         } else {
-          body[i].solved = "Unsolved";
-          body[i].color = "";
+          body.courseName = "Invalid Course";
         }
-      }
-
-      body.url = clientRoute;
-      // Course Name
-      if (req.params.courseId === "IARE_PY") {
-        body.courseName = "Python Proficiency";
-        body.courseId = "IARE_PY";
-      } else if (req.params.courseId === "IARE_C") {
-        body.courseName = "C Proficiency";
-        body.courseId = "IARE_C";
-      } else if (req.params.courseId === "IARE_JAVA") {
-        body.courseName = "Java Proficiency";
-        body.courseId = "IARE_JAVA";
-      } else if (req.params.courseId === "IARE_CPP") {
-        body.courseName = "C++ Proficiency";
-        body.courseId = "IARE_CPP";
-      } else {
-        body.courseName = "Invalid Course";
-      }
-      // Course level
-      if (req.params.concept === "bs") {
-        body.courseName = body.courseName + " - Basics";
-      } else if (req.params.concept === "cs") {
-        body.courseName = body.courseName + " - Control Structures";
-      } else if (req.params.concept === "al") {
-        body.courseName = body.courseName + " - Arrays/Lists/Strings";
-      } else if (req.params.concept === "po") {
-        body.courseName = body.courseName + " - Pointers/Objects";
-      } else if (req.params.concept === "so") {
-        body.courseName = body.courseName + " - Structures/Objects";
-      } else if (req.params.concept === "fn") {
-        body.courseName = body.courseName + " - Functions";
-      }
-      res.render("displayTutQuestions", {
-        imgUsername: req.cookies.username,
-        data: body,
-      });
-    });
-  });
-});
-
-app.get("/tutorials/:courseId/:difficulty", checkSignIn, async (req, res, next) => {
-  let difficulty = req.params.difficulty;
-  let categoryBased = difficulty.includes("-");
-  let ifTopicsOrCompanies =
-    req.params.difficulty === "Topics" || req.params.difficulty === "Companies";
-
-  let param = ifTopicsOrCompanies
-    ? "topics"
-    : categoryBased
-    ? difficulty.split("-").join("/")
-    : difficulty;
-
-  let options = {
-    url:
-      serverRoute +
-      "/questions/" +
-      (categoryBased ? "practice/" : "courses/") +
-      req.params.courseId +
-      "/" +
-      param,
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-
-  request(options, function (err, response, body) {
-    if (ifTopicsOrCompanies) {
-      let courseIds = ["IARE_PY", "IARE_C", "IARE_JAVA", "IARE_CPP"];
-      let isCourseValid = courseIds.includes(req.params.courseId);
-      let ifTopics = difficulty === "Topics";
-
-      body.courseId = req.params.courseId;
-      body.courseName = isCourseValid
-        ? ifTopics
-          ? "Select a topic"
-          : "Select a company"
-        : "Invalid Course";
-
-      res.render("practiceTutList", {
-        imgUsername: req.cookies.username,
-        title: difficulty,
-        data: body,
-      });
-    } else {
-
-    let options3 = {
-      url: serverRoute + "/tparticipations/" + req.params.courseId,
-      method: "get",
-      headers: {
-        authorization: req.cookies.token,
-      },
-      json: true,
-    };
-    request(options3, function (err, response, bodytimer) {
-      bodytimer = bodytimer[0];
-
-      for (let i = 0; i < body.length; i++) {
-        if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1) {
-          body[i].solved = "Solved";
-          body[i].color = "#96f542";
-        } else {
-          body[i].solved = "Unsolved";
-          body[i].color = "";
-        }
-      }
-
-      body.url = clientRoute;
-      if (req.params.courseId === "IARE_PY") {
-        body.courseName = "Python Proficiency";
-        body.courseId = "IARE_PY";
-      } else if (req.params.courseId === "IARE_C") {
-        body.courseName = "C Proficiency";
-        body.courseId = "IARE_C";
-      } else if (req.params.courseId === "IARE_JAVA") {
-        body.courseName = "Java Proficiency";
-        body.courseId = "IARE_JAVA";
-      } else if (req.params.courseId === "IARE_CPP") {
-        body.courseName = "C++ Proficiency";
-        body.courseId = "IARE_CPP";
-      } else {
-        body.courseName = "Invalid Course";
-      }
-      // console.log(body, "\n ____________________________________________________________________");
-      // console.log(bodytimer);
-      res.render("displayTutQuestions", {
-        imgUsername: req.cookies.username,
-        data: body,
+        res.render("tutProgress", {
+          imgUsername: req.cookies.username,
+          data: body,
+          datatimer: bodytimer,
+        });
       });
     });
   }
-  });
-});
+);
+
+app.get(
+  "/tutorials/:courseId/:difficulty/:concept",
+  checkSignIn,
+  async (req, res, next) => {
+    let concept = req.params.concept;
+
+    let subjectMap = ["bs", "cs", "al", "fn", "po", "so"];
+
+    let reqConcept = subjectMap.indexOf(concept);
+
+    let options = {
+      url:
+        serverRoute +
+        "/questions/courses/" +
+        req.params.courseId +
+        "/" +
+        req.params.difficulty +
+        "/" +
+        reqConcept,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+    request(options, function (err, response, body) {
+      let options3 = {
+        url: serverRoute + "/tparticipations/" + req.params.courseId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      request(options3, function (err, response, bodytimer) {
+        bodytimer = bodytimer[0];
+        for (let i = 0; i < body.length; i++) {
+          if (bodytimer.submissionResults.indexOf(body[i].questionId) !== -1) {
+            body[i].solved = "Solved";
+            body[i].color = "#DFF0D8";
+          } else {
+            body[i].solved = "Unsolved";
+            body[i].color = "";
+          }
+        }
+
+        body.url = clientRoute;
+        // Course Name
+        if (req.params.courseId === "IARE_PY") {
+          body.courseName = "Python Proficiency";
+          body.courseId = "IARE_PY";
+        } else if (req.params.courseId === "IARE_C") {
+          body.courseName = "C Proficiency";
+          body.courseId = "IARE_C";
+        } else if (req.params.courseId === "IARE_JAVA") {
+          body.courseName = "Java Proficiency";
+          body.courseId = "IARE_JAVA";
+        } else if (req.params.courseId === "IARE_CPP") {
+          body.courseName = "C++ Proficiency";
+          body.courseId = "IARE_CPP";
+        } else {
+          body.courseName = "Invalid Course";
+        }
+        // Course level
+        if (req.params.concept === "bs") {
+          body.courseName = body.courseName + " - Basics";
+        } else if (req.params.concept === "cs") {
+          body.courseName = body.courseName + " - Control Structures";
+        } else if (req.params.concept === "al") {
+          body.courseName = body.courseName + " - Arrays/Lists/Strings";
+        } else if (req.params.concept === "po") {
+          body.courseName = body.courseName + " - Pointers/Objects";
+        } else if (req.params.concept === "so") {
+          body.courseName = body.courseName + " - Structures/Objects";
+        } else if (req.params.concept === "fn") {
+          body.courseName = body.courseName + " - Functions";
+        }
+        res.render("displayTutQuestions", {
+          imgUsername: req.cookies.username,
+          data: body,
+        });
+      });
+    });
+  }
+);
+
+app.get(
+  "/tutorials/:courseId/:difficulty",
+  checkSignIn,
+  async (req, res, next) => {
+    let difficulty = req.params.difficulty;
+    let categoryBased = difficulty.includes("-");
+    let ifTopicsOrCompanies =
+      req.params.difficulty === "Topics" ||
+      req.params.difficulty === "Companies";
+
+    let param = ifTopicsOrCompanies
+      ? "topics"
+      : categoryBased
+      ? difficulty.split("-").join("/")
+      : difficulty;
+
+    let options = {
+      url:
+        serverRoute +
+        "/questions/" +
+        (categoryBased ? "practice/" : "courses/") +
+        req.params.courseId +
+        "/" +
+        param,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+
+    request(options, function (err, response, body) {
+      if (ifTopicsOrCompanies) {
+        let courseIds = ["IARE_PY", "IARE_C", "IARE_JAVA", "IARE_CPP"];
+        let isCourseValid = courseIds.includes(req.params.courseId);
+        let ifTopics = difficulty === "Topics";
+
+        body.courseId = req.params.courseId;
+        body.courseName = isCourseValid
+          ? ifTopics
+            ? "Select a topic"
+            : "Select a company"
+          : "Invalid Course";
+
+        res.render("practiceTutList", {
+          imgUsername: req.cookies.username,
+          title: difficulty,
+          data: body,
+        });
+      } else {
+        let options3 = {
+          url: serverRoute + "/tparticipations/" + req.params.courseId,
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        request(options3, function (err, response, bodytimer) {
+          bodytimer = bodytimer[0];
+
+          for (let i = 0; i < body.length; i++) {
+            if (
+              bodytimer.submissionResults.indexOf(body[i].questionId) !== -1
+            ) {
+              body[i].solved = "Solved";
+              body[i].color = "#96f542";
+            } else {
+              body[i].solved = "Unsolved";
+              body[i].color = "";
+            }
+          }
+
+          body.url = clientRoute;
+          if (req.params.courseId === "IARE_PY") {
+            body.courseName = "Python Proficiency";
+            body.courseId = "IARE_PY";
+          } else if (req.params.courseId === "IARE_C") {
+            body.courseName = "C Proficiency";
+            body.courseId = "IARE_C";
+          } else if (req.params.courseId === "IARE_JAVA") {
+            body.courseName = "Java Proficiency";
+            body.courseId = "IARE_JAVA";
+          } else if (req.params.courseId === "IARE_CPP") {
+            body.courseName = "C++ Proficiency";
+            body.courseId = "IARE_CPP";
+          } else {
+            body.courseName = "Invalid Course";
+          }
+          // console.log(body, "\n ____________________________________________________________________");
+          // console.log(bodytimer);
+          res.render("displayTutQuestions", {
+            imgUsername: req.cookies.username,
+            data: body,
+          });
+        });
+      }
+    });
+  }
+);
 
 app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
   res.clearCookie("contestId");
@@ -2502,9 +2536,9 @@ app.get("/userSession/:sessionId", (req, res) => {
     res.status(200).send({ status: true });
   else res.status(404).send({ status: false, message: "user logged out!" });
 });
-app.get('/resume',checkSignIn,async(req,res)=>{
+app.get("/resume", checkSignIn, async (req, res) => {
   let options = {
-    url: serverRoute + "/resume/"+req.cookies.username,
+    url: serverRoute + "/resume/" + req.cookies.username,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -2512,18 +2546,18 @@ app.get('/resume',checkSignIn,async(req,res)=>{
     json: true,
   };
   request(options, (err, response, body) => {
-    res.render("ResumeBuilderForm",{
-      url:serverRoute,
+    res.render("ResumeBuilderForm", {
+      url: serverRoute,
       imgUsername: req.cookies.username,
       token: req.cookies.token,
-      curl:clientRoute,
-      data:body
-    })
-  })
-})
-app.post("/resume/:username" ,async(req,res)=>{
+      curl: clientRoute,
+      data: body,
+    });
+  });
+});
+app.post("/resume/:username", async (req, res) => {
   let options = {
-    url: serverRoute + "/resume/"+req.params.username,
+    url: serverRoute + "/resume/" + req.params.username,
     method: "delete",
     headers: {
       authorization: req.cookies.token,
@@ -2545,63 +2579,40 @@ app.post("/resume/:username" ,async(req,res)=>{
       for (let i = 0; i < body.length; i++) {
         body[i].firstName = body[i].personalInfo.firstName;
         body[i].lastName = body[i].personalInfo.lastName;
-        var branch = body[i].resumeId.substring(6,8);
-        if(branch == '05')
-        {
+        var branch = body[i].resumeId.substring(6, 8);
+        if (branch == "05") {
           body[i].branch = "CSE";
-        }
-        else if(branch == '12')
-        {
+        } else if (branch == "12") {
           body[i].branch = "IT";
-        }
-        else if(branch == '04')
-        {
+        } else if (branch == "04") {
           body[i].branch = "ECE";
-        }
-        else if(branch == '01')
-        {
+        } else if (branch == "01") {
           body[i].branch = "CIV";
-        }
-        else if(branch == '02')
-        {
+        } else if (branch == "02") {
           body[i].branch = "EEE";
-        }
-        else if(branch == '03')
-        {
+        } else if (branch == "03") {
           body[i].branch = "ME";
-        }
-        else if(branch == '21')
-        {
+        } else if (branch == "21") {
           body[i].branch = "CSE";
-        }
-        else if(branch == '66')
-        {
+        } else if (branch == "66") {
           body[i].branch = "CSE AIML";
-        }
-        else if(branch == '67')
-        {
+        } else if (branch == "67") {
           body[i].branch = "CSE DS";
-        }
-        else if(branch == '62')
-        {
+        } else if (branch == "62") {
           body[i].branch = "CSE CS";
-        }
-        else if(branch == '33')
-        {
+        } else if (branch == "33") {
           body[i].branch = "CSE IT";
-        }
-        else
-        {
+        } else {
           body[i].branch = "INVALID";
         }
       }
-      res.render("viewResumes", { data: body});
+      res.render("viewResumes", { data: body });
     });
   });
 });
-app.get("/resume/:username",checkSignIn,async(req,res)=>{
+app.get("/resume/:username", checkSignIn, async (req, res) => {
   let options = {
-    url: serverRoute + "/resume/"+req.params.username,
+    url: serverRoute + "/resume/" + req.params.username,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -2610,16 +2621,17 @@ app.get("/resume/:username",checkSignIn,async(req,res)=>{
   };
 
   request(options, (err, response, body) => {
-    if (body){
-      a=body.themeId
-    res.render("ResumeTemplates/"+a,{data:body})
-  }
-  else {res.render("error", {
-    imgUsername:req.cookies.username,
-    data: {message:"You have no resumes"},
-  });}
+    if (body) {
+      a = body.themeId;
+      res.render("ResumeTemplates/" + a, { data: body });
+    } else {
+      res.render("error", {
+        imgUsername: req.cookies.username,
+        data: { message: "You have no resumes" },
+      });
+    }
   });
-})
+});
 
 app.get("/admin/viewResumes", async (req, res) => {
   let options = {
@@ -2636,66 +2648,43 @@ app.get("/admin/viewResumes", async (req, res) => {
     for (let i = 0; i < body.length; i++) {
       body[i].firstName = body[i].personalInfo.firstName;
       body[i].lastName = body[i].personalInfo.lastName;
-      var branch = body[i].resumeId.substring(6,8);
-      if(branch == '05')
-      {
+      var branch = body[i].resumeId.substring(6, 8);
+      if (branch == "05") {
         body[i].branch = "CSE";
-      }
-      else if(branch == '12')
-      {
+      } else if (branch == "12") {
         body[i].branch = "IT";
-      }
-      else if(branch == '04')
-      {
+      } else if (branch == "04") {
         body[i].branch = "ECE";
-      }
-      else if(branch == '01')
-      {
+      } else if (branch == "01") {
         body[i].branch = "CIV";
-      }
-      else if(branch == '02')
-      {
+      } else if (branch == "02") {
         body[i].branch = "EEE";
-      }
-      else if(branch == '03')
-      {
+      } else if (branch == "03") {
         body[i].branch = "ME";
-      }
-      else if(branch == '21')
-      {
+      } else if (branch == "21") {
         body[i].branch = "CSE";
-      }
-      else if(branch == '66')
-      {
+      } else if (branch == "66") {
         body[i].branch = "CSE AIML";
-      }
-      else if(branch == '67')
-      {
+      } else if (branch == "67") {
         body[i].branch = "CSE DS";
-      }
-      else if(branch == '62')
-      {
+      } else if (branch == "62") {
         body[i].branch = "CSE CS";
-      }
-      else if(branch == '33')
-      {
+      } else if (branch == "33") {
         body[i].branch = "CSE IT";
-      }
-      else
-      {
+      } else {
         body[i].branch = "INVALID";
       }
     }
-    res.render("viewResumes", { data: body});
+    res.render("viewResumes", { data: body });
   });
 });
 
-app.post("/getAllResumes", async(req,res)=>{
+app.post("/getAllResumes", async (req, res) => {
   let options = {
     url: serverRoute + "/getAllResumes",
     body: {
-      year:req.body.Year,
-      branch:req.body.Branch
+      year: req.body.Year,
+      branch: req.body.Branch,
     },
     method: "post",
     headers: {
@@ -2703,14 +2692,23 @@ app.post("/getAllResumes", async(req,res)=>{
     },
     json: true,
   };
-  request(options, function(err,response,body){
-    res.render("allResumes",{resumes:body})
-  })
-})
+  request(options, function (err, response, body) {
+    res.render("allResumes", { resumes: body });
+  });
+});
 
-app.get("/potdReport", checkSignIn, async(req,res)=>{
-  res.render("potdReport",{imgUsername:req.cookies.username})
-})
+app.get("/facultyResume", async (req, res) => {
+  res.render("facultyResume");
+});
+
+app.post("/sendit", async (req, res) => {
+  console.log(req.body);
+  res.render("facultyResume");
+});
+
+app.get("/potdReport", checkSignIn, async (req, res) => {
+  res.render("potdReport", { imgUsername: req.cookies.username });
+});
 
 app.get("*", async (req, res) => {
   res.render("404page");
