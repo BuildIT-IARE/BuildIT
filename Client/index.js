@@ -2716,8 +2716,6 @@ app.get("/facultyResume", checkSignIn, async (req, res) => {
     });
   });
 });
-  res.render("facultyResume");
-});
 
 app.get("/ResumeBuilder", checkSignIn, async (req, res) => {
   if (req.cookies.token) {
