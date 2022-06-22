@@ -370,7 +370,13 @@
       </div>
       <div class="nonepartrequired"></div>
       <div class="form-container">
-        <form action="/sendit" method="post">
+        <form action="<%= url%>/facultyResume" method="post">
+          <input
+          type="text"
+          name="username"
+          style="display: none"
+          value="<%= imgUsername %>"
+          />
           <span class="cover" id="l1">
             <div class="title">Personal Details</div>
             <span class="form-section" id="fs1">
@@ -810,6 +816,13 @@
           </div>
         </footer>
       </div>
+      <textarea
+              type="hidden"
+              name="token"
+              id="token"
+              value="<%= token %>"
+              style="display: none"
+            ></textarea>
     </span>
     <script>
       var add1 = document.getElementById("add1");
@@ -979,6 +992,9 @@
             '" id="TextBooks" cols="30" rows="5" class="long inputf" required placeholder="Text Books" ></textarea> <span class="label">Text Books</span> </span> </span>'
         );
       };
+    </script>
+    <script>
+      document.getElementById("token").value = "<%= token %>";
     </script>
   </body>
 </html>

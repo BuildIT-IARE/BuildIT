@@ -2697,14 +2697,26 @@ app.post("/getAllResumes", async (req, res) => {
   });
 });
 
-app.get("/facultyResume", async (req, res) => {
-  res.render("facultyResume");
+app.get("/facultyResume", checkSignIn, async (req, res) => {
+  let options = {
+    url: serverRoute + "/facultyResume/" + req.cookies.username,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    res.render("facultyResume", {
+      url: serverRoute,
+      imgUsername: req.cookies.username,
+      token: req.cookies.token,
+      curl: clientRoute,
+      data: body,
+    });
+  });
 });
 
-app.post("/sendit", async (req, res) => {
-  console.log(req.body);
-  res.render("facultyResume");
-});
 
 app.get("/potdReport", checkSignIn, async (req, res) => {
   res.render("potdReport", { imgUsername: req.cookies.username });
