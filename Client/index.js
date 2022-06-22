@@ -2697,13 +2697,20 @@ app.post("/getAllResumes", async (req, res) => {
   });
 });
 
-app.get("/facultyResume", async (req, res) => {
+app.get("/facultyResume", checkSignIn, async (req, res) => {
   res.render("facultyResume");
 });
 
 app.post("/sendit", async (req, res) => {
-  console.log(req.body);
   res.render("facultyResume");
+});
+
+app.get("/ResumeBuilder", checkSignIn, async (req, res) => {
+  if (req.cookies.token) {
+    res.render("ResumeHome", { clientURL: clientRoute });
+  } else {
+    res.render("error", { data: "Unauthorized Access", imgUsername: null });
+  }
 });
 
 app.get("/potdReport", checkSignIn, async (req, res) => {
