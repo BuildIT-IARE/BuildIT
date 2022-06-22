@@ -2698,11 +2698,23 @@ app.post("/getAllResumes", async (req, res) => {
 });
 
 app.get("/facultyResume", checkSignIn, async (req, res) => {
-  res.render("facultyResume");
-});
-
-app.post("/sendit", async (req, res) => {
-  res.render("facultyResume");
+  let options = {
+    url: serverRoute + "/facultyResume/" + req.cookies.username,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    res.render("facultyResume", {
+      url: serverRoute,
+      imgUsername: req.cookies.username,
+      token: req.cookies.token,
+      curl: clientRoute,
+      data: body,
+    });
+  });
 });
 
 app.get("/ResumeBuilder", checkSignIn, async (req, res) => {
