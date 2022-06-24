@@ -332,7 +332,7 @@
     <span class="main-container">
       <div class="nav">
         <div class="navigation">
-          <a href="#" target="_blank" class="links"
+          <a href="<%=curl%>/MyResume" target="_blank" class="links"
             >My Resume
             <span class="material-icons-outlined"> description </span></a
           >
@@ -370,7 +370,13 @@
       </div>
       <div class="nonepartrequired"></div>
       <div class="form-container">
-        <form action="/sendit" method="post">
+        <form action="<%= url%>/facultyResume" method="post">
+          <input
+            type="text"
+            name="username"
+            style="display: none"
+            value="<%= imgUsername %>"
+          />
           <span class="cover" id="l1">
             <div class="title">Personal Details</div>
             <span class="form-section" id="fs1">
@@ -392,7 +398,8 @@
                 <script>
                   var a = document.getElementById("imageURL");
                   var i = document.getElementById("profile");
-                  a.onchange = function () {
+
+                  function dispimg() {
                     b = a.value;
                     c = b.indexOf("file/d/");
                     c = c + 7;
@@ -400,6 +407,12 @@
                     b = b.slice(c, d);
                     s = "http://drive.google.com/uc?export=view&id=" + b;
                     i.src = s;
+                  }
+                  a.onchange = function () {
+                    dispimg();
+                  };
+                  document.body.onload = function () {
+                    dispimg();
                   };
                 </script>
               </span>
@@ -810,8 +823,26 @@
           </div>
         </footer>
       </div>
+      <textarea
+        type="hidden"
+        name="token"
+        id="token"
+        value="<%= token %>"
+        style="display: none"
+      ></textarea>
     </span>
     <script>
+      function checkUser() {
+        var a = "<%=imgUsername%>";
+        var b = "<%=imgUsername%>";
+        a.slice(0, 4);
+        if (a == "IARE" || a == "iare" || b.length < 10) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
       var add1 = document.getElementById("add1");
       var edu1 = 0;
       var fs2 = document.getElementById("fs2");
@@ -979,6 +1010,120 @@
             '" id="TextBooks" cols="30" rows="5" class="long inputf" required placeholder="Text Books" ></textarea> <span class="label">Text Books</span> </span> </span>'
         );
       };
+
+      var cover1 = document.getElementById("l1").getElementsByTagName("input");
+
+      function looprun(n, cname) {
+        for (var i = 0; i < n; i++) {
+          cname.click();
+        }
+      }
+
+      function updateData(arr, field) {
+        for (var i = 0; i < field.length; i++) {
+          field[i].value = arr[i];
+        }
+      }
+      ("<% if(data){%>");
+      ("<% var res=[data.imgURL,data.name,data.fatherName,data.designation,data.department,data.officeAddress,data.dob,data.age,data.mobileNumber,data.email[0],data.email[1]] %>");
+
+      ("<% for(var i=0;i<11;i++){%>");
+      cover1["<%=i%>"].value = "<%=res[i]%>";
+      ("<%}%>");
+      looprun("<%=data.degree.length-1%>", add1);
+      var res2 = [];
+      ("<% for(var i=0;i<data.degree.length;i++){%>");
+      res2.push("<%=data.degree[i]%>");
+      res2.push("<%=data.specialization[i]%>");
+      res2.push("<%=data.yearOfPass[i]%>");
+      res2.push("<%=data.marks[i]%>");
+      res2.push("<%=data.university[i]%>");
+      ("<%}%>");
+      var cover2 = document.getElementById("l2").getElementsByTagName("input");
+      updateData(res2, cover2);
+
+      looprun("<%=data.empStartDate.length-1%>", add2);
+      res2 = [];
+      ("<% for(var i=0;i<data.empStartDate.length;i++){%>");
+      res2.push("<%=data.empStartDate[i]%>");
+      res2.push("<%=data.empEndDate[i]%>");
+      res2.push("<%=data.experience[i]%>");
+      res2.push("<%=data.role[i]%>");
+      res2.push("<%=data.workAddress[i]%>");
+      ("<%}%>");
+      var cover3 = document.getElementById("l3").getElementsByTagName("input");
+      updateData(res2, cover3);
+
+      looprun("<%=data.adminStartDate.length%>", add3);
+      res2 = [];
+      ("<% for(var i=0;i<data.adminStartDate.length;i++){%>");
+      res2.push("<%=data.adminStartDate[i]%>");
+      res2.push("<%=data.adminEndDate[i]%>");
+      res2.push("<%=data.adminTimePeriod[i]%>");
+      res2.push("<%=data.adminRole[i]%>");
+      res2.push("<%=data.adminWorkAddress[i]%>");
+      ("<%}%>");
+      var cover4 = document.getElementById("l4").getElementsByTagName("input");
+      updateData(res2, cover4);
+
+      var cover5 = document
+        .getElementById("l5")
+        .getElementsByTagName("textarea");
+
+      cover5[0].value = "<%=data.research[0]%>";
+
+      looprun("<%=data.identityWebsite.length%>", add4);
+      res2 = [];
+      ("<% for(var i=0;i<data.identityWebsite.length;i++){%>");
+      res2.push("<%=data.identityWebsite[i]%>");
+      res2.push("<%=data.identityURL[i]%>");
+      ("<%}%>");
+      var cover6 = document.getElementById("l6").getElementsByTagName("input");
+      updateData(res2, cover6);
+
+      looprun("<%=data.publication.length%>", add5);
+      res2 = [];
+      ("<% for(var i=0;i<data.publication.length;i++){%>");
+      res2.push("<%=data.publication[i]%>");
+      ("<%}%>");
+      var cover7 = document
+        .getElementById("l7")
+        .getElementsByTagName("textarea");
+      updateData(res2, cover7);
+
+      looprun("<%=data.conference.length%>", add6);
+      res2 = [];
+      ("<% for(var i=0;i<data.conference.length;i++){%>");
+      res2.push("<%=data.conference[i]%>");
+      ("<%}%>");
+      var cover8 = document
+        .getElementById("l8")
+        .getElementsByTagName("textarea");
+      updateData(res2, cover8);
+
+      looprun("<%=data.patent.length%>", add7);
+      res2 = [];
+      ("<% for(var i=0;i<data.patent.length;i++){%>");
+      res2.push("<%=data.patent[i]%>");
+      ("<%}%>");
+      var cover9 = document
+        .getElementById("l9")
+        .getElementsByTagName("textarea");
+      updateData(res2, cover9);
+
+      looprun("<%=data.textBooks.length%>", add8);
+      res2 = [];
+      ("<% for(var i=0;i<data.textBooks.length;i++){%>");
+      res2.push("<%=data.textBooks[i]%>");
+      ("<%}%>");
+      var cover10 = document
+        .getElementById("l10")
+        .getElementsByTagName("textarea");
+      updateData(res2, cover10);
+      ("<%}%>");
+    </script>
+    <script>
+      document.getElementById("token").value = "<%= token %>";
     </script>
   </body>
 </html>

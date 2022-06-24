@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="../images/iare-chapter/iare-logo.png"
+      type="image/x-icon"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,100,0,-25"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        position: relative;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      .nav {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgb(239, 240, 241);
+      }
+      .nav .left {
+        font-family: poppins;
+        font-size: x-large;
+        padding: 20px 15px;
+        font-weight: 500;
+      }
+      .nav .right {
+        padding: 20px 35px;
+      }
+      .nav a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: medium;
+        padding: 7px 15px;
+        border-radius: 6mm;
+        color: white;
+        background: rgb(1, 120, 238);
+        font-weight: 500;
+      }
+      .nav a:hover {
+        background: rgb(0, 92, 185);
+      }
+      .content-sec {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+      .material-symbols-outlined {
+        position: absolute;
+        top: 50px;
+        left: -350px;
+        font-size: 700px;
+        z-index: -1;
+        color: rgba(0, 0, 0, 0.05);
+        transform: rotateZ(-30deg);
+      }
+      .content {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 55px;
+        flex-wrap: wrap;
+        height: fit-content;
+      }
+      .content .left {
+        float: left;
+        font-family: VT323;
+      }
+      .line {
+        font-size: 80px;
+      }
+      .head {
+        font-size: 100px;
+        animation: flicker 2s linear;
+      }
+      @keyframes flicker {
+        from {
+          opacity: 0.5;
+        }
+        4% {
+          opacity: 0.5;
+        }
+        6% {
+          opacity: 0.45;
+        }
+        8% {
+          opacity: 0.55;
+        }
+        10% {
+          opacity: 0.45;
+        }
+        11% {
+          opacity: 0.5;
+        }
+        12% {
+          opacity: 0.65;
+        }
+        14% {
+          opacity: 0.55;
+        }
+        16% {
+          opacity: 0.7;
+        }
+        17% {
+          opacity: 0.55;
+        }
+        19% {
+          opacity: 0.5;
+        }
+        20% {
+          opacity: 0.5;
+        }
+        24% {
+          opacity: 0.5;
+        }
+        26% {
+          opacity: 0.69;
+        }
+        28% {
+          opacity: 0.5;
+        }
+        38% {
+          opacity: 0.45;
+        }
+        40% {
+          opacity: 0.5;
+        }
+        42% {
+          opacity: 0.6;
+        }
+        44% {
+          opacity: 0.5;
+        }
+        46% {
+          opacity: 0.5;
+        }
+        56% {
+          opacity: 0.5;
+        }
+        58% {
+          opacity: 0.75;
+        }
+        60% {
+          opacity: 0.5;
+        }
+        68% {
+          opacity: 0.5;
+        }
+        70% {
+          opacity: 0.6; /*peak*/
+        }
+        72% {
+          opacity: 0.5;
+        }
+        93% {
+          opacity: 0.5;
+        }
+        95% {
+          opacity: 0.6; /*peak*/
+        }
+        97% {
+          opacity: 0.5;
+        }
+        to {
+          opacity: 0.5;
+        }
+      }
+      .small {
+        font-size: 45px;
+        font-family: "Libre Barcode 128";
+      }
+      .none {
+        background: rgb(1, 120, 238);
+        color: white;
+      }
+      .right {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+      .box {
+        display: block;
+        width: 250px;
+        height: 250px;
+        border-radius: 2mm;
+        border: 3px dashed rgb(50, 50, 50);
+        margin-top: 55px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        transition: all 0.25s;
+        background: rgb(239, 240, 241);
+        box-shadow: 3px 3px rgba(0, 0, 0, 0.12), 7px 7px rgba(0, 0, 0, 0.15);
+      }
+      .image span::after {
+        content: "\e7f2";
+        font-size: 165px;
+        color: rgb(75, 75, 75);
+      }
+      .student:hover .image span::after {
+        content: "\e815";
+      }
+      .box .bottom {
+        display: block;
+        margin: auto;
+        width: 95%;
+        background: rgb(27, 27, 27);
+        align-self: baseline;
+        color: rgb(255, 255, 255);
+        text-align: center;
+        line-height: 30px;
+        border-radius: 2mm;
+        box-shadow: 0 0 0.265rem 0 rgba(0, 0, 0, 0.15);
+      }
+      .box:hover .bottom {
+        background: rgb(1, 120, 238);
+      }
+      .box:hover {
+        box-shadow: 0px 0px rgba(0, 0, 0, 0.15);
+      }
+      .tag1 {
+        font-family: poppins;
+        font-size: large;
+      }
+      .tag2 {
+        font-family: "Press Start 2P";
+        font-size: x-large;
+      }
+      .image2 span::after {
+        content: "\e83a";
+        font-size: 175px;
+        color: rgb(75, 75, 75);
+      }
+      .faculty:hover .image2 span::after {
+        content: "\e838";
+      }
+      .tagline {
+        font-family: poppins;
+        font-size: medium;
+        font-style: italic;
+        margin-top: 2px;
+        font-weight: 300;
+      }
+      .footer-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .bg-dark {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background-color: rgb(239, 240, 241);
+      }
+      .footer-section a:hover {
+        color: rgb(34, 34, 34);
+      }
+      .footer-left {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+      }
+      .footer-right {
+        width: 20%;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-left-titles a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: x-large;
+        color: rgb(54, 54, 54);
+        font-weight: 600;
+      }
+      .footer-left-links a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+      }
+      .footer-right p {
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+        width: 100%;
+        text-align: center;
+      }
+      .features {
+        width: 80%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+        margin-top: 20px;
+      }
+      .feature {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 12px;
+      }
+      .icon {
+        width: fit-content;
+        height: fit-content;
+        padding: 55px;
+        background: rgb(248, 249, 250);
+      }
+      .icon span {
+        width: 55px;
+        height: 55px;
+        background: black;
+        color: white;
+        border-radius: 3mm;
+        text-align: center;
+        line-height: 55px;
+        font-size: x-large;
+      }
+      .icon-text {
+        font-family: poppins;
+        font-size: small;
+        font-weight: 500;
+        margin-top: 15px;
+      }
+      @media all and (max-width: 700px) {
+        .footer-left {
+          width: 100%;
+        }
+        .footer-right {
+          width: 100%;
+        }
+        .features {
+          width: 100%;
+          margin-bottom: 15px;
+          margin-top: 10px;
+        }
+        .icon {
+          padding: 45px;
+        }
+        .icon span {
+          width: 45px;
+          height: 45px;
+          line-height: 45px;
+        }
+        .content {
+          margin-top: 25px;
+          width: 95%;
+          justify-content: space-evenly;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <div class="left">BuildIT | IARE</div>
+      <div class="right"><a href="<%= clientURL %>">Home</a></div>
+    </div>
+    <div class="content-sec">
+      <span class="material-symbols-outlined"> description </span>
+      <div class="content">
+        <div class="left">
+          <div class="line small">Welcome to</div>
+          <div class="line head">BuildIT</div>
+          <div class="line none">Resume Builder</div>
+          <div class="tagline"># There is no Tagline</div>
+        </div>
+        <div class="right">
+          <a href="<%= clientURL %>/Resume" class="box student">
+            <div class="image">
+              <span class="material-icons-outlined"> </span>
+            </div>
+            <div class="bottom">
+              <div class="tag1">Click Here if you are a</div>
+              <div class="tag2">STUDENT</div>
+            </div>
+          </a>
+          <a href="<%= clientURL %>/facultyResume" class="box faculty">
+            <div class="image2">
+              <span class="material-icons-outlined"> </span>
+            </div>
+            <div class="bottom">
+              <div class="tag1">Click Here if you are a</div>
+              <div class="tag2">FACULTY</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <div class="icon">
+            <span class="material-icons-round"> file_copy </span>
+          </div>
+          <div class="icon-text">Multiple Themes</div>
+        </div>
+        <div class="feature">
+          <div class="icon">
+            <span class="material-icons-round"> favorite </span>
+          </div>
+          <div class="icon-text">Easy to Use</div>
+        </div>
+        <div class="feature">
+          <div class="icon">
+            <span class="material-icons-round"> design_services </span>
+          </div>
+          <div class="icon-text">Dynamic</div>
+        </div>
+        <div class="feature">
+          <div class="icon">
+            <span class="material-icons-round"> flash_on </span>
+          </div>
+          <div class="icon-text">Fast</div>
+        </div>
+      </div>
+    </div>
+    <footer class="bg-dark" id="footers">
+      <div class="footer-section">
+        <div class="footer-left">
+          <div class="footer-left-titles">
+            <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://www.iare.ac.in" target="_blank">IARE</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank"
+              >Feedback</a
+            >
+          </div>
+        </div>
+        <div class="footer-right">
+          <p>
+            Copyright ©
+            <script>
+              var CurrentYear = new Date().getFullYear();
+              document.write(CurrentYear);
+            </script>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

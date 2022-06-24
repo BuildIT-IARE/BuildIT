@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faculty Theme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="../images/iare-chapter/iare-logo.png"
+      type="image/x-icon"
+    />
+    <style>
+      body {
+        font-family: Roboto Slab;
+        display: block;
+      }
+      .main-container {
+        margin: 0 auto;
+        width: 960px;
+        height: fit-content;
+        background: white;
+        position: relative;
+      }
+      .section {
+        margin: 20px 15px;
+      }
+      .label {
+        font-size: x-large;
+        color: rgb(0, 122, 174);
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .details {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+      .left {
+        flex-basis: 75%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .detail {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 2px 0;
+        text-align: justify;
+      }
+      .head {
+        flex-basis: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .value {
+        flex-basis: 50%;
+      }
+      .right {
+        flex-basis: 20%;
+      }
+      .right img {
+        width: 100%;
+      }
+      .colon {
+        font-weight: bold;
+      }
+      .section table {
+        width: 100%;
+        border: solid black 0.5mm;
+        font-size: medium;
+        border-collapse: collapse;
+      }
+      .tabledata td, .tabledata th {
+        border: 0.5mm solid rgb(0, 0, 0);
+        border-left: none;
+        border-right: none;
+        padding: 15px;
+        text-align: left;
+        max-width: 200px;
+      }
+      .text{
+        width: 100%;
+        text-align: justify;
+      }
+      .identity{
+        margin-bottom: 10px;
+        width: 100%;
+        overflow-wrap: break-word;
+      }
+      .identity .webname{
+        font-weight: bold;
+      }
+      .identity a{
+        text-decoration: none;
+        color: dodgerblue;
+      }
+      .content{
+        width: 100%;
+        overflow-wrap: break-word;
+        margin-bottom: 20px;
+        padding: 0;
+      }
+      ol{
+        padding-left: 15px;
+      }
+      #print{
+          align-self: center;
+          background: rgb(212, 234, 255);
+          color: darkblue;
+          font-family: poppins;
+          font-size: x-large;
+          padding: 3px 25px;
+          border: none;
+          border-radius: 10mm;
+          outline: none;
+          cursor: pointer;
+          margin-top: 10px;
+          margin: auto;
+          display: block;
+        }
+        #print:hover{
+            background: rgb(199, 228, 255);
+        }
+        .fields{
+            width: 100%;
+        }
+        .field{
+            display: flex;
+            align-items: center;
+        }
+        .field .value{
+            margin-left: 10px;
+        }
+      @media print{
+          .pagebreak { page-break-before: always; }
+            #print{
+                visibility: hidden;
+                display: none;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="section">
+        <div class="label">Personal Information</div>
+        <div class="details">
+          <div class="left">
+            <div class="detail">
+              <div class="head">
+                Name
+                <div class="colon">:</div>
+              </div>
+              <div class="value" style="font-weight: bold"><%=data.name%></div>
+            </div>
+            <div class="detail">
+              <div class="head">
+                Father's Name
+                <div class="colon">:</div>
+              </div>
+              <div class="value"><%=data.fatherName%></div>
+            </div>
+            <div class="detail">
+              <div class="head">
+                Designation
+                <div class="colon">:</div>
+              </div>
+              <div class="value"><%=data.designation%></div>
+            </div>
+            <div class="detail">
+              <div class="head">
+                Department
+                <div class="colon">:</div>
+              </div>
+              <div class="value"><%=data.department%></div>
+            </div>
+            <div class="detail">
+              <div class="head">
+                Office Address
+                <div class="colon">:</div>
+              </div>
+              <div class="value"><%=data.officeAddress%></div>
+            </div>
+            <div class="detail">
+              <div class="head">
+                Date Of Birth
+                <div class="colon">:</div>
+              </div>
+              <div class="value"><%=data.dob%></div>
+            </div>
+            <div class="detail">
+              <div class="head">
+                Age
+                <div class="colon">:</div>
+              </div>
+              <div class="value"><%=data.age%></div>
+            </div>
+            <div class="detail">
+              <div class="head">
+                Mobile
+                <div class="colon">:</div>
+              </div>
+              <div class="value"><%=data.mobileNumber%></div>
+            </div>
+            <div class="detail">
+              <div class="head">
+                Email
+                <div class="colon">:</div>
+              </div>
+              <div class="value"><%=data.email[0]%></div>
+            </div>
+            <% if(data.email[1]){%>
+            <div class="detail">
+              <div class="head">
+                Alternate Email
+                <div class="colon">:</div>
+              </div>
+              <div class="value"><%=data.email[1]%></div>
+            </div>
+            <%}%>
+          </div>
+          <div class="right">
+            <img src="" id="profile" />
+            <script>
+              var a = "<%=data.imgURL%>";
+              var i = document.getElementById("profile");
+              b = a;
+              c = b.indexOf("file/d/");
+              c = c + 7;
+              d = b.indexOf("/view");
+              b = b.slice(c, d);
+              s = "http://drive.google.com/uc?export=view&id=" + b;
+              console.log(s);
+              i.src = s;
+            </script>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="section">
+        <div class="label">Education Details</div>
+        <table class="tabledata">
+          <tr>
+            <th>Examination</th>
+            <th>Specialization</th>
+            <th>University</th>
+            <th>Year of Pass</th>
+            <th>Perecentage / CGPA</th>
+          </tr>
+          <% for(var i=0;i<data.degree.length;i++){%>
+            <tr>
+      <td><%=data.degree[i]%></td>
+      <td><%=data.specialization[i]%></td>
+      <td><%=data.university[i]%></td>
+      <td><%=data.yearOfPass[i]%></td>
+      <td><%=data.marks[i]%></td>
+      </tr>
+      <%}%>
+        </table>
+      </div>
+      <br>
+
+            <div class="section">
+        <div class="label">Employment Details</div>
+        <table class="tabledata">
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Experience</th>
+            <th>Role</th>
+            <th>Work Address</th>
+          </tr>
+          <% for(var i=0;i<data.empStartDate.length;i++){%>
+            <tr>
+      <td><%=data.empStartDate[i]%></td>
+      <td><%=data.empEndDate[i]%></td>
+      <td><%=data.experience[i]%></td>
+      <td><%=data.role[i]%></td>
+      <td><%=data.workAddress[i]%></td>
+      </tr>
+      <%}%>
+        </table>
+      </div>
+
+      <br>
+      <% if(data.adminStartDate.length>0){%>
+            <div class="section">
+        <div class="label">Administrative Roles</div>
+        <table class="tabledata">
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Time Period</th>
+            <th>Role</th>
+            <th>Work Address</th>
+          </tr>
+          <% for(var i=0;i<data.adminStartDate.length;i++){%>
+            <tr>
+      <td><%=data.adminStartDate[i]%></td>
+      <td><%=data.adminEndDate[i]%></td>
+      <td><%=data.adminTimePeriod[i]%></td>
+      <td><%=data.adminRole[i]%></td>
+      <td><%=data.adminWorkAddress[i]%></td>
+      </tr>
+      <%}%>
+        </table>
+      </div>
+      <%}%>
+
+      <% if(data.research[0].length>0){%>
+      <div class="section">
+        <div class="label">Research Interest</div>
+        <div class="text">
+            <%=data.research[0]%>
+        </div>
+      </div>
+      <br>
+      <%}%>
+
+      <% if(data.identityWebsite.length>0){%>
+      <div class="section">
+        <div class="label">Academic Identity</div>
+        <% for(var i=0;i<data.identityWebsite.length;i++){%>
+        <div class="identity">
+            <div class="webname"><%=data.identityWebsite[i]%></div>
+            <a href="<%=data.identityURL[i]%>" target="_blank"><%=data.identityURL[i]%></a>
+        </div>
+        <%}%>
+      </div>
+      <br>
+      <%}%>
+
+      <% if(data.publication.length>0 || data.conference.length>0 || data.patent.length>0 || data.textBooks.length>0){%>
+        <div class="section">
+            <div class="label">Publications Brief</div>
+            <div class="fields">
+                <% if(data.publication.length>0){%>
+                <div class="field">
+                    <div class="head">
+                Number of Research Papers Publications
+              </div>
+              <div class="value"><%=data.publication.length%></div> 
+                </div>
+                <%}%>
+                <% if(data.conference.length>0>0){%>
+                <div class="field">
+                    <div class="head">
+                In International / National Journals
+              </div>
+              <div class="value"><%=data.conference.length%></div>
+                </div>
+                <%}%>
+                <% if(data.patent.length>0){%>
+                <div class="field">
+                    <div class="head">
+                Proceedings in Conferences
+              </div>
+              <div class="value"><%=data.patent.length%></div>
+                </div>
+                <%}%>
+                <% if(data.textBooks.length>0){%>
+                <div class="field">
+                    <div class="head">
+                Text Books
+              </div>
+              <div class="value"><%=data.textBooks.length%></div>
+                </div>
+                <%}%>
+            </div>
+        </div>
+        <br>
+        <%}%>
+
+      <%if (data.publication.length>0){%>
+      <div class="section">
+        <div class="label">Publications</div>
+        <ol>
+        <% for(var i=0;i<data.publication.length;i++){%>
+        <li class="content">
+            <%=data.publication[i]%>
+        </li>
+        <%}%>
+        </ol>
+      </div>
+      <br>
+      <%}%>
+
+      <%if (data.conference.length>0){%>
+      <div class="section">
+        <div class="label">Conferences</div>
+        <ol>
+        <% for(var i=0;i<data.conference.length;i++){%>
+        <li class="content">
+            <%=data.conference[i]%>
+        </li>
+        <%}%>
+        </ol>
+      </div>
+      <br>
+      <%}%>
+
+      <%if (data.patent.length>0){%>
+      <div class="section">
+        <div class="label">Patents</div>
+        <ol>
+        <% for(var i=0;i<data.patent.length;i++){%>
+        <li class="content">
+            <%=data.patent[i]%>
+        </li>
+        <%}%>
+        </ol>
+      </div>
+      <br>
+      <%}%>
+
+      <%if (data.textBooks.length>0){%>
+      <div class="section">
+        <div class="label">Text Books</div>
+        <ol>
+        <% for(var i=0;i<data.textBooks.length;i++){%>
+        <li class="content">
+            <%=data.textBooks[i]%>
+        </li>
+        <%}%>
+        </ol>
+      </div>
+      <br>
+      <%}%>
+    </div>
+    <div class="pagebreak"> </div>
+    <button type="button" id="print" onclick="window.print()">Print</button>
+  </body>
+</html>
