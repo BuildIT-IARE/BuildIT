@@ -2697,6 +2697,25 @@ app.post("/getAllResumes", async (req, res) => {
   });
 });
 
+app.get("/MyResume", checkSignIn, async (req, res) => {
+  let options = {
+    url: serverRoute + "/facultyResume/" + req.cookies.username,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    if (body) {
+      res.render("ResumeTemplates/facultyTheme", {
+        imgUsername: req.cookies.username,
+        data: body,
+      });
+    }
+  });
+});
+
 app.get("/facultyResume", checkSignIn, async (req, res) => {
   let options = {
     url: serverRoute + "/facultyResume/" + req.cookies.username,
