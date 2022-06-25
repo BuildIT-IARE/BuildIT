@@ -10,22 +10,22 @@ exports.create = (req, res) => {
 
   degreesArray = [];
   if (req.body["Degree"]) {
-    degreesArray.push(req.body["Degree"]);
+    degreesArray.push(req.body["Degree"].replace(/(\r\n|\n|\r)/gm, ""));
   }
   var degreesCount = 1;
   while (req.body["Degree" + degreesCount]) {
-    degreesArray.push(req.body["Degree" + degreesCount]);
+    degreesArray.push(req.body["Degree" + degreesCount].replace(/(\r\n|\n|\r)/gm, ""));
     degreesCount++;
   }
 
   specializationsArray = [];
   if (req.body["Specialization"]) {
-    specializationsArray.push(req.body["Specialization"]);
+    specializationsArray.push(req.body["Specialization"].replace(/(\r\n|\n|\r)/gm, ""));
   }
   var specializationsCount = 1;
   while (req.body["Specialization" + specializationsCount]) {
     specializationsArray.push(
-      req.body["Specialization" + specializationsCount]
+      req.body["Specialization" + specializationsCount].replace(/(\r\n|\n|\r)/gm, "")
     );
     specializationsCount++;
   }
@@ -52,41 +52,41 @@ exports.create = (req, res) => {
 
   universityArray = [];
   if (req.body["University"]) {
-    universityArray.push(req.body["University"]);
+    universityArray.push(req.body["University"].replace(/(\r\n|\n|\r)/gm, ""));
   }
   var universityCount = 1;
   while (req.body["University" + universityCount]) {
-    universityArray.push(req.body["University" + universityCount]);
+    universityArray.push(req.body["University" + universityCount].replace(/(\r\n|\n|\r)/gm, ""));
     universityCount++;
   }
 
   experienceArray = [];
   if (req.body["Experience"]) {
-    experienceArray.push(req.body["Experience"]);
+    experienceArray.push(req.body["Experience"].replace(/(\r\n|\n|\r)/gm, ""));
   }
   var experienceCount = 1;
   while (req.body["Experience" + experienceCount]) {
-    experienceArray.push(req.body["Experience" + experienceCount]);
+    experienceArray.push(req.body["Experience" + experienceCount].replace(/(\r\n|\n|\r)/gm, ""));
     experienceCount++;
   }
 
   roleArray = [];
   if (req.body["Role"]) {
-    roleArray.push(req.body["Role"]);
+    roleArray.push(req.body["Role"].replace(/(\r\n|\n|\r)/gm, ""));
   }
   var roleCount = 1;
   while (req.body["Role" + roleCount]) {
-    roleArray.push(req.body["Role" + roleCount]);
+    roleArray.push(req.body["Role" + roleCount].replace(/(\r\n|\n|\r)/gm, ""));
     roleCount++;
   }
 
   workAddressArray = [];
   if (req.body["WorkAddress"]) {
-    workAddressArray.push(req.body["WorkAddress"]);
+    workAddressArray.push(req.body["WorkAddress"].replace(/(\r\n|\n|\r)/gm, ""));
   }
   var workAddressCount = 1;
   while (req.body["WorkAddress" + workAddressCount]) {
-    workAddressArray.push(req.body["WorkAddress" + workAddressCount]);
+    workAddressArray.push(req.body["WorkAddress" + workAddressCount].replace(/(\r\n|\n|\r)/gm, ""));
     workAddressCount++;
   }
 
@@ -142,19 +142,19 @@ exports.create = (req, res) => {
 
   var adminWorkAddressArray = [];
   if (req.body["adminWorkAddress"]) {
-    adminWorkAddressArray.push(req.body["adminWorkAddress"]);
+    adminWorkAddressArray.push(req.body["adminWorkAddress"].replace(/(\r\n|\n|\r)/gm, ""));
   }
   var adminWorkAddressCount = 1;
   while (req.body["adminWorkAddress" + adminWorkAddressCount]) {
     adminWorkAddressArray.push(
-      req.body["adminWorkAddress" + adminWorkAddressCount]
+      req.body["adminWorkAddress" + adminWorkAddressCount].replace(/(\r\n|\n|\r)/gm, "")
     );
     adminWorkAddressCount++;
   }
 
   var adminRoleArray = [];
   if (req.body["adminRole"]) {
-    adminRoleArray.push(req.body["adminRole"]);
+    adminRoleArray.push(req.body["adminRole"].replace(/(\r\n|\n|\r)/gm, ""));
   }
   var adminRoleCount = 1;
   while (req.body["adminRole" + adminRoleCount]) {
@@ -186,32 +186,32 @@ exports.create = (req, res) => {
 
   var publicationArray = [];
   if (req.body["Publication"]) {
-    publicationArray.push(req.body["Publication"]);
+    publicationArray.push(req.body["Publication"].replace(/(\r\n|\n|\r)/gm, ""));
   }
   var publicationCount = 1;
   while (req.body["Publication" + publicationCount]) {
-    publicationArray.push(req.body["Publication" + publicationCount]);
+    publicationArray.push(req.body["Publication" + publicationCount].replace(/(\r\n|\n|\r)/gm, ""));
     publicationCount++;
   }
 
   var conferenceArray = [];
   var conferenceCount = 1;
   while (req.body["Conference" + conferenceCount]) {
-    conferenceArray.push(req.body["Conference" + conferenceCount]);
+    conferenceArray.push(req.body["Conference" + conferenceCount].replace(/(\r\n|\n|\r)/gm, ""));
     conferenceCount++;
   }
 
   var patentArray = [];
   var patentCount = 1;
   while (req.body["Patent" + patentCount]) {
-    patentArray.push(req.body["Patent" + patentCount]);
+    patentArray.push(req.body["Patent" + patentCount].replace(/(\r\n|\n|\r)/gm, ""));
     patentCount++;
   }
 
   var textBooksArray = [];
   var textBooksCount = 1;
   while (req.body["TextBooks" + textBooksCount]) {
-    textBooksArray.push(req.body["TextBooks" + textBooksCount]);
+    textBooksArray.push(req.body["TextBooks" + textBooksCount].replace(/(\r\n|\n|\r)/gm, ""));
     textBooksCount++;
   }
   // console.log(req.body);
@@ -248,7 +248,7 @@ exports.create = (req, res) => {
           adminTimePeriod: adminTimePeriodArray,
           adminWorkAddress: adminWorkAddressArray,
           adminRole: adminRoleArray,
-          research: req.body.Research,
+          research: req.body.Research.replace(/(\r\n|\n|\r)/gm, ""),
           identityWebsite: identityWebsiteArray,
           identityURL: identityURLArray,
           publication: publicationArray,
