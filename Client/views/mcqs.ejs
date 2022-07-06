@@ -26,45 +26,78 @@
     <!--Favicon-->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon"> -->
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
     <style>
-      * {
-        margin: 0px;
-        padding: 0px;
-        box-sizing: border-box;
+            html {
+        scroll-behavior: smooth;
       }
-      * body {
-        font-family: Arial, Helvetica, sans-serif;
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        font-family: poppins;
         /* font-size: 45px; */
         width: 100%;
         min-height: 100vh;
         letter-spacing: 1px;
+        margin: 0;
+        padding: 0;
       }
       /*---------------- LEVEL 1 --------------*/
       #container {
+        width: 100%;
         min-height: 100vh;
       }
       /*---------------- LEVEL 2 --------------*/
       #header {
-        display: flex;
-        border-top: 0.5vh solid #9d94ea;
-        border-bottom: 0.5vh solid #9d94ea;
-        background-color: #b3acfa;
+        background-color: rgb(7,48,66);
         color: white;
-        padding: 2vh;
-        min-height: 12vh;
-        min-width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        height: 70px;
+      }
+      #time h2, #time h5{
+        margin: 0px 0;
+      }
+      #time{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+        margin: 2px 0;
+      }
+      #image img{
+        width: 70px;
+        height: 80px;
       }
       #main {
-        padding: 4vh 2vw;
-        min-height: 88vh;
-        min-width: 100vw;
+        width: 100%;
+        margin-top: 10px;
       }
       /*---------------- LEVEL 3 --------------*/
       .content, #content {
         float: left;
-        width: 75vw;
-        padding-right: 2vw;
+        width: 73%;
+        padding:0 2vw;
         word-wrap: break-word;
       }
       #controls{
@@ -74,7 +107,6 @@
       /*---------------- NAV DIVISION --------------*/
       #nav {
         float: right;
-        width: 21vw;
       }
       #nav {
         display: flex;
@@ -82,7 +114,10 @@
         gap: 4vh;
         padding: 4vh 1.5vw;
         min-height: 55.75vh;
-        border: 0.25vw solid #afb6bf;
+        border-radius: 3mm;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        background: #f8f9fa;
+        margin-right: 10px;
       }
       [class^="block-"] {
         display: flex;
@@ -101,11 +136,18 @@
         justify-content: center;
         align-items: center;
         /* flex-basis: 25%; */
-        background-color: #dfe6ee;
-        border: 0.125vw solid #afb6bf;
+        background-color: white;
+        border: 0.125vw solid rgb(7,48,66);
         user-select: none;
         height: 6vh;
         width: 3vw;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 2px 3px rgba(60, 64, 67, 0.2);
+        
+      }
+      [class^="box-"]:hover{
+        background: rgb(246,189,65);
       }
       /*---------------- HEADER DIVISION --------------*/
       #time {
@@ -120,17 +162,19 @@
         justify-content: center;
         align-items: center;
         width: 70vw;
+        position: relative;
       }
       #image {
         display: flex;
         align-items: center;
-        width: 20vw;
+        width: fit-content;
         margin-top: -2vh;
         margin-bottom: -2vh;
-        padding-left: 5vw;
+        margin-right: 10px;
+        margin-left: 10px;
       }
       #labelTime {
-        color: #009b77;
+        color: rgb(61,220,132);
       }
       /*---------------- MAIN DIVISION --------------*/
       #description-picture > img{
@@ -158,28 +202,40 @@
       #section > button {
         margin-right: 4vw;
       }
-      button:first-child {
-        margin-left: 10vw;
-      }
-      button:last-child {
-        margin-right: 0;
-      }
       .active {
-        background-color: #19b09f;
-        border-color: #00a591;
+        background-color: rgb(66,133,244);
+        border-color: rgb(66,133,244);
         color: #fff;
+        border-radius: 5mm;
+        padding: 5px 15px;
+        font-size: large;
       }
       .submit {
-        border-color: #00a591;
-        color: #00a591;
+        border: 0.5mm solid rgb(7,48,66);
+        background: white;
         cursor: pointer;
         display: none;
+        font-family: poppins;
+        font-size: larger;
+        border-radius: 1mm;
+        background: rgb(232,234,237);
+        margin-bottom: 20px;
+      }
+      .submit:hover{
+        background:rgb(61,220,132);
       }
       .end {
         float: right;
         text-decoration: none;
         clear: both;
         margin: 2vh auto 0 auto;
+        background: rgb(246,189,65);
+        border: 0.5mm solid rgb(7,48,66);
+        border-radius: 1mm;
+        color: black;
+      }
+      .end:hover{
+        background: rgb(236,94,79);
       }
       p {
         display: inline-flex;
@@ -187,10 +243,16 @@
         margin-top: 10px;
       }
       .activeQuestion {
-        background-color: #96c3eb;
+        background-color:rgb(66,143,255);
+        border: none;
+        border-radius: 50%;
+        border: 0.125vw solid rgb(7,48,66);
       }
       .attemptedQuestion {
-        background-color: #8ed7cd;
+        background-color: rgb(61,220,132);
+        border: none;
+        border-radius: 50%;
+        border: 0.125vw solid rgb(7,48,66);
       }
     </style>
 
@@ -232,6 +294,130 @@
         font-weight: 700;
         font-family: "Roboto", sans-serif;
       }
+      .content h4{
+        margin-top: 0;
+      }
+      .sec-button{
+        width: 300px;
+        background: white;
+        padding: 5px 10px;
+        padding-left: 20px;
+        border-radius: 10mm;
+        color: black;
+        font-size: larger;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        letter-spacing: 0;
+        cursor: pointer;
+      }
+      .sec-button span{
+        font-size: 45px;
+        height: 25px;
+        line-height: 25px;
+      }
+      .sec-menu{
+        position: absolute;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background: #f8f9fa;
+        width: 300px;
+        padding: 20px;
+        padding-top: 5px;
+        color: black;
+        margin: auto;
+        top: 55px;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        border-radius: 3mm;
+        max-height: 70vh;
+        overflow-y:auto;
+        border-top: 15px solid #f8f9fa;
+        border-bottom: solid 15px #f8f9fa;
+        opacity: 0;
+        transform: translateY(-200vh);
+        height: 0;
+        transition: opacity height 200ms ease-in-out;
+      }
+      .btn2{
+        text-align: left;
+        font-family: poppins;
+        background:white;
+        width: 100%;
+        outline: none;
+        border: none;
+        border-radius: 0;
+        color: black;
+        margin: 0;
+        padding: 5px 5%;
+        margin: 5px 0;
+        border-radius: 3mm;
+        border: 0.5mm solid rgb(7,48,66);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+      .btn2 span{
+        font-size: medium;
+      }
+      .btn2:hover{
+        background: rgb(61,220,132);
+      }
+      .sec-head{
+        font-size: medium;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 10px;
+      }
+      .sec-head span{
+        font-size: small;
+      }
+      .bullet-number{
+        width: 15px;
+        margin-right: 5px;
+      }
+      #ans1,#ans2,#ans3,#ans4{
+        display: none;
+      }
+      .ans-label{
+        width: 90%;
+        padding: 6px 10px;
+        border-radius: 1mm;
+        border: 0.5mm solid rgb(7,48,66);
+        display: inline-block;
+        cursor: pointer;
+      }
+      .ans-label:hover{
+        background: rgb(246,189,65);
+      }
+      #ans1:checked + .ans-label{
+        background: rgb(61,220,132);
+      }
+      #ans2:checked + .ans-label{
+        background: rgb(61,220,132);
+      }
+      #ans3:checked + .ans-label{
+        background: rgb(61,220,132);
+      }
+      #ans4:checked + .ans-label{
+        background: rgb(61,220,132);
+      }
+      .questionNum{
+        width: 25px;
+        height: 25px;
+        font-size: medium;
+        line-height: 25px;
+        text-align: center;
+        border-radius: 50%;
+        border: 0.5mm solid rgb(7,48,66);
+        display: inline-block;
+        margin: 6px 2px;
+      }
+      .questionNum:nth-child(2){
+        box-shadow: 1px 1px rgba(60, 64, 67, 0.3);
+      }
     </style>
   </head>
 
@@ -243,30 +429,53 @@
           <h2 id="labelTime"></h2>
         </div>
         <div id="section">
+          <div class="sec-button" id="sectionmenu">
+            <%= datatimer.sections[data.section-1] %>
+            <span class="material-icons-round">arrow_drop_down</span>
+          </div>
+          <div class="sec-menu" id="secmenu">
+            <div class="sec-head">
+              <span class="material-icons-round">widgets</span>
+              Sections
+            </div>
           <% for(let i=0; i<datatimer.sections.length; i++) { %>
+            <% if(i==data.section-1){%>
+              <button style="background: rgb(66,143,255);"
+              type="button"
+              class="btn2 active"
+              onclick="jump(0,'<%= i+1 %>')">
+            <span class="material-icons-round">navigate_next</span>
+            <%= datatimer.sections[i] %></button>
+            <%} else {%>
             <button
               type="button"
-              class="btn active"
-              onclick="jump(0,'<%= i+1 %>')"
-            >
-            <%= datatimer.sections[i] %></button
-            >
+              class="btn2 active"
+              onclick="jump(0,'<%= i+1 %>')">
+            <span class="material-icons-round">navigate_next</span>
+            <%= datatimer.sections[i] %></button>
+            <%}%>
           <% } %>
+          </div>
         </div>
         <div id="image">
           <h4 id="username"><%= imgUsername %>&emsp;</h4>
           <img
             id="img"
-            alt="No Image );"
-            width="50"
+            alt="No Image"
             src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/<%= imgBranch %>/<%= imgUsername %>.jpg"
           />
         </div>
       </div>
       <div id="main">
         <div id="content">
-          <h4>
-            Q&nbsp;<%= data.questionNum %>.&nbsp;<%= data.mcqDescriptionText %>
+          <div class="questionNum">
+            Q
+          </div>
+          <div class="questionNum">
+            <%= data.questionNum %>
+          </div>
+          <h4 style="text-align:justify ; margin-top: 0;">
+            <%= data.mcqDescriptionText %>
           </h4>
           <% if (data.photo){ %>
             <br>
@@ -286,25 +495,25 @@
             name="myform"
             id="form1"
           >
-            <p>1.&nbsp;</p>
-            <input type="radio" name="answer" value=1
+            <p class="bullet-number">1.&nbsp;</p>
+            <input type="radio" name="answer" value=1 id="ans1"
             <% if(datatimer.selection===1){ %>checked<%}%> >
-            <p>&emsp;<%= data.option1 %></p>
+            <label for="ans1" class="ans-label"><%= data.option1 %></label>
             <br />
-            <p>2.&nbsp;</p>
-            <input type="radio" name="answer" value=2
+            <p class="bullet-number">2.&nbsp;</p>
+            <input type="radio" name="answer" value=2 id="ans2"
             <% if(datatimer.selection===2){ %>checked<%}%> >
-            <p>&emsp;<%= data.option2 %></p>
+            <label for="ans2" class="ans-label"><%= data.option2 %></label>
             <br />
-            <p>3.&nbsp;</p>
-            <input type="radio" name="answer" value=3
+            <p class="bullet-number">3.&nbsp;</p>
+            <input type="radio" name="answer" value=3 id="ans3"
             <% if(datatimer.selection===3){ %>checked<%}%> >
-            <p>&emsp;<%= data.option3 %></p>
+            <label for="ans3" class="ans-label"><%= data.option3 %></label>
             <br />
-            <p>4.&nbsp;</p>
-            <input type="radio" name="answer" value=4
+            <p class="bullet-number">4.&nbsp;</p>
+            <input type="radio" name="answer" value=4 id="ans4"
             <% if(datatimer.selection===4){ %>checked<%}%> >
-            <p>&emsp;<%= data.option4 %></p>
+            <label for="ans4" class="ans-label"><%= data.option4 %></label>
             <br /><br />
 
             <input type="hidden" name="isPartial" value="<%= data.isPartial %>" >
@@ -364,6 +573,38 @@
     <div id="div1" style="display: none"><%= datatimer.validTill %></div>
     <div id="div2" style="display: none"><%= datatimer.contestId %></div>
     <script>
+      var dotsmenu = document.getElementById("secmenu");
+      var dots = document.getElementById("sectionmenu");
+      var toggle = 0;
+      var press = 0;
+      dots.onclick = function () {
+        if (toggle == 0) {
+          dotsmenu.style.transform = "translateY(0)";
+          dotsmenu.style.opacity="1"
+          dotsmenu.style.height="fit-content"
+          toggle = 1;
+        } else {
+          dotsmenu.style.transform = "translateY(-200vh)";
+          dotsmenu.style.opacity="0"
+          dotsmenu.style.height="0"
+          toggle = 0;
+        }
+        press = 1;
+      };
+      window.onclick = function () {
+        if (toggle == 1 && press == 0) {
+          dotsmenu.style.transform = "translateY(-200vh)";
+          dotsmenu.style.opacity="0"
+          dotsmenu.style.height="0"
+          toggle = 0;
+        } else {
+          press = 0;
+        }
+      };
+
+
+
+
       var countDownDatetemp = document.getElementById("div1").innerHTML;
       countDownDatetemp = countDownDatetemp.slice(4, countDownDatetemp.length);
       var countDownDate = new Date(countDownDatetemp).getTime();
