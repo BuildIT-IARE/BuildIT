@@ -14,50 +14,91 @@
     <!--Favicon-->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
-
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Baloo:wght@500&display=swap');
-* {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
+     html {
+        scroll-behavior: smooth;
+        max-width: 100vw;
+        padding: 0;
+        margin: 0;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      h1,h2,h3,h4 {
+    margin: 0;
+    max-width: 100%;
 }
-* body {
-  font-family: 'Barlow', sans-serif;
-  width: 100%;
-  min-height: 100vh;
-  letter-spacing: 1px;
-}
-/*---------------- LEVEL 1 --------------*/
-#container {
-  min-height: 100vh;
-}
-/*---------------- LEVEL 2 --------------*/
-#header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  border-top: 0.5vh solid #6558f5;
-  border-bottom: 0.5vh solid #6558f5;
-  background-color: #b3acfa;
-  color: white;
-  padding: 0 2vh;
-  min-height: 12vh;
-  min-width: 100vw;
-}
-#central {
-  padding: 0 31vw;
-  height: 88vh;
-  min-width: 100vw;
-  line-height: 200%;
-}
-/*---------------- LEVEL 3 HEADER--------------*/
-#home {
+      body {
+        font-family: poppins;
+        width: 100%;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        
+      }
+      /*---------------- LEVEL 1 --------------*/
+      #header {
+        background-color: rgb(7,48,66);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        height: 70px;
+      }
+      #image {
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        margin-top: -2vh;
+        margin-bottom: -2vh;
+        margin-right: 10px;
+        margin-left: 10px;
+      }
+      #image img{
+        width: 70px;
+        height: 80px;
+      }
+      #home {
   display: flex;
   align-items: center;
   width: 20vw;
+}
+#home a{
+  text-decoration: none;
+  padding: 5px 15px;
+  border-radius: 6mm;
+  color: black;
+  background: white;
+  margin: 0 5px;
+  display: flex;
+  align-items: center;
+}
+#home a span{
+  font-size: larger;
+  margin-left: 10px;
+  color: rgb(55, 206, 123);
+  font-weight: bold;
 }
 #banner {
   display: flex;
@@ -66,110 +107,139 @@
   flex-direction: column;
   width: 60vw;
 }
-#image {
-  display: flex;
-  align-items: center;
-  width: 20vw;
-  padding-left: 5.5vw;
+#banner p{
+  margin: 0;
 }
-/*---------------- LEVEL 3 CENTRAL--------------*/
-#up{
-  min-height: 35vh;
-}
-#down{
-  min-height: 35vh;
-}
-#print{
-  max-height: 18vh;
-  padding-top: 6vh;
-}
-/*---------------- LEVEL 4 HEADER--------------*/
-#home button {
-  background-color: #fff;
-  font-family: 'Barlow', sans-serif;
-  font-weight: bold;
-  font-size: 14px;
-  color: #50606f;
-  border: 2px solid #8d8fc7;
-  padding: .3rem .9rem;
-  border-radius: 3px;
-}
+      #container {
+        width: 100%;
+        min-height: 100vh;
+      }
+/*---------------- LEVEL 2 --------------*/
 #result {
   font-size: 18px;
-  padding-bottom: .5vh;
+  padding-bottom: 3px;
+  color: rgb(61,220,132);
+  font-weight: 600;
 }
 #contest {
   font-size: 28px;
 }
 #username {
-  font-family: 'Barlow', sans-serif;
+  font-family: poppins;
   font-size: 20px;
   margin-right: -1vw;
 }
 /*---------------- LEVEL 4 CENTRAL--------------*/
+#central{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  width: 100%;
+}
+#up{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .score{
   font-size: 3.5vh;
-  font-weight: 900;
+  font-weight: 500;
   padding: 6vh 0 2vh 0;
-  height: 12vh;
+  align-self: flex-start;
+  
+}
+.score p{
+  margin: 0;
+  width: fit-content;
+  padding: 5px 10px ;
+  border-radius: 1mm;
+  background: rgb(232,234,237);
+  border: 0.5mm solid rgb(7,48,66)
+;
 }
 .box1{
   display: flex;
-  border: 2px solid #c3cfd9;
-  width: 38vw;
+  border: 0.5mm solid rgb(7,48,66);
+  border-radius: 2mm;
+  width: 100%;
   min-height: 23vh;
   padding: 1vh 0;
 }
 #print button{
-  background-color: #2AAA8A;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  color: white;
-  line-height: 1.5;
+  margin: 10px 0 ;
+  background-color: rgb(61,220,132);
+  border: 0.5mm solid rgb(7,48,66);
+  border-radius: 1mm;
+  color:black;
   letter-spacing: 2px;
-  padding: .375rem .75rem;
+  padding: 10px 15px;
+  font-size: large;
+  font-weight: 500;
+  cursor: pointer;
 }
 /*---------------- LEVEL 5 BOX1--------------*/
 .total-score{
-  font-family: 'Baloo', sans-serif;
-  border-right:  2px solid #ddd;
-  font-size: 3.8vh;
+  font-family: poppins;
+  border-right:  0.5mm solid rgb(7,48,66);
+  font-size: 35px;
   font-weight: bolder;
-  width: 10vw;
+  width: 15%;
   min-height: 21vh;
   padding: 6vh 2vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.total-score p{
+  margin: 0;
+}
+.thecircle{
+  width: 165px;
+  height: 165px;
+  border-radius: 50%;
+  border: 0.5mm solid rgb(7,48,66);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(246,189,65);
 }
 .coding-socre{
   font-weight: normal;
 }
 .statistic1{
-  width: 28vw;
+  width: 100%;
   min-height: 19vh;
   padding: 1vh 1vw;
   /*display: table*/
 }
 /*---------------- LEVEL 6 TOTAL SCORE--------------*/
 .line{
-    border-bottom: 2px solid #ddd;
-    -webkit-transform:
-                translateY(0)
-                translateX(.5vw)
-                rotate(-45deg);
-    width: 5vw;
+    border-bottom: 0.5mm solid rgb(7,48,66);
+    width: 90px;
+    transform: rotateZ(-20deg);
 }
 .left{
-  color: #2AAA8A;
+  color:black;
+  margin-bottom: 5px;
 }
 .right{
-  text-indent: 3.6vw;
+  color: black;
+  margin-top: 5px;
 }
 /*---------------- LEVEL 6 STATISTICS--------------*/
 table, th, td {
-  border: 2px solid #c3cfd9;
+  border-bottom: 2px solid rgb(7,48,66);
 }
 td, th {
   text-align: center;
-  padding: 3px;
+  padding: 7px 3px;
+}
+td{
+  font-weight: 500;
 }
 table {
   border-collapse: collapse;
@@ -178,8 +248,8 @@ table {
   line-height: 1.5;
 }
 table {
-  font-family: 'Baloo', sans-serif;
-  font-size: 12px;
+  font-family: poppins;
+  font-size: large;
 }
 .correct{
   color: #1aae9f;
@@ -195,7 +265,9 @@ table {
   
       <div id="header">
         <div id="home">
-          <a href="/qualifier_tests/leaderboard/<%= data.contestId %>"><button>LEADERBOARD</button></a>
+          <a href="/qualifier_tests/leaderboard/<%= data.contestId %>">LEADERBOARD <span class="material-icons-round">
+east
+</span></a>
         </div>
         <div id="banner">
           <div id="result">
@@ -206,10 +278,10 @@ table {
           </div>
         </div>
         <div id="image">
-          <p id="username"><%= imgUsername %>&emsp;</p>
+          <h4 id="username"><%= imgUsername %>&emsp;</h4>
           <img
             id="img"
-            alt="No Image );"
+            alt="No Image"
             width="50"
             src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/<%= imgBranch %>/<%= imgUsername %>.jpg"
           />
@@ -223,15 +295,17 @@ table {
           </div>
           <div class="box1">
             <div class="total-score">
+              <div class="thecircle">
               <p class="left"><%= data.totalScore %></p>
               <div class="line"></div>
               <p class="right"><%= data.totalCount %></p>
+              </div>
             </div>
             <div class="statistic1">
               <table>
                 <thead>
                 <tr>
-                  <th>Section</th>
+                  <th style="width:35% ;text-align: left;">Section</th>
                   <th>Total</th>
                   <th>Correct</th>
                   <th>Wrong</th>
@@ -241,7 +315,7 @@ table {
                 <tbody>
                 <% for(var i=0; i<data.sections.length; i++){ %>
                 <tr>
-                  <td><%= data.sections[i] %></td>
+                  <td style="width:35% ;text-align: left;"><%= data.sections[i] %></td>
                   <td><%= data.divisionCount[i] %></td>
                   <td class="correct"><%= data.divisionScore[i] %></td>
                   <td class="wrong"><%= data.divisionAttemptCount[i] - data.divisionScore[i] %></td>
@@ -254,7 +328,7 @@ table {
           </div>
         </div>
         <div id="print">
-          <center><button id="print-btn" onclick="window.print()">Print</button></center>
+          <button id="print-btn" onclick="window.print()">Print</button>
         </div>
       </div>
     </div>
