@@ -22,14 +22,12 @@ exports.create = (req, res) => {
       message: "user Branch can not be empty",
     });
   }
-
   if (!req.body.contestId) {
     return res.status(400).send({
       success: false,
       message: "contest Id can not be empty",
     });
   }
-
   Participation.find({
     participationId: req.body.username + req.body.contestId,
   })
@@ -322,6 +320,9 @@ exports.acceptSubmission = (sub, callback) => {
                   score: sub.score,
                   ipAddress: sub.ipAddress,
                 },
+              },
+              $inc: {
+                totalSubmissionResultsScore: sub.score,
               },
             },
             { new: true },

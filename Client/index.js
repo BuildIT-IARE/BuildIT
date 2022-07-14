@@ -1508,7 +1508,6 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
           };
           // get participation details
           request(options3, function (err, response, bodytimer) {
-            console.log(bodytimer);
             bodytimer = bodytimer[0];
             let questions = [];
             let scores = [];
