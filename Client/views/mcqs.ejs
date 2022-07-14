@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title id="demo1"></title>
+    <title id="demo1">Contest</title>
 
     <!-- mobile responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -38,7 +38,7 @@
         scroll-behavior: smooth;
       }
       ::-webkit-scrollbar {
-        width: 10px;
+        width: 0.65vw;
       }
       ::-webkit-scrollbar-track {
         border-radius: 10px;
@@ -46,7 +46,7 @@
       }
       ::-webkit-scrollbar-thumb {
         background: rgb(155, 155, 155);
-        border-radius: 10px;
+        border-radius: 0.5vw;
       }
       ::-webkit-scrollbar-thumb:hover {
         background: rgb(110, 110, 110);
@@ -64,6 +64,7 @@
       #container {
         width: 100%;
         min-height: 100vh;
+        height: 100vh;
       }
       /*---------------- LEVEL 2 --------------*/
       #header {
@@ -73,7 +74,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 10px 0;
-        height: 70px;
+        height: 11vh;
       }
       #time h2, #time h5{
         margin: 0px 0;
@@ -92,17 +93,28 @@
       #main {
         width: 100%;
         margin-top: 10px;
+        display: grid;
+        grid-template-columns: 76.35vw 23vw;
       }
       /*---------------- LEVEL 3 --------------*/
       .content, #content {
         float: left;
-        width: 73%;
-        padding:0 2vw;
+        width: 96%;
+        padding:0 2%;
         word-wrap: break-word;
+        overflow-y: auto;
+        height: 84vh;
       }
       #controls{
         display: flex;
         flex-direction: column;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        overflow-x: hidden;
+        height: 84vh;
+
       }
       /*---------------- NAV DIVISION --------------*/
       #nav {
@@ -111,13 +123,12 @@
       #nav {
         display: flex;
         flex-direction: column;
-        gap: 4vh;
-        padding: 4vh 1.5vw;
+        padding: 4vh 7.5%;
         min-height: 55.75vh;
         border-radius: 3mm;
         box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
         background: #f8f9fa;
-        margin-right: 10px;
+        width: 80%;
       }
       [class^="block-"] {
         display: flex;
@@ -254,6 +265,12 @@
         border-radius: 50%;
         border: 0.125vw solid rgb(7,48,66);
       }
+      .code-ide{
+        width: 100%;
+        height: 84vh;
+        margin-bottom: 20px;
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 20px 0px;
+      }
     </style>
 
     <style>
@@ -296,6 +313,7 @@
       }
       .content h4{
         margin-top: 0;
+        white-space: pre-wrap;
       }
       .sec-button{
         width: 300px;
@@ -358,6 +376,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        cursor: pointer;
       }
       .btn2 span{
         font-size: medium;
@@ -418,6 +437,24 @@
       .questionNum:nth-child(2){
         box-shadow: 1px 1px rgba(60, 64, 67, 0.3);
       }
+      label,.questiondesc,.sampleinout, .questionexplain {
+  white-space: pre-line;
+}   .questionlabel{
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.sampleinout{
+  background: rgb(241, 241, 241);
+  width: 93%;
+  padding: 0 3%;
+  padding-bottom: 3%;
+  border-radius: 2mm;
+  border: 0.5mm solid rgb(7,48,66);
+}
+.questionexplain{
+  border-bottom: 0.5mm solid rgb(7,48,66);
+  padding-bottom: 35px;
+}
     </style>
   </head>
 
@@ -467,15 +504,18 @@
         </div>
       </div>
       <div id="main">
+        <%_ %><% var codesec =  datatimer.sections[data.section-1] %>
+        <%_ %><% codesec=codesec.toUpperCase() %>
         <div id="content">
           <div class="questionNum">
             Q
           </div>
           <div class="questionNum">
-            <%= data.questionNum %>
+            <%_ %><%= data.questionNum %>
           </div>
+          <%if (codesec!="CODING") {%>
           <h4 style="text-align:justify ; margin-top: 0;">
-            <%= data.mcqDescriptionText %>
+            <%_ %><%= data.mcqDescriptionText %>
           </h4>
           <% if (data.photo){ %>
             <br>
@@ -488,6 +528,7 @@
             </div>
           <% } %>
           <br /><br />
+          
           <form
             action="/qualifier_test/<%=data.contestId%>/mcq"
             method="POST"
@@ -535,6 +576,8 @@
               name="sectionCount"
               value="<%= datatimer.sections.length %>"
             >
+            <input type="hidden" name="sectionName" value="<%= datatimer.sections[data.section-1] %>">
+            <input type="hidden" name="secarr" value="<%=datatimer.sections%>">
             <input
               type="submit"
               name="submit"
@@ -543,6 +586,40 @@
               class="btn submit"
             />
           </form>
+          <% } else {%>
+            <h1><%= data.questionName %></h1>
+            <div class="questiondesc">
+              <%= data.questionDescriptionText %>
+            </div>
+            <br>
+            <div class="questionlabel">Input Format</div>
+            <div class="inoutformat">
+              <%= data.questionInputText %>
+            </div>
+            <br>
+            <div class="questionlabel">Output Format</div>
+            <div class="inoutformat">
+              <%= data.questionOutputText %>
+            </div>
+            <br>
+            <div class="questionlabel">Sample Input</div>
+            <div class="sampleinout">
+              <%_ %><%= data.questionExampleInput1 %>
+            </div>
+            <br>
+            <div class="questionlabel">Sample Output</div>
+            <div class="sampleinout">
+              <%_ %><%= data.questionExampleOutput1 %>
+            </div>
+            <br>
+             <div class="questionlabel" style="margin-bottom: 0;">Explaination</div>
+             <div class="questionexplain">
+              <%_ %><%= data.questionExplanation %>
+             </div>
+             <br>
+             <br>
+            <iframe src="/ide/<%=data.questionId %>" frameborder="0" class="code-ide"></iframe>
+            <% } %>
         </div>
         <div id="controls">
           <div id="nav">
@@ -756,7 +833,10 @@
           document.getElementById("submit").style.display = "inherit";
         }
         if (distance > 0 && "<%= data.questionId %>") {
-          document.getElementById("editor").style.display = "inherit";
+          let editorid = document.getElementById("editor")
+          if (editorid){
+            editorid.style.display = "inherit";
+          }
         }
         let note = document.querySelector(".box-<%= data.questionNum %>");
         note.classList.add("activeQuestion");
@@ -766,6 +846,10 @@
         mark.classList.add("attemptedQuestion");
         ("<% }; %>");
       })();
+      var allsec=[]
+      "<% for(var i=0;i<datatimer.sections.length;i++){%> "
+      allsec.push("<%= datatimer.sections[i] %>")
+      "<%}%>"
       function jump(num, sec) {
         document.body.innerHTML +=
           `<form id="dynForm" action="/qualifier_test/<%= data.contestId %>/mcq" method="post">
@@ -776,6 +860,8 @@
             <input type="hidden" name="section" value=` +
           sec +
           `>
+          <input type="hidden" name="sectionName" value=`+allsec[sec-1]+`>
+          <input type="hidden" name="secarr" value="<%=datatimer.sections%>">
             <input type="hidden" name="sectionCount" value="<%= datatimer.sections.length %>" >
           </form>`;
         document.getElementById("dynForm").submit();

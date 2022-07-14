@@ -1508,6 +1508,7 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
           };
           // get participation details
           request(options3, function (err, response, bodytimer) {
+            console.log(bodytimer);
             bodytimer = bodytimer[0];
             let questions = [];
             let scores = [];
@@ -1686,12 +1687,15 @@ app.post(
         let sectionLen = Number(req.body.sectionLen);
         let questionNum = Number(req.body.questionNum);
         let sectionCount = Number(req.body.sectionCount);
+        let secName = req.body.sectionName;
+        let secarray = req.body.secarr.split(",");
 
         if (questionNum === sectionLen) {
           if (section === sectionCount) questionNum -= 1;
           else {
             questionNum = 0;
             section += 1;
+            secName = secarray[section - 1];
           }
         }
         let options = {
@@ -1704,6 +1708,7 @@ app.post(
             "/" +
             questionNum,
           method: "post",
+          body: { sectionName: secName },
           headers: {
             authorization: req.cookies.token,
           },
@@ -1729,17 +1734,19 @@ app.post(
                 let currSection = [];
                 let selection = 0;
                 let index = 0;
-
-                bodytimer.responses =
-                  bodytimer.responses[body.section - 1].responses;
-                currSection = bodytimer.responses;
-                currSection = currSection.map((v) => v.questionNum);
-                index = currSection.indexOf(body.questionNum);
-                if (index !== -1) {
-                  currSection.splice(index, 1);
-                  selection = bodytimer.responses[index].selection;
+                if (
+                  bodytimer.sections[body.section - 1].toUpperCase() != "CODING"
+                ) {
+                  bodytimer.responses =
+                    bodytimer.responses[body.section - 1].responses;
+                  currSection = bodytimer.responses;
+                  currSection = currSection.map((v) => v.questionNum);
+                  index = currSection.indexOf(body.questionNum);
+                  if (index !== -1) {
+                    currSection.splice(index, 1);
+                    selection = bodytimer.responses[index].selection;
+                  }
                 }
-
                 bodytimer.selection = selection;
                 bodytimer.questionNums = currSection;
                 bodytimer.submissionResults = null;

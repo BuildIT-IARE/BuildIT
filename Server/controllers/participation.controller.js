@@ -115,6 +115,9 @@ exports.createMcq = (req, res) => {
             section: e,
             responses: [],
           }));
+          if (duration.coding) {
+            duration.sections.push("Coding");
+          }
           let endTime = moment(date, "HH:mm:ss").add(d, "minutes");
           // Create a Participation
           const participation = new McqParticipation({
@@ -162,8 +165,8 @@ exports.acceptSelection = (sub, callback) => {
   McqParticipation.find({ participationId: sub.participationId })
     .then((participation) => {
       // Check prev selection
-      const sec = participation[0].responses[sub.section-1].section;
-      const selections = participation[0].responses[sub.section-1].responses;
+      const sec = participation[0].responses[sub.section - 1].section;
+      const selections = participation[0].responses[sub.section - 1].responses;
       found = false;
       if (selections.length !== 0) {
         selections.forEach((selection) => {
@@ -172,8 +175,8 @@ exports.acceptSelection = (sub, callback) => {
 
             // Update selection
             console.log("Came here");
-            const query_field = `responses.${sub.section-1}.responses.mcqId`;
-            const field = `responses.${sub.section-1}.responses.$.selection`;
+            const query_field = `responses.${sub.section - 1}.responses.mcqId`;
+            const field = `responses.${sub.section - 1}.responses.$.selection`;
             const value = sub.answer;
             const obj = { [field]: value };
             McqParticipation.updateOne(
@@ -184,7 +187,7 @@ exports.acceptSelection = (sub, callback) => {
               {
                 $set: obj,
               },
-              { new: true },
+              { new: true }
             )
               .then((participations) => {
                 if (!participations) {
@@ -203,7 +206,7 @@ exports.acceptSelection = (sub, callback) => {
       }
       if (!found) {
         // const field = `responses.${sec}`;
-        const field = `responses.${sub.section-1}.responses`;
+        const field = `responses.${sub.section - 1}.responses`;
         McqParticipation.findOneAndUpdate(
           { participationId: sub.participationId },
           {
@@ -215,7 +218,7 @@ exports.acceptSelection = (sub, callback) => {
               },
             },
           },
-          { new: true },
+          { new: true }
         )
           .then((participation) => {
             if (!participation) {
@@ -285,19 +288,13 @@ exports.acceptSubmission = (sub, callback) => {
                 )
                   .then((participation) => {
                     if (!participation) {
-                      return callback(
-                        "Participation not found with Id ",
-                        null
-                      );
+                      return callback("Participation not found with Id ", null);
                     }
                     return callback(null, participation);
                   })
                   .catch((err) => {
                     if (err.kind === "ObjectId") {
-                      return callback(
-                        "Participation not found with Id ",
-                        null
-                      );
+                      return callback("Participation not found with Id ", null);
                     }
                     return callback(
                       "Error updating Participation with Id ",
@@ -355,116 +352,122 @@ exports.acceptSubmission = (sub, callback) => {
         });
       });
   } else {
-  Participation.find({ participationId: sub.participationId })
-    .then((participation) => {
-      // Check prev sub
-      participation = participation[0];
+    Participation.find({ participationId: sub.participationId })
+      .then((participation) => {
+        // Check prev sub
+        participation = participation[0];
 
-      multiset = true;
-      if (participation.questions.length !== 0) {
-        if (!participation.questions.includes(sub.questionId)){
-          multiset = false;
-          return callback(null, participation);
-        }
-      }
-      if (multiset) {
-        
-        found = false;
-        updated = false;
-        if (participation.submissionResults.length !== 0) {
-          for (let i = 0; i < participation.submissionResults.length; i++) {
-            if (
-              participation.submissionResults[i].questionId === sub.questionId
-            ) {
-              found = true;
-              if (participation.submissionResults[i].score < sub.score) {
-                // Update higher score
-                updated = true;
-                console.log("Came here");
-                Participation.updateOne(
-                  {
-                    participationId: sub.participationId,
-                    "submissionResults.questionId": sub.questionId,
-                  },
-                  {
-                    $set: {
-                      "submissionResults.$.score": sub.score,
-                      "submissionResults.$.ipAddress": sub.ipAddress,
-                    },
-                  },
-                  { new: true },
-                  (err, doc) => {
-                    if (err) {
-                      console.log("Something wrong when updating data!");
-                    }
-                    // console.log(doc);
-                  }
-                )
-                  .then((participation) => {
-                    if (!participation) {
-                      return callback("Participation not found with Id ", null);
-                    }
-                    return callback(null, participation);
-                  })
-                  .catch((err) => {
-                    if (err.kind === "ObjectId") {
-                      return callback("Participation not found with Id ", null);
-                    }
-                    return callback(
-                      "Error updating Participation with Id ",
-                      null
-                    );
-                  });
-              }
-            }
-          }
-          if (found && !updated) {
+        multiset = true;
+        if (participation.questions.length !== 0) {
+          if (!participation.questions.includes(sub.questionId)) {
+            multiset = false;
             return callback(null, participation);
           }
         }
-        if (!found) {
-          Participation.findOneAndUpdate(
-            { participationId: sub.participationId },
-            {
-              $addToSet: {
-                submissionResults: {
-                  questionId: sub.questionId,
-                  score: sub.score,
-                  ipAddress: sub.ipAddress,
-                },
-              },
-            },
-            { new: true },
-            (err, doc) => {
-              if (err) {
-                console.log("Something wrong when updating data!");
+        if (multiset) {
+          found = false;
+          updated = false;
+          if (participation.submissionResults.length !== 0) {
+            for (let i = 0; i < participation.submissionResults.length; i++) {
+              if (
+                participation.submissionResults[i].questionId === sub.questionId
+              ) {
+                found = true;
+                if (participation.submissionResults[i].score < sub.score) {
+                  // Update higher score
+                  updated = true;
+                  console.log("Came here");
+                  Participation.updateOne(
+                    {
+                      participationId: sub.participationId,
+                      "submissionResults.questionId": sub.questionId,
+                    },
+                    {
+                      $set: {
+                        "submissionResults.$.score": sub.score,
+                        "submissionResults.$.ipAddress": sub.ipAddress,
+                      },
+                    },
+                    { new: true },
+                    (err, doc) => {
+                      if (err) {
+                        console.log("Something wrong when updating data!");
+                      }
+                      // console.log(doc);
+                    }
+                  )
+                    .then((participation) => {
+                      if (!participation) {
+                        return callback(
+                          "Participation not found with Id ",
+                          null
+                        );
+                      }
+                      return callback(null, participation);
+                    })
+                    .catch((err) => {
+                      if (err.kind === "ObjectId") {
+                        return callback(
+                          "Participation not found with Id ",
+                          null
+                        );
+                      }
+                      return callback(
+                        "Error updating Participation with Id ",
+                        null
+                      );
+                    });
+                }
               }
             }
-          )
-            .then((participation) => {
-              if (!participation) {
-                return callback("Participation not found with Id ", null);
-              }
+            if (found && !updated) {
               return callback(null, participation);
-            })
-            .catch((err) => {
-              console.log(err);
-              if (err.kind === "ObjectId") {
-                return callback("Participation not found with Id ", null);
+            }
+          }
+          if (!found) {
+            Participation.findOneAndUpdate(
+              { participationId: sub.participationId },
+              {
+                $addToSet: {
+                  submissionResults: {
+                    questionId: sub.questionId,
+                    score: sub.score,
+                    ipAddress: sub.ipAddress,
+                  },
+                },
+              },
+              { new: true },
+              (err, doc) => {
+                if (err) {
+                  console.log("Something wrong when updating data!");
+                }
               }
-              return callback("Error updating Participation with Id ", null);
-            });
+            )
+              .then((participation) => {
+                if (!participation) {
+                  return callback("Participation not found with Id ", null);
+                }
+                return callback(null, participation);
+              })
+              .catch((err) => {
+                console.log(err);
+                if (err.kind === "ObjectId") {
+                  return callback("Participation not found with Id ", null);
+                }
+                return callback("Error updating Participation with Id ", null);
+              });
+          }
         }
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send({
-        success: false,
-        message:
-          err.message || "Some error occurred while retrieving participation.",
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+          success: false,
+          message:
+            err.message ||
+            "Some error occurred while retrieving participation.",
+        });
       });
-    });
   }
 };
 
@@ -527,7 +530,7 @@ exports.updateParticipation = (req, questions, callback) => {
         questions: questions,
       },
     },
-    { new: true },
+    { new: true }
   )
     .then((participation) => {
       if (!participation) {
@@ -643,7 +646,6 @@ exports.saveResult = (req, res) => {
           }
           let responses = participation[0].responses.map((e) => e.responses); // array of 4 arrays
           mcq = mcq.map((v) => v.books); // array of 4 arrays each having mcqs array from 1 section
-
           if (mcq.length !== responses.length) {
             return res.send({ success: false, message: "Error occured" });
           }
@@ -705,7 +707,7 @@ exports.saveResult = (req, res) => {
                 validTill: participation[0].participationTime,
               },
             },
-            { new: true },
+            { new: true }
           )
             .then((participations) => {
               if (!participations) {
@@ -719,6 +721,7 @@ exports.saveResult = (req, res) => {
               let participation = participations.mcqResults._doc;
               participation.sections = participations.sections;
               participation.contestName = participations.contestName;
+              participations.coding = participation[0].submissionResults;
               // participation.coding = participations.submissionResults;
               res.send(participation);
             })
@@ -729,7 +732,8 @@ exports.saveResult = (req, res) => {
                   success: false,
                   message:
                     "Question not found with Contest id " +
-                    req.params.contestId,
+                    req.params.contestId +
+                    "Please Reload",
                 });
               }
               return res.status(500).send({
@@ -744,6 +748,7 @@ exports.saveResult = (req, res) => {
         let participations = participation[0].mcqResults._doc;
         participations.sections = participation[0].sections;
         participations.contestName = participation[0].contestName;
+        participations.coding = participation[0].submissionResults;
         // participations.coding = participation[0].submissionResults;
         res.send(participations);
       }
@@ -760,16 +765,21 @@ exports.saveResult = (req, res) => {
 // create and save a new score
 exports.leaderboard = async (req, res) => {
   try {
-    let participation1 = await McqParticipation.find({contestId: req.params.contestId});
+    let participation1 = await McqParticipation.find({
+      contestId: req.params.contestId,
+    });
 
-    let leaderboard = participation1.map(e => ({username: e.username, totalScore: e.mcqResults.totalScore}) );
-
+    let leaderboard = participation1.map((e) => ({
+      username: e.username,
+      totalScore: e.mcqResults.totalScore,
+    }));
+    console.log(leaderboard);
     res.send(leaderboard);
-  } catch(err) {console.log(err)
+  } catch (err) {
+    console.log(err);
     res.status(500).send({
       success: false,
-      message:
-        err.message || "Error occurred!",
+      message: err.message || "Error occurred!",
     });
   }
 };

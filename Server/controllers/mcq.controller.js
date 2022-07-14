@@ -3,7 +3,7 @@ const Question = require("../models/question.model.js");
 const inarray = require("inarray");
 const xlsx = require("xlsx");
 const fs = require("fs");
-var Binary = require('mongodb').Binary;
+var Binary = require("mongodb").Binary;
 
 // Create and Save a new question
 exports.create = (req, res) => {
@@ -113,7 +113,7 @@ exports.create = (req, res) => {
 };
 
 // Create and Save a new question
-exports.createMultiple = async(req, res) => {
+exports.createMultiple = async (req, res) => {
   // Validate request
   if (!req.params.contestId) {
     return res.status(400).send({
@@ -127,12 +127,12 @@ exports.createMultiple = async(req, res) => {
     ++count;
     let body = JSON.parse(req.body.arr);
     let fileKeys = [];
-    if(req.files)
-      fileKeys = Object.keys(req.files).map(e => Number(e.charAt(5)));
+    if (req.files)
+      fileKeys = Object.keys(req.files).map((e) => Number(e.charAt(5)));
 
     for (let i = 0; i < body.length; i++) {
       body[i].mcqId = "IARE" + (count + i).toString();
-      if(req.files && fileKeys.includes(i)) {
+      if (req.files && fileKeys.includes(i)) {
         body[i].photo = {};
         body[i].photo.data = Binary(req.files["photo" + i].data);
         body[i].photo.contentType = "image/png";
@@ -142,7 +142,6 @@ exports.createMultiple = async(req, res) => {
     let result = await Mcq.insertMany(body);
     res.send(result);
   } catch (err) {
-
     res.status(500).send({
       success: false,
       message: err.message || "Error occurred!",
@@ -260,9 +259,8 @@ exports.findOneQuestion = async (req, res) => {
       mcq.questionNum = index + 1;
       mcq.sectionLen = mcqs.length;
       mcq.isPartial = req.body.isPartial;
-      
-      if (mcq.isPartial)
-      {
+
+      if (mcq.isPartial) {
         mcq.sections = req.body.sections;
       }
 
@@ -272,55 +270,98 @@ exports.findOneQuestion = async (req, res) => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
           success: false,
-          message: err+ "Question not found with id " + req.params.contestId,
-        });
-      }
-      return res.status(500).send({
-        success: false,
-        message: err +"Error retrieving question with id " + req.params.contestId,
-      });
-    });
-};
-
-exports.findOneContest = (req, res) => {
-  Mcq.find({
-    contestId: req.params.contestId,
-    section: Number(req.params.section),
-  })
-    .then((mcqs) => {
-      if (!mcqs) {
-        return res.status(404).send({
-          success: false,
-          message: "Question not found with Contest id " + req.params.contestId,
-        });
-      }
-      // mcqs.sort( (a, b) => a.mcqId.substring(4) - b.mcqId.substring(4) );
-      // let min = mcqs.reduce( (a, b) => a.mcqId.substring(4) > b.mcqId.substring(4)? a : b );
-      let index = parseInt(req.params.questionNum);
-
-      let mcq = mcqs[index]._doc;
-      mcq.answer = null;
-      mcq.questionNum = index + 1;
-      mcq.sectionLen = mcqs.length;
-      mcq.photo = mcq.photo.contentType
-        ? mcq.photo.data.toString("base64")
-        : "";
-
-      res.send(mcq);
-    })
-    .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          success: false,
-          message: "Question not found with Contest id " + req.params.contestId,
+          message: err + "Question not found with id " + req.params.contestId,
         });
       }
       return res.status(500).send({
         success: false,
         message:
-          "Error retrieving question with Contest id " + req.params.contestId,
+          err + "Error retrieving question with id " + req.params.contestId,
       });
     });
+};
+
+exports.findOneContest = (req, res) => {
+  var sectionName = req.body.sectionName;
+  if (sectionName) {
+    sectionName = sectionName.toUpperCase();
+  } else {
+    sectionName = "none";
+  }
+  if (sectionName != "CODING") {
+    Mcq.find({
+      contestId: req.params.contestId,
+      section: Number(req.params.section),
+    })
+      .then((mcqs) => {
+        if (!mcqs) {
+          return res.status(404).send({
+            success: false,
+            message:
+              "Question not found with Contest id " + req.params.contestId,
+          });
+        }
+        // mcqs.sort( (a, b) => a.mcqId.substring(4) - b.mcqId.substring(4) );
+        // let min = mcqs.reduce( (a, b) => a.mcqId.substring(4) > b.mcqId.substring(4)? a : b );
+        let index = parseInt(req.params.questionNum);
+
+        let mcq = mcqs[index]._doc;
+        mcq.answer = null;
+        mcq.questionNum = index + 1;
+        mcq.sectionLen = mcqs.length;
+        mcq.photo = mcq.photo.contentType
+          ? mcq.photo.data.toString("base64")
+          : "";
+        res.send(mcq);
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return res.status(404).send({
+            success: false,
+            message:
+              "Question not found with Contest id " + req.params.contestId,
+          });
+        }
+        return res.status(500).send({
+          success: false,
+          message:
+            "Error retrieving question with Contest id " + req.params.contestId,
+        });
+      });
+  } else {
+    Question.find({ contestId: req.params.contestId })
+      .then((mcqs) => {
+        if (!mcqs) {
+          return res.status(404).send({
+            success: false,
+            message:
+              "Question not found with Contest id " + req.params.contestId,
+          });
+        }
+        let index = parseInt(req.params.questionNum);
+
+        let mcq = mcqs[index]._doc;
+        mcq.answer = null;
+        mcq.questionNum = index + 1;
+        mcq.sectionLen = mcqs.length;
+        mcq.section = Number(req.params.section);
+        res.send(mcq);
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId") {
+          return res.status(404).send({
+            success: false,
+            message:
+              "Question not found with Contest id " + req.params.contestId,
+          });
+        }
+        return res.status(500).send({
+          success: false,
+          message:
+            "Error retrieving question with Contest id " + req.params.contestId,
+        });
+      });
+  }
 };
 
 // Retrieve first mcq

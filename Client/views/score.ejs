@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <!-- <title id="demo1"></title> -->
-
+    <title>Score</title>
     <!-- mobile responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
@@ -296,9 +296,20 @@ east
           <div class="box1">
             <div class="total-score">
               <div class="thecircle">
-              <p class="left"><%= data.totalScore %></p>
+                <% var codtotsum = 0 %>
+                <% var totsum = 0 %>
+                <% for(var i=0;i<data.coding.length;i++){ %>
+                  <% codtotsum+=Number(data.coding[i].score) %>
+                  <% totsum+=100 %>
+                <%}%>
+                <% var flag=0 %>
+                <% for(var i=0; i<data.sections.length; i++){ %>
+                  <% if(data.sections[i].toUpperCase()=="CODING"){ %>
+                    <% flag=1 %>
+                 <%}}%>   
+              <p class="left"><%= data.totalScore+codtotsum-flag %></p>
               <div class="line"></div>
-              <p class="right"><%= data.totalCount %></p>
+              <p class="right"><%= data.totalCount+totsum-flag %></p>
               </div>
             </div>
             <div class="statistic1">
@@ -314,6 +325,9 @@ east
                 </thead>
                 <tbody>
                 <% for(var i=0; i<data.sections.length; i++){ %>
+                  <% if(data.sections[i].toUpperCase()=="CODING"){ %>
+                    <% continue; %>
+                 <%}%> 
                 <tr>
                   <td style="width:35% ;text-align: left;"><%= data.sections[i] %></td>
                   <td><%= data.divisionCount[i] %></td>
@@ -323,6 +337,27 @@ east
                 </tr>
                 <% } %>
                 </tbody>
+              </table>
+              <br>
+              <div style="width: 100%; text-align: center; font-size: x-large; font-weight: bold;">Coding</div>
+              <br>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Q.No</th>
+                    <th>Question ID</th>
+                    <th>Score</th>
+                    <th>Total Score</th>
+                  </tr>
+                </thead>
+                <% for(var i=0;i<data.coding.length;i++){ %>
+                  <tr>
+                    <td><%=i+1%></td>
+                    <td><%=data.coding[i].questionId%></td>
+                    <td><%=data.coding[i].score%></td>
+                    <td>100</td>
+                  </tr>
+                <%}%>  
               </table>
             </div>
           </div>
