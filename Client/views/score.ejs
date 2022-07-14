@@ -301,15 +301,10 @@ east
                 <% for(var i=0;i<data.coding.length;i++){ %>
                   <% codtotsum+=Number(data.coding[i].score) %>
                   <% totsum+=100 %>
-                <%}%>
-                <% var flag=0 %>
-                <% for(var i=0; i<data.sections.length; i++){ %>
-                  <% if(data.sections[i].toUpperCase()=="CODING"){ %>
-                    <% flag=1 %>
-                 <%}}%>   
-              <p class="left"><%= data.totalScore+codtotsum-flag %></p>
+                <%}%>   
+              <p class="left"><%= data.totalScore+codtotsum %></p>
               <div class="line"></div>
-              <p class="right"><%= data.totalCount+totsum-flag %></p>
+              <p class="right"><%= data.totalCount+totsum %></p>
               </div>
             </div>
             <div class="statistic1">

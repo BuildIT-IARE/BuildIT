@@ -127,6 +127,7 @@ exports.createMcq = (req, res) => {
             contestName: duration.contestName,
             participationTime: date,
             submissionResults: [],
+            totalSubmissionResultsScore: 0,
             mcqResults: {},
             validTill: endTime,
             responses: sections,
@@ -276,6 +277,9 @@ exports.acceptSubmission = (sub, callback) => {
                     $set: {
                       "submissionResults.$.score": sub.score,
                       "submissionResults.$.ipAddress": sub.ipAddress,
+                    },
+                    $inc: {
+                      totalSubmissionResultsScore: sub.score,
                     },
                   },
                   { new: true },
@@ -771,9 +775,8 @@ exports.leaderboard = async (req, res) => {
 
     let leaderboard = participation1.map((e) => ({
       username: e.username,
-      totalScore: e.mcqResults.totalScore,
+      totalScore: e.mcqResults.totalScore + e.totalSubmissionResultsScore,
     }));
-    console.log(leaderboard);
     res.send(leaderboard);
   } catch (err) {
     console.log(err);

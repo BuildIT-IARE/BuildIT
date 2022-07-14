@@ -12,7 +12,7 @@ var participationSchema = new Schema({
   participationTime: String,
   submissionResults: Array,
   validTill: String,
-  questions: Array
+  questions: Array,
 });
 
 var result = new Schema({
@@ -23,14 +23,16 @@ var result = new Schema({
   divisionCount: Array,
   divisionAttemptCount: Array,
   statistics: Array,
-  answerKey: Array
+  answerKey: Array,
 });
 
 var response = new Schema({
-  section: [{
-    name: String,
-    responses: [{ mcqId: String, questionNum: Number, selection: Number }]
-  }],
+  section: [
+    {
+      name: String,
+      responses: [{ mcqId: String, questionNum: Number, selection: Number }],
+    },
+  ],
 });
 
 var mcqParticipationSchema = new Schema({
@@ -42,12 +44,15 @@ var mcqParticipationSchema = new Schema({
   validTill: String,
   questions: Array,
   submissionResults: Array,
+  totalSubmissionResultsScore: Number,
   mcqResults: result,
-  responses: [{
-    section: String,
-    responses: [{ mcqId: String, questionNum: Number, selection: Number }]
-  }],
-  sections: [ String ],
+  responses: [
+    {
+      section: String,
+      responses: [{ mcqId: String, questionNum: Number, selection: Number }],
+    },
+  ],
+  sections: [String],
 });
 
 module.exports = {

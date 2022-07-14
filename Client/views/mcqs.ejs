@@ -24,7 +24,7 @@
     <!-- <link href="css/style.css" rel="stylesheet"> -->
 
     <!--Favicon-->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    
     <!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon"> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -456,6 +456,11 @@
   padding-bottom: 35px;
 }
     </style>
+    <link
+      rel="shortcut icon"
+      href="../images/iare-chapter/iare-logo.png"
+      type="image/x-icon"
+    />
   </head>
 
   <body>
@@ -587,7 +592,7 @@
             />
           </form>
           <% } else {%>
-            <h1><%= data.questionName %></h1>
+            <h1><%= data.questionName %> #<%= data.questionId %></h1>
             <div class="questiondesc">
               <%= data.questionDescriptionText %>
             </div>
