@@ -39,6 +39,25 @@
     <link type="text/css" rel="stylesheet" href="css/ide.css" />
 
     <title>BuildIT IDE</title>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 7px;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 7px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 7px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+    </style>
   </head>
 
   <body>
@@ -181,9 +200,9 @@
       return "";
     }
     let a = getCookie("username") === "ADMIN";
-    let b = getCookie("username")
-    b=b.slice(0,4)
-    let c=(b=="IARE" || b=="iare")
+    let b = getCookie("username");
+    b = b.slice(0, 4);
+    let c = b == "IARE" || b == "iare";
     $(document).ready(function () {
       let branch = getCookie("branch");
       let username = getCookie("username");
@@ -205,7 +224,8 @@
     function checkKeyCode(evt) {
       var evt = evt ? evt : evt ? evt : null;
 
-      if ( //F12, F5
+      if (
+        //F12, F5
         evt.keyCode == 123 ||
         evt.keyCode == 116
       ) {
@@ -222,7 +242,7 @@
         case 88:
         case 67:
         case 86:
-          if(a) break;
+          if (a) break;
         case 83: //Block Ctrl+S
         case 80: //Block Ctrl+P
         case 85: //Block Ctrl+U
@@ -233,7 +253,8 @@
       }
 
       if (
-        event.ctrlKey && event.shiftKey &&
+        event.ctrlKey &&
+        event.shiftKey &&
         (event.keyCode == 73 || event.keyCode == 74 || event.keyCode == 67)
       ) {
         return false;
@@ -242,27 +263,27 @@
 
     function handle(event) {
       event.preventDefault();
-      event.clipboardData.setData('text/plain', "NOT ALLOWED!");
+      event.clipboardData.setData("text/plain", "NOT ALLOWED!");
     }
 
     if (!a && !c) {
       document.onkeydown = checkKeyCode;
 
-      document.addEventListener('cut', handle);
-      document.addEventListener('copy', handle);
-      document.addEventListener('paste', (event) => {
+      document.addEventListener("cut", handle);
+      document.addEventListener("copy", handle);
+      document.addEventListener("paste", (event) => {
         event.preventDefault();
         alert("PASTE DETECTED! PLEASE RELOAD");
         document.getElementById("submit-btn").remove();
-        document.getElementById('site-content').innerHTML += null;
+        document.getElementById("site-content").innerHTML += null;
       });
     }
 
-    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener("contextmenu", (event) => event.preventDefault());
 
     window.onbeforeunload = function (e) {
       e.preventDefault();
-      e.returnValue = 'Really want to quit the contest?';
+      e.returnValue = "Really want to quit the contest?";
     };
   </script>
 </html>
