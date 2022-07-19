@@ -315,7 +315,7 @@ function run() {
     sourceValue = sourceEditor.getValue();
   }
 
-  if(languageId === "4"){
+  if (languageId === "4") {
     compilerOptions = "-lm";
   }
 
@@ -845,7 +845,7 @@ Content of compiled binary is Base64 encoded and used as source code.\n\
 https://ide.judge0.com/?kS_f\n\
 ';
 
-function insertUserCode(data){
+function insertUserCode(data) {
   currentLanguageId = parseInt(data);
   sourceEditor.setValue(sources[currentLanguageId]);
   monaco.editor.setModelLanguage(
@@ -857,25 +857,31 @@ function insertUserCode(data){
 
 function getSubmission() {
   let windowUrl = window.location.href;
-  let username= getCookie("username");
-  let questionId= windowUrl.slice(serverUrl.length + 5, windowUrl.length);
+  let username = getCookie("username");
+  let questionId = windowUrl.slice(serverUrl.length + 5, windowUrl.length);
   $.ajax({
-    url: serverUrl + "/submissions/user/" + username.toLowerCase() + "/" + questionId + "/",
+    url:
+      serverUrl +
+      "/submissions/user/" +
+      username.toLowerCase() +
+      "/" +
+      questionId +
+      "/",
     type: "GET",
     async: true,
     headers: {
       authorization: getCookie("token"),
     },
     success: function (data) {
-      if(data.length > 0) {
-        var a = data.length-1;
+      if (data.length > 0) {
+        var a = data.length - 1;
         currentLanguageId = parseInt(data[a].languageId);
         sources[currentLanguageId] = data[a].sourceCode;
         insertUserCode(data[a].languageId);
-      };
+      }
     },
   });
-};
+}
 
 getSubmission();
 

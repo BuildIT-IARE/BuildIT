@@ -4,6 +4,7 @@ const xlsx = require("xlsx");
 
 // Create and Save a new contest
 exports.create = (req, res) => {
+  console.log(req.body);
   // Validate request
   if (!req.body.contestId) {
     return res.status(400).send({
@@ -57,6 +58,7 @@ exports.create = (req, res) => {
       mcq: req.body.mcq,
       usernames: usernames,
       sections: sections,
+      coding: req.body.coding,
     });
 
     // SaveContest in the database
@@ -114,7 +116,7 @@ exports.findAllUser = (req, res) => {
 
   Contest.find({
     mcq: req.body.mcq ? true : { $in: [false, null] },
-    usernames: { $in: [username, "", null] }
+    usernames: { $in: [username, "", null] },
   })
     .then((contests) => {
       res.send(contests);
@@ -169,6 +171,7 @@ exports.getDuration = (req, callback) => {
         mcq: contest.mcq,
         sections: contest.sections,
         contestName: contest.contestName,
+        coding: contest.coding,
       };
       return callback(null, durationData);
     })
@@ -205,10 +208,10 @@ exports.updateOneSet = (req, sets, callback) => {
     {
       $set: {
         multiset: true,
-        sets: sets
+        sets: sets,
       },
     },
-    { new: true },
+    { new: true }
   )
     .then((contest) => {
       if (!contest) {
