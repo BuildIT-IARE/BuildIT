@@ -74,6 +74,12 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+@media print{
+  .toggle{
+    visibility: hidden;
+    display: none;
+  }
+}
     </style>
 </head>
 <body>
@@ -94,6 +100,7 @@ input:checked + .slider:before {
             var con2 = document.querySelectorAll(".persdetails2")
             var con3 = document.querySelectorAll(".contactDetails3")
             var con4 = document.querySelectorAll(".social-list")
+            var con5 = document.querySelectorAll(".social-list5")
                 for(var j=0;j<con.length;j++){
                     con[j].style.display="none"
                 }
@@ -105,6 +112,9 @@ input:checked + .slider:before {
                 }
                 for(var j=0;j<con4.length;j++){
                     con4[j].style.display="none"
+                }
+                for(var j=0;j<con5.length;j++){
+                    con5[j].style.display="none"
                 }
                 tog.style.display='none'
         }
@@ -122,6 +132,9 @@ input:checked + .slider:before {
                 <%}%>  
                 <% if(data.themeId=="theme4"){ %>
                     <% include ../views/ResumeTemplates/theme4 %>
+                    <%}%>
+                    <% if(data.themeId=="theme5"){ %>
+                    <% include ../views/ResumeTemplates/theme5 %>
                     <%}%>
     <%}%>
 </body>
