@@ -2754,6 +2754,37 @@ app.get("/potdReport", checkSignIn, async (req, res) => {
   res.render("potdReport", { imgUsername: req.cookies.username });
 });
 
+app.get("/skillUp/update", checkSignIn, async (req,res) => {
+  let options = {
+    url: serverRoute + "/skillUps",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    for(var i=0;i<body.length;i++){
+      let options1 = {
+        url: serverRoute + "/skillUp/update/"+body[i].rollNumber+"/"+body[i].leetCodeId+"/"+body[i].hackerRankId+"/"+body[i].codeChefId+"/"+body[i].codeForcesId+"/"+body[i].interviewBitId+"/"+body[i].spojId+"/"+body[i].geeksForGeeksId,
+        method: "post",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+        data: body[i],
+      };
+      request(options1, (err, response, body1) => {
+        console.log("Updated Succesfull!");
+      });
+    }
+    res.render("error", {
+      imgUsername: req.cookies.username,
+      data: { message: "skillUps Updated!" },
+    });
+  });
+});
+
 app.get("*", async (req, res) => {
   res.render("404page");
 });

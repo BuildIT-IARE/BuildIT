@@ -95,6 +95,7 @@ const codechefEvents = require("../Server/controllers/codechefEvents.controller.
 const counters = require("../Server/controllers/counters.controller.js");
 const resume = require("../Server/controllers/resume.controller.js");
 const facultyResume = require("../Server/controllers/facultyResume.controller.js");
+const skillUp = require("../Server/controllers/skillUp.controller.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -125,6 +126,8 @@ require("./routes/counters.route.js")(app);
 require("./routes/resume.route.js")(app);
 // Require facultyResume routes
 require("./routes/facultyResume.route.js")(app);
+// Require skillUp routes
+require("./routes/skillUp.route.js")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
