@@ -243,13 +243,13 @@
           font-weight: 500;
           box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.20);
       }
-      .Achievements p,.Extras p{
+      .Achievements3 p,.Extras3 p{
           padding: 0px 10px;
           margin: 0;
           font-weight:500;
           margin-bottom: 10px;
       }
-      .Achievements span{
+      .Achievements3 span{
           padding: 0px 10px;
       }
       #print{
@@ -527,7 +527,7 @@ expand_more
                         </div>
                         <%}%>
                         <% if(data.achievements.length>0){ %>
-                            <div class="Achievements">
+                            <div class="Achievements3">
                                 <div class="label32">
                                     <div class="bullet">
                                       <span class="material-icons-outlined">
@@ -538,14 +538,14 @@ expand_more
                                 </div>
                               <% for(var i=0;i<data.achievements.length;i++){ %>
                                 <span class="date"><%= data.achievements[i][1]%></span>
-                              <p>
+                              <p style="word-wrap:break-word ;">
                                 <%= data.achievements[i][0]%>
                               </p>
                               <%}%>
                             </div>
                             <%}%>
                             <% if(data.extraCurricular.length>0){ %>
-                                <div class="Extras">
+                                <div class="Extras3">
                                   <div class="label32">
                                     <div class="bullet">
                                       <span class="material-icons-outlined">

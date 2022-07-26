@@ -170,9 +170,8 @@
       }
       .t5exptop{
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
-        flex-wrap: wrap;
         padding-right: 10px;
       }
       .t5expvalue{
@@ -188,6 +187,9 @@
         font-size: medium;
         color: black;
         text-decoration: underline;
+      }
+      .limit-size{
+        max-width: 530px;
       }
       .side25 .label15{
         margin-top: 20px;
@@ -262,30 +264,7 @@
       <div class="line55"></div>
       <div class="main-section">
         <div class="side15">
-            <% if(data.personalSkills.length>0){%>
-                <div class="label15">Personal Skills</div>
-            <div class="t5thebox">
-                <% for(var i=0;i<data.personalSkills.length;i++){ %>
-                    <div class="data-item5">
-                        <span class="material-icons">play_arrow</span>
-                        <div class="data-value"><%=data.personalSkills[i][0] %></div>
-                    </div>
-                <%}%>
-            </div>
-            <%}%>
-            <% if(data.professionalSkills.length>0){%>
-                <div class="label15">Professional Skills</div>
-            <div class="t5thebox">
-                <% for(var i=0;i<data.professionalSkills.length;i++){ %>
-                    <div class="data-item5">
-                        <span class="material-icons">play_arrow</span>
-                        <div class="data-value"><%=data.professionalSkills[i][0] %></div>
-                    </div>
-                <%}%>
-            </div>
-            <%}%>
-
-            <div class="label15">Education</div>
+                      <div class="label15">Education</div>
             <div class="t5thebox">
                 <div class="box-part5">
                     <div class="small-data5">
@@ -329,6 +308,29 @@
                     </div>
                 </div>
             </div>
+
+            <% if(data.personalSkills.length>0){%>
+                <div class="label15">Personal Skills</div>
+            <div class="t5thebox">
+                <% for(var i=0;i<data.personalSkills.length;i++){ %>
+                    <div class="data-item5">
+                        <span class="material-icons">play_arrow</span>
+                        <div class="data-value"><%=data.personalSkills[i][0] %></div>
+                    </div>
+                <%}%>
+            </div>
+            <%}%>
+            <% if(data.professionalSkills.length>0){%>
+                <div class="label15">Professional Skills</div>
+            <div class="t5thebox">
+                <% for(var i=0;i<data.professionalSkills.length;i++){ %>
+                    <div class="data-item5">
+                        <span class="material-icons">play_arrow</span>
+                        <div class="data-value"><%=data.professionalSkills[i][0] %></div>
+                    </div>
+                <%}%>
+            </div>
+            <%}%>
 
             <% if(data.codingProfilesInfo.codeChefURL || data.codingProfilesInfo.codeForcesURL || data.codingProfilesInfo.hackerRankURL || data.codingProfilesInfo.geeksForGeeksURL || data.codingProfilesInfo.InterviewBitURL || data.codingProfilesInfo.leetCodeURL || data.codingProfilesInfo.spojURL){%>
                 <div class="label15">Coding Profiles</div>
@@ -398,7 +400,7 @@
                                 <%= data.internshipInfo.internshipStartDate[i]%> to <%= data.internshipInfo.internshipEndDate[i]%>
                             </div>
                             </div>
-                            <div class="t5expvalue" style="padding-right: 10px;">
+                            <div class="t5expvalue" style="padding-right: 10px; text-align: justify;">
                                 <%= data.internshipInfo.internshipDesc[i]%>
                             </div>
                         </div>
@@ -417,7 +419,7 @@
                                 <strong><%= data.projects[i][0]%></strong><a href="<%= data.projects[i][1]%>" target="_blank"><span class="material-icons-outlined">open_in_new</span></a>
                             </div>
                             </div>
-                            <div class="t5expvalue" style="padding-right: 10px;">
+                            <div class="t5expvalue" style="padding-right: 10px;text-align: justify;">
                                 <%= data.projects[i][2]%>
                             </div>
                         </div>
@@ -429,7 +431,7 @@
                 <div class="label15">Achievements</div>
                 <% for(var i=0;i<data.achievements.length;i++){ %>
                     <div class="t5exptop" style="margin:10px 0 ;">
-                        <span><%= data.achievements[i][0]%></span>
+                        <span class="limit-size"><%= data.achievements[i][0]%></span>
                         <span><%= data.achievements[i][1]%></span>
                     </div>
                 <%}%>
