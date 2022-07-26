@@ -135,22 +135,20 @@ app.get("/about", async (req, res, next) => {
 
 app.post("/skill", async (req, res, next) => {
   let headers = [
-    "rank",
     "rollNumber",
-    "hackerRank",
-    "codeChef",
-    "codeforces",
-    "interviewBit",
-    "spoj",
-    "geeksForGeeks",
+    "hackerRankScore",
+    "codeChefScore",
+    "codeForcesScore",
+    "interviewBitScore",
+    "spojScore",
+    "geeksForGeeksScore",
+    "leetCodeScore",
     "buildIT",
     "overallScore",
-    "weeklyPerformance",
-    "points",
   ];
 
   let options = {
-    url: serverRoute + "/weeks",
+    url: serverRoute + "/skillUps",
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -158,64 +156,33 @@ app.post("/skill", async (req, res, next) => {
     json: true,
   };
 
-  request(options, async (err, response, week) => {
-    let options = {
-      url: serverRoute + "/skill",
-      method: "get",
-      headers: {
-        authorization: req.cookies.token,
-      },
-      json: true,
-    };
+  request(options, async (err, response, body) => {
+    let toppers = [
+      body[0]["rollNumber"],
+      body[1]["rollNumber"],
+      body[2]["rollNumber"],
+    ];
+    toppers[0] = toppers[0].toUpperCase();
+    toppers[1] = toppers[1].toUpperCase();
+    toppers[2] = toppers[2].toUpperCase();
+    const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+      fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+      fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+      fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+    ]);
 
-    if (req.body.weekId !== undefined) {
-      options.url = serverRoute + "/skill/" + req.body.weekId;
-    }
+    const first = await firstResponse.json();
+    const second = await secondResponse.json();
+    const third = await thirdResponse.json();
 
-    request(options, async (err, response, body) => {
-      if (!err) {
-        const ordered = _.orderBy(
-          body,
-          function (item) {
-            return item["weeklyPerformance"];
-          },
-          "desc"
-        );
+    const topperData = [first, second, third];
 
-        let toppers = [
-          ordered[0]["rollNumber"],
-          ordered[1]["rollNumber"],
-          ordered[2]["rollNumber"],
-        ];
-
-        const [firstResponse, secondResponse, thirdResponse] =
-          await Promise.all([
-            fetch(`${serverRoute}/users/branch/${toppers[0]}`),
-            fetch(`${serverRoute}/users/branch/${toppers[1]}`),
-            fetch(`${serverRoute}/users/branch/${toppers[2]}`),
-          ]);
-
-        const first = await firstResponse.json();
-        const second = await secondResponse.json();
-        const third = await thirdResponse.json();
-
-        const topperData = [first, second, third];
-
-        body.clientAddress = clientRoute;
-
-        res.render("leaderboard", {
-          imgUsername: req.cookies.username,
-          data: body,
-          week: week,
-          headers: headers,
-          toppers: topperData,
-        });
-      } else {
-        res.render("error", {
-          data: { message: "Leaderboard not initialised" },
-          imgUsername: req.cookies.username,
-        });
-      }
+    body.clientAddress = clientRoute;
+    res.render("leaderboard", {
+      imgUsername: req.cookies.username,
+      data: body,
+      headers: headers,
+      toppers: topperData,
     });
   });
 });
@@ -224,6 +191,28 @@ app.get("/SkillRegister", checkSignIn, async (req, res) => {
   res.render("skillUpForm", {
     imgUsername: req.cookies.username,
     token: req.cookies.token,
+  });
+});
+
+app.post("/SkillRegister", async (req, res) => {
+  let options = {
+    body: req.body,
+    url: serverRoute + "/skillUp",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    } else {
+      res.render("error", {
+        data: { message: "Your SkillUp has been Registered" },
+        imgUsername: req.cookies.username,
+      });
+    }
   });
 });
 
@@ -2759,37 +2748,6 @@ app.get("/ResumeBuilder", checkSignIn, async (req, res) => {
 
 app.get("/potdReport", checkSignIn, async (req, res) => {
   res.render("potdReport", { imgUsername: req.cookies.username });
-});
-
-app.get("/skillUp/update", checkSignIn, async (req,res) => {
-  let options = {
-    url: serverRoute + "/skillUps",
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, (err, response, body) => {
-    for(var i=0;i<body.length;i++){
-      let options1 = {
-        url: serverRoute + "/skillUp/update/"+body[i].rollNumber+"/"+body[i].leetCodeId+"/"+body[i].hackerRankId+"/"+body[i].codeChefId+"/"+body[i].codeForcesId+"/"+body[i].interviewBitId+"/"+body[i].spojId+"/"+body[i].geeksForGeeksId,
-        method: "post",
-        headers: {
-          authorization: req.cookies.token,
-        },
-        json: true,
-        data: body[i],
-      };
-      request(options1, (err, response, body1) => {
-        console.log("Updated Succesfull!");
-      });
-    }
-    res.render("error", {
-      imgUsername: req.cookies.username,
-      data: { message: "skillUps Updated!" },
-    });
-  });
 });
 
 app.get("*", async (req, res) => {

@@ -10,16 +10,18 @@ var path = require("path");
 const archiver = require("archiver");
 const fs = require("fs");
 const requestIp = require("request-ip");
-const dotenv = require('dotenv');
-const schedule = require('node-schedule');
-const Count = require("./models/count.model.js")
-dotenv.config({ path: '../Server/util/config.env' });
+const dotenv = require("dotenv");
+const schedule = require("node-schedule");
+const Count = require("./models/count.model.js");
+const SkillUp = require("./controllers/skillUp.controller.js");
+dotenv.config({ path: "../Server/util/config.env" });
 
 let middleware = require("./util/middleware.js");
 
 const User = require("./models/user.model");
 const Participation = require("./models/participation.model").Participation;
-const McqParticipation = require("./models/participation.model").McqParticipation;
+const McqParticipation =
+  require("./models/participation.model").McqParticipation;
 const ParticipationTut = require("./models/participationTut.model");
 
 // API Address
@@ -214,7 +216,7 @@ app.post("/isOngoing", middleware.checkToken, async (req, res) => {
   });
 });
 
-app.post("/validateMcq", middleware.checkToken, async(req, res) => {
+app.post("/validateMcq", middleware.checkToken, async (req, res) => {
   if (req.body.contestId) {
     contests.getDuration(req, (err, duration) => {
       if (err) {
@@ -285,35 +287,28 @@ app.post("/validateMcq", middleware.checkToken, async(req, res) => {
           participation = participation[0];
           let momentDate = new moment();
           let validTime = participation.validTill;
-          
+
           if (
             momentDate.isBefore(participation.validTill) ||
             req.decoded.admin
           ) {
-              participations.acceptSelection(
-                result,
-                (err, doc) => {
-                  if (err) {
-                    res
-                      .status(404)
-                      .send({ message: err });
-                  } else {
-                    res.send(doc);
-                  }
-                }
-              )
-              // .catch((err)=>{
-              //   res.status(500).send({
-              //     message:
-              //       "Server is Busy, try again later! or check your code for any compilation errors, and try again.",
-              //   });
-              // });
+            participations.acceptSelection(result, (err, doc) => {
+              if (err) {
+                res.status(404).send({ message: err });
+              } else {
+                res.send(doc);
+              }
+            });
+            // .catch((err)=>{
+            //   res.status(500).send({
+            //     message:
+            //       "Server is Busy, try again later! or check your code for any compilation errors, and try again.",
+            //   });
+            // });
           } else {
-            res
-              .status(403)
-              .send({ message: "Your test duration has expired" });
+            res.status(403).send({ message: "Your test duration has expired" });
           }
-        })
+        });
         // .catch((err)=>{
         //   res.status(500).send({
         //     message:
@@ -323,7 +318,7 @@ app.post("/validateMcq", middleware.checkToken, async(req, res) => {
       } else {
         res.status(403).send({ message: "The contest window is not open" });
       }
-    })
+    });
     // .catch((err)=>{
     //   res.status(500).send({
     //     message:
@@ -575,9 +570,8 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
                                                 result.participationId =
                                                   result.username +
                                                   result.contestId;
-                                                result.clientIp = requestIp.getClientIp(
-                                                  req
-                                                );
+                                                result.clientIp =
+                                                  requestIp.getClientIp(req);
                                                 var testcasesPassed = 0;
                                                 if (
                                                   result.response1 ===
@@ -1136,21 +1130,36 @@ app.get("/plagreport/:languageId/:questionId", async (req, res) => {
     .catch(res.send("Failed"));
 });
 
-schedule.scheduleJob("59 23 * * *",(async function () {
-  await Count.findOneAndUpdate({},
+schedule.scheduleJob("59 23 * * *", async function () {
+  await Count.findOneAndUpdate(
+    {},
     {
-      $set:{
-        day:0
-      }
-    })
-}));
+      $set: {
+        day: 0,
+      },
+    }
+  );
+});
 
-schedule.scheduleJob("59 23 * * 0",(async function () {
-  await Count.findOneAndUpdate({},
+schedule.scheduleJob("59 23 * * 0", async function () {
+  await Count.findOneAndUpdate(
+    {},
     {
-      $set:{
-        week:0
-      }
-    })
-}));
+      $set: {
+        week: 0,
+      },
+    }
+  );
+});
+
+schedule.scheduleJob("59 23 * * 0", async function () {
+  await SkillUp.findAll(async (err, skillUps) => {
+    skillUps.forEach(async (skillUp) => {
+      await SkillUp.update(skillUp, (err, res) => {
+        console.log("Updated!");
+      });
+    });
+    // await SkillUp.update(skil)
+  });
+});
 app.listen(port, () => console.log("Server @ port", port));
