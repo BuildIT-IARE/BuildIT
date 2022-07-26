@@ -460,3 +460,13 @@ exports.findAllSkillUps = (req, res) => {
       res.send("Error retrieving skillups");
     });
 };
+
+exports.findOneSkillUp = (req, res) => {
+  SkillUp.find({ rollNumber: req.body.rollNumber })
+    .then((skillUp) => {
+      res.send(skillUp[0]);
+    })
+    .catch((err) => {
+      res.send({});
+    });
+};
