@@ -129,11 +129,11 @@ app.get("/index", async (req, res) => {
 app.get("/home", checkSignIn, async (req, res, next) => {
   loginCounts(req, res);
 });
-app.get("/about", checkSignIn, async (req, res, next) => {
+app.get("/about", async (req, res, next) => {
   res.render("about", { imgUsername: req.cookies.username });
 });
 
-app.post("/skill", checkSignIn, async (req, res, next) => {
+app.post("/skill", async (req, res, next) => {
   let headers = [
     "rank",
     "rollNumber",
@@ -217,6 +217,13 @@ app.post("/skill", checkSignIn, async (req, res, next) => {
         });
       }
     });
+  });
+});
+
+app.get("/SkillRegister", checkSignIn, async (req, res) => {
+  res.render("skillUpForm", {
+    imgUsername: req.cookies.username,
+    token: req.cookies.token,
   });
 });
 
