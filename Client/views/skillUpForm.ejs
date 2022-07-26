@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillUp 365 Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="../images/iare-chapter/iare-logo.png"
+      type="image/x-icon"
+    />
+    <style>
+      body {
+        background: rgb(248, 248, 250);
+        font-family: poppins;
+        margin: 0;
+        padding: 0;
+      }
+      span {
+        display: block;
+      }
+      .containers {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+      }
+      .main-title {
+        font-size: 90px;
+        letter-spacing: 5px;
+        font-weight: 500;
+        margin: 20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgb(45, 45, 45);
+        color: white;
+        margin-top: 100px;
+        width: 650px;
+        border-radius: 2mm;
+        border: 1px solid rgb(221, 221, 221);
+        box-shadow: 0 0 0.125rem 0 rgba(0, 0, 0, 0.15);
+        padding-bottom: 30px;
+      }
+      .inputs {
+        margin: 20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        color: black;
+        width: 650px;
+        border-radius: 2mm;
+        border: 1px solid rgb(221, 221, 221);
+        box-shadow: 0 0 0.125rem 0 rgba(0, 0, 0, 0.15);
+      }
+      .main-title span {
+        font-size: x-large;
+        letter-spacing: 7px;
+      }
+      .inputfield {
+        width: 90%;
+        height: max-content;
+        position: relative;
+      }
+      .inputf {
+        width: 100%;
+        font-size: medium;
+        font-weight: 400;
+        font-family: poppins;
+        color: rgb(0, 0, 0);
+        outline: none;
+        border: none;
+        border: rgb(143, 143, 143) solid 0.25mm;
+        padding: 0 10px;
+        height: 43px;
+        margin: 25px 0;
+        background: rgb(255, 255, 255);
+        border-radius: 1mm;
+        box-sizing: border-box;
+      }
+      .inputf:hover {
+        border: rgb(0, 0, 0) solid 0.25mm;
+      }
+      .inputf:focus {
+        border: rgb(97, 59, 193) solid 2px;
+      }
+      .inputf:focus::placeholder {
+        opacity: 0;
+      }
+      .inputf::placeholder {
+        color: rgb(145, 145, 145);
+      }
+      .label {
+        position: absolute;
+        top: 25px;
+        left: 5px;
+        font-size: 12px;
+        font-family: poppins;
+        color: rgb(97, 59, 193);
+        opacity: 0;
+        transition: 0.25s;
+      }
+      .inputf:focus + .label {
+        opacity: 1;
+        top: 5px;
+        left: 0;
+      }
+      .inputf:not(:placeholder-shown) + .label {
+        opacity: 1;
+        top: 5px;
+        left: 0;
+      }
+      .main-label {
+        font-size: large;
+        font-weight: bold;
+        align-self: flex-start;
+        margin: 20px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .main-label img {
+        width: 15px;
+        margin-right: 5px;
+      }
+      #inter {
+        width: 20px;
+      }
+      .submit {
+        width: 650px;
+        background: rgb(45, 45, 45);
+        outline: none;
+        border-radius: 2mm;
+        font-size: larger;
+        color: white;
+        font-family: poppins;
+        padding: 7px 0;
+        margin-bottom: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+      .submit:hover {
+        background: rgb(73, 73, 73);
+      }
+      .footer-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .bg-dar {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background-color: rgb(239, 240, 241);
+      }
+      .footer-section a:hover {
+        color: rgb(34, 34, 34);
+      }
+      .footer-left {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+      }
+      .footer-right {
+        width: 20%;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-left-titles a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: x-large;
+        color: rgb(54, 54, 54);
+        font-weight: 600;
+      }
+      .footer-left-links a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+      }
+      .footer-right p {
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+        width: 100%;
+        text-align: center;
+      }
+      @media all and (max-width: 700px) {
+        .main-title,
+        .inputs,
+        .submit {
+          width: 98vw;
+        }
+        .footer-left {
+          width: 100%;
+        }
+        .footer-right {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <% include ../views/partials/header2 %>
+
+    <section class="section" style="padding-top: 1rem">
+      <div class="containers">
+        <!-- Toppers -->
+        <div class="main-title">
+          SkillUp 365 <span>Skill Enhancement Program</span>
+        </div>
+        <form action="" method="post">
+          <input type="hidden" name="username" value="<%= imgUsername %>" />
+          <span class="inputs">
+            <div class="main-label">
+              <img
+                src="../images/iare-chapter/hackerrank logo.webp"
+                alt="logo"
+              />
+              Hackerrank
+            </div>
+            <span class="inputfield">
+              <input
+                type="text"
+                name="Hackerrank"
+                id="Hackerrank"
+                class="long inputf"
+                required
+                placeholder="Hackerrank Username"
+              />
+              <span class="label">Hackerrank Username</span>
+            </span>
+          </span>
+
+          <span class="inputs">
+            <div class="main-label">
+              <img src="../images/iare-chapter/codechef.svg" alt="logo" />
+              CodeChef
+            </div>
+            <span class="inputfield">
+              <input
+                type="text"
+                name="CodeChef"
+                id="CodeChef"
+                class="long inputf"
+                required
+                placeholder="CodeChef Username"
+              />
+              <span class="label">CodeChef Username</span>
+            </span>
+          </span>
+
+          <span class="inputs">
+            <div class="main-label">
+              <img src="../images/iare-chapter/Codeforces.svg" alt="logo" />
+              Codeforces
+            </div>
+            <span class="inputfield">
+              <input
+                type="text"
+                name="Codeforces"
+                id="Codeforces"
+                class="long inputf"
+                required
+                placeholder="Codeforces Username"
+              />
+              <span class="label">Codeforces Username</span>
+            </span>
+          </span>
+
+          <span class="inputs">
+            <div class="main-label">
+              <img
+                src="../images/iare-chapter/interviewBit.png"
+                alt="logo"
+                id="inter"
+              />
+              InterviewBit
+            </div>
+            <span class="inputfield">
+              <input
+                type="text"
+                name="InterviewBit"
+                id="InterviewBit"
+                class="long inputf"
+                required
+                placeholder="InterviewBit Username"
+              />
+              <span class="label">InterviewBit Username</span>
+            </span>
+          </span>
+
+          <span class="inputs">
+            <div class="main-label">
+              <img
+                src="../images/iare-chapter/spoj logo.jpg"
+                alt="logo"
+                id="inter"
+              />
+              Spoj
+            </div>
+            <span class="inputfield">
+              <input
+                type="text"
+                name="Spoj"
+                id="Spoj"
+                class="long inputf"
+                required
+                placeholder="Spoj Username"
+              />
+              <span class="label">Spoj Username</span>
+            </span>
+          </span>
+
+          <span class="inputs">
+            <div class="main-label">
+              <img
+                src="../images/iare-chapter/geeksforgeeks logo.svg"
+                alt="logo"
+                id="inter"
+              />
+              GeeksforGeeks
+            </div>
+            <span class="inputfield">
+              <input
+                type="text"
+                name="GeeksforGeeks"
+                id="GeeksforGeeks"
+                class="long inputf"
+                required
+                placeholder="GeeksforGeeks Username"
+              />
+              <span class="label">GeeksforGeeks Username</span>
+            </span>
+          </span>
+
+          <span class="inputs">
+            <div class="main-label">
+              <img
+                src="../images/iare-chapter/LeetCode logo.png"
+                alt="logo"
+                id="inter"
+              />
+              LeetCode
+            </div>
+            <span class="inputfield">
+              <input
+                type="text"
+                name="LeetCode"
+                id="LeetCode"
+                class="long inputf"
+                required
+                placeholder="LeetCode Username"
+              />
+              <span class="label">LeetCode Username</span>
+            </span>
+          </span>
+          <textarea
+            type="hidden"
+            name="token"
+            id="token"
+            value="<%= token %>"
+            style="display: none"
+          ></textarea>
+          <button type="submit" class="submit">
+            Submit <span class="material-icons-round"> east </span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <script>
+      document.getElementById("token").value = "<%= token %>";
+    </script>
+
+    <footer class="bg-dar" id="footers">
+      <div class="footer-section">
+        <div class="footer-left">
+          <div class="footer-left-titles">
+            <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://www.iare.ac.in" target="_blank">IARE</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank"
+              >Feedback</a
+            >
+          </div>
+        </div>
+        <div class="footer-right">
+          <p>
+            Copyright ©
+            <script>
+              var CurrentYear = new Date().getFullYear();
+              document.write(CurrentYear);
+            </script>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

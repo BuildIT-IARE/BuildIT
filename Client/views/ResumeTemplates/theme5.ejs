@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theme5</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: block;
+      }
+      .main-container5 {
+        background: rgb(255, 255, 255);
+        width: 960px;
+        height: 1353px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+        font-family: "Noto Sans Mono";
+        position: relative;
+      }
+        .name5{
+            width: 100%;
+            text-align: center;
+            font-size:55px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            margin-bottom: 5px;
+        }
+        .name5 span{
+            font-weight: 200;
+        }
+        .social-list5{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: fit-content;
+        }
+        .item5{
+            display: flex;
+            align-items: center;
+            font-size: medium;
+            margin: 10px;
+            font-weight: 500;
+        }
+        .item5 span{
+            font-size: medium;
+            margin: 0 3px;
+        }
+        .item5 a{
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+            padding: 5px 10px;
+            background: rgba(209, 209, 209, 0.687);
+            border-radius: 1mm;
+            border: 0.5mm solid rgb(38, 38, 38);
+        }
+        .line55{
+            width: 100%;
+            border-top: 0.5mm solid rgb(38, 38, 38);
+            margin: 10px 0;
+        }
+        .main-section{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .side15 {
+        width: 300px;
+        height: 100%;
+        background: rgb(255, 255, 255);
+        display: block;
+        padding: 0 5px;
+      }
+      .side25 {
+        width: 610px;
+        height: 100%;
+        background: white;
+        display: block;
+        padding:0 10px;
+        padding-right: 0px;
+      }
+      .label15{
+        font-size: 22px;
+        font-weight: 600;
+        margin: 5px 0;
+      }
+      .t5thebox{
+        padding: 10px 5px;
+        border: 0.5mm solid rgb(38, 38, 38);
+        border-radius: 1mm;
+        margin-bottom: 15px;
+      }
+      .data-item5{
+        display: flex;
+        align-items:flex-start;
+        word-wrap: break-word;
+        max-width: 300px;
+        margin: 1px 0;
+        
+      }
+      .data-value{
+        max-width: 260px;
+        word-wrap: break-word;
+      }
+      .data-value2{
+        max-width: 300px;
+        word-wrap: break-word;
+        font-weight: 600;
+        margin: 2px 0;
+        letter-spacing: 1px;
+      }
+      .small-data5{
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        font-size: small;
+      }
+      .box-part5{
+        margin-bottom: 20px;
+      }
+      .box-part5:last-child{
+        margin-bottom: 0;
+      }
+      .box-part25{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items:flex-start;
+        margin-bottom: 5px;
+      }
+      .box-part25 a{
+        display:flex ;
+        align-items:center;
+        color: black;
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .box-part25 a span{
+        font-size: medium;
+        text-decoration: none;
+      }
+      .brief55{
+        margin-top: 38px;
+        margin-bottom: 18px;
+        text-align: justify;
+        padding-right: 10px;
+      }
+      .t5expdata{
+        margin-bottom: 15px;
+      }
+      .t5expinfo{
+        margin-top: 18px;
+      }
+      .t5exptop{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding-right: 10px;
+      }
+      .t5expvalue{
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 1px 0;
+      }
+      .t5expvalue a{
+        text-decoration: none;
+      }
+      .t5expvalue a span{
+        font-size: medium;
+        color: black;
+        text-decoration: underline;
+      }
+      .limit-size{
+        max-width: 530px;
+      }
+      .side25 .label15{
+        margin-top: 20px;
+        margin-bottom: 15px;
+      }
+        #print5{
+          align-self: center;
+          background: rgba(209, 209, 209, 0.687);
+          color: black;
+          font-size: x-large;
+          padding: 3px 25px;
+          border: 0.5mm solid rgb(38, 38, 38);
+          border-radius: 1mm;
+          outline: none;
+          cursor: pointer;
+          margin-top: 10px;
+          margin: auto;
+          display: block;
+        }
+        #print5:hover{
+            background: rgb(203, 203, 203);
+        }
+        .rollnumber5{
+          position: absolute;
+          left: 20px;
+          bottom: 5px;
+          color: rgba(53, 53, 53, 0.79);
+        }
+        @media print{
+          .pagebreak { page-break-before: always; }
+            #print5{
+                visibility: hidden;
+                display: none;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <div class="main-container5">
+        <div class="rollnumber5">
+            <%= data.resumeId %>
+        </div>
+      <div class="header-section">
+        <div class="name5">
+            <%= data.personalInfo.firstName%> 
+            <span><%= data.personalInfo.lastName%></span>
+        </div>
+            <div class="social-list5">
+                <div class="item5">
+                    <span class="material-icons-round">
+                        phone
+                        </span>
+                        <%= data.personalInfo.phoneNumber%>
+                </div>
+                &nbsp|&nbsp
+                <div class="item5">
+                    <span class="material-icons-round">
+                        email
+                        </span>
+                        <%= data.personalInfo.emailId%>
+                </div>
+                <% for(var i=0;i<data.personalInfo.socials.length;i++){ %>
+                    &nbsp|&nbsp
+                    <div class="item5">
+                      <a href="<%=data.personalInfo.socials[i][1]%>" target="_blank"><%=data.personalInfo.socials[i][0]%><span class="material-icons-outlined">
+                        open_in_new
+                        </span></a>
+                    </div>
+                    <% }%>
+            </div>
+      </div>
+      <div class="line55"></div>
+      <div class="main-section">
+        <div class="side15">
+                      <div class="label15">Education</div>
+            <div class="t5thebox">
+                <div class="box-part5">
+                    <div class="small-data5">
+                        <span><%= data.educationalInfo.collegeStartDate%></span>
+                        <span><%= data.educationalInfo.collegePassingDate%></span>
+                    </div>
+                    <div class="data-value2">
+                        <%= data.educationalInfo.collegeName%> <%= data.educationalInfo.collegeLocation%>
+                    </div>
+                    <div class="small-data5">
+                        <span><%= data.educationalInfo.collegeDesc%></span> 
+                        <span><%= data.educationalInfo.collegeScore%> (<%= data.educationalInfo.collegeScoreType %>)</span>
+                    </div>
+                </div>
+
+                <div class="box-part5">
+                    <div class="small-data5">
+                        <span><%= data.educationalInfo.interStartDate%></span>
+                        <span><%= data.educationalInfo.interPassingDate%></span>
+                    </div>
+                    <div class="data-value2">
+                        <%= data.educationalInfo.interName%> <%= data.educationalInfo.interLocation%>
+                    </div>
+                    <div class="small-data5">
+                        <span><%= data.educationalInfo.interDesc%></span> 
+                        <span><%= data.educationalInfo.interScore%> (<%= data.educationalInfo.interScoreType %>)</span>
+                    </div>
+                </div>
+
+                <div class="box-part5">
+                    <div class="small-data5">
+                        <span></span>
+                        <span><%= data.educationalInfo.schoolPassingDate%></span>
+                    </div>
+                    <div class="data-value2">
+                        <%= data.educationalInfo.schoolName%> <%= data.educationalInfo.schoolLocation%>
+                    </div>
+                    <div class="small-data5">
+                        <span><%= data.educationalInfo.schoolDesc%></span> 
+                        <span><%= data.educationalInfo.schoolScore%> (<%= data.educationalInfo.schoolScoreType %>)</span>
+                    </div>
+                </div>
+            </div>
+
+            <% if(data.personalSkills.length>0){%>
+                <div class="label15">Personal Skills</div>
+            <div class="t5thebox">
+                <% for(var i=0;i<data.personalSkills.length;i++){ %>
+                    <div class="data-item5">
+                        <span class="material-icons">play_arrow</span>
+                        <div class="data-value"><%=data.personalSkills[i][0] %></div>
+                    </div>
+                <%}%>
+            </div>
+            <%}%>
+            <% if(data.professionalSkills.length>0){%>
+                <div class="label15">Professional Skills</div>
+            <div class="t5thebox">
+                <% for(var i=0;i<data.professionalSkills.length;i++){ %>
+                    <div class="data-item5">
+                        <span class="material-icons">play_arrow</span>
+                        <div class="data-value"><%=data.professionalSkills[i][0] %></div>
+                    </div>
+                <%}%>
+            </div>
+            <%}%>
+
+            <% if(data.codingProfilesInfo.codeChefURL || data.codingProfilesInfo.codeForcesURL || data.codingProfilesInfo.hackerRankURL || data.codingProfilesInfo.geeksForGeeksURL || data.codingProfilesInfo.InterviewBitURL || data.codingProfilesInfo.leetCodeURL || data.codingProfilesInfo.spojURL){%>
+                <div class="label15">Coding Profiles</div>
+                <div class="t5thebox">
+                    <% if(data.codingProfilesInfo.codeChefURL){ %>
+                    <div class="box-part25">
+                        <a href="<%=data.codingProfilesInfo.codeChefURL%>" target="_blank"><u>CodeChef</u><span class="material-icons-outlined">open_in_new</span></a>
+                        <span><%=data.codingProfilesInfo.codeChefRating%>(Rating)</span>
+                    </div>
+                    <%}%>
+                    <% if(data.codingProfilesInfo.hackerRankURL){ %>
+                    <div class="box-part25">
+                        <a href="<%=data.codingProfilesInfo.hackerRankURL%>" target="_blank"><u>Hackerrank</u><span class="material-icons-outlined">open_in_new</span></a>
+                        <span><%=data.codingProfilesInfo.hackerRankBadges%>(Badges)</span>
+                    </div>
+                    <%}%>
+                    <% if(data.codingProfilesInfo.codeForcesURL){ %>
+                    <div class="box-part25">
+                        <a href="<%=data.codingProfilesInfo.codeForcesURL%>" target="_blank"><u>Codeforces</u><span class="material-icons-outlined">open_in_new</span></a>
+                        <span><%=data.codingProfilesInfo.codeForcesRating%>(Rating)</span>
+                    </div>
+                    <%}%>
+                    <% if(data.codingProfilesInfo.geeksForGeeksURL){ %>
+                    <div class="box-part25">
+                        <a href="<%=data.codingProfilesInfo.geeksForGeeksURL%>" target="_blank"><u>GeeksforGeeks</u><span class="material-icons-outlined">open_in_new</span></a>
+                        <span><%=data.codingProfilesInfo.geeksForGeeksScore%>(Score)</span>
+                    </div>
+                    <%}%>
+                    <% if(data.codingProfilesInfo.interViewBitURL){ %>
+                    <div class="box-part25">
+                        <a href="<%=data.codingProfilesInfo.interViewBitURL%>" target="_blank"><u>InterviewBit</u><span class="material-icons-outlined">open_in_new</span></a>
+                        <span><%=data.codingProfilesInfo.interViewBitScore%>(Score)</span>
+                    </div>
+                    <%}%>
+                    <% if(data.codingProfilesInfo.leetCodeURL){ %>
+                    <div class="box-part25">
+                        <a href="<%=data.codingProfilesInfo.leetCodeURL%>" target="_blank"><u>LeetCode</u><span class="material-icons-outlined">open_in_new</span></a>
+                        <span><%=data.codingProfilesInfo.leetCodeProblems%>(Problems)</span>
+                    </div>
+                    <%}%>
+                    <% if(data.codingProfilesInfo.spojURL){ %>
+                    <div class="box-part25">
+                        <a href="<%=data.codingProfilesInfo.spojURL%>" target="_blank"><u>Spoj</u><span class="material-icons-outlined">open_in_new</span></a>
+                        <span><%=data.codingProfilesInfo.spojProblems%>(Problems)</span>
+                    </div>
+                    <%}%>
+                </div>
+            <%}%>
+        </div>
+        <div class="side25">
+            <% if(data.brief){ %>
+                <div class="brief55">
+                    <%= data.brief%>
+                </div>
+                <div class="line55"></div>
+            <%}%>
+            <% if(data.internshipInfo.internshipName.length>0){%>
+                <div class="label15">Internships</div>
+                <div class="t5expinfo">
+                    <% for(var i=0;i<data.internshipInfo.internshipName.length;i++){ %>
+                        <div class="t5expdata">
+                            <div class="t5exptop">
+                            <div class="t5expvalue">
+                                <strong><%= data.internshipInfo.internshipName[i]%></strong>[<%= data.internshipInfo.internshipCompanyName[i]%>] <a href="<%= data.internshipInfo.internshipCertificate[i]%>" target="_blank"><span class="material-icons-outlined">open_in_new</span></a>
+                            </div>
+                            <div class="t5expvalue">
+                                <%= data.internshipInfo.internshipStartDate[i]%> to <%= data.internshipInfo.internshipEndDate[i]%>
+                            </div>
+                            </div>
+                            <div class="t5expvalue" style="padding-right: 10px; text-align: justify;">
+                                <%= data.internshipInfo.internshipDesc[i]%>
+                            </div>
+                        </div>
+                    <%}%>
+                </div>
+                <div class="line55"></div>
+            <%}%>
+
+            <% if(data.projects.length>0>0){%>
+                <div class="label15">Projects</div>
+                <div class="t5expinfo">
+                    <% for(var i=0;i<data.projects.length;i++){ %>
+                        <div class="t5expdata">
+                            <div class="t5exptop">
+                            <div class="t5expvalue">
+                                <strong><%= data.projects[i][0]%></strong><a href="<%= data.projects[i][1]%>" target="_blank"><span class="material-icons-outlined">open_in_new</span></a>
+                            </div>
+                            </div>
+                            <div class="t5expvalue" style="padding-right: 10px;text-align: justify;">
+                                <%= data.projects[i][2]%>
+                            </div>
+                        </div>
+                    <%}%>
+                </div>
+                <div class="line55"></div>
+            <%}%>
+            <% if(data.achievements.length>0){ %>
+                <div class="label15">Achievements</div>
+                <% for(var i=0;i<data.achievements.length;i++){ %>
+                    <div class="t5exptop" style="margin:10px 0 ;">
+                        <span class="limit-size"><%= data.achievements[i][0]%></span>
+                        <span><%= data.achievements[i][1]%></span>
+                    </div>
+                <%}%>
+                <div class="line55"></div>
+            <%}%>
+
+            <% if(data.extraCurricular.length>0){ %>
+                <div class="label15">Extracurricular Activities</div>
+                <% for(var i=0;i<data.extraCurricular.length;i++){ %>
+                    <div class="t5exptop" style="margin:10px 0 ;">
+                    <span><%= data.extraCurricular[i] %></span>
+                    </div>
+                <%}%>
+            <%}%>
+        </div>
+      </div>
+    </div>
+    <div class="pagebreak"> </div>
+    <button type="button" id="print5" onclick="window.print()">Print</button>
+  </body>
+</html>

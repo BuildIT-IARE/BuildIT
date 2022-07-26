@@ -21,19 +21,41 @@
     <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
 
     <!-- Main Stylesheet -->
-    <link href="/css/style.css" rel="stylesheet" />
     <link href="/datatables/dataTables.min.css" rel="stylesheet" />
 
     <!--Favicon-->
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
     <style>
       /* Three columns side by side */
+      body {
+        background: rgb(248, 248, 250);
+        font-family: poppins;
+        margin: 0;
+        padding: 0;
+      }
+      .rows {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: auto;
+        width: 97%;
+        padding: 0;
+      }
       .column {
-        float: left;
-        width: 25%;
+        width: fit-content;
         margin-bottom: 16px;
         padding: 0 8px;
+        min-width: 30%;
+        width: 26%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       /* Display the columns below each other instead of side by side on small screens */
@@ -45,23 +67,15 @@
       }
 
       /* Add some shadows to create a card effect */
-      .card {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        width: 100%;
-        height: 100%;
-      }
 
       /* Some left and right padding inside the container */
-      .container {
-        padding: 0 16px;
-      }
-
-      /* Clear floats */
-      .container::after,
-      .row::after {
-        content: "";
-        clear: both;
-        display: table;
+      .containers {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
       }
 
       .title {
@@ -98,73 +112,210 @@
         font-size: inherit;
         font-weight: inherit;
       }
+      .main-title {
+        font-size: 90px;
+        letter-spacing: 5px;
+        font-weight: 500;
+        margin: 80px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 210px;
+      }
+      .main-title span {
+        font-size: x-large;
+        letter-spacing: 7px;
+      }
+      .join a {
+        text-decoration: none;
+        background: black;
+        padding: 9px 18px;
+        border-radius: 8mm;
+        color: white;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+      }
+      #sub-title {
+        font-family: poppins;
+        font-size: x-large;
+        margin: 50px;
+      }
+      .cardy {
+        width: 80%;
+        padding: 15px;
+        border-radius: 3mm;
+        background: rgb(246, 189, 65);
+        box-shadow: 2px 2px rgba(0, 0, 0, 0.237), 5px 5px rgba(0, 0, 0, 0.174),
+          8px 8px rgba(0, 0, 0, 0.089);
+      }
+      .cards {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .card-content {
+        width: fit-content;
+      }
+      .card-left {
+        width: fit-content;
+        border-radius: 3.5mm;
+        height: 100%;
+      }
+      .ranks {
+        width: 100%;
+        font-size: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        padding: 30px 20px;
+        min-height: 130px;
+      }
+      .card-img {
+        width: 60%;
+        border: 0.6mm solid rgba(0, 0, 0, 0.747);
+        border-radius: 3.5mm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 30px 0;
+        background: rgb(47, 47, 47);
+      }
+      .card-img img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+      }
+      .title,
+      .title2 {
+        width: fit-content;
+        font-family: poppins;
+      }
+      .title2 {
+        font-size: large;
+      }
+      .card-content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .join {
+        margin-bottom: 50px;
+      }
+      .footer-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .bg-dar {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background-color: rgb(239, 240, 241);
+      }
+      .footer-section a:hover {
+        color: rgb(34, 34, 34);
+      }
+      .footer-left {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+      }
+      .footer-right {
+        width: 20%;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-left-titles a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: x-large;
+        color: rgb(54, 54, 54);
+        font-weight: 600;
+      }
+      .footer-left-links a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+      }
+      .footer-right p {
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+        width: 100%;
+        text-align: center;
+      }
+      @media all and (max-width: 700px) {
+        .footer-left {
+          width: 100%;
+        }
+        .footer-right {
+          width: 100%;
+        }
+      }
     </style>
-      <link
+    <link
       href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-      rel="stylesheet">
-  <link rel="stylesheet" href="../css/style2.css">
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style2.css" />
   </head>
 
   <body>
     <% include ../views/partials/header2 %>
 
-    <!-- page title -->
-    <section
-      class="page-title bg-primary position-relative"
-      style="height: 1vh"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center">
-            <h3 class="text-white font-tertiary">
-              SkillUP365: Skill Enhancement Program
-            </h3>
-            <br />
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="section" style="padding-top: 1rem">
-      <div class="container d-flex flex-column align-items-center">
+      <div class="containers">
         <!-- Toppers -->
-        <img src="../images/skillup.jpg" style="width: 80%" />
+        <div class="main-title">
+          SkillUp 365 <span>Skill Enhancement Program</span>
+        </div>
+        <div class="join">
+          <a href="/SkillRegister">
+            Join Now <span class="material-icons-round"> east </span>
+          </a>
+        </div>
         <div
           class="row d-flex flex-column align-items-center justify-content-center"
           style="padding-bottom: 0.5rem"
         >
           <% if( data[0].weekId !== week[ week.length-1 ].weekId ) { %>
-            <h2>Toppers for  <%= data[0].weekId.substring(8,10) %>-<%= data[0].weekId.substring(5,7) %>-<%= data[0].weekId.substring(0,4) %></h2>
+          <h2>
+            Toppers for <%= data[0].weekId.substring(8,10) %>-<%=
+            data[0].weekId.substring(5,7) %>-<%= data[0].weekId.substring(0,4)
+            %>
+          </h2>
           <% } else { %>
-            <h2>This Week's Toppers</h2>
+          <div id="sub-title">This Week's Toppers</div>
           <% } %>
-          <a href="../images/SkillUP.pdf">
-            <img
-              src="../images/join.jpg"
-              style="height: 55px; padding-left: 20px"
-            />
-          </a>
         </div>
-        <div class="row" style="width: 97vw; margin: auto">
+        <div class="rows">
           <% for (let i = 0; i < 3; i++){ %>
           <div class="column">
-            <div class="card d-flex justify-content-center align-items-center">
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  src="../images/no<%= i + 1 %>.jpg"
-                  style="width: 140px; padding-right: 10px; height: 120px"
-                /><img
-                  src="<%= toppers[i].imgUrl %>"
-                  style="width: 157px; height: 210px; padding-top: 12px"
-                />
+            <div class="cardy">
+              <div class="cards">
+                <div class="card-left">
+                  <div class="corner">
+                    <span class="material-icons-round"> emoji_events </span>
+                  </div>
+                  <div class="ranks"><%=i+1 %></div>
+                </div>
+                <div class="card-img">
+                  <img src="<%= toppers[i].imgUrl %>" />
+                </div>
               </div>
-              <div class="container d-flex align-items-center flex-column">
-                <p class="title" style="color: #005aab">
-                  <%= toppers[i].name %>
-                </p>
-                <p class="title" style="color: #d2ad6b">
-                  <%= toppers[i].username %>
-                </p>
+              <div class="card-content">
+                <p class="title"><%= toppers[i].name %></p>
+                <p class="title2"><%= toppers[i].username %></p>
               </div>
             </div>
           </div>
@@ -172,32 +323,48 @@
         </div>
       </div>
     </section>
-    
+
     <section>
       <div class="container">
         <form action="<%= data.clientAddress %>/skill/" method="POST">
-          <select class="dropdown custom-select" name="weekId" onchange="javascript:$('#submit').click();">
-              <option value="">Select Week</option>
-              <% for (let i = week.length-1; i >= 0; i--){ %>
-                <option value="<%= week[i].weekId %>"><%= week[i].weekId %></option>
-              <% } %>
+          <select
+            class="dropdown custom-select"
+            name="weekId"
+            onchange="javascript:$('#submit').click();"
+          >
+            <option value="">Select Week</option>
+            <% for (let i = week.length-1; i >= 0; i--){ %>
+            <option value="<%= week[i].weekId %>"><%= week[i].weekId %></option>
+            <% } %>
           </select>
-          <input class="b" id="submit" type="submit" name="submit" value="Submit">
+          <input
+            class="b"
+            id="submit"
+            type="submit"
+            name="submit"
+            value="Submit"
+          />
         </form>
       </div>
     </section>
-
+    <br />
+    <br />
     <section class="section mt-3 pb-3" style="padding-top: 1rem">
       <div class="container d-flex flex-column align-items-center">
         <table
           id="leaderboard"
-          class="table table-striped table-bordered dt-center"
-          style="width: 100%"
+          class="table"
+          style="
+            width: 100%;
+            box-shadow: 0 0 0.125rem 0 rgba(0, 0, 0, 0.15);
+            border-radius: 2mm;
+            overflow: hidden;
+          "
         >
-          <thead>
+          <thead class="thead-dark table-hover">
             <tr>
               <!-- headers -->
-              <th>Rank</th>
+              <th scope="col">Rank</th>
               <th>Roll Number</th>
               <th>HackerRank</th>
               <th>CodeChef</th>
@@ -211,7 +378,7 @@
               <th>Points</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="background: white">
             <% for (let i = 0; i < data.length; i++ ){ %>
             <tr>
               <% headers.forEach((col)=> { if (data[i][col]) { %>
@@ -222,7 +389,7 @@
             </tr>
             <% } %>
           </tbody>
-          <tfoot>
+          <tfoot style="background: white">
             <tr>
               <!-- headers -->
               <th>Rank</th>
@@ -246,11 +413,19 @@
     <% if(imgUsername) {%>
     <section class="m-0">
       <div class="d-flex flex-column align-items-center mb-5">
-        <a class="btn btn-sm btn-dark white" href="/certificate" target="_blank" role="button">Print Certificate</a>
+        <a
+          class="btn btn-sm btn-dark white"
+          href="/certificate"
+          target="_blank"
+          role="button"
+          >Print Certificate</a
+        >
       </div>
     </section>
     <% } %>
-    
+    <br />
+    <br />
+    <br />
     <!-- jQuery -->
     <script src="/plugins/jQuery/jquery.min.js"></script>
     <script type="text/javascript" src="/datatables/datatables.min.js"></script>
@@ -270,5 +445,31 @@
         $("#leaderboard").DataTable();
       });
     </script>
+    <footer class="bg-dar" id="footers">
+      <div class="footer-section">
+        <div class="footer-left">
+          <div class="footer-left-titles">
+            <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://www.iare.ac.in" target="_blank">IARE</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank"
+              >Feedback</a
+            >
+          </div>
+        </div>
+        <div class="footer-right">
+          <p>
+            Copyright ©
+            <script>
+              var CurrentYear = new Date().getFullYear();
+              document.write(CurrentYear);
+            </script>
+          </p>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
