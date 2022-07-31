@@ -254,6 +254,9 @@
         width: 100%;
         text-align: center;
       }
+      .scroller {
+        overflow-x: auto;
+      }
       @media all and (max-width: 700px) {
         .footer-left {
           width: 100%;
@@ -318,7 +321,7 @@
     <br />
     <br />
     <section class="section mt-3 pb-3" style="padding-top: 1rem">
-      <div class="container d-flex flex-column align-items-center">
+      <div class="container d-flex flex-column align-items-center scroller">
         <table
           id="leaderboard"
           class="table"
