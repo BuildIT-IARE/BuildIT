@@ -143,6 +143,43 @@
         margin: 50px;
       }
       .cardy {
+        width: 65%;
+        padding: 5px;
+        border-radius: 5mm;
+        background: rgb(61, 220, 132);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+        margin: auto;
+        border: 0.55mm solid rgb(37, 37, 37);
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+        transition: 0.3s;
+      }
+      .cardy::before {
+        content: "";
+        position: absolute;
+        top: 400px;
+        left: 0px;
+        width: 0px;
+        height: 0px;
+        transform: translate(-50%, -50%);
+        background: white;
+        transition: width 0.5s, height 0.5s;
+        border-radius: 50%;
+        z-index: -1;
+      }
+      .cardy:hover::before {
+        width: 1000px;
+        height: 1000px;
+      }
+      .cardy:hover {
+        box-shadow: 6px 6px rgba(0, 0, 0, 0.15);
+      }
+      .card-top {
+
         width: 80%;
         padding: 15px;
         border-radius: 3mm;
@@ -152,6 +189,7 @@
       }
       .cards {
         width: 100%;
+
         display: flex;
         align-items: center;
         justify-content: space-between;
