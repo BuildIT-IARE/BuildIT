@@ -241,8 +241,8 @@
         <div class="main-title">
           SkillUp 365 <span>Skill Enhancement Program</span>
         </div>
-        <form action="/SkillRegister" method="post">
-          <input type="hidden" name="rollNumber" value="<%= imgUsername %>" />
+        <form action="" method="post">
+          <input type="hidden" name="username" value="<%= imgUsername %>" />
           <span class="inputs">
             <div class="main-label">
               <img
@@ -254,7 +254,7 @@
             <span class="inputfield">
               <input
                 type="text"
-                name="hackerRankId"
+                name="Hackerrank"
                 id="Hackerrank"
                 class="long inputf"
                 required
@@ -272,7 +272,7 @@
             <span class="inputfield">
               <input
                 type="text"
-                name="codeChefId"
+                name="CodeChef"
                 id="CodeChef"
                 class="long inputf"
                 required
@@ -290,7 +290,7 @@
             <span class="inputfield">
               <input
                 type="text"
-                name="codeForcesId"
+                name="Codeforces"
                 id="Codeforces"
                 class="long inputf"
                 required
@@ -312,7 +312,7 @@
             <span class="inputfield">
               <input
                 type="text"
-                name="interviewBitId"
+                name="InterviewBit"
                 id="InterviewBit"
                 class="long inputf"
                 required
@@ -334,7 +334,7 @@
             <span class="inputfield">
               <input
                 type="text"
-                name="spojId"
+                name="Spoj"
                 id="Spoj"
                 class="long inputf"
                 required
@@ -356,7 +356,7 @@
             <span class="inputfield">
               <input
                 type="text"
-                name="geeksForGeeksId"
+                name="GeeksforGeeks"
                 id="GeeksforGeeks"
                 class="long inputf"
                 required
@@ -378,7 +378,7 @@
             <span class="inputfield">
               <input
                 type="text"
-                name="leetCodeId"
+                name="LeetCode"
                 id="LeetCode"
                 class="long inputf"
                 required
@@ -431,18 +431,5 @@
         </div>
       </div>
     </footer>
-    <script>
-      "<% if(data) {%>";
-      document.getElementById("Hackerrank").value = "<%=data.hackerRankId%>";
-      document.getElementById("GeeksforGeeks").value =
-        "<%=data.geeksForGeeksId%>";
-      document.getElementById("CodeChef").value = "<%=data.codeChefId%>";
-      document.getElementById("Codeforces").value = "<%=data.codeForcesId%>";
-      document.getElementById("InterviewBit").value =
-        "<%=data.interviewBitId%>";
-      document.getElementById("Spoj").value = "<%=data.spojId%>";
-      document.getElementById("LeetCode").value = "<%=data.leetCodeId%>";
-      ("<%}%>");
-    </script>
   </body>
 </html>

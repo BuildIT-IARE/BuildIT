@@ -143,6 +143,7 @@
         margin: 50px;
       }
       .cardy {
+<<<<<<< HEAD
         width: 65%;
         padding: 5px;
         border-radius: 5mm;
@@ -180,6 +181,8 @@
       }
       .card-top {
 
+=======
+>>>>>>> 033b76bbaeb104a8e01372a612ff35f69297c1e4
         width: 80%;
         padding: 15px;
         border-radius: 3mm;
@@ -189,7 +192,6 @@
       }
       .cards {
         width: 100%;
-
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -326,7 +328,15 @@
           class="row d-flex flex-column align-items-center justify-content-center"
           style="padding-bottom: 0.5rem"
         >
+          <% if( data[0].weekId !== week[ week.length-1 ].weekId ) { %>
+          <h2>
+            Toppers for <%= data[0].weekId.substring(8,10) %>-<%=
+            data[0].weekId.substring(5,7) %>-<%= data[0].weekId.substring(0,4)
+            %>
+          </h2>
+          <% } else { %>
           <div id="sub-title">This Week's Toppers</div>
+          <% } %>
         </div>
         <div class="rows">
           <% for (let i = 0; i < 3; i++){ %>
@@ -351,6 +361,30 @@
           </div>
           <% } %>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <form action="<%= data.clientAddress %>/skill/" method="POST">
+          <select
+            class="dropdown custom-select"
+            name="weekId"
+            onchange="javascript:$('#submit').click();"
+          >
+            <option value="">Select Week</option>
+            <% for (let i = week.length-1; i >= 0; i--){ %>
+            <option value="<%= week[i].weekId %>"><%= week[i].weekId %></option>
+            <% } %>
+          </select>
+          <input
+            class="b"
+            id="submit"
+            type="submit"
+            name="submit"
+            value="Submit"
+          />
+        </form>
       </div>
     </section>
     <br />
@@ -378,15 +412,15 @@
               <th>InterviewBit</th>
               <th>SPOJ</th>
               <th>GFG</th>
-              <th>LeetCode</th>
               <th>BuildIT</th>
               <th>Score</th>
+              <th>Weekly</th>
+              <th>Points</th>
             </tr>
           </thead>
           <tbody style="background: white">
             <% for (let i = 0; i < data.length; i++ ){ %>
             <tr>
-              <td><%=i+1%></td>
               <% headers.forEach((col)=> { if (data[i][col]) { %>
               <td><%= data[i][col]===-1? "NA" : data[i][col] %></td>
               <% } else { %>
@@ -406,14 +440,29 @@
               <th>InterviewBit</th>
               <th>SPOJ</th>
               <th>GFG</th>
-              <th>LeetCode</th>
               <th>BuildIT</th>
               <th>Score</th>
+              <th>Weekly</th>
+              <th>Points</th>
             </tr>
           </tfoot>
         </table>
       </div>
     </section>
+
+    <% if(imgUsername) {%>
+    <section class="m-0">
+      <div class="d-flex flex-column align-items-center mb-5">
+        <a
+          class="btn btn-sm btn-dark white"
+          href="/certificate"
+          target="_blank"
+          role="button"
+          >Print Certificate</a
+        >
+      </div>
+    </section>
+    <% } %>
     <br />
     <br />
     <br />

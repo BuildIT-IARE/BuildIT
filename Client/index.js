@@ -135,20 +135,22 @@ app.get("/about", async (req, res, next) => {
 
 app.post("/skill", async (req, res, next) => {
   let headers = [
+    "rank",
     "rollNumber",
-    "hackerRankScore",
-    "codeChefScore",
-    "codeForcesScore",
-    "interviewBitScore",
-    "spojScore",
-    "geeksForGeeksScore",
-    "leetCodeScore",
+    "hackerRank",
+    "codeChef",
+    "codeforces",
+    "interviewBit",
+    "spoj",
+    "geeksForGeeks",
     "buildIT",
     "overallScore",
+    "weeklyPerformance",
+    "points",
   ];
 
   let options = {
-    url: serverRoute + "/skillUps",
+    url: serverRoute + "/weeks",
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -156,77 +158,72 @@ app.post("/skill", async (req, res, next) => {
     json: true,
   };
 
-  request(options, async (err, response, body) => {
-    let toppers = [
-      body[0]["rollNumber"],
-      body[1]["rollNumber"],
-      body[2]["rollNumber"],
-    ];
-    toppers[0] = toppers[0].toUpperCase();
-    toppers[1] = toppers[1].toUpperCase();
-    toppers[2] = toppers[2].toUpperCase();
-    const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-      fetch(`${serverRoute}/users/branch/${toppers[0]}`),
-      fetch(`${serverRoute}/users/branch/${toppers[1]}`),
-      fetch(`${serverRoute}/users/branch/${toppers[2]}`),
-    ]);
+  request(options, async (err, response, week) => {
+    let options = {
+      url: serverRoute + "/skill",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
 
-    const first = await firstResponse.json();
-    const second = await secondResponse.json();
-    const third = await thirdResponse.json();
+    if (req.body.weekId !== undefined) {
+      options.url = serverRoute + "/skill/" + req.body.weekId;
+    }
 
-    const topperData = [first, second, third];
+    request(options, async (err, response, body) => {
+      if (!err) {
+        const ordered = _.orderBy(
+          body,
+          function (item) {
+            return item["weeklyPerformance"];
+          },
+          "desc"
+        );
 
-    body.clientAddress = clientRoute;
-    res.render("leaderboard", {
-      imgUsername: req.cookies.username,
-      data: body,
-      headers: headers,
-      toppers: topperData,
+        let toppers = [
+          ordered[0]["rollNumber"],
+          ordered[1]["rollNumber"],
+          ordered[2]["rollNumber"],
+        ];
+
+        const [firstResponse, secondResponse, thirdResponse] =
+          await Promise.all([
+            fetch(`${serverRoute}/users/branch/${toppers[0]}`),
+            fetch(`${serverRoute}/users/branch/${toppers[1]}`),
+            fetch(`${serverRoute}/users/branch/${toppers[2]}`),
+          ]);
+
+        const first = await firstResponse.json();
+        const second = await secondResponse.json();
+        const third = await thirdResponse.json();
+
+        const topperData = [first, second, third];
+
+        body.clientAddress = clientRoute;
+
+        res.render("leaderboard", {
+          imgUsername: req.cookies.username,
+          data: body,
+          week: week,
+          headers: headers,
+          toppers: topperData,
+        });
+      } else {
+        res.render("error", {
+          data: { message: "Leaderboard not initialised" },
+          imgUsername: req.cookies.username,
+        });
+      }
     });
   });
 });
 
 app.get("/SkillRegister", checkSignIn, async (req, res) => {
-  let options = {
-    url: serverRoute + "/skillUp",
-    method: "get",
-    body: {
-      rollNumber: req.cookies.username,
-    },
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    res.render("skillUpForm", {
-      data: body,
-      imgUsername: req.cookies.username,
-      token: req.cookies.token,
-    });
-  });
-});
-
-app.post("/SkillRegister", async (req, res) => {
-  let options = {
-    body: req.body,
-    url: serverRoute + "/skillUp",
-    method: "post",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    if (body.success) {
-      res.render("error", { data: body, imgUsername: req.cookies.username });
-    } else {
-      res.render("error", {
-        data: { message: "Your SkillUp has been Registered" },
-        imgUsername: req.cookies.username,
-      });
-    }
+  res.render("skillUpForm", {
+    imgUsername: req.cookies.username,
+    token: req.cookies.token,
   });
 });
 
