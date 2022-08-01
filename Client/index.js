@@ -188,23 +188,9 @@ app.post("/skill", async (req, res, next) => {
 });
 
 app.get("/SkillRegister", checkSignIn, async (req, res) => {
-  let options = {
-    url: serverRoute + "/skillUp",
-    method: "get",
-    body: {
-      rollNumber: req.cookies.username,
-    },
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    res.render("skillUpForm", {
-      data: body,
-      imgUsername: req.cookies.username,
-      token: req.cookies.token,
-    });
+  res.render("skillUpForm", {
+    imgUsername: req.cookies.username,
+    token: req.cookies.token,
   });
 });
 
