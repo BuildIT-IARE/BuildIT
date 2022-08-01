@@ -4,10 +4,8 @@ module.exports = (app) => {
   const skillUp = require("../controllers/skillUp.controller.js");
   // Create a new skillup ac
   app.post("/skillUp", middleware.checkToken, skillUp.create);
-  //get single skillup
-  app.get("/skillUp", middleware.checkToken, skillUp.findOneSkillUp);
   //get all skillUps
-  app.get("/skillUps", middleware.checkToken, skillUp.findAllSkillUps);
+  app.get("/skillUps", middleware.checkTokenAdmin, skillUp.findAllSkillUps);
   //update skillUp details
   app.post(
     "/skillUp/update/details",
