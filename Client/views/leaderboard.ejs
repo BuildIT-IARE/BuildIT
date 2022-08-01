@@ -179,50 +179,69 @@
         box-shadow: 6px 6px rgba(0, 0, 0, 0.15);
       }
       .card-top {
+
+        width: 80%;
+        padding: 15px;
+        border-radius: 3mm;
+        background: rgb(246, 189, 65);
+        box-shadow: 2px 2px rgba(0, 0, 0, 0.237), 5px 5px rgba(0, 0, 0, 0.174),
+          8px 8px rgba(0, 0, 0, 0.089);
+      }
+      .cards {
+        width: 100%;
+
         display: flex;
         align-items: center;
-        width: 98%;
         justify-content: space-between;
       }
-      .corner {
-        width: 35px;
-        height: 35px;
-        text-align: center;
-        border-radius: 50%;
-        background: rgb(37, 37, 37);
-        color: white;
+      .card-content {
+        width: fit-content;
       }
-      .corner span {
-        font-size: 22px;
-        line-height: 35px;
+      .card-left {
+        width: fit-content;
+        border-radius: 3.5mm;
+        height: 100%;
       }
       .ranks {
-        width: 35px;
-        height: 35px;
-        text-align: center;
-        border-radius: 50%;
-        background: rgb(37, 37, 37);
-        color: white;
-        font-size: 22px;
-        line-height: 35px;
+        width: 100%;
+        font-size: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        padding: 30px 20px;
+        min-height: 130px;
       }
       .card-img {
-        width: 70%;
-        padding: 10px 0px;
-        align-items: center;
+        width: 60%;
+        border: 0.6mm solid rgba(0, 0, 0, 0.747);
+        border-radius: 3.5mm;
         display: flex;
+        align-items: center;
         justify-content: center;
+        height: 100%;
+        padding: 30px 0;
+        background: rgb(47, 47, 47);
       }
       .card-img img {
-        width: 125px;
-        height: 125px;
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
       }
-      .card-content {
-        text-align: center;
+      .title,
+      .title2 {
+        width: fit-content;
+        font-family: poppins;
       }
-      .centerit {
-        margin: auto;
+      .title2 {
+        font-size: large;
+      }
+      .card-content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
       }
       .join {
         margin-bottom: 50px;
@@ -280,12 +299,6 @@
         .footer-right {
           width: 100%;
         }
-        .main-title {
-          font-size: 15vw;
-        }
-        .main-title span {
-          font-size: 3vw;
-        }
       }
     </style>
     <link
@@ -315,18 +328,20 @@
         >
           <div id="sub-title">This Week's Toppers</div>
         </div>
-        <div class="rows centerit">
+        <div class="rows">
           <% for (let i = 0; i < 3; i++){ %>
           <div class="column">
             <div class="cardy">
-              <div class="card-top">
-                <div class="corner">
-                  <span class="material-icons-round"> emoji_events </span>
+              <div class="cards">
+                <div class="card-left">
+                  <div class="corner">
+                    <span class="material-icons-round"> emoji_events </span>
+                  </div>
+                  <div class="ranks"><%=i+1 %></div>
                 </div>
-                <div class="ranks"><%=i+1 %></div>
-              </div>
-              <div class="card-img">
-                <img src="<%= toppers[i].imgUrl %>" />
+                <div class="card-img">
+                  <img src="<%= toppers[i].imgUrl %>" />
+                </div>
               </div>
               <div class="card-content">
                 <p class="title"><%= toppers[i].name %></p>
@@ -341,9 +356,7 @@
     <br />
     <br />
     <section class="section mt-3 pb-3" style="padding-top: 1rem">
-      <div
-        class="container d-flex flex-column align-items-center table-responsive-xl"
-      >
+      <div class="container d-flex flex-column align-items-center">
         <table
           id="leaderboard"
           class="table"
