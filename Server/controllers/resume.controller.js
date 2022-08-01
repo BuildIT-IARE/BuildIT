@@ -198,7 +198,7 @@ exports.create  = (req,res) => {
     .catch((err) => {
         return res.status(500).send({
             success: false,
-            message: "Error Occurred with  " + req.params.resumeId,
+            message: "Error Occured with  " + req.params.resumeId,
         });
     });
 };
