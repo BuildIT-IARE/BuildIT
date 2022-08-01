@@ -7,7 +7,7 @@ module.exports = (app) => {
   //get single skillup
   app.get("/skillUp", middleware.checkToken, skillUp.findOneSkillUp);
   //get all skillUps
-  app.get("/skillUps", skillUp.findAllSkillUps);
+  app.get("/skillUps", middleware.checkToken, skillUp.findAllSkillUps);
   //update skillUp details
   app.post(
     "/skillUp/update/details",
