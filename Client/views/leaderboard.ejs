@@ -143,16 +143,16 @@
         margin: 50px;
       }
       .cardy {
-        width: 65%;
+        width: 70%;
         padding: 5px;
         border-radius: 5mm;
-        background: rgb(61, 220, 132);
+        background: rgb(88, 88, 88);
         display: flex;
         align-items: center;
         flex-direction: column;
         justify-content: space-evenly;
         margin: auto;
-        border: 0.55mm solid rgb(37, 37, 37);
+        border: 0.55mm solid rgb(18, 18, 18);
         position: relative;
         overflow: hidden;
         z-index: 0;
@@ -189,8 +189,8 @@
         height: 35px;
         text-align: center;
         border-radius: 50%;
-        background: rgb(37, 37, 37);
-        color: white;
+        background: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
       }
       .corner span {
         font-size: 22px;
@@ -201,8 +201,8 @@
         height: 35px;
         text-align: center;
         border-radius: 50%;
-        background: rgb(37, 37, 37);
-        color: white;
+        background: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
         font-size: 22px;
         line-height: 35px;
       }
@@ -219,7 +219,19 @@
         border-radius: 50%;
       }
       .card-content {
+        color: white;
         text-align: center;
+      }
+      .cardy:hover .corner {
+        background: rgb(88, 88, 88);
+        color: white;
+      }
+      .cardy:hover .ranks {
+        background: rgb(88, 88, 88);
+        color: white;
+      }
+      .cardy:hover .card-content {
+        color: black;
       }
       .centerit {
         margin: auto;
