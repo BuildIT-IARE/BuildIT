@@ -614,7 +614,7 @@ $(document).ready(function () {
       e.preventDefault();
       wait = !wait;
       localStorageSetItem("wait", wait);
-      alert(`Submission wait is ${wait ? "ON. Enjoy" : "OFF"}.`);
+      alert(`Submission wait is ${wait ? "ON" : "OFF"}.`);
     } else if (event.ctrlKey && keyCode == 83) {
       // Ctrl+S
       e.preventDefault();
