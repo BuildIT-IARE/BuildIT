@@ -786,6 +786,13 @@
               </button>
             </span>
           </span>
+          <textarea
+            type="hidden"
+            name="token"
+            id="token"
+            value="<%= token %>"
+            style="display: none"
+          ></textarea>
           <span class="cover">
             <span class="button-block" style="justify-content: center">
               <button type="submit">
@@ -823,13 +830,6 @@
           </div>
         </footer>
       </div>
-      <textarea
-        type="hidden"
-        name="token"
-        id="token"
-        value="<%= token %>"
-        style="display: none"
-      ></textarea>
     </span>
     <script>
       function checkUser() {
