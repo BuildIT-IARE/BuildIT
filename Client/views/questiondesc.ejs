@@ -61,11 +61,10 @@
       font-weight: 400;
       color: black;
       line-height: 25px;
-      background: rgb(244, 247, 247);
+      background: rgb(255, 255, 255);
     }
     .setback {
       background: white;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
     .cover {
       padding: 30px;
@@ -101,18 +100,43 @@
       padding-bottom: 35px;
     }
     .code-ide {
-      width: 100%;
-      height: 95vh;
+      width: 97%;
+      height: 97vh;
+      margin: auto;
       margin-bottom: 20px;
-      box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 20px 0px;
     }
-    .button {
+    .section-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 22px 0;
+      border-bottom: 0.6mm solid rgb(7, 48, 66);
+      margin-bottom: 25px;
+    }
+    .heading {
+      font-size: 25px;
+      font-weight: 600;
+    }
+    .container-top {
+      margin: auto;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .container-top .icon {
+      color: rgb(246, 189, 65);
+    }
+    .container-top .button {
       text-decoration: none;
       background: rgb(246, 189, 65);
       border: 0.5mm solid rgb(7, 48, 66);
       color: black;
-      padding: 10px 15px;
+      padding: 7px 10px;
       border-radius: 1mm;
+      font-size: medium;
+      margin: 0 2px;
     }
     .button:hover {
       background: rgb(61, 220, 132);
@@ -124,8 +148,10 @@
       background: rgb(254, 254, 254);
       border: 0.5mm solid rgb(7, 48, 66);
       color: black;
-      padding: 10px 15px;
+      padding: 7px 10px;
       border-radius: 1mm;
+      font-size: medium;
+      margin: 0 2px;
     }
     .button1:hover {
       background: rgb(236, 94, 79);
@@ -144,7 +170,8 @@
     .bg-dark2 {
       padding-top: 20px;
       padding-bottom: 20px;
-      background-color: rgb(250, 252, 255);
+      border-top: 0.6mm solid rgb(7, 48, 66);
+      background-color: rgb(255, 255, 255);
     }
     .footer-section a:hover {
       color: rgb(34, 34, 34);
@@ -189,9 +216,14 @@
       }
     </script>
     <!-- about -->
-    <section class="section pt-8" style="padding-bottom: 30px">
-      <div class="container">
-        <a href="javascript:close_window()" class="button1">Close</a>
+    <section class="section-top">
+      <div class="container-top">
+        <span class="material-icons-round icon"> star </span>
+        <span style="font-family: poppins" class="heading">
+          <%= data[0].questionName %> #<%= data[0].questionId %>
+        </span>
+      </div>
+      <div class="container-top">
         <a href="#ide" class="button">Online Editor</a>
         <a
           href="<%= data.url %>/registerComplaint/<%= data[0].questionId %>"
@@ -207,14 +239,11 @@
         >
       </div>
     </section>
-    <section class="section pt-8" style="padding-top: 0">
+    <section class="section pt-8" style="padding-top: 0; padding-bottom: 20px">
       <div class="container">
         <div class="row">
           <div class="col-md-12 setback">
             <div class="cover">
-              <h3 style="font-family: poppins">
-                <%= data[0].questionName %> #<%= data[0].questionId %>
-              </h3>
               <div class="questiondesc">
                 <%= data[0].questionDescriptionText %>
               </div>
@@ -251,17 +280,13 @@
       </div>
     </section>
     <section class="section pt-8" style="padding-top: 0">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <iframe
-              src="/ide/<%=data[0].questionId %>"
-              frameborder="0"
-              class="code-ide"
-              id="ide"
-            ></iframe>
-          </div>
-        </div>
+      <div class="row">
+        <iframe
+          src="/ide/<%=data[0].questionId %>"
+          frameborder="0"
+          class="code-ide"
+          id="ide"
+        ></iframe>
       </div>
     </section>
 
