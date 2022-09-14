@@ -64,7 +64,8 @@
 				  <textarea placeholder="24 Hours HHMM format" name="contestStartTime" rows="5"></textarea>
 				  <p class="comments">Contest End Time</p>
 				  <textarea placeholder="24 Hours HHMM format" name="contestEndTime" rows="5"></textarea>
-
+				  <p class="comments">Contest Password</p>
+				<textarea name="contestPassword" id="" rows="5" placeholder="Enter Password"></textarea>
 					<div class="question">
 						<p class="comments">Is Roll Number Specific?&emsp;</p>
 						<input class="is_specific" type="checkbox" name="is_specific" value="1" onchange="valueChanged()"/>
@@ -76,6 +77,7 @@
 					</fieldset>
 					<input type="hidden" name="mcq" value=false id="coding">
 					<br><hr>
+				
 				  <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
 				  <div class="btn-block">
 					<button  class= "submit" type="submit" href="/">Send</button>
