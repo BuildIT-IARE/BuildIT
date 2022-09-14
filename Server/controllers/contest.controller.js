@@ -305,3 +305,36 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.checkContestPassword = (req,res)=>{
+  console.log(req.body)
+  if (req.body.username.toLowerCase()===req.body.rollNumber.toLowerCase()){
+    Contest.findOne({contestId : req.body.contestId})
+    .then((data) => {
+      if(data.contestPassword === req.body.password)
+      {
+        res.status(200).send({
+          success:true,
+          contestId:req.body.contestId
+        })
+      }
+      else{
+        res.status(200).send({
+          success:false,
+        })
+      }
+    })
+    .catch((err) => {
+      res.status(400).send({
+        success:false,
+        message: err.message
+      });
+    })
+  }
+  else{
+    res.status(400).send({
+      success:false,
+      message: err.message
+    });
+  }
+}

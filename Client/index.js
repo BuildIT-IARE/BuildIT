@@ -1480,10 +1480,12 @@ app.get("/contestPassword/:contestId", checkSignIn, async (req, res) => {
   res.render("contestPassword", {
     imgUsername: req.cookies.username,
     contestId: req.params.contestId,
+    token:req.cookies.token,
   });
 });
 
 app.post("/checkContestPassword", checkSignIn, async (req, res) => {
+  req.body.rollNumber=req.cookies.username
   let options = {
     url: serverRoute + "/checkContestPassword",
     method: "post",
@@ -1493,7 +1495,15 @@ app.post("/checkContestPassword", checkSignIn, async (req, res) => {
     body: req.body,
     json: true,
   };
-  request(options, function (err, response, body) {});
+  request(options, function (err, response, body) {
+    if (body.success){
+      a="/contests/"+body.contestId
+    res.redirect(a)
+  }
+  else{
+    res.redirect("/contest")
+  }
+  });
 });
 
 app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
@@ -1609,6 +1619,24 @@ app.get("/extendUserTime", async (req, res) => {
     serverurl: serverRoute,
   };
   res.render("changeValidTill", { data, token: req.cookies.token });
+});
+
+app.post("/endContest/:contestId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/endContest",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      contestId: req.params.contestId,
+      username: req.cookies.username,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.redirect("/contest");
+  });
 });
 
 app.get("/qualifier_tests", checkSignIn, async (req, res, next) => {

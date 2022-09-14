@@ -24,4 +24,6 @@ module.exports = (app) => {
     middleware.checkTokenAdmin,
     contests.delete
   );
+
+  app.post("/checkContestPassword",middleware.checkToken,contests.checkContestPassword)
 };
