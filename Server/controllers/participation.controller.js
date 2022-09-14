@@ -280,12 +280,6 @@ exports.acceptSubmission = (sub, callback) => {
                     },
                   },
                   { new: true },
-                  (err, doc) => {
-                    if (err) {
-                      console.log("Something wrong when updating data!");
-                    }
-                    // console.log(doc);
-                  }
                 )
                   .then((participation) => {
                     if (!participation) {
@@ -325,11 +319,6 @@ exports.acceptSubmission = (sub, callback) => {
               },
             },
             { new: true },
-            (err, doc) => {
-              if (err) {
-                console.log("Something wrong when updating data!");
-              }
-            }
           )
             .then((participation) => {
               if (!participation) {
@@ -393,12 +382,6 @@ exports.acceptSubmission = (sub, callback) => {
                       },
                     },
                     { new: true },
-                    (err, doc) => {
-                      if (err) {
-                        console.log("Something wrong when updating data!");
-                      }
-                      // console.log(doc);
-                    }
                   )
                     .then((participation) => {
                       if (!participation) {
@@ -441,11 +424,6 @@ exports.acceptSubmission = (sub, callback) => {
                 },
               },
               { new: true },
-              (err, doc) => {
-                if (err) {
-                  console.log("Something wrong when updating data!");
-                }
-              }
             )
               .then((participation) => {
                 if (!participation) {
