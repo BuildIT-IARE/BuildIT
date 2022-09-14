@@ -280,11 +280,6 @@
     }
 
     document.addEventListener("contextmenu", (event) => event.preventDefault());
-
-    window.onbeforeunload = function (e) {
-      e.preventDefault();
-      e.returnValue = "Really want to quit the contest?";
-    };
   </script>
 </html>
 <!-- 41228e -->
