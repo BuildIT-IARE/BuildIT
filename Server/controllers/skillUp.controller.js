@@ -28,6 +28,14 @@ exports.create = (req, res) => {
     },
     json: true,
   };
+  var totalScore=0;
+  var hackerRankScore=0;
+  var codeChefScore=0;
+  var codeForcesScore=0;
+  var interviewBitScore=0;
+  var spojScore=0;
+  var geeksForGeeksScore=0;
+  var buildITScore=0;
   const calcScore = async () => {
     try {
       const score = await Promise.all([
@@ -41,6 +49,8 @@ exports.create = (req, res) => {
             a = a.split(")");
             a = a[0];
             a = Number(a);
+            totalScore+=a*10;
+            codeChefScore+=a*10;
             return a * 10;
           })
           .catch((err) => {
@@ -53,6 +63,8 @@ exports.create = (req, res) => {
             a = dom.window.document.querySelectorAll(".txt")[1];
             a = a.textContent;
             a = Number(a);
+            interviewBitScore+=a;
+            totalScore+=a;
             return a;
           })
           .catch((err) => {
@@ -67,6 +79,8 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
+            hackerRankScore+=a;
+            totalScore+=a;
             return a;
           })
           .catch((err) => {
@@ -81,6 +95,8 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
+            hackerRankScore+=a;
+            totalScore+=a;
             return a;
           })
           .catch((err) => {
@@ -91,26 +107,28 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll("dd")[0].textContent;
             a = Number(a);
+            spojScore+=a*10;
+            totalScore+=a*10;
             return a * 10;
           })
           .catch((err) => {
             return -1;
           }),
-        got(
-          "https://auth.geeksforgeeks.org/user/" +
-            req.body.geeksForGeeksId +
-            "/practice"
-        )
-          .then((response) => {
-            const dom = new JSDOM(response.body);
-            a = dom.window.document.querySelectorAll("span")[13].textContent;
-            a = a.split(":");
-            a = Number(a[1]);
-            return a;
-          })
-          .catch((err) => {
-            return -1;
-          }),
+          got(
+            "https://auth.geeksforgeeks.org/user/" +
+              req.body.geeksForGeeksId +
+              "/practice"
+          )
+            .then((response) => {
+              const dom = new JSDOM(response.body);
+              a = dom.window.document.querySelectorAll(".score_card_value");
+              a = Number(a[0].textContent);
+              geeksForGeeksScore+=a;
+              return a;
+            })
+            .catch((err) => {
+              return NaN;
+            }),
         got("https://codeforces.com/profile/" + req.body.codeForcesId + "")
           .then((response) => {
             const dom = new JSDOM(response.body);
@@ -120,6 +138,8 @@ exports.create = (req, res) => {
             a = a.textContent;
             a = a.split(" ");
             a = Number(a[0]);
+            codeForcesScore+=a*10;
+            totalScore+=a*10;
             return a * 10;
           })
           .catch((err) => {
@@ -132,8 +152,9 @@ exports.create = (req, res) => {
               total = total.concat(participation[i]["submissionResults"]);
             }
             var totalSet = new Set(total);
-            console.log(totalSet.size * 10);
             buildIt = Number(totalSet.size) * 10;
+            buildITScore+=buildIt;
+            totalScore+=buildIt;
             return buildIt;
           })
           .catch((err) => {
@@ -152,6 +173,7 @@ exports.create = (req, res) => {
             leetScore[2].count * 10 +
             leetScore[3].count * 15
         );
+        totalScore+=leetCodeScore;
         SkillUp.findOneAndUpdate(
           { rollNumber: req.body.rollNumber },
           {
@@ -160,21 +182,19 @@ exports.create = (req, res) => {
               leetCodeId: req.body.leetCodeId,
               leetCodeScore: leetCodeScore,
               hackerRankId: req.body.hackerRankId,
-              hackerRankScore: score[2] + score[3],
+              hackerRankScore: hackerRankScore,
               codeChefId: req.body.codeChefId,
-              codeChefScore: score[0],
+              codeChefScore: codeChefScore,
               codeForcesId: req.body.codeForcesId,
-              codeForcesScore: score[6],
+              codeForcesScore: codeForcesScore,
               interviewBitId: req.body.interviewBitId,
-              interviewBitScore: score[1],
+              interviewBitScore: interviewBitScore,
               spojId: req.body.spojId,
-              spojScore: score[4],
+              spojScore: spojScore,
               geeksForGeeksId: req.body.geeksForGeeksId,
-              geeksForGeeksScore: score[5],
-              buildIT: score[7],
-              overallScore: Math.round(
-                score.reduce((a, b) => a + b, 0) + leetCodeScore
-              ),
+              geeksForGeeksScore: geeksForGeeksScore,
+              buildIT: buildITScore,
+              overallScore: totalScore,
             },
           }
         )
@@ -185,21 +205,19 @@ exports.create = (req, res) => {
                 leetCodeId: req.body.leetCodeId,
                 leetCodeScore: leetCodeScore,
                 hackerRankId: req.body.hackerRankId,
-                hackerRankScore: score[2] + score[3],
+                hackerRankScore: hackerRankScore,
                 codeChefId: req.body.codeChefId,
-                codeChefScore: score[0],
+                codeChefScore: codeChefScore,
                 codeForcesId: req.body.codeForcesId,
-                codeForcesScore: score[6],
+                codeForcesScore: codeForcesScore,
                 interviewBitId: req.body.interviewBitId,
-                interviewBitScore: score[1],
+                interviewBitScore: interviewBitScore,
                 spojId: req.body.spojId,
-                spojScore: score[4],
+                spojScore: spojScore,
                 geeksForGeeksId: req.body.geeksForGeeksId,
-                geeksForGeeksScore: score[5],
-                buildIT: score[7],
-                overallScore: Math.round(
-                  score.reduce((a, b) => a + b, 0) + leetCodeScore
-                ),
+                geeksForGeeksScore: geeksForGeeksScore,
+                buildIT: buildITScore,
+                overallScore: totalScore,
               });
               skillUp
                 .save()
@@ -239,7 +257,7 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  req.body = req;
+  req.body = req.params;
   var leetCodeScore = 0;
   var options = {
     url: "https://leetcode.com/graphql",
@@ -257,6 +275,14 @@ exports.update = (req, res) => {
     },
     json: true,
   };
+  var totalScore=0;
+  var hackerRankScore=0;
+  var codeChefScore=0;
+  var codeForcesScore=0;
+  var interviewBitScore=0;
+  var spojScore=0;
+  var geeksForGeeksScore=0;
+  var buildITScore=0;
   const calcScore = async () => {
     try {
       const score = await Promise.all([
@@ -270,10 +296,12 @@ exports.update = (req, res) => {
             a = a.split(")");
             a = a[0];
             a = Number(a);
+            totalScore+=a*10;
+            codeChefScore+=a*10;
             return a * 10;
           })
           .catch((err) => {
-            return -1;
+            return NaN;
           }),
         //interviewBit
         got("https://www.interviewbit.com/profile/" + req.body.interviewBitId)
@@ -282,10 +310,12 @@ exports.update = (req, res) => {
             a = dom.window.document.querySelectorAll(".txt")[1];
             a = a.textContent;
             a = Number(a);
+            totalScore+=a;
+            interviewBitScore+=a;
             return a;
           })
           .catch((err) => {
-            return -1;
+            return NaN;
           }),
         got(
           "https://www.hackerrank.com/leaderboard?filter=" +
@@ -296,10 +326,12 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
+            totalScore+=a;
+            hackerRankScore+=a;
             return a;
           })
           .catch((err) => {
-            return -1;
+            return NaN;
           }),
         got(
           "https://www.hackerrank.com/leaderboard?filter=" +
@@ -310,20 +342,24 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
+            totalScore+=a;
+            hackerRankScore+=a;
             return a;
           })
           .catch((err) => {
-            return -1;
+            return NaN;
           }),
         got("https://www.spoj.com/users/" + req.body.spojId)
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll("dd")[0].textContent;
             a = Number(a);
+            totalScore+=a*10;
+            spojScore+=a*10;
             return a * 10;
           })
           .catch((err) => {
-            return -1;
+            return NaN;
           }),
         got(
           "https://auth.geeksforgeeks.org/user/" +
@@ -332,13 +368,13 @@ exports.update = (req, res) => {
         )
           .then((response) => {
             const dom = new JSDOM(response.body);
-            a = dom.window.document.querySelectorAll("span")[13].textContent;
-            a = a.split(":");
-            a = Number(a[1]);
+            a = dom.window.document.querySelectorAll(".score_card_value");
+            a = Number(a[0].textContent);
+            geeksForGeeksScore+=a;
             return a;
           })
           .catch((err) => {
-            return -1;
+            return NaN;
           }),
         got("https://codeforces.com/profile/" + req.body.codeForcesId + "")
           .then((response) => {
@@ -349,6 +385,8 @@ exports.update = (req, res) => {
             a = a.textContent;
             a = a.split(" ");
             a = Number(a[0]);
+            totalScore+=a;
+            codeForcesScore+=a;
             return a * 10;
           })
           .catch((err) => {
@@ -361,8 +399,9 @@ exports.update = (req, res) => {
               total = total.concat(participation[i]["submissionResults"]);
             }
             var totalSet = new Set(total);
-            console.log(totalSet.size * 10);
             buildIt = Number(totalSet.size) * 10;
+            totalScore+=buildIt;
+            buildITScore+=buildIt;
             return buildIt;
           })
           .catch((err) => {
@@ -376,36 +415,35 @@ exports.update = (req, res) => {
             leetScore[2].count * 10 +
             leetScore[3].count * 15
         );
+        totalScore+=leetCodeScore;
         SkillUp.findOneAndUpdate(
           { rollNumber: req.body.rollNumber },
           {
             $set: {
               leetCodeScore: leetCodeScore,
-              hackerRankScore: score[2] + score[3],
-              codeChefScore: score[0],
-              codeForcesScore: score[6],
-              interviewBitScore: score[1],
-              spojScore: score[4],
-              geeksForGeeksScore: score[5],
-              buildIT: score[7],
-              overallScore: Math.round(
-                score.reduce((a, b) => a + b, 0) + leetCodeScore
-              ),
+              hackerRankScore: hackerRankScore,
+              codeChefScore: codeChefScore,
+              codeForcesScore: codeForcesScore,
+              interviewBitScore: interviewBitScore,
+              spojScore: spojScore,
+              geeksForGeeksScore: geeksForGeeksScore,
+              buildIT: buildITScore,
+              overallScore: totalScore,
             },
           },
           { upsert: true }
         )
           .then((skillUp) => {
-            // res.status(200).send(skillUp);
-            return res(null, skillUp);
+            res.status(200).send(skillUp);
+            // return res(null, skillUp);
           })
           .catch((err) => {
-            // res.status(404).send(err||"Error occured with "+req.body.rollNumber);
-            return res("err", null);
+            res.status(404).send(err||"Error occured with "+req.body.rollNumber);
+            // return res("err", null);
           });
       });
-    } catch {
-      return res("err", null);
+    } catch(err) {
+      res.status(404).send(err||"Error occured with "+req.body.rollNumber);
     }
   };
   calcScore();
@@ -435,18 +473,16 @@ exports.updateDetails = (req, res) => {
       // return res("err",null);
     });
 };
-exports.findAll = (callback) => {
+exports.findAll = (req,res) => {
   SkillUp.find()
     .then((skillUps) => {
-      // res.send(skillUps);
-      return callback(null, skillUps);
+      res.status(200).send(skillUps);
     })
     .catch((err) => {
-      // res.status(500).send({
-      //     success: false,
-      //     message: err.message || "Some error occurred while retrieving skillUps.",
-      // });
-      return callback("Error retrieving skillups", null);
+      res.status(500).send({
+          success: false,
+          message: err.message || "Some error occurred while retrieving skillUps.",
+      });
     });
 };
 
@@ -457,16 +493,16 @@ exports.findAllSkillUps = (req, res) => {
       res.send(skillUps);
     })
     .catch((err) => {
-      res.send("Error retrieving skillups");
+      res.send("Error retrieving skillUps");
     });
 };
 
 exports.findOneSkillUp = (req, res) => {
   SkillUp.find({ rollNumber: req.body.rollNumber })
     .then((skillUp) => {
-      res.send(skillUp[0]);
+      res.status(200).send(skillUp[0]);
     })
     .catch((err) => {
-      res.send({});
+      res.status(400).send(err.message);
     });
 };
