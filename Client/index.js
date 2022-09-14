@@ -90,6 +90,15 @@ let checkSignIn = async (req, res, next) => {
   }
 };
 
+var imageUrl = "";
+function imageRetrive(req, res) {
+  let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
+  let rollno = req.cookies.username;
+  let branch = req.cookies.branch;
+  var testUrl = imageUrl + branch + "/" + rollno + ".jpg";
+  return testUrl;
+}
+
 function loginCounts(req, res) {
   let options = {
     url: serverRoute + "/counters",
@@ -1467,6 +1476,26 @@ app.get("/contest", checkSignIn, async (req, res, next) => {
   });
 });
 
+app.get("/contestPassword/:contestId", checkSignIn, async (req, res) => {
+  res.render("contestPassword", {
+    imgUsername: req.cookies.username,
+    contestId: req.params.contestId,
+  });
+});
+
+app.post("/checkContestPassword", checkSignIn, async (req, res) => {
+  let options = {
+    url: serverRoute + "/checkContestPassword",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: req.body,
+    json: true,
+  };
+  request(options, function (err, response, body) {});
+});
+
 app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
   // check if contest is open
   let options = {
@@ -1555,11 +1584,15 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
                 body[i].color = "black";
               }
             }
+            imageUrl = imageRetrive(req, res);
             body.contestId = req.params.contestId;
             res.render("questions", {
               imgUsername: req.cookies.username,
               data: body,
               datatimer: bodytimer,
+              imgUrl: imageUrl,
+              serverUrl: serverRoute,
+              token: req.cookies.token,
             });
           });
         });
@@ -1568,6 +1601,14 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
       res.render("error", { data: body, imgUsername: req.cookies.username });
     }
   });
+});
+
+app.get("/extendUserTime", async (req, res) => {
+  let data = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+  res.render("changeValidTill", { data, token: req.cookies.token });
 });
 
 app.get("/qualifier_tests", checkSignIn, async (req, res, next) => {

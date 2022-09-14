@@ -59,6 +59,7 @@ exports.create = (req, res) => {
       usernames: usernames,
       sections: sections,
       coding: req.body.coding,
+      contestPassword: req.body.contestPassword,
     });
 
     // SaveContest in the database

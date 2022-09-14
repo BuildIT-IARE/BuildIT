@@ -13,6 +13,10 @@ var participationSchema = new Schema({
   submissionResults: Array,
   validTill: String,
   questions: Array,
+  endContest: {
+    type: Number,
+    default: 0,
+  },
 });
 
 var result = new Schema({

@@ -16,6 +16,7 @@ var contestSchema = new Schema({
   usernames: [String],
   sections: [String],
   coding: { type: Boolean, default: false },
+  contestPassword: String,
 });
 
 module.exports = mongoose.model("Contest", contestSchema);

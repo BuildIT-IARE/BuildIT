@@ -2,7 +2,6 @@ const Participate = require("../models/participation.model.js");
 const Participation = Participate.Participation;
 const McqParticipation = Participate.McqParticipation;
 const contests = require("./contest.controller.js");
-const mcqs = require("./mcq.controller.js");
 
 var moment = require("moment");
 // Create and Save a new participation
@@ -786,4 +785,113 @@ exports.leaderboard = async (req, res) => {
       message: err.message || "Error occurred!",
     });
   }
+};
+
+exports.endContest = async (req, res) => {
+  let findval = req.body.username.toLowerCase() + req.body.contestId;
+  Participation.findOne({ participationId: findval })
+    .then((paricipation) => {
+      let setval = paricipation.participationTime;
+      Participation.findOneAndUpdate(
+        { participationId: findval },
+        {
+          $set: {
+            validTill: setval,
+          },
+        }
+      )
+        .then(() => {
+          res.send("done");
+        })
+        .catch((err) => {
+          res.send("error");
+        });
+    })
+    .catch((err) => {
+      res.send("error");
+    });
+};
+
+exports.changeValidTime = (req, res) => {
+  const username = req.body.username.toLowerCase();
+  const contestId = req.body.contestId;
+  var participationId = username + contestId;
+  Participation.findOne({ participationId: participationId })
+    .then((data) => {
+      // console.log(data.validTill,new Date());
+      const time = Number(req.body.time);
+      var data = new Date(data.validTill);
+      data.setTime(data.getTime() + time * 60 * 1000);
+      Participation.findOneAndUpdate(
+        { participationId: participationId },
+        {
+          $set: {
+            participationId: participationId,
+            validTill: data,
+            endContest: 0,
+          },
+        },
+        { upsert: true }
+      )
+        .then((data) => {
+          res.status(200).send("Updated Successfully!");
+        })
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message: "Error occurred!",
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message: err.message || "Error occurred!",
+      });
+    });
+};
+
+exports.checkContest = (req, res) => {
+  let a = req.body.username.toLowerCase() + req.body.testId;
+  Participation.findOne({ participationId: a })
+    .then((participation) => {
+      let setval = participation.participationTime;
+      if (
+        participation["endContest"] != undefined &&
+        participation.endContest == 0
+      ) {
+        Participation.updateOne(
+          { participationId: a },
+          {
+            $set: {
+              endContest: 1,
+            },
+          }
+        )
+          .then(() => {
+            res.send("success");
+          })
+          .catch((err) => {
+            res.send("error");
+          });
+      } else {
+        Participation.updateOne(
+          { participationId: a },
+          {
+            $set: {
+              validTill: setval,
+            },
+          }
+        )
+          .then(() => {
+            res.send("success");
+          })
+          .catch((err) => {
+            res.send("error");
+          });
+      }
+    })
+    .catch((err) => {
+      res.send("error");
+    });
 };
