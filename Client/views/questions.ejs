@@ -263,6 +263,10 @@
         font-size: x-large;
         margin-left: 10px;
       }
+      #leaderboard a{
+        text-decoration: none;
+        color: black;
+      }
       .start-buttons{
         width: 600px;
         display: flex;
@@ -475,7 +479,7 @@
       <div class="startbutton">
         <div class="start-buttons">
           <button id="Start">Start Exam <span class="material-icons-round">play_arrow</span></button>
-          <button id="leaderboard">Leaderboard <span class="material-icons-round">leaderboard</span></button>
+          <button id="leaderboard"><a href="/contests/<%=data.contestId%>/leaderboard" target="_blank" rel="noopener noreferrer">Leaderboard <span class="material-icons-round">leaderboard</span></a></button>
         </div>
         <span class="finished">You have Completed the test (Contact Admin for any Issue)</span>
         <div class="Description" id="descit">
