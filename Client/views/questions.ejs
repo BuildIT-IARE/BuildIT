@@ -235,7 +235,7 @@
         flex-direction: column;
         background: white;
       }
-      #Start {
+      #Start,#leaderboard {
         font-family: poppins;
         margin-top: 100px;
         font-size: x-large;
@@ -249,10 +249,25 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-left: 30px;
+        margin-right: 30px;
       }
       #Start span{
         font-size: xx-large;
         margin-left: 0px;
+      }
+      #leaderboard{
+        background: rgb(81,218,133);
+      }
+      #leaderboard span{
+        font-size: x-large;
+        margin-left: 10px;
+      }
+      .start-buttons{
+        width: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .nav-btn {
         display: none;
@@ -320,11 +335,11 @@
         justify-content: center;
         z-index: 10;
         display: none;
-         background: rgba(255, 255, 255, 0.39);
-backdrop-filter: blur( 14.5px );
--webkit-backdrop-filter: blur( 14.5px );
-border-radius: 10px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
+        background: rgba(255, 255, 255, 0.39);
+        backdrop-filter: blur( 14.5px );
+        -webkit-backdrop-filter: blur( 14.5px );
+        border-radius: 10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
       }
       .chbox{
         width: 600px;
@@ -458,9 +473,10 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
         </div>
       </div>
       <div class="startbutton">
-        <button id="Start">Start Exam <span class="material-icons-round">
-play_arrow
-</span></button>
+        <div class="start-buttons">
+          <button id="Start">Start Exam <span class="material-icons-round">play_arrow</span></button>
+          <button id="leaderboard">Leaderboard <span class="material-icons-round">leaderboard</span></button>
+        </div>
         <span class="finished">You have Completed the test (Contact Admin for any Issue)</span>
         <div class="Description" id="descit">
           <div class="dtitle">Instructions</div>
