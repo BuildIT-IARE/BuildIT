@@ -5,6 +5,55 @@
       <div class="gn-scroller">
         <ul class="gn-menu">
           <li>
+            <a
+              class="gn-icon gn-icon-download"
+              href="<%= data.url %>/admin/add/event"
+              >IARE Codechef Chapter</a
+            >
+            <!-- Add Events -->
+          </li>
+          <li>
+            <a
+              class="gn-icon gn-icon-download"
+              href="<%= data.url %>/admin/add/skillup"
+              >Skill Up 365</a
+            >
+            <!-- Add Skill Up Scores -->
+          </li>
+          <li>
+            <a class="gn-icon gn-icon-download">Qualifier Test</a>
+            <ul class="gn-submenu">
+              <li>
+                <a
+                  class="gn-icon gn-icon-add"
+                  href="<%= data.url %>/admin/add/qualifier_test"
+                  >Add Qualifier Test</a
+                >
+              </li>
+              <li>
+                <a
+                  class="gn-icon gn-icon-add"
+                  href="<%= data.url %>/admin/add/mcq"
+                  >Add MCQ's</a
+                >
+              </li>
+              <li>
+                <a
+                  class="gn-icon gn-icon-update"
+                  href="<%= data.url %>/admin/edit/mcq"
+                  >Edit MCQ's</a
+                >
+              </li>
+              <li>
+                <a
+                  class="gn-icon gn-icon-trashcan"
+                  href="<%= data.url %>/admin/delete/mcq"
+                  >Delete MCQ's</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
             <a class="gn-icon gn-icon-download">Manage Contests</a>
             <ul class="gn-submenu">
               <li>
@@ -85,6 +134,66 @@
             </ul>
           </li>
           <li>
+            <a class="gn-icon gn-icon-download">Manage Tutorials</a>
+            <ul class="gn-submenu">
+              <li>
+                <a
+                  class="gn-icon gn-icon-add"
+                  href="<%= data.url %>/admin/add/course"
+                  >Add Course</a
+                >
+              </li>
+              <li>
+                <a
+                  class="gn-icon gn-icon-add"
+                  href="<%= data.url %>/admin/add/tutQuestion"
+                  >Add New Question</a
+                >
+              </li>
+              <li>
+                <a class="gn-icon gn-icon-add" href="<%= data.url %>/admin/move"
+                  >Move Question</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="gn-icon gn-icon-download">Manage Resumes</a>
+            <ul class="gn-submenu">
+              <li>
+                <a
+                  class="gn-icon gn-icon-add"
+                  href="<%= data.url %>/admin/viewResumes"
+                  >View Resumes</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="gn-icon gn-icon-download">Manage Practice</a>
+            <ul class="gn-submenu">
+              <li>
+                <a
+                  class="gn-icon gn-icon-add"
+                  href="<%= data.url %>/admin/add/practiceQuestion"
+                  >Add New Question</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="gn-icon gn-icon-download">Upload Files</a>
+            <ul class="gn-submenu">
+              <li>
+                <a
+                  class="gn-icon gn-icon-add"
+                  href="<%= data.url %>/admin/add/pdf"
+                  >Add Flipped Class PDF</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
             <a
               class="gn-icon gn-icon-cog"
               href="<%= data.url %>/admin/manageusers"
@@ -106,6 +215,13 @@
             >
           </li>
           <li>
+            <a
+              class="gn-icon gn-icon-cog"
+              href="<%= data.url %>/admin/contentDevProgress"
+              >Content Developer Report</a
+            >
+          </li>
+          <li>
             <a class="gn-icon gn-icon-help" href="<%= data.url %>/admin/solved"
               >Solved Questions Report</a
             >
@@ -118,8 +234,8 @@
           <li>
             <a
               class="gn-icon gn-icon-help"
-              href="<%= data.url %>/admin/localPassword"
-              >Set Local Password</a
+              href="<%= data.url %>/admin/resultsTut"
+              >Tutorial Results</a
             >
           </li>
         </ul>
