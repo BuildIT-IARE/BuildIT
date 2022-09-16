@@ -344,35 +344,43 @@
         -webkit-backdrop-filter: blur( 14.5px );
         border-radius: 10px;
         border: 1px solid rgba( 255, 255, 255, 0.18 );
+        top: 0;
+        left: 0;
       }
       .chbox{
-        width: 600px;
-        background: rgb(52, 52, 52);
+        width: 290px;
+        height: 180px;
+        background:rgb(246, 189, 65);
         display: flex;
         flex-direction: column;
-        padding: 15px;
+        padding: 15px 30px;
         border-radius: 2mm;
         font-family: poppins;
-        color: white;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: justify;
+        position: relative;
       }
       .chalert,.chbutton{
         width: 100%;
         font-size: large;
       }
       .chbutton button{
-        float: right;
-        width: fit-content;
-        background: rgb(246, 189, 65);
+        width: 100%;
+        background: rgb(48, 48, 48);
         font-family: poppins;
-        padding: 10px;
+        padding: 5px;
         border-radius: 2mm;
         border: none;
         outline: none;
         cursor: pointer;
         font-size: larger;
         font-weight: 500;
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.167);
         color: black;
+        color: rgb(246, 189, 65);
       }
       .top-nav{
         position: sticky;
@@ -436,6 +444,25 @@
         font-size: xx-large;
         line-height: 15px;
       }
+      .alert-title{
+        font-size: xx-large;
+        animation: pop ease 0.5s;
+        animation-delay: 0.25s;
+      }
+      @keyframes pop{
+        0%{
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        90%{
+          transform: scale(1.15);
+          opacity: 1;
+        }
+        100%{
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
     </style>
     <link
       href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
@@ -468,9 +495,11 @@
     <section class="page">
       <div class="chanceone" id="firstchance">
         <div class="chbox">
+          <div class="alert-title">Warning</div>
           <div class="chalert">
             Do not <strong>Exit</strong> full Screen or else contest will be ended
           </div>
+          
           <div class="chbutton">
             <button type="button" id="okbut">OK</button>
           </div>
