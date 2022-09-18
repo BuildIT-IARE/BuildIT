@@ -2,6 +2,7 @@ const Participate = require("../models/participation.model.js");
 const Participation = Participate.Participation;
 const McqParticipation = Participate.McqParticipation;
 const contests = require("./contest.controller.js");
+const mcqs = require('./mcq.controller');
 
 var moment = require("moment");
 // Create and Save a new participation
@@ -532,6 +533,20 @@ exports.updateParticipation = (req, questions, callback) => {
 // Retrieve and return all participation details.
 exports.findContestPart = (req, res) => {
   Participation.find({ contestId: req.body.contestId })
+    .then((participation) => {
+      res.send(participation);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message:
+          err.message || "Some error occurred while retrieving participation.",
+      });
+    });
+};
+// Retrieve and return all mcqParticipation details.
+exports.findQualContestPart = (req, res) => {
+  McqParticipation.find({ contestId: req.body.contestId })
     .then((participation) => {
       res.send(participation);
     })
