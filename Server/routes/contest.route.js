@@ -9,6 +9,9 @@ module.exports = (app) => {
   // Retrieve all contests
   app.get("/contests", middleware.checkToken, contests.findAll);
 
+  // Retrieve all qualifier contests
+  app.get("/qualContests", middleware.checkToken, contests.findAllQual);
+
   // Retrieve all contests
   app.get("/contests/user/:username", middleware.checkToken, contests.findAllUser);
 

@@ -15,6 +15,12 @@ module.exports = (app) => {
     middleware.checkToken,
     participation.findContestPart
   );
+  // Retrieve all mcqparticipations per contestId in body
+  app.post(
+    "/mcqParticipations/all",
+    middleware.checkToken,
+    participation.findQualContestPart
+  );
 
   // leaderboard
   app.get(

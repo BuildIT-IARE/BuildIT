@@ -254,9 +254,25 @@ exports.addSetGivenQIdArray = (req, res) => {
           message: "Question id does not exists!",
         });
       }
-
-      let set = question.map((e) => e.questionId);
-      updateSet(set);
+      Question.updateMany(
+        { questionId: { $in: questionIds } },
+        {
+          $set:{
+            contestId : req.body.contestId
+          }
+        }
+        )
+      .then((questions) => {
+        let set = question.map((e) => e.questionId);
+        updateSet(set);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          success: false,
+          message:
+            err.message || "Some error occurred while retrieving questions.",
+        });
+      })
     })
     .catch((err) => {
       res.status(500).send({

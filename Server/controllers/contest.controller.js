@@ -112,6 +112,21 @@ exports.findAll = (req, res) => {
 };
 
 // Retrieve and return all contests from the database.
+exports.findAllQual = (req, res) => {
+  Contest.find({ mcq: true })
+  .then((contests) => {
+    res.send(contests);
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving contests.",
+    });
+  });
+};
+
+
+// Retrieve and return all contests from the database.
 exports.findAllUser = (req, res) => {
   const username = req.params.username;
 
