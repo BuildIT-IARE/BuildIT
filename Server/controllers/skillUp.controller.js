@@ -28,14 +28,14 @@ exports.create = (req, res) => {
     },
     json: true,
   };
-  var totalScore=0;
-  var hackerRankScore=0;
-  var codeChefScore=0;
-  var codeForcesScore=0;
-  var interviewBitScore=0;
-  var spojScore=0;
-  var geeksForGeeksScore=0;
-  var buildITScore=0;
+  var totalScore = 0;
+  var hackerRankScore = 0;
+  var codeChefScore = 0;
+  var codeForcesScore = 0;
+  var interviewBitScore = 0;
+  var spojScore = 0;
+  var geeksForGeeksScore = 0;
+  var buildITScore = 0;
   const calcScore = async () => {
     try {
       const score = await Promise.all([
@@ -49,8 +49,8 @@ exports.create = (req, res) => {
             a = a.split(")");
             a = a[0];
             a = Number(a);
-            totalScore+=a*10;
-            codeChefScore+=a*10;
+            totalScore += a * 10;
+            codeChefScore += a * 10;
             return a * 10;
           })
           .catch((err) => {
@@ -63,8 +63,8 @@ exports.create = (req, res) => {
             a = dom.window.document.querySelectorAll(".txt")[1];
             a = a.textContent;
             a = Number(a);
-            interviewBitScore+=a;
-            totalScore+=a;
+            interviewBitScore += a;
+            totalScore += a;
             return a;
           })
           .catch((err) => {
@@ -79,8 +79,8 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            hackerRankScore+=a;
-            totalScore+=a;
+            hackerRankScore += a;
+            totalScore += a;
             return a;
           })
           .catch((err) => {
@@ -95,8 +95,8 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            hackerRankScore+=a;
-            totalScore+=a;
+            hackerRankScore += a;
+            totalScore += a;
             return a;
           })
           .catch((err) => {
@@ -107,28 +107,28 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll("dd")[0].textContent;
             a = Number(a);
-            spojScore+=a*10;
-            totalScore+=a*10;
+            spojScore += a * 10;
+            totalScore += a * 10;
             return a * 10;
           })
           .catch((err) => {
             return -1;
           }),
-          got(
-            "https://auth.geeksforgeeks.org/user/" +
-              req.body.geeksForGeeksId +
-              "/practice"
-          )
-            .then((response) => {
-              const dom = new JSDOM(response.body);
-              a = dom.window.document.querySelectorAll(".score_card_value");
-              a = Number(a[0].textContent);
-              geeksForGeeksScore+=a;
-              return a;
-            })
-            .catch((err) => {
-              return NaN;
-            }),
+        got(
+          "https://auth.geeksforgeeks.org/user/" +
+            req.body.geeksForGeeksId +
+            "/practice"
+        )
+          .then((response) => {
+            const dom = new JSDOM(response.body);
+            a = dom.window.document.querySelectorAll(".score_card_value");
+            a = Number(a[0].textContent);
+            geeksForGeeksScore += a;
+            return a;
+          })
+          .catch((err) => {
+            return NaN;
+          }),
         got("https://codeforces.com/profile/" + req.body.codeForcesId + "")
           .then((response) => {
             const dom = new JSDOM(response.body);
@@ -138,8 +138,8 @@ exports.create = (req, res) => {
             a = a.textContent;
             a = a.split(" ");
             a = Number(a[0]);
-            codeForcesScore+=a*10;
-            totalScore+=a*10;
+            codeForcesScore += a * 10;
+            totalScore += a * 10;
             return a * 10;
           })
           .catch((err) => {
@@ -153,8 +153,8 @@ exports.create = (req, res) => {
             }
             var totalSet = new Set(total);
             buildIt = Number(totalSet.size) * 10;
-            buildITScore+=buildIt;
-            totalScore+=buildIt;
+            buildITScore += buildIt;
+            totalScore += buildIt;
             return buildIt;
           })
           .catch((err) => {
@@ -173,7 +173,7 @@ exports.create = (req, res) => {
             leetScore[2].count * 10 +
             leetScore[3].count * 15
         );
-        totalScore+=leetCodeScore;
+        totalScore += leetCodeScore;
         SkillUp.findOneAndUpdate(
           { rollNumber: req.body.rollNumber },
           {
@@ -275,14 +275,14 @@ exports.update = (req, res) => {
     },
     json: true,
   };
-  var totalScore=0;
-  var hackerRankScore=0;
-  var codeChefScore=0;
-  var codeForcesScore=0;
-  var interviewBitScore=0;
-  var spojScore=0;
-  var geeksForGeeksScore=0;
-  var buildITScore=0;
+  var totalScore = 0;
+  var hackerRankScore = 0;
+  var codeChefScore = 0;
+  var codeForcesScore = 0;
+  var interviewBitScore = 0;
+  var spojScore = 0;
+  var geeksForGeeksScore = 0;
+  var buildITScore = 0;
   const calcScore = async () => {
     try {
       const score = await Promise.all([
@@ -296,8 +296,8 @@ exports.update = (req, res) => {
             a = a.split(")");
             a = a[0];
             a = Number(a);
-            totalScore+=a*10;
-            codeChefScore+=a*10;
+            totalScore += a * 10;
+            codeChefScore += a * 10;
             return a * 10;
           })
           .catch((err) => {
@@ -310,8 +310,8 @@ exports.update = (req, res) => {
             a = dom.window.document.querySelectorAll(".txt")[1];
             a = a.textContent;
             a = Number(a);
-            totalScore+=a;
-            interviewBitScore+=a;
+            totalScore += a;
+            interviewBitScore += a;
             return a;
           })
           .catch((err) => {
@@ -326,8 +326,8 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            totalScore+=a;
-            hackerRankScore+=a;
+            totalScore += a;
+            hackerRankScore += a;
             return a;
           })
           .catch((err) => {
@@ -342,8 +342,8 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            totalScore+=a;
-            hackerRankScore+=a;
+            totalScore += a;
+            hackerRankScore += a;
             return a;
           })
           .catch((err) => {
@@ -354,8 +354,8 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll("dd")[0].textContent;
             a = Number(a);
-            totalScore+=a*10;
-            spojScore+=a*10;
+            totalScore += a * 10;
+            spojScore += a * 10;
             return a * 10;
           })
           .catch((err) => {
@@ -370,7 +370,7 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score_card_value");
             a = Number(a[0].textContent);
-            geeksForGeeksScore+=a;
+            geeksForGeeksScore += a;
             return a;
           })
           .catch((err) => {
@@ -385,8 +385,8 @@ exports.update = (req, res) => {
             a = a.textContent;
             a = a.split(" ");
             a = Number(a[0]);
-            totalScore+=a;
-            codeForcesScore+=a;
+            totalScore += a;
+            codeForcesScore += a;
             return a * 10;
           })
           .catch((err) => {
@@ -400,8 +400,8 @@ exports.update = (req, res) => {
             }
             var totalSet = new Set(total);
             buildIt = Number(totalSet.size) * 10;
-            totalScore+=buildIt;
-            buildITScore+=buildIt;
+            totalScore += buildIt;
+            buildITScore += buildIt;
             return buildIt;
           })
           .catch((err) => {
@@ -415,7 +415,7 @@ exports.update = (req, res) => {
             leetScore[2].count * 10 +
             leetScore[3].count * 15
         );
-        totalScore+=leetCodeScore;
+        totalScore += leetCodeScore;
         SkillUp.findOneAndUpdate(
           { rollNumber: req.body.rollNumber },
           {
@@ -438,12 +438,14 @@ exports.update = (req, res) => {
             // return res(null, skillUp);
           })
           .catch((err) => {
-            res.status(404).send(err||"Error occured with "+req.body.rollNumber);
+            res
+              .status(404)
+              .send(err || "Error occured with " + req.body.rollNumber);
             // return res("err", null);
           });
       });
-    } catch(err) {
-      res.status(404).send(err||"Error occured with "+req.body.rollNumber);
+    } catch (err) {
+      res.status(404).send(err || "Error occured with " + req.body.rollNumber);
     }
   };
   calcScore();
@@ -473,15 +475,16 @@ exports.updateDetails = (req, res) => {
       // return res("err",null);
     });
 };
-exports.findAll = (req,res) => {
+exports.findAll = (req, res) => {
   SkillUp.find()
     .then((skillUps) => {
       res.status(200).send(skillUps);
     })
     .catch((err) => {
       res.status(500).send({
-          success: false,
-          message: err.message || "Some error occurred while retrieving skillUps.",
+        success: false,
+        message:
+          err.message || "Some error occurred while retrieving skillUps.",
       });
     });
 };
@@ -500,9 +503,18 @@ exports.findAllSkillUps = (req, res) => {
 exports.findOneSkillUp = (req, res) => {
   SkillUp.find({ rollNumber: req.body.rollNumber })
     .then((skillUp) => {
-      res.status(200).send(skillUp[0]);
+      if (skillUp.length == 0) {
+        res.send({ success: false });
+      } else {
+        res.send({
+          success: true,
+          data: skillUp[0],
+        });
+      }
     })
     .catch((err) => {
-      res.status(400).send(err.message);
+      res.status(400).send({
+        success: false,
+      });
     });
 };

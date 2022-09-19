@@ -2,7 +2,7 @@ const Participate = require("../models/participation.model.js");
 const Participation = Participate.Participation;
 const McqParticipation = Participate.McqParticipation;
 const contests = require("./contest.controller.js");
-
+const mcqs = require("./mcq.controller.js");
 var moment = require("moment");
 // Create and Save a new participation
 exports.create = (req, res) => {
@@ -279,7 +279,7 @@ exports.acceptSubmission = (sub, callback) => {
                       totalSubmissionResultsScore: sub.score,
                     },
                   },
-                  { new: true },
+                  { new: true }
                 )
                   .then((participation) => {
                     if (!participation) {
@@ -318,7 +318,7 @@ exports.acceptSubmission = (sub, callback) => {
                 totalSubmissionResultsScore: sub.score,
               },
             },
-            { new: true },
+            { new: true }
           )
             .then((participation) => {
               if (!participation) {
@@ -381,7 +381,7 @@ exports.acceptSubmission = (sub, callback) => {
                         "submissionResults.$.ipAddress": sub.ipAddress,
                       },
                     },
-                    { new: true },
+                    { new: true }
                   )
                     .then((participation) => {
                       if (!participation) {
@@ -423,7 +423,7 @@ exports.acceptSubmission = (sub, callback) => {
                   },
                 },
               },
-              { new: true },
+              { new: true }
             )
               .then((participation) => {
                 if (!participation) {
@@ -871,5 +871,21 @@ exports.checkContest = (req, res) => {
     })
     .catch((err) => {
       res.send("error");
+    });
+};
+
+exports.findAllContestsUser = (req, res) => {
+  Participation.find({ username: req.body.username })
+    .then((participation) => {
+      res.send({
+        success: true,
+        count: participation.length,
+      });
+    })
+    .catch((err) => {
+      res.send({
+        success: false,
+        count: 0,
+      });
     });
 };
