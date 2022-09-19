@@ -2,7 +2,12 @@ const Participate = require("../models/participation.model.js");
 const Participation = Participate.Participation;
 const McqParticipation = Participate.McqParticipation;
 const contests = require("./contest.controller.js");
+<<<<<<< HEAD
 const mcqs = require("./mcq.controller.js");
+=======
+const mcqs = require('./mcq.controller');
+
+>>>>>>> e3c81228db4d2360c5b6d1b67093c3c54fe7a0b6
 var moment = require("moment");
 // Create and Save a new participation
 exports.create = (req, res) => {
@@ -532,6 +537,20 @@ exports.updateParticipation = (req, questions, callback) => {
 // Retrieve and return all participation details.
 exports.findContestPart = (req, res) => {
   Participation.find({ contestId: req.body.contestId })
+    .then((participation) => {
+      res.send(participation);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message:
+          err.message || "Some error occurred while retrieving participation.",
+      });
+    });
+};
+// Retrieve and return all mcqParticipation details.
+exports.findQualContestPart = (req, res) => {
+  McqParticipation.find({ contestId: req.body.contestId })
     .then((participation) => {
       res.send(participation);
     })

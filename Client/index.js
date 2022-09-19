@@ -1335,6 +1335,23 @@ app.get("/admin/results", async (req, res) => {
     res.render("dropdown", { data: body });
   });
 });
+app.get("/admin/qualResults", async (req, res) => {
+  let options = {
+    url: serverRoute + "/qualContests",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    body.posturl = clientRoute + "/admin/results/qualContest";
+    body.url = clientRoute;
+    body.method = "POST";
+    res.render("dropdown", { data: body });
+  });
+});
 
 app.get("/admin/resultsTut", async (req, res) => {
   let options = {
@@ -1395,6 +1412,7 @@ app.post("/admin/results/contest", async (req, res) => {
   };
 
   request(options, function (err, response, bodyparticipation) {
+    console.log(bodyparticipation);
     let options = {
       url: serverRoute + "/questions/contests/" + req.body.contestId,
       method: "get",
@@ -1412,6 +1430,42 @@ app.post("/admin/results/contest", async (req, res) => {
         data: url,
         datap: bodyparticipation,
         dataq: bodyquestion,
+      });
+    });
+  });
+});
+
+
+app.post("/admin/results/qualContest", async (req, res) => {
+  let options = {
+    url: serverRoute + "/mcqParticipations/all",
+    method: "post",
+    body: {
+      contestId: req.body.contestId,
+    },
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, bodyparticipation) {
+    let options = {
+      url: serverRoute + "/mcqs/contests/" + req.body.contestId,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+
+    request(options, function (err, response, bodyquestion) {
+        let url = {
+          url: clientRoute,
+        };
+      res.render("qualResults", {
+        data: url,
+        datap: bodyparticipation,
       });
     });
   });
