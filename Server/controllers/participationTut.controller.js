@@ -237,13 +237,36 @@ exports.findContentDevSolved = (req, res) => {
         });
       }
       let programmerId = req.params.username.substr(7);
-      programmerId = programmerId.toUpperCase()
+      programmerId = programmerId.toUpperCase();
       let programmerSpecific = participation
         .map((v) => v.practiceSolved)
         .reduce((a, b) => a.concat(b), [])
         .filter((v) => v.substr(0, 3) === programmerId);
 
       res.send(programmerSpecific);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message:
+          err.message || "Some error occurred while retrieving participation.",
+      });
+    });
+};
+
+exports.findUserCourses = (req, res) => {
+  Participation.find({
+    username: req.body.username,
+  })
+    .then((participation) => {
+      let arr = [];
+      for (var i = 0; i < participation.length; i++) {
+        arr.push(participation[i].courseId);
+      }
+      res.send({
+        success: true,
+        data: arr,
+      });
     })
     .catch((err) => {
       res.status(500).send({

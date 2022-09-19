@@ -1,754 +1,795 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Change Profile</title>
-
-    <!-- mobile responsive meta -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1"
-    />
-
-    <!-- ** Plugins Needed for the Project ** -->
-    <!-- Bootstrap -->
-    <link
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
-    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
-    <!-- slick slider -->
-    <link rel="stylesheet" href="plugins/slick/slick.css" />
-    <!-- themefy-icon -->
-    <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css" />
-
-    <!-- Main Stylesheet -->
-    <link href="css/style.css" rel="stylesheet" />
-
-    <!--Favicon-->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
-
-    <style>
-      body {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        background: #dee2e6;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #212529;
-        text-align: left;
-      }
-
-      .emp-profile {
-        padding: 3%;
-        margin-top: 3%;
-        margin-bottom: 3%;
-        border-radius: 0.5rem;
-      }
-
-      .profile-img {
-        text-align: center;
-      }
-
-      .profile-img img {
-        width: 70%;
-        height: 100%;
-      }
-
-      .profile-img .file {
-        position: relative;
-        overflow: hidden;
-        margin-top: -20%;
-        width: 70%;
-        border: none;
-        border-radius: 0;
-        font-size: 15px;
-        background: #212529b8;
-      }
-
-      .profile-img .file input {
-        position: absolute;
-        opacity: 0;
-        right: 0;
-        top: 0;
-      }
-
-      .profile-head h5 {
-        color: #333;
-      }
-
-      .profile-head h6 {
-        color: #0062cc;
-      }
-
-      .profile-edit-btn {
-        border: none;
-        border-radius: 1.5rem;
-        width: 70%;
-        padding: 2%;
-        font-weight: 600;
-        color: #6c757d;
-        cursor: pointer;
-      }
-
-      .proile-rating {
-        font-size: 12px;
-        color: #818182;
-        margin-top: 5%;
-      }
-
-      .proile-rating span {
-        color: #495057;
-        font-size: 15px;
-        font-weight: 600;
-      }
-
-      .profile-head .nav-tabs {
-        margin-bottom: 5%;
-      }
-
-      .profile-head .nav-tabs .nav-link {
-        font-weight: 600;
-        border: none;
-      }
-
-      .profile-head .nav-tabs .nav-link.active {
-        border: none;
-        border-bottom: 2px solid #0062cc;
-      }
-
-      .profile-work {
-        padding: 14%;
-        margin-top: -15%;
-      }
-
-      .profile-work p {
-        font-size: 12px;
-        color: #818182;
-        font-weight: 600;
-        margin-top: 10%;
-      }
-
-      .profile-work a {
-        text-decoration: none;
-        color: #495057;
-        font-weight: 600;
-        font-size: 14px;
-      }
-
-      .profile-work ul {
-        list-style: none;
-      }
-
-      .profile-tab label {
-        font-weight: 600;
-      }
-
-      .profile-tab p {
-        font-weight: 600;
-        color: #0062cc;
-      }
-
-      .wrapper {
-        height: 140px;
-        width: 140px;
-        position: relative;
-        /* border: 5px solid #fff; */
-        border-radius: 50%;
-        background: url("<%=data.photo? 'data:image/jpeg;base64,'+data.photo :data.imgUrl%>");
-        background-size: 100% 100%;
-        margin: 100px auto;
-        overflow: hidden;
-      }
-
-      .my_file {
-        position: absolute;
-        bottom: 0;
-        outline: none;
-        color: transparent;
-        width: 100%;
-        box-sizing: border-box;
-        padding: 10px 60px;
-        cursor: pointer;
-        transition: 0.5s;
-        background: rgba(0, 0, 0, 0.5);
-        opacity: 0;
-      }
-
-      .my_file::-webkit-file-upload-button {
-        visibility: hidden;
-      }
-
-      .my_file::before {
-        content: "\f030";
-        font-family: fontAwesome;
-        color: #fff;
-        display: inline-block;
-        -webkit-user-select: none;
-      }
-
-      .my_file::after {
-        content: "Update";
-        font-family: "arial";
-        font-weight: bold;
-        color: #fff;
-        margin-left: -15px;
-        display: block;
-      }
-
-      .my_file:hover {
-        opacity: 1;
-      }
-
-      .title {
-        font-size: 1.3rem;
-        font-weight: bold;
-        margin-bottom: 2px;
-      }
-
-      .cont {
-        padding-left: 16.6%;
-        padding-right: 16.66%;
-      }
-
-      .ha {
-        font-family: inherit;
-        font-size: 1.5rem;
-      }
-
-      .pa {
-        font-family: inherit;
-        font-size: 1rem;
-        line-height: 1.5;
-      }
-
-      .btn-primary {
-        font-family: inherit;
-        color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
-        font-weight: 400;
-        border: 1px solid transparent;
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border-radius: 0.25rem;
-      }
-
-      .btn-primary:hover {
-        color: #fff;
-        background-color: #0069d9;
-        border-color: #0062cc;
-      }
-
-      #error, #error1 {
-        color: red;
-      }
-
-      /* Remove arrows from input type number */
-      /* Chrome, Safari, Edge, Opera */
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-
-      /* Firefox */
-      input[type="number"] {
-        -moz-appearance: textfield;
-      }
-
-      div.wrapper > img {
-        height: 140px;
-        width: 140px;
-      }
-      
-    </style>
-      <link
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+    <link
       href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-      rel="stylesheet">
-  <link rel="stylesheet" href="../css/style2.css">
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0"
+    />
   </head>
-
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    ::-webkit-scrollbar {
+      width: 0.65vw;
+    }
+    ::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgb(155, 155, 155);
+      border-radius: 0.5vw;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgb(110, 110, 110);
+    }
+    body {
+      background: black;
+      padding: 0;
+      margin: 0;
+      font-family: poppins;
+    }
+    .nav {
+      width: 100%;
+      height: fit-content;
+      padding: 10px 0;
+      border-radius: 2mm;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0.5mm 0;
+    }
+    .nav-left {
+      font-size: larger;
+      font-weight: 600;
+      margin: 0 20px;
+    }
+    .nav-center {
+      font-size: x-large;
+      letter-spacing: 2px;
+    }
+    .nav-right {
+      margin: 0 25px;
+    }
+    .nav-right a {
+      text-decoration: none;
+      font-size: medium;
+      color: black;
+      font-weight: 500;
+      margin: 0 5px;
+    }
+    .nav-right a:hover {
+      text-decoration: underline;
+    }
+    .main {
+      display: grid;
+      grid-template-columns: 280px auto;
+    }
+    .profile {
+      width: 275px;
+      background: white;
+      margin: 0.5mm;
+      border-radius: 2mm;
+      height: 99vh;
+    }
+    .p-top {
+      width: 85%;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+    .p-title {
+      font-size: large;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+    .p-title span {
+      margin-right: 2px;
+    }
+    .p-edit {
+      text-decoration: none;
+      color: black;
+      font-size: small;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      border: black 0.4mm solid;
+      padding: 2px 5px;
+      border-radius: 1mm;
+      box-shadow: 1px 1px 0 black;
+      transition: 0.25s;
+    }
+    .p-edit span {
+      margin-left: 2px;
+      font-size: medium;
+    }
+    .p-edit:hover {
+      box-shadow: 2px 2px 0 black;
+    }
+    .p-image {
+      width: 85%;
+      margin: auto;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .p-image img {
+      width: 100px;
+      height: 120px;
+      border: 0.5mm solid rgb(3, 3, 3);
+      border-radius: 3mm;
+    }
+    .p-username {
+      width: 100%;
+      text-align: center;
+      margin: 15px 0;
+    }
+    .big {
+      font-size: large;
+      font-weight: 500;
+    }
+    .small {
+      font-size: small;
+      display: block;
+      font-weight: 500;
+      color: rgb(118, 118, 118);
+    }
+    .p-email-phone {
+      width: 85%;
+      margin: auto;
+      margin-top: 45px;
+      margin-bottom: 15px;
+    }
+    .p-back-black,
+    .p-back-white {
+      display: block;
+      width: 100%;
+      padding: 5px 0;
+      border-radius: 2mm;
+      background: rgb(216, 184, 255);
+      border: 0.4mm solid black;
+      box-shadow: 2px 2px 0 black;
+      text-align: center;
+      margin: 12px 0;
+    }
+    .p-back-white {
+      background: white;
+    }
+    .p-ac-state {
+      width: 85%;
+      margin: auto;
+      margin-top: 55px;
+    }
+    .p-state-title {
+      font-size: large;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+    .p-state-logo {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      flex-direction: column;
+    }
+    .p-state-logo span {
+      font-size: 75px;
+    }
+    .d-item-title {
+      font-size: large;
+      display: flex;
+      align-items: center;
+      margin: 15px 15px;
+      font-weight: 500;
+    }
+    .d-item-title span {
+      font-size: larger;
+      margin-right: 2px;
+    }
+    .d-item1 {
+      grid-area: item1;
+      background: rgb(230, 244, 227);
+      min-height: 200px;
+      box-shadow: inset -0.5mm -0.5mm 0 black;
+      border-radius: 3mm;
+      position: relative;
+    }
+    .d-item2 {
+      grid-area: item2;
+      background:rgb(253, 253, 253) ;
+      min-height: 200px;
+      box-shadow: inset -0.5mm -0.5mm 0 black;
+      border-radius: 4mm;
+      
+    }
+    .d-item3 {
+      grid-area: item3;
+      background: rgb(249, 255, 187);
+      min-height: 200px;
+      box-shadow: inset -0.5mm -0.5mm 0 black;
+      border-radius: 3mm;
+      position: relative;
+    }
+    .d-item4 {
+      grid-area: item4;
+      background: rgb(254,231,216);
+      min-height: 200px;
+      box-shadow: inset -0.5mm -0.5mm 0 black;
+      border-radius: 3mm;
+      position: relative;
+    }
+    .d-item5 {
+      grid-area: item5;
+      background: rgb(235, 218, 255);
+      min-height: 200px;
+      box-shadow: inset -0.5mm -0.5mm 0 black;
+      border-radius: 3mm;
+      position: relative;
+    }
+    .d-item6 {
+      grid-area: item6;
+      min-height: 200px;
+      background: rgb(244, 244, 244);
+      box-shadow: inset -0.5mm -0.5mm 0 black;
+      border-radius: 3mm;
+      position: relative;
+    }
+    .d-row {
+      display: grid;
+      grid-template-areas: "item1 item2 item2" "item3 item4 item5" "item6 item6 item6";
+    }
+    .dashboard {
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .d-item-main{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      margin-top: 40px;
+    }
+    .d1-val{
+      color: white;
+      font-size: 50px;
+      font-weight: 500;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      text-align: center;
+      line-height: 80px;
+      background: rgb(17, 121, 45);
+    }
+    .d1-courses{
+      display: grid;
+      grid-template-columns: auto auto;
+    }
+    .d1-courses span{
+      background: white;
+      width: 70px;
+      border: rgb(22, 143, 54) solid 0.2mm;
+      box-shadow: 2px 2px 0 rgb(17, 121, 45);
+      margin: 5px;
+      text-align: center;
+      padding: 2px;
+      border-radius: 1mm;
+      font-size: small;
+      animation: flip ease-in 0.5s;
+      transform-style: preserve-3d;
+    }
+    .d-item2-main{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .graph-box{
+      height: 150px;
+      width: 365px;
+      border-bottom: 0.6mm solid rgb(212, 212, 212);
+      border-left: 0.3mm solid rgb(228, 228, 228);
+      margin-bottom: 25px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-evenly;
+      flex-direction: column;
+      position: relative;
+    }
+    .percetage{
+      height: 7px;
+      background: orange;
+      border-radius: 2mm;
+      position: relative;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      box-shadow: 1px 1px 0 black;
+    }
+    .percetage span{
+      display: block;
+      position: absolute;
+      top: -7px;
+      left: -60px;
+      font-size: small;
+      font-weight: 600;
+    }
+    .mark{
+      position: absolute;
+      bottom: -15px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+    .d-per-val{
+      position: absolute;
+      right: -26px;
+      top: -9px;
+      font-size: 10px;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      border: 0.4mm solid orange;
+      border-radius: 50%;
+      text-align: center;
+    }
+    @keyframes flip{
+      0%{
+        transform: rotateY(90deg)
+      }
+      100%{
+        transform: rotateY(0deg);
+      }
+    }
+    .d-item3-main,.d-item4-main,.d-item5-main{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-weight: 500;
+    }
+    .item3-val{
+      font-size: 40px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgb(99, 85, 2);
+      color: white;
+      text-align: center;
+      line-height: 80px;
+      margin-bottom: 5px;
+      animation: flip 0.5s ease-in;
+    }
+    .d-item4-main span{
+      font-size: 80px;
+      animation: flip 0.5s ease-in;
+    }
+    .d-item5-main{
+      font-size: xx-large;
+      margin-top: 40px;
+    }
+    .d-item6-main{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding-bottom: 15px;
+    }
+    .d-item6-main table{
+      width: 95%;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    th{
+      text-align: left;
+      padding-left: 10px;
+      font-size: small;
+      color: rgb(165, 165, 165);
+    }
+    table tr{
+      border-bottom: 0.5mm dashed rgba(0, 0, 0, 0.068);
+      padding: 5px 0;
+    }
+    td {
+      padding-top:10px;
+      padding-bottom:10px;
+      padding-right:10px; 
+      padding-left: 10px;  
+    }
+    .t-black{
+      width: fit-content;
+      background: rgb(51, 51, 51);
+      color: white;
+      padding: 2px 5px;
+      border-radius: 1mm;
+      box-shadow: 2px 2px 0 white, 3px 3px 0 rgb(51, 51, 51);
+    }
+    .bottom-link{
+      position: absolute;
+      margin: auto;
+      bottom: 10px;
+      font-size: small;
+      font-weight: 500;
+    }
+    #b1{
+      color: rgb(22, 143, 54);
+    }
+    #b2{
+      color: rgb(99, 85, 2);
+    }
+    #b3{
+      color: rgb(51, 51, 51);
+    }
+  </style>
   <body>
-    <% include ../views/partials/header2 %>
-
-    <!-- page title -->
-    <section
-      class="page-title bg-primary position-relative"
-      style="height: 1vh; padding: 8%"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center">
-            <h3 class="text-white font-tertiary">
-              <!-- Edit Profile -->Profile
-            </h3>
-            <br />
+    <section class="main">
+      <section class="profile">
+        <div class="p-top">
+          <div class="p-title">
+            <span class="material-icons-outlined"> person </span> Profile
+          </div>
+          <a href="" target="_blank" class="p-edit"
+            >Edit <span class="material-icons-outlined"> edit </span></a
+          >
+        </div>
+        <div class="p-image">
+          <img src="<%=data.imgUrl%>" alt="" />
+        </div>
+        <div class="p-username">
+          <span class="big"><%= data.name.toUpperCase() %></span>
+          <span class="small">@<%= imgUsername %></span>
+        </div>
+        <div class="p-email-phone">
+          <span class="p-back-black"><%= data.branch.toUpperCase() %></span>
+          <span class="p-back-white"><%= data.email %></span>
+          <% if(data.phone){ %>
+          <span class="p-back-white"><%= data.phone %></span>
+          <%}%>
+        </div>
+        <div class="p-ac-state">
+          <div class="p-state-title">Account Status</div>
+          <div class="p-state-logo">
+            <span class="material-symbols-outlined"> verified </span>
+            Verified
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <div class="container-fluid cont"> <!--bg-light-->
-      <div class="row flex-lg-nowrap">
-        <div class="col">
-          <div class="row">
-            <div class="col">
-              <!-- mr-3 ml-3 mb-3 -->
-              <div class="card border-right bg-light border-left"> <!--bg-white-->
-                <ul class="nav nav-tabs">
-                  <!-- flex-column -->
-                  <li class="nav-item">
-                    <a href="#a" data-toggle="tab" class="active nav-link"
-                      >Profile</a
-                    >
-                  </li>
-                  <li class="nav-item">
-                    <a href="#b" data-toggle="tab" class="nav-link"
-                      >Edit</a
-                    >
-                  </li>
-                </ul>
-                <div class="tab-content">
-                  <div id="a" class="container tab-pane active  p-0 ml-3 pt-3">
-                    <div class="container emp-profile">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <% if (imgUsername !==undefined){ %>
-                          <div class="profile-img">
-                            <img
-                              height="160px"
-                              width="135px"
-                              src="<%=data.photo? 'data:image/jpeg;base64,'+data.photo :data.imgUrl%>"
-                              class="nav-link"
-                            />
-                            <br />
-                          </div>
-                          <% } %>
-                        </div>
-                        <div class="col-md-8">
-                          <div class="col-md-10">
-                            <br />
-                            <div
-                              class="tab-content profile-tab"
-                              id="myTabContent"
-                            >
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <label>Username</label>
-                                </div>
-                                <div class="col-md-6">
-                                  <p><%= imgUsername %></p>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <label>Name</label>
-                                </div>
-                                <div class="col-md-6">
-                                  <p><%= data.name %></p>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <label>Branch</label>
-                                </div>
-                                <div class="col-md-6">
-                                  <p><%= data.branchCaps %></p>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <label>Email</label>
-                                </div>
-                                <div class="col-md-6">
-                                  <p><%= data.email %></p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="b" class="container tab-pane fade pr-5 pl-5">
-                    <div class="card-body"> <!--border left-->
-                      <div class="e-profile">
-                        <div class="row">
-                          <div class="col-12 col-sm-auto mb-3">
-                            <div class="mx-auto" style="width: 140px;">
-                              <div
-                                class="wrapper"
-                                style="height: 140px; margin: 0"
-                              >
-                                <form class="form"
-                                action="<%= data.serverUrl %>/users/photo/<%= imgUsername %>"
-                                method="POST"
-                                enctype="multipart/form-data"
-                                onsubmit="return imgValidate()"
-                                >
-                                  <input type="file" name="photo" id="input-files" class="my_file" accept="image/*"/>                           
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            class="col d-flex flex-column flex-sm-row justify-content-between mb-3"
-                          >
-                            <div
-                              class="text-center text-sm-left mb-2 mb-sm-0"
-                            >
-                              <h4 class="ha pt-sm-2 pb-1 mb-0 text-nowrap">
-                                <%= data.name %>
-                              </h4>
-                              <p class="pa mb-0"><%= imgUsername %></p>
-                              <div class="mt-2">
-                                <button class="btn btn-primary btn-sm" type="submit">
-                                  <i class="fa fa-fw fa-camera"></i>
-                                  <span>Change Photo</span>
-                                </button>
-                              </form>
-                              </div>
-                              <br>
-                              <div class="row">
-                                <div class="col">
-                                  <div class="form-group">
-                                    <span id="error1"></span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="text-center text-sm-right">
-                              <span class="badge badge-secondary">User</span>
-                              <!-- <div class="text-muted"><small>Joined 09 Dec 2017</small></div> -->
-                            </div>
-                          </div>
-                        </div>
-                        <ul class="nav nav-tabs">
-                          <li class="nav-item">
-                            <a href="" class="active nav-link">Settings</a>
-                          </li>
-                        </ul>
-                        <div class="tab-content pt-3">
-                          <div class="tab-pane active">
-                            <form
-                              class="form"
-                              name="form1"
-                              action="/editProfile"
-                              method="POST"
-                              onsubmit="return validate()"
-                            >
-                              <!--novalidate=""-->
-                              <div class="row">
-                                <div class="col-12 col-sm-6 mb-3 border-right">
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <div class="mb-2">
-                                          <b>Edit Profile</b>
-                                        </div>
-                                        <label>Full Name</label>
-                                        <input
-                                          class="form-control"
-                                          type="text"
-                                          name="name"
-                                          id="name"
-                                          placeholder=""
-                                          value="<%= data.name %>"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>Phone</label>
-                                        <input
-                                          class="form-control"
-                                          type="number"
-                                          name="phone"
-                                          id="phone"
-                                          placeholder="+91"
-                                          value="<%= data.phone %>"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>Email</label>
-                                        <input
-                                          class="form-control"
-                                          type="email"
-                                          name="email"
-                                          id="email"
-                                          placeholder="user@example.com"
-                                          value="<%= data.email %>"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-6 mb-3">
-                                  <div class="mb-2"><b>Change Password</b></div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>Current Password</label>
-                                        <input
-                                          class="form-control"
-                                          type="password"
-                                          name="pswd"
-                                          id="pswd"
-                                          placeholder="••••••"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label>New Password</label>
-                                        <input
-                                          class="form-control"
-                                          type="password"
-                                          name="pswd1"
-                                          id="pswd1"
-                                          placeholder="••••••"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="form-group">
-                                        <label
-                                          >Confirm
-                                          <span class="d-none d-xl-inline"
-                                            >Password</span
-                                          ></label
-                                        >
-                                        <input
-                                          class="form-control"
-                                          type="password"
-                                          name="pswd2"
-                                          id="pswd2"
-                                          placeholder="••••••"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col">
-                                  <div class="form-group">
-                                    <span id="error"></span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col d-flex justify-content-end">
-                                  <button
-                                    class="btn btn-primary btn-sm"
-                                    type="submit"
-                                  >
-                                    Save Changes
-                                  </button>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+<!---------------------------------------------------------------------------------------------------->
+
+      <section class="dashboard">
+        <section class="nav">
+          <div class="nav-left">BuildIT | IARE</div>
+          <div class="nav-center">Dashboard</div>
+          <div class="nav-right">
+            <a href="/">Home</a>
+            <a href="/logout">Logout</a>
+          </div>
+        </section>
+        <section class="d-row">
+          <div class="d-item1">
+            <div class="d-item-title">
+              <span class="material-icons-outlined"> auto_stories </span>
+              Courses
+            </div>
+            <div class="d-item-main">
+              <div class="d1-val"><%= "0"+partCount.length%></div>
+              <div class="d1-courses">
+                <% for(var i=0;i<partCount.length;i++){ %>
+                  <span><%= partCount[i] %></span>
+                <%}%>
               </div>
+              <a href="/tutorials" class="bottom-link" id="b1">Checkout all the courses</a>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+          <div class="d-item2">
+            <div class="d-item-title">
+              <span class="material-icons-outlined"> analytics </span>
+              Progress
+            </div>
+            <div class="d-item2-main">
+              <div class="graph-box">
+                <div class="percetage" id="easy">
+                  <span>Level_0</span>
+                  <div class="d-per-val" id="dval1"></div>
+                </div>
+                <div class="percetage" id="medium">
+                  <span>Level_1</span>
+                  <div class="d-per-val" id="dval2"></div>
+                </div>
+                <div class="percetage" id="hard">
+                  <span>Level_2</span>
+                  <div class="d-per-val" id="dval3"></div>
+                </div>
+                <div class="percetage" id="contest">
+                  <span>Contest</span>
+                  <div class="d-per-val" id="dval4"></div>
+                </div>
+                <div class="mark" id="mark0">0</div>
+                <div class="mark" id="mark25">25</div>
+                <div class="mark" id="mark50">50</div>
+                <div class="mark" id="mark75">75</div>
+                <div class="mark" id="mark100">100</div>
+              </div>
+              <script>
+                var easy = document.getElementById("easy")
+                var medium = document.getElementById("medium")
+                var hard = document.getElementById("hard")
+                var contest = document.getElementById("contest")
+                var ep=0
+                var mp=0
+                var hp=0
+                var cp=0
+                "<% if(progress.easyPercentage){%>";
+                ep="<%=progress.easyPercentage%>";
+                "<%}%>"
+                "<% if(progress.mediumPercentage){%>";
+                mp="<%=progress.mediumPercentage%>";
+                "<%}%>"
+                "<% if(progress.hardPercentage){%>";
+                hp="<%=progress.hardPercentage%>";
+                "<%}%>"
+                "<% if(progress.contestPercentage){%>";
+                cp="<%=progress.contestPercentage%>";
+                "<%}%>"
+                easy.style.width=ep*3.5+2+"px"
+                medium.style.width=mp*3.5+2+"px"
+                hard.style.width=hp*3.5+2+"px"
+                contest.style.width=cp*3.5+2+"px"
+                document.getElementById("mark0").style.left=0+"px"
+                document.getElementById("mark25").style.left=25*3.52+"px"
+                document.getElementById("mark50").style.left=50*3.52+"px"
+                document.getElementById("mark75").style.left=75*3.52+"px"
+                document.getElementById("mark100").style.left=100*3.52+"px"
+                document.getElementById("dval1").innerHTML=ep
+                document.getElementById("dval2").innerHTML=mp
+                document.getElementById("dval3").innerHTML=hp
+                document.getElementById("dval4").innerHTML=cp
 
-    <!-- /footer -->
-    <% include ../views/partials/aboutfooter %>
+                function myMove(elem, dis) {
+                  let id = null;  
+                  let pos = 0;
+                  clearInterval(id);
+                  id = setInterval(frame, 1.5);
+                  function frame() {
+                    if (pos == dis) {
+                      clearInterval(id);
+                    } else {
+                      pos++; 
+                      elem.style.width = pos + "px";
+                    }
+                  }
+                }
+                myMove(easy,ep*3.5+2)
+                myMove(medium,mp*3.5+2)
+                myMove(hard,hp*3.5+2)
+                myMove(contest,cp*3.5+2)
+              </script>
+            </div>
+          </div>
+          <div class="d-item3">
+            <div class="d-item-title">
+              <span class="material-icons-outlined"> outlined_flag </span>
+              Total Contests
+            </div>
+            <div class="d-item3-main">
+              <div class="item3-val"><%= contestCount %></div>
+              Participated
+              <a href="/contest" class="bottom-link" id="b2">Checkout other contests</a>
+            </div>
+          </div>
+          <div class="d-item4">
+            <div class="d-item-title">
+              <span class="material-icons-outlined"> description </span>
+              Resume
+            </div>
+            <div class="d-item4-main">
+                <% if(resumeStatus){ %>
+                  <span class="material-icons-outlined">check_circle</span>
+                  Available
+                <% } else{ %>
+                  <span class="material-icons-outlined">highlight_off</span>
+                  Not Available
+                <%}%>
+                <a href="/ResumeBuilder" class="bottom-link" id="b3">Update your resume</a>
+            </div>
+          </div>
+          <div class="d-item5">
+            <div class="d-item-title">
+              <span class="material-icons-outlined"> wifi </span>
+              IP Address
+            </div>
+            <div class="d-item5-main" id="item5-main">
 
-    <!-- jQuery -->
-    <script src="plugins/jQuery/jquery.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="plugins/bootstrap/bootstrap.min.js"></script>
-    <!-- slick slider -->
-    <script src="plugins/slick/slick.min.js"></script>
-    <!-- filter -->
-    <script src="plugins/shuffle/shuffle.min.js"></script>
-
-    <!-- Main Script -->
-    <script src="js/script.js"></script>
-
-    <script>
-      function validate() {
-        //collect form data in JavaScript variables
-        var name = document.form1.name.value;
-        var mobile = document.form1.phone.value;
-        var email = document.form1.email.value;
-        var pw = document.form1.pswd.value;
-        var pw1 = document.form1.pswd1.value;
-        var pw2 = document.form1.pswd2.value;
-        if (pw == "") {
-          document.getElementById("error").innerHTML =
-            "*Please enter your current password to authorize the changes";
-          return false;
-        }
-
-        // if( !pw1 && !pw2 )
-        if (
-          (pw1 == "" || pw1 == undefined) &&
-          (pw2 == "" || pw2 == undefined)
-        ) {
-        } else {
-          //check empty password field
-          if (pw1 == "") {
-            document.getElementById("error").innerHTML =
-              "*Please enter the new password!";
-            return false;
-          }
-
-          //check empty confirm password field
-          if (pw2 == "") {
-            document.getElementById("error").innerHTML =
-              "*Please enter confirm password!";
-            return false;
-          }
-
-          //minimum password length validation
-          if (pw1.length < 8) {
-            document.getElementById("error").innerHTML =
-              "*Password length must be atleast 8 characters";
-            return false;
-          }
-
-          //maximum length of password validation
-          if (pw1.length > 15) {
-            document.getElementById("error").innerHTML =
-              "*Password length must not exceed 15 characters";
-            return false;
-          }
-
-          if (pw1 != pw2) {
-            document.getElementById("error").innerHTML =
-              "*Passwords are not same";
-            return false;
-          } else {
-            alert("Your password created successfully");
-          }
-        }
-
-        if (!validateForm(name, mobile, email)) {
-          return false;
-        } else {
-          alert("Your profile updated successfully!");
-        }
-      }
-
-      // Form Validation
-      function validateForm(name, mobile, email) {
-        if (name == "" || name == "undefined") {
-          document.getElementById("name").value = "<%= data.name %>";
-        } //character data validation
-        else if (!isNaN(name)) {
-          document.getElementById("error").innerHTML =
-            "*Only characters are allowed";
-          return false;
-        } else if (name.length <= 2) {
-          document.getElementById("error").innerHTML =
-            "*Name lenght must be atlease 3 characters!";
-          return false;
-        }
-
-        if (mobile == "" || mobile == "undefined") {
-          document.getElementById("phone").value = "<%= data.phone %>";
-        } else if (!mobile.match(/^\d{10}$/)) {
-          document.getElementById("error").innerHTML =
-            "*Not a valid Phone Number";
-          return false;
-        }
-
-        if (email == "" || email == "undefined") {
-          document.getElementById("email").value = "<%= data.email %>";
-        } else if (!email.match(/\S+@\S+\.\S+/)) {
-          document.getElementById("error").innerHTML =
-            "*Not a valid Email Address!";
-          return false;
-        }
-
-        return true;
-      }
-    </script>
-    <script>
-      $(document).ready(function() {
-        let imagesPreview = function(input, placeToInsertImagePreview) {
-          if (input.files) {
-              let reader = new FileReader();
-              reader.onload = function(event) {
-                $($.parseHTML("<img>"))
-                  .attr("src", event.target.result)
-                  .appendTo(placeToInsertImagePreview);
-              };
-              reader.readAsDataURL(input.files[0]);
-          }
-        };
-        $("#input-files").on("change", function() {
-          imagesPreview(this, "div.wrapper");
-        });
-      });
-    </script>
-    <script>
-      function imgValidate() {
-        if (!window.FileReader) { // This is VERY unlikely, browser support is near-universal
-            document.getElementById("error1").innerHTML =
-              "The file API isn't supported on this browser yet.";
-            return false;
-        }
-
-        var input = document.getElementById('input-files');
-        if (!input.files) { // This is VERY unlikely, browser support is near-universal
-            console.error();
-            document.getElementById("error1").innerHTML =
-              "This browser doesn't seem to support the `files` property of file inputs.";
-            return false;
-        }
-
-        if (!input.files[0]) {
-          document.getElementById("error1").innerHTML =
-            "Please select a file before 'Submit'";
-            return false;
-        }
-
-        var oFile = input.files[0];
-        if( !oFile.type.includes('image') ) // Allowed Extensions
-        {
-          document.getElementById("error1").innerHTML =
-            "Allowed Extensions are : *.jpeg,*.jpg,*.png";
-            return false;
-        }
-        
-        if (oFile.size > 102400 ) // 100 KiB for bytes.
-        {
-          document.getElementById("error1").innerHTML =
-            "File size must be under 100KiB!";
-            return false;
-        }
-
-        return true;
-      }
-    </script>
+            </div>
+            <script>
+                fetch("https://api.ipify.org/?format=json")
+                .then(results=>results.json())
+                .then(data=>{
+                  console.log(data)
+                  document.getElementById("item5-main").innerHTML=data.ip
+                  })
+            </script>
+          </div>
+          <div class="d-item6">
+            <div class="d-item-title">
+              <span class="material-icons-outlined"> insights </span>
+              SkillUp Data
+            </div>
+            <div class="d-item6-main">
+              <table>
+                <tr>
+                  <th>Platform</th>
+                  <th>Username</th>
+                  <th>Score</th>
+                </tr>
+                <tbody>
+                <tr>
+                  <td>Hackerrank</td>
+                  <td>
+                    <span class="t-black">
+                    <% if(skillups.success && skillups.data.hackerRankId){ %>
+                      <%= skillups.data.hackerRankId %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                    </span>
+                  </td>
+                  <td>
+                    <% if(skillups.success && skillups.data.hackerRankScore){ %>
+                      <%= Math.round(skillups.data.hackerRankScore) %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                  </td>
+                </tr>
+                <tr>
+                  <td>CodeChef</td>
+                  <td>
+                    <span class="t-black">
+                    <% if(skillups.success && skillups.data.codeChefId){ %>
+                      <%= skillups.data.codeChefId %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                    </span>
+                  </td>
+                  <td>
+                    <% if(skillups.success && skillups.data.codeChefScore){ %>
+                      <%= skillups.data.codeChefScore %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                  </td>
+                </tr>
+                <tr>
+                  <td>CodeForces</td>
+                  <td>
+                    <span class="t-black">
+                    <% if(skillups.success && skillups.data.codeForcesId){ %>
+                      <%= skillups.data.codeForcesId %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                    </span>
+                  </td>
+                  <td>
+                    <% if(skillups.success && skillups.data.codeForcesScore){ %>
+                      <%= skillups.data.codeForcesScore %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                  </td>
+                </tr>
+                <tr>
+                  <td>GeeksForGeeks</td>
+                  <td>
+                    <span class="t-black">
+                    <% if(skillups.success && skillups.data.geeksForGeeksId){ %>
+                      <%= skillups.data.geeksForGeeksId %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                    </span>
+                  </td>
+                  <td>
+                    <% if(skillups.success && skillups.data.geeksForGeeksScore){ %>
+                      <%= skillups.data.geeksForGeeksScore %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                  </td>
+                </tr>
+                <tr>
+                  <td>InterviewBit</td>
+                  <td>
+                    <span class="t-black">
+                    <% if(skillups.success && skillups.data.interviewBitId){ %>
+                      <%= skillups.data.interviewBitId %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                    </span>
+                  </td>
+                  <td>
+                    <% if(skillups.success && skillups.data.interviewBitScore){ %>
+                      <%= skillups.data.interviewBitScore %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                  </td>
+                </tr>
+                <tr>
+                  <td>LeetCode</td>
+                  <td>
+                    <span class="t-black">
+                    <% if(skillups.success && skillups.data.leetCodeId){ %>
+                      <%= skillups.data.leetCodeId %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                    </span>
+                  </td>
+                  <td>
+                    <% if(skillups.success && skillups.data.leetCodeScore){ %>
+                      <%= skillups.data.leetCodeScore %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Spoj</td>
+                  <td>
+                    <span class="t-black">
+                    <% if(skillups.success && skillups.data.spojId){ %>
+                      <%= skillups.data.spojId %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                    </span>
+                  </td>
+                  <td>
+                    <% if(skillups.success && skillups.data.spojScore){ %>
+                      <%= skillups.data.spojScore %>
+                    <%} else{ %>
+                      Not Available
+                    <%}%>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </section>
+    </section>
   </body>
 </html>

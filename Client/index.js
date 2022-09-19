@@ -308,22 +308,139 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
     let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
     let rollno = req.cookies.username;
     let testUrl = imageUrl + branch + "/" + rollno + ".jpg";
-    urlExists(testUrl, function (err, exists) {
-      if (exists) {
-        body.imgUrl = testUrl;
-        body.serverUrl = serverRoute;
-        res.render("editProfile", {
-          data: body,
-          imgUsername: req.cookies.username,
-        });
-      } else {
-        body.imgUrl = "./images/defaultuser.png";
-        body.serverUrl = serverRoute;
-        res.render("editProfile", {
-          data: body,
-          imgUsername: req.cookies.username,
-        });
+    let options = {
+      url: serverRoute + "/tparticipations/findUserCourses",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      body: {
+        username: req.cookies.username.toLowerCase(),
+      },
+      json: true,
+    };
+    request(options, function (err, response, body2) {
+      let partCount = [];
+      if (body2.success) {
+        partCount = body2.data;
       }
+      let options = {
+        url: serverRoute + "/questions/courses/" + req.params.courseId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      // Get questions for contest
+      request(options, function (err, response, body3) {
+        let options3 = {
+          url: serverRoute + "/tparticipations/" + "IARE_PY",
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        // get participation details
+        request(options3, function (err, response, bodytimer) {
+          bodytimer = bodytimer[0];
+
+          let totalSolEasy = 0;
+          let totalSolMedium = 0;
+          let totalSolHard = 0;
+          let totalSolContest = 0;
+          let eCount = 0;
+          let mCount = 0;
+          let hCount = 0;
+          let cCount = 0;
+          for (let i = 0; i < body3.length; i++) {
+            if (body3[i].difficulty === "level_0") {
+              eCount++;
+            } else if (body3[i].difficulty === "level_1") {
+              mCount++;
+            } else if (body3[i].difficulty === "level_2") {
+              hCount++;
+            } else if (body3[i].difficulty === "contest") {
+              cCount++;
+            }
+          }
+          totalSolEasy = bodytimer.easySolved.length;
+          totalSolMedium = bodytimer.mediumSolved.length;
+          totalSolHard = bodytimer.hardSolved.length;
+          totalSolContest = bodytimer.contestSolved.length;
+          req.params.courseId = req.params.courseId;
+          body3.easyPercentage = Math.ceil((totalSolEasy / eCount) * 100);
+          body3.mediumPercentage = Math.ceil((totalSolMedium / mCount) * 100);
+          body3.hardPercentage = Math.ceil((totalSolHard / hCount) * 100);
+          body3.contestPercentage = Math.ceil((totalSolContest / cCount) * 100);
+
+          let options = {
+            url: serverRoute + "/findAllContestsUser",
+            method: "get",
+            headers: {
+              authorization: req.cookies.token,
+            },
+            body: {
+              username: req.cookies.username.toLowerCase(),
+            },
+            json: true,
+          };
+
+          request(options, function (err, response, body4) {
+            let options = {
+              url:
+                serverRoute + "/resume/" + req.cookies.username.toLowerCase(),
+              method: "get",
+              headers: {
+                authorization: req.cookies.token,
+              },
+              json: true,
+            };
+            request(options, function (err, response, body5) {
+              let options = {
+                url: serverRoute + "/skillUp",
+                method: "get",
+                headers: {
+                  authorization: req.cookies.token,
+                },
+                body: {
+                  rollNumber: req.cookies.username.toUpperCase(),
+                },
+                json: true,
+              };
+              request(options, function (err, response, body6) {
+                urlExists(testUrl, function (err, exists) {
+                  if (exists) {
+                    body.imgUrl = testUrl;
+                    body.serverUrl = serverRoute;
+                    res.render("editProfile", {
+                      data: body,
+                      imgUsername: req.cookies.username,
+                      partCount: partCount,
+                      progress: body3,
+                      contestCount: body4.count,
+                      resumeStatus: body5.success,
+                      skillups: body6,
+                    });
+                  } else {
+                    body.imgUrl = "./images/defaultuser.png";
+                    body.serverUrl = serverRoute;
+                    res.render("editProfile", {
+                      data: body,
+                      imgUsername: req.cookies.username,
+                      partCount: partCount,
+                      progress: body3,
+                      contestCount: body4.count,
+                      resumeStatus: body5.success,
+                    });
+                  }
+                });
+              });
+            });
+          });
+        });
+      });
     });
   });
 });
@@ -1534,12 +1651,12 @@ app.get("/contestPassword/:contestId", checkSignIn, async (req, res) => {
   res.render("contestPassword", {
     imgUsername: req.cookies.username,
     contestId: req.params.contestId,
-    token:req.cookies.token,
+    token: req.cookies.token,
   });
 });
 
 app.post("/checkContestPassword", checkSignIn, async (req, res) => {
-  req.body.rollNumber=req.cookies.username
+  req.body.rollNumber = req.cookies.username;
   let options = {
     url: serverRoute + "/checkContestPassword",
     method: "post",
@@ -1550,13 +1667,12 @@ app.post("/checkContestPassword", checkSignIn, async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    if (body.success){
-      a="/contests/"+body.contestId
-    res.redirect(a)
-  }
-  else{
-    res.redirect("/contest")
-  }
+    if (body.success) {
+      a = "/contests/" + body.contestId;
+      res.redirect(a);
+    } else {
+      res.redirect("/contest");
+    }
   });
 });
 
