@@ -23,9 +23,7 @@
           <th>Username</th>
           <th>Contest ID</th>
           <th>Participation Time</th>
-          <% for (let i = 0; i < dataq.length; i++){ %>
-          <th><%= dataq[i].questionId %></th>
-          <% } %>
+          <th>Score</th>
         </tr>
         <% for(let i=0; i < datap.length; i++){ %>
         <tr>
@@ -35,16 +33,13 @@
             <%= datap[i].participationTime.slice(0,
             datap[i].participationTime.length - 9 ) %>
           </td>
-          <% if (datap[i].submissionResults.length !== 0){ %> <% for (let j = 0;
-          j < datap[i].submissionResults.length ; j++ ){ %> <% let done = 0; let
-          k = 0; %> <% while (done < dataq.length && k < dataq.length) { %> <%
-          if (dataq[k].questionId === datap[i].submissionResults[j].questionId)
-          { %> <% done++ %>
-          <td><%= datap[i].submissionResults[j].score %></td>
-          <% } %> <% k++ %> <% } %> <% } %> <% } else { %> <% for ( let i = 0; i
-          < dataq.length; i++){ %>
-          <td>0</td>
-          <% } %> <% } %>
+          <% var totalScore = 0; %>
+          <% if (datap[i].submissionResults.length !== 0){ %>
+          <% for (let j = 0;j < datap[i].submissionResults.length ; j++ ){ %>
+          <% totalScore+= datap[i].submissionResults[j].score %>
+          <% } %>
+          <% } %>
+          <td><%= totalScore %></td>
         </tr>
         <% } %>
       </table>
