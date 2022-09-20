@@ -325,7 +325,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
         partCount = body2.data;
       }
       let options = {
-        url: serverRoute + "/questions/courses/" + req.params.courseId,
+        url: serverRoute + "/questions/courses/" + "IARE_PY",
         method: "get",
         headers: {
           authorization: req.cookies.token,
@@ -1435,7 +1435,6 @@ app.post("/admin/results/contest", async (req, res) => {
   });
 });
 
-
 app.post("/admin/results/qualContest", async (req, res) => {
   let options = {
     url: serverRoute + "/mcqParticipations/all",
@@ -1460,9 +1459,9 @@ app.post("/admin/results/qualContest", async (req, res) => {
     };
 
     request(options, function (err, response, bodyquestion) {
-        let url = {
-          url: clientRoute,
-        };
+      let url = {
+        url: clientRoute,
+      };
       res.render("qualResults", {
         data: url,
         datap: bodyparticipation,
