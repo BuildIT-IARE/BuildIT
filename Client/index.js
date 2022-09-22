@@ -2805,7 +2805,7 @@ app.get("/resume", checkSignIn, async (req, res) => {
       imgUsername: req.cookies.username,
       token: req.cookies.token,
       curl: clientRoute,
-      data: body,
+      data: body.data,
     });
   });
 });
@@ -2876,8 +2876,8 @@ app.get("/resume/:username", checkSignIn, async (req, res) => {
 
   request(options, (err, response, body) => {
     if (body) {
-      a = body.themeId;
-      res.render("ResumeTemplates/" + a, { data: body });
+      a = body.data.themeId;
+      res.render("ResumeTemplates/" + a, { data: body.data });
     } else {
       res.render("error", {
         imgUsername: req.cookies.username,
