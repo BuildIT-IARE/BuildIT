@@ -18,6 +18,7 @@ module.exports = (app) => {
   // Retrieve a single user with userId public
   app.get("/users/branch/:username", users.findBranch);
 
+  app.get("/generateSecret", middleware.checkToken, users.generateSecret);
   // Login Route
   app.post("/login", users.checkPass);
 
@@ -37,7 +38,11 @@ module.exports = (app) => {
   app.delete("/users/:username", middleware.checkTokenAdmin, users.delete);
 
   // Delete Multiple users
-  app.post("/users/delete/multiple", middleware.checkTokenAdmin, users.deleteMultiple);
+  app.post(
+    "/users/delete/multiple",
+    middleware.checkTokenAdmin,
+    users.deleteMultiple
+  );
 
   // Forgot Password
   app.post("/forgotPass", users.forgotPass);
