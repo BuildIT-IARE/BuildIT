@@ -25,6 +25,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0"
     />
+    <script src="plugins/jQuery/jquery.min.js"></script>
   </head>
   <style>
     html {
@@ -89,10 +90,10 @@
     }
     .profile {
       width: 275px;
-      background: white;
       margin: 0.5mm;
       border-radius: 2mm;
       height: 99vh;
+      position: relative;
     }
     .p-top {
       width: 85%;
@@ -113,7 +114,6 @@
       margin-right: 2px;
     }
     .p-edit {
-      text-decoration: none;
       color: black;
       font-size: small;
       font-weight: 500;
@@ -124,6 +124,9 @@
       border-radius: 1mm;
       box-shadow: 1px 1px 0 black;
       transition: 0.25s;
+      outline: none;
+      background: white;
+      cursor: pointer;
     }
     .p-edit span {
       margin-left: 2px;
@@ -447,17 +450,173 @@
     #b3{
       color: rgb(51, 51, 51);
     }
+    .card{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: all 0.5s ease-in;
+      background: white;
+      border-radius: 2mm;
+    }
+    .card-front{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      transform: translateZ(70px);
+    }
+    .card-back{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      transform: rotateY(180deg);
+      transform-style: preserve-3d;
+    }
+    form{
+      width: 100%;
+      margin-top: 50px;
+      transform: translateZ(70px);
+    }
+    .form-title{
+      font-size: medium;
+      font-weight: 500;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .form-title span{
+      font-size: large;
+    }
+    .inputf{
+      display: block;
+      margin: 30px 0;
+      width: 100%;
+      position: relative;
+    }
+    .inputf input{
+      width: 75%;
+      padding: 12px 10px;
+      outline: none;
+      border: 0.6mm solid black;
+      margin: auto;
+      display: block;
+      font-family: poppins;
+      font-weight: 600;
+      position: relative;
+      transition: 0.25s;
+    }
+    .inputf input:focus{
+      box-shadow: 5px 5px 0 black;
+      padding-top: 16px;
+      padding-bottom: 8px;
+    }
+    .label{
+      width: 80%;
+      position: absolute;
+      margin: auto;
+      top: 20px;
+      left: 12%;
+      font-size: 8px;
+      font-weight: bold;
+      display: block;
+      transition: 0.25s;
+      opacity: 0;
+      z-index: -1;
+    }
+    .inputf input:focus + .label{
+      opacity: 1;
+      top: 5px;
+      z-index: 1;
+    }
+    .sub-btn{
+      position: absolute;
+      background: rgb(170,249,0);
+      padding: 0px 10px;
+      width: fit-content;
+      border: 0.6mm solid black;
+      cursor: pointer;
+      font-family: poppins;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+    .sub-btn2{
+      background: rgb(216, 184, 255);
+      padding: 5px 10px;
+      width: fit-content;
+      border: 0.6mm solid black;
+      cursor: pointer;
+      width: 84%;
+      display: block;
+      margin: auto;
+      transition: 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: poppins;
+      font-size: larger;
+      font-weight: 500;
+    }
+    .sub-btn2 span{
+      font-size: 30px;
+      color: black;
+    }
+    .sub-btn:hover span{
+      transform: scale(1.05);
+    }
+    .sub-btn2:hover{
+      box-shadow: 5px 5px 0 black;
+    }
+    .sub-btn span{
+      font-size: 30px;
+      color: black;
+    }
+    #demo{
+      width: 85%;
+      margin: auto;
+      font-size: small;
+      height: 12px;
+      margin-bottom: 20px;
+      margin-top: 3px;
+    }
+    .sec-alert{
+      position: absolute;
+      top: 0;
+      left: 5%;
+      width: 90%;
+      margin: auto;
+      padding: 5px 0px;
+      background: black;
+      color: rgb(170,249,0);
+      display: flex;
+      align-items:center;
+      justify-content: space-between;
+      flex-direction: column;
+      font-size: small;
+      transform: rotateY(90deg);
+      transition: 0.35s ease-in-out;
+      transform-origin: top;
+      transform-style: preserve-3d;
+    }
+    .sec-alert span{
+      font-weight: bold;
+    }
   </style>
   <body>
     <section class="main">
       <section class="profile">
+        <div class="card" id="card">
+          <div class="card-front">
         <div class="p-top">
           <div class="p-title">
             <span class="material-icons-outlined"> person </span> Profile
           </div>
-          <a href="" target="_blank" class="p-edit"
-            >Edit <span class="material-icons-outlined"> edit </span></a
-          >
+          <button type="button" class="p-edit" id="edit-pro"> Edit <span class="material-icons-outlined"> edit </span></button>
         </div>
         <div class="p-image">
           <img src="<%=data.imgUrl%>" alt="" />
@@ -480,6 +639,131 @@
             Verified
           </div>
         </div>
+        </div>
+        <div class="card-back">
+          <div class="p-top">
+          <div class="p-title">
+            <span class="material-icons-outlined"> edit </span> Edit Profile
+          </div>
+          <button type="button" class="p-edit"> Close <span class="material-icons-outlined"> close </span></button>
+        </div>
+        <form action="" method="post">
+            <div class="form-title"><span class="material-icons-outlined">phone</span>Update Contact Number</div>
+            <span class="inputf">
+              <input type="tel" name="phone" id="phone" pattern="[0-9]{10}" placeholder="Phone Number" required maxlength="10" value="<% if(data.phone){ %> <%= data.phone %> <%}%>">
+              <span class="label">Phone Number</span> 
+              <button type="button" class="sub-btn" id="sub1"><span class="material-icons-round" >east</span></button>
+            </span>
+          </form>
+          <form action="" method="post">
+            <div class="form-title"><span class="material-icons-outlined">lock</span>Update Password</div>
+            <span class="inputf">
+              <input type="text" name="password" id="" placeholder="Password" required minlength="7">
+              <span class="label">Password</span> 
+            </span>
+            <span class="inputf">
+              <input type="text" name="conformPassword" id="" placeholder="Conform Password" required minlength="7">
+              <span class="label">Conform Password</span> 
+            </span>
+            <span class="inputf" style="margin-bottom: 0;">
+              <input type="text" name="secret" id="secret" placeholder="Secret" required>
+              <span class="label">Secret</span> 
+              <button type="button" class="sub-btn" id="sub3">Generate</button>
+              <div class="sec-alert" id="sec-alert">Secret sent to <span><%=data.email%></span></div>
+            </span>
+            <div id="demo"></div>
+
+            <script>
+              window.onload=function(){
+              var phone = document.getElementById("phone")
+              var top = phone.getBoundingClientRect().top
+              var right = phone.getBoundingClientRect().right
+              var height = phone.getBoundingClientRect().height
+              var sub1 = document.getElementById("sub1")
+              var width = sub1.getBoundingClientRect().width
+              var height2 =  sub1.getBoundingClientRect().height
+              sub1.style.left=right-width-2+"px"
+              sub1.style.height=height+"px"
+              sub1.style.top=0
+
+
+              var secret = document.getElementById("secret")
+              var top2 = secret.getBoundingClientRect().top
+              var right2 = secret.getBoundingClientRect().right
+              var height2 = secret.getBoundingClientRect().height
+              var sub3 = document.getElementById("sub3")
+              var width2 = sub3.getBoundingClientRect().width
+              var height4 =  sub3.getBoundingClientRect().height
+              sub3.style.left=right2-width2-2+"px"
+              sub3.style.height=height2+"px"
+              sub3.style.top=0
+              }
+            </script>
+
+            <button type="button" class="sub-btn2" id="sub2">Submit <span class="material-icons-round" >east</span></button>
+          </form>
+        </div>
+        </div>
+        <script>
+          var edit = document.querySelectorAll(".p-edit")
+          console.log(edit.length)
+          var flipFlag=1
+          edit.forEach((button)=>{
+            button.addEventListener("click",()=>{
+              document.getElementById("card").style.transform="rotateY("+180*(flipFlag%2)+"deg)"
+              flipFlag+=1
+            })
+          })
+
+          var sub3 = document.getElementById("sub3")
+          sub3.onclick=function(){
+            document.getElementById("sec-alert").style.transform="rotateY(0deg)"
+            setTimeout(()=>{
+              document.getElementById("sec-alert").style.transform="rotateY(90deg)"
+            },5000)
+            
+
+            var distance=30;
+            sub3.disabled=true
+            setTimeout(()=>{
+              sub3.disabled=false
+            },32000)
+
+            var x = setInterval(function() {
+            document.getElementById("demo").innerHTML = "Resend Secret in " +distance+"s";
+            distance-=1
+            if (distance < 0) {
+              clearInterval(x);
+              document.getElementById("demo").innerHTML = "";
+            }
+          }, 1000);
+
+            try{
+              var url = "<%= serverUrl%>/generateSecret"
+              $.ajax({
+                // data: { arr: body1 },
+                async: false,
+                // enctype: 'multipart/form-data',
+                url: url,
+                headers: { "Authorization": "<%=token%>" },
+                type: "GET",
+                cache: false,
+                contentType: "application/json",
+                processData: false,
+                dataType: 'json',
+                success: function (response) {
+                  console.log(1)
+                },
+                error: function (error) {
+                  console.log(`Error ${JSON.stringify(error)}`);
+                }
+              })
+              }
+            catch (err) {
+              console.log(err);
+            }
+          }
+        </script>
       </section>
 
 <!---------------------------------------------------------------------------------------------------->

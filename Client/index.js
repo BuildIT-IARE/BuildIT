@@ -422,6 +422,8 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       contestCount: body4.count,
                       resumeStatus: body5.success,
                       skillups: body6,
+                      token: req.cookies.token,
+                      serverUrl: serverRoute,
                     });
                   } else {
                     body.imgUrl = "./images/defaultuser.png";
@@ -433,6 +435,8 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       progress: body3,
                       contestCount: body4.count,
                       resumeStatus: body5.success,
+                      token: req.cookies.token,
+                      serverUrl: serverRoute,
                     });
                   }
                 });
@@ -469,6 +473,8 @@ app.post("/editProfile", async (req, res) => {
       res.render("error", {
         data: body,
         imgUsername: req.cookies.username,
+        token: req.cookies.token,
+        serverUrl: serverRoute,
       });
     }
   });
