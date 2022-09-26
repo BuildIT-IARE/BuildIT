@@ -784,7 +784,8 @@ exports.deleteMultiple = (req, res) => {
 exports.generateSecret = (req, res) => {
   let secretText = req.decoded.username + Math.floor(Math.random() * 10);
   let encrypted = encrypt.encrypt(secretText);
-  secretText = encrypted.iv + "++" + encrypted.encryptedData;
-  console.log(secretText);
+  console.log(encrypted);
+  let decrypted = encrypt.decrypt(encrypted);
+  console.log(decrypted);
   res.send("success");
 };
