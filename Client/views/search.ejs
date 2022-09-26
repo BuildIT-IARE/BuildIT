@@ -33,12 +33,12 @@
 
     <div class="b" style="width: 25%; margin: auto; margin-top: 45px">
       <h3 style="color: white">
-        <center>Enter <%= data.subtitle ? "Question" : "Mcq" %> Id</center>
+        <center>Enter <%= data.subtitle %> Id</center>
       </h3>
       <form onsubmit=" return checkUsers()" action="<%= data.posturl %>" method="<%= data.method %>">
         <input
           type="text"
-          placeholder="Question Id.."
+          placeholder="Id"
           name="questionId"
           id="One"
         />

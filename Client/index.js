@@ -881,6 +881,27 @@ app.get("/admin/edit/question", async (req, res) => {
     res.render("search", { data: body });
   });
 });
+app.get("/admin/edit/contest", async (req, res) => {
+  let options = {
+    url: serverRoute + "/contests",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    body.posturl = clientRoute + "/contestEdit";
+    body.url = clientRoute;
+    body.method = "POST";
+    body.class = "btn-green";
+    body.title = "Editing";
+    body.subtitle = "Contests";
+    body.username = req.cookies.username;
+    res.render("search", { data: body });
+  });
+});
 
 app.post("/questionEdit", async (req, res) => {
   let questionId = req.body.questionId;
@@ -925,6 +946,49 @@ app.post("/questionEdit", async (req, res) => {
         if (!("success" in body)) {
           body[0].serverurl = serverRoute;
           res.render("questionedit", {
+            data: body[0],
+            token: req.cookies.token,
+          });
+        } else {
+          body.message = "Unauthorized access";
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
+      });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+app.post("/contestEdit", async (req, res) => {
+  let contestId = req.body.questionId;
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      let options = {
+        url: serverRoute + "/contests/" + contestId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+
+      request(options, function (err, response, body) {
+        if (!("success" in body)) {
+          body[0].serverurl = serverRoute;
+          res.render("contestupdate", {
             data: body[0],
             token: req.cookies.token,
           });

@@ -254,7 +254,7 @@ exports.update = (req, res) => {
   }
   // Findcontest and update it with the request body
   Contest.findOneAndUpdate(
-    { contestId: req.body.contestId },
+    { contestId: req.params.contestId },
     {
       $set: {
         contestId: req.body.contestId,
@@ -265,12 +265,7 @@ exports.update = (req, res) => {
         contestEndTime: req.body.contestEndTime,
       },
     },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        console.log("Error Occured");
-      }
-    }
+    { new: true }
   )
     .then((contest) => {
       if (!contest) {
