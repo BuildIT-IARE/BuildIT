@@ -903,3 +903,35 @@ exports.findAllContestsUser = (req, res) => {
       });
     });
 };
+
+exports.findUserPartTime = (req,res) => {
+  if(req.params.mcq === "NO")
+  {
+    Participation.find({ participationId: req.params.participationId })
+    .then((participation) => {
+      res.send({
+        success : true,
+        data : participation
+      });
+    })
+    .catch((err) => {
+      res.send({
+        success: false
+      });
+    });
+  }
+  else {
+    McqParticipation.find({ participationId: req.body.username+req.body.contestId })
+    .then((participation) => {
+      res.send({
+        success : true,
+        data : participation
+      });
+    })
+    .catch((err) => {
+      res.send({
+        success: false
+      });
+    });
+  }
+}
