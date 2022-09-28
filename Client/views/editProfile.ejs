@@ -606,6 +606,27 @@
     .sec-alert span{
       font-weight: bold;
     }
+    form{
+      position: relative;
+    }
+    .alert-box{
+      position: absolute;
+      bottom: -50px;
+      width: 80%;
+      left: 4.5%;
+      height: fit-content;
+      padding: 10px 15px;
+      background: black;
+      color: rgb(170,249,0);
+      font-size: medium;
+      font-family: poppins;
+      font-weight: 500;
+      box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.18),-2px 0px 4px rgba(0, 0, 0, 0.18);
+      transform: rotateY(90deg);
+      transition:transform 0.35s ease-in-out;
+      transform-origin: top;
+      transform-style: preserve-3d;
+    }
   </style>
   <body>
     <section class="main">
@@ -652,21 +673,29 @@
             <span class="inputf">
               <input type="tel" name="phone" id="phone" pattern="[0-9]{10}" placeholder="Phone Number" required maxlength="10" value="<% if(data.phone){ %> <%= data.phone %> <%}%>">
               <span class="label">Phone Number</span> 
+                <textarea
+                  type="hidden"
+                  name="token"
+                  id="token"
+                  value="<%= token %>"
+                  style="display: none"
+            ></textarea>
               <button type="button" class="sub-btn" id="sub1"><span class="material-icons-round" >east</span></button>
             </span>
           </form>
           <form action="" method="post">
+            <div class="alert-box" id="alert">Passwords did not match</div>
             <div class="form-title"><span class="material-icons-outlined">lock</span>Update Password</div>
             <span class="inputf">
-              <input type="text" name="password" id="" placeholder="Password" required minlength="7">
+              <input type="text" name="password" id="pass" placeholder="Password" required minlength="7">
               <span class="label">Password</span> 
             </span>
             <span class="inputf">
-              <input type="text" name="conformPassword" id="" placeholder="Conform Password" required minlength="7">
+              <input type="text" name="conformPassword" id="cpass" placeholder="Conform Password" required minlength="7">
               <span class="label">Conform Password</span> 
             </span>
             <span class="inputf" style="margin-bottom: 0;">
-              <input type="text" name="secret" id="secret" placeholder="Secret" required>
+              <input type="text" name="secret" id="secret" placeholder="Secret" required minlength="32" maxlength="32">
               <span class="label">Secret</span> 
               <button type="button" class="sub-btn" id="sub3">Generate</button>
               <div class="sec-alert" id="sec-alert">Secret sent to <span><%=data.email%></span></div>
@@ -700,7 +729,14 @@
               }
             </script>
 
-            <button type="button" class="sub-btn2" id="sub2">Submit <span class="material-icons-round" >east</span></button>
+            <textarea
+            type="hidden"
+            name="token"
+            id="token"
+            value="<%= token %>"
+            style="display: none"
+          ></textarea>
+            <button type="submit" class="sub-btn2" id="sub2" onclick="updatePassword()">Submit <span class="material-icons-round" >east</span></button>
           </form>
         </div>
         </div>
@@ -762,6 +798,77 @@
             catch (err) {
               console.log(err);
             }
+          }
+
+
+
+          var sub2 = document.getElementById("sub2");
+
+          document.getElementById("sub2").addEventListener("click", function(event){
+            event.preventDefault()
+          });
+          function updatePassword(){
+
+            var alert = document.getElementById("alert")
+            
+
+            let pass = document.getElementById("pass").value
+            let cpass  = document.getElementById("cpass").value
+            let secret = document.getElementById("secret").value
+            if (pass===cpass && secret){
+            try{
+              var url = "<%= serverUrl%>/updatePassword"
+              $.ajax({
+                // data: { arr: body1 },
+                async: false,
+                // enctype: 'multipart/form-data',
+                url: url,
+                headers: { "Authorization": "<%=token%>" },
+                type: "POST",
+                data: JSON.stringify({password:pass, cpassword:cpass, secret:secret, username:"<%=imgUsername%>"}),
+                cache: false,
+                contentType: "application/json",
+                processData: false,
+                dataType: 'json',
+                success: function (response) {
+                  alert.innerHTML=response.message
+                  alert.style.transform="rotateY(0deg)"
+                  setTimeout(()=>{
+                    alert.style.transform="rotateY(90deg)"
+                  },5000)
+                },
+                error: function (error) {
+                  console.log(`Error ${JSON.stringify(error)}`);
+                  alert.innerHTML="Some error occurred"
+                  alert.style.transform="rotateY(0deg)"
+                  setTimeout(()=>{
+                    alert.style.transform="rotateY(90deg)"
+                  },5000)
+                }
+              })
+              }
+            catch (err) {
+              console.log(err);
+              alert.innerHTML="Some error occurred"
+              alert.style.transform="rotateY(0deg)"
+              setTimeout(()=>{
+                alert.style.transform="rotateY(90deg)"
+              },5000)
+            }
+            }
+            else{
+              if (secret==""){
+                alert.innerHTML="Secret is not entered"
+              }
+              else{
+                alert.innerHTML="Passwords did not match"
+              }
+              alert.style.transform="rotateY(0deg)"
+              setTimeout(()=>{
+                alert.style.transform="rotateY(90deg)"
+              },5000)
+            }
+            return false
           }
         </script>
       </section>
