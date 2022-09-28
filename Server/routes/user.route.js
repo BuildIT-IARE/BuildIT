@@ -46,4 +46,6 @@ module.exports = (app) => {
 
   // Forgot Password
   app.post("/forgotPass", users.forgotPass);
+
+  app.post("/updatePassword", users.updatePassword);
 };
