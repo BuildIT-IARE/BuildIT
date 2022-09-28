@@ -34,6 +34,10 @@
                   <textarea name="contestStartTime" rows="5"><%= data.contestStartTime %></textarea>
                   <p class="comments">Contest End Time</p>
                   <textarea name="contestEndTime" rows="5"><%= data.contestEndTime %></textarea>
+				  <% if(data.contestPassword){ %>
+				  <p class="comments">Contest password</p>
+                  <textarea name="contestEndTime" rows="5"><%= data.contestPassword %></textarea>
+				  <%}%>
 				  <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"><%= token %></textarea>
                   <div class="btn-block">
                     <button  class= "submit" type="submit" href="/">Send</button>
