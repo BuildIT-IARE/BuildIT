@@ -238,6 +238,49 @@
         </button>
       </form>
     </section>
+    <section class="page-title bg-white position-relative" style="height: 8vh">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h3>Get User Participation Time</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="section py-5 bg-white"
+      style="padding-top: 1rem; border-style: hidden"
+    >
+    <div class="box">
+      <div class="search-bar">
+        <input
+          class="sinput"
+          type="text"
+          placeholder="Enter Username"
+          id="username"
+          required
+        />
+        <input
+          class="sinput"
+          type="text"
+          placeholder="Enter Contest Id"
+          id="contestId"
+          required
+        />
+        <input
+          class="sinput"
+          type="text"
+          placeholder="If Mcq Contest enter 'YES' else enter 'NO'""
+          id="mcq"
+          required
+        />
+        <button class="sbutton" onclick="getSubmission()">
+          Get Time
+        </button>
+      </div>
+      <div id="time"></div>
+    </section>
     <br />
     <br />
     <script src="/adminjs/classie.js"></script>
@@ -258,6 +301,25 @@
       $(document).ready(function () {
         $("#leaderboard").DataTable();
       });
+    </script>
+    <script>
+      function getSubmission() {
+        let contestId = document.getElementById("contestId").value;
+        let username = document.getElementById("username").value;
+        let mcq = document.getElementById("mcq").value;
+        $.ajax({
+          url: "<%=data.serverurl%>/getPartTime/"+username+contestId+"/"+mcq,
+          type: "GET",
+          async: true,
+          headers: {
+            authorization: "<%= token %>",
+          },
+          success: function (data) {
+            document.getElementById("time").innerText = "The User participation Time is "+data.data[0].validTill;
+            console.log(data.data[0].validTill)
+          },
+        });
+      }
     </script>
   </body>
 </html>

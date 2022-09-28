@@ -19,7 +19,7 @@ module.exports = (app) => {
   app.get("/contests/:contestId", middleware.checkToken, contests.findOne);
 
   // Update a contest with contestId
-  app.put("/contests", middleware.checkTokenAdmin, contests.update);
+  app.post("/contests/:contestId", middleware.checkTokenAdmin, contests.update);
 
   // Delete a contest with contestId
   app.delete(

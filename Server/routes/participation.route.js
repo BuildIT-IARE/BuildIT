@@ -62,6 +62,11 @@ module.exports = (app) => {
     middleware.checkToken,
     participation.findAllContestsUser
   );
+  app.get(
+    "/getPartTime/:participationId/:mcq",
+    middleware.checkToken,
+    participation.findUserPartTime
+  );
 
   app.post("/endContest", middleware.checkToken, participation.endContest);
 
