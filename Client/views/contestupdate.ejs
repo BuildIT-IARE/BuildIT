@@ -22,22 +22,26 @@
 			<div class="main-block">
                 <form action="<%= data.serverurl %>/contests/<%= data.contestId %>" method = "POST">
                   
-                  <h4>Contest ID</h4>
-                  <textarea name="contestId" rows = "5"><%= data.contestId %></textarea>
-                  <p class="comments">Contest Name</p>
-                  <textarea name="contestName" rows="5"><%= data.contestName %></textarea>
-                  <p class="comments">Contest Date</p>
-                  <input name="contestDate" type="date"><%= data.contestDate %></textarea>
-                  <p class="comments">Contest Duration</p>
-                  <textarea name="contestDuration" rows="5"><%= data.contestDuration %></textarea>
-                  <p class="comments">Contest Start Time</p>
-                  <textarea name="contestStartTime" rows="5"><%= data.contestStartTime %></textarea>
-                  <p class="comments">Contest End Time</p>
-                  <textarea name="contestEndTime" rows="5"><%= data.contestEndTime %></textarea>
-				  <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"><%= token %></textarea>
-                  <div class="btn-block">
-                    <button  class= "submit" type="submit" href="/">Send</button>
-                  </div>
+					<h4>Contest ID</h4>
+					<textarea name="contestId" rows = "5"><%= data.contestId %></textarea>
+					<p class="comments">Contest Name</p>
+					<textarea name="contestName" rows="5"><%= data.contestName %></textarea>
+					<p class="comments">Contest Date</p>
+					<input name="contestDate" type="date"><%= data.contestDate %></textarea>
+					<p class="comments">Contest Duration</p>
+					<textarea name="contestDuration" rows="5"><%= data.contestDuration %></textarea>
+					<p class="comments">Contest Start Time</p>
+					<textarea name="contestStartTime" rows="5"><%= data.contestStartTime %></textarea>
+					<p class="comments">Contest End Time</p>
+					<textarea name="contestEndTime" rows="5"><%= data.contestEndTime %></textarea>
+					<p class="comments">Contest Users</p>
+					<textarea name="sets" rows="5"><%= data.usernames %></textarea>
+					<p class="comments">Contest Password</p>
+					<textarea name="sets" rows="5"><%= data.contestPassword %></textarea>
+					<textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"><%= token %></textarea>
+					<div class="btn-block">
+						<button  class= "submit" type="submit" href="/">Send</button>
+					</div>
                 </form>
             </div>
 		</div><!-- /container -->
