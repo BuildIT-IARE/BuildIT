@@ -252,7 +252,7 @@ exports.update = (req, res) => {
       message: "content can not be empty",
     });
   }
-  // Findcontest and update it with the request body
+  // Find contest and update it with the request body
   Contest.findOneAndUpdate(
     { contestId: req.params.contestId },
     {
@@ -263,9 +263,11 @@ exports.update = (req, res) => {
         contestDuration: req.body.contestDuration,
         contestStartTime: req.body.contestStartTime,
         contestEndTime: req.body.contestEndTime,
+        contestPassword: req.body.contestPassword,
+        usernames : req.body.usernames
       },
     },
-    { new: true }
+    { upsert: true }
   )
     .then((contest) => {
       if (!contest) {
