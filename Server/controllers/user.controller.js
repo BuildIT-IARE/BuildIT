@@ -9,6 +9,11 @@ let domains = require("../util/email");
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const encrypt = require("../encrypt.js");
+const { v4: uuidv4 } = require("uuid");
+const {
+  auth,
+} = require("googleapis/build/src/apis/abusiveexperiencereport/index.js");
+const { response } = require("express");
 
 let clientAddress = process.env.clientAddress;
 let emailDomains = domains.domains;
@@ -233,7 +238,6 @@ exports.create = (req, res) => {
           process.env.OAuthClientSecret, // Client Secret
           "https://developers.google.com/oauthplayground" // Redirect URL
         );
-
         oauth2Client.setCredentials({
           refresh_token: process.env.OAuthRefreshToken,
         });
@@ -241,6 +245,7 @@ exports.create = (req, res) => {
 
         const smtpTransport = nodemailer.createTransport({
           service: "gmail",
+          secure: true,
           auth: {
             type: "OAuth2",
             user: "buildit.iare@gmail.com",
@@ -691,15 +696,7 @@ exports.checkToken = (req, res) => {
         isVerified: true,
       },
     },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        return res.status(404).send({
-          success: false,
-          message: "Could not verify account " + req.body.email,
-        });
-      }
-    }
+    { new: true }
   )
     .then((user) => {
       if (!user) {
@@ -784,7 +781,142 @@ exports.deleteMultiple = (req, res) => {
 exports.generateSecret = (req, res) => {
   let secretText = req.decoded.username + Math.floor(Math.random() * 10);
   let encrypted = encrypt.encrypt(secretText);
-  secretText = encrypted.iv + "++" + encrypted.encryptedData;
-  console.log(secretText);
-  res.send("success");
+  console.log(encrypted);
+
+  function sendMail(user, secret) {
+    var readHTMLFile = async function (path, callback) {
+      fs.readFile(path, { encoding: "utf-8" }, function (err, html) {
+        if (err) {
+          callback(err);
+        } else {
+          callback(null, html);
+        }
+      });
+    };
+
+    let htmlPath = path.join(__dirname, "../util/generateSecret.html");
+    readHTMLFile(htmlPath, function (err, html) {
+      if (err) {
+        console.log(err);
+      }
+      const oauth2Client = new OAuth2(
+        process.env.OAuthClientID, // ClientID
+        process.env.OAuthClientSecret, // Client Secret
+        "https://developers.google.com/oauthplayground" // Redirect URL
+      );
+      oauth2Client.setCredentials({
+        refresh_token: process.env.OAuthRefreshToken,
+      });
+      const accessToken = oauth2Client.getAccessToken();
+      const transport = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          type: "OAuth2",
+          user: "buildit.iare@gmail.com",
+          clientId: process.env.OAuthClientID,
+          clientSecret: process.env.OAuthClientSecret,
+          refreshToken: process.env.OAuthRefreshToken,
+          accessToken: accessToken,
+        },
+      });
+
+      var template = handlebars.compile(html);
+      var replacements = {
+        name: user.name.toUpperCase(),
+        username: user.username.toLowerCase(),
+        email: user.email,
+        password: user.password,
+        token: user.verifyToken,
+        clientUrl: clientAddress,
+        secret: secret,
+        year: new Date().getFullYear(),
+      };
+      var htmlToSend = template(replacements);
+
+      const options = {
+        from: "buildit.iare@gmail.com",
+        to: user.email,
+        subject: "Buildit Password Change",
+        html: htmlToSend,
+      };
+      transport.sendMail(options, (err, response) => {
+        if (err) {
+          console.log("err");
+          return false;
+        } else {
+          console.log("sent");
+          return true;
+        }
+      });
+    });
+  }
+
+  User.find({ username: req.decoded.username }).then((user) => {
+    try {
+      let ret = sendMail(user[0], encrypted);
+      if (ret) {
+        res.send({
+          success: true,
+        });
+      } else {
+        res.send({
+          success: false,
+        });
+      }
+    } catch {
+      res.send({
+        success: false,
+      });
+    }
+  });
+};
+
+exports.updatePassword = (req, res) => {
+  let username = req.body.username.toLowerCase();
+  if (
+    req.body.password === req.body.cpassword &&
+    req.body.secret &&
+    req.body.secret.length == 32
+  ) {
+    let flag = 1;
+    let decrypted = "00";
+    try {
+      decrypted = encrypt.decrypt(req.body.secret);
+    } catch {
+      flag = 0;
+    }
+    decrypted = decrypted.slice(0, -1).toLowerCase();
+    if (flag == 1 && username === decrypted) {
+      User.findOneAndUpdate(
+        { username: username },
+        {
+          $set: {
+            password: req.body.password,
+          },
+        }
+      )
+        .then(() => {
+          res.send({
+            success: true,
+            message: "Password updated successfully",
+          });
+        })
+        .catch((err) => {
+          res.send({
+            success: false,
+            message: "Some error occurred",
+          });
+        });
+    } else {
+      res.send({
+        success: false,
+        message: "Entered wrong secret",
+      });
+    }
+  } else {
+    res.send({
+      success: false,
+      message: "Passwords did not match",
+    });
+  }
 };
