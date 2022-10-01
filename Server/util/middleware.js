@@ -20,7 +20,7 @@ let checkToken = (req, res, next) => {
           message: "Token is not valid",
         });
       } else {
-        if (decoded.isVerified || decoded.admin) {
+        if ((decoded.isVerified && decoded.username === req.cookies.username) || decoded.admin) {
           req.decoded = decoded;
           next();
         } else {
