@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile</title>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="../images/iare-chapter/iare-logo.png" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -626,6 +626,12 @@
       transition:transform 0.35s ease-in-out;
       transform-origin: top;
       transform-style: preserve-3d;
+      display: flex;
+      align-items: center;
+    }
+    .alert-box span{
+      font-size: large;
+      margin-right: 5px;
     }
   </style>
   <body>
@@ -643,7 +649,9 @@
           <img src="<%=data.imgUrl%>" alt="" />
         </div>
         <div class="p-username">
+          <% if(data.name){ %>
           <span class="big"><%= data.name.toUpperCase() %></span>
+          <%}%>
           <span class="small">@<%= imgUsername %></span>
         </div>
         <div class="p-email-phone">
@@ -815,7 +823,7 @@
             let pass = document.getElementById("pass").value
             let cpass  = document.getElementById("cpass").value
             let secret = document.getElementById("secret").value
-            if (pass===cpass && secret){
+            if (pass===cpass && secret && pass.length>=8){
             try{
               var url = "<%= serverUrl%>/updatePassword"
               $.ajax({
@@ -831,10 +839,14 @@
                 processData: false,
                 dataType: 'json',
                 success: function (response) {
-                  alert.innerHTML=response.message
+                  alert.innerHTML='<span class="material-icons-outlined">check_circle</span>'+response.message
                   alert.style.transform="rotateY(0deg)"
+                  alert.style.background="rgb(170,249,0)"
+                  alert.style.color="black"
                   setTimeout(()=>{
                     alert.style.transform="rotateY(90deg)"
+                    alert.style.background="black"
+                    alert.style.color="rgb(170,249,0)"
                   },5000)
                 },
                 error: function (error) {
@@ -859,6 +871,12 @@
             else{
               if (secret==""){
                 alert.innerHTML="Secret is not entered"
+              }
+              else if(pass.length<8){
+                alert.innerHTML="Password is too short"
+              }
+              else if (secret.length!=32){
+                alert.innerHTML="Entered wrong secret"
               }
               else{
                 alert.innerHTML="Passwords did not match"

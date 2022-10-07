@@ -345,7 +345,6 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
         // get participation details
         request(options3, function (err, response, bodytimer) {
           bodytimer = bodytimer[0];
-
           let totalSolEasy = 0;
           let totalSolMedium = 0;
           let totalSolHard = 0;
@@ -354,22 +353,30 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
           let mCount = 0;
           let hCount = 0;
           let cCount = 0;
-          for (let i = 0; i < body3.length; i++) {
-            if (body3[i].difficulty === "level_0") {
-              eCount++;
-            } else if (body3[i].difficulty === "level_1") {
-              mCount++;
-            } else if (body3[i].difficulty === "level_2") {
-              hCount++;
-            } else if (body3[i].difficulty === "contest") {
-              cCount++;
+          if (bodytimer) {
+            for (let i = 0; i < body3.length; i++) {
+              if (body3[i].difficulty === "level_0") {
+                eCount++;
+              } else if (body3[i].difficulty === "level_1") {
+                mCount++;
+              } else if (body3[i].difficulty === "level_2") {
+                hCount++;
+              } else if (body3[i].difficulty === "contest") {
+                cCount++;
+              }
             }
+
+            totalSolEasy = bodytimer.easySolved.length;
+            totalSolMedium = bodytimer.mediumSolved.length;
+            totalSolHard = bodytimer.hardSolved.length;
+            totalSolContest = bodytimer.contestSolved.length;
+            req.params.courseId = req.params.courseId;
+          } else {
+            eCount = 1;
+            mCount = 1;
+            hCount = 1;
+            cCount = 1;
           }
-          totalSolEasy = bodytimer.easySolved.length;
-          totalSolMedium = bodytimer.mediumSolved.length;
-          totalSolHard = bodytimer.hardSolved.length;
-          totalSolContest = bodytimer.contestSolved.length;
-          req.params.courseId = req.params.courseId;
           body3.easyPercentage = Math.ceil((totalSolEasy / eCount) * 100);
           body3.mediumPercentage = Math.ceil((totalSolMedium / mCount) * 100);
           body3.hardPercentage = Math.ceil((totalSolHard / hCount) * 100);
@@ -437,6 +444,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       resumeStatus: body5.success,
                       token: req.cookies.token,
                       serverUrl: serverRoute,
+                      skillups: body6,
                     });
                   }
                 });
