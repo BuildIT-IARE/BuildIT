@@ -4,7 +4,8 @@ let checkToken = (req, res, next) => {
   let token =
     req.cookies.token ||
     req.headers["x-access-token"] ||
-    req.headers["authorization"] || req.body.token;
+    req.headers["authorization"] ||
+    req.body.token;
   // Express headers are auto converted to lowercase
   //
   if (token) {
@@ -20,7 +21,7 @@ let checkToken = (req, res, next) => {
           message: "Token is not valid",
         });
       } else {
-        if ((decoded.isVerified && decoded.username === req.cookies.username) || decoded.admin) {
+        if (decoded.isVerified || decoded.admin) {
           req.decoded = decoded;
           next();
         } else {
