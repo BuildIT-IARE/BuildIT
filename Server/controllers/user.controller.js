@@ -898,7 +898,7 @@ exports.updatePassword = (req, res) => {
         .then(() => {
           res.send({
             success: true,
-            message: "Password updated successfully",
+            message: "Password updated",
           });
         })
         .catch((err) => {
