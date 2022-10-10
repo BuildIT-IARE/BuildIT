@@ -65,9 +65,9 @@ exports.create = (req, res) => {
             a = a.split(")");
             a = a[0];
             a = Number(a);
-            totalScore += a * 10;
-            codeChefScore += a * 10;
-            return a * 10;
+            totalScore += Math.round(a*10);
+            codeChefScore += Math.round(a*10);
+            return Math.round(a * 10);
           })
           .catch((err) => {
             return -1;
@@ -79,9 +79,9 @@ exports.create = (req, res) => {
             a = dom.window.document.querySelectorAll(".txt")[1];
             a = a.textContent;
             a = Number(a);
-            interviewBitScore += a;
-            totalScore += a;
-            return a;
+            interviewBitScore += Math.round(a);
+            totalScore += Math.round(a);
+            return  a;
           })
           .catch((err) => {
             return -1;
@@ -95,8 +95,8 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            hackerRankScore += a;
-            totalScore += a;
+            hackerRankScore += Math.round(a);
+            totalScore += Math.round(a);
             return a;
           })
           .catch((err) => {
@@ -111,8 +111,8 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            hackerRankScore += a;
-            totalScore += a;
+            hackerRankScore += Math.round(a);
+            totalScore += Math.round(a);
             return a;
           })
           .catch((err) => {
@@ -123,8 +123,8 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll("dd")[0].textContent;
             a = Number(a);
-            spojScore += a * 10;
-            totalScore += a * 10;
+            spojScore += Math.round(a*10);
+            totalScore += Math.round(a*10);
             return a * 10;
           })
           .catch((err) => {
@@ -139,7 +139,7 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score_card_value");
             a = Number(a[0].textContent);
-            geeksForGeeksScore += a;
+            geeksForGeeksScore += Math.round(a);
             return a;
           })
           .catch((err) => {
@@ -154,8 +154,8 @@ exports.create = (req, res) => {
             a = a.textContent;
             a = a.split(" ");
             a = Number(a[0]);
-            codeForcesScore += a * 10;
-            totalScore += a * 10;
+            codeForcesScore += Math.round(a*10);
+            totalScore += Math.round(a*10);
             return a * 10;
           })
           .catch((err) => {
@@ -312,8 +312,8 @@ exports.update = (req, res) => {
             a = a.split(")");
             a = a[0];
             a = Number(a);
-            totalScore += a * 10;
-            codeChefScore += a * 10;
+            totalScore += Math.round(a*10);
+            codeChefScore += Math.round(a*10);
             return a * 10;
           })
           .catch((err) => {
@@ -326,8 +326,8 @@ exports.update = (req, res) => {
             a = dom.window.document.querySelectorAll(".txt")[1];
             a = a.textContent;
             a = Number(a);
-            totalScore += a;
-            interviewBitScore += a;
+            totalScore += Math.round(a);
+            interviewBitScore += Math.round(a);
             return a;
           })
           .catch((err) => {
@@ -342,8 +342,8 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            totalScore += a;
-            hackerRankScore += a;
+            totalScore += Math.round(a);
+            hackerRankScore += Math.round(a);
             return a;
           })
           .catch((err) => {
@@ -358,8 +358,8 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            totalScore += a;
-            hackerRankScore += a;
+            totalScore += Math.round(a);
+            hackerRankScore += Math.round(a);
             return a;
           })
           .catch((err) => {
@@ -370,8 +370,8 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll("dd")[0].textContent;
             a = Number(a);
-            totalScore += a * 10;
-            spojScore += a * 10;
+            totalScore += Math.round(a*10);
+            spojScore += Math.round(a*10);
             return a * 10;
           })
           .catch((err) => {
@@ -386,7 +386,7 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score_card_value");
             a = Number(a[0].textContent);
-            geeksForGeeksScore += a;
+            geeksForGeeksScore += Math.round(a);
             return a;
           })
           .catch((err) => {
@@ -401,8 +401,8 @@ exports.update = (req, res) => {
             a = a.textContent;
             a = a.split(" ");
             a = Number(a[0]);
-            totalScore += a*10;
-            codeForcesScore += a*10;
+            totalScore += Math.round(a*10);
+            codeForcesScore += Math.round(a*10);
             return a * 10;
           })
           .catch((err) => {
