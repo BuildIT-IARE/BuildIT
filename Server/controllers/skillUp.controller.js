@@ -10,10 +10,26 @@ const { JSDOM } = jsdom;
 const request = require("request");
 const fetch = require("node-fetch");
 
+
+// All Coding Links
+var codeChefLink = "https://www.codechef.com/users/";
+var interviewBitLink = "https://www.interviewbit.com/profile/";
+var hackerRankFilter = "https://www.hackerrank.com/leaderboard?filter=";
+var hackerRankAlgoFilter = "&filter_on=hacker&page=1&track=algorithms&type=practice";
+var hackerRankDSFilter = "&filter_on=hacker&page=1&track=data-structures&type=practice";
+var spojLink = "https://www.spoj.com/users/";
+var geeksForGeeksLink = "https://auth.geeksforgeeks.org/user/";
+var codeForcesLink = "https://codeforces.com/profile/";
+var leetCodeApi = "https://leetcode.com/graphql";
+var leetCodeLink = "https://leetcode.com/";
+
+
+
+
 exports.create = (req, res) => {
   var leetCodeScore = 0;
   var options = {
-    url: "https://leetcode.com/graphql",
+    url: leetCodeApi,
     method: "post",
     body: {
       operationName: "getUserProfile",
@@ -24,7 +40,7 @@ exports.create = (req, res) => {
         "query getUserProfile($username: String!) {  allQuestionsCount {    difficulty    count  }  matchedUser(username: $username) {    contributions {    points      questionCount      testcaseCount    }    profile {    reputation      ranking    }    submitStats {      acSubmissionNum {        difficulty        count        submissions      }      totalSubmissionNum {        difficulty        count        submissions      }    }  }}",
     },
     headers: {
-      referer: "https://leetcode.com/" + req.body.leetCodeId + "/",
+      referer: leetCodeLink + req.body.leetCodeId + "/",
     },
     json: true,
   };
@@ -40,7 +56,7 @@ exports.create = (req, res) => {
     try {
       const score = await Promise.all([
         //codeChef
-        got("https://www.codechef.com/users/" + req.body.codeChefId)
+        got(codeChefLink + req.body.codeChefId)
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll("h5")[0].textContent;
@@ -49,73 +65,73 @@ exports.create = (req, res) => {
             a = a.split(")");
             a = a[0];
             a = Number(a);
-            totalScore += a * 10;
-            codeChefScore += a * 10;
-            return a * 10;
+            totalScore += Math.round(a*10);
+            codeChefScore += Math.round(a*10);
+            return Math.round(a * 10);
           })
           .catch((err) => {
             return -1;
           }),
         //interviewBit
-        got("https://www.interviewbit.com/profile/" + req.body.interviewBitId)
+        got(interviewBitLink + req.body.interviewBitId)
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".txt")[1];
             a = a.textContent;
             a = Number(a);
-            interviewBitScore += a;
-            totalScore += a;
+            interviewBitScore += Math.round(a);
+            totalScore += Math.round(a);
+            return  a;
+          })
+          .catch((err) => {
+            return -1;
+          }),
+        got(
+          hackerRankFilter +
+            req.body.hackerRankId +
+            hackerRankAlgoFilter
+        )
+          .then((response) => {
+            const dom = new JSDOM(response.body);
+            a = dom.window.document.querySelectorAll(".score")[1].textContent;
+            a = Number(a);
+            hackerRankScore += Math.round(a);
+            totalScore += Math.round(a);
             return a;
           })
           .catch((err) => {
             return -1;
           }),
         got(
-          "https://www.hackerrank.com/leaderboard?filter=" +
+          hackerRankFilter +
             req.body.hackerRankId +
-            "&filter_on=hacker&page=1&track=algorithms&type=practice"
+            hackerRankDSFilter
         )
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            hackerRankScore += a;
-            totalScore += a;
+            hackerRankScore += Math.round(a);
+            totalScore += Math.round(a);
             return a;
           })
           .catch((err) => {
             return -1;
           }),
-        got(
-          "https://www.hackerrank.com/leaderboard?filter=" +
-            req.body.hackerRankId +
-            "&filter_on=hacker&page=1&track=data-structures&type=practice"
-        )
-          .then((response) => {
-            const dom = new JSDOM(response.body);
-            a = dom.window.document.querySelectorAll(".score")[1].textContent;
-            a = Number(a);
-            hackerRankScore += a;
-            totalScore += a;
-            return a;
-          })
-          .catch((err) => {
-            return -1;
-          }),
-        got("https://www.spoj.com/users/" + req.body.spojId)
+        got(spojLink + req.body.spojId)
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll("dd")[0].textContent;
             a = Number(a);
-            spojScore += a * 10;
-            totalScore += a * 10;
+            spojScore += Math.round(a*10);
+            totalScore += Math.round(a*10);
             return a * 10;
           })
           .catch((err) => {
             return -1;
           }),
         got(
-          "https://auth.geeksforgeeks.org/user/" +
+          geeksForGeeksLink +
             req.body.geeksForGeeksId +
             "/practice"
         )
@@ -123,13 +139,13 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score_card_value");
             a = Number(a[0].textContent);
-            geeksForGeeksScore += a;
+            geeksForGeeksScore += Math.round(a);
             return a;
           })
           .catch((err) => {
             return NaN;
           }),
-        got("https://codeforces.com/profile/" + req.body.codeForcesId + "")
+        got(codeForcesLink + req.body.codeForcesId + "")
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(
@@ -138,8 +154,8 @@ exports.create = (req, res) => {
             a = a.textContent;
             a = a.split(" ");
             a = Number(a[0]);
-            codeForcesScore += a * 10;
-            totalScore += a * 10;
+            codeForcesScore += Math.round(a*10);
+            totalScore += Math.round(a*10);
             return a * 10;
           })
           .catch((err) => {
@@ -260,7 +276,7 @@ exports.update = (req, res) => {
   req.body = req.params;
   var leetCodeScore = 0;
   var options = {
-    url: "https://leetcode.com/graphql",
+    url: leetCodeApi,
     method: "post",
     body: {
       operationName: "getUserProfile",
@@ -271,7 +287,7 @@ exports.update = (req, res) => {
         "query getUserProfile($username: String!) {  allQuestionsCount {    difficulty    count  }  matchedUser(username: $username) {    contributions {    points      questionCount      testcaseCount    }    profile {    reputation      ranking    }    submitStats {      acSubmissionNum {        difficulty        count        submissions      }      totalSubmissionNum {        difficulty        count        submissions      }    }  }}",
     },
     headers: {
-      referer: "https://leetcode.com/" + req.body.leetCodeId + "/",
+      referer: leetCodeLink + req.body.leetCodeId + "/",
     },
     json: true,
   };
@@ -287,7 +303,7 @@ exports.update = (req, res) => {
     try {
       const score = await Promise.all([
         //codeChef
-        got("https://www.codechef.com/users/" + req.body.codeChefId)
+        got(codeChefLink + req.body.codeChefId)
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll("h5")[0].textContent;
@@ -296,73 +312,73 @@ exports.update = (req, res) => {
             a = a.split(")");
             a = a[0];
             a = Number(a);
-            totalScore += a * 10;
-            codeChefScore += a * 10;
+            totalScore += Math.round(a*10);
+            codeChefScore += Math.round(a*10);
             return a * 10;
           })
           .catch((err) => {
             return NaN;
           }),
         //interviewBit
-        got("https://www.interviewbit.com/profile/" + req.body.interviewBitId)
+        got(interviewBitLink + req.body.interviewBitId)
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".txt")[1];
             a = a.textContent;
             a = Number(a);
-            totalScore += a;
-            interviewBitScore += a;
+            totalScore += Math.round(a);
+            interviewBitScore += Math.round(a);
             return a;
           })
           .catch((err) => {
             return NaN;
           }),
         got(
-          "https://www.hackerrank.com/leaderboard?filter=" +
+          hackerRankFilter +
             req.body.hackerRankId +
-            "&filter_on=hacker&page=1&track=algorithms&type=practice"
+            hackerRankAlgoFilter
         )
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            totalScore += a;
-            hackerRankScore += a;
+            totalScore += Math.round(a);
+            hackerRankScore += Math.round(a);
             return a;
           })
           .catch((err) => {
             return NaN;
           }),
         got(
-          "https://www.hackerrank.com/leaderboard?filter=" +
+          hackerRankFilter +
             req.body.hackerRankId +
-            "&filter_on=hacker&page=1&track=data-structures&type=practice"
+            hackerRankDSFilter
         )
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score")[1].textContent;
             a = Number(a);
-            totalScore += a;
-            hackerRankScore += a;
+            totalScore += Math.round(a);
+            hackerRankScore += Math.round(a);
             return a;
           })
           .catch((err) => {
             return NaN;
           }),
-        got("https://www.spoj.com/users/" + req.body.spojId)
+        got(spojLink + req.body.spojId)
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll("dd")[0].textContent;
             a = Number(a);
-            totalScore += a * 10;
-            spojScore += a * 10;
+            totalScore += Math.round(a*10);
+            spojScore += Math.round(a*10);
             return a * 10;
           })
           .catch((err) => {
             return NaN;
           }),
         got(
-          "https://auth.geeksforgeeks.org/user/" +
+          geeksForGeeksLink +
             req.body.geeksForGeeksId +
             "/practice"
         )
@@ -370,13 +386,13 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score_card_value");
             a = Number(a[0].textContent);
-            geeksForGeeksScore += a;
+            geeksForGeeksScore += Math.round(a);
             return a;
           })
           .catch((err) => {
             return NaN;
           }),
-        got("https://codeforces.com/profile/" + req.body.codeForcesId + "")
+        got(codeForcesLink + req.body.codeForcesId + "")
           .then((response) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(
@@ -385,8 +401,8 @@ exports.update = (req, res) => {
             a = a.textContent;
             a = a.split(" ");
             a = Number(a[0]);
-            totalScore += a;
-            codeForcesScore += a;
+            totalScore += Math.round(a*10);
+            codeForcesScore += Math.round(a*10);
             return a * 10;
           })
           .catch((err) => {
@@ -435,17 +451,15 @@ exports.update = (req, res) => {
         )
           .then((skillUp) => {
             res.status(200).send(skillUp);
-            // return res(null, skillUp);
           })
           .catch((err) => {
             res
               .status(404)
-              .send(err || "Error occured with " + req.body.rollNumber);
-            // return res("err", null);
+              .send(err || "Error occurred with " + req.body.rollNumber);
           });
       });
     } catch (err) {
-      res.status(404).send(err || "Error occured with " + req.body.rollNumber);
+      res.status(404).send(err || "Error occurred with " + req.body.rollNumber);
     }
   };
   calcScore();
