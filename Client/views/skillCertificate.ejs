@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillUp 365 Certificate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+      .main-container {
+        width: 1050px;
+        height: 690px;
+        display: block;
+        margin: auto;
+        position: relative;
+        padding: 30px;
+        display: grid;
+        grid-template-columns: 700px auto;
+        overflow: hidden;
+      }
+      .left {
+        z-index: 1;
+      }
+      .right {
+        border-left: 0.5mm dashed rgb(47, 141, 70);
+        padding-left: 25px;
+        z-index: 1;
+      }
+      .top {
+        font-size: x-large;
+        font-family: poppins;
+        font-weight: 500;
+        background: rgb(74, 74, 74);
+        border-radius: 1mm;
+        color: white;
+        width: fit-content;
+      }
+      .title {
+        font-family: silkscreen;
+        font-size: 65px;
+        color: rgb(54, 147, 88);
+        font-weight: 500;
+        margin-top: 45px;
+        letter-spacing: 2px;
+      }
+      .stitle {
+        font-size: x-large;
+        font-weight: 400;
+        font-family: silkscreen;
+        color: rgb(54, 147, 88);
+        letter-spacing: 2px;
+      }
+      .subtitle {
+        margin-top: 60px;
+        font-family: poppins;
+        font-size: larger;
+        color: rgb(105, 105, 105);
+        font-style: italic;
+      }
+      .name {
+        padding: 0 10px;
+        font-family: poppins;
+        background: rgb(69, 191, 114);
+        font-size: 2.5rem;
+        border: 0.6mm dashed rgb(255, 255, 255);
+        border-radius: 1mm;
+        color: white;
+        margin-top: 30px;
+        width: fit-content;
+      }
+      .abs {
+        position: absolute;
+        bottom: -100px;
+        left: -100px;
+        transform: rotateZ(30deg);
+        z-index: 0;
+      }
+      .abs span {
+        font-size: 500px;
+        color: rgba(0, 0, 0, 0.038);
+      }
+      .content {
+        font-family: poppins;
+        font-size: larger;
+        color: rgb(49, 49, 49);
+        margin-top: 45px;
+      }
+      .content strong {
+        display: inline-flex;
+      }
+      .signatures {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 140px;
+      }
+      .sign {
+        padding: 5px;
+        border-top: 0.6mm solid rgb(54, 147, 88);
+        font-family: poppins;
+        text-align: center;
+      }
+      .signtilte {
+        font-size: large;
+        font-weight: 600;
+        color: rgb(49, 49, 49);
+      }
+      .signrole {
+        font-size: small;
+        color: rgb(105, 105, 105);
+      }
+      .scoreTitle {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: xx-large;
+        color: black;
+        font-family: poppins;
+      }
+      .scoreTitle span {
+        color: gold;
+        font-size: xx-large;
+      }
+      .scores {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+      .score {
+        width: fit-content;
+        margin: auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+      .platform {
+        font-size: medium;
+        font-weight: 500;
+        color: rgb(44, 44, 44);
+        font-family: poppins;
+        text-align: left;
+      }
+      .value {
+        width: 100%;
+        border-radius: 1mm;
+        padding: 3px 0;
+        font-family: poppins;
+        font-size: large;
+        color: white;
+        text-align: center;
+        width: 140px;
+        height: 60px;
+        line-height: 60px;
+        font-weight: 600;
+      }
+      .total {
+        margin-top: 15px;
+        width: 100%;
+        font-family: poppins;
+      }
+      .totalTitle {
+        font-size: large;
+        font-weight: 500;
+        text-align: center;
+      }
+      .totalValue {
+        background: rgb(69, 191, 114);
+        color: white;
+        font-size: x-large;
+        border-radius: 1mm;
+        font-weight: 500;
+        text-align: center;
+        padding: 5px 0;
+      }
+      .platform img {
+        width: 15px;
+      }
+      .print {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        padding-top: 10px;
+      }
+      #print {
+        color: rgb(6, 110, 215);
+        display: inline-flex;
+        outline: none;
+        border: 0.5mm solid rgb(6, 110, 215);
+        background: white;
+        font-family: poppins;
+        font-size: larger;
+        border-radius: 1mm;
+        padding: 2px 15px;
+        align-items: center;
+        margin-right: 20px;
+        cursor: pointer;
+      }
+      .abs2 {
+        position: absolute;
+        right: -30px;
+        top: 260px;
+        font-family: poppins;
+        font-size: 150px;
+        transform: rotateZ(90deg);
+        color: rgba(0, 0, 0, 0.038);
+        z-index: 0;
+      }
+      @media print {
+        #print {
+          visibility: hidden;
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="print">
+      <button type="button" id="print" onclick="window.print()">
+        Print <span class="material-icons"> print </span>
+      </button>
+    </div>
+    <div class="main-container">
+      <div class="abs"><span class="material-icons"> emoji_events </span></div>
+      <div class="abs2">Buildit</div>
+      <div class="left">
+        <div class="top">{BuildIT - IARE}</div>
+        <div class="title">Certificate</div>
+        <div class="stitle">OF APPRICIATION</div>
+        <div class="subtitle">this certificate is proudly presented to:</div>
+        <div class="name"><%= name %></div>
+        <div class="content">
+          Bearing roll number <strong><%= skillup.rollNumber %></strong><br />
+          For achieveing a score of
+          <strong
+            ><%= Math.round(skillup.overallScore) %><span
+              class="material-icons-round"
+            >
+              sports_score
+            </span></strong
+          >
+          in SkillUp Program of BuildIT IARE
+        </div>
+        <div class="signatures">
+          <div class="sign">
+            <div class="signtilte">DR. RAMU GANDIKOTA</div>
+            <div class="signrole">Dean of Skill Development</div>
+          </div>
+          <div class="sign">
+            <div class="signtilte">DR. L V Narasimha Prasad</div>
+            <div class="signrole">Principal</div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="scoreTitle">
+          <span class="material-icons-round"> star </span>
+          Scores
+          <span class="material-icons-round"> star </span>
+        </div>
+        <div class="scores">
+          <div class="score">
+            <div class="platform">
+              <img
+                src="../images/iare-chapter/hackerrank logo.webp"
+                alt="logo"
+              />
+              Hackerrank
+            </div>
+            <div class="value" style="background: rgb(50, 199, 102)">
+              <% if(skillup.hackerRankId){ %> <%=
+              Math.round(skillup.hackerRankScore) %> <%}%>
+            </div>
+          </div>
+          <div class="score">
+            <div class="platform">
+              <img src="../images/iare-chapter/codechef.png" alt="logo" />
+              CodeChef
+            </div>
+            <div class="value" style="background: rgb(109, 59, 24)">
+              <% if(skillup.codeChefId){ %> <%=
+              Math.round(skillup.codeChefScore) %> <%}%>
+            </div>
+          </div>
+          <div class="score">
+            <div class="platform">
+              <img src="../images/iare-chapter/Codeforces.svg" alt="logo" />
+              Codeforces
+            </div>
+            <div class="value" style="background: rgb(245, 198, 56)">
+              <% if(skillup.codeForcesId){ %> <%=
+              Math.round(skillup.codeForcesScore) %> <%}%>
+            </div>
+          </div>
+          <div class="score">
+            <div class="platform">
+              <img src="../images/iare-chapter/interviewBit.png" alt="logo" />
+              InterviewBit
+            </div>
+            <div class="value" style="background: rgb(0, 186, 190)">
+              <% if(skillup.interviewBitId){ %> <%=
+              Math.round(skillup.interviewBitScore) %> <%}%>
+            </div>
+          </div>
+          <div class="score">
+            <div class="platform">
+              <img src="../images/iare-chapter/spoj logo.jpg" alt="logo" /> Spoj
+            </div>
+            <div class="value" style="background: rgb(50, 117, 180)">
+              <% if(skillup.spojId){ %> <%= Math.round(skillup.spojScore) %>
+              <%}%>
+            </div>
+          </div>
+          <div class="score">
+            <div class="platform">
+              <img
+                src="../images/iare-chapter/geeksforgeeks logo.svg"
+                alt="logo"
+              />
+              GeeksForGeeks
+            </div>
+            <div class="value" style="background: rgb(47, 141, 70)">
+              <% if(skillup.geeksForGeeksId){ %> <%=
+              Math.round(skillup.geeksForGeeksScore) %> <%}%>
+            </div>
+          </div>
+          <div class="score">
+            <div class="platform">
+              <img src="../images/iare-chapter/LeetCode logo.png" alt="" />
+              LeetCode
+            </div>
+            <div class="value" style="background: rgb(248, 159, 27)">
+              <% if(skillup.leetCodeId){ %> <%=
+              Math.round(skillup.leetCodeScore) %> <%}%>
+            </div>
+          </div>
+          <div class="score">
+            <div class="platform"><>BuildIT</div>
+            <div class="value" style="background: rgb(32, 32, 32)">
+              <%= Math.round(skillup.buildIT) %>
+            </div>
+          </div>
+        </div>
+        <div class="total">
+          <div class="totalTitle">TOTAL</div>
+          <div class="totalValue"><%= Math.round(skillup.overallScore) %></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
