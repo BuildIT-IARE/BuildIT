@@ -274,7 +274,7 @@ exports.acceptSubmission = (sub, callback) => {
                       "submissionResults.$.score": sub.score,
                       "submissionResults.$.ipAddress": sub.ipAddress,
                     },
-                    $set: {
+                    $inc: {
                       totalSubmissionResultsScore: sub.score,
                     },
                   },
@@ -635,6 +635,12 @@ exports.saveResult = (req, res) => {
   })
     .then((participation) => {
       if (participation[0].mcqResults.compute) {
+        let totalCodingScore = 0;
+        for (let i = 0; i < participation[0].submissionResults.length; i++) {
+          totalCodingScore += Number(
+            participation[0].submissionResults[i].score
+          );
+        }
         mcqs.findAllMcqContest(req.params.contestId, (err, mcq) => {
           if (err) {
             res.send({ success: false, message: "Error occured" });
@@ -700,6 +706,7 @@ exports.saveResult = (req, res) => {
               $set: {
                 mcqResults: submission,
                 validTill: participation[0].participationTime,
+                totalSubmissionResultsScore: totalCodingScore,
               },
             },
             { new: true }
@@ -764,13 +771,9 @@ exports.leaderboard = async (req, res) => {
     let participation1 = await McqParticipation.find({
       contestId: req.params.contestId,
     });
-    var totalScore = 0;
-    for (var i = 0; i < participation1[0].submissionResults.length; i++) {
-      totalScore += participation1[0].submissionResults[i].score;
-    }
     let leaderboard = participation1.map((e) => ({
       username: e.username,
-      totalScore: e.mcqResults.totalScore + totalScore,
+      totalScore: e.mcqResults.totalScore + e.totalSubmissionResultsScore,
     }));
     res.send(leaderboard);
   } catch (err) {
