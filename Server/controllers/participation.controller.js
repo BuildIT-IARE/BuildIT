@@ -765,8 +765,8 @@ exports.leaderboard = async (req, res) => {
       contestId: req.params.contestId,
     });
     var totalScore = 0;
-    for (var i = 0; i < participation1.submissionResults.length; i++) {
-      totalScore += participation1.submissionResults[i].score;
+    for (var i = 0; i < participation1[0].submissionResults.length; i++) {
+      totalScore += participation1[0].submissionResults[i].score;
     }
     let leaderboard = participation1.map((e) => ({
       username: e.username,
