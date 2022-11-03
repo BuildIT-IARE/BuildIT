@@ -651,6 +651,13 @@ exports.saveResult = (req, res) => {
           let scoreCnt = Array(sectionCount).fill(0);
           let attemptCnt = Array(sectionCount).fill(0);
           let divisionCnt = Array(sectionCount).fill(0);
+          let totalCodingScore = 0;
+
+          //calc Coding Score
+          for(let i=0; i <  participation[0].submissionResults.length;i++)
+          {
+            totalCodingScore += Number(participation[0].submissionResults[i].score);
+          }
 
           for (let i = 0; i < sectionCount; i++) {
             let sectionLen = mcq[i].length;
@@ -700,6 +707,7 @@ exports.saveResult = (req, res) => {
               $set: {
                 mcqResults: submission,
                 validTill: participation[0].participationTime,
+                totalSubmissionResultsScore : totalCodingScore
               },
             },
             { new: true }
