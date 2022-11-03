@@ -252,7 +252,6 @@ exports.acceptSubmission = (sub, callback) => {
       .then((participation) => {
         // Check prev sub
         participation = participation[0];
-
         found = false;
         updated = false;
         if (participation.submissionResults.length !== 0) {
@@ -275,7 +274,7 @@ exports.acceptSubmission = (sub, callback) => {
                       "submissionResults.$.score": sub.score,
                       "submissionResults.$.ipAddress": sub.ipAddress,
                     },
-                    $inc: {
+                    $set: {
                       totalSubmissionResultsScore: sub.score,
                     },
                   },
@@ -746,6 +745,7 @@ exports.saveResult = (req, res) => {
         participations.contestName = participation[0].contestName;
         participations.coding = participation[0].submissionResults;
         // participations.coding = participation[0].submissionResults;
+
         res.send(participations);
       }
     })
@@ -764,10 +764,13 @@ exports.leaderboard = async (req, res) => {
     let participation1 = await McqParticipation.find({
       contestId: req.params.contestId,
     });
-
+    var totalScore = 0;
+    for (var i = 0; i < participation1.submissionResults.length; i++) {
+      totalScore += participation1.submissionResults[i].score;
+    }
     let leaderboard = participation1.map((e) => ({
       username: e.username,
-      totalScore: e.mcqResults.totalScore + e.totalSubmissionResultsScore,
+      totalScore: e.mcqResults.totalScore + totalScore,
     }));
     res.send(leaderboard);
   } catch (err) {
@@ -904,34 +907,34 @@ exports.findAllContestsUser = (req, res) => {
     });
 };
 
-exports.findUserPartTime = (req,res) => {
-  if(req.params.mcq === "NO")
-  {
+exports.findUserPartTime = (req, res) => {
+  if (req.params.mcq === "NO") {
     Participation.find({ participationId: req.params.participationId })
-    .then((participation) => {
-      res.send({
-        success : true,
-        data : participation
+      .then((participation) => {
+        res.send({
+          success: true,
+          data: participation,
+        });
+      })
+      .catch((err) => {
+        res.send({
+          success: false,
+        });
       });
+  } else {
+    McqParticipation.find({
+      participationId: req.body.username + req.body.contestId,
     })
-    .catch((err) => {
-      res.send({
-        success: false
+      .then((participation) => {
+        res.send({
+          success: true,
+          data: participation,
+        });
+      })
+      .catch((err) => {
+        res.send({
+          success: false,
+        });
       });
-    });
   }
-  else {
-    McqParticipation.find({ participationId: req.body.username+req.body.contestId })
-    .then((participation) => {
-      res.send({
-        success : true,
-        data : participation
-      });
-    })
-    .catch((err) => {
-      res.send({
-        success: false
-      });
-    });
-  }
-}
+};
