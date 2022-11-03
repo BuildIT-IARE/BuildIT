@@ -12,6 +12,7 @@ const fetch = require("node-fetch");
 var _ = require("lodash");
 const dotenv = require("dotenv");
 const { cookie } = require("request");
+const { response } = require("express");
 
 // Load config
 dotenv.config({ path: "../Server/util/config.env" });
@@ -210,7 +211,7 @@ app.get("/SkillRegister", checkSignIn, async (req, res) => {
   };
   request(options, function (err, response, body) {
     res.render("skillUpForm", {
-      data: body,
+      data: body.data,
       imgUsername: req.cookies.username,
       token: req.cookies.token,
     });
@@ -3078,6 +3079,42 @@ app.get("/ResumeBuilder", checkSignIn, async (req, res) => {
 
 app.get("/potdReport", checkSignIn, async (req, res) => {
   res.render("potdReport", { imgUsername: req.cookies.username });
+});
+
+app.get("/skillCertificate", checkSignIn, async (req, res) => {
+  let options = {
+    url: serverRoute + "/skillUp",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      rollNumber: req.cookies.username.toUpperCase(),
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    if (body.success) {
+      let skillup = body.data;
+      let options = {
+        url: serverRoute + "/users/" + req.cookies.username.toLowerCase(),
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      request(options, (err, response, body) => {
+        let name = body.name;
+        res.render("skillCertificate", { skillup, name });
+      });
+    } else {
+      res.render("error", {
+        data: { message: "Your SkillUp has not been Registered" },
+        imgUsername: req.cookies.username,
+      });
+    }
+  });
 });
 
 app.get("*", async (req, res) => {
