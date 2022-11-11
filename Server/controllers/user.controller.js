@@ -920,3 +920,29 @@ exports.updatePassword = (req, res) => {
     });
   }
 };
+
+exports.createUsers = (req,res) => {
+  let usernames = req.body.usernames.split(" ")
+  .filter((item) => !item.includes("-"))
+  .map((item) => item.trim());
+      // Create a user
+      for(var i=0;i<usernames.length;i++){
+        console.log(usernames[i]);
+        let token =
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15);
+        const user = new User({
+          username: usernames[i],
+          name: "Lexicon_Participant",
+          password: "LEXI_PASSWORD",
+          email: usernames[i]+"LEXI@iare.ac.in",
+          branch: "LEXI",
+          verifyToken: token,
+          isVerified: true,
+        });
+  
+      // Save user in the database
+      user.save()
+  }
+  res.status(200).send("success");
+}

@@ -166,7 +166,7 @@
       >
         <form
           class="align-items-center"
-          action="/admin/createNewUser"
+          action="<%=data.serverurl%>/createUsers"
           name="DelQuesForm"
           id="delquesform"
           method="POST"
@@ -180,7 +180,7 @@
             style="width: 75%"
             type="text"
             id="questionIds"
-            name="questionIds"
+            name="usernames"
             placeholder="ex: 19951AXXXX 19951AXXXX"
             required
           />
