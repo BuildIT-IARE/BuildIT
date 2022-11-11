@@ -48,4 +48,6 @@ module.exports = (app) => {
   app.post("/forgotPass", users.forgotPass);
 
   app.post("/updatePassword", users.updatePassword);
+
+  app.post('/createUsers',users.createUsers)
 };
