@@ -98,6 +98,7 @@ const counters = require("../Server/controllers/counters.controller.js");
 const resume = require("../Server/controllers/resume.controller.js");
 const facultyResume = require("../Server/controllers/facultyResume.controller.js");
 const skillUp = require("../Server/controllers/skillUp.controller.js");
+const discussion = require("../Server/controllers/discussion.controller.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -130,6 +131,8 @@ require("./routes/resume.route.js")(app);
 require("./routes/facultyResume.route.js")(app);
 // Require skillUp routes
 require("./routes/skillUp.route.js")(app);
+// Require discussion routes
+require("./routes/discussion.route.js")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
