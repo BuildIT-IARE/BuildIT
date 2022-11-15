@@ -2441,9 +2441,22 @@ app.get(
     };
     request(options, function (err, response, body) {
       body.url = clientRoute;
-      res.render("questionTutDesc", {
-        imgUsername: req.cookies.username,
-        data: body,
+      body.serverUrl = serverRoute;
+      let options = {
+        url: serverRoute + "/discussions/" + req.params.questionId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      request(options, function (err, response, body1) {
+        res.render("questionTutDesc", {
+          imgUsername: req.cookies.username,
+          data: body,
+          token: req.cookies.token,
+          messages: body1,
+        });
       });
     });
   }
