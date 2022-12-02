@@ -9,7 +9,10 @@
     <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="../plugins/bootstrap-5/css/bootstrap.min.css"/>
+    <link
+      rel="stylesheet"
+      href="../plugins/bootstrap-5/css/bootstrap.min.css"
+    />
     <!-- <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css" /> -->
 
     <!-- Main Stylesheet -->
@@ -95,7 +98,7 @@
         -ms-text-size-adjust: 100%;
         -webkit-text-size-adjust: 100%;
       }
-      
+
       body {
         background: #41228e;
         overflow-x: auto;
@@ -128,25 +131,31 @@
       }
 
       @media (min-width: 568px) {
-        th, td {
+        th,
+        td {
           word-break: normal;
         }
       }
 
-      h1, h2, h3, h4, h5, h6 {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
         color: #000;
         font-family: "Playfair Display", serif;
         line-height: 1.2;
       }
 
-      label{
+      label {
         white-space: normal;
       }
 
-      select{
+      select {
         width: -webkit-fill-available;
       }
-      
+
       input[type="search"] {
         display: block;
       }
@@ -156,9 +165,7 @@
   <body>
     <% include ../views/partials/adminpanel %>
     <br /><br /><br /><br /><br />
-    <section class="page-title bg-white position-relative" 
-      style="height: 8vh"
-    >
+    <section class="page-title bg-white position-relative" style="height: 8vh">
       <div class="container">
         <div class="row">
           <div class="col-12 text-center">
@@ -171,26 +178,73 @@
     <section class="bg-white">
       <div class="container">
         <div class="row col-15 pb-3">
-          <form action="<%= data.serverurl %>/users/delete/multiple" method="post" style="box-shadow: none;">
-            <button class="btn btn-light" style="border: 1px solid rgb(237 235 235);">
+          <form
+            action="<%= data.serverurl %>/users/delete/multiple"
+            method="post"
+            style="box-shadow: none"
+          >
+            <button
+              class="btn btn-light"
+              style="border: 1px solid rgb(237 235 235)"
+            >
               Delete All Unverified Users
             </button>
           </form>
         </div>
       </div>
     </section>
-    <section class="section py-5 bg-white" style="padding-top: 1rem; border-style:hidden;">
-      <form class="align-items-center" action="<%= data.serverurl %>/users/delete/multiple" name="delusersform" id="delusersform" method='POST' style="width: 74%;margin-left: 13%;">
-        <label for="Hours" style=" font-size: 1.5rem;">Enter time in hours:</label>
-        <input style="width: 75%; margin-left: 2rem;" type="number" id='hours' name="hours" placeholder="Example - 3">
-        <label for="explaination">(users created before this time will be deleted)</label>
-        <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
-        <button style="margin-top: 2rem;margin-left: 12rem; border: 1px solid rgb(237 235 235);" class="btn btn-light" action="submit" >Delete</button>
+    <section
+      class="section py-5 bg-white"
+      style="padding-top: 1rem; border-style: hidden"
+    >
+      <form
+        class="align-items-center"
+        action="<%= data.serverurl %>/users/delete/multiple"
+        name="delusersform"
+        id="delusersform"
+        method="POST"
+        style="width: 74%; margin-left: 13%"
+      >
+        <label for="Hours" style="font-size: 1.5rem"
+          >Enter time in hours:</label
+        >
+        <input
+          style="width: 75%; margin-left: 2rem"
+          type="number"
+          id="hours"
+          name="hours"
+          placeholder="Example - 3"
+        />
+        <label for="explaination"
+          >(users created before this time will be deleted)</label
+        >
+        <textarea
+          type="hidden"
+          name="token"
+          id="token"
+          value="<%= token %>"
+          style="display: none"
+        ></textarea>
+        <button
+          style="
+            margin-top: 2rem;
+            margin-left: 12rem;
+            border: 1px solid rgb(237 235 235);
+          "
+          class="btn btn-light"
+          action="submit"
+        >
+          Delete
+        </button>
       </form>
     </section>
     <section class="section py-5 bg-white" style="padding-top: 1rem">
       <div class="container d-flex flex-column align-items-center">
-        <table id="leaderboard" class="table table-striped table-bordered dt-center" style="width: 100%">
+        <table
+          id="leaderboard"
+          class="table table-striped table-bordered dt-center"
+          style="width: 100%"
+        >
           <thead>
             <tr>
               <!-- headers -->
@@ -202,11 +256,12 @@
               <th>Email</th>
               <th>After Created(HH:MM)</th>
               <th>Delete</th>
+              <th>Verify</th>
             </tr>
           </thead>
           <tbody>
-            <%var date = new Date();%>
-            <% for (let i=0; i < data.length; i++ ){ %>
+            <%var date = new Date();%> <% for (let i=0; i < data.length; i++ ){
+            %>
             <tr style="background: <%= data[i].color %>">
               <td><%= i+1 %></td>
               <td><%= data[i].username %></td>
@@ -214,30 +269,72 @@
               <td><%= data[i].name %></td>
               <td><%= data[i].branch %></td>
               <td><%= data[i].email %></td>
-                <%var createDate = new Date(data[i].createdAt);%>
-                <%let diffInMilliSeconds = Math.abs(createDate - date) / 1000;%>
-                <%let hours = (Math.floor(diffInMilliSeconds/(60*60)));%>
-                <%let hours_string=String(hours)%>
-                <% if(hours <= 9){%>
-                <%      hours_string="0"+String(hours);%>
-                <%  } else if(hours >= 99) {%>
-                <%      hours_string="99";%>
-                <%  } else {%>
-                <%      hours_string="0"+String(hours);%>
-                <%  }%>
-                <% let minutes =Math.floor(diffInMilliSeconds/60) - hours*60; %>
-                <% let minutes_string; %>
-                <% if(minutes <= 9) { %>
-                <%   minutes_string=(":0"+String(minutes))%>
-                <% }else if(minutes >= 99) { %>
-                <%   minutes_string=(":99");%>
-                <% }else { %>
-                <%   minutes_string=(":"+String(minutes));%>
-                <% } %>
-                <%data[i].createdAt = hours+Math.floor(minutes/60);%>
+              <%var createDate = new Date(data[i].createdAt);%> <%let
+              diffInMilliSeconds = Math.abs(createDate - date) / 1000;%> <%let
+              hours = (Math.floor(diffInMilliSeconds/(60*60)));%> <%let
+              hours_string=String(hours)%> <% if(hours <= 9){%> <%
+              hours_string="0"+String(hours);%> <% } else if(hours >= 99) {%> <%
+              hours_string="99";%> <% } else {%> <%
+              hours_string="0"+String(hours);%> <% }%> <% let minutes
+              =Math.floor(diffInMilliSeconds/60) - hours*60; %> <% let
+              minutes_string; %> <% if(minutes <= 9) { %> <%
+              minutes_string=(":0"+String(minutes))%> <% }else if(minutes >= 99)
+              { %> <% minutes_string=(":99");%> <% }else { %> <%
+              minutes_string=(":"+String(minutes));%> <% } %>
+              <%data[i].createdAt = hours+Math.floor(minutes/60);%>
               <td><%= hours_string +minutes_string%></td>
               <td>
-                <a href="<%= data[i].url %>/admin/deleteuser/<%= data[i].username %>">Delete User</a>
+                <a
+                  href="<%= data[i].url %>/admin/deleteuser/<%= data[i].username %>"
+                  >Delete User</a
+                >
+              </td>
+              <td>
+                <button
+                  type="button"
+                  style="
+                    outline: none;
+                    background: rgb(19, 180, 19);
+                    border: none;
+                    border-radius: 1mm;
+                    color: white;
+                  "
+                  onclick="verifyUser(this ,'<%= data[i].username %>')"
+                >
+                  Verify User
+                </button>
+
+                <script>
+                  function verifyUser(verBtn, username) {
+                    try {
+                      var url = "<%= data.serverurl %>/admin/makeVerify/";
+                      $.ajax({
+                        // data: { arr: body1 },
+                        async: false,
+                        // enctype: 'multipart/form-data',
+                        url: url,
+                        headers: { Authorization: "<%=token%>" },
+                        type: "POST",
+                        data: JSON.stringify({
+                          username: username,
+                        }),
+                        cache: false,
+                        contentType: "application/json",
+                        processData: false,
+                        dataType: "json",
+                        success: function (response) {
+                          verBtn.disabled = true;
+                          verBtn.style.background = "rgba(19, 180, 19, 0.5)";
+                        },
+                        error: function (error) {
+                          console.log(`Error ${JSON.stringify(error)}`);
+                        },
+                      });
+                    } catch (err) {
+                      console.log(err);
+                    }
+                  }
+                </script>
               </td>
             </tr>
             <% } %>
@@ -264,8 +361,8 @@
     <script src="/adminjs/gnmenu.js"></script>
     <script>
       new gnMenu(document.getElementById("gn-menu"));
-			document.getElementById("token").value = "<%= token %>";
-		</script>
+      document.getElementById("token").value = "<%= token %>";
+    </script>
 
     <!-- jQuery -->
     <script src="/plugins/jQuery/jquery.min.js"></script>
