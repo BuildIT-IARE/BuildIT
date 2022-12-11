@@ -208,6 +208,140 @@
       width: 100%;
       text-align: center;
     }
+    .discussions {
+      width: 90%;
+      display: block;
+      margin: auto;
+      position: relative;
+      font-family: poppins;
+      border: 0.5mm solid rgba(125, 125, 125, 0.322);
+      border-radius: 3mm;
+      margin-bottom: 30px;
+      padding: 20px;
+      margin-bottom: 250px;
+    }
+    .dis-title {
+      font-family: poppins;
+      font-size: x-large;
+      padding-bottom: 10px;
+    }
+    .discuss-body {
+      width: 100%;
+      height: auto;
+      max-height: 600px;
+      overflow: auto;
+      border-radius: 2mm;
+      padding: 15px;
+      margin-bottom: 200px;
+    }
+    .discussion {
+      max-width: 95%;
+      padding: 10px;
+      height: fit-content;
+      background: rgb(246, 246, 246);
+      font-size: medium;
+      border-radius: 4mm;
+      margin: auto;
+      margin-bottom: 20px;
+    }
+    .dis-user {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .img-name {
+      width: fit-content;
+      font-size: small;
+      font-weight: 600;
+    }
+    .img-name img {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      font-size: small;
+      font-weight: 500;
+    }
+    .dis-roll {
+      font-size: small;
+      font-weight: 400;
+    }
+    .dis-msg {
+      color: rgb(122, 122, 122);
+    }
+    .dis-reward {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .date-time {
+      font-size: small;
+      color: rgb(122, 122, 122);
+    }
+    .dis-reward button {
+      outline: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      justify-content: space-between;
+      border-radius: 7mm;
+      font-size: small;
+      background: rgb(54, 54, 54);
+      color: white;
+      margin-top: 7px;
+    }
+    .dis-reward button span {
+      font-size: medium;
+      margin-right: 2px;
+    }
+    .dis-line {
+      height: 20px;
+      width: 0.4mm;
+      background: white;
+      margin: 0 5px;
+    }
+    .dis-b-bleft {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dis-form {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: 100%;
+      background: white;
+      border-radius: 3mm;
+    }
+    .dis-form textarea {
+      width: 90%;
+      height: 150px;
+      font-size: medium;
+      outline: none;
+      background: white;
+      border: none;
+      border-radius: 2mm;
+      margin: auto;
+      resize: none;
+      display: block;
+      border: 0.4mm solid rgba(0, 0, 0, 0.31);
+      padding: 10px;
+    }
+    .dis-form button {
+      outline: none;
+      background: rgb(81, 218, 133);
+      font-size: medium;
+      color: black;
+      padding: 5px 15px;
+      border-radius: 2mm;
+      border: none;
+      margin: 10px;
+      margin-right: 0;
+      border: 0.5mm solid black;
+      float: right;
+      transition: 0.25s;
+    }
   </style>
   <body>
     <script>
@@ -290,6 +424,132 @@
       </div>
     </section>
 
+    <section class="section pt-8 discussions">
+      <div class="dis-title">Discussions</div>
+      <div class="discuss-body">
+        <% for(i=0;i<messages.length;i++) { %>
+        <div class="discussion">
+          <div class="dis-user">
+            <div class="img-name">
+              <img
+                src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/<%= messages[i].rollNumber.toUpperCase() %>/<%= messages[i].rollNumber.toUpperCase() %>.jpg"
+                alt="img"
+              />
+              <span class="dis-name"><%= messages[i].rollNumber %></span>
+            </div>
+          </div>
+          <div class="dis-msg">
+            <%= messages[i].message %>
+          </div>
+          <div class="dis-reward">
+            <% if(!(messages[i].likes.includes(imgUsername.toLowerCase()))){ %>
+            <button type="button" id="<%= messages[i].discussionId %>" onclick="likeIt(this)">
+              <div class="dis-b-bleft">
+                <span class="material-icons-outlined"> thumb_up </span>
+                Like
+              </div>
+              <div class="dis-line"></div>
+              <div class="dis-b-right"><%= messages[i].likes.length %></div>
+            </button>
+            <%} else {%>
+              <button type="button" style="background: rgb(180,180,180);" id="<%= messages[i].discussionId %>" onclick="likeIt(this)" disabled>
+              <div class="dis-b-bleft">
+                <span class="material-icons"> thumb_up </span>
+                Like
+              </div>
+              <div class="dis-line"></div>
+              <div class="dis-b-right"><%= messages[i].likes.length %></div>
+            </button>
+            <%}%>
+            <span class="date-time"><%= new Date(messages[i].createdAt).toString().split("GMT")[0] %></span>
+          </div>
+        </div>
+        <%}%>
+      </div>
+      <form action="" method="post" class="dis-form">
+        <textarea
+          name="discussion"
+          id="dis-area"
+          placeholder="Write Here..."
+        ></textarea>
+        <input type="hidden" name="rollNumber" />
+        <span style="width: 90%; display: block; margin: auto">
+          <button type="button" id="dis-sub">Post Comment</button>
+        </span>
+      </form>
+      <script>
+        function likeIt(discuss){
+          try {
+            var url = "<%= data.serverUrl%>/liked";
+            $.ajax({
+              // data: { arr: body1 },
+              async: false,
+              // enctype: 'multipart/form-data',
+              url: url,
+              headers: { Authorization: "<%=token%>" },
+              type: "POST",
+              data: JSON.stringify({
+                rollNumber: "<%= imgUsername.toLowerCase() %>",
+                discussionId:discuss.id
+              }),
+              cache: false,
+              contentType: "application/json",
+              processData: false,
+              dataType: "json",
+              success: function (response) {
+                console.log(1)
+                discuss.disabled = true;
+                discuss.querySelector(".material-icons-outlined").className = "material-icons";
+                discuss.style.background="rgb(180,180,180)"
+              },
+              error: function (error) {
+                console.log(`Error ${JSON.stringify(error)}`);
+              },
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        }
+        var disSub = document.getElementById("dis-sub");
+        disSub.onclick = function () {
+          try {
+            var url = "<%= data.serverUrl%>/discussionPost";
+            $.ajax({
+              // data: { arr: body1 },
+              async: false,
+              // enctype: 'multipart/form-data',
+              url: url,
+              headers: { Authorization: "<%=token%>" },
+              type: "POST",
+              data: JSON.stringify({
+                rollNumber: "<%= imgUsername %>",
+                questionId: "<%= data[0].questionId %>",
+                message: document.getElementById("dis-area").value,
+              }),
+              cache: false,
+              contentType: "application/json",
+              processData: false,
+              dataType: "json",
+              success: function (response) {
+                console.log(1);
+                disSub.innerHTML = "Comment Posted";
+                disSub.style.background = "rgb(96,153,246)";
+                setTimeout(() => {
+                  disSub.innerHTML = "Post Comment";
+                  disSub.style.background = "rgb(81, 218, 133)";
+                  location.reload();
+                }, 2000);
+              },
+              error: function (error) {
+                console.log(`Error ${JSON.stringify(error)}`);
+              },
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        };
+      </script>
+    </section>
     <!-- jQuery -->
     <script src="plugins/jQuery/jquery.min.js"></script>
     <!-- Bootstrap JS -->

@@ -44,10 +44,11 @@ module.exports = (app) => {
     users.deleteMultiple
   );
 
+  app.post("/admin/makeVerify/", middleware.checkTokenAdmin, users.makeVerify);
   // Forgot Password
   app.post("/forgotPass", users.forgotPass);
 
   app.post("/updatePassword", users.updatePassword);
 
-  app.post('/createUsers',users.createUsers)
+  app.post("/createUsers", users.createUsers);
 };
