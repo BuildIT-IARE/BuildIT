@@ -20,6 +20,7 @@ exports.create = (req, res) => {
         emailName: req.body.emailName,
         emailDate: req.body.emailDate,
         emailFaculty: req.body.emailFaculty,
+        facultyId : req.body.facultyId,
         emailStartDay : req.body.emailStartDay,
         emailEndDay : req.body.emailEndDay,
         emailStartTime: req.body.emailStartTime,
@@ -68,8 +69,21 @@ exports.findOne = (req, res) => {
 };
 
 // Find All emails
-exports.findAll = (req,res) => {
+exports.findAllSession = (req,res) => {
     Email.find({})
+    .then((emails) => {
+        res.status(200).send(emails);
+    })
+    .catch((err) => {
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving emails" || err.message,
+        });
+    })
+}
+
+exports.findAll = (req,res) => {
+    Email.find({facultyId : req.params.facultyId})
     .then((emails) => {
         res.status(200).send(emails);
     })
@@ -94,7 +108,6 @@ exports.update = (req, res) => {
         { emailId: req.params.emailId },
         {
             $set: {
-                emailId: req.body.emailId,
                 emailName: req.body.emailName,
                 emailDuration: req.body.emailDuration,
                 emailStartDay: req.body.emailStartDay,

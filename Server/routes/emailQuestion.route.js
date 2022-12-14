@@ -4,7 +4,7 @@ module.exports = (app) => {
     const emailQuestion = require('../controllers/emailQuestion.controller.js');
 
     // Create a new emailQuestion
-    app.post("/emailQuestion", middleware.checkTokenAdmin, emailQuestion.create);
+    app.post("/emailQuestion", middleware.checkToken, emailQuestion.create);
 
     // Get all emailQuestions
     app.get("/emailQuestions",middleware.checkToken,emailQuestion.findAll);
