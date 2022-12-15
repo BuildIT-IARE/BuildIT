@@ -65,8 +65,8 @@ exports.evalSubmission = (req,res) => {
         {emailSubmissionId : req.params.emailSubmissionId},
         {
             $set : {
-                facultyComments: comments,
-                score:Number(score)
+                facultyComments : comments,
+                score : Number(score)
             }
         },
         {upsert : true}

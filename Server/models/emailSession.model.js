@@ -8,6 +8,7 @@ var emailSchema = new Schema({
     emailName: String,
     emailDate: String,
     emailFaculty : String,
+    facultyId : String,
     emailStartDay : String,
     emailEndDay : String,
     emailStartTime: String,
