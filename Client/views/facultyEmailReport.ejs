@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generate Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cutive&family=Cutive+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+        height: 0vh;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: rgb(255, 255, 255);
+        overflow-x: hidden;
+        position: relative;
+      }
+      .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 0.52mm solid black;
+      }
+      .head-left {
+        font-family: "old standard tt";
+        font-weight: 700;
+        font-size: x-large;
+        padding: 18px;
+      }
+      .head-right {
+        padding: 18px;
+      }
+      .head-right a {
+        text-decoration: none;
+        color: black;
+        font-family: poppins;
+        font-size: medium;
+        padding: 5px 10px;
+        border: 0.5mm solid black;
+        margin-left: 10px;
+        transition: 0.25s;
+        background: rgb(255, 195, 74);
+        box-shadow: 3px 3px 0 black;
+      }
+
+      .head-right a:hover {
+        box-shadow: 0px 0px 0 black;
+      }
+      .email {
+        width: 90%;
+        margin: auto;
+        box-sizing: border-box;
+        border: 0.5mm solid black;
+        font-family: poppins;
+        margin-top: 40px;
+      }
+      .subject {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: x-large;
+        font-weight: 400;
+        padding: 5px;
+        margin-left: 50px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+      }
+      .body {
+        font-size: medium;
+        padding: 10px;
+        margin-left: 50px;
+        box-sizing: border-box;
+        margin-bottom: 35px;
+      }
+      .body p {
+        margin: 0;
+      }
+      .user {
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        margin-bottom: 20px;
+      }
+      .user .material-icons {
+        font-size: 45px;
+        color: rgb(67, 116, 224);
+        margin-right: 10px;
+      }
+      .user .username {
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        letter-spacing: 1px;
+      }
+      .number span {
+        font-weight: 400;
+        font-size: 12px;
+        letter-spacing: normal;
+        color: rgb(70, 70, 70);
+      }
+      .tag {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgb(58, 58, 58);
+      }
+      .extra-details {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+      .date-time {
+        font-family: poppins;
+        font-size: small;
+        font-weight: 300;
+        margin-right: 20px;
+      }
+      .evaluation {
+        width: 100%;
+        margin-top: 40px;
+      }
+      .main-title {
+        font-family: poppins;
+        font-size: x-large;
+        width: 90%;
+        margin: auto;
+        margin-bottom: 20px;
+      }
+      .main-title span {
+        width: fit-content;
+        padding: 5px 10px;
+        border: 0.5mm dashed black;
+      }
+      .add-new {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: poppins;
+      }
+      .inputs {
+        width: 90%;
+        margin: auto;
+        background: white;
+        height: fit-content;
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 50px 30px;
+        position: relative;
+      }
+      .input-text {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .input-values {
+        width: fit-content;
+        position: relative;
+        margin-bottom: 20px;
+        padding: 10px 0;
+      }
+      .inputf {
+        width: 250px;
+        height: 35px;
+        font-family: poppins;
+        font-size: 14px;
+        padding: 0 10px;
+        border: 0.5mm solid black;
+        outline: none;
+        transition: 0.25s;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+      }
+      .inputf:focus {
+        box-shadow: 5px 5px 0 black;
+      }
+      .label {
+        position: absolute;
+        top: 10px;
+        left: 0;
+        font-size: 12px;
+        font-weight: 600;
+        transition: 0.25s;
+        z-index: 0;
+      }
+      .small {
+        width: 150px;
+      }
+      .inputf:focus + .label {
+        top: -10px;
+      }
+      .inputf:not(:placeholder-shown) + .label {
+        top: -10px;
+      }
+      label {
+        margin: 0;
+        position: absolute;
+        top: -10px;
+        left: 0;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .inputs button,
+      #sub-btn {
+        width: 350px;
+        box-sizing: border-box;
+        text-align: center;
+        background: black;
+        color: white;
+        outline: none;
+        border: none;
+        padding: 7px 0;
+        font-family: poppins;
+        font-size: medium;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+      .inputs button:hover,
+      #sub-btn:hover {
+        box-shadow: 5px 5px 0 rgb(188, 188, 188);
+      }
+      .close-btn {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0.5mm solid black;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+      }
+      .close-btn span {
+        font-size: larger;
+      }
+      .ex-session {
+        background: rgb(35, 35, 35);
+        color: white;
+        position: relative;
+      }
+      .ex-session .material-icons-outlined {
+        color: white;
+      }
+      .ex-session::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+        width: 198px;
+        height: 198px;
+        border: 0.5mm solid rgb(38, 38, 38);
+        transition: 0.25s;
+        z-index: -1;
+      }
+      .ex-session:hover::before {
+        transform: translate(5px, 5px);
+      }
+      .ck-editor__editable[role="textbox"] {
+        min-height: 340px;
+        height: 300px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        border: 0.5mm solid black;
+        overflow: auto !important;
+      }
+      .ck.ck-reset.ck-editor {
+        min-height: 400px;
+        height: 400px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        border: 0.5mm solid black;
+      }
+      .ck-content .image {
+        max-width: 80%;
+        margin: 20px auto;
+      }
+      .ck.ck-toolbar > .ck-toolbar__items {
+        display: block !important;
+      }
+      .ck-restricted-editing_mode_standard p {
+        margin: 0;
+      }
+      .ck-restricted-editing_mode_standard {
+        outline: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: 0.5mm solid rgba(0, 0, 0, 0.162) !important;
+        box-shadow: none !important;
+        border-bottom: none !important;
+      }
+      .feedback {
+        width: 90%;
+        margin: auto;
+        margin-bottom: 20px;
+      }
+      .feedback textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        border: 0.5mm solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="header">
+      <div class="head-left">BuildIT - IARE</div>
+      <div class="head-right">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </section>
+    <section class="email">
+      <div class="subject"><%= data.emailSubject %></div>
+      <div class="extra-details">
+        <div class="user">
+          <span class="material-icons"> account_circle </span>
+          <span class="username">
+            <div class="number">
+              <%= rollNumber %> <span><%= data.submissionTime %></span>
+            </div>
+            <div class="tag">to Me</div>
+          </span>
+        </div>
+        <div class="date-time"></div>
+      </div>
+      <div class="body" id="body"></div>
+      <script>
+        let val = "<%= data.emailSource %>";
+        document.getElementById("body").innerHTML = val;
+        let s = document.getElementById("body").innerText;
+        document.getElementById("body").innerText = "";
+        document.getElementById("body").innerHTML = s;
+      </script>
+    </section>
+    <section class="evaluation">
+      <div class="main-title"><span>Evaluation</span></div>
+      <section class="add-new" id="add-new">
+        <div class="inputs">
+          <span class="input-text">
+            <span class="input-values">
+              <input
+                type="number"
+                name=""
+                placeholder="Subject Score"
+                class="inputf"
+                max="10"
+                min="0"
+                required
+              />
+              <span class="label">Subject Score (10)</span>
+            </span>
+            <span class="input-values">
+              <input
+                type="number"
+                name=""
+                placeholder="Salutation Score"
+                class="inputf"
+                max="10"
+                min="0"
+                required
+              />
+              <span class="label">Salutation Score (10)</span>
+            </span>
+            <span class="input-values">
+              <input
+                type="number"
+                name=""
+                placeholder="Body Score"
+                class="inputf"
+                max="10"
+                min="0"
+                required
+              />
+              <span class="label">Body Score (10)</span>
+            </span>
+          </span>
+          <span class="input-text">
+            <span class="input-values">
+              <input
+                type="number"
+                name=""
+                placeholder="Conclusion Score"
+                class="inputf"
+                max="10"
+                min="0"
+                required
+              />
+              <span class="label">Conclusion Score (10)</span>
+            </span>
+            <span class="input-values">
+              <input
+                type="number"
+                name=""
+                placeholder="Total Score"
+                class="inputf"
+                min="0"
+                required
+              />
+              <span class="label">Total Score (Based on your guidelines)</span>
+            </span>
+          </span>
+          <div class="feedback">
+            <textarea id="editor" class="textf"></textarea>
+          </div>
+          <div id="sub-btn" onclick="sendSession()">Submit</div>
+        </div>
+      </section>
+    </section>
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
+    <script>
+      CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+        toolbar: {
+          items: [
+            "bold",
+            "italic",
+            "strikethrough",
+            "underline",
+            "removeFormat",
+            "|",
+            "bulletedList",
+            "numberedList",
+            "|",
+            "outdent",
+            "indent",
+            "|",
+            "undo",
+            "redo",
+            "-",
+            "fontSize",
+            "fontFamily",
+            "fontColor",
+            "fontBackgroundColor",
+            "|",
+            "alignment",
+          ],
+          shouldNotGroupWhenFull: true,
+        },
+        list: {
+          properties: {
+            styles: true,
+            startIndex: true,
+            reversed: true,
+          },
+        },
+        placeholder: "Write Email Here",
+        fontFamily: {
+          options: [
+            "Poppins",
+            "Arial, Helvetica, sans-serif",
+            "Courier New, Courier, monospace",
+            "Georgia, serif",
+            "Lucida Sans Unicode, Lucida Grande, sans-serif",
+            "Tahoma, Geneva, sans-serif",
+            "Times New Roman, Times, serif",
+            "Trebuchet MS, Helvetica, sans-serif",
+            "Verdana, Geneva, sans-serif",
+          ],
+          supportAllValues: true,
+        },
+        fontSize: {
+          options: [10, 12, 14, "default", 18, 20, 22],
+          supportAllValues: true,
+        },
+        htmlSupport: {
+          allow: [
+            {
+              name: /.*/,
+              attributes: true,
+              classes: true,
+              styles: true,
+            },
+          ],
+        },
+        htmlEmbed: {
+          showPreviews: true,
+        },
+        link: {
+          decorators: {
+            addTargetToExternalLinks: true,
+            defaultProtocol: "https://",
+            toggleDownloadable: {
+              mode: "manual",
+              label: "Downloadable",
+              attributes: {
+                download: "file",
+              },
+            },
+          },
+        },
+        mention: {
+          feeds: [
+            {
+              marker: "@",
+              feed: [
+                "@apple",
+                "@bears",
+                "@brownie",
+                "@cake",
+                "@cake",
+                "@candy",
+                "@canes",
+                "@chocolate",
+                "@cookie",
+                "@cotton",
+                "@cream",
+                "@cupcake",
+                "@danish",
+                "@donut",
+                "@dragée",
+                "@fruitcake",
+                "@gingerbread",
+                "@gummi",
+                "@ice",
+                "@jelly-o",
+                "@liquorice",
+                "@macaroon",
+                "@marzipan",
+                "@oat",
+                "@pie",
+                "@plum",
+                "@pudding",
+                "@sesame",
+                "@snaps",
+                "@soufflé",
+                "@sugar",
+                "@sweet",
+                "@topping",
+                "@wafer",
+              ],
+              minimumCharacters: 1,
+            },
+          ],
+        },
+        removePlugins: [
+          "CKBox",
+          "CKFinder",
+          "EasyImage",
+          "RealTimeCollaborativeComments",
+          "RealTimeCollaborativeTrackChanges",
+          "RealTimeCollaborativeRevisionHistory",
+          "PresenceList",
+          "Comments",
+          "TrackChanges",
+          "TrackChangesData",
+          "RevisionHistory",
+          "Pagination",
+          "WProofreader",
+          "MathType",
+        ],
+      });
+    </script>
+    <script>
+      function sendSession() {
+        let body = document.querySelector(
+          ".ck-restricted-editing_mode_standard"
+        ).innerText;
+        let bodyData = document.querySelector(
+          ".ck-restricted-editing_mode_standard"
+        ).innerHTML;
+        let bool = true;
+        let scores = document.querySelectorAll(".inputf");
+        let scoreData = [];
+        scores.forEach((item) => {
+          if (item.value.length > 0) {
+            scoreData.push(item.value);
+          } else {
+            bool = false;
+          }
+        });
+        if (
+          bool &&
+          body.length > 0 &&
+          body != " " &&
+          body != "\n" &&
+          scoreData[0] < 11 &&
+          scoreData[0] > -1 &&
+          scoreData[1] < 11 &&
+          scoreData[1] > -1 &&
+          scoreData[2] < 11 &&
+          scoreData[2] > -1 &&
+          scoreData[3] < 11 &&
+          scoreData[3] > -1
+        ) {
+          try {
+            var url =
+              "<%= serverUrl %>/emailSubmission/<%= submissionId %>/<%= rollNumber %>";
+            $.ajax({
+              async: false,
+              url: url,
+              headers: { Authorization: "<%=token%>" },
+              type: "POST",
+              data: JSON.stringify({
+                score: scoreData,
+                facultyComments: bodyData,
+              }),
+              cache: false,
+              contentType: "application/json",
+              processData: false,
+              dataType: "json",
+              success: function (response) {
+                alert("Statement Updated Successfully");
+              },
+              error: function (error) {
+                console.log(`Error ${JSON.stringify(error)}`);
+                alert("Failed to Update Statement");
+              },
+            });
+          } catch (err) {
+            console.log(err);
+            alert("Failed to Update Statement");
+          }
+        } else {
+          alert("Fill all the required fields");
+        }
+      }
+      document
+        .querySelector("input")
+        .addEventListener("keypress", function (evt) {
+          if (evt.which < 48 || evt.which > 57) {
+            evt.preventDefault();
+          }
+        });
+    </script>
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </body>
+</html>

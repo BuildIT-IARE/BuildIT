@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Statement Submissions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cutive&family=Cutive+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+        height: 0vh;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: rgb(255, 255, 255);
+        overflow-x: hidden;
+        position: relative;
+      }
+      .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 0.52mm solid black;
+      }
+      .head-left {
+        font-family: "old standard tt";
+        font-weight: 700;
+        font-size: x-large;
+        padding: 18px;
+      }
+      .head-right {
+        padding: 18px;
+      }
+      .head-right a {
+        text-decoration: none;
+        color: black;
+        font-family: poppins;
+        font-size: medium;
+        padding: 5px 10px;
+        border: 0.5mm solid black;
+        margin-left: 10px;
+        transition: 0.25s;
+        background: rgb(255, 195, 74);
+        box-shadow: 3px 3px 0 black;
+      }
+
+      .head-right a:hover {
+        box-shadow: 0px 0px 0 black;
+      }
+      .main {
+        width: 100%;
+        margin-bottom: 90px;
+        position: relative;
+      }
+      .main-title {
+        width: 90%;
+        margin: auto;
+        font-size: x-large;
+        font-family: poppins;
+        font-weight: 500;
+        margin-top: 20px;
+        text-decoration: underline;
+        margin-bottom: 40px;
+        position: relative;
+      }
+      .main-title span {
+        font-weight: 400;
+      }
+      .box {
+        width: 90%;
+        margin: auto;
+        padding: 10px 15px;
+        box-sizing: border-box;
+        border: 0.5mm solid black;
+        box-shadow: 5px 5px 0 black;
+        font-family: poppins;
+        margin-bottom: 40px;
+      }
+      .box-title {
+        font-size: large;
+        font-weight: 500;
+      }
+      .submissions{
+        width: 90%;
+        margin: auto;
+      }
+      tr{
+        border-bottom: 0.3mm solid black;
+      }
+      .edit {
+        font-family: poppins;
+        display: flex;
+        align-items: center;
+        font-size: medium;
+        color: white;
+        background: black;
+        padding: 5px 10px;
+        width: fit-content;
+        transition: 0.25s;
+        cursor: pointer;
+      }
+      .edit span {
+        font-size: larger;
+        margin-left: 5px;
+      }
+      .edit:hover {
+        box-shadow: 5px 5px 0 rgb(187, 187, 187);
+      }
+      .edit {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+      .add-new{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.162);
+        font-family: poppins;
+      }
+      .inputs{
+        width: 410px;
+        background: white;
+        height: 100vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 50px 30px;
+        position: relative;
+      }
+      .input-text{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .input-values{
+        width: fit-content;
+        position: relative;
+        margin-bottom: 20px;
+        padding: 10px 0;
+      }
+      .inputf{
+        width: 350px;
+        height: 35px;
+        font-family: poppins;
+        font-size: 14px;
+        padding: 0 10px;
+        border: 0.5mm solid black;
+        outline: none;
+        transition: 0.25s;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+      }
+      .inputf:focus{
+        box-shadow: 5px 5px 0 black;
+      }
+      .label{
+        position: absolute;
+        top: 10px;
+        left: 0;
+        font-size: 12px;
+        font-weight: 600;
+        transition: 0.25s;
+        z-index: 0;
+      }
+      .small{
+        width: 150px;
+      }
+      .inputf:focus + .label{
+        top: -10px;
+      }
+      .inputf:not(:placeholder-shown) + .label {
+        top: -10px;
+      }
+      .inputs button{
+        width: 350px;
+        box-sizing: border-box;
+        text-align: center;
+        background: black;
+        color: white;
+        outline: none;
+        border: none;
+        padding: 7px 0;
+        font-family: poppins;
+        font-size: medium;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+      .inputs button:hover{
+        box-shadow: 5px 5px 0 rgb(188, 188, 188);
+      }
+      .close-btn{
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0.5mm solid black;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+      }
+      .close-btn span{
+        font-size: larger;
+      }
+      .long{
+        height: 300px;
+        resize: none;
+        box-sizing: border-box;
+        padding: 10px 10px;
+      }
+      .input-values2{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 10px 0;
+        position: relative;
+      }
+      .input-values2 .inputf{
+        width: 300px;
+      }
+      .input-values2 .material-icons-outlined{
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: black;
+        color: white;
+        cursor: pointer;
+      }
+      #add-guide{
+        padding: 5px 10px;
+        background: black;
+        color: white;
+        width: fit-content;
+        margin-bottom: 20px;
+        cursor: pointer;
+      }
+    </style>
+        <link rel="stylesheet" href="../css/navadmin.css" />
+
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css" />
+
+    <!-- Main Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/datatables/dataTables.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <section class="header">
+      <div class="head-left">BuildIT - IARE</div>
+      <div class="head-right">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </section>
+    <section class="main">
+      <div class="main-title">
+        <div class="edit" id="edit">
+          Edit <span class="material-icons-outlined">edit</span>
+        </div>
+        <%= data1.emailQuestionName %>
+        <span>(<%= data1.emailScore %> Points)</span>
+      </div>
+      <div class="box">
+        <div class="box-title">Topic</div>
+        <div class="box-body"><%= data1.emailTopic %></div>
+      </div>
+      <div class="box">
+        <div class="box-title">Guidelines</div>
+        <div class="box-body">
+            <ul>
+                <% for(var i=0;i<data1.emailGuidelines.length;i++){ %>
+                    <li><%= data1.emailGuidelines[i] %></li>
+                <%}%>
+            </ul>
+        </div>
+      </div>
+    </section>
+    <section class="submissions">
+        <table
+          id="leaderboard"
+          class="table  dt-center"
+          style="width: 100%"
+        >
+        <thead class="thead-dark">
+            <th>S.No.</th>
+            <th>Roll Number</th>
+            <th>Submission</th>
+            <th>Evaluated</th>
+        </thead>
+        <% for(var i=0;i<data.length;i++){ %>
+        <tr>
+            <td><%= i+1 %></td>
+            <td><%= data[i].rollNumber %></td>
+            <td><a href="/facultyEmailReport/<%= emailId %>/<%= emailQuestionId %>/<%= data[i].rollNumber %>">View Submission</a></td>
+            <td><%= data[i].evaluated %></td>
+        </tr>
+        <%}%>
+        </table>
+    </section>
+            <section class="add-new" id="add-new">
+        <div class="inputs">
+            <div class="close-btn" id="close-btn2"><span class="material-icons-outlined">close</span></div>
+            <span class="input-text">
+            <span class="input-values">
+                <input type="text" name="" id="emailQuestionName" placeholder="Statement Name" class="inputf" maxlength="30" value="<%= data1.emailQuestionName %>">
+                <span class="label">Statement Name</span>
+            </span>
+            </span>
+            <span class="input-text">
+            <span class="input-values">
+                <input type="text" name="" id="emailQuestionId" placeholder="Statement ID" class="inputf" value="<%= data1.emailQuestionId %>" readonly>
+                <span class="label">Statement ID</span>
+            </span>
+            </span>
+            <span class="input-text">
+            <span class="input-values">
+                <input type="number" name="" id="emailScore" placeholder="Statement Points" class="inputf" min="0" value="<%= data1.emailScore %>">
+                <span class="label">Statement Points</span>
+            </span>
+            </span>
+            <span class="input-text">
+            <span class="input-values">
+                <textarea type="text" name="" id="emailTopic" placeholder="Email Topic" class="inputf long"><%= data1.emailTopic %></textarea>
+                <span class="label">Email Topic</span>
+            </span>
+            </span>
+            <span id="input-text2">
+              <span class="input-values2">
+                <input type="text" name=""  placeholder="Statement Guideline" class="inputf emailGuidelines" value="<%= data1.emailGuidelines[0] %>">
+                <span class="label">Statement Guideline</span>
+            </span>
+            </span>
+             <div id="add-guide" onclick="addGuide()">Add Guideline</div>
+            <button type="button" id="sub-btn" onclick="sendSession()">Submit</button>
+        </div>
+        </section>
+        <script>
+      function addGuide(value){
+        let iAppend = document.getElementById("input-text2")
+        iAppend.insertAdjacentHTML("beforeend",'<span class="input-values2"><input type="text" name=""  placeholder="Statement Guideline" class="inputf emailGuidelines"><span class="label">Statement Guideline</span><span class="material-icons-outlined guideClose">close</span></span>')
+        let guides = document.querySelectorAll(".input-values2")
+        guides.forEach((item)=>{
+          let close = item.querySelector(".guideClose")
+          if(close){
+          close.addEventListener("click", ()=>{
+            item.remove()
+          })}
+        })
+        guides[guides.length-1].querySelector(".inputf").value=value
+      }
+      ("<% for(var i=1; i<data1.emailGuidelines.length;i++){ %>");
+      addGuide("<%= data1.emailGuidelines[i] %>");
+      ("<%}%>");
+    </script>
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/plugins/jQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="/js/script.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#leaderboard").DataTable();
+      });
+    </script>
+    <script>
+        document.getElementById("close-btn2").onclick=function(){
+            document.getElementById("add-new").style.display="none"
+        }
+        document.getElementById("edit").onclick=function(){
+            document.getElementById("add-new").style.display="flex"
+        }
+        function sendSession() {
+           let emailQuestionId= document.getElementById("emailQuestionId").value
+           let emailQuestionName=document.getElementById("emailQuestionName").value
+           let emailScore=document.getElementById("emailScore").value
+           let emailTopic=document.getElementById("emailTopic").value
+           let guidelines = document.querySelectorAll(".emailGuidelines")
+           let gArray =[]
+           guidelines.forEach((item)=>{
+            if (item.value.length>0){
+              gArray.push(item.value)
+            }
+           })
+        if (
+            emailQuestionId.length>0 && emailQuestionName.length>0 && emailScore.length>0 && emailTopic.length>0
+        ) {
+          try {
+            var url = "<%= serverUrl %>/emailQuestionUpdate/<%= data1.emailQuestionId %>";
+            $.ajax({
+              async: false,
+              url: url,
+              headers: { Authorization: "<%=token%>" },
+              type: "POST",
+              data: JSON.stringify({
+                emailId:"<%= data1.emailId %>",
+                emailQuestionId: document.getElementById("emailQuestionId").value,
+                emailQuestionName:document.getElementById("emailQuestionName").value,
+                emailScore:document.getElementById("emailScore").value,
+                emailTopic:document.getElementById("emailTopic").value,
+                emailGuidelines:gArray,
+              }),
+              cache: false,
+              contentType: "application/json",
+              processData: false,
+              dataType: "json",
+              success: function (response) {
+                alert("Statement Updated Successfully")
+                document.getElementById("add-new").style.display="none"
+                location.reload()
+              },
+              error: function (error) {
+                console.log(`Error ${JSON.stringify(error)}`);
+                alert("Failed to Update Statement");
+              },
+            });
+          } catch (err) {
+            console.log(err);
+            alert("Failed to Update Statement");
+          }
+        } else {
+          alert("Fill all the required fields");
+        }
+      }
+    </script>
+
+  </body>
+</html>

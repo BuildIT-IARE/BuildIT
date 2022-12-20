@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cutive&family=Cutive+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .alert-box {
+        width: 100%;
+        height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: xx-large;
+        transition: 0.5s;
+        flex-direction: column;
+        font-family: poppins;
+      }
+      .alert-box span {
+        padding: 10px 20px;
+        border: 0.5mm solid black;
+        box-shadow: 5px 5px 0 rgb(120, 120, 120), 10px 10px 0 rgb(90, 90, 90),
+          15px 15px 0 rgb(56, 56, 56), 20px 20px 0 black;
+        animation: wave 0.5s linear infinite;
+        display: flex;
+        align-items: center;
+      }
+      .alert-box span span {
+        border: none;
+        box-shadow: none;
+        padding: none;
+        font-size: xx-large;
+        margin-right: 5px;
+        animation: none;
+      }
+      @keyframes wave {
+        0% {
+          box-shadow: 5px 5px 0 rgb(120, 120, 120), 10px 10px 0 rgb(90, 90, 90),
+            15px 15px 0 rgb(56, 56, 56), 20px 20px 0 black;
+        }
+        25% {
+          box-shadow: 5px 0px 0 rgb(120, 120, 120), 10px 15px 0 rgb(90, 90, 90),
+            15px 20px 0 rgb(56, 56, 56), 20px 15px 0 black;
+        }
+        50% {
+          box-shadow: 5px 5px 0 rgb(120, 120, 120), 10px 5px 0 rgb(90, 90, 90),
+            15px 15px 0 rgb(56, 56, 56), 20px 20px 0 black;
+        }
+        75% {
+          box-shadow: 5px 10px 0 rgb(120, 120, 120), 10px 5px 0 rgb(90, 90, 90),
+            15px 10px 0 rgb(56, 56, 56), 20px 25px 0 black;
+        }
+        100% {
+          box-shadow: 5px 5px 0 rgb(120, 120, 120), 10px 10px 0 rgb(90, 90, 90),
+            15px 15px 0 rgb(56, 56, 56), 20px 20px 0 black;
+        }
+      }
+      .alert-box p {
+        font-size: medium;
+      }
+      .alert-box div {
+        font-size: large;
+        background: black;
+        color: white;
+        position: relative;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      .alert-box section {
+        position: relative;
+        z-index: 1;
+      }
+      .alert-box div::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: translate(5px, 5px);
+        border: 0.35mm solid rgb(44, 44, 44);
+        background: transparent;
+        z-index: -1;
+        transition: 0.25s;
+      }
+      .alert-box div:hover::after {
+        transform: translate(3px, 3px);
+      }
+      .alert-box article {
+        font-size: large;
+        background: white;
+        padding: 5px 10px;
+        border: 0.5mm solid black;
+        box-shadow: 5px 5px 0 black;
+      }
+      .graphs {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: auto;
+        padding-top: 20px;
+      }
+      .bars {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: poppins;
+      }
+      .bar {
+        width: 100%;
+        display: flex;
+        align-items: left;
+        flex-direction: column;
+        margin-bottom: 5px;
+      }
+      .bar-caption {
+        font-size: small;
+      }
+      .bar-value {
+        height: 39.5px;
+        background: rgb(52, 52, 52);
+        position: relative;
+      }
+      .bar:nth-child(1) .bar-value {
+        width: calc(380px * (<%- data.score[0] %> / 10));
+        animation: loadit1 3s forwards;
+      }
+      .bar:nth-child(2) .bar-value {
+        width: calc(380px * (<%- data.score[1] %> / 10));
+        animation: loadit2 3s forwards;
+      }
+      .bar:nth-child(3) .bar-value {
+        width: calc(380px * (<%- data.score[2] %> / 10));
+        animation: loadit3 3s forwards;
+      }
+      .bar:nth-child(4) .bar-value {
+        width: calc(380px * (<%- data.score[3] %> / 10));
+        animation: loadit4 3s forwards;
+      }
+      .bar-value::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 380px;
+        height: 37px;
+        border: 0.4mm solid rgba(0, 0, 0, 0.411);
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 1%,
+          rgba(38, 38, 38, 0.4) 1%,
+          rgba(38, 38, 38, 0.4) 1.3%
+        );
+        z-index: -1;
+      }
+      .bar-value::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 45px;
+        border-right: 0.5mm solid rgba(255, 255, 255, 0.169);
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.015);
+      }
+      .bar:nth-child(1) .bar-value::after {
+        width: calc(380px * (<%- data.score[0] %> / 10));
+        animation: load1 7s infinite forwards;
+      }
+
+      .bar:nth-child(2) .bar-value::after {
+        width: calc(380px * (<%- data.score[1] %> / 10));
+        animation: load2 7s infinite forwards;
+      }
+      .bar:nth-child(3) .bar-value::after {
+        width: calc(380px * (<%- data.score[2] %> / 10));
+        animation: load3 7s infinite forwards;
+      }
+      .bar:nth-child(4) .bar-value::after {
+        width: calc(380px * (<%- data.score[3] %> / 10));
+        animation: load4 7s infinite forwards;
+      }
+      @keyframes load1 {
+        0% {
+          width: 0;
+        }
+        100% {
+          width: calc(380px * (<%- data.score[0] %> / 10));
+        }
+      }
+      @keyframes load2 {
+        0% {
+          width: 0;
+        }
+        100% {
+          width: calc(380px * (<%- data.score[1] %> / 10));
+        }
+      }
+      @keyframes load3 {
+        0% {
+          width: 0;
+        }
+        100% {
+          width: calc(380px * (<%- data.score[2] %> / 10));
+        }
+      }
+      @keyframes load4 {
+        0% {
+          width: 0;
+        }
+        100% {
+          width: calc(380px * (<%- data.score[3] %> / 10));
+        }
+      }
+      @keyframes loadit1 {
+        0% {
+          width: 0;
+        }
+        100% {
+          width: calc(380px * (<%- data.score[0] %> / 10));
+        }
+      }
+      @keyframes loadit2 {
+        0% {
+          width: 0;
+        }
+        100% {
+          width: calc(380px * (<%- data.score[1] %> / 10));
+        }
+      }
+      @keyframes loadit3 {
+        0% {
+          width: 0;
+        }
+        100% {
+          width: calc(380px * (<%- data.score[2] %> / 10));
+        }
+      }
+      @keyframes loadit4 {
+        0% {
+          width: 0;
+        }
+        100% {
+          width: calc(380px * (<%- data.score[3] %> / 10));
+        }
+      }
+      .circle {
+        font-family: "old standard tt";
+        width: 280px;
+        height: 280px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 0.5mm solid black;
+        padding: 10px;
+        position: relative;
+      }
+      .myScore {
+        font-size: 180px;
+      }
+      .circle::before {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        border: 0.5mm solid black;
+        padding: 10px;
+        z-index: -1;
+        animation: slide linear infinite 10s;
+      }
+      @keyframes slide {
+        0% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(10px, 10px);
+        }
+        50% {
+          transform: translate(0, 0);
+        }
+        75% {
+          transform: translate(-12px, -12px);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+      .myScore span {
+        font-size: medium;
+        font-weight: 600;
+      }
+      .rtitle {
+        font-family: poppins;
+        font-size: x-large;
+      }
+      .email {
+        width: 90%;
+        margin: auto;
+        box-sizing: border-box;
+        border: 0.5mm dashed black;
+        font-family: poppins;
+        margin-top: 20px;
+        background: white;
+      }
+      .subject {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: x-large;
+        font-weight: 400;
+        padding: 5px;
+        margin-left: 50px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+      }
+      .body {
+        font-size: medium;
+        padding: 10px;
+        margin-left: 50px;
+        box-sizing: border-box;
+        margin-bottom: 35px;
+      }
+      .body p {
+        margin: 0;
+      }
+      .user {
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        margin-bottom: 20px;
+      }
+      .user .material-icons {
+        font-size: 45px;
+        color: rgb(67, 116, 224);
+        margin-right: 10px;
+      }
+      .user .username {
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        letter-spacing: 1px;
+      }
+      .number span {
+        font-weight: 400;
+        font-size: 12px;
+        letter-spacing: normal;
+        color: rgb(70, 70, 70);
+      }
+      .tag {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgb(58, 58, 58);
+      }
+      .extra-details {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+      .date-time {
+        font-family: poppins;
+        font-size: small;
+        font-weight: 300;
+        margin-right: 20px;
+      }
+      h2 {
+        width: 90%;
+        margin: auto;
+        display: block;
+        font-family: poppins;
+        margin-bottom: 0;
+        margin-top: 30px;
+      }
+      .data {
+        width: 100%;
+      }
+      .dataBody {
+        width: 90%;
+        margin: auto;
+        box-sizing: border-box;
+        padding: 20px;
+        background: white;
+        margin-top: 50px;
+        border: 0.5mm solid black;
+        box-shadow: 5px 5px 0 black;
+      }
+    </style>
+  </head>
+  <body>
+    <% if(data.evaluated){ %>
+    <h2>Your Mail</h2>
+    <section class="email">
+      <div class="subject"><%= data.emailSubject %></div>
+      <div class="extra-details">
+        <div class="user">
+          <span class="material-icons"> account_circle </span>
+          <span class="username">
+            <div class="number">
+              <%= data.rollNumber %> <span><%= data.submissionTime %></span>
+            </div>
+            <div class="tag">to Me</div>
+          </span>
+        </div>
+        <div class="date-time"></div>
+      </div>
+      <div class="body" id="body"></div>
+    </section>
+    <h2>Report</h2>
+    <div class="graphs">
+      <div class="bars">
+        <div class="bar">
+          <div class="bar-caption">Subject (10)</div>
+          <div class="bar-value"></div>
+        </div>
+        <div class="bar">
+          <div class="bar-caption">Salutation (10)</div>
+          <div class="bar-value"></div>
+        </div>
+        <div class="bar">
+          <div class="bar-caption">Main Body (10)</div>
+          <div class="bar-value"></div>
+        </div>
+        <div class="bar">
+          <div class="bar-caption">Conclusion (10)</div>
+          <div class="bar-value"></div>
+        </div>
+      </div>
+      <div class="rtitle">
+        <span class="material-icons-outlined"> leaderboard </span>
+      </div>
+      <div class="circle">
+        <div class="myScore">
+          <%= data.score[4] %><span>of <%= data1.emailScore %></span>
+        </div>
+      </div>
+    </div>
+    <div class="data">
+      <div class="dataBody" id="dbody"></div>
+      <script>
+        document.getElementById("dbody").innerHTML =
+          "<%= data.facultyComments %>";
+        let s2 = document.getElementById("dbody").innerText;
+        document.getElementById("dbody").innerHTML = s2;
+      </script>
+    </div>
+    <% } else { %>
+    <div class="alert-box">
+      <article>
+        Your Mail has to be evaluated! yet recheck the report after some time
+      </article>
+      <p>Click the button as fast as you can for 10 seconds:</p>
+      <span id="clicker">Click Me!</span>
+      <h5 id="score">0</h5>
+      <div id="restart"><section>Restart</section></div>
+    </div>
+    <script>
+      function game() {
+        document.getElementById("restart").style.display = "none";
+        let timeleft = 10;
+        let downloadTimer = setInterval(function () {
+          if (timeleft <= 0) {
+            clearInterval(downloadTimer);
+            document.getElementById("clicker").style.display = "none";
+            document.getElementById("restart").style.display = "block";
+            document.getElementById("score").innerHTML =
+              "Your Score " + document.getElementById("score").innerHTML;
+          } else {
+            document.getElementById("clicker").innerText =
+              "Click Me " + timeleft + "s";
+          }
+          timeleft -= 1;
+        }, 1000);
+
+        // Increment the score on button click
+        let score = 0;
+        document
+          .getElementById("clicker")
+          .addEventListener("click", function () {
+            score++;
+            document.getElementById("score").innerHTML = score;
+          });
+      }
+      document.getElementById("restart").onclick = function () {
+        document.getElementById("clicker").style.display = "block";
+        game();
+      };
+      game();
+    </script>
+    <section class="email">
+      <div class="subject"><%= data.emailSubject %></div>
+      <div class="extra-details">
+        <div class="user">
+          <span class="material-icons"> account_circle </span>
+          <span class="username">
+            <div class="number">
+              <%= data.rollNumber %> <span><%= data.submissionTime %></span>
+            </div>
+            <div class="tag">to Me</div>
+          </span>
+        </div>
+        <div class="date-time"></div>
+      </div>
+      <div class="body" id="body"></div>
+    </section>
+    <% } %>
+    <script>
+      let val = "<%= data.emailSource %>";
+      document.getElementById("body").innerHTML = val;
+      let s = document.getElementById("body").innerText;
+      document.getElementById("body").innerText = "";
+      document.getElementById("body").innerHTML = s;
+    </script>
+  </body>
+</html>

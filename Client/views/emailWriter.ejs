@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Writer | Statement 1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cutive&family=Cutive+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: rgb(247, 246, 242);
+        overflow-x: hidden;
+      }
+      .topic {
+        height: fit-content;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        font-family: "cutive mono";
+        margin-top: 50px;
+        position: relative;
+      }
+      .topic-title-box {
+        width: 90%;
+      }
+      .topic-title {
+        width: fit-content;
+        height: fit-content;
+        font-size: large;
+        font-weight: 600;
+        color: black;
+        background: white;
+        padding: 2px 10px;
+        border: 0.5mm solid black;
+        border-bottom: none;
+        box-sizing: border-box;
+        transform: translateY(0.5mm);
+      }
+      .topic-box {
+        box-sizing: border-box;
+        width: 90%;
+        padding: 15px;
+        border: 0.5mm solid black;
+        box-shadow: 5px 5px 0 black;
+        font-size: medium;
+        background: white;
+        overflow: hidden;
+      }
+      .nopad {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        height: fit-content;
+        font-family: poppins;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        position: relative;
+      }
+      .tomail {
+        width: 100%;
+        border-bottom: 0.5mm solid black;
+        padding: 10px;
+        font-size: medium;
+        box-sizing: border-box;
+        background: rgb(81, 218, 133);
+        border: 0.5mm solid black;
+      }
+      .subject {
+        width: 100%;
+        border-bottom: 0.5mm solid black;
+        box-sizing: border-box;
+        font-size: medium;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .subject span {
+        padding-left: 10px;
+        font-weight: bold;
+      }
+      .subject .inputf {
+        flex-grow: 1;
+        box-sizing: border-box;
+        border: none;
+        outline: none;
+        height: 100%;
+        padding: 10px;
+        font-family: poppins;
+        font-size: medium;
+        padding-left: 3px;
+      }
+      .body {
+        width: 100%;
+        height: fit-content;
+        box-sizing: border-box;
+        margin-bottom: 0;
+      }
+      .body .textf {
+        width: 100%;
+        box-sizing: border-box;
+        border: none;
+        outline: none;
+        resize: none;
+        height: 400px;
+        padding: 10px;
+        font-family: poppins;
+        font-size: medium;
+        margin-bottom: 0;
+      }
+      .controls {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 0.5mm solid black;
+      }
+      .text-control {
+        padding: 0 10px;
+        box-sizing: border-box;
+        position: relative;
+      }
+      .sub-btn button {
+        background: black;
+        padding: 8px 15px;
+        color: white;
+        font-family: poppins;
+        font-size: medium;
+        cursor: pointer;
+      }
+      #bold,
+      #italic {
+        background: white;
+        border: 0.5mm solid black;
+        outline: none;
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        box-sizing: border-box;
+        box-shadow: 2px 2px 0 black;
+        transition: 0.25s;
+      }
+      #bold:hover,
+      #italic:hover {
+        box-shadow: 0px 0px 0 black;
+      }
+      #bold span,
+      #italic span {
+        line-height: 28px;
+      }
+      #container {
+        width: 1000px;
+        margin: 20px auto;
+      }
+      .ck-editor__editable[role="textbox"] {
+        min-height: 400px;
+        height: 400px;
+        overflow: auto;
+      }
+      .ck-content .image {
+        max-width: 80%;
+        margin: 20px auto;
+      }
+      .ck.ck-toolbar > .ck-toolbar__items {
+        display: block !important;
+      }
+      .ck-restricted-editing_mode_standard p {
+        margin: 0;
+      }
+      .ck-restricted-editing_mode_standard {
+        outline: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: 0.5mm solid rgba(0, 0, 0, 0.162) !important;
+        box-shadow: none !important;
+        border-bottom: none !important;
+      }
+      .alert-box {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgb(255, 255, 255);
+        background-size: cover;
+        background-repeat: no-repeat;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: xx-large;
+        transform: translateY(-150%);
+        transition: 0.5s;
+        flex-direction: column;
+      }
+      .alert-box span {
+        padding: 10px 20px;
+        border: 0.5mm solid black;
+        box-shadow: 5px 5px 0 rgb(120, 120, 120), 10px 10px 0 rgb(90, 90, 90),
+          15px 15px 0 rgb(56, 56, 56), 20px 20px 0 black;
+        animation: wave 0.5s linear infinite;
+        display: flex;
+        align-items: center;
+      }
+      .alert-box span span {
+        border: none;
+        box-shadow: none;
+        padding: none;
+        font-size: xx-large;
+        margin-right: 5px;
+        animation: none;
+      }
+      iframe {
+        min-height: 90vh;
+      }
+      @keyframes wave {
+        0% {
+          box-shadow: 5px 5px 0 rgb(120, 120, 120), 10px 10px 0 rgb(90, 90, 90),
+            15px 15px 0 rgb(56, 56, 56), 20px 20px 0 black;
+        }
+        25% {
+          box-shadow: 5px 0px 0 rgb(120, 120, 120), 10px 15px 0 rgb(90, 90, 90),
+            15px 20px 0 rgb(56, 56, 56), 20px 15px 0 black;
+        }
+        50% {
+          box-shadow: 5px 5px 0 rgb(120, 120, 120), 10px 5px 0 rgb(90, 90, 90),
+            15px 15px 0 rgb(56, 56, 56), 20px 20px 0 black;
+        }
+        75% {
+          box-shadow: 5px 10px 0 rgb(120, 120, 120), 10px 5px 0 rgb(90, 90, 90),
+            15px 10px 0 rgb(56, 56, 56), 20px 25px 0 black;
+        }
+        100% {
+          box-shadow: 5px 5px 0 rgb(120, 120, 120), 10px 10px 0 rgb(90, 90, 90),
+            15px 15px 0 rgb(56, 56, 56), 20px 20px 0 black;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topic">
+      <div class="topic-title-box">
+        <div class="topic-title">Details</div>
+      </div>
+      <div class="topic-box">
+        <ul>
+          <li>Session Name: <strong><%= data1.emailName%></strong></li>
+          <li><%= data.emailQuestionName %></li>
+          <li>
+            Valid From <%= data1.emailStartDay%> <%= data1.emailStartTime%>
+          </li>
+          <li>Valid Till <%= data1.emailEndDay%> <%= data1.emailEndTime%></li>
+          <li>By <%= data1.emailFaculty %></li>
+          <li>Total Score: <%= data.emailScore%></li>
+        </ul>
+      </div>
+    </div>
+    <div class="topic">
+      <div class="topic-title-box">
+        <div class="topic-title">Topic</div>
+      </div>
+      <div class="topic-box"><%= data.emailTopic %></div>
+    </div>
+    <div class="topic">
+      <div class="topic-title-box">
+        <div class="topic-title">Guidelines</div>
+      </div>
+      <div class="topic-box">
+        <ul>
+          <% for(var i=0;i<data.emailGuidelines.length;i++){ %>
+          <li><%= data.emailGuidelines[i] %></li>
+          <%}%>
+        </ul>
+      </div>
+    </div>
+    <div class="topic">
+      <div class="topic-title-box">
+        <div class="topic-title">Mailer</div>
+      </div>
+      <div class="topic-box nopad">
+        <div class="alert-box" id="alert-box">
+          <span>
+            <span class="material-icons-outlined"> done_outline </span>Mail
+            Sent</span
+          >
+          <!-- <p>Click the button as fast as you can for 10 seconds:</p>
+          <span id="clicker">Click Me!</span>
+          <h5 id="score">0</h5>
+          <div id="restart">Restart</div>-->
+        </div>
+        <div class="tomail">
+          <strong>To:</strong> <%= data1.emailFaculty %>-buildit@iare.ac.in
+        </div>
+        <div class="subject">
+          <span>Subject: </span>
+          <input type="text" class="inputf" id="subject" />
+        </div>
+        <div class="body">
+          <textarea id="editor" class="textf"></textarea>
+        </div>
+        <div class="controls">
+          <div class="text-control"></div>
+          <div class="sub-btn">
+            <button type="button" onclick="sendEmail()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
+    <script>
+      CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+        toolbar: {
+          items: [
+            "bold",
+            "italic",
+            "strikethrough",
+            "underline",
+            "removeFormat",
+            "|",
+            "bulletedList",
+            "numberedList",
+            "|",
+            "outdent",
+            "indent",
+            "|",
+            "undo",
+            "redo",
+            "-",
+            "fontSize",
+            "fontFamily",
+            "fontColor",
+            "fontBackgroundColor",
+            "|",
+            "alignment",
+          ],
+          shouldNotGroupWhenFull: true,
+        },
+        list: {
+          properties: {
+            styles: true,
+            startIndex: true,
+            reversed: true,
+          },
+        },
+        placeholder: "Write Email Here",
+        fontFamily: {
+          options: [
+            "Poppins",
+            "Arial, Helvetica, sans-serif",
+            "Courier New, Courier, monospace",
+            "Georgia, serif",
+            "Lucida Sans Unicode, Lucida Grande, sans-serif",
+            "Tahoma, Geneva, sans-serif",
+            "Times New Roman, Times, serif",
+            "Trebuchet MS, Helvetica, sans-serif",
+            "Verdana, Geneva, sans-serif",
+          ],
+          supportAllValues: true,
+        },
+        fontSize: {
+          options: [10, 12, 14, "default", 18, 20, 22],
+          supportAllValues: true,
+        },
+        htmlSupport: {
+          allow: [
+            {
+              name: /.*/,
+              attributes: true,
+              classes: true,
+              styles: true,
+            },
+          ],
+        },
+        htmlEmbed: {
+          showPreviews: true,
+        },
+        link: {
+          decorators: {
+            addTargetToExternalLinks: true,
+            defaultProtocol: "https://",
+            toggleDownloadable: {
+              mode: "manual",
+              label: "Downloadable",
+              attributes: {
+                download: "file",
+              },
+            },
+          },
+        },
+        mention: {
+          feeds: [
+            {
+              marker: "@",
+              feed: [
+                "@apple",
+                "@bears",
+                "@brownie",
+                "@cake",
+                "@cake",
+                "@candy",
+                "@canes",
+                "@chocolate",
+                "@cookie",
+                "@cotton",
+                "@cream",
+                "@cupcake",
+                "@danish",
+                "@donut",
+                "@dragée",
+                "@fruitcake",
+                "@gingerbread",
+                "@gummi",
+                "@ice",
+                "@jelly-o",
+                "@liquorice",
+                "@macaroon",
+                "@marzipan",
+                "@oat",
+                "@pie",
+                "@plum",
+                "@pudding",
+                "@sesame",
+                "@snaps",
+                "@soufflé",
+                "@sugar",
+                "@sweet",
+                "@topping",
+                "@wafer",
+              ],
+              minimumCharacters: 1,
+            },
+          ],
+        },
+        removePlugins: [
+          "CKBox",
+          "CKFinder",
+          "EasyImage",
+          "RealTimeCollaborativeComments",
+          "RealTimeCollaborativeTrackChanges",
+          "RealTimeCollaborativeRevisionHistory",
+          "PresenceList",
+          "Comments",
+          "TrackChanges",
+          "TrackChangesData",
+          "RevisionHistory",
+          "Pagination",
+          "WProofreader",
+          "MathType",
+        ],
+      });
+    </script>
+    <script>
+      function sendEmail() {
+        let alerti = document.getElementById("alert-box");
+        let subject = document.getElementById("subject").value;
+        let body = document.querySelector(
+          ".ck-restricted-editing_mode_standard"
+        ).innerText;
+        let bodyData = document.querySelector(
+          ".ck-restricted-editing_mode_standard"
+        ).innerHTML;
+        if (
+          body.length > 0 &&
+          subject.length > 0 &&
+          body != " " &&
+          body != "\n"
+        ) {
+          try {
+            var url = "<%= serverUrl %>/emailSubmission";
+            $.ajax({
+              async: false,
+              url: url,
+              headers: { Authorization: "<%=token%>" },
+              type: "POST",
+              data: JSON.stringify({
+                emailId: "<%= data1.emailId%>",
+                rollNumber: "<%= imgUsername %>",
+                emailQuestionId: "<%= data.emailQuestionId %>",
+                emailSource: bodyData.toString(),
+                emailSubject: subject,
+              }),
+              cache: false,
+              contentType: "application/json",
+              processData: false,
+              dataType: "json",
+              success: function (response) {
+                alerti.style.transform = "translateY(0)";
+                setTimeout(() => {
+                  location.reload();
+                }, 5000);
+              },
+              error: function (error) {
+                console.log(`Error ${JSON.stringify(error)}`);
+                alert("Failed to Send the Mail");
+              },
+            });
+          } catch (err) {
+            console.log(err);
+            alert("Failed to Send the Mail");
+          }
+        } else {
+          alert("subject or body is not available");
+        }
+      }
+    </script>
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </body>
+</html>

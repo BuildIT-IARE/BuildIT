@@ -99,6 +99,7 @@ const resume = require("../Server/controllers/resume.controller.js");
 const facultyResume = require("../Server/controllers/facultyResume.controller.js");
 const skillUp = require("../Server/controllers/skillUp.controller.js");
 const discussion = require("../Server/controllers/discussion.controller.js");
+const emailSession = require("../Server/controllers/emailSession.controller.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -133,6 +134,12 @@ require("./routes/facultyResume.route.js")(app);
 require("./routes/skillUp.route.js")(app);
 // Require discussion routes
 require("./routes/discussion.route.js")(app);
+// Require emailSession routes
+require("./routes/emailSession.route")(app);
+// Require emailQuestion routes
+require("./routes/emailQuestion.route")(app);
+// Require emailSubmission routes
+require("./routes/emailSubmission.route")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {

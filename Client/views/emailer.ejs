@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Writer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cutive&family=Cutive+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+        height: 0vh;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: rgb(247, 246, 242);
+        overflow-x: hidden;
+      }
+      .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 0.52mm solid black;
+      }
+      .head-left {
+        font-family: "old standard tt";
+        font-weight: 700;
+        font-size: x-large;
+        padding: 18px;
+      }
+      .head-right {
+        padding: 18px;
+      }
+      .head-right a {
+        text-decoration: none;
+        color: black;
+        font-family: poppins;
+        font-size: medium;
+        padding: 5px 10px;
+        border: 0.5mm solid black;
+        margin-left: 10px;
+        transition: 0.25s;
+        background: rgb(255, 195, 74);
+        box-shadow: 3px 3px 0 black;
+      }
+      .head-right a:hover {
+        box-shadow: 0px 0px 0 black;
+      }
+      .slider {
+        width: calc(100% - 60px);
+        margin: auto;
+        padding: 0 30px;
+        position: relative;
+      }
+      .emails {
+        width: 100%;
+        height: fit-content;
+        overflow-x: auto;
+        display: flex;
+        align-items: center;
+        position: relative;
+        scroll-behavior: smooth;
+      }
+      .emails button {
+        width: 140px;
+        min-width: 130px;
+        height: fit-content;
+        padding: 5px 10px;
+        font-family: poppins;
+        background: white;
+        color: black;
+        border: 0.5mm solid black;
+        outline: none;
+        box-shadow: 3px 3px 0 black;
+        margin: 10px 10px;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+      .emails button:hover {
+        box-shadow: none;
+      }
+      .nleft {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .nright {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+      .active-enbtn {
+        background: rgb(81, 218, 133) !important;
+      }
+      .footer-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .bg-dark {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background-color: rgb(255, 195, 74);
+        border-top: 0.5mm solid black;
+      }
+      .footer-section a:hover {
+        text-decoration: underline;
+      }
+      .footer-left {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+      }
+      .footer-right {
+        width: 20%;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-left-titles a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: x-large;
+        color: rgb(0, 0, 0);
+        font-weight: 600;
+      }
+      .footer-left-links a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(0, 0, 0);
+      }
+      .footer-right p {
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+        width: 100%;
+        text-align: center;
+      }
+      .dummy {
+        min-height: 100vh;
+      }
+      @media all and (max-width: 700px) {
+        .footer-left {
+          width: 100%;
+        }
+        .footer-right {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="header">
+      <div class="head-left">BuildIT - IARE</div>
+      <div class="head-right">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </section>
+    <div class="slider">
+      <div class="nleft" onclick="moveLeft()">
+        <span class="material-icons-outlined"> arrow_back_ios </span>
+      </div>
+      <div class="emails">
+        <% for(var i=1;i<=data.length;i++){ %>
+        <button
+          type="button"
+          onclick="redirect('<%= data[i-1].emailQuestionId %>', this)"
+          class="enav-btn"
+        >
+          Statement-<%= i%>
+        </button>
+        <%}%>
+      </div>
+      <div class="nright" onclick="moveRight()">
+        <span class="material-icons-outlined"> arrow_forward_ios </span>
+      </div>
+    </div>
+    <div class="dummy">
+      <iframe src="" frameborder="0" id="frame"></iframe>
+    </div>
+    <script>
+      var iframe = document.getElementById("frame");
+      function redirect(value, tbtn) {
+        iframe.src = "/emailWriter/<%= sessionId %>/" + value;
+        let btns = document.querySelectorAll(".enav-btn");
+        btns.forEach((btn) => {
+          btn.className = "enav-btn";
+        });
+        tbtn.className = "enav-btn active-enbtn";
+      }
+      iframe.onload = function () {
+        iframe.style.height =
+          iframe.contentWindow.document.body.scrollHeight + 100 + "px";
+      };
+      function moveLeft() {
+        let emails = document.querySelector(".emails");
+        emails.scrollBy(-200, 0);
+      }
+      function moveRight() {
+        let emails = document.querySelector(".emails");
+        emails.scrollBy(200, 0);
+      }
+      document.querySelectorAll(".enav-btn")[0].click();
+      let emails = document.querySelector(".emails");
+      const hasScrollableContent = emails.scrollWidth > emails.clientWidth;
+      if (!hasScrollableContent) {
+        document.querySelector(".nright").style.display = "none";
+        document.querySelector(".nleft").style.display = "none";
+      }
+    </script>
+    <footer class="bg-dark" id="footers">
+      <div class="footer-section">
+        <div class="footer-left">
+          <div class="footer-left-titles">
+            <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://www.iare.ac.in" target="_blank">IARE</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank"
+              >Feedback</a
+            >
+          </div>
+        </div>
+        <div class="footer-right">
+          <p>
+            Copyright ©
+            <script>
+              var CurrentYear = new Date().getFullYear();
+              document.write(CurrentYear);
+            </script>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
