@@ -13,6 +13,7 @@ var _ = require("lodash");
 const dotenv = require("dotenv");
 const { cookie } = require("request");
 const { response } = require("express");
+const e = require("express");
 
 // Load config
 dotenv.config({ path: "../Server/util/config.env" });
@@ -3152,6 +3153,368 @@ app.get("/skillCertificate", checkSignIn, async (req, res) => {
     }
   });
 });
+
+app.get("/extras", checkSignIn, async (req, res) => {
+  res.render("extrasSections");
+});
+
+app.get("/emailSessions", checkSignIn, async (req, res) => {
+  let options = {
+    url: serverRoute + "/emailSessions",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    let expired = [];
+    let active = [];
+    var d = new Date();
+    let time = d.getHours();
+    let temTime = d.getMinutes();
+    let mon = d.getMonth();
+    mon += 1;
+    let yr = d.getFullYear();
+    let day = d.getDate();
+    let cDate = yr + "-" + mon + "-" + day;
+    let bdate = new Date(cDate);
+    if (temTime.length < 2) {
+      temTime = "0" + temTime;
+    }
+    time = time + temTime;
+    for (var i = 0; i < body.length; i++) {
+      let dateC = new Date(body[i].emailEndDay);
+      let bool = bdate > dateC;
+      if (bool) {
+        expired.push(body[i]);
+      } else if (
+        cDate == body[i].emailEndDay &&
+        Number(body[i].emailEndTime) > Number(time)
+      ) {
+        console.log(111);
+        expired.push(body[i]);
+      } else {
+        active.push(body[i]);
+      }
+    }
+    res.render("emailSessions", {
+      active: active,
+      serverUrl: serverRoute,
+      expired: expired,
+    });
+  });
+});
+
+app.get("/emailWriter/:emailId", checkSignIn, async (req, res) => {
+  let options = {
+    url: serverRoute + "/emailSessionQuestions/" + req.params.emailId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    if (!body.success) {
+      res.render("error", {
+        data: { message: "No Questions Available" },
+        imgUsername: req.cookies.username,
+      });
+    } else {
+      res.render("emailer", {
+        data: body.data,
+        sessionId: req.params.emailId,
+      });
+    }
+  });
+});
+
+app.get(
+  "/emailWriter/:emailId/:emailQuestionId",
+  checkSignIn,
+  async (req, res) => {
+    let options = {
+      url: serverRoute + "/emailQuestion/" + req.params.emailQuestionId,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+    request(options, (err, response, body) => {
+      let options = {
+        url: serverRoute + "/emailSession/" + req.params.emailId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      request(options, (err, response, body1) => {
+        let options = {
+          url:
+            serverRoute +
+            "/emailSubmission/" +
+            req.params.emailId +
+            req.params.emailQuestionId,
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        request(options, (err, response, body2) => {
+          var d = new Date();
+          let time = d.getHours();
+          let temTime = d.getMinutes();
+          let mon = d.getMonth();
+          mon += 1;
+          let yr = d.getFullYear();
+          let day = d.getDate();
+          let cDate = yr + "-" + mon + "-" + day;
+          let bdate = new Date(cDate);
+          if (temTime.length < 2) {
+            temTime = "0" + temTime;
+          }
+          time = time + temTime;
+          let dateC = new Date(body1.emailEndDay);
+          let bool = bdate > dateC;
+          if (
+            bool ||
+            (cDate == body1.emailEndDay &&
+              Number(body1.emailEndTime) > Number(time)) ||
+            body2.success
+          ) {
+            res.render("emailReport", { data: body2.data, data1: body.data });
+          } else {
+            res.render("emailWriter", {
+              token: req.cookies.token,
+              imgUsername: req.cookies.username,
+              serverUrl: serverRoute,
+              data: body.data,
+              data1: body1,
+            });
+          }
+        });
+      });
+    });
+  }
+);
+
+app.get("/facultyEmailSessions", checkSignIn, async (req, res) => {
+  res.render("facultyEmailSessionsValidation");
+});
+
+app.post("/facultyValidSessions", checkSignIn, async (req, res) => {
+  let options = {
+    url: serverRoute + "/login",
+    method: "post",
+    body: {
+      username: req.body.username,
+      password: req.body.password,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    if (body.success) {
+      let options = {
+        url: serverRoute + "/emailSessions/" + req.body.username.toLowerCase(),
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      request(options, (err, response, body) => {
+        if (body.success) {
+          let expired = [];
+          let active = [];
+          var d = new Date();
+          let time = d.getHours();
+          let temTime = d.getMinutes();
+          let mon = d.getMonth();
+          mon += 1;
+          let yr = d.getFullYear();
+          let day = d.getDate();
+          let cDate = yr + "-" + mon + "-" + day;
+          let bdate = new Date(cDate);
+          if (temTime.length < 2) {
+            temTime = "0" + temTime;
+          }
+          time = time + temTime;
+          for (var i = 0; i < body.data.length; i++) {
+            let dateC = new Date(body.data[i].emailEndDay);
+            let bool = bdate > dateC;
+            if (bool) {
+              expired.push(body.data[i]);
+            } else if (
+              cDate == body.data[i].emailEndDay &&
+              Number(body.data[i].emailEndTime) > Number(time)
+            ) {
+              expired.push(body.data[i]);
+            } else {
+              active.push(body.data[i]);
+            }
+          }
+          res.cookie("facultyEmail", body.facultyEmail);
+          res.render("facultyEmailSessions", {
+            expired: expired,
+            active: active,
+            facultyId: body.facultyEmail,
+            token: req.cookies.token,
+            serverUrl: serverRoute,
+          });
+        } else {
+          res.redirect("/facultyEmailSessions");
+        }
+      });
+    } else {
+      res.redirect("/facultyEmailSessions");
+    }
+  });
+});
+
+app.get("/facultyEmailStatements/:emailId", checkSignIn, async (req, res) => {
+  if (req.cookies.facultyEmail) {
+    let options = {
+      url: serverRoute + "/emailSessionQuestions/" + req.params.emailId,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+    request(options, (err, response, body) => {
+      if (!body.success && !body.data) {
+        res.render("error", {
+          data: { message: "No Questions Available" },
+          imgUsername: req.cookies.username,
+        });
+      } else {
+        let options = {
+          url: serverRoute + "/emailSession/" + req.params.emailId,
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        request(options, (err, response, body1) => {
+          let expired = false;
+          var d = new Date();
+          let time = d.getHours();
+          let temTime = d.getMinutes();
+          let mon = d.getMonth();
+          mon += 1;
+          let yr = d.getFullYear();
+          let day = d.getDate();
+          let cDate = yr + "-" + mon + "-" + day;
+          let bdate = new Date(cDate);
+          if (temTime.length < 2) {
+            temTime = "0" + temTime;
+          }
+          time = time + temTime;
+          let dateC = new Date(body1.emailEndDay);
+          let bool = bdate > dateC;
+          if (
+            bool ||
+            (cDate == body1.emailEndDay &&
+              Number(body1.emailEndTime) > Number(time))
+          ) {
+            expired = true;
+          }
+          res.render("facultyEmailStatements", {
+            data: body.data,
+            expired: expired,
+            token: req.cookies.token,
+            data1: body1,
+            facultyId: req.cookies.facultyEmail,
+            serverUrl: serverRoute,
+          });
+        });
+      }
+    });
+  } else {
+    res.redirect("/facultyEmailSessions");
+  }
+});
+
+app.get(
+  "/facultyValidSubmissions/:emailId/:emailQuestionId",
+  checkSignIn,
+  async (req, res) => {
+    if (req.cookies.facultyEmail) {
+      let options = {
+        url: serverRoute + "/emailQuestion/" + req.params.emailQuestionId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      request(options, (err, response, body) => {
+        let options = {
+          url:
+            serverRoute +
+            "/emailSubmissions/" +
+            req.params.emailId +
+            req.params.emailQuestionId,
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        request(options, (err, response, body1) => {
+          res.render("facultyValidSubmissions", {
+            data: body1,
+            data1: body.data,
+            token: req.cookies.token,
+            emailId: req.params.emailId,
+            emailQuestionId: req.params.emailQuestionId,
+            serverUrl: serverRoute,
+          });
+        });
+      });
+    } else {
+      res.redirect("/facultyEmailSessions");
+    }
+  }
+);
+
+app.get(
+  "/facultyEmailReport/:emailId/:emailQuestionId/:rollNumber",
+  async (req, res) => {
+    if (req.cookies.facultyEmail) {
+      let options = {
+        url:
+          serverRoute +
+          "/emailSubmissions/" +
+          req.params.emailId +
+          req.params.emailQuestionId +
+          "/" +
+          req.params.rollNumber,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      request(options, (err, response, body) => {
+        res.render("facultyEmailReport", {
+          data: body.data,
+          rollNumber: req.params.rollNumber,
+          submissionId: req.params.emailId + req.params.emailQuestionId,
+          serverUrl: serverRoute,
+          token: req.cookies.token,
+        });
+      });
+    } else {
+      res.redirect("/facultyEmailSessions");
+    }
+  }
+);
 
 app.get("*", async (req, res) => {
   res.render("404page");

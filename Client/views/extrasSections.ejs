@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Section Name</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: rgb(247, 246, 242);
+        overflow-x: hidden;
+      }
+      .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 0.52mm solid black;
+      }
+      .head-left {
+        font-family: "old standard tt";
+        font-weight: 700;
+        font-size: x-large;
+        padding: 18px;
+      }
+      .head-right {
+        padding: 18px;
+      }
+      .head-right a {
+        text-decoration: none;
+        color: black;
+        font-family: poppins;
+        font-size: medium;
+        padding: 5px 10px;
+        border: 0.5mm solid black;
+        margin-left: 10px;
+        transition: 0.25s;
+        background: rgb(255, 195, 74);
+        box-shadow: 3px 3px 0 black;
+      }
+      .head-right a:hover {
+        box-shadow: 0px 0px 0 black;
+      }
+      .title-area {
+        width: 100%;
+        height: calc(100vh - 70px);
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        flex-wrap: wrap;
+        justify-content: center;
+        background: url(../images/extrasBack.svg);
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      .timg {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 100px;
+      }
+      .timg img {
+        width: 345px;
+        height: 345px;
+      }
+      .title {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .tags {
+        width: fit-content;
+      }
+      .tname {
+        font-size: 75px;
+        font-family: "old standard tt";
+        font-weight: 700;
+        color: black;
+        margin-bottom: 40px;
+      }
+      .tsmall {
+        font-family: poppins;
+        font-size: x-large;
+        color: black;
+        margin-bottom: 20px;
+      }
+      .tags a {
+        font-family: poppins;
+        font-size: large;
+        color: black;
+        text-decoration: none;
+        background: #38b6ff;
+        border: 0.5mm solid black;
+        padding: 5px 12px;
+        box-shadow: 3px 3px 0 black;
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        transition: 0.25s;
+      }
+      .tags a span {
+        font-size: x-large;
+        margin-left: 5px;
+      }
+      .tags a:hover {
+        box-shadow: none;
+      }
+      .main-body {
+        height: 460px;
+        position: relative;
+        margin-bottom: 10px;
+      }
+      .container {
+        background: rgb(51, 51, 51);
+        width: 460px;
+        height: calc(100vw - 15px);
+        max-height: 100vw;
+        box-sizing: border-box;
+        padding: 15px 0;
+        transform: rotateZ(-90deg) translateX(-460px);
+        transform-origin: left top;
+        overflow-y: auto;
+      }
+      .container::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+      .item-box {
+        width: 400px;
+        height: 250px;
+        box-sizing: border-box;
+        padding: 15px;
+        background: rgb(255, 172, 115);
+        box-shadow: 10px 10px 0 rgb(255, 224, 203);
+        position: relative;
+        border: 0.5mm solid black;
+        overflow: hidden;
+        margin-top: 200px;
+        transform: rotateZ(90deg);
+        transform-origin: center;
+      }
+      .box-title {
+        font-size: 40px;
+        font-family: poppins;
+        color: black;
+        font-weight: 600;
+        margin-bottom: 40px;
+        position: relative;
+        z-index: 9999;
+      }
+      .btag a {
+        text-decoration: none;
+        background: transparent;
+        border: 0.5mm solid black;
+        padding: 5px 10px;
+        font-family: poppins;
+        font-size: large;
+        color: black;
+        transition: 0.25s;
+      }
+      .btag a:hover {
+        background: rgb(46, 46, 46);
+        color: white;
+      }
+      .item-box img {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        right: -30px;
+        bottom: -30px;
+        z-index: 0;
+      }
+      .mb-title {
+        font-family: poppins;
+        color: rgb(255, 255, 255);
+        position: absolute;
+        top: 15px;
+        left: 100px;
+        font-size: 65px;
+        z-index: 9999;
+        font-weight: 600;
+      }
+      .footer-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .bg-dark {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background-color: rgb(255, 195, 74);
+        border-top: 0.5mm solid black;
+      }
+      .footer-section a:hover {
+        text-decoration: underline;
+      }
+      .footer-left {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+      }
+      .footer-right {
+        width: 20%;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-left-titles a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: x-large;
+        color: rgb(0, 0, 0);
+        font-weight: 600;
+      }
+      .footer-left-links a {
+        text-decoration: none;
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(0, 0, 0);
+      }
+      .footer-right p {
+        font-family: poppins;
+        font-size: 14px;
+        color: rgb(97, 97, 97);
+        width: 100%;
+        text-align: center;
+      }
+      @media all and (max-width: 700px) {
+        .footer-left {
+          width: 100%;
+        }
+        .footer-right {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="header">
+      <div class="head-left">BuildIT - IARE</div>
+      <div class="head-right">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </section>
+    <section class="title-area">
+      <div class="timg">
+        <img src="../images/extras.svg" alt="img" />
+      </div>
+      <div class="title">
+        <div class="tags">
+          <div class="tsmall">Welcome To</div>
+          <div class="tname">Section Name</div>
+          <a href="#main-body"
+            >Get Started <span class="material-icons-outlined"> east </span></a
+          >
+        </div>
+      </div>
+    </section>
+    <section class="main-body" id="main-body">
+      <div class="mb-title">Features</div>
+      <div class="container element_size" id="container">
+        <div class="item-box">
+          <img src="../images/emailWrite.svg" alt="" />
+          <div class="box">
+            <div class="btag">
+              <div class="box-title">Email Writing</div>
+              <a href="/emailSessions">View Statements</a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="item-box"
+          style="
+            background: rgb(0, 229, 190);
+            box-shadow: 10px 10px 0 rgb(189, 224, 217);
+          "
+        >
+          <img src="../images/extrasMCQ.svg" alt="" />
+          <div class="box">
+            <div class="btag">
+              <div class="box-title">MCQ Tests (Long Challenges)</div>
+              <a href="">View Contests</a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="item-box"
+          style="
+            background: rgb(0, 186, 229);
+            box-shadow: 10px 10px 0 rgb(188, 219, 225);
+          "
+        >
+          <img src="../images/extraDBMS.svg" alt="" />
+          <div class="box">
+            <div class="btag">
+              <div class="box-title">DBMS Challenge</div>
+              <a href="">View Challenges</a>
+            </div>
+          </div>
+        </div>
+        <div class="item-box" style="opacity: 0; width: 2px; margin: 0">
+          <div class="box">
+            <div class="btag">
+              <div class="box-title"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-dark" id="footers">
+      <div class="footer-section">
+        <div class="footer-left">
+          <div class="footer-left-titles">
+            <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://www.iare.ac.in" target="_blank">IARE</a>
+          </div>
+          <div class="footer-left-links">
+            <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank"
+              >Feedback</a
+            >
+          </div>
+        </div>
+        <div class="footer-right">
+          <p>
+            Copyright ©
+            <script>
+              var CurrentYear = new Date().getFullYear();
+              document.write(CurrentYear);
+            </script>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

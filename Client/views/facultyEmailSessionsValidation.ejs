@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faculty Email Sessions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cutive&family=Cutive+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+        height: 0vh;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: rgb(255, 255, 255);
+        overflow-x: hidden;
+      }
+      .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 0.52mm solid black;
+      }
+      .head-left {
+        font-family: "old standard tt";
+        font-weight: 700;
+        font-size: x-large;
+        padding: 18px;
+      }
+      .head-right {
+        padding: 18px;
+      }
+      .head-right a {
+        text-decoration: none;
+        color: black;
+        font-family: poppins;
+        font-size: medium;
+        padding: 5px 10px;
+        border: 0.5mm solid black;
+        margin-left: 10px;
+        transition: 0.25s;
+        background: rgb(255, 195, 74);
+        box-shadow: 3px 3px 0 black;
+      }
+      .head-right a:hover {
+        box-shadow: 0px 0px 0 black;
+      }
+      .main {
+        width: 100%;
+        height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .title {
+        width: 100%;
+        text-align: center;
+        font-size: x-large;
+        font-weight: 500;
+        font-family: poppins;
+        margin-bottom: 20px;
+      }
+      .validation {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .validation input {
+        box-sizing: border-box;
+        width: 350px;
+        border: 0.5mm solid black;
+        height: 40px;
+        font-family: poppins;
+        font-size: medium;
+        margin-bottom: 20px;
+        padding: 0 10px;
+        outline: none;
+        transition: 0.25s;
+      }
+      .validation input:focus {
+        box-shadow: 5px 5px 0 black;
+      }
+      .validation button {
+        background: black;
+        font-family: poppins;
+        font-size: medium;
+        color: white;
+        width: 350px;
+        box-sizing: border-box;
+        padding: 5px 0;
+        position: relative;
+      }
+      .validation form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .validation button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0.5mm solid black;
+        transition: 0.25s;
+        z-index: -1;
+        box-sizing: border-box;
+        padding: 5px 0;
+      }
+      .validation button:hover::before {
+        transform: translate(9px, 9px);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="header">
+      <div class="head-left">BuildIT - IARE</div>
+      <div class="head-right">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </section>
+    <section class="main">
+      <div class="title">Email Sessions</div>
+      <div class="validation">
+        <form action="/facultyValidSessions" method="post">
+          <input type="text" placeholder="Faculty ID" name="username" />
+          <input type="password" name="password" id="" placeholder="Password" />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>

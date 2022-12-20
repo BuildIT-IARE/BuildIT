@@ -1,17 +1,31 @@
 let middleware = require("../util/middleware.js");
 
 module.exports = (app) => {
-    const emailQuestion = require('../controllers/emailQuestion.controller.js');
+  const emailQuestion = require("../controllers/emailQuestion.controller.js");
 
-    // Create a new emailQuestion
-    app.post("/emailQuestion", middleware.checkToken, emailQuestion.create);
+  // Create a new emailQuestion
+  app.post("/emailQuestion", middleware.checkToken, emailQuestion.create);
 
-    // Get all emailQuestions
-    app.get("/emailQuestions",middleware.checkToken,emailQuestion.findAll);
+  // Get all emailQuestions
+  app.get("/emailQuestions", middleware.checkToken, emailQuestion.findAll);
 
-    // Get one emailQuestion
-    app.get("/emailQuestion/:emailId",middleware.checkToken,emailQuestion.findOne);
+  app.get(
+    "/emailSessionQuestions/:emailId",
+    middleware.checkToken,
+    emailQuestion.emailSessionQuestions
+  );
 
-    //Delete emailQuestion
-    app.delete("/emailQuestion/:emailId",middleware.checkToken,emailQuestion.delete);
-}
+  // Get one emailQuestion
+  app.get(
+    "/emailQuestion/:emailQuestionId",
+    middleware.checkToken,
+    emailQuestion.findOne
+  );
+
+  //Delete emailQuestion
+  app.delete(
+    "/emailQuestion/:emailQuestionId",
+    middleware.checkToken,
+    emailQuestion.delete
+  );
+};

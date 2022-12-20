@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Sessions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cutive&family=Cutive+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+        height: 0vh;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: rgb(255, 255, 255);
+        overflow-x: hidden;
+        position: relative;
+      }
+      .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 0.52mm solid black;
+      }
+      .head-left {
+        font-family: "old standard tt";
+        font-weight: 700;
+        font-size: x-large;
+        padding: 18px;
+      }
+      .head-right {
+        padding: 18px;
+      }
+      .head-right a {
+        text-decoration: none;
+        color: black;
+        font-family: poppins;
+        font-size: medium;
+        padding: 5px 10px;
+        border: 0.5mm solid black;
+        margin-left: 10px;
+        transition: 0.25s;
+        background: rgb(255, 195, 74);
+        box-shadow: 3px 3px 0 black;
+      }
+
+      .head-right a:hover {
+        box-shadow: 0px 0px 0 black;
+      }
+
+      .sbtitle {
+        position: relative;
+      }
+      .sbicon {
+        width: 100%;
+        text-align: left;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .sbicon span {
+        font-size: 28px;
+        color: black;
+      }
+      .sbtitle {
+        width: 100%;
+        flex-grow: 1;
+        padding: 4px 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .sbmain-title {
+        font-size: medium;
+        font-weight: 600;
+        margin-bottom: 3px;
+      }
+      .sbsubtitle {
+        font-size: small;
+      }
+      .sbbutton {
+        width: 100%;
+        text-align: left;
+        position: relative;
+        text-decoration: underline;
+      }
+      .time-date {
+        font-size: small;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        position: relative;
+      }
+      .from {
+        font-size: small;
+      }
+      .sessions{
+        width: 100%;
+      }
+      .list-sessions{
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        margin: auto;
+      }
+      .title{
+        width: 90%;
+        margin: auto;
+        font-family: poppins;
+        font-size: x-large;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+      .session{
+        width: 200px;
+        height: 200px;
+        box-sizing: border-box;
+        border: 0.5mm solid black;
+        padding: 10px;
+        text-decoration: none;
+        font-family: poppins;
+        text-align: justify;
+        position: relative;
+        transition: 0.25s;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        margin-bottom: 25px;
+      }
+      .ac-session{
+        color: black;
+      }
+      .ac-session:hover{
+        box-shadow: 5px 5px 0 black;
+      }
+      .createit{
+        width: 90%;
+        margin: auto;
+      }
+      .create{
+        font-family: poppins;
+        display: flex;
+        align-items: center;
+        font-size: medium;
+        color: white;
+        background: black;
+        padding: 5px 10px;
+        width: fit-content;
+        transition: 0.25s;
+        cursor: pointer;
+      }
+      .create span{
+        font-size: larger;
+        margin-left: 5px;
+      }
+      .create:hover{
+        box-shadow: 5px 5px 0 rgb(187, 187, 187);
+      }
+      .add-new{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.162);
+        font-family: poppins;
+      }
+      .inputs{
+        width: 410px;
+        background: white;
+        height: 100vh;
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 50px 30px;
+        position: relative;
+      }
+      .input-text{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .input-values{
+        width: fit-content;
+        position: relative;
+        margin-bottom: 20px;
+        padding: 10px 0;
+      }
+      .inputf{
+        width: 350px;
+        height: 35px;
+        font-family: poppins;
+        font-size: 14px;
+        padding: 0 10px;
+        border: 0.5mm solid black;
+        outline: none;
+        transition: 0.25s;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+      }
+      .inputf:focus{
+        box-shadow: 5px 5px 0 black;
+      }
+      .label{
+        position: absolute;
+        top: 10px;
+        left: 0;
+        font-size: 12px;
+        font-weight: 600;
+        transition: 0.25s;
+        z-index: 0;
+      }
+      .small{
+        width: 150px;
+      }
+      .inputf:focus + .label{
+        top: -10px;
+      }
+      .inputf:not(:placeholder-shown) + .label {
+        top: -10px;
+      }
+      label{
+        margin: 0;
+        position: absolute;
+        top: -10px;
+        left: 0;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .inputs button{
+        width: 350px;
+        box-sizing: border-box;
+        text-align: center;
+        background: black;
+        color: white;
+        outline: none;
+        border: none;
+        padding: 7px 0;
+        font-family: poppins;
+        font-size: medium;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+      .inputs button:hover{
+        box-shadow: 5px 5px 0 rgb(188, 188, 188);
+      }
+      .close-btn{
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0.5mm solid black;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+      }
+      .close-btn span{
+        font-size: larger;
+      }
+      .ex-session{
+        background: rgb(35, 35, 35);
+        color: white;
+        position: relative;
+      }
+      .ex-session .material-icons-outlined{
+        color: white;
+      }
+      .ex-session::before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+        width: 198px;
+        height: 198px;
+        border: 0.5mm solid rgb(38, 38, 38);
+        transition: 0.25s;
+        z-index: -1;
+      }
+      .ex-session:hover::before{
+        transform: translate(5px, 5px);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="header">
+      <div class="head-left">BuildIT - IARE</div>
+      <div class="head-right">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </section>
+    <section class="sessions">
+      <div class="active">
+        <div class="title">Active Sessions</div>
+        <div class="createit">
+        <div class="create" id="create">Add Session <span class="material-icons-outlined">add</span></div>
+        </div>
+        <div class="list-sessions">
+            <% for(var i=0;i<active.length;i++){ %>
+                <a href="/facultyEmailStatements/<%= active[i].emailId %>" class="session ac-session">
+                <div class="sbicon">
+                  <span class="material-icons-outlined"> texture </span>
+                  <div class="from"><%= active[i].emailStartDay %> <%= active[i].emailStartTime.slice(0,-2)+':'+active[i].emailStartTime.slice(-2) %></div>
+                </div>
+                <div class="sbtitle">
+                  <div class="sbmain-title"><%= active[i].emailName %></div>
+                  <div class="sbsubtitle">by <%= active[i].emailFaculty %></div>
+                </div>
+                <div class="time-date">
+                  <div class="to"><%= active[i].emailEndDay %> <%= active[i].emailEndTime.slice(0,-2)+':'+active[i].emailEndTime.slice(-2) %></div>
+                </div>
+                </a>
+            <%}%>
+        </div>
+      </div>
+      <div class="expired">
+        <div class="title">Expired Sessions</div>
+        <div class="list-sessions">
+            <% for(var i=0; i<expired.length;i++){ %>
+              <a href="/facultyEmailStatements/<%= expired[i].emailId %>" class="session ex-session">
+                <div class="sbicon">
+                  <span class="material-icons-outlined"> done_outline </span>
+                  <div class="from"><%= expired[i].emailStartDay %> <%= expired[i].emailStartTime.slice(0,-2)+':'+expired[i].emailStartTime.slice(-2) %></div>
+                </div>
+                <div class="sbtitle">
+                  <div class="sbmain-title"><%= expired[i].emailName %></div>
+                  <div class="sbsubtitle">by <%= expired[i].emailFaculty %></div>
+                </div>
+                <div class="time-date">
+                  <div class="to"><%= expired[i].emailEndDay %> <%= expired[i].emailEndTime.slice(0,-2)+':'+expired[i].emailEndTime.slice(-2) %></div>
+                </div>
+              </a>
+              <%}%>
+        </div>
+      </div>
+    </section>
+    <section class="add-new" id="add-new">
+        <div class="inputs">
+            <div class="close-btn" id="close-btn"><span class="material-icons-outlined">close</span></div>
+            <span class="input-text">
+            <span class="input-values">
+                <input type="text" name="" id="emailName" placeholder="Session Name" class="inputf" maxlength="40">
+                <span class="label">Session Name</span>
+            </span>
+            </span>
+            <span class="input-text">
+            <span class="input-values">
+                <input type="text" name="" id="emailId" placeholder="Session ID" class="inputf">
+                <span class="label">Session ID</span>
+            </span>
+            </span>
+            <span class="input-text">
+            <span class="input-values">
+                <input type="date" name="" id="emailStartDay" class="inputf small">
+                <span class="label">Session Start Day</span>
+            </span>
+            <span class="input-values">
+                <input type="date" name="" id="emailEndDay" class="inputf small">
+                <span class="label">Session End Day</span>
+            </span>
+            </span>
+            <span class="input-text">
+            <span class="input-values">
+                <label for="emailStartTime">Session Start Time</label>
+                <input type="text" name="" id="emailStartTime" class="inputf small" placeholder="0000 Format">
+            </span>
+            <span class="input-values">
+                <label for="emailEndTime">Session Start Time</label>
+                <input type="text" name="" id="emailEndTime" class="inputf small" placeholder="0000 Format">
+            </span>
+            </span>
+            <span class="input-text">
+            <span class="input-values">
+                <input type="text" name="" id="emailFaculty" placeholder="Faculty Name" class="inputf">
+                <span class="label">Faculty Name</span>
+            </span>
+            </span>
+            <span class="input-text">
+            <span class="input-values">
+                <input type="text" name="" id="emailPassword" placeholder=" Set Password (Optional)" class="inputf">
+                <span class="label">Set Password (Optional)</span>
+            </span>
+            </span>
+            <button type="button" id="sub-btn" onclick="sendSession()">Submit</button>
+        </div>
+    </section>
+    <script>
+        document.getElementById("close-btn").onclick=function(){
+            document.getElementById("add-new").style.display="none"
+        }
+        document.getElementById("create").onclick=function(){
+            document.getElementById("add-new").style.display="flex"
+        }
+        function sendSession() {
+           let emailId= document.getElementById("emailId").value
+           let emailName=document.getElementById("emailName").value
+           let emailStartDay=document.getElementById("emailStartDay").value
+           let emailEndDay=document.getElementById("emailEndDay").value
+           let emailStartTime=document.getElementById("emailStartTime").value 
+           let emailEndTime=document.getElementById("emailEndTime").value
+           let emailFaculty=document.getElementById("emailFaculty").value
+        if (
+            emailId.length>0 && emailName.length>0 && emailStartDay.length>0 && emailEndDay.length>0 && emailStartTime.length>0 && emailEndTime.length>0 && emailFaculty.length>0
+        ) {
+          try {
+            var url = "<%= serverUrl %>/emailSession";
+            $.ajax({
+              async: false,
+              url: url,
+              headers: { Authorization: "<%=token%>" },
+              type: "POST",
+              data: JSON.stringify({
+                emailId: document.getElementById("emailId").value,
+                emailName:document.getElementById("emailName").value,
+                emailStartDay:document.getElementById("emailStartDay").value,
+                emailEndDay:document.getElementById("emailEndDay").value,
+                emailStartTime:document.getElementById("emailStartTime").value,
+                emailEndTime:document.getElementById("emailEndTime").value,
+                emailFaculty:document.getElementById("emailFaculty").value,
+                emailPassword:document.getElementById("emailPassword").value,
+                emailDate:new Date(),
+                facultyId:"<%= facultyId %>",
+              }),
+              cache: false,
+              contentType: "application/json",
+              processData: false,
+              dataType: "json",
+              success: function (response) {
+                alert("Session Created Successfully")
+                document.getElementById("add-new").style.display="none"
+                location.reload()
+              },
+              error: function (error) {
+                console.log(`Error ${JSON.stringify(error)}`);
+                alert("Failed to create Session");
+              },
+            });
+          } catch (err) {
+            console.log(err);
+            alert("Failed to create Session");
+          }
+        } else {
+          alert("Fill all the required fields");
+        }
+      }
+    </script>
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </body>
+</html>
