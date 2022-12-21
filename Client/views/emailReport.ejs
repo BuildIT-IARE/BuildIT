@@ -129,6 +129,7 @@
         align-items: left;
         flex-direction: column;
         margin-bottom: 5px;
+        position: relative;
       }
       .bar-caption {
         font-size: small;
@@ -261,6 +262,38 @@
         100% {
           width: calc(380px * (<%- data.score[3] %> / 10));
         }
+      }
+      .bar-tag {
+        width: 18px;
+        height: 18px;
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        background: rgb(48, 48, 48);
+        color: white;
+        font-size: 10px;
+        border-radius: 50%;
+        line-height: 18px;
+        text-align: center;
+        transform-origin: center bottom;
+        transform: rotateX(90deg);
+        transition: 0.25s;
+        font-weight: bold;
+      }
+      .bar:nth-child(1) .bar-tag {
+        left: calc((380px * (<%- data.score[0] %> / 10)) - 9px);
+      }
+      .bar:nth-child(2) .bar-tag {
+        left: calc((380px * (<%- data.score[1] %> / 10)) - 9px);
+      }
+      .bar:nth-child(3) .bar-tag {
+        left: calc((380px * (<%- data.score[2] %> / 10)) - 9px);
+      }
+      .bar:nth-child(4) .bar-tag {
+        left: calc((380px * (<%- data.score[3] %> / 10)) - 9px);
+      }
+      .bar:hover .bar-tag {
+        transform: rotateX(0deg);
       }
       .circle {
         font-family: "old standard tt";
@@ -435,18 +468,22 @@
         <div class="bar">
           <div class="bar-caption">Subject (10)</div>
           <div class="bar-value"></div>
+          <div class="bar-tag"><%= data.score[0] %></div>
         </div>
         <div class="bar">
           <div class="bar-caption">Salutation (10)</div>
           <div class="bar-value"></div>
+          <div class="bar-tag"><%= data.score[1] %></div>
         </div>
         <div class="bar">
           <div class="bar-caption">Main Body (10)</div>
           <div class="bar-value"></div>
+          <div class="bar-tag"><%= data.score[2] %></div>
         </div>
         <div class="bar">
           <div class="bar-caption">Conclusion (10)</div>
           <div class="bar-value"></div>
+          <div class="bar-tag"><%= data.score[3] %></div>
         </div>
       </div>
       <div class="rtitle">
