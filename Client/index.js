@@ -3192,16 +3192,61 @@ app.get("/emailSessions", checkSignIn, async (req, res) => {
         cDate == body[i].emailEndDay &&
         Number(body[i].emailEndTime) > Number(time)
       ) {
-        console.log(111);
         expired.push(body[i]);
       } else {
         active.push(body[i]);
       }
     }
-    res.render("emailSessions", {
-      active: active,
-      serverUrl: serverRoute,
-      expired: expired,
+    let options = {
+      url: serverRoute + "/emailAllSubmissions/" + req.cookies.username,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+    request(options, (err, response, body) => {
+      let score = 0;
+      let totalScore = 0;
+      let subData = body.data;
+      subData.forEach((item) => {
+        if (item.evaluated) {
+          score += Number(item.score[4]);
+          totalScore += Number(item.emailScore);
+        }
+      });
+
+      let percent = 0;
+      if (totalScore == 0) {
+        percent = 0;
+      } else {
+        percent = score / totalScore;
+      }
+      percent = 439.1124267578125 - 439.1124267578125 * percent;
+      let stars = 0;
+      if (score >= 10) {
+        stars = 1;
+      } else if (score >= 50) {
+        stars = 2;
+      } else if (score >= 100) {
+        stars = 3;
+      } else if (score >= 200) {
+        stars = 4;
+      } else if (score >= 350) {
+        stars = 5;
+      } else if (score >= 500) {
+        stars = 6;
+      }
+      res.render("emailSessions", {
+        active: active,
+        serverUrl: serverRoute,
+        expired: expired,
+        percent: percent,
+        stars: stars,
+        data: body.data,
+        score: score,
+        totalScore: totalScore,
+      });
     });
   });
 });
@@ -3286,7 +3331,18 @@ app.get(
               Number(body1.emailEndTime) > Number(time)) ||
             body2.success
           ) {
-            res.render("emailReport", { data: body2.data, data1: body.data });
+            let expiredOnly = false;
+            if (!body2.data) {
+              body2.data = {
+                score: [0, 0, 0, 0, 0],
+              };
+              expiredOnly = true;
+            }
+            res.render("emailReport", {
+              data: body2.data,
+              data1: body.data,
+              expiredOnly: expiredOnly,
+            });
           } else {
             res.render("emailWriter", {
               token: req.cookies.token,
@@ -3317,7 +3373,8 @@ app.post("/facultyValidSessions", checkSignIn, async (req, res) => {
     json: true,
   };
   request(options, (err, response, body) => {
-    if (body.success) {
+    let str = username.toLowerCase();
+    if (body.success && str.indexOf("iare") > -1) {
       let options = {
         url: serverRoute + "/emailSessions/" + req.body.username.toLowerCase(),
         method: "get",

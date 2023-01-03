@@ -32,4 +32,10 @@ module.exports = (app) => {
     middleware.checkToken,
     emailSubmission.findOneStatementRollNumber
   );
+
+  app.get(
+    "/emailAllSubmissions/:rollNumber",
+    middleware.checkToken,
+    emailSubmission.findAllRollNumber
+  );
 };

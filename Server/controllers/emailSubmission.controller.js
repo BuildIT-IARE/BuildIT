@@ -16,6 +16,8 @@ exports.create = (req, res) => {
     score: score,
     submissionTime: moment(),
     evaluated: false,
+    emailScore: req.body.emailScore,
+    emailName: req.body.emailName,
   });
   Submission.save()
     .then((data) => {
@@ -61,14 +63,20 @@ exports.findOne = (req, res) => {
     });
 };
 
-//find all submissions (testing purpose)
-exports.findAll = (req, res) => {
-  EmailSubmission.find({})
+//find all submissions based on roll number
+exports.findAllRollNumber = (req, res) => {
+  EmailSubmission.find({ rollNumber: req.params.rollNumber })
     .then((data) => {
-      res.status(200).send(data);
+      res.send({
+        data: data,
+        success: true,
+      });
     })
     .catch((err) => {
-      res.status(500).send("Error while retrieving submissions");
+      res.status(500).send({
+        message: "Error while retrieving submissions",
+        success: false,
+      });
     });
 };
 

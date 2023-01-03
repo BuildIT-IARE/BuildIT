@@ -439,7 +439,7 @@
                 min="0"
                 required
               />
-              <span class="label">Total Score (Based on your guidelines)</span>
+              <span class="label">Total Score (<%= data.emailScore %>)</span>
             </span>
           </span>
           <div class="feedback">
@@ -622,7 +622,9 @@
           scoreData[2] < 11 &&
           scoreData[2] > -1 &&
           scoreData[3] < 11 &&
-          scoreData[3] > -1
+          scoreData[3] > -1 &&
+          scoreData[4] > -1 &&
+          Number(scoreData[4]) <= "<%= Number(data.emailScore) %>"
         ) {
           try {
             var url =

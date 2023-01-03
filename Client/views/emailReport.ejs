@@ -507,7 +507,8 @@
     <% } else { %>
     <div class="alert-box">
       <article>
-        Your Mail has to be evaluated! yet recheck the report after some time
+        <% if(!expiredOnly){ %> Your Mail has to be evaluated yet!, recheck the
+        report after some time <%} else {%> Session is Expired <%}%>
       </article>
       <p>Click the button as fast as you can for 10 seconds:</p>
       <span id="clicker">Click Me!</span>
@@ -547,6 +548,7 @@
       };
       game();
     </script>
+    <% if(!expiredOnly){ %>
     <section class="email">
       <div class="subject"><%= data.emailSubject %></div>
       <div class="extra-details">
@@ -563,7 +565,7 @@
       </div>
       <div class="body" id="body"></div>
     </section>
-    <% } %>
+    <%}%> <% } %>
     <script>
       let val = "<%= data.emailSource %>";
       document.getElementById("body").innerHTML = val;
