@@ -3373,7 +3373,8 @@ app.post("/facultyValidSessions", checkSignIn, async (req, res) => {
     json: true,
   };
   request(options, (err, response, body) => {
-    let str = username.toLowerCase();
+    let str = req.body.username.toLowerCase();
+
     if (body.success && str.indexOf("iare") > -1) {
       let options = {
         url: serverRoute + "/emailSessions/" + req.body.username.toLowerCase(),
