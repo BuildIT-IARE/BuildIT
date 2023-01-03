@@ -15,6 +15,7 @@
       href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <style>
       html {
         scroll-behavior: smooth;
@@ -271,10 +272,20 @@
       .mini {
         font-size: x-large;
       }
+      .progress{
+        background: url(../images/emailProgress.svg);
+        background-size:contain;
+        background-attachment:fixed;
+        width: 95%;
+        margin: auto;
+        border-radius: 4mm;
+        margin-bottom: 10px;
+        border: 0.4mm solid black;
+        overflow: hidden;
+      }
       .pro-box {
         width: 100%;
         box-sizing: border-box;
-        padding: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -283,67 +294,111 @@
       }
       .pro-box .percent {
         position: relative;
-        width: 150px;
-        height: 150px;
+        width: 180px;
+        height: 180px;
         display: flex;
         align-items: center;
         justify-content: center;
+        background: rgb(255,208,114);
       }
       .pro-box .percent svg {
         position: relative;
-        width: 130px;
-        height: 130px;
+        width: 150px;
+        height: 150px;
         transform-origin: center;
         transform: rotateZ(-90deg);
       }
       .pro-box .percent svg circle:nth-child(1) {
         stroke-dashoffset: 0;
-        stroke: rgba(255, 195, 74, 0.176);
+        stroke: white;
       }
       .pro-box .percent svg circle:nth-child(2) {
-        stroke-dashoffset: calc(380 - (380 * 25) / 100);
-        stroke: rgb(255, 178, 23);
+        stroke-dashoffset: <%- percent %>;
+        stroke: rgb(36, 36, 36);
+        animation: load forwards 2s;
+      }
+      @keyframes load{
+        from{
+          stroke-dashoffset: 439.1124267578125;
+        }
       }
       .pro-box .percent svg circle {
         position: relative;
-        width: 130px;
-        height: 130px;
+        width: 150px;
+        height: 150px;
         fill: none;
-        stroke-width: 7;
+        stroke-width: 5;
         stroke: black;
         transform: translate(5px, 5px);
-        stroke-dasharray: 380;
-        stroke-dashoffset: 380;
+        stroke-dasharray: 439.1124267578125;
+        stroke-dashoffset: 439.1124267578125;
         stroke-linecap: round;
+        transition: stroke-dashoffset 1s ease;
       }
       .pro-box .percent .pro-num {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 134px;
+        height: 134px;
+        border-radius: 50%;
+        background: repeating-linear-gradient(
+          transparent,
+          transparent 5%,
+          rgba(0, 0, 0, 0.4) 5%,
+          rgba(0, 0, 0, 0.4) 5.5%
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 5%,
+          rgba(0, 0, 0, 0.4) 5%,
+          rgba(0, 0, 0, 0.4) 5.5%
+        );;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: black;
-        font-size: xx-large;
+      }
+      .pro-num .info{
+        color: rgb(255, 255, 255);
+        font-size: x-large;
         font-family: poppins;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgb(37, 37, 37);
+        animation: flip ease-in-out 1s;
+      }
+      @keyframes flip {
+        0%{
+          transform: rotateY(90deg);
+        }
+        100%{
+          transform: rotateY(0deg);
+        }
       }
       .pro-box .percent .pro-num span {
-        font-size: medium;
+        font-size: small;
         font-family: poppins;
       }
       .pro-stars {
-        width: fit-content;
+        width: 100%;
         display: flex;
         margin: auto;
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
+        background: rgb(255,208,114);
       }
       .pro-stars span {
-        font-size: larger;
+        font-size: x-large;
         margin: 1px;
+        color: rgb(0, 0, 0);
+        text-shadow: 2px 2px rgb(255, 255, 255);
       }
       .recents {
         width: 96%;
@@ -518,14 +573,22 @@
           <div class="pro-box">
             <div class="percent">
               <svg>
-                <circle cx="60" cy="60" r="60"></circle>
-                <circle cx="60" cy="60" r="60"></circle>
+                <circle cx="70" cy="70" r="70"></circle>
+                <circle cx="70" cy="70" r="70"></circle>
+                <animate id="p1"
+        attributeName="stroke-dashoffset"
+         begin="0.1s;f1.end+0.4s"
+         values="2037;0;2037"
+         dur="15s"
+         calcMode="linear"
+     />
               </svg>
-              <div class="pro-num">25<span>/100</span></div>
+              <div class="pro-num">
+                <div class="info"><%= score %><span>/<%= totalScore %></span></div></div>
             </div>
           </div>
           <div class="pro-stars">
-            <% for(var i=0;i<5;i++){ %>
+            <% for(var i=0;i<stars;i++){ %>
             <span class="material-icons-outlined"> star </span>
             <%}%>
           </div>
@@ -540,15 +603,25 @@
             <span>Points/Total</span>
           </div>
           <div class="submissions">
-            <% for(var i=0;i<50;i++){ %>
+            <% for(var i=0;i<data.length;i++){ %>
             <div class="submission">
-              <div class="subm-title"><a href="">Statement Name</a></div>
+              <div class="subm-title"><a href="/emailWriter/<%= data[i].emailId %>"><%= data[i].emailName %></a></div>
               <div class="subm-status">
-                <span class="material-icons-outlined"> done </span>
+                <span class="material-icons-outlined"> 
+                  <% if(data[i].evaluated) { %>
+                    done
+                  <%} else {%>
+                    remove
+                    <%}%>
+                  </span>
               </div>
               <div class="subm-points">
-                10
-                <span>/10</span>
+                <% if(data[i].evaluated){ %>
+                <%= data[i].score[4] %>
+                <span>/<%= data[i].emailScore %></span>
+                <%} else {%>
+                  - <span>/-</span>
+                  <%}%>
               </div>
             </div>
             <%}%>

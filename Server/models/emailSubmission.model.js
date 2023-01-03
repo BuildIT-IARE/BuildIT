@@ -14,6 +14,8 @@ var emailSubmissionSchema = new Schema({
   score: Array,
   submissionTime: String,
   evaluated: Boolean,
+  emailScore: Number,
+  emailName: String,
 });
 
 module.exports = mongoose.model("EmailSubmission", emailSubmissionSchema);
