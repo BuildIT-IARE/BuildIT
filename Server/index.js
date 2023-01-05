@@ -63,6 +63,7 @@ if (process.env.NODE_ENV === "production") {
 
 mongoose.Promise = global.Promise;
 moment.suppressDeprecationWarnings = true;
+mongoose.set('strictQuery', true);
 
 dbConfig = {
   url: process.env.dbURL,
@@ -140,6 +141,8 @@ require("./routes/emailSession.route")(app);
 require("./routes/emailQuestion.route")(app);
 // Require emailSubmission routes
 require("./routes/emailSubmission.route")(app);
+// Require twilio routes
+require("./routes/twilio.route")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
