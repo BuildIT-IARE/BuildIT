@@ -112,6 +112,35 @@ exports.create = (req, res) => {
     extraCurricularCount++;
   }
 
+  //extracting all Publications
+  var publicationsArray = [];
+  var publicationCount = 1;
+  while (req.body["Publication" + publicationCount]) {
+    publicationsArray.push(req.body["Publication" + publicationCount]);
+    publicationCount++;
+  }
+
+  var patentsArray = [];
+  var patentCount = 1;
+  while (req.body["Patent" + patentCount]) {
+    patentsArray.push(req.body["Patent" + patentCount]);
+    patentCount++;
+  }
+
+  var productsArray = [];
+  var productCount = 1;
+  while (req.body["EActivity" + productCount]) {
+    productsArray.push(req.body["EActivity" + productCount]);
+    productCount++;
+  }
+
+  var industrialDesignArray = [];
+  var industrialDesignCount = 1;
+  while (req.body["IndustrialDesign" + industrialDesignCount]) {
+    industrialDesignArray.push(req.body["IndustrialDesign" + industrialDesignCount]);
+    industrialDesignCount++;
+  }
+
   var personalInfo = new PersonalInfo({
     firstName: req.body.Fname,
     lastName: req.body.Lname,
@@ -186,26 +215,30 @@ exports.create = (req, res) => {
 
   Resume
     //findOneAndUpdate creates a new Doc if query is not found or updates the existing if found
-    .findOneAndUpdate(
-      { resumeId: req.body.username },
-      {
-        $set: {
-          resumeId: req.body.username,
-          themeId: req.body.theme,
-          personalSkills: personalSkillsArray,
-          professionalSkills: professionalSkillsArray,
-          projects: projectsArray,
-          achievements: achievementsArray,
-          extraCurricular: extraCurricularArray,
-          brief: brief,
-          personalInfo: personalInfo,
-          educationalInfo: educationalInfo,
-          internshipInfo: internshipInfo,
-          codingProfilesInfo: codingProfilesInfo,
-        },
+    .findOneAndUpdate({
+      resumeId: req.body.username
+    }, {
+      $set: {
+        resumeId: req.body.username,
+        themeId: req.body.theme,
+        personalSkills: personalSkillsArray,
+        professionalSkills: professionalSkillsArray,
+        projects: projectsArray,
+        achievements: achievementsArray,
+        extraCurricular: extraCurricularArray,
+        brief: brief,
+        personalInfo: personalInfo,
+        educationalInfo: educationalInfo,
+        internshipInfo: internshipInfo,
+        codingProfilesInfo: codingProfilesInfo,
+        publications: publicationsArray,
+        patents: patentsArray,
+        products: productsArray,
+        industrialDesigns: industrialDesignArray,
       },
-      { upsert: true }
-    )
+    }, {
+      upsert: true
+    })
     .then((resume) => {
       res
         .status(200)
@@ -246,7 +279,9 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-  Resume.findOne({ resumeId: req.params.username })
+  Resume.findOne({
+    resumeId: req.params.username
+  })
     .then((resume) => {
       res.send({
         success: true,

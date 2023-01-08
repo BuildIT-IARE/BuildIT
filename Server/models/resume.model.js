@@ -71,6 +71,7 @@ var codingProfilesSchema = new Schema ({
     spojProblems : Number,
 })
 
+
 var resumeSchema = new Schema ({
     //resumeId is RollNumber to differentiate among others
     resumeId: String,
@@ -84,6 +85,10 @@ var resumeSchema = new Schema ({
     codingProfilesInfo : codingProfilesSchema,
     achievements: Array, // arrays will look like this [[achievement name,achievement date]]
     extraCurricular : Array,
+    publications : Array,
+    patents : Array,
+    products : Array,
+    industrialDesigns : Array,
     themeId : String,
 });
 
