@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visitor Pass | OTP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+        height: 0vh;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        background: white;
+      }
+      .header {
+        width: 100%;
+        font-family: "Space Mono";
+        padding: 5px 0;
+      }
+      .header .title {
+        font-size: x-large;
+        width: fit-content;
+        padding: 10px 15px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+      }
+      .header .title span {
+        margin-right: 10px;
+        font-size: xx-large;
+        color: rgb(0, 161, 75);
+      }
+      .form {
+        width: 100%;
+        min-height: calc(100vh - 120px);
+        border-radius: 4mm;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-direction: column;
+      }
+      .form img {
+        position: absolute;
+        bottom: 5px;
+        right: 40px;
+        width: 120px;
+      }
+      #bigImg {
+        position: absolute;
+        left: -100px;
+        top: 20px;
+        width: 500px;
+      }
+      .form-data {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        position: relative;
+        padding: 20px 0;
+        width: fit-content;
+        box-sizing: content-box;
+        border-radius: 2mm;
+      }
+      .inputs {
+        display: flex;
+        align-items: center;
+      }
+      .form-data input {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        outline: none;
+        border: 0.5mm solid rgba(0, 0, 0, 0.379);
+        font-size: 20px;
+        font-family: poppins;
+        text-align: center;
+        margin: 5px;
+      }
+      .inputs input:focus {
+        border: 0.5mm solid rgb(139, 197, 63);
+      }
+      .btn {
+        width: 100%;
+        margin-top: 15px;
+      }
+      .btn button {
+        margin: auto;
+        display: block;
+        width: 300px;
+        background: rgb(0, 161, 75);
+        color: white;
+        font-size: medium;
+        font-family: poppins;
+        outline: none;
+        padding: 7px 0;
+        border: none;
+        border-radius: 1mm;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn button:hover {
+        background: rgb(139, 197, 63);
+      }
+      .footer {
+        background: linear-gradient(
+          90deg,
+          rgb(0, 161, 75) 30%,
+          rgb(139, 197, 63) 100%
+        );
+        width: 100%;
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .footer a {
+        text-decoration: none;
+        font-size: x-large;
+        font-family: poppins;
+        color: white;
+        font-weight: 500;
+        margin: 15px 20px;
+      }
+      .footer p {
+        font-family: poppins;
+        font-size: medium;
+        color: rgba(255, 255, 255, 0.92);
+        font-weight: 400;
+        margin-right: 20px;
+      }
+      .small-title {
+        font-size: large;
+        font-family: raleway;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+      }
+      .shake {
+        animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both
+          infinite;
+      }
+      @keyframes shake {
+        10%,
+        90% {
+          transform: translate3d(-1px, 0, 0);
+        }
+
+        20%,
+        80% {
+          transform: translate3d(2px, 0, 0);
+        }
+
+        30%,
+        50%,
+        70% {
+          transform: translate3d(-4px, 0, 0);
+        }
+
+        40%,
+        60% {
+          transform: translate3d(4px, 0, 0);
+        }
+      }
+      .form-data p {
+        font-family: raleway;
+        font-size: small;
+        color: rgb(255, 54, 54);
+        font-weight: 600;
+        opacity: 0;
+        transition: 0.25s;
+      }
+      .request {
+        background: none;
+        font-size: small;
+        font-family: poppins;
+        color: rgb(0, 161, 75);
+        outline: none;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 5px;
+      }
+      .rdisable {
+        color: rgb(150, 150, 150);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="header">
+      <div class="title">
+        <span class="material-icons-round"> confirmation_number </span>
+        Visitor Pass | IARE
+      </div>
+    </section>
+    <section class="form">
+      <div class="small-title">Enter OTP</div>
+      <img src="../images/visitorPass.svg" alt="" id="bigImg" />
+      <div class="form-data">
+        <span class="inputs">
+          <input type="text" name="OTP" maxlength="1" minlength="1" required />
+          <input type="text" name="OTP" maxlength="1" minlength="1" required />
+          <input
+            type="text"
+            name="OTP"
+            maxlength="1"
+            minlength="1"
+            required
+            style="margin-right: 18px"
+          />
+          <input type="text" name="OTP" maxlength="1" minlength="1" required />
+          <input type="text" name="OTP" maxlength="1" minlength="1" required />
+          <input type="text" name="OTP" maxlength="1" minlength="1" required />
+        </span>
+        <button type="button" class="request" onclick="requestOTP()">
+          Resend OTP <span id="timer"></span>
+        </button>
+        <p id="alert">Wrong OTP</p>
+        <span class="btn">
+          <button type="button" onclick="SubmitOTP()">Submit</button>
+        </span>
+        <script>
+          const inputs = document.querySelectorAll(".inputs input");
+
+          inputs.forEach((input, index) => {
+            input.dataset.index = index;
+            input.addEventListener("paste", handleOTPPaste);
+            input.addEventListener("keyup", handleOTP);
+          });
+
+          function handleOTPPaste(e) {
+            const data = e.clipboardData.getData("text");
+            const values = data.split("");
+            if (values.length == inputs.length) {
+              inputs.forEach((input, index) => {
+                input.value = values[index];
+              });
+            }
+          }
+
+          function handleOTP(e) {
+            const input = e.target;
+            let value = input.value;
+            input.value = "";
+            input.value = value ? value[0] : "";
+
+            let fieldIndex = input.dataset.index;
+            if (value.length > 0 && fieldIndex < inputs.length - 1) {
+              input.nextElementSibling.focus();
+            }
+
+            if (e.key === "Backspace" && fieldIndex > 0) {
+              input.previousElementSibling.focus();
+            }
+
+            if (fieldIndex == inputs.length - 1) {
+            }
+          }
+
+          function addHours(date, hours) {
+            date.setHours(date.getHours() + hours);
+
+            return date;
+          }
+          function SubmitOTP() {
+            let flag = 1;
+            let eindex = 0;
+            let otp = "";
+            inputs.forEach((input, index) => {
+              let data = input.value;
+              if (data == "" || !data.length == 1) {
+                if (flag == 1) {
+                  flag = 0;
+                  eindex = index;
+                }
+              } else {
+                otp += data;
+              }
+            });
+            if (flag) {
+              try {
+                var url = "<%= serverUrl %>/verifyOtp";
+                $.ajax({
+                  async: false,
+                  url: url,
+                  headers: {},
+                  type: "POST",
+                  data: JSON.stringify({
+                    countryCode: "+91",
+                    phoneNumber: "<%= phone %>",
+                    otp: otp,
+                    name: "<%= name %>",
+                    purpose: "<%= purpose %>",
+                    photo: "<%= photo %>",
+                  }),
+                  cache: false,
+                  contentType: "application/json; charset=utf-8",
+                  processData: false,
+                  dataType: "json",
+                  success: function (response) {
+                    console.log(response);
+                    var name = "VisitorPass",
+                      value = response.data,
+                      path = "/",
+                      ATS_getExpire = function () {
+                        const date = new Date();
+
+                        const newDate = addHours(date, 7);
+                        return newDate;
+                      };
+
+                    var curCookie = name + "=" + value;
+                    window.location.replace("/MyVisitorPass");
+                    document.cookie = curCookie;
+                  },
+                  error: function (error) {
+                    inputs.forEach((input) => {
+                      input.value = "";
+                    });
+                    inputs[0].focus();
+                    document.querySelector(".inputs").className =
+                      "inputs shake";
+                    setTimeout(() => {
+                      document.querySelector(".inputs").className = "inputs";
+                    }, 800);
+                    document.getElementById("alert").style.opacity = 1;
+                    setTimeout(() => {
+                      document.getElementById("alert").style.opacity = 0;
+                    }, 2000);
+                  },
+                });
+              } catch (err) {
+                inputs.forEach((input) => {
+                  input.value = "";
+                });
+                inputs[0].focus();
+                document.querySelector(".inputs").className = "inputs shake";
+                setTimeout(() => {
+                  document.querySelector(".inputs").className = "inputs";
+                }, 800);
+                document.getElementById("alert").style.opacity = 1;
+                setTimeout(() => {
+                  document.getElementById("alert").style.opacity = 0;
+                }, 2000);
+              }
+            } else {
+              inputs[eindex].focus();
+              document.querySelector(".inputs").className = "inputs shake";
+              setTimeout(() => {
+                document.querySelector(".inputs").className = "inputs";
+              }, 800);
+            }
+          }
+
+          function timer30() {
+            let btn = document.querySelector(".request");
+            btn.className = "request rdisable";
+            btn.disabled = true;
+            var time = 30;
+            const interval = setInterval(() => {
+              if (time == -1) {
+                document.getElementById("timer").innerHTML = "";
+                btn.className = "request";
+                btn.disabled = false;
+                clearInterval(interval);
+              } else {
+                document.getElementById("timer").innerHTML = time;
+                time = time - 1;
+              }
+            }, 1000);
+          }
+          timer30();
+          function requestOTP() {
+            try {
+              var url = "<%= serverUrl %>/sendOtp";
+              $.ajax({
+                async: false,
+                url: url,
+                headers: {},
+                type: "POST",
+                data: JSON.stringify({
+                  countryCode: "+91",
+                  phoneNumber: "<%= phone %>",
+                }),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                processData: false,
+                dataType: "json",
+                success: function (response) {
+                  timer30();
+                },
+                error: function (error) {
+                  window.location.reload();
+                },
+              });
+            } catch (err) {
+              window.location.reload();
+            }
+          }
+        </script>
+        <script src="plugins/jQuery/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      </div>
+      <img src="../images/visitorPass2.svg" alt="" class="img2" />
+    </section>
+    <section class="footer">
+      <a href="http://buildit.iare.ac.in/">BuildIT | IARE</a>
+      <p>
+        Copyright ©
+        <script>
+          var CurrentYear = new Date().getFullYear();
+          document.write(CurrentYear);
+        </script>
+      </p>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visitor Pass | Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <script src="../js/barcode.js"></script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+        height: 0vh;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        background: white;
+      }
+      .header {
+        width: 100%;
+        font-family: "Space Mono";
+        padding: 5px 0;
+      }
+      .header .title {
+        font-size: x-large;
+        width: fit-content;
+        padding: 10px 15px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+      }
+      .header .title span {
+        margin-right: 10px;
+        font-size: xx-large;
+        color: rgb(0, 161, 75);
+      }
+      .form {
+        width: 100%;
+        min-height: calc(100vh - 120px);
+        border-radius: 4mm;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-direction: column;
+      }
+      .pass {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 320px;
+        height: 320px;
+        border-radius: 2mm;
+        padding: 0;
+        overflow: hidden;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px,
+          rgba(0, 0, 0, 0.15) 0px 1px 3px 1px;
+        box-sizing: border-box;
+      }
+      .top {
+        width: 320px;
+        font-size: 75px;
+        font-family: "VT323";
+        letter-spacing: 10px;
+        background: rgb(255, 211, 80);
+        color: rgb(21, 21, 21);
+        padding: 0 10px;
+        padding-top: 15px;
+        box-sizing: border-box;
+        line-height: 45px;
+      }
+      .middle {
+        width: 100%;
+        padding: 10px;
+        flex-grow: 1;
+        box-sizing: border-box;
+      }
+      .middle .name {
+        font-size: 25px;
+        font-family: poppins;
+        font-weight: 500;
+        width: 280px;
+        word-wrap: break-word;
+        margin: 12px 0;
+      }
+      .middle .details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
+      .middle .details div {
+        display: flex;
+        width: fit-content;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        font-size: 20px;
+        font-family: poppins;
+        width: 100%;
+        text-align: center;
+        color: rgb(150, 150, 150);
+      }
+      .bottom {
+        width: 100%;
+        padding-bottom: 15px;
+        padding-top: 5px;
+        border-top: 0.5mm dashed rgb(45, 45, 45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer {
+        background: linear-gradient(
+          90deg,
+          rgb(0, 161, 75) 30%,
+          rgb(139, 197, 63) 100%
+        );
+        width: 100%;
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .footer a {
+        text-decoration: none;
+        font-size: x-large;
+        font-family: poppins;
+        color: white;
+        font-weight: 500;
+        margin: 15px 20px;
+      }
+      .footer p {
+        font-family: poppins;
+        font-size: medium;
+        color: rgba(255, 255, 255, 0.92);
+        font-weight: 400;
+        margin-right: 20px;
+      }
+      .small-title {
+        font-size: large;
+        font-family: raleway;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+      }
+      .image {
+        width: 100px;
+        height: 120px;
+      }
+      .image img {
+        width: 100px;
+        height: 120px;
+        overflow: hidden;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="header">
+      <div class="title">
+        <span class="material-icons-round"> confirmation_number </span>
+        Visitor Pass | IARE
+      </div>
+    </section>
+    <% if(data.status=="allocated") { %>
+    <section class="form">
+      <div class="pass">
+        <div class="top">IARE</div>
+        <div class="middle">
+          <div class="name"><%= data.name %></div>
+          <div class="details">
+            <div>
+              Visitor <%= new Date(data.date).getHours()+':'+new
+              Date(data.date).getMinutes() %>
+            </div>
+            <div class="image"></div>
+            <script>
+              let image = document.querySelector(".image");
+              var imgs = new Image();
+              imgs.src = "<%= data.photo %>";
+              image.append(imgs);
+            </script>
+          </div>
+        </div>
+        <div class="bottom">
+          <svg id="barcode"></svg>
+        </div>
+        <script>
+          JsBarcode("#barcode", "<%= data.allocatedId %>", {
+            width: 2,
+            height: 40,
+            displayValue: false,
+          });
+        </script>
+      </div>
+    </section>
+    <%}%>
+    <section class="footer">
+      <a href="http://buildit.iare.ac.in/">BuildIT | IARE</a>
+      <p>
+        Copyright ©
+        <script>
+          var CurrentYear = new Date().getFullYear();
+          document.write(CurrentYear);
+        </script>
+      </p>
+    </section>
+  </body>
+</html>
