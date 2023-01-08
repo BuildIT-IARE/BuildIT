@@ -63,6 +63,7 @@ if (process.env.NODE_ENV === "production") {
 
 mongoose.Promise = global.Promise;
 moment.suppressDeprecationWarnings = true;
+mongoose.set("strictQuery", true);
 
 dbConfig = {
   url: process.env.dbURL,
@@ -100,6 +101,7 @@ const facultyResume = require("../Server/controllers/facultyResume.controller.js
 const skillUp = require("../Server/controllers/skillUp.controller.js");
 const discussion = require("../Server/controllers/discussion.controller.js");
 const emailSession = require("../Server/controllers/emailSession.controller.js");
+const visitors = require("../Server/controllers/visitorAccess.controller.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -140,6 +142,10 @@ require("./routes/emailSession.route")(app);
 require("./routes/emailQuestion.route")(app);
 // Require emailSubmission routes
 require("./routes/emailSubmission.route")(app);
+// Require twilio routes
+require("./routes/twilio.route")(app);
+//Require visitor routes
+require("./routes/visitorAccess.route")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {

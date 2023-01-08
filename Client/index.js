@@ -59,7 +59,6 @@ app.use("/admin/add/practiceQuestion", express.static(__dirname + "/"));
 app.use("/admin/viewResumes", express.static(__dirname + "/"));
 
 app.use("/admin", express.static(__dirname + "/"));
-
 let countApiKey = process.env.countApiKey;
 let googleSheetsApi = process.env.googleSheetsApi;
 let prevDate = new Date().getDate();
@@ -3573,6 +3572,97 @@ app.get(
     }
   }
 );
+
+app.get("/visitorPass", async (req, res) => {
+  res.render("gatePassForm", { clientUrl: clientRoute });
+});
+
+app.post("/visitorOTP", async (req, res) => {
+  let options = {
+    url: serverRoute + "/sendOtp",
+    method: "post",
+    json: true,
+    body: {
+      phoneNumber: req.body.Phone,
+      countryCode: "+91",
+    },
+  };
+  request(options, (err, response, body) => {
+    if (body.success) {
+      res.render("visitorOTP", {
+        clientUrl: clientRoute,
+        serverUrl: serverRoute,
+        phone: req.body.Phone,
+        purpose: req.body.Purpose,
+        name: req.body.Name,
+        photo: req.body.Photo,
+      });
+    }
+  });
+});
+
+app.get("/admin/visitorPass", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    if (body.success) {
+      let options = {
+        url: serverRoute + "/admin/getVisitorData",
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      request(options, (err, response, body) => {
+        if (body.success) {
+          body.data.splice(0, 2);
+          body.data.sort(function (a, b) {
+            return new Date(b.date) - new Date(a.date);
+          });
+          res.render("visitorPassAdmin", {
+            data: body.data,
+            serverUrl: serverRoute,
+            token: req.cookies.token,
+          });
+        } else {
+          res.redirect("/admin");
+        }
+      });
+    } else {
+      res.redirect("/");
+    }
+  });
+});
+
+app.get("/MyVisitorPass", async (req, res) => {
+  if (req.cookies.VisitorPass) {
+    let options = {
+      url: serverRoute + "/getVisitorData/" + req.cookies.VisitorPass,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+    request(options, (err, response, body) => {
+      res.render("generatePass", { data: body.data });
+    });
+  } else {
+    res.redirect("/visitorPass");
+  }
+});
 
 app.get("*", async (req, res) => {
   res.render("404page");
