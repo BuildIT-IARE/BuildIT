@@ -2,10 +2,10 @@ const Visitor = require("../models/visitorAccess.model.js");
 const encrypt = require("../encrypt.js");
 exports.create = async (req, res) => {
   Visitor.find({}).then((visitors) => {
-    let count = visitors[0].CountValue + 1;
+    let count = visitors[0].countValue + 1;
     Visitor.findOneAndUpdate(
       { personId: visitors[0].personId },
-      { $set: { CountValue: count } }
+      { $set: { countValue: count } }
     ).then((data) => {
       console.log(data);
     });
@@ -122,6 +122,44 @@ exports.allocateVisitor = async (req, res) => {
       });
     });
 };
+
+exports.deallocateVisitor = (req,res) => {
+  Visitor.find({})
+    .then((visitors) => {
+      let data = visitors[1].visitorAllocatedId;
+      for (i = 0; i < data.length; i++) {
+        if (data[i][1] === req.params.personId) {
+          data[i][1] = ""
+          break;
+        }
+      }
+      Visitor.findOneAndUpdate(
+        {
+          personId: "allocation",
+        },
+        {
+          $set: {
+            visitorAllocatedId: data,
+          },
+        }
+      )
+      .then(() => {
+        res.status(200).send({
+          success : true
+        })
+      })
+      .catch((err) => {
+        res.status(400).send({
+          error: true,
+        });
+      });
+    })
+    .catch((err) => {
+      res.status(400).send({
+        error: true,
+      });
+    });
+}
 
 exports.findOne = async (req, res) => {
   let deid = encrypt.decrypt(req.params.personId);

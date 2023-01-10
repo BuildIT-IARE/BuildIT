@@ -10,7 +10,7 @@ var visitorAccessSchema = new Schema({
   personId: String,
   allocatedId: String,
   status: String,
-  CountValue: Number,
+  countValue: Number,
   visitorAllocatedId: Array,
   photo: String,
 });

@@ -3664,6 +3664,67 @@ app.get("/MyVisitorPass", async (req, res) => {
   }
 });
 
+app.get("/admin/emailSubmissions/:emailSubmissionId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/emailSubmissions/"+req.params.emailSubmissionId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.render("facultyEmailReport", {
+      data: body[0],
+      rollNumber: body[0].rollNumber,
+      submissionId: body[0].emailSubmissionId,
+      serverUrl: serverRoute,
+      token: req.cookies.token,
+    });
+  });
+})
+
+app.get("/admin/emailSessionQuestions/:emailId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/emailSessionQuestions/"+req.params.emailId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.render("emailQuestionsAdmin", {
+      data: body.data,
+      token: req.cookies.token,
+      url : {
+        serverUrl : serverRoute,
+        clientUrl : clientRoute
+      }
+    });
+  });
+})
+
+app.get("/admin/emailSessions", async (req, res) => {
+  let options = {
+    url: serverRoute + "/emailSessions",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.render("emailSessionsAdmin", {
+      data: body,
+      token: req.cookies.token,
+      url : {
+        serverUrl : serverRoute,
+        clientUrl : clientRoute
+      }
+    });
+  });
+})
 app.get("*", async (req, res) => {
   res.render("404page");
 });
