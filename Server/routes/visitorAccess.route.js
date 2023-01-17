@@ -18,6 +18,12 @@ module.exports = (app) => {
     middleware.checkTokenAdmin,
     visitor.allocateVisitor
   );
+  
+  app.get(
+    "/admin/deallocateVisitor/:personId",
+    middleware.checkTokenAdmin,
+    visitor.deallocateVisitor
+  );
 
   app.get("/getVisitorData/:personId", visitor.findOne);
 };
