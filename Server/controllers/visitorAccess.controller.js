@@ -67,15 +67,14 @@ exports.deleteVisitor = async (req, res) => {
     });
 };
 
-exports.allocateVisitor = async (req, res) => {
+exports.deallocateVisitor = (req, res) => {
+  console.log(req.params.personId);
   Visitor.find({})
     .then((visitors) => {
       let data = visitors[1].visitorAllocatedId;
-      let aid = "";
       for (i = 0; i < data.length; i++) {
-        if (data[i][1] == "") {
-          data[i][1] = req.params.personId;
-          aid = data[i][0];
+        if (data[i][1] === req.params.personId) {
+          data[i][1] = "";
           break;
         }
       }
@@ -94,91 +93,79 @@ exports.allocateVisitor = async (req, res) => {
             { personId: req.params.personId },
             {
               $set: {
-                status: "allocated",
-                allocatedId: aid,
+                status: "expired at" + new Date().toString(),
               },
             }
           )
             .then(() => {
-              res.send({
+              res.status(200).send({
                 success: true,
               });
             })
             .catch((err) => {
-              res.send({
+              res.status(400).send({
                 error: true,
               });
             });
         })
         .catch((err) => {
-          res.send({
+          res.status(400).send({
             error: true,
           });
         });
-    })
-    .catch((err) => {
-      res.send({
-        error: true,
-      });
-    });
-};
-
-exports.deallocateVisitor = (req,res) => {
-  Visitor.find({})
-    .then((visitors) => {
-      let data = visitors[1].visitorAllocatedId;
-      for (i = 0; i < data.length; i++) {
-        if (data[i][1] === req.params.personId) {
-          data[i][1] = ""
-          break;
-        }
-      }
-      Visitor.findOneAndUpdate(
-        {
-          personId: "allocation",
-        },
-        {
-          $set: {
-            visitorAllocatedId: data,
-          },
-        }
-      )
-      .then(() => {
-        res.status(200).send({
-          success : true
-        })
-      })
-      .catch((err) => {
-        res.status(400).send({
-          error: true,
-        });
-      });
     })
     .catch((err) => {
       res.status(400).send({
         error: true,
       });
     });
-}
+};
 
 exports.findOne = async (req, res) => {
-  let deid = encrypt.decrypt(req.params.personId);
-  Visitor.findOne({ personId: deid })
-    .then((visitor) => {
-      if (visitor) {
-        res.send({
-          success: true,
-          data: visitor,
-        });
-      } else {
+  try {
+    let deid = encrypt.decrypt(req.params.personId);
+    Visitor.findOne({ personId: deid })
+      .then((visitor) => {
+        if (visitor) {
+          res.send({
+            success: true,
+            data: visitor,
+          });
+        } else {
+          res.send({
+            success: false,
+          });
+        }
+      })
+      .catch((err) => {
         res.send({
           success: false,
         });
-      }
+      });
+  } catch {
+    res.send({
+      success: false,
+    });
+  }
+};
+
+exports.getAllocateData = async (req, res) => {
+  Visitor.find({})
+    .then((visitors) => {
+      res.send({
+        success: true,
+        data: visitors[1],
+      });
     })
     .catch((err) => {
-      res.send({
-        success: false,
-      });
+      res.send({ success: false });
     });
+};
+
+exports.adminViewPass = async (req, res) => {
+  let encrypted = encrypt.encrypt(req.params.personId);
+  res.status(200).send({
+    success: true,
+    value: encrypted,
+  });
 };

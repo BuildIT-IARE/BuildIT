@@ -4,11 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Visitor Pass | Form</title>
+    <title>Visitor Pass</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Radio+Canada:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -72,32 +76,38 @@
         justify-content: center;
         overflow: hidden;
         flex-direction: column;
+        background: rgb(235, 235, 235);
       }
       .pass {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 320px;
-        height: 320px;
-        border-radius: 2mm;
+        width: 380px;
+        height: fit-content;
+        max-height: fit-content;
         padding: 0;
-        overflow: hidden;
-        box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px,
-          rgba(0, 0, 0, 0.15) 0px 1px 3px 1px;
         box-sizing: border-box;
+        background: white;
+        position: relative;
       }
       .top {
-        width: 320px;
-        font-size: 75px;
-        font-family: "VT323";
-        letter-spacing: 10px;
-        background: rgb(255, 211, 80);
-        color: rgb(21, 21, 21);
-        padding: 0 10px;
-        padding-top: 15px;
-        box-sizing: border-box;
-        line-height: 45px;
+        width: 380px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 0;
+        height: fit-content;
+      }
+      .top-title {
+        font-family: poppins;
+        font-size: medium;
+        font-weight: 500;
+      }
+      .top img {
+        margin: auto;
+        width: 370px;
+        margin-top: 5px;
       }
       .middle {
         width: 100%;
@@ -106,12 +116,22 @@
         box-sizing: border-box;
       }
       .middle .name {
+        background: linear-gradient(
+          90deg,
+          rgb(0, 161, 75) 30%,
+          rgb(139, 197, 63) 100%
+        );
         font-size: 25px;
         font-family: poppins;
         font-weight: 500;
-        width: 280px;
+        width: 360px;
         word-wrap: break-word;
-        margin: 12px 0;
+        margin: 5px 0;
+        color: white;
+        box-sizing: border-box;
+        padding: 0 5px;
+        border-radius: 2mm;
+        margin-bottom: 12px;
       }
       .middle .details {
         display: flex;
@@ -119,26 +139,14 @@
         justify-content: space-between;
         width: 100%;
       }
-      .middle .details div {
-        display: flex;
-        width: fit-content;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        font-size: 20px;
-        font-family: poppins;
-        width: 100%;
-        text-align: center;
-        color: rgb(150, 150, 150);
-      }
       .bottom {
         width: 100%;
-        padding-bottom: 15px;
-        padding-top: 5px;
-        border-top: 0.5mm dashed rgb(45, 45, 45);
+        border-top: 0.6mm dashed rgba(45, 45, 45, 0.68);
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
+        background: rgb(225, 252, 227);
       }
       .footer {
         background: linear-gradient(
@@ -183,6 +191,133 @@
         overflow: hidden;
         object-fit: cover;
       }
+      .check {
+        font-family: poppins;
+        flex-grow: 1;
+        box-sizing: border-box;
+        padding-right: 5px;
+      }
+      .check-title {
+        font-size: x-large;
+        color: rgba(0, 0, 0, 0.523);
+      }
+      .time {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-grow: 1;
+        padding-bottom: 15px;
+        padding-top: 5px;
+        flex-wrap: wrap;
+      }
+      .inout {
+        display: flex;
+        width: fit-content;
+        flex-direction: column;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: justify;
+      }
+      .inout .label {
+        font-size: small;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.838);
+        letter-spacing: 1px;
+      }
+      .circle {
+        position: absolute;
+        width: 17px;
+        height: 34px;
+        top: -17px;
+        background: rgb(235, 235, 235);
+      }
+      .circle.left {
+        left: 0;
+        border-bottom-right-radius: 17px;
+        border-top-right-radius: 17px;
+      }
+      .circle.right {
+        right: 0;
+        border-top-left-radius: 17px;
+        border-bottom-left-radius: 17px;
+      }
+      .print {
+        background: none;
+        width: fit-content;
+        height: fit-content;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        color: rgb(3, 122, 15);
+        font-family: poppins;
+        font-size: small;
+        font-weight: 600;
+        padding-top: 10px;
+      }
+      .details-title {
+        font-size: x-large;
+        color: rgb(26, 26, 26);
+        font-family: "radio canada";
+        margin: auto;
+        width: 100%;
+        text-align: center;
+        padding-top: 15px;
+        font-weight: bold;
+      }
+      .bot-left {
+        padding-left: 25px;
+        padding-right: 20px;
+        border-right: 0.5mm solid rgba(51, 51, 51, 0.774);
+        padding-top: 5px;
+        padding-bottom: 15px;
+      }
+      .bot-right {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 5px;
+        padding-bottom: 15px;
+      }
+      @media print {
+        .pagebreak {
+          page-break-before: always;
+        }
+        .header {
+          display: none;
+        }
+        .footer {
+          display: none;
+        }
+        .print {
+          display: none;
+        }
+        body * {
+          visibility: hidden;
+        }
+        .pass,
+        .pass * {
+          visibility: visible;
+        }
+        .pass {
+          transform: scale(2);
+          border: 0.5mm solid rgb(49, 49, 49);
+          height: 390px;
+        }
+        .circle {
+          background: white;
+          border: 0.5mm solid rgb(49, 49, 49);
+        }
+        .circle.left {
+          border-left: none;
+          left: -3px;
+        }
+        .circle.right {
+          border-right: none;
+          right: -3px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -195,14 +330,56 @@
     <% if(data.status=="allocated") { %>
     <section class="form">
       <div class="pass">
-        <div class="top">IARE</div>
+        <div class="top">
+          <img src="../images/iare_page_header.png" alt="" />
+        </div>
         <div class="middle">
           <div class="name"><%= data.name %></div>
           <div class="details">
-            <div>
-              Visitor <%= new Date(data.date).getHours()+':'+new
-              Date(data.date).getMinutes() %>
+            <div class="check">
+              <div class="time">
+                <div class="inout">
+                  <div class="label">Check-in</div>
+                  <%= new Date(data.date).getHours()+':'+new
+                  Date(data.date).getMinutes() %>
+                </div>
+
+                <div class="inout">
+                  <div class="label">Date</div>
+                  <%= new Date().toDateString() %>
+                </div>
+                <div class="inout">
+                  <div class="label">Phone</div>
+                  <%= data.phoneNumber %>
+                </div>
+              </div>
+              <div class="time">
+                <div class="inout">
+                  <div class="label">Validity</div>
+                  1 Day
+                </div>
+                <div class="inout">
+                  <div class="label">Purpose</div>
+                  <%= data.purpose %>
+                </div>
+                <div class="inout">
+                  <div class="label">Host</div>
+                  <%= data.host %>
+                </div>
+              </div>
+              <div class="time">
+                <div class="inout">
+                  <div class="label">Address</div>
+                  <%= data.address %>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+        <div class="bottom">
+          <div class="circle left"></div>
+          <div class="circle right"></div>
+          <div class="bot-left">
             <div class="image"></div>
             <script>
               let image = document.querySelector(".image");
@@ -211,18 +388,23 @@
               image.append(imgs);
             </script>
           </div>
-        </div>
-        <div class="bottom">
-          <svg id="barcode"></svg>
+          <div class="bot-right">
+            <div class="details-title">Visitor Pass</div>
+            <svg id="barcode"></svg>
+          </div>
         </div>
         <script>
-          JsBarcode("#barcode", "<%= data.allocatedId %>", {
-            width: 2,
-            height: 40,
+          JsBarcode("#barcode", "<%= data.allocatedId %>+<%= pval %>", {
+            width: 1.1,
+            height: 60,
             displayValue: false,
+            background: "rgb(225, 252, 227)",
           });
         </script>
       </div>
+      <button type="button" onclick="window.print()" class="print">
+        Print Pass
+      </button>
     </section>
     <%}%>
     <section class="footer">

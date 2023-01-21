@@ -3596,6 +3596,8 @@ app.post("/visitorOTP", async (req, res) => {
         purpose: req.body.Purpose,
         name: req.body.Name,
         photo: req.body.Photo,
+        host: req.body.Host,
+        address: req.body.Address,
       });
     }
   });
@@ -3627,14 +3629,37 @@ app.get("/admin/visitorPass", async (req, res) => {
       };
       request(options, (err, response, body) => {
         if (body.success) {
-          body.data.splice(0, 2);
-          body.data.sort(function (a, b) {
-            return new Date(b.date) - new Date(a.date);
-          });
-          res.render("visitorPassAdmin", {
-            data: body.data,
-            serverUrl: serverRoute,
-            token: req.cookies.token,
+          let options = {
+            url: serverRoute + "/admin/getAllocateData",
+            method: "get",
+            headers: {
+              authorization: req.cookies.token,
+            },
+            json: true,
+          };
+          request(options, (err, response, body1) => {
+            body.data.splice(0, 2);
+            body.data.sort(function (a, b) {
+              return new Date(b.date) - new Date(a.date);
+            });
+            let total = 0;
+            let running = 0;
+            let free = 0;
+            body1.data.visitorAllocatedId.forEach((vid) => {
+              if (vid[1] == "") {
+                free += 1;
+              }
+              total += 1;
+            });
+            running = total - free;
+            res.render("visitorPassAdmin", {
+              data: body.data,
+              serverUrl: serverRoute,
+              token: req.cookies.token,
+              total: total,
+              running: running,
+              free: free,
+            });
           });
         } else {
           res.redirect("/admin");
@@ -3646,27 +3671,32 @@ app.get("/admin/visitorPass", async (req, res) => {
   });
 });
 
-app.get("/MyVisitorPass", async (req, res) => {
-  if (req.cookies.VisitorPass) {
-    let options = {
-      url: serverRoute + "/getVisitorData/" + req.cookies.VisitorPass,
-      method: "get",
-      headers: {
-        authorization: req.cookies.token,
-      },
-      json: true,
-    };
-    request(options, (err, response, body) => {
-      res.render("generatePass", { data: body.data });
-    });
-  } else {
-    res.redirect("/visitorPass");
-  }
+app.get("/visitorPass/:personId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/getVisitorData/" + req.params.personId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    if (body.success) {
+      let val = body.data.personId.split("IAREVISITOR")[1];
+      res.render("generatePass", { data: body.data, pval: val });
+    } else {
+      res.redirect("/visitorPass");
+    }
+  });
+});
+
+app.get("/visitorMessage", async (req, res) => {
+  res.render("visitorMessage");
 });
 
 app.get("/admin/emailSubmissions/:emailSubmissionId", async (req, res) => {
   let options = {
-    url: serverRoute + "/emailSubmissions/"+req.params.emailSubmissionId,
+    url: serverRoute + "/emailSubmissions/" + req.params.emailSubmissionId,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -3682,11 +3712,11 @@ app.get("/admin/emailSubmissions/:emailSubmissionId", async (req, res) => {
       token: req.cookies.token,
     });
   });
-})
+});
 
 app.get("/admin/emailSessionQuestions/:emailId", async (req, res) => {
   let options = {
-    url: serverRoute + "/emailSessionQuestions/"+req.params.emailId,
+    url: serverRoute + "/emailSessionQuestions/" + req.params.emailId,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -3697,13 +3727,13 @@ app.get("/admin/emailSessionQuestions/:emailId", async (req, res) => {
     res.render("emailQuestionsAdmin", {
       data: body.data,
       token: req.cookies.token,
-      url : {
-        serverUrl : serverRoute,
-        clientUrl : clientRoute
-      }
+      url: {
+        serverUrl: serverRoute,
+        clientUrl: clientRoute,
+      },
     });
   });
-})
+});
 
 app.get("/admin/emailSessions", async (req, res) => {
   let options = {
@@ -3718,13 +3748,13 @@ app.get("/admin/emailSessions", async (req, res) => {
     res.render("emailSessionsAdmin", {
       data: body,
       token: req.cookies.token,
-      url : {
-        serverUrl : serverRoute,
-        clientUrl : clientRoute
-      }
+      url: {
+        serverUrl: serverRoute,
+        clientUrl: clientRoute,
+      },
     });
   });
-})
+});
 app.get("*", async (req, res) => {
   res.render("404page");
 });
