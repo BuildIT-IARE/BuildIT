@@ -327,28 +327,21 @@
                     name: "<%= name %>",
                     purpose: "<%= purpose %>",
                     photo: "<%= photo %>",
+                    host: "<%= host %>",
+                    address: "<%= address %>",
                   }),
                   cache: false,
                   contentType: "application/json; charset=utf-8",
                   processData: false,
                   dataType: "json",
                   success: function (response) {
-                    console.log(response);
-                    var name = "VisitorPass",
-                      value = response.data,
-                      path = "/",
-                      ATS_getExpire = function () {
-                        const date = new Date();
-
-                        const newDate = addHours(date, 7);
-                        return newDate;
-                      };
-
-                    var curCookie = name + "=" + value;
-                    window.location.replace("/MyVisitorPass");
-                    document.cookie = curCookie;
+                    window.location.replace("/visitorMessage");
                   },
                   error: function (error) {
+                    if (error.responseJSON.alert) {
+                      alert("You have already registered");
+                      window.location.replace("/myVisitorPass");
+                    }
                     inputs.forEach((input) => {
                       input.value = "";
                     });
@@ -365,6 +358,7 @@
                   },
                 });
               } catch (err) {
+                console.log(err);
                 inputs.forEach((input) => {
                   input.value = "";
                 });
