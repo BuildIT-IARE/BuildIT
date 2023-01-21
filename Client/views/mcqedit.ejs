@@ -31,7 +31,7 @@
   </head>
   <body>
     <div class="container">
-      <% include ../views/partials/adminpanel %>
+      <%- include ("../views/partials/adminpanel") -%>
       <header>
         <h1>Manage Questions<span style="color: white">Edit MCQ 's</span></h1>
       </header>
@@ -62,7 +62,7 @@
           </div>
           <h4>Add Picture</h4>
           <div class="wrapper" style="margin: 0">
-            <input type="file" name="photo" id="input-files" accept="image/*"/>
+            <input type="file" name="photo" id="input-files" accept="image/*" />
           </div>
           <h4>Contest ID</h4>
           <input name="contestId" type="text" value="<%= data.contestId %>" />
@@ -120,16 +120,16 @@
     </script>
     <script>
       function verifyImage() {
-        var input = document.getElementById('input-files');
+        var input = document.getElementById("input-files");
         var oFile = input.files[0];
-        if( !oFile.type.includes('image') ) // Allowed Extensions
-        {
+        if (!oFile.type.includes("image")) {
+          // Allowed Extensions
           window.alert("Allowed Extensions are : *.jpeg,*.jpg,*.png");
           return false;
         }
-        
-        if (oFile.size > 204800 ) // 200 KiB for bytes.
-        {
+
+        if (oFile.size > 204800) {
+          // 200 KiB for bytes.
           window.alert("File size must be under 200KiB!");
           return false;
         }

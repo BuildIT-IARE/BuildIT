@@ -9,7 +9,7 @@
   </head>
 
   <body>
-    <% include ../views/partials/adminpanel %>
+    <%- include ("../views/partials/adminpanel") -%>
     <br /><br /><br /><br /><br />
     <div class="w3-container" style="background: white">
       <h2 style="text-align: center">Contest Id - <%= datap[0].contestId %></h2>
@@ -20,25 +20,24 @@
       <hr />
       <table class="w3-table w3-striped" id="results">
         <tr>
-            <th>Username</th>
-            <th>Contest ID</th>
-            <th>Participation Time</th>
-            <th>Score</th>
+          <th>Username</th>
+          <th>Contest ID</th>
+          <th>Participation Time</th>
+          <th>Score</th>
         </tr>
         <% for(let i=0; i < datap.length; i++){ %>
         <tr>
-            <td>
-                <%= datap[i].username %>
-            </td>
-            <td>
-                <%= datap[i].contestId %>
-            </td>
-            <td>
-                <%= datap[i].participationTime.slice(0,datap[i].participationTime.length - 9 ) %>
-            </td>
-            <td>
-                <%= datap[i].mcqResults.totalScore + datap[i].totalSubmissionResultsScore %>
-            </td>
+          <td><%= datap[i].username %></td>
+          <td><%= datap[i].contestId %></td>
+          <td>
+            <%=
+            datap[i].participationTime.slice(0,datap[i].participationTime.length
+            - 9 ) %>
+          </td>
+          <td>
+            <%= datap[i].mcqResults.totalScore +
+            datap[i].totalSubmissionResultsScore %>
+          </td>
         </tr>
         <% } %>
       </table>
