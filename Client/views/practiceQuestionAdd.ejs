@@ -1,118 +1,89 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin menu</title>
-    <meta
-      name="description"
-      content="A sidebar menu as seen on the Google Nexus 7 website"
-    />
-    <meta
-      name="keywords"
-      content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu"
-    />
-    <meta name="author" content="Codrops" />
-    <link rel="shortcut icon" href="../favicon.ico" />
-    <link rel="stylesheet" href="../../css/navadmin.css" />
-    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
-    <script src="/adminjs/modernizr.custom.js"></script>
-  </head>
 
-  <body>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin menu</title>
+    <meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
+    <meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
+    <meta name="author" content="Codrops" />
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../../css/navadmin.css">
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png">
+    <script src="/adminjs/modernizr.custom.js"></script>
+</head>
+
+<body>
     <div class="container">
-      <%- include ("../views/partials/adminpanel") -%>
-      <header>
-        <h1>
-          Manage Practice Questions<span style="color: white"
-            >Add Questions</span
-          >
-        </h1>
-      </header>
-      <div class="main-block">
-        <form
-          action="<%= data.serverurl %>/questiontutorialsExcel"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <h1>Upload Excel File Here</h1>
-          <a href="./images/sample-practice.csv">Sample CSV</a><br />
-          <input type="file" name="upfile" value="" />
-          <textarea
-            type="hidden"
-            name="token"
-            id="token2"
-            value="<%= token %>"
-            style="display: none"
-          ></textarea>
-          <div class="btn-block">
-            <button class="submit" type="submit" href="/">Send</button>
-          </div>
-        </form>
-        <hr />
-        <br />
-      </div>
-      <div class="main-block">
-        <form
-          action="<%= data.serverurl %>/questiontutorials"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <h1>Add Question Manually</h1>
-          <h4>Question ID</h4>
-          <input name="questionId" type="text" />
-          <h4>Question Name</h4>
-          <input name="questionName" type="text" />
-          <p class="comments">Description</p>
-          <textarea name="questionDescriptionText" rows="30"></textarea>
-          <p class="comments">Input Format:</p>
-          <textarea name="questionInputText" rows="10"></textarea>
-          <p class="comments">Output Format:</p>
-          <textarea name="questionOutputText" rows="10"></textarea>
-          <p class="comments">Example Input 1:</p>
-          <textarea name="questionExampleInput1" rows="10"></textarea>
-          <p class="comments">Example Output 1:</p>
-          <textarea name="questionExampleOutput1" rows="10"></textarea>
-          <p class="comments">Hidden Input 1:</p>
-          <textarea name="questionHiddenInput1" rows="10"></textarea>
-          <p class="comments">Hidden Output 1:</p>
-          <textarea name="questionHiddenOutput1" rows="10"></textarea>
-          <p class="comments">Hidden Input 2:</p>
-          <textarea name="questionHiddenInput2" rows="10"></textarea>
-          <p class="comments">Hidden Output 2:</p>
-          <textarea name="questionHiddenOutput2" rows="10"></textarea>
-          <p class="comments">Hidden Input 3:</p>
-          <textarea name="questionHiddenInput3" rows="10"></textarea>
-          <p class="comments">Hidden Output 3:</p>
-          <textarea name="questionHiddenOutput3" rows="10"></textarea>
-          <p class="comments">Explanation</p>
-          <textarea name="questionExplanation" rows="30"></textarea>
-          <p class="comments">Company:</p>
-          <textarea name="company" rows="10"></textarea>
-          <p class="comments">Topic:</p>
-          <textarea name="topic" rows="10"></textarea>
-          <textarea
-            type="hidden"
-            name="token"
-            id="token"
-            value="<%= token %>"
-            style="display: none"
-          ></textarea>
-          <br /><br />
-          <button class="submit" type="submit" href="/">Send</button>
-        </form>
-      </div>
-    </div>
-    <!-- /container -->
+        <% include ../views/partials/adminpanel %>
+            <header>
+                <h1>Manage Practice Questions<span style="color:white">Add Questions</span></h1>
+            </header>
+            <div class="main-block">
+
+                <form action="<%= data.serverurl %>/questiontutorialsExcel" method="POST" enctype="multipart/form-data">
+                    <h1>Upload Excel File Here</h1>
+                    <a href="./images/sample-practice.csv">Sample CSV</a><br>
+                    <input type="file" name="upfile" value="">
+                    <textarea type="hidden" name="token" id="token2" value="<%= token %>" style="display: none;"></textarea>
+                    <div class="btn-block">
+                        <button class="submit" type="submit" href="/">Send</button>
+                    </div>
+                </form>
+                <hr><br>
+            </div>
+            <div class="main-block">
+                <form action="<%= data.serverurl %>/questiontutorials" method="POST" enctype="multipart/form-data">
+                    <h1>Add Question Manually</h1>
+                    <h4>Question ID</h4>
+                    <input name="questionId" type="text" />
+                    <h4>Question Name</h4>
+                    <input name="questionName" type="text" />
+                    <p class="comments">Description</p>
+                    <textarea name="questionDescriptionText" rows="30"></textarea>
+                    <p class="comments">Input Format:</p>
+                    <textarea name="questionInputText" rows="10"></textarea>
+                    <p class="comments">Output Format:</p>
+                    <textarea name="questionOutputText" rows="10"></textarea>
+                    <p class="comments">Example Input 1:</p>
+                    <textarea name="questionExampleInput1" rows="10"></textarea>
+                    <p class="comments">Example Output 1:</p>
+                    <textarea name="questionExampleOutput1" rows="10"></textarea>
+                    <p class="comments">Hidden Input 1:</p>
+                    <textarea name="questionHiddenInput1" rows="10"></textarea>
+                    <p class="comments">Hidden Output 1:</p>
+                    <textarea name="questionHiddenOutput1" rows="10"></textarea>
+                    <p class="comments">Hidden Input 2:</p>
+                    <textarea name="questionHiddenInput2" rows="10"></textarea>
+                    <p class="comments">Hidden Output 2:</p>
+                    <textarea name="questionHiddenOutput2" rows="10"></textarea>
+                    <p class="comments">Hidden Input 3:</p>
+                    <textarea name="questionHiddenInput3" rows="10"></textarea>
+                    <p class="comments">Hidden Output 3:</p>
+                    <textarea name="questionHiddenOutput3" rows="10"></textarea>
+                    <p class="comments">Explanation</p>
+                    <textarea name="questionExplanation" rows="30"></textarea>
+                    <p class="comments">Company:</p>
+                    <textarea name="company" rows="10"></textarea>
+                    <p class="comments">Topic:</p>
+                    <textarea name="topic" rows="10"></textarea>
+                    <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
+                    <br><br>
+                    <button class="submit" type="submit" href="/">Send</button>
+                </form>
+            </div>
+    </div><!-- /container -->
     <script src="/adminjs/classie.js"></script>
     <script src="/adminjs/gnmenu.js"></script>
     <script>
-      new gnMenu(document.getElementById("gn-menu"));
+        new gnMenu(document.getElementById('gn-menu'));
     </script>
     <script>
-      document.getElementById("token").value = "<%= token %>";
-      document.getElementById("token2").value = "<%= token %>";
+        document.getElementById("token").value = "<%= token %>";
+        document.getElementById("token2").value = "<%= token %>";
     </script>
-  </body>
+</body>
+
 </html>

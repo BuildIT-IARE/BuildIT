@@ -1,54 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <title>Manage Users</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="../css/navadmin.css" />
-  <link rel="stylesheet" href="../css/w3.css" />
-  <head>
-    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
-  </head>
+<title>Manage Users</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../css/navadmin.css">
+<link rel="stylesheet" href="../css/w3.css">
+<head>
+	<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+</head>
 
-  <body>
-    <%- include ("../views/partials/adminpanel") -%>
-    <br /><br /><br /><br /><br />
+<body>
+	<% include ../views/partials/adminpanel %>
+      <br><br><br><br><br>
 
-    <div class="w3-container" style="background: white">
-      <h2 style="text-align: center">BuildIT Complaints</h2>
+<div class="w3-container" style="background: white;">
 
-      <br />
-      <hr />
-      <table class="w3-table w3-striped">
-        <tr>
-          <th>S.No.</th>
-          <th>QuestionId</th>
-          <th>Username</th>
-          <th>Complain Subject</th>
-          <th>Complain Description</th>
-          <th>Resolve</th>
-        </tr>
-        <% for(let i=0; i < data.length; i++){ %>
-        <tr>
-          <td><%= i+1 %></td>
-          <td><%= data[i].questionId %></td>
-          <td><%= data[i].username %></td>
-          <td><%= data[i].complainSubject %></td>
-          <td><%= data[i].complainDesc %></td>
-          <td>
-            <a
-              href="<%= data[i].url %>/admin/deletecomplain/<%= data[i].questionId %>"
-              >Solved</a
-            >
-          </td>
-        </tr>
-        <% } %>
-      </table>
-      <br />
-      <br />
-    </div>
-    <script src="/adminjs/classie.js"></script>
-    <script src="/adminjs/gnmenu.js"></script>
-    <script>
-      new gnMenu(document.getElementById("gn-menu"));
-    </script>
-  </body>
+    <h2 style="text-align: center">BuildIT Complaints</h2>
+
+	<br><hr>
+  <table class="w3-table w3-striped">
+    <tr>
+    <th>S.No.</th>
+	  <th> QuestionId</th>
+    <th> Username</th>
+	  <th> Complain Subject</th>
+    <th> Complain Description</th>
+    <th> Resolve</th>
+    </tr>
+<% for(let i=0; i < data.length; i++){ %>
+    <tr>
+		<td><%= i+1 %></td>
+    <td><%= data[i].questionId %></td>
+		<td><%= data[i].username %></td> 
+		<td><%= data[i].complainSubject %></td> 		
+    <td><%= data[i].complainDesc %></td>
+    <td><a href = "<%= data[i].url %>/admin/deletecomplain/<%= data[i].questionId %>">Solved</a></td>
+	</tr>  
+<% } %>
+ 
+  </table>
+  <br>
+  <br>
+  
+</div>
+<script src="/adminjs/classie.js"></script>
+<script src="/adminjs/gnmenu.js"></script>
+<script>
+  new gnMenu( document.getElementById( 'gn-menu' ) );
+</script>
+
+</body>
 </html>
