@@ -71,6 +71,8 @@
         justify-content: center;
         overflow: hidden;
         flex-direction: column;
+        scroll-behavior: smooth;
+        transition: 0.25s;
       }
       .form img {
         position: absolute;
@@ -87,14 +89,29 @@
       .form-data {
         display: flex;
         align-items: center;
-        flex-direction: column;
-        border: 0.5mm solid rgb(47, 47, 47);
         position: relative;
         padding: 50px 0;
-        width: fit-content;
+        width: 373px;
         box-sizing: content-box;
         border-radius: 2mm;
         position: relative;
+        margin-bottom: 40px;
+        overflow: hidden;
+        scroll-behavior: smooth !important;
+      }
+      .form-cover {
+        border: 0.5mm solid rgb(47, 47, 47);
+        position: relative;
+        width: fit-content;
+        border-radius: 2mm;
+      }
+      .split {
+        width: 373px;
+        min-width: 373px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        scroll-behavior: smooth !important;
       }
       .circle {
         position: absolute;
@@ -104,6 +121,7 @@
         transform: translate(-50%, 0%);
         border: 0.5mm solid rgb(48, 48, 48);
         background: white;
+        z-index: 9999;
       }
       .circle.left {
         top: -2px;
@@ -137,6 +155,19 @@
         transition: 0.25s;
         background: transparent;
       }
+      .inputf textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        height: 115px;
+        font-family: poppins;
+        font-size: 14px;
+        outline: none;
+        border: none;
+        border-bottom: 0.5mm solid rgba(54, 54, 54, 0.55);
+        transition: 0.25s;
+        background: transparent;
+      }
       .inputf .label {
         font-size: 12px;
         font-weight: 500;
@@ -155,6 +186,9 @@
         width: 100%;
         border-top: 0.55mm dashed rgb(27, 27, 27);
         margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
       }
       .btn button {
         margin: auto;
@@ -256,6 +290,9 @@
         align-items: center;
         justify-content: space-evenly;
       }
+      .smallBtn button {
+        width: 40%;
+      }
     </style>
   </head>
   <body>
@@ -268,70 +305,127 @@
     <section class="form">
       <div class="small-title">Welcome to IARE</div>
       <img src="../images/visitorPass.svg" alt="" id="bigImg" />
-      <form
-        class="form-data"
-        method="post"
-        action="<%= clientUrl %>/visitorOTP"
-      >
+      <div class="form-cover">
         <div class="circle left"></div>
         <div class="circle right"></div>
-        <span class="inputf">
-          <span class="label">Full Name*</span>
-          <input
-            type="text"
-            id="Name"
-            placeholder="Full Name"
-            required
-            name="Name"
-          />
-        </span>
-        <span class="inputf">
-          <span class="label">Phone Number*</span>
-          <input
-            type="text"
-            id="Phone"
-            placeholder="Phone Number"
-            required
-            minlength="10"
-            name="Phone"
-          />
-        </span>
-        <span class="inputf">
-          <span class="label">Purpose of Visit</span>
-          <input
-            type="text"
-            id="Purpose"
-            placeholder="Purpose"
-            name="Purpose"
-          />
-        </span>
-        <span class="imagef">
-          Capture Photo
-          <button type="button" id="cam-btn" onclick="capture()">
-            <span class="material-icons"> photo_camera </span>
-          </button>
-        </span>
-        <input
-          type="text"
-          name="Photo"
-          id="photo"
-          required
-          oninvalid="this.setCustomValidity('Please Capture Image')"
-          style="opacity: 0; width: 0; height: 0"
-        />
-        <span class="image-capture">
-          <div id="container">
-            <video width="150" height="200" autoplay="true" id="video"></video>
-          </div>
-          <canvas
-            id="canvas"
-            style="overflow: hidden; object-fit: cover"
-          ></canvas>
-        </span>
-        <span class="btn">
-          <button type="submit">Submit</button>
-        </span>
-      </form>
+        <form
+          class="form-data"
+          method="post"
+          action="<%= clientUrl %>/visitorOTP"
+          id="myForm"
+        >
+          <span class="split">
+            <span class="inputf">
+              <span class="label">Full Name*</span>
+              <input
+                type="text"
+                id="Name"
+                placeholder="Full Name"
+                required
+                name="Name"
+                maxlength="25"
+              />
+            </span>
+            <span class="inputf">
+              <span class="label">Phone Number*</span>
+              <input
+                type="text"
+                id="Phone"
+                placeholder="Phone Number"
+                required
+                minlength="10"
+                name="Phone"
+              />
+            </span>
+            <span class="inputf">
+              <span class="label">Purpose of Visit*</span>
+              <input
+                type="text"
+                id="Purpose"
+                placeholder="Purpose"
+                name="Purpose"
+                required
+                maxlength="25"
+              />
+            </span>
+            <span class="btn">
+              <button type="button" onclick="moveRight(1)">Next</button>
+            </span>
+          </span>
+          <span class="split">
+            <span class="inputf">
+              <span class="label">Your Host*</span>
+              <input
+                type="text"
+                id="Host"
+                placeholder="Your Host"
+                required
+                name="Host"
+                value=""
+              />
+            </span>
+            <span class="inputf">
+              <span class="label">Address*</span>
+              <textarea
+                name="Address"
+                id="address"
+                placeholder="Address"
+                required
+              ></textarea>
+            </span>
+            <span class="btn smallBtn">
+              <button
+                type="button"
+                style="background: rgb(48, 48, 48)"
+                onclick="moveLeft()"
+              >
+                Back
+              </button>
+              <button type="button" onclick="moveRight(2)">Next</button>
+            </span>
+          </span>
+          <span class="split">
+            <span class="imagef">
+              Capture Photo
+              <button type="button" id="cam-btn" onclick="capture()">
+                <span class="material-icons"> photo_camera </span>
+              </button>
+            </span>
+            <input
+              type="text"
+              name="Photo"
+              id="photo"
+              required
+              oninvalid="this.setCustomValidity('Please Capture Image')"
+              style="opacity: 0; width: 0; height: 0"
+            />
+            <span class="image-capture">
+              <div id="container">
+                <video
+                  width="150"
+                  height="200"
+                  autoplay="true"
+                  id="video"
+                ></video>
+              </div>
+              <canvas
+                id="canvas"
+                style="overflow: hidden; object-fit: cover"
+              ></canvas>
+            </span>
+            <span class="btn smallBtn">
+              <button
+                type="button"
+                style="background: rgb(48, 48, 48)"
+                onclick="moveLeft()"
+              >
+                Back
+              </button>
+              <button type="submit">Submit</button>
+            </span>
+          </span>
+        </form>
+      </div>
       <img src="../images/visitorPass2.svg" alt="" class="img2" />
       <script>
         var video = document.querySelector("#video");
@@ -352,6 +446,7 @@
           let ch = window.innerHeight + 250;
           let cw = window.innerWidth;
           if (cw > 500) {
+            console.log(10);
             cw = cw / 8;
             ch = ch / 8;
           } else {
@@ -367,6 +462,37 @@
           document.getElementById("photo").value = resultb64;
         }
       </script>
+
+      <script>
+        function moveLeft() {
+          let forms = document.querySelector(".form-data");
+          forms.scrollBy(-373, 0);
+        }
+        function moveRight(value) {
+          let $inputs = $(":input");
+          if (value == 1) {
+            if (
+              $inputs[0].checkValidity() &&
+              $inputs[1].checkValidity() &&
+              $inputs[2].checkValidity()
+            ) {
+              let forms = document.querySelector(".form-data");
+              forms.scrollBy(373, 0);
+            } else {
+              var $myForm = $("#myForm");
+              $myForm.find(":submit").click();
+            }
+          } else if (value == 2) {
+            if ($inputs[4].checkValidity() && $inputs[5].checkValidity()) {
+              let forms = document.querySelector(".form-data");
+              forms.scrollBy(373, 0);
+            } else {
+              var $myForm = $("#myForm");
+              $myForm.find(":submit").click();
+            }
+          }
+        }
+      </script>
     </section>
     <section class="footer">
       <a href="http://buildit.iare.ac.in/">BuildIT | IARE</a>
@@ -378,5 +504,7 @@
         </script>
       </p>
     </section>
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </body>
 </html>
