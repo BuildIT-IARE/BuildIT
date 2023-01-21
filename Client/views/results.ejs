@@ -9,7 +9,7 @@
   </head>
 
   <body>
-    <%- include ("../views/partials/adminpanel") -%>
+    <% include ../views/partials/adminpanel %>
     <br /><br /><br /><br /><br />
     <div class="w3-container" style="background: white">
       <h2 style="text-align: center">Contest Id - <%= datap[0].contestId %></h2>
@@ -33,9 +33,11 @@
             <%= datap[i].participationTime.slice(0,
             datap[i].participationTime.length - 9 ) %>
           </td>
-          <% var totalScore = 0; %> <% if (datap[i].submissionResults.length !==
-          0){ %> <% for (let j = 0;j < datap[i].submissionResults.length ; j++
-          ){ %> <% totalScore+= datap[i].submissionResults[j].score %> <% } %>
+          <% var totalScore = 0; %>
+          <% if (datap[i].submissionResults.length !== 0){ %>
+          <% for (let j = 0;j < datap[i].submissionResults.length ; j++ ){ %>
+          <% totalScore+= datap[i].submissionResults[j].score %>
+          <% } %>
           <% } %>
           <td><%= totalScore %></td>
         </tr>
