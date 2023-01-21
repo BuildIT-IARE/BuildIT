@@ -121,7 +121,7 @@
   </head>
 
   <body>
-    <%- include ("../views/partials/header2") -%>
+    <%- include("../views/partials/header2.ejs") -%>
 
     <!-- page title -->
     <section class="page-title bg-primary position-relative">
@@ -343,7 +343,8 @@
   </div>
 ------footer------->
     <!-- /footer -->
-    <% include ../views/partials/aboutfooter %>
+    <%- include("../views/partials/aboutfooter") %> <%-
+    include("../views/partials/aboutfooter") %>
 
     <!-- jQuery -->
     <script src="plugins/jQuery/jquery.min.js"></script>
