@@ -27,7 +27,7 @@
         margin-left: 5%;
         color: black;
       }
-      .button{
+      .button {
         font-size: 16px;
         text-align: center;
         width: 150px;
@@ -37,7 +37,7 @@
   </head>
   <body>
     <div class="container">
-      <% include ../views/partials/adminpanel %>
+      <%- include ("../views/partials/adminpanel") -%>
       <header>
         <h1>
           Manage Multiple Choice Questions<span style="color: white"
@@ -52,7 +52,7 @@
           enctype="multipart/form-data"
         >
           <h1>Upload Excel File Here</h1>
-          <a href="./images/sample-mcq.xlsx">Sample CSV</a><br>
+          <a href="./images/sample-mcq.xlsx">Sample CSV</a><br />
           <input type="file" name="upfile" value="" />
           <textarea
             type="hidden"
@@ -82,19 +82,22 @@
           <h4>Contest ID</h4>
           <input name="contestId" id="get_sections" type="text" required />
           <p class="button" onclick="getSection()">Show Sections</p>
-          <br>
+          <br />
 
           <p class="comments"><b>Section</b></p>
-          <div class="new" id="sectionInput">
-          </div>
+          <div class="new" id="sectionInput"></div>
           <h4>Add Picture</h4>
           <div class="wrapper" style="margin: 0">
-            <input type="file" name="photo" id="input-files" accept="image/*"/>
+            <input type="file" name="photo" id="input-files" accept="image/*" />
           </div>
           <!-- <h4>Contest ID</h4> -->
           <!-- <input name="contestId2" type="text" /> -->
           <p class="comments">Description</p>
-          <textarea name="questionDescriptionText" rows="30" required></textarea>
+          <textarea
+            name="questionDescriptionText"
+            rows="30"
+            required
+          ></textarea>
           <p class="comments">Option 1</p>
           <textarea name="op1" rows="4" required></textarea>
           <p class="comments">Option 2</p>
@@ -141,16 +144,16 @@
     </script>
     <script>
       function verifyImage() {
-        var input = document.getElementById('input-files');
+        var input = document.getElementById("input-files");
         var oFile = input.files[0];
-        if( !oFile.type.includes('image') ) // Allowed Extensions
-        {
+        if (!oFile.type.includes("image")) {
+          // Allowed Extensions
           window.alert("Allowed Extensions are : *.jpeg,*.jpg,*.png");
           return false;
         }
-        
-        if (oFile.size > 204800 ) // 200 KiB for bytes.
-        {
+
+        if (oFile.size > 204800) {
+          // 200 KiB for bytes.
           window.alert("File size must be under 200KiB!");
           return false;
         }
@@ -161,10 +164,10 @@
     <script>
       function getCookie(cname) {
         let name = cname + "=";
-        let ca = document.cookie.split(';');
-        for(let i = 0; i < ca.length; i++) {
+        let ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
           let c = ca[i];
-          while (c.charAt(0) == ' ') {
+          while (c.charAt(0) == " ") {
             c = c.substring(1);
           }
           if (c.indexOf(name) == 0) {
@@ -175,11 +178,13 @@
       }
 
       const getSection = () => {
-        var url = '<%= data.serverurl %>/contests/' + document.getElementById("get_sections").value;
+        var url =
+          "<%= data.serverurl %>/contests/" +
+          document.getElementById("get_sections").value;
         console.log(url);
         $.ajax({
           url: url,
-          headers: {"Authorization": getCookie("token")},
+          headers: { Authorization: getCookie("token") },
           type: "GET",
           success: function (data) {
             // var x = JSON.stringify(data);
@@ -188,25 +193,23 @@
             var tex = document.getElementById("sectionInput");
             let str = "";
 
-            for(let i=0; i<sections.length; i++) {
-              str +=
-              `
-              <input type="radio" name="section" value="${i+1}" id="${11+i}" required/>
-              <label for="${11+i}">&emsp;${sections[i]}</label>
+            for (let i = 0; i < sections.length; i++) {
+              str += `
+              <input type="radio" name="section" value="${i + 1}" id="${
+                11 + i
+              }" required/>
+              <label for="${11 + i}">&emsp;${sections[i]}</label>
               `;
             }
             tex.innerHTML = str;
           },
           error: function (error) {
-              console.log(`Error ${error}`);
-          }
+            console.log(`Error ${error}`);
+          },
         });
         return false;
-      }
+      };
     </script>
-    <script>
-      
-    </script>
-    
+    <script></script>
   </body>
 </html>

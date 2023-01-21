@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>POTD Report</title>
-      <!-- mobile responsive meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  <!-- ** Plugins Needed for the Project ** -->
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
-  <!-- slick slider -->
-  <link rel="stylesheet" href="plugins/slick/slick.css">
-  <!-- themefy-icon -->
-  <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
-    <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+    <!-- slick slider -->
+    <link rel="stylesheet" href="plugins/slick/slick.css" />
+    <!-- themefy-icon -->
+    <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,39 +27,42 @@
       rel="stylesheet"
     />
     <link
-        href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-        rel="stylesheet">
-    <link rel="stylesheet" href="../css/style2.css">
-    <link href="css/style.css" rel="stylesheet">
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style2.css" />
+    <link href="css/style.css" rel="stylesheet" />
     <style>
-        body{
-            display: flex;
-            flex-direction: column;
-        }
-        .frame1{
-            width: 100%;
-            height:100vh;
-            margin-top: 100px;
-        }
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      .frame1 {
+        width: 100%;
+        height: 100vh;
+        margin-top: 100px;
+      }
     </style>
-</head>
-<body>
-    <div class="tag1">
-        <% include ../views/partials/header2 %>
-    </div>
+  </head>
+  <body>
+    <div class="tag1"><%- include ("../views/partials/header2") -%></div>
     <div class="tag2">
-        <iframe class="frame1" src="https://datastudio.google.com/embed/reporting/53f82b07-595d-4e1d-a6b7-e0954000c411/page/y31qC" frameborder="0" style="border:0" allowfullscreen></iframe>
+      <iframe
+        class="frame1"
+        src="https://datastudio.google.com/embed/reporting/53f82b07-595d-4e1d-a6b7-e0954000c411/page/y31qC"
+        frameborder="0"
+        style="border: 0"
+        allowfullscreen
+      ></iframe>
     </div>
-    <div class="tag3">
-        <% include ../views/partials/footer %>
-    </div>
+    <div class="tag3"><%- include ("../views/partials/footer") -%></div>
     <!-- jQuery -->
-<script src="plugins/jQuery/jquery.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="plugins/bootstrap/bootstrap.min.js"></script>
-<!-- slick slider -->
-<script src="plugins/slick/slick.min.js"></script>
-<!-- filter -->
-<script src="plugins/shuffle/shuffle.min.js"></script>
-</body>
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- slick slider -->
+    <script src="plugins/slick/slick.min.js"></script>
+    <!-- filter -->
+    <script src="plugins/shuffle/shuffle.min.js"></script>
+  </body>
 </html>

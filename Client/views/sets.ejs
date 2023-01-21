@@ -21,19 +21,21 @@
 
     <style>
       #first,
-      #second, #set {
+      #second,
+      #set {
         padding-left: 30%;
         padding-right: 30%;
       }
 
-      #second, #set {
+      #second,
+      #set {
         display: none;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <% include ../views/partials/adminpanel %>
+      <%- include ("../views/partials/adminpanel") -%>
       <header>
         <h1>Manage Questions<span style="color: white">Add Sets</span></h1>
       </header>
@@ -56,17 +58,13 @@
       </div>
 
       <div id="set">
-        <hr>
+        <hr />
         <form id="sets"></form>
       </div>
 
       <div id="second">
         <hr />
-        <form
-          method="POST"
-          enctype="multipart/form-data"
-          id="form1"
-        >
+        <form method="POST" enctype="multipart/form-data" id="form1">
           <h3 id="h3">Add Set</h3>
           <input type="file" name="upfile" value="" />
           <textarea
@@ -90,7 +88,7 @@
 
     <!-- Ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+
     <!-- jQuery -->
     <!-- <script src="plugins/jQuery/jquery.min.js"></script> -->
 
@@ -114,26 +112,32 @@
           },
           success: function (data) {
             if (data.length > 0) {
-              document.getElementById("form1").action
-                = "<%= data.serverurl %>/questionsExcel/" + data[0].contestId;
+              document.getElementById("form1").action =
+                "<%= data.serverurl %>/questionsExcel/" + data[0].contestId;
               document.getElementById("contestId").value = data[0].contestId;
               document.getElementById("second").style.display = "block";
-              if( data[0].sets.length ) {
+              if (data[0].sets.length) {
                 document.getElementById("set").style.display = "block";
               }
               let sets = "";
               let i;
-              for( i=0; i<data[0].sets.length; i++ ) {
-                sets += "<h3>Set " + (i+1).toString() + " Questions: "+ (data[0].sets[i]).toString().split(",").join(", ") +"</h3></br>"
+              for (i = 0; i < data[0].sets.length; i++) {
+                sets +=
+                  "<h3>Set " +
+                  (i + 1).toString() +
+                  " Questions: " +
+                  data[0].sets[i].toString().split(",").join(", ") +
+                  "</h3></br>";
               }
               document.getElementById("sets").innerHTML = sets;
-              document.getElementById("h3").innerHTML = "Add Set " + (data[0].sets.length+1).toString() + ":";
-            }
-            else {
+              document.getElementById("h3").innerHTML =
+                "Add Set " + (data[0].sets.length + 1).toString() + ":";
+            } else {
               document.getElementById("set").style.display = "block";
-              document.getElementById("sets").innerHTML = "<h3>Contest not found!</h3>";
+              document.getElementById("sets").innerHTML =
+                "<h3>Contest not found!</h3>";
             }
-          }
+          },
         });
         return false;
       }

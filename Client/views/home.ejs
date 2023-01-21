@@ -68,8 +68,7 @@
 </head>
 
 <body>
-
-<% include ../views/partials/header2 %>
+<%- include ("../views/partials/header2") -%>
 
 
 <!-- hero area -->
@@ -137,7 +136,7 @@
   <p class="counter" id="weekly"><span>Daily Views</span><%= dayCount%></p>
   <p class="counter" id="counter"><span>Weekly Views</span><%= weeklyCount%></p>
 </div>
-<% include ../views/partials/footer %>
+<%- include ("../views/partials/footer") -%>
 
 <!-- jQuery -->
 <script src="plugins/jQuery/jquery.min.js"></script>
