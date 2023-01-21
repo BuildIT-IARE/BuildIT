@@ -25,13 +25,9 @@
   </head>
   <body>
     <div class="container">
-      <%- include ("../views/partials/adminpanel") -%>
+      <% include ../views/partials/adminpanel %>
       <header style="text-indent: 130px; height: 200px">
-        <h1>
-          Editing<span style="color: white"
-            ><%= data.subtitle ? data.subtitle : "MCQ 's" %></span
-          >
-        </h1>
+        <h1>Editing<span style="color: white"><%= data.subtitle ? data.subtitle : "MCQ 's" %></span></h1>
       </header>
     </div>
 
@@ -39,27 +35,29 @@
       <h3 style="color: white">
         <center>Enter <%= data.subtitle %> Id</center>
       </h3>
-      <form
-        onsubmit=" return checkUsers()"
-        action="<%= data.posturl %>"
-        method="<%= data.method %>"
-      >
-        <input type="text" placeholder="Id" name="questionId" id="One" />
-        <input type="submit" class="btn-green" value="Search" />
+      <form onsubmit=" return checkUsers()" action="<%= data.posturl %>" method="<%= data.method %>">
+        <input
+          type="text"
+          placeholder="Id"
+          name="questionId"
+          id="One"
+        />
+        <input type="submit" class="btn-green" value="Search"/>
       </form>
     </div>
     <script>
-      function checkUsers() {
-        var datapart = document.getElementById("One").value;
-        var user = "<%= data.username%>";
-        console.log(user.slice(7), datapart.slice(0, 3));
-        if (user == "ADMIN") {
-          return true;
+      function checkUsers(){
+        var datapart = document.getElementById("One").value
+        var user = "<%= data.username%>"
+        console.log(user.slice(7),datapart.slice(0,3))
+        if(user=="ADMIN"){
+          return true
         }
-        if (datapart.length > 3 && datapart.slice(0, 3) == user.slice(7)) {
-          return true;
-        } else {
-          return false;
+        if (datapart.length>3 && datapart.slice(0,3)==user.slice(7)){
+          return true
+        }
+        else{
+          return false
         }
       }
     </script>

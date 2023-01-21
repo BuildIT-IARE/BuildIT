@@ -13,8 +13,6 @@ var visitorAccessSchema = new Schema({
   CountValue: Number,
   visitorAllocatedId: Array,
   photo: String,
-  host: String,
-  address: String,
 });
 
 module.exports = mongoose.model("Visitor", visitorAccessSchema);

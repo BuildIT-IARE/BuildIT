@@ -1,15 +1,9 @@
 let middleware = require("../util/middleware.js");
 
 module.exports = (app) => {
-  const twilio = require("../controllers/twilio.controller");
+    const twilio = require('../controllers/twilio.controller');
 
-  app.post("/sendOtp", twilio.sendOTP);
+    app.post('/sendOtp',twilio.sendOTP);
 
-  app.post("/verifyOtp", twilio.verifyOTP);
-
-  app.post(
-    "/admin/allocateVisitor/:personId",
-    middleware.checkTokenAdmin,
-    twilio.allocateVisitor
-  );
-};
+    app.post('/verifyOtp',twilio.verifyOTP);
+}

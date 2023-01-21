@@ -14,22 +14,10 @@ module.exports = (app) => {
   );
 
   app.get(
-    "/admin/deallocateVisitor/:personId",
+    "/admin/allocateVisitor/:personId",
     middleware.checkTokenAdmin,
-    visitor.deallocateVisitor
+    visitor.allocateVisitor
   );
 
   app.get("/getVisitorData/:personId", visitor.findOne);
-
-  app.get(
-    "/admin/getAllocateData",
-    middleware.checkTokenAdmin,
-    visitor.getAllocateData
-  );
-
-  app.get(
-    "/admin/viewPass/:personId",
-    middleware.checkTokenAdmin,
-    visitor.adminViewPass
-  );
 };

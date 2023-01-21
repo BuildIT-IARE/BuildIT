@@ -154,63 +154,11 @@
       input[type="search"] {
         display: block;
       }
-      .deleteBtn {
-        background: rgb(255, 72, 72);
-        outline: none;
-        border: none;
-        border-radius: 6mm;
-        color: white;
-        padding: 4px 9px;
-      }
-      .allocateBtn {
-        background: #4caf50;
-        outline: none;
-        border: none;
-        border-radius: 6mm;
-        color: rgb(43, 43, 43);
-        padding: 4px 9px;
-        color: white;
-      }
-      .deallocateBtn {
-        background: rgb(24, 119, 242);
-        outline: none;
-        border: none;
-        border-radius: 6mm;
-        color: rgb(43, 43, 43);
-        padding: 4px 9px;
-        color: white;
-      }
-      .viewPass {
-        background: rgb(46, 46, 46);
-        outline: none;
-        border: none;
-        border-radius: 6mm;
-        color: rgb(43, 43, 43);
-        padding: 4px 9px;
-        color: white;
-      }
-      .adata {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        background: white;
-      }
-      .datap {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        font-size: 50px;
-      }
-      .datap .label {
-        font-size: medium;
-        color: black;
-      }
     </style>
   </head>
 
   <body>
-    <%- include ("../views/partials/adminpanel") -%>
+    <% include ../views/partials/adminpanel %>
     <br /><br /><br /><br /><br />
     <!-- page title -->
     <section class="page-title bg-white position-relative" style="height: 8vh">
@@ -233,21 +181,6 @@
       </div>
     </section>
 
-    <section class="adata">
-      <div class="datap">
-        <%= total %>
-        <div class="label">Total Passes</div>
-      </div>
-      <div class="datap" style="color: rgb(24, 119, 242)">
-        <%= free %>
-        <div class="label">Available Passes</div>
-      </div>
-      <div class="datap" style="color: #4caf50">
-        <%= running %>
-        <div class="label">Visitors In</div>
-      </div>
-    </section>
-
     <section class="section py-5 bg-white" style="padding-top: 1rem">
       <div class="container d-flex flex-column align-items-center">
         <table
@@ -264,8 +197,6 @@
               <th>Phone Number</th>
               <th>Status</th>
               <th>Purpose</th>
-              <th>Host</th>
-              <th>Allocated Id</th>
               <th>Controls</th>
             </tr>
           </thead>
@@ -277,56 +208,26 @@
               <td><%= data[i].name %></td>
               <td><%= data[i].personId %></td>
               <td><%= data[i].phoneNumber %></td>
-              <td>
-                <% if(data[i].status!='allocated' &&
-                data[i].status!='verified'){ %> expired <%} else { %> <%=
-                data[i].status %> <%}%>
-              </td>
+              <td><%= data[i].status %></td>
               <td><%= data[i].purpose %></td>
-              <td><%= data[i].host %></td>
-              <td><%= data[i].allocatedId %></td>
               <td>
-                <% if(data[i].status=="verified"){ %>
-                <button
-                  type="button"
-                  onclick="allocateVisitor('<%= data[i].personId %>', '<%= data[i].phoneNumber %>', '<%= data[i].name %>')"
-                  class="allocateBtn"
-                >
-                  Allocate
-                </button>
                 <button
                   type="button"
                   onclick="deleteVisitor('<%= data[i].personId %>')"
-                  class="deleteBtn"
                 >
-                  Delete
+                  Delete User
                 </button>
-                <% } else if(data[i].status=="allocated") { %>
+                <% if(data[i].status=="verified"){ %>
                 <button
                   type="button"
-                  onclick="deallocateVisitor('<%= data[i].personId %>')"
-                  class="deallocateBtn"
+                  onclick="allocateVisitor('<%= data[i].personId %>')"
                 >
-                  Deallocate
+                  Allocate
                 </button>
-                <button
-                  type="button"
-                  onclick="viewPass('<%= data[i].personId %>')"
-                  class="viewPass"
-                >
-                  View Pass
-                </button>
+                <%}%>
               </td>
             </tr>
-            <% } else { %>
-            <button
-              type="button"
-              onclick="deleteVisitor('<%= data[i].personId %>')"
-              class="deleteBtn"
-            >
-              Delete
-            </button>
-            <%} } } %>
+            <% } %> <% } %>
           </tbody>
           <tfoot>
             <tr>
@@ -337,7 +238,6 @@
               <th>Phone Number</th>
               <th>Status</th>
               <th>Purpose</th>
-              <th>Allocated Id</th>
               <th>Controls</th>
             </tr>
           </tfoot>
@@ -406,64 +306,19 @@
         } catch (err) {}
       }
 
-      function allocateVisitor(pid, pnum, pname) {
+      function allocateVisitor(pid) {
         try {
           var url = "<%= serverUrl %>/admin/allocateVisitor/" + pid;
           $.ajax({
             async: false,
             url: url,
             headers: { Authorization: "<%=token%>" },
-            type: "POST",
-            data: JSON.stringify({
-              name: pname,
-              phoneNumber: pnum,
-            }),
-            cache: false,
-            contentType: "application/json; charset=utf-8",
-            processData: false,
-            dataType: "json",
-            success: function (response) {
-              window.location.reload();
-            },
-            error: function (error) {
-              console.log(error);
-            },
-          });
-        } catch (err) {}
-      }
-
-      function deallocateVisitor(pid) {
-        try {
-          var url = "<%= serverUrl %>/admin/deallocateVisitor/" + pid;
-          $.ajax({
-            async: false,
-            url: url,
-            headers: { Authorization: "<%=token%>" },
             type: "GET",
             cache: false,
             contentType: "application/json; charset=utf-8",
             processData: false,
             success: function (response) {
               window.location.reload();
-            },
-            error: function (error) {},
-          });
-        } catch (err) {}
-      }
-
-      function viewPass(pid) {
-        try {
-          var url = "<%= serverUrl %>/admin/viewPass/" + pid;
-          $.ajax({
-            async: false,
-            url: url,
-            headers: { Authorization: "<%=token%>" },
-            type: "GET",
-            cache: false,
-            contentType: "application/json; charset=utf-8",
-            processData: false,
-            success: function (response) {
-              window.open("/visitorPass/" + response.value, "_blank");
             },
             error: function (error) {},
           });
