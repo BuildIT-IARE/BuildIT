@@ -2,10 +2,10 @@ const Visitor = require("../models/visitorAccess.model.js");
 const encrypt = require("../encrypt.js");
 exports.create = async (req, res) => {
   Visitor.find({}).then((visitors) => {
-    let count = visitors[0].countValue + 1;
+    let count = visitors[0].CountValue + 1;
     Visitor.findOneAndUpdate(
       { personId: visitors[0].personId },
-      { $set: { countValue: count } }
+      { $set: { CountValue: count } }
     ).then((data) => {
       console.log(data);
     });
@@ -67,14 +67,15 @@ exports.deleteVisitor = async (req, res) => {
     });
 };
 
-exports.deallocateVisitor = (req, res) => {
-  console.log(req.params.personId);
+exports.allocateVisitor = async (req, res) => {
   Visitor.find({})
     .then((visitors) => {
       let data = visitors[1].visitorAllocatedId;
+      let aid = "";
       for (i = 0; i < data.length; i++) {
-        if (data[i][1] === req.params.personId) {
-          data[i][1] = "";
+        if (data[i][1] == "") {
+          data[i][1] = req.params.personId;
+          aid = data[i][0];
           break;
         }
       }
@@ -93,79 +94,53 @@ exports.deallocateVisitor = (req, res) => {
             { personId: req.params.personId },
             {
               $set: {
-                status: "expired at" + new Date().toString(),
+                status: "allocated",
+                allocatedId: aid,
               },
             }
           )
             .then(() => {
-              res.status(200).send({
+              res.send({
                 success: true,
               });
             })
             .catch((err) => {
-              res.status(400).send({
+              res.send({
                 error: true,
               });
             });
         })
         .catch((err) => {
-          res.status(400).send({
+          res.send({
             error: true,
           });
         });
     })
     .catch((err) => {
-      res.status(400).send({
+      res.send({
         error: true,
       });
     });
 };
 
 exports.findOne = async (req, res) => {
-  try {
-    let deid = encrypt.decrypt(req.params.personId);
-    Visitor.findOne({ personId: deid })
-      .then((visitor) => {
-        if (visitor) {
-          res.send({
-            success: true,
-            data: visitor,
-          });
-        } else {
-          res.send({
-            success: false,
-          });
-        }
-      })
-      .catch((err) => {
+  let deid = encrypt.decrypt(req.params.personId);
+  Visitor.findOne({ personId: deid })
+    .then((visitor) => {
+      if (visitor) {
+        res.send({
+          success: true,
+          data: visitor,
+        });
+      } else {
         res.send({
           success: false,
         });
-      });
-  } catch {
-    res.send({
-      success: false,
-    });
-  }
-};
-
-exports.getAllocateData = async (req, res) => {
-  Visitor.find({})
-    .then((visitors) => {
-      res.send({
-        success: true,
-        data: visitors[1],
-      });
+      }
     })
     .catch((err) => {
-      res.send({ success: false });
+      res.send({
+        success: false,
+      });
     });
-};
-
-exports.adminViewPass = async (req, res) => {
-  let encrypted = encrypt.encrypt(req.params.personId);
-  res.status(200).send({
-    success: true,
-    value: encrypted,
-  });
 };

@@ -15,13 +15,13 @@ exports.create = (req, res) => {
       message: "email name can not be empty",
     });
   }
-  // let encryptValue = encrypt.encrypt(req.body.facultyId);
+  let decryptValue = encrypt.decrypt(req.body.facultyId);
   const email = new Email({
     emailId: req.body.emailId,
     emailName: req.body.emailName,
     emailDate: req.body.emailDate,
     emailFaculty: req.body.emailFaculty,
-    facultyId: req.body.facultyId,
+    facultyId: decryptValue,
     emailStartDay: req.body.emailStartDay,
     emailEndDay: req.body.emailEndDay,
     emailStartTime: req.body.emailStartTime,
