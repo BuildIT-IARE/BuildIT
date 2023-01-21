@@ -1,178 +1,191 @@
 <!DOCTYPE html>
 <html lang="zxx">
-
-<head>
-  <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Tutorials</title>
 
-  <!-- mobile responsive meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  <!-- ** Plugins Needed for the Project ** -->
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css">
-  <!-- slick slider -->
-  <link rel="stylesheet" href="/plugins/slick/slick.css">
-  <!-- themefy-icon -->
-  <link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css">
-  <link rel = "icon" type = "image/png" href = "/images/logo-backup2.png">
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
 
-  <!-- Main Stylesheet -->
-  <link href="/css/style.css" rel="stylesheet">
-  
-  <!--Favicon-->
-  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css" />
+    <!-- slick slider -->
+    <link rel="stylesheet" href="/plugins/slick/slick.css" />
+    <!-- themefy-icon -->
+    <link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css" />
+    <link rel="icon" type="image/png" href="/images/logo-backup2.png" />
 
-<style>
-#chartdiv {
-  width: 100%;
-  height: 400px;
-  position: initial;
-  bottom: 0;
-  right: 500;
-}
-</style>
+    <!-- Main Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet" />
 
-<!-- Resources -->
-<script src="/js/core.js"></script>
-<script src="/js/charts.js"></script>
-<script src="/js/animated.js"></script>
+    <!--Favicon-->
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
 
-<!-- Chart code -->
-<link
-href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-rel="stylesheet">
-<link rel="stylesheet" href="../css/style2.css">
+    <style>
+      #chartdiv {
+        width: 100%;
+        height: 400px;
+        position: initial;
+        bottom: 0;
+        right: 500;
+      }
+    </style>
 
-</head>
+    <!-- Resources -->
+    <script src="/js/core.js"></script>
+    <script src="/js/charts.js"></script>
+    <script src="/js/animated.js"></script>
 
-<body>
+    <!-- Chart code -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style2.css" />
+  </head>
 
-  <%- include ("../views/partials/header2") -%>
+  <body>
+    <%- include ("../views/partials/header2") -%>
 
-<!-- page title -->
-<section class="page-title bg-primary position-relative">
-  <center><h2 class="text-white font-tertiary" ><%= data.courseName %></h2></center>
-  <br>
-</section>
-<!-- /page title -->
+    <!-- page title -->
+    <section class="page-title bg-primary position-relative">
+      <center>
+        <h2 class="text-white font-tertiary"><%= data.courseName %></h2>
+      </center>
+      <br />
+    </section>
+    <!-- /page title -->
 
-<section class="section">
-  <div class="container">
-  <h3 class="font-tertiary mb-5" style="text-align: center; color: green;">Your Progress - <%= data.courseName %></h3>
+    <section class="section">
+      <div class="container">
+        <h3 class="font-tertiary mb-5" style="text-align: center; color: green">
+          Your Progress - <%= data.courseName %>
+        </h3>
 
-    <div id="chartdiv"></div>
-    <hr>
-  </div>
-</section>
+        <div id="chartdiv"></div>
+        <hr />
+      </div>
+    </section>
 
-<% include ../views/partials/aboutfooter %>
-<!-- jQuery -->
-<script src="/plugins/jQuery/jquery.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="/plugins/bootstrap/bootstrap.min.js"></script>
-<!-- slick slider -->
-<script src="/plugins/slick/slick.min.js"></script>
-<!-- filter -->
-<script src="/plugins/shuffle/shuffle.min.js"></script>
+    <%- include("../views/partials/aboutfooter") %>
+    <!-- jQuery -->
+    <script src="/plugins/jQuery/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="/plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- slick slider -->
+    <script src="/plugins/slick/slick.min.js"></script>
+    <!-- filter -->
+    <script src="/plugins/shuffle/shuffle.min.js"></script>
 
-<!-- Main Script -->
-<script src="/js/script.js"></script>
-<script src="/css/dist/jquery.flipster.min.js"></script>
-<script>
-  $("#carousel").flipster({
-    style: 'carousel',
-    spacing: -0.5,
-    nav: true,
-    buttons: true,
-});
-</script>
-<script>
-  am4core.ready(function() {
-  
-  // Themes begin
-  am4core.useTheme(am4themes_animated);
-  // Themes end
-  
-  
-  
-  // Create chart instance
-  var chart = am4core.create("chartdiv", am4charts.RadarChart);
-  
-  // Add data
-  chart.data = [{
-    "category": "Level 0",
-    "value": eval("<%= data.easyPercentage %>"),
-    "full": 100
-  }, {
-    "category": "Level 1",
-    "value": eval("<%= data.mediumPercentage %>"),
-    "full": 100
-  }, {
-    "category": "Level 2",
-    "value": eval("<%= data.hardPercentage %>"),
-    "full": 100
-  },{
-    "category": "Contest",
-    "value": eval("<%= data.contestPercentage %>"),
-    "full": 100
-  }];
-  
-  // Make chart not full circle
-  chart.startAngle = -90;
-  chart.endAngle = 180;
-  chart.innerRadius = am4core.percent(20);
-  
-  // Set number format
-  chart.numberFormatter.numberFormat = "#'%'";
-  
-  // Create axes
-  var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-  categoryAxis.dataFields.category = "category";
-  categoryAxis.renderer.grid.template.location = 0;
-  categoryAxis.renderer.grid.template.strokeOpacity = 0;
-  categoryAxis.renderer.labels.template.horizontalCenter = "right";
-  categoryAxis.renderer.labels.template.fontWeight = 500;
-  categoryAxis.renderer.labels.template.adapter.add("fill", function(fill, target) {
-    return (target.dataItem.index >= 0) ? chart.colors.getIndex(target.dataItem.index) : fill;
-  });
-  categoryAxis.renderer.minGridDistance = 10;
-  
-  var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-  valueAxis.renderer.grid.template.strokeOpacity = 0;
-  valueAxis.min = 0;
-  valueAxis.max = 100;
-  valueAxis.strictMinMax = true;
-  
-  // Create series
-  var series1 = chart.series.push(new am4charts.RadarColumnSeries());
-  series1.dataFields.valueX = "full";
-  series1.dataFields.categoryY = "category";
-  series1.clustered = false;
-  series1.columns.template.fill = new am4core.InterfaceColorSet().getFor("alternativeBackground");
-  series1.columns.template.fillOpacity = 0.08;
-  series1.columns.template.cornerRadiusTopLeft = 20;
-  series1.columns.template.strokeWidth = 0;
-  series1.columns.template.radarColumn.cornerRadius = 20;
-  
-  var series2 = chart.series.push(new am4charts.RadarColumnSeries());
-  series2.dataFields.valueX = "value";
-  series2.dataFields.categoryY = "category";
-  series2.clustered = false;
-  series2.columns.template.strokeWidth = 0;
-  series2.columns.template.tooltipText = "{category}: [bold]{value}[/]";
-  series2.columns.template.radarColumn.cornerRadius = 20;
-  
-  series2.columns.template.adapter.add("fill", function(fill, target) {
-    return chart.colors.getIndex(target.dataItem.index);
-  });
-  
-  // Add cursor
-  chart.cursor = new am4charts.RadarCursor();
-  
-  }); // end am4core.ready()
-  </script>
-</body>
+    <!-- Main Script -->
+    <script src="/js/script.js"></script>
+    <script src="/css/dist/jquery.flipster.min.js"></script>
+    <script>
+      $("#carousel").flipster({
+        style: "carousel",
+        spacing: -0.5,
+        nav: true,
+        buttons: true,
+      });
+    </script>
+    <script>
+      am4core.ready(function () {
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        // Create chart instance
+        var chart = am4core.create("chartdiv", am4charts.RadarChart);
+
+        // Add data
+        chart.data = [
+          {
+            category: "Level 0",
+            value: eval("<%= data.easyPercentage %>"),
+            full: 100,
+          },
+          {
+            category: "Level 1",
+            value: eval("<%= data.mediumPercentage %>"),
+            full: 100,
+          },
+          {
+            category: "Level 2",
+            value: eval("<%= data.hardPercentage %>"),
+            full: 100,
+          },
+          {
+            category: "Contest",
+            value: eval("<%= data.contestPercentage %>"),
+            full: 100,
+          },
+        ];
+
+        // Make chart not full circle
+        chart.startAngle = -90;
+        chart.endAngle = 180;
+        chart.innerRadius = am4core.percent(20);
+
+        // Set number format
+        chart.numberFormatter.numberFormat = "#'%'";
+
+        // Create axes
+        var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = "category";
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.grid.template.strokeOpacity = 0;
+        categoryAxis.renderer.labels.template.horizontalCenter = "right";
+        categoryAxis.renderer.labels.template.fontWeight = 500;
+        categoryAxis.renderer.labels.template.adapter.add(
+          "fill",
+          function (fill, target) {
+            return target.dataItem.index >= 0
+              ? chart.colors.getIndex(target.dataItem.index)
+              : fill;
+          }
+        );
+        categoryAxis.renderer.minGridDistance = 10;
+
+        var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.grid.template.strokeOpacity = 0;
+        valueAxis.min = 0;
+        valueAxis.max = 100;
+        valueAxis.strictMinMax = true;
+
+        // Create series
+        var series1 = chart.series.push(new am4charts.RadarColumnSeries());
+        series1.dataFields.valueX = "full";
+        series1.dataFields.categoryY = "category";
+        series1.clustered = false;
+        series1.columns.template.fill = new am4core.InterfaceColorSet().getFor(
+          "alternativeBackground"
+        );
+        series1.columns.template.fillOpacity = 0.08;
+        series1.columns.template.cornerRadiusTopLeft = 20;
+        series1.columns.template.strokeWidth = 0;
+        series1.columns.template.radarColumn.cornerRadius = 20;
+
+        var series2 = chart.series.push(new am4charts.RadarColumnSeries());
+        series2.dataFields.valueX = "value";
+        series2.dataFields.categoryY = "category";
+        series2.clustered = false;
+        series2.columns.template.strokeWidth = 0;
+        series2.columns.template.tooltipText = "{category}: [bold]{value}[/]";
+        series2.columns.template.radarColumn.cornerRadius = 20;
+
+        series2.columns.template.adapter.add("fill", function (fill, target) {
+          return chart.colors.getIndex(target.dataItem.index);
+        });
+
+        // Add cursor
+        chart.cursor = new am4charts.RadarCursor();
+      }); // end am4core.ready()
+    </script>
+  </body>
 </html>
