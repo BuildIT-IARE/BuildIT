@@ -278,13 +278,14 @@ exports.create = (req, res) => {
           generateTextFromHTML: true,
           html: htmlToSend,
         };
-
-        smtpTransport.sendMail(mailOptions, (error, response) => {
-          if (error) {
-            console.log(error);
-          }
-          smtpTransport.close();
-        });
+        if (user.email.indexOf("iare.ac.in") > -1) {
+          smtpTransport.sendMail(mailOptions, (error, response) => {
+            if (error) {
+              console.log(error);
+            }
+            smtpTransport.close();
+          });
+        }
       });
     }
   } else {
@@ -629,11 +630,17 @@ exports.checkPass = (req, res) => {
               { $set: { countDate: tdate } }
             );
           }
+          let faculty = false;
+          let checkFaculty = req.body.username.toLowerCase();
+          if (checkFaculty.indexOf("iare") > -1) {
+            faculty = true;
+          }
           let token = jwt.sign(
             {
               username: user[0].username,
               isVerified: user[0].isVerified,
               admin: user[0].admin,
+              faculty: faculty,
             },
             process.env.secret,
             { expiresIn: "730h" }

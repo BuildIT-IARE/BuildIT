@@ -3153,7 +3153,7 @@ app.get("/skillCertificate", checkSignIn, async (req, res) => {
   });
 });
 
-app.get("/extras", checkSignIn, async (req, res) => {
+app.get("/adventures", checkSignIn, async (req, res) => {
   res.render("extrasSections");
 });
 
@@ -3357,26 +3357,22 @@ app.get(
   }
 );
 
-app.get("/facultyEmailSessions", checkSignIn, async (req, res) => {
-  res.render("facultyEmailSessionsValidation");
-});
-
-app.post("/facultyValidSessions", checkSignIn, async (req, res) => {
+app.get("/facultyValidSessions", checkSignIn, async (req, res) => {
   let options = {
-    url: serverRoute + "/login",
-    method: "post",
-    body: {
-      username: req.body.username,
-      password: req.body.password,
+    url: serverRoute + "/isFaculty",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
     },
     json: true,
   };
   request(options, (err, response, body) => {
-    let str = req.body.username.toLowerCase();
+    let str = req.cookies.username.toLowerCase();
 
     if (body.success && str.indexOf("iare") > -1) {
       let options = {
-        url: serverRoute + "/emailSessions/" + req.body.username.toLowerCase(),
+        url:
+          serverRoute + "/emailSessions/" + req.cookies.username.toLowerCase(),
         method: "get",
         headers: {
           authorization: req.cookies.token,
@@ -3423,19 +3419,96 @@ app.post("/facultyValidSessions", checkSignIn, async (req, res) => {
             serverUrl: serverRoute,
           });
         } else {
-          res.redirect("/facultyEmailSessions");
+          res.redirect("/logout");
         }
       });
     } else {
-      res.redirect("/facultyEmailSessions");
+      res.redirect("/logout");
     }
   });
 });
 
 app.get("/facultyEmailStatements/:emailId", checkSignIn, async (req, res) => {
-  if (req.cookies.facultyEmail) {
+  let options = {
+    url: serverRoute + "/isFaculty",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    if (body.success) {
+      let options = {
+        url: serverRoute + "/emailSessionQuestions/" + req.params.emailId,
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+      request(options, (err, response, body) => {
+        if (!body.success && !body.data) {
+          res.render("error", {
+            data: { message: "No Questions Available" },
+            imgUsername: req.cookies.username,
+          });
+        } else {
+          let options = {
+            url: serverRoute + "/emailSession/" + req.params.emailId,
+            method: "get",
+            headers: {
+              authorization: req.cookies.token,
+            },
+            json: true,
+          };
+          request(options, (err, response, body1) => {
+            let expired = false;
+            var d = new Date();
+            let time = d.getHours();
+            let temTime = d.getMinutes();
+            let mon = d.getMonth();
+            mon += 1;
+            let yr = d.getFullYear();
+            let day = d.getDate();
+            let cDate = yr + "-" + mon + "-" + day;
+            let bdate = new Date(cDate);
+            if (temTime.length < 2) {
+              temTime = "0" + temTime;
+            }
+            time = time + temTime;
+            let dateC = new Date(body1.emailEndDay);
+            let bool = bdate > dateC;
+            if (
+              bool ||
+              (cDate == body1.emailEndDay &&
+                Number(body1.emailEndTime) > Number(time))
+            ) {
+              expired = true;
+            }
+            res.render("facultyEmailStatements", {
+              data: body.data,
+              expired: expired,
+              token: req.cookies.token,
+              data1: body1,
+              facultyId: req.cookies.facultyEmail,
+              serverUrl: serverRoute,
+            });
+          });
+        }
+      });
+    } else {
+      res.redirect("/logout");
+    }
+  });
+});
+
+app.get(
+  "/facultyValidSubmissions/:emailId/:emailQuestionId",
+  checkSignIn,
+  async (req, res) => {
     let options = {
-      url: serverRoute + "/emailSessionQuestions/" + req.params.emailId,
+      url: serverRoute + "/isFaculty",
       method: "get",
       headers: {
         authorization: req.cookies.token,
@@ -3443,133 +3516,86 @@ app.get("/facultyEmailStatements/:emailId", checkSignIn, async (req, res) => {
       json: true,
     };
     request(options, (err, response, body) => {
-      if (!body.success && !body.data) {
-        res.render("error", {
-          data: { message: "No Questions Available" },
-          imgUsername: req.cookies.username,
+      if (body.success) {
+        let options = {
+          url: serverRoute + "/emailQuestion/" + req.params.emailQuestionId,
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        request(options, (err, response, body) => {
+          let options = {
+            url:
+              serverRoute +
+              "/emailSubmissions/" +
+              req.params.emailId +
+              req.params.emailQuestionId,
+            method: "get",
+            headers: {
+              authorization: req.cookies.token,
+            },
+            json: true,
+          };
+          request(options, (err, response, body1) => {
+            res.render("facultyValidSubmissions", {
+              data: body1,
+              data1: body.data,
+              token: req.cookies.token,
+              emailId: req.params.emailId,
+              emailQuestionId: req.params.emailQuestionId,
+              serverUrl: serverRoute,
+            });
+          });
         });
       } else {
-        let options = {
-          url: serverRoute + "/emailSession/" + req.params.emailId,
-          method: "get",
-          headers: {
-            authorization: req.cookies.token,
-          },
-          json: true,
-        };
-        request(options, (err, response, body1) => {
-          let expired = false;
-          var d = new Date();
-          let time = d.getHours();
-          let temTime = d.getMinutes();
-          let mon = d.getMonth();
-          mon += 1;
-          let yr = d.getFullYear();
-          let day = d.getDate();
-          let cDate = yr + "-" + mon + "-" + day;
-          let bdate = new Date(cDate);
-          if (temTime.length < 2) {
-            temTime = "0" + temTime;
-          }
-          time = time + temTime;
-          let dateC = new Date(body1.emailEndDay);
-          let bool = bdate > dateC;
-          if (
-            bool ||
-            (cDate == body1.emailEndDay &&
-              Number(body1.emailEndTime) > Number(time))
-          ) {
-            expired = true;
-          }
-          res.render("facultyEmailStatements", {
-            data: body.data,
-            expired: expired,
-            token: req.cookies.token,
-            data1: body1,
-            facultyId: req.cookies.facultyEmail,
-            serverUrl: serverRoute,
-          });
-        });
+        res.redirect("/logout");
       }
     });
-  } else {
-    res.redirect("/facultyEmailSessions");
-  }
-});
-
-app.get(
-  "/facultyValidSubmissions/:emailId/:emailQuestionId",
-  checkSignIn,
-  async (req, res) => {
-    if (req.cookies.facultyEmail) {
-      let options = {
-        url: serverRoute + "/emailQuestion/" + req.params.emailQuestionId,
-        method: "get",
-        headers: {
-          authorization: req.cookies.token,
-        },
-        json: true,
-      };
-      request(options, (err, response, body) => {
-        let options = {
-          url:
-            serverRoute +
-            "/emailSubmissions/" +
-            req.params.emailId +
-            req.params.emailQuestionId,
-          method: "get",
-          headers: {
-            authorization: req.cookies.token,
-          },
-          json: true,
-        };
-        request(options, (err, response, body1) => {
-          res.render("facultyValidSubmissions", {
-            data: body1,
-            data1: body.data,
-            token: req.cookies.token,
-            emailId: req.params.emailId,
-            emailQuestionId: req.params.emailQuestionId,
-            serverUrl: serverRoute,
-          });
-        });
-      });
-    } else {
-      res.redirect("/facultyEmailSessions");
-    }
   }
 );
 
 app.get(
   "/facultyEmailReport/:emailId/:emailQuestionId/:rollNumber",
   async (req, res) => {
-    if (req.cookies.facultyEmail) {
-      let options = {
-        url:
-          serverRoute +
-          "/emailSubmissions/" +
-          req.params.emailId +
-          req.params.emailQuestionId +
-          "/" +
-          req.params.rollNumber,
-        method: "get",
-        headers: {
-          authorization: req.cookies.token,
-        },
-        json: true,
-      };
-      request(options, (err, response, body) => {
-        res.render("facultyEmailReport", {
-          data: body.data,
-          rollNumber: req.params.rollNumber,
-          submissionId: req.params.emailId + req.params.emailQuestionId,
-          serverUrl: serverRoute,
-          token: req.cookies.token,
+    let options = {
+      url: serverRoute + "/isFaculty",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+    request(options, (err, response, body) => {
+      if (body.success) {
+        let options = {
+          url:
+            serverRoute +
+            "/emailSubmissions/" +
+            req.params.emailId +
+            req.params.emailQuestionId +
+            "/" +
+            req.params.rollNumber,
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        request(options, (err, response, body) => {
+          res.render("facultyEmailReport", {
+            data: body.data,
+            rollNumber: req.params.rollNumber,
+            submissionId: req.params.emailId + req.params.emailQuestionId,
+            serverUrl: serverRoute,
+            token: req.cookies.token,
+          });
         });
-      });
-    } else {
-      res.redirect("/facultyEmailSessions");
-    }
+      } else {
+        res.redirect("/logout");
+      }
+    });
   }
 );
 
