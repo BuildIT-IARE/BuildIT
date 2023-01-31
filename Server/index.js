@@ -146,6 +146,8 @@ require("./routes/emailSubmission.route")(app);
 require("./routes/twilio.route")(app);
 //Require visitor routes
 require("./routes/visitorAccess.route")(app);
+// Require adventure routes
+require("./routes/mcqLong.route")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
