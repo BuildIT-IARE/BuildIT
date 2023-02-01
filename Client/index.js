@@ -3154,7 +3154,7 @@ app.get("/skillCertificate", checkSignIn, async (req, res) => {
   });
 });
 
-app.get("/adventures", checkSignIn, async (req, res) => {
+app.get("/pragnya", checkSignIn, async (req, res) => {
   res.render("extrasSections");
 });
 
