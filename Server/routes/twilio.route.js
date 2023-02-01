@@ -9,7 +9,7 @@ module.exports = (app) => {
 
   app.post(
     "/admin/allocateVisitor/:personId",
-    middleware.checkTokenAdmin,
+    middleware.checkTokenWatch,
     twilio.allocateVisitor
   );
 };
