@@ -5,17 +5,17 @@ module.exports = (app) => {
 
   app.post("/newVisitor", visitor.create);
 
-  app.get("/admin/getVisitorData", middleware.checkTokenAdmin, visitor.findAll);
+  app.get("/admin/getVisitorData", middleware.checkTokenWatch, visitor.findAll);
   //delete visitor
   app.get(
     "/admin/deleteVisitor/:personId",
-    middleware.checkTokenAdmin,
+    middleware.checkTokenWatch,
     visitor.deleteVisitor
   );
 
   app.get(
     "/admin/deallocateVisitor/:personId",
-    middleware.checkTokenAdmin,
+    middleware.checkTokenWatch,
     visitor.deallocateVisitor
   );
 
@@ -23,13 +23,13 @@ module.exports = (app) => {
 
   app.get(
     "/admin/getAllocateData",
-    middleware.checkTokenAdmin,
+    middleware.checkTokenWatch,
     visitor.getAllocateData
   );
 
   app.get(
     "/admin/viewPass/:personId",
-    middleware.checkTokenAdmin,
+    middleware.checkTokenWatch,
     visitor.adminViewPass
   );
 };

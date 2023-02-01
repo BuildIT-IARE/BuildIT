@@ -1047,6 +1047,12 @@ app.get("/isFaculty", middleware.checkTokenFaculty, async (req, res) => {
   });
 });
 
+app.get("/isWatch", middleware.checkTokenWatch, async (req, res) => {
+  res.send({
+    success: true,
+  });
+});
+
 app.get("/pdf/:setno", middleware.checkToken, async (req, res) => {
   res.sendFile(path.resolve("../Public/pdf/" + req.params.setno + ".pdf"));
 });
