@@ -2444,10 +2444,11 @@ app.post("/login_", async (req, res) => {
         console.log("error occurred");
         return res.redirect("/logout");
       }
-
       if (body.admin) {
         res.clearCookie("branch");
         res.redirect("admin");
+      } else if (body.username.toUpperCase() == "VISITORADMIN") {
+        res.redirect("/admin/visitorPass");
       } else {
         let url = {
           url: clientRoute,
@@ -3254,7 +3255,7 @@ app.get("/skillCertificate", checkSignIn, async (req, res) => {
   });
 });
 
-app.get("/adventures", checkSignIn, async (req, res) => {
+app.get("/pragnya", checkSignIn, async (req, res) => {
   res.render("extrasSections");
 });
 
@@ -3798,7 +3799,7 @@ app.get("/admin/visitorPass", async (req, res) => {
   };
 
   let options = {
-    url: serverRoute + "/isAdmin",
+    url: serverRoute + "/isWatch",
     method: "get",
     headers: {
       authorization: req.cookies.token,

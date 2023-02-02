@@ -632,8 +632,12 @@ exports.checkPass = (req, res) => {
           }
           let faculty = false;
           let checkFaculty = req.body.username.toLowerCase();
+          let watch = false;
           if (checkFaculty.indexOf("iare") > -1) {
             faculty = true;
+          }
+          if (checkFaculty == "visitoradmin") {
+            watch = true;
           }
           let token = jwt.sign(
             {
@@ -641,6 +645,7 @@ exports.checkPass = (req, res) => {
               isVerified: user[0].isVerified,
               admin: user[0].admin,
               faculty: faculty,
+              watch: watch,
             },
             process.env.secret,
             { expiresIn: "730h" }
