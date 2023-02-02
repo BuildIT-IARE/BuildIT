@@ -2,7 +2,7 @@
 <html lang="zxx">
   <head>
     <meta charset="utf-8" />
-    <title>BuildIT Adventures</title>
+    <title>BuildIT Pragna</title>
 
     <!-- mobile responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -58,7 +58,8 @@
         <div class="row">
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if 
-          ((new Date(data[i].contestEndDate + " " + data[i].contestEndTime.slice(0, 2) + ":" + data[i].contestEndTime.slice(3, 5) + ":00") - new Date()) > 0) { %>
+          ((new Date(data[i].contestEndDate + " " + data[i].contestEndTime.slice(0, 2) + ":" + data[i].contestEndTime.slice(2, 5) + ":00") - new Date()) > 0) { %>
+          
           <div class="col-lg-4 col-sm-6 mb-4">
             <article class="card shadow">
               <div class="card-body">
@@ -104,7 +105,7 @@
         <div class="row">
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-            ((new Date(data[i].contestEndDate + " " + data[i].contestEndTime.slice(0, 2) + ":" + data[i].contestEndTime.slice(3, 5) + ":00") - new Date()) <= 0) { %>
+            ((new Date(data[i].contestEndDate + " " + data[i].contestEndTime.slice(0, 2) + ":" + data[i].contestEndTime.slice(2, 5) + ":00") - new Date()) <= 0) { %>
           <div class="col-lg-4 col-sm-6 mb-4">
             <article class="card shadow">
               <!-- <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> -->

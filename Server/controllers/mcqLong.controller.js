@@ -261,7 +261,7 @@ let getDurationLong = (req, callback) => {
         }
         console.log(contest);
         contest = contest[0];
-        let validTill = new Date(contest.contestEndDate + " " + contest.contestEndTime.slice(0, 2) + ":" + contest.contestEndTime.slice(3, 5) + ":00");
+        let validTill = new Date(contest.contestEndDate + " " + contest.contestEndTime.slice(0, 2) + ":" + contest.contestEndTime.slice(2, 5) + ":00");
         // contestDuration = (new Date(contest.contestEndDate + " " + contest.contestEndTime.slice(0, 2) + ":" + contest.contestEndTime.slice(3, 5) + ":00") - new Date(contest.contestStartDate + " " + contest.contestStartTime.slice(0, 2) + ":" + contest.contestStartTime.slice(3, 5) + ":00" ))
         // validTill = moment(validTill, "HH:mm:ss");
         // console.log("lvjkndslkjvn;dsknvfdslkvjn*************", validTill);
@@ -270,7 +270,7 @@ let getDurationLong = (req, callback) => {
           endTime: contest.contestEndTime,
           startDate: contest.contestStartDate,
           endDate: contest.contestEndDate,
-          contestDuration: String((new Date() - new Date(contest.contestStartDate + " " + contest.contestStartTime.slice(0, 2) + ":" + contest.contestStartTime.slice(3, 5) + ":00" ))/60000),
+          contestDuration: String((validTill.getTime() - new Date().getTime())/60000) > 0 ? String((validTill.getTime() - new Date().getTime())/60000) : "0",
           validTill: validTill,
           mcq: contest.mcq,
           sections: contest.sections,
