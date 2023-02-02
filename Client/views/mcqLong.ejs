@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <title>BuildIT Adventures</title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+    <!-- slick slider -->
+    <link rel="stylesheet" href="plugins/slick/slick.css" />
+    <!-- themefy-icon -->
+    <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css" />
+
+    <!-- Main Stylesheet -->
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style2.css" />
+  </head>
+
+  <body>
+    <!-- header2 -->
+
+    <!-- page title -->
+    <section class="page-title bg-primary position-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <!-- <h1 class="text-white font-tertiary">BuildIT Laboratory</h1> -->
+            <h1 class="text-white font-tertiary">MCQ LONG CHALLENGES</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /page title -->
+
+    <!-- blog -->
+    <section class="section">
+      <div class="container">
+        <h3 class="font-tertiary mb-5" style="color: green">
+          MCQ LONG CHALLENGES
+        </h3>
+        <div class="row">
+          <h5 id="login"></h5>
+          <% for(let i = data.length-1; i >= 0; i--){ %> <% if 
+          ((new Date(data[i].contestEndDate + " " + data[i].contestEndTime.slice(0, 2) + ":" + data[i].contestEndTime.slice(3, 5) + ":00") - new Date()) > 0) { %>
+          <div class="col-lg-4 col-sm-6 mb-4">
+            <article class="card shadow">
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a
+                    style="white-space: pre-line"
+                    class="text-dark"
+                    href="/mcqLong/<%= data[i].contestId %>"
+                    ><%= data[i].contestName %></a
+                  >
+                </h4>
+
+                <p>
+                  <% if (data[i].contestDuration) { %>
+                  <b>Duration: </b><%= data[i].contestDuration %> Mins <% } %>
+                </p>
+                <p>
+                  <% if (data[i].contestDate) { %>
+                  <b>Date: </b><%= data[i].contestDate %> <% } %>
+                </p>
+                <p>
+                  <% if (data[i].contestStartTime && data[i].contestEndTime) {
+                  %>
+                  <b>Timing: </b><%= data[i].contestStartTime %> to <%=
+                  data[i].contestEndTime %> <% } %>
+                </p>
+                <br />
+                <a
+                  href="/mcqLong/<%= data[i].contestId %>"
+                  class="btn btn-xs btn-primary"
+                  >Participate</a
+                >
+              </div>
+            </article>
+          </div>
+          <% } %> <% } %>
+        </div>
+      </div>
+      <div class="container">
+        <h3 class="font-tertiary mb-5" style="color: grey">
+          PAST MCQ LONG CHALLENGES
+        </h3>
+        <div class="row">
+          <h5 id="login"></h5>
+          <% for(let i = data.length-1; i >= 0; i--){ %> <% if
+            ((new Date(data[i].contestEndDate + " " + data[i].contestEndTime.slice(0, 2) + ":" + data[i].contestEndTime.slice(3, 5) + ":00") - new Date()) <= 0) { %>
+          <div class="col-lg-4 col-sm-6 mb-4">
+            <article class="card shadow">
+              <!-- <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> -->
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a
+                    style="white-space: pre-line"
+                    class="text-dark"
+                    href="/mcqLong/<%= data[i].contestId %>"
+                    ><%= data[i].contestName %></a
+                  >
+                </h4>
+                <p>
+                  <% if (data[i].contestDuration) { %>
+                  <b>Duration: </b><%= data[i].contestDuration %> Mins <% } %>
+                </p>
+                <p>
+                  <% if (data[i].contestDate) { %>
+                  <b>Date: </b><%= data[i].contestDate %> <% } %>
+                </p>
+                <p>
+                  <% if (data[i].contestStartTime && data[i].contestEndTime) {
+                  %>
+                  <b>Timing: </b><%= data[i].contestStartTime %> to <%=
+                  data[i].contestEndTime %> <% } %>
+                </p>
+                <br />
+                <a
+                  href="/mcqLong/<%= data[i].contestId %>"
+                  class="btn btn-xs btn-primary"
+                  >Practice</a
+                >
+              </div>
+              <!--contests mcqLongs-->
+            </article>
+          </div>
+          <% } %> <% } %>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      function getCookie(name) {
+        var dc = document.cookie;
+        var prefix = name + "=";
+        var begin = dc.indexOf("; " + prefix);
+        if (begin == -1) {
+          begin = dc.indexOf(prefix);
+          if (begin != 0) return null;
+        } else {
+          begin += 2;
+          var end = document.cookie.indexOf(";", begin);
+          if (end == -1) {
+            end = dc.length;
+          }
+        }
+        // because unescape has been deprecated, replaced with decodeURI
+        //return unescape(dc.substring(begin + prefix.length, end));
+        return decodeURI(dc.substring(begin + prefix.length, end));
+      }
+
+      function doSomething() {
+        var myCookie = getCookie("token");
+
+        if (myCookie == null) {
+          // do cookie doesn't exist stuff;
+          console.log("came");
+          document.getElementById("login").innerHTML = "Login to view contests";
+        }
+      }
+      doSomething();
+    </script>
+
+    <!-- /footer -->
+    <%- include("../views/partials/aboutfooter") %>
+
+    <!-- jQuery -->
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- slick slider -->
+    <script src="plugins/slick/slick.min.js"></script>
+    <!-- filter -->
+    <script src="plugins/shuffle/shuffle.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="js/script.js"></script>
+  </body>
+</html>

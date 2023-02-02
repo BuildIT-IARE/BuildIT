@@ -2026,6 +2026,105 @@ app.get("/qualifier_test/:contestId", checkSignIn, async (req, res, next) => {
   });
 });
 
+app.get("/mcqLong/:contestId", checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/isOngoingMcqLong",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      contestId: req.params.contestId,
+    },
+    json: true,
+  };
+  // Check if contest is open
+  request(options, function (err, response, body) {
+    if (body.success) {
+      let options1 = {
+        url: serverRoute + "/mcqParticipations", // MCQ participation
+        method: "post",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        body: {
+          contestId: req.params.contestId,
+        },
+        json: true,
+      };
+      // Add participation
+      request(options1, function (err, response, body) {
+        let option2 = {
+          url: serverRoute + "/mcqFirst/" + req.params.contestId, // First MCQ
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        // Get mcq for contest
+        request(option2, function (err, response, body) {
+          // console.log(body)
+          if (!body.message) {
+            res.cookie("contestId", req.params.contestId);
+            let options3 = {
+              url: serverRoute + "/mcqParticipations/" + req.params.contestId, // Time and score
+              method: "get",
+              headers: {
+                authorization: req.cookies.token,
+              },
+              json: true,
+            };
+            // Get participation details
+            console.log("options3: ",options3)
+            request(options3, function (err, response, bodytimer) {
+              console.log("bodytimer: ",bodytimer)
+              // bodytimer={responses:[]}
+              if (Array.isArray(bodytimer)) {
+                bodytimer = bodytimer[0];
+                bodytimer.responses =
+                  bodytimer.responses[body.section - 1].responses;
+
+                let currSection = bodytimer.responses;
+                currSection = currSection.map((v) => v.questionNum);
+                let index = currSection.indexOf(body.questionNum);
+                if (index !== -1) currSection.splice(index, 1);
+
+                bodytimer.selection =
+                  index === -1 ? 0 : bodytimer.responses[index].selection;
+                bodytimer.questionNums = currSection;
+                bodytimer.submissionResults = null;
+                bodytimer.responses = null;
+
+                // bodytimer.open = bodytimer.validTill>currentDatenTime;
+                res.render("mcqs", {
+                  imgUsername: req.cookies.username,
+                  imgBranch: req.cookies.branch,
+                  data: body,
+                  datatimer: bodytimer,
+                });
+              } else {
+                res.render("error", {
+                  data: body,
+                  imgUsername: req.cookies.username,
+                });
+              }
+            });
+          } else {
+            res.render("error", {
+              data: body,
+              imgUsername: req.cookies.username,
+            });
+          }
+        });
+      });
+    } else {
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+
 app.post(
   "/qualifier_test/:contestId/mcq",
   checkSignIn,
@@ -2065,6 +2164,7 @@ app.post(
         };
         // get one MCQ
         request(options, (err, response, body) => {
+          console.log("body: ", body);
           if (!body.message) {
             res.cookie("contestId", req.params.contestId);
             let options3 = {
@@ -2126,6 +2226,7 @@ app.post(
 
     const addSelection = () => {
       return new Promise(() => {
+        console.log(req.body)
         let options = {
           url: serverRoute + "/validateMcq",
           method: "post",
@@ -3357,9 +3458,28 @@ app.get(
   }
 );
 
-app.get("/mcqSessions",async(req,res)=>{
-  res.render("mcqLong")
-})
+app.get("/mcqSessions", checkSignIn, async (req, res, next) => {
+    let options = {
+      url: serverRoute + "/mcqLongContests",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      body: {
+        mcq: true,
+      },
+      json: true,
+    };
+  
+    request(options, function (err, response, body) {
+      res.clearCookie("courseId");
+      // console.log(body)
+      res.render("mcqLong", {
+        imgUsername: req.cookies.username,
+        data: body,
+      });
+    });
+  });
 
 app.get("/admin/adventures/mcqContest", async (req, res) => {
   res.render("mcqLongContestAdd", {
@@ -3371,6 +3491,7 @@ app.get("/admin/adventures/mcqContest", async (req, res) => {
 })
 
 app.post("/admin/advnetures/mcqContest", async (req, res) => {
+  console.log(req.body)
   let options = {
     url: serverRoute + "/mcqLong",
     method: "post",
