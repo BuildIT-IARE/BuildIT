@@ -456,7 +456,8 @@
       #Extracurriculardata,
       #patentdata,
       #productdata,
-      #industrialdata {
+      #industrialdata,
+      #publicationdata {
         width: 100%;
         position: relative;
       }
@@ -2055,7 +2056,7 @@
           "beforeend",
           '<span class="formspan"><span class="inputfield"><input type="text" name="publicationName' +
             pubcat +
-            '" placeholder="Publication Name" class="inputf Publication" required><span class="label">Industrial Design Name</span></span><span class="inputfield"><input type="url" name="publicationURL' +
+            '" placeholder="Publication Name" class="inputf Publication" required><span class="label">Publication Name</span></span><span class="inputfield"><input type="url" name="publicationURL' +
             pubcat +
             '" placeholder="Link" class="inputf Publication" required><span class="label">Link</span></span></span><span class="formspan"><span class="inputfield"></span></span>'
         );
@@ -2132,6 +2133,58 @@
       var Projects = document.querySelectorAll(".Projects");
       ("<%for(var i=0;i<projgetarr.length;i++){%>");
       Projects["<%=i%>"].value = "<%=projgetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.products.length>0){ %>");
+      ("<% var prodgetarr=[]%>");
+      ("<% for(var i=0;i<data.products.length;i++){ %>");
+      ("<% prodgetarr.push(data.products[i][0]) %>");
+      ("<% prodgetarr.push(data.products[i][1]) %>");
+      sb8.click();
+      ("<%}%>");
+      var Products = document.querySelectorAll(".Products");
+      ("<%for(var i=0;i<prodgetarr.length;i++){%>");
+      Products["<%=i%>"].value = "<%=prodgetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.patents.length>0){ %>");
+      ("<% var patentgetarr=[]%>");
+      ("<% for(var i=0;i<data.patents.length;i++){ %>");
+      ("<% patentgetarr.push(data.patents[i][0]) %>");
+      ("<% patentgetarr.push(data.patents[i][1]) %>");
+      sb9.click();
+      ("<%}%>");
+      var Patents = document.querySelectorAll(".Patents");
+      ("<%for(var i=0;i<patentgetarr.length;i++){%>");
+      Patents["<%=i%>"].value = "<%=patentgetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.industrialDesigns.length>0){ %>");
+      ("<% var industgetarr=[]%>");
+      ("<% for(var i=0;i<data.industrialDesigns.length;i++){ %>");
+      ("<% industgetarr.push(data.industrialDesigns[i][0]) %>");
+      ("<% industgetarr.push(data.industrialDesigns[i][1]) %>");
+      sb10.click();
+      ("<%}%>");
+      var Industrial = document.querySelectorAll(".Industrial");
+      ("<%for(var i=0;i<industgetarr.length;i++){%>");
+      Industrial["<%=i%>"].value = "<%=industgetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.publications.length>0){ %>");
+      ("<% var publicgetarr=[]%>");
+      ("<% for(var i=0;i<data.publications.length;i++){ %>");
+      ("<% publicgetarr.push(data.publications[i][0]) %>");
+      ("<% publicgetarr.push(data.publications[i][1]) %>");
+      sb11.click();
+      ("<%}%>");
+      var Publications = document.querySelectorAll(".Publication");
+      ("<%for(var i=0;i<publicgetarr.length;i++){%>");
+      Publications["<%=i%>"].value = "<%=publicgetarr[i]%>";
       ("<%}%>");
       ("<%}%>");
 
