@@ -416,6 +416,21 @@ expand_more
             <%}%>
           </div>
           <%}%>
+          <% if(data.products.length>0){ %>
+            <div class="products">
+              <div class="label3">Products</div>
+              <% for(var i=0;i<data.products.length;i++){ %>
+              <div class="project">
+                <p>
+                  <strong><%= data.products[i][0]%></strong
+                  ><a href="<%= data.products[i][1]%>" target="_blank"
+                    ><span class="material-icons-outlined"> open_in_new </span></a
+                  >
+                </p>
+              </div>
+              <%}%>
+            </div>
+            <%}%>
       </div>
       <div class="right3">
         <% if(data.brief){ %>
@@ -526,6 +541,67 @@ expand_more
                         </div>
                         </div>
                         <%}%>
+                        <% if(data.patents.length>0){ %>
+                          <div class="patents">
+                            <div class="label32">
+                              <div class="bullet">
+                                <span class="material-icons-outlined">
+                                    arrow_right
+                                    </span>
+                                        Patents
+                              </div>
+                          </div>
+                            <% for(var i=0;i<data.patents.length;i++){ %>
+                            <div class="project">
+                              <p style="padding: 0 10px;"><%= data.patents[i][0]%><a href="<%= data.patents[i][1]%>" target="_blank"
+                                  ><span class="material-icons-outlined"> open_in_new </span></a
+                                >
+                              </p>
+                            </div>
+                            <%}%>
+                          </div>
+                          <%}%>
+                          <% if(data.industrialDesigns.length>0){ %>
+                            <div class="industrialDesigns">
+                              <div class="label32">
+                                <div class="bullet">
+                                  <span class="material-icons-outlined">
+                                      arrow_right
+                                      </span>
+                                          Industrial Designs
+                                </div>
+                            </div>
+                              <% for(var i=0;i<data.industrialDesigns.length;i++){ %>
+                              <div class="project">
+                                <p style="padding: 0 10px;"><%= data.industrialDesigns[i][0]%><a href="<%= data.industrialDesigns[i][1]%>" target="_blank"
+                                    ><span class="material-icons-outlined"> open_in_new </span></a
+                                  >
+                                </p>
+                              </div>
+                              <%}%>
+                            </div>
+                            <%}%>
+
+                            <% if(data.publications.length>0){ %>
+                              <div class="publications">
+                                <div class="label32">
+                                  <div class="bullet">
+                                    <span class="material-icons-outlined">
+                                        arrow_right
+                                        </span>
+                                            Publications
+                                  </div>
+                              </div>
+                                <% for(var i=0;i<data.publications.length;i++){ %>
+                                <div class="project">
+                                  <p style="padding: 0 10px;"><%= data.publications[i][0]%><a href="<%= data.publications[i][1]%>" target="_blank"
+                                      ><span class="material-icons-outlined"> open_in_new </span></a
+                                    >
+                                  </p>
+                                </div>
+                                <%}%>
+                              </div>
+                              <%}%>
                         <% if(data.achievements.length>0){ %>
                             <div class="Achievements3">
                                 <div class="label32">
