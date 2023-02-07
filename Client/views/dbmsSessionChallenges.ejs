@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DBMS</title>
+    <title>Session Name</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -98,9 +98,10 @@
       .big {
         font-size: 80px;
         font-family: silkscreen;
+        word-wrap: break-word;
       }
       .small {
-        font-size: x-large;
+        font-size: large;
         font-family: poppins;
         letter-spacing: 5px;
       }
@@ -146,7 +147,7 @@
         scroll-behavior: smooth;
       }
       .total {
-        width: 200vw;
+        width: 100vw;
         display: flex;
         align-items: start;
         justify-content: center;
@@ -268,82 +269,6 @@
           rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
           rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
       }
-      .sessions {
-        min-width: 100vw;
-        align-items: flex-start;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-      }
-      .label {
-        width: 90%;
-        margin: auto;
-        display: block;
-        font-size: x-large;
-        font-family: poppins;
-        font-weight: 600;
-        margin-bottom: 30px;
-        margin-top: 40px;
-      }
-      .allSessions {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        justify-content: space-evenly;
-      }
-      .session {
-        width: 360px;
-        padding: 15px;
-        box-sizing: border-box;
-        height: 120px;
-        display: flex;
-        flex-direction: column;
-        background: white;
-        text-decoration: none;
-        border: 0.5mm solid rgba(39, 39, 39, 0.326);
-        transition: 0.25s;
-        margin-bottom: 15px;
-      }
-      .session .ses-top {
-        color: black;
-        font-family: poppins;
-        font-size: small;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 5px;
-      }
-      .ses-bottom {
-        display: flex;
-        font-family: poppins;
-        font-size: small;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .session .ses-title {
-        font-family: poppins;
-        font-size: 14px;
-        font-weight: 500;
-        color: black;
-        flex-grow: 1;
-      }
-      .color {
-        color: rgb(5, 77, 172);
-      }
-      .session:hover {
-        box-shadow: 10px 10px 0 black;
-        border: 0.5mm solid black;
-        background: rgb(246, 255, 250);
-      }
-      .session:hover .ses-title {
-        text-decoration: underline;
-      }
-      .inactive:hover {
-        box-shadow: 10px 10px 0 black;
-        border: 0.5mm solid black;
-        background: rgb(255, 253, 246);
-      }
     </style>
   </head>
   <body>
@@ -357,8 +282,8 @@
     </section>
     <section class="main">
       <div class="title">
-        <div class="big">DBMS</div>
-        <div class="small">Challenges</div>
+        <div class="big">Session Name</div>
+        <div class="small">07.02.23 00:00 to 08.02.23 23:59</div>
       </div>
     </section>
     <div class="searchBox">
@@ -371,18 +296,6 @@
       />
     </div>
     <section class="lists">
-      <div class="section-names">
-        <button
-          type="button"
-          class="active"
-          onclick="scrollit('practice', this)"
-        >
-          Practice
-        </button>
-        <button type="button" class="" onclick="scrollit('sessions', this)">
-          Sessions
-        </button>
-      </div>
       <div class="sections">
         <div class="total">
           <div class="section practice">
@@ -394,61 +307,10 @@
             </div>
             <%}%>
           </div>
-          <div class="section sessions">
-            <div class="label">Active Contests</div>
-            <div class="allSessions">
-              <% for(var i=0;i<9;i++){ %>
-              <a
-                href=""
-                target="_blank"
-                rel="noopener noreferrer"
-                class="session card"
-              >
-                <div class="ses-top">
-                  <span>From</span>
-                  <span class="color">06.02.23 &nbsp00:00</span>
-                </div>
-                <div class="ses-title seTitle">Session Name <%= i+1 %></div>
-                <div class="ses-bottom">
-                  <span>To</span>
-                  <span class="color">07.02.23 &nbsp23:59</span>
-                </div>
-              </a>
-              <%}%>
-            </div>
-            <div class="label">Inactive Contests</div>
-            <div class="allSessions">
-              <% for(var i=0;i<9;i++){ %>
-              <a
-                href=""
-                target="_blank"
-                rel="noopener noreferrer"
-                class="session inactive card"
-              >
-                <div class="ses-top">
-                  <span>From</span>
-                  <span class="color">06.02.23 &nbsp00:00</span>
-                </div>
-                <div class="ses-title seTitle">Session Name <%= i+1 %></div>
-                <div class="ses-bottom">
-                  <span>To</span>
-                  <span class="color">07.02.23 &nbsp23:59</span>
-                </div>
-              </a>
-              <%}%>
-            </div>
-          </div>
         </div>
       </div>
     </section>
     <script>
-      function scrollit(name, btnid) {
-        name = "." + name;
-        document.querySelector(name).scrollIntoView();
-        document.querySelector(".active").className = "";
-        btnid.className = "active";
-      }
-
       const search = (text) => {
         text = text.value;
         text = text.toUpperCase();

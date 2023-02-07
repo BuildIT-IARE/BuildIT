@@ -3784,12 +3784,16 @@ app.get("/admin/emailSessions", async (req, res) => {
   });
 });
 
-app.get("/sqlEditor", async (req, res) => {
+app.get("/sqlEditor/dbQuestionId", async (req, res) => {
   res.render("sqlEditor");
 });
 
 app.get("/dbmsChallenges", async (req, res) => {
   res.render("dbmsChallenges");
+});
+
+app.get("/dbmsChallenges/sessionId", async (req, res) => {
+  res.render("dbmsSessionChallenges");
 });
 
 app.get("*", async (req, res) => {
