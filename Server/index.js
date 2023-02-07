@@ -1,4 +1,5 @@
 const express = require("express");
+const mysql = require("mysql")
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -14,6 +15,9 @@ const dotenv = require("dotenv");
 const schedule = require("node-schedule");
 const Count = require("./models/count.model.js");
 const SkillUp = require("./controllers/skillUp.controller.js");
+const sqlCon = require("./controllers/sqlDB.js");
+
+
 dotenv.config({ path: "../Server/util/config.env" });
 
 let middleware = require("./util/middleware.js");
@@ -76,7 +80,11 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Successfully connected to the database");
+    console.log("Successfully connected to the mongodb database");
+    sqlCon.query("SELECT * FROM students", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+    });
   })
   .catch((err) => {
     console.log("Could not connect to the database. Exiting now...", err);
@@ -146,6 +154,8 @@ require("./routes/emailSubmission.route")(app);
 require("./routes/twilio.route")(app);
 //Require visitor routes
 require("./routes/visitorAccess.route")(app);
+//Require questionDBMS routes
+require("./routes/questionDBMS.route")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
@@ -1185,3 +1195,5 @@ schedule.scheduleJob("59 23 * * 0", async function () {
   });
 });
 app.listen(port, () => console.log("Server @ port", port));
+
+
