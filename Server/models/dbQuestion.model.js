@@ -3,18 +3,21 @@ const mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 
-var dbquestionSchema = new Schema({
-  questionId: String,
-  questionName: String,
-  contestId: String,
-  questionDescriptionText: String,
-  questionExampleInput: String,
-  questionExampleOutput: String,
-  questionHiddenOutput: String,
-  questionExplanation: String,
-  author: String,
-  CountValue: Number,
-  tableName: String,
+var dbQuestionSchema = new Schema({
+    questionId: String,
+    questionName: String,
+    contestId: String,
+    questionDescriptionText: String,
+    questionInputText: String,
+    questionOutputText: String,
+    questionExampleInput: String,
+    questionExampleOutput: String,
+    questionHiddenOutput: String,
+    questionExplanation: String,
+    author: String,
+    editorial: String,
+    tableName: String,
+    CountValue:Number,
 });
 
-module.exports = mongoose.model("dbQuestion", dbquestionSchema);
+module.exports = mongoose.model("DbQuestion", dbQuestionSchema);

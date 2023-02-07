@@ -15,7 +15,7 @@ const dotenv = require("dotenv");
 const schedule = require("node-schedule");
 const Count = require("./models/count.model.js");
 const SkillUp = require("./controllers/skillUp.controller.js");
-const sqlCon = require("./controllers/sqlDB.js");
+const sqlCon = require("./controllers/sqlDBConnector.js");
 
 
 dotenv.config({ path: "../Server/util/config.env" });
@@ -154,8 +154,10 @@ require("./routes/emailSubmission.route")(app);
 require("./routes/twilio.route")(app);
 //Require visitor routes
 require("./routes/visitorAccess.route")(app);
-//Require questionDBMS routes
-require("./routes/questionDBMS.route")(app);
+//Require dbQuestion routes
+require("./routes/dbQuestion.route")(app);
+//Require dbSession routes
+require("./routes/dbSession.route")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
