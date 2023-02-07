@@ -6,6 +6,7 @@ const InternshipInfo = ResumeModels.InternshipInfo;
 const CodingProfilesInfo = ResumeModels.CodingProfiles;
 
 exports.create = (req, res) => {
+  console.log(req.body);
   //extracting all socials
   //socialsArray = [[social1,social1url]...]
   socialsArray = [];
@@ -115,29 +116,47 @@ exports.create = (req, res) => {
   //extracting all Publications
   var publicationsArray = [];
   var publicationCount = 1;
-  while (req.body["Publication" + publicationCount]) {
-    publicationsArray.push(req.body["Publication" + publicationCount]);
+  while (req.body["publicationName" + publicationCount]) {
+    var publication = [
+      req.body["publicationName" + publicationCount],
+      req.body["publicationURL" + publicationCount],
+    ];
+    publicationsArray.push(publication);
     publicationCount++;
   }
 
   var patentsArray = [];
   var patentCount = 1;
-  while (req.body["Patent" + patentCount]) {
-    patentsArray.push(req.body["Patent" + patentCount]);
+  while (req.body["PatentName" + patentCount]) {
+    var publicationDesc;
+    var patent = [
+      req.body["PatentName" + patentCount],
+      req.body["PatentURL" + patentCount],
+    ];
+    patentsArray.push(patent);
     patentCount++;
   }
 
   var productsArray = [];
   var productCount = 1;
-  while (req.body["EActivity" + productCount]) {
-    productsArray.push(req.body["EActivity" + productCount]);
+  while (req.body["ProductName" + productCount]) {
+    var publicationDesc;
+    var product = [
+      req.body["ProductName" + productCount],
+      req.body["ProductURL" + productCount],
+    ];
+    productsArray.push(product);
     productCount++;
   }
-
   var industrialDesignArray = [];
   var industrialDesignCount = 1;
-  while (req.body["IndustrialDesign" + industrialDesignCount]) {
-    industrialDesignArray.push(req.body["IndustrialDesign" + industrialDesignCount]);
+  while (req.body["industrialName" + industrialDesignCount]) {
+    var publicationDesc;
+    var industrial = [
+      req.body["industrialName" + industrialDesignCount],
+      req.body["industrialURL" + industrialDesignCount],
+    ];
+    industrialDesignArray.push(industrial);
     industrialDesignCount++;
   }
 
@@ -215,30 +234,34 @@ exports.create = (req, res) => {
 
   Resume
     //findOneAndUpdate creates a new Doc if query is not found or updates the existing if found
-    .findOneAndUpdate({
-      resumeId: req.body.username
-    }, {
-      $set: {
+    .findOneAndUpdate(
+      {
         resumeId: req.body.username,
-        themeId: req.body.theme,
-        personalSkills: personalSkillsArray,
-        professionalSkills: professionalSkillsArray,
-        projects: projectsArray,
-        achievements: achievementsArray,
-        extraCurricular: extraCurricularArray,
-        brief: brief,
-        personalInfo: personalInfo,
-        educationalInfo: educationalInfo,
-        internshipInfo: internshipInfo,
-        codingProfilesInfo: codingProfilesInfo,
-        publications: publicationsArray,
-        patents: patentsArray,
-        products: productsArray,
-        industrialDesigns: industrialDesignArray,
       },
-    }, {
-      upsert: true
-    })
+      {
+        $set: {
+          resumeId: req.body.username,
+          themeId: req.body.theme,
+          personalSkills: personalSkillsArray,
+          professionalSkills: professionalSkillsArray,
+          projects: projectsArray,
+          achievements: achievementsArray,
+          extraCurricular: extraCurricularArray,
+          brief: brief,
+          personalInfo: personalInfo,
+          educationalInfo: educationalInfo,
+          internshipInfo: internshipInfo,
+          codingProfilesInfo: codingProfilesInfo,
+          publications: publicationsArray,
+          patents: patentsArray,
+          products: productsArray,
+          industrialDesigns: industrialDesignArray,
+        },
+      },
+      {
+        upsert: true,
+      }
+    )
     .then((resume) => {
       res
         .status(200)
@@ -280,7 +303,7 @@ exports.findAll = (req, res) => {
 
 exports.findOne = (req, res) => {
   Resume.findOne({
-    resumeId: req.params.username
+    resumeId: req.params.username,
   })
     .then((resume) => {
       res.send({

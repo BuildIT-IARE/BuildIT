@@ -382,6 +382,78 @@
               </div>
         </div>
         <%}%>
+        <% if(data.products.length>0){ %>
+            <div class="res-sec">
+                    <div class="label4">Products</div>
+                    <div class="line44"></div>
+                    <% for(var i=0;i<data.products.length;i++){ %>
+                        <div class="edu-part">
+                    <div class="epart">
+                        <span>
+                        <%= data.products[i][0]%><a href="<%= data.products[i][1]%>" target="_blank"
+                          ><span class="material-icons-outlined"> open_in_new </span></a
+                        >
+                    </span>
+                </div>
+                </div>
+                    <%}%>
+                  
+            </div>
+            <%}%>
+            <% if(data.patents.length>0){ %>
+                <div class="res-sec">
+                        <div class="label4">Patents</div>
+                        <div class="line44"></div>
+                        <% for(var i=0;i<data.patents.length;i++){ %>
+                            <div class="edu-part">
+                        <div class="epart">
+                            <span>
+                            <%= data.patents[i][0]%><a href="<%= data.patents[i][1]%>" target="_blank"
+                              ><span class="material-icons-outlined"> open_in_new </span></a
+                            >
+                        </span>
+                    </div>
+                    </div>
+                        <%}%>
+                      
+                </div>
+                <%}%>
+                <% if(data.industrialDesigns.length>0){ %>
+                    <div class="res-sec">
+                            <div class="label4">Industrial Designs</div>
+                            <div class="line44"></div>
+                            <% for(var i=0;i<data.industrialDesigns.length;i++){ %>
+                                <div class="edu-part">
+                            <div class="epart">
+                                <span>
+                                <%= data.industrialDesigns[i][0]%><a href="<%= data.industrialDesigns[i][1]%>" target="_blank"
+                                  ><span class="material-icons-outlined"> open_in_new </span></a
+                                >
+                            </span>
+                        </div>
+                        </div>
+                            <%}%>
+                          
+                    </div>
+                    <%}%>
+                    <% if(data.publications.length>0){ %>
+                        <div class="res-sec">
+                                <div class="label4">Publications</div>
+                                <div class="line44"></div>
+                                <% for(var i=0;i<data.publications.length;i++){ %>
+                                    <div class="edu-part">
+                                <div class="epart">
+                                    <span>
+                                    <%= data.publications[i][0]%><a href="<%= data.publications[i][1]%>" target="_blank"
+                                      ><span class="material-icons-outlined"> open_in_new </span></a
+                                    >
+                                </span>
+                            </div>
+                            </div>
+                                <%}%>
+                              
+                        </div>
+                        <%}%>
         <% if(data.achievements.length>0){ %>
         <div class="res-sec">
             <div class="label4">Achievements</div>

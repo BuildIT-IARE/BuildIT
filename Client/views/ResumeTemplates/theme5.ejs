@@ -427,6 +427,46 @@
                 </div>
                 <div class="line55"></div>
             <%}%>
+            <% if(data.products.length>0){ %>
+              <div class="label15">Products</div>
+              <% for(var i=0;i<data.products.length;i++){ %>
+                  <div class="t5exptop" style="margin:10px 0 ;">
+                      <span class="limit-size"><%= data.products[i][0]%></span>
+                      <span><%= data.products[i][1]%></span>
+                  </div>
+              <%}%>
+              <div class="line55"></div>
+          <%}%>
+          <% if(data.patents.length>0){ %>
+            <div class="label15">Patents</div>
+            <% for(var i=0;i<data.patents.length;i++){ %>
+                <div class="t5exptop" style="margin:10px 0 ;">
+                    <span class="limit-size"><%= data.patents[i][0]%></span>
+                    <span><%= data.patents[i][1]%></span>
+                </div>
+            <%}%>
+            <div class="line55"></div>
+        <%}%>
+        <% if(data.publications.length>0){ %>
+          <div class="label15">Publications</div>
+          <% for(var i=0;i<data.publications.length;i++){ %>
+              <div class="t5exptop" style="margin:10px 0 ;">
+                  <span class="limit-size"><%= data.publications[i][0]%></span>
+                  <span><%= data.publications[i][1]%></span>
+              </div>
+          <%}%>
+          <div class="line55"></div>
+      <%}%>
+      <% if(data.industrialDesigns.length>0){ %>
+        <div class="label15">Industrial Designs</div>
+        <% for(var i=0;i<data.industrialDesigns.length;i++){ %>
+            <div class="t5exptop" style="margin:10px 0 ;">
+                <span class="limit-size"><%= data.industrialDesigns[i][0]%></span>
+                <span><%= data.industrialDesigns[i][1]%></span>
+            </div>
+        <%}%>
+        <div class="line55"></div>
+    <%}%>
             <% if(data.achievements.length>0){ %>
                 <div class="label15">Achievements</div>
                 <% for(var i=0;i<data.achievements.length;i++){ %>

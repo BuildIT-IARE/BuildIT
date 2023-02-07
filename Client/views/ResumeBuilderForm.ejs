@@ -453,7 +453,11 @@
       #internshipdata,
       #ProjectData,
       #Achievementsdata,
-      #Extracurriculardata {
+      #Extracurriculardata,
+      #patentdata,
+      #productdata,
+      #industrialdata,
+      #publicationdata {
         width: 100%;
         position: relative;
       }
@@ -1116,25 +1120,36 @@
                 <span class="material-icons"> add_circle_outline </span>
                 Add Products
               </button>
-              <span class="material-icons-round clear" id="cl3"> cancel </span>
+              <span class="material-icons-round clear" id="cl7"> cancel </span>
             </span>
             <span class="sublabel">Patents</span>
-            <span id="productdata"> </span>
+            <span id="patentdata"> </span>
             <span class="buttons3">
               <button type="button" class="socialbutton" id="sb9">
                 <span class="material-icons"> add_circle_outline </span>
                 Add Patents
               </button>
-              <span class="material-icons-round clear" id="cl3"> cancel </span>
+              <span class="material-icons-round clear" id="cl8" 8>
+                cancel
+              </span>
             </span>
             <span class="sublabel">Industrial Design</span>
-            <span id="productdata"> </span>
+            <span id="industrialdata"> </span>
             <span class="buttons3">
               <button type="button" class="socialbutton" id="sb10">
                 <span class="material-icons"> add_circle_outline </span>
                 Add Designs
               </button>
-              <span class="material-icons-round clear" id="cl3"> cancel </span>
+              <span class="material-icons-round clear" id="cl9"> cancel </span>
+            </span>
+            <span class="sublabel">Publications</span>
+            <span id="publicationdata"> </span>
+            <span class="buttons3">
+              <button type="button" class="socialbutton" id="sb11">
+                <span class="material-icons"> add_circle_outline </span>
+                Add Publications
+              </button>
+              <span class="material-icons-round clear" id="cl10"> cancel </span>
             </span>
             <span class="buttons">
               <button type="button" class="buttonf" id="pre4">Back</button>
@@ -1524,6 +1539,10 @@
       var sb5 = document.getElementById("sb5");
       var sb6 = document.getElementById("sb6");
       var sb7 = document.getElementById("sb7");
+      var sb8 = document.getElementById("sb8");
+      var sb9 = document.getElementById("sb9");
+      var sb10 = document.getElementById("sb10");
+      var sb11 = document.getElementById("sb11");
       var ss1 = document.getElementById("socialspan1");
       var ss2 = document.getElementById("socialspan2");
       var ss3 = document.getElementById("socialspan3");
@@ -1538,8 +1557,12 @@
       var pros = document.getElementById("ProfessionalSkills");
       var intern = document.getElementById("internshipdata");
       var project = document.getElementById("ProjectData");
+      var product = document.getElementById("productdata");
+      var patent = document.getElementById("patentdata");
+      var industrial = document.getElementById("industrialdata");
       var achieve = document.getElementById("Achievementsdata");
       var eactive = document.getElementById("Extracurriculardata");
+      var public = document.getElementById("publicationdata");
       var pre1 = document.getElementById("pre1");
       var nex1 = document.getElementById("nex1");
       var pre2 = document.getElementById("pre2");
@@ -1558,6 +1581,10 @@
       var cl4 = document.getElementById("cl4");
       var cl5 = document.getElementById("cl5");
       var cl6 = document.getElementById("cl6");
+      var cl7 = document.getElementById("cl7");
+      var cl8 = document.getElementById("cl8");
+      var cl9 = document.getElementById("cl9");
+      var cl10 = document.getElementById("cl10");
       var sides = document.querySelectorAll(".sideicons");
       var bri = document.getElementById("Brief");
       var pspo = 0;
@@ -1566,6 +1593,10 @@
       var propo = 0;
       var achpo = 0;
       var extpo = 0;
+      var papt = 0;
+      var prodt = 0;
+      var indut = 0;
+      var pubcat = 0;
       var arr = [
         "person",
         "school",
@@ -1980,6 +2011,58 @@
         cl6.style.display = "block";
       };
 
+      sb8.onclick = function () {
+        prodt += 1;
+        product.insertAdjacentHTML(
+          "beforeend",
+          '<span class="formspan"><span class="inputfield"><input type="text" name="ProductName' +
+            prodt +
+            '" placeholder="Product Name" class="inputf Products" required><span class="label">Product Name</span></span><span class="inputfield"><input type="url" name="ProductURL' +
+            prodt +
+            '" placeholder="Link" class="inputf Products" required><span class="label">Link</span></span></span><span class="formspan"><span class="inputfield"></span></span>'
+        );
+        myForm.style.height = fs4.clientHeight + "px";
+        cl7.style.display = "block";
+      };
+      sb9.onclick = function () {
+        papt += 1;
+        patent.insertAdjacentHTML(
+          "beforeend",
+          '<span class="formspan"><span class="inputfield"><input type="text" name="PatentName' +
+            papt +
+            '" placeholder="Patent Name" class="inputf Patents" required><span class="label">Patent Name</span></span><span class="inputfield"><input type="url" name="PatentURL' +
+            papt +
+            '" placeholder="Link" class="inputf Patents" required><span class="label">Link</span></span></span><span class="formspan"><span class="inputfield"></span></span>'
+        );
+        myForm.style.height = fs4.clientHeight + "px";
+        cl8.style.display = "block";
+      };
+      sb10.onclick = function () {
+        indut += 1;
+        industrial.insertAdjacentHTML(
+          "beforeend",
+          '<span class="formspan"><span class="inputfield"><input type="text" name="industrialName' +
+            indut +
+            '" placeholder="Industrial Design Name" class="inputf Industrial" required><span class="label">Industrial Design Name</span></span><span class="inputfield"><input type="url" name="industrialURL' +
+            indut +
+            '" placeholder="Link" class="inputf Industrial" required><span class="label">Link</span></span></span><span class="formspan"><span class="inputfield"></span></span>'
+        );
+        myForm.style.height = fs4.clientHeight + "px";
+        cl9.style.display = "block";
+      };
+      sb11.onclick = function () {
+        pubcat += 1;
+        public.insertAdjacentHTML(
+          "beforeend",
+          '<span class="formspan"><span class="inputfield"><input type="text" name="publicationName' +
+            pubcat +
+            '" placeholder="Publication Name" class="inputf Publication" required><span class="label">Publication Name</span></span><span class="inputfield"><input type="url" name="publicationURL' +
+            pubcat +
+            '" placeholder="Link" class="inputf Publication" required><span class="label">Link</span></span></span><span class="formspan"><span class="inputfield"></span></span>'
+        );
+        myForm.style.height = fs4.clientHeight + "px";
+        cl10.style.display = "block";
+      };
       //Filling the form with existing data in database
       ("<% if(data){%>");
       ("<% var socialgetarr=['','','','','','']%>");
@@ -2050,6 +2133,58 @@
       var Projects = document.querySelectorAll(".Projects");
       ("<%for(var i=0;i<projgetarr.length;i++){%>");
       Projects["<%=i%>"].value = "<%=projgetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.products.length>0){ %>");
+      ("<% var prodgetarr=[]%>");
+      ("<% for(var i=0;i<data.products.length;i++){ %>");
+      ("<% prodgetarr.push(data.products[i][0]) %>");
+      ("<% prodgetarr.push(data.products[i][1]) %>");
+      sb8.click();
+      ("<%}%>");
+      var Products = document.querySelectorAll(".Products");
+      ("<%for(var i=0;i<prodgetarr.length;i++){%>");
+      Products["<%=i%>"].value = "<%=prodgetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.patents.length>0){ %>");
+      ("<% var patentgetarr=[]%>");
+      ("<% for(var i=0;i<data.patents.length;i++){ %>");
+      ("<% patentgetarr.push(data.patents[i][0]) %>");
+      ("<% patentgetarr.push(data.patents[i][1]) %>");
+      sb9.click();
+      ("<%}%>");
+      var Patents = document.querySelectorAll(".Patents");
+      ("<%for(var i=0;i<patentgetarr.length;i++){%>");
+      Patents["<%=i%>"].value = "<%=patentgetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.industrialDesigns.length>0){ %>");
+      ("<% var industgetarr=[]%>");
+      ("<% for(var i=0;i<data.industrialDesigns.length;i++){ %>");
+      ("<% industgetarr.push(data.industrialDesigns[i][0]) %>");
+      ("<% industgetarr.push(data.industrialDesigns[i][1]) %>");
+      sb10.click();
+      ("<%}%>");
+      var Industrial = document.querySelectorAll(".Industrial");
+      ("<%for(var i=0;i<industgetarr.length;i++){%>");
+      Industrial["<%=i%>"].value = "<%=industgetarr[i]%>";
+      ("<%}%>");
+      ("<%}%>");
+
+      ("<% if(data.publications.length>0){ %>");
+      ("<% var publicgetarr=[]%>");
+      ("<% for(var i=0;i<data.publications.length;i++){ %>");
+      ("<% publicgetarr.push(data.publications[i][0]) %>");
+      ("<% publicgetarr.push(data.publications[i][1]) %>");
+      sb11.click();
+      ("<%}%>");
+      var Publications = document.querySelectorAll(".Publication");
+      ("<%for(var i=0;i<publicgetarr.length;i++){%>");
+      Publications["<%=i%>"].value = "<%=publicgetarr[i]%>";
       ("<%}%>");
       ("<%}%>");
 

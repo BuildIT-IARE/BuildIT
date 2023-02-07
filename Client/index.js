@@ -2312,7 +2312,7 @@ app.post("/login_", async (req, res) => {
       res.cookie("token", body.token);
       res.cookie("username", body.username);
       res.cookie("branch", body.branch);
-
+      res.cookie("displayBuildit", "neat");
       try {
         let userCookie;
         let ind = userSessions.findIndex((e) => e.username === body.username);
@@ -2343,10 +2343,11 @@ app.post("/login_", async (req, res) => {
         console.log("error occurred");
         return res.redirect("/logout");
       }
-
       if (body.admin) {
         res.clearCookie("branch");
         res.redirect("admin");
+      } else if (body.username.toUpperCase() == "VISITORADMIN") {
+        res.redirect("/admin/visitorPass");
       } else {
         let url = {
           url: clientRoute,
@@ -2394,6 +2395,7 @@ app.get("/logout", async (req, res) => {
   res.clearCookie("courseId");
   res.clearCookie("branch");
   res.clearCookie("user");
+  res.clearCookie("displayBuildit");
   res.redirect("/");
 });
 
@@ -3153,7 +3155,7 @@ app.get("/skillCertificate", checkSignIn, async (req, res) => {
   });
 });
 
-app.get("/adventures", checkSignIn, async (req, res) => {
+app.get("/pragnya", checkSignIn, async (req, res) => {
   res.render("extrasSections");
 });
 
@@ -3636,7 +3638,7 @@ app.get("/admin/visitorPass", async (req, res) => {
   };
 
   let options = {
-    url: serverRoute + "/isAdmin",
+    url: serverRoute + "/isWatch",
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -3781,6 +3783,15 @@ app.get("/admin/emailSessions", async (req, res) => {
     });
   });
 });
+
+app.get("/sqlEditor", async (req, res) => {
+  res.render("sqlEditor");
+});
+
+app.get("/dbmsChallenges", async (req, res) => {
+  res.render("dbmsChallenges");
+});
+
 app.get("*", async (req, res) => {
   res.render("404page");
 });
