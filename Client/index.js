@@ -2312,7 +2312,7 @@ app.post("/login_", async (req, res) => {
       res.cookie("token", body.token);
       res.cookie("username", body.username);
       res.cookie("branch", body.branch);
-
+      res.cookie("displayBuildit", "neat");
       try {
         let userCookie;
         let ind = userSessions.findIndex((e) => e.username === body.username);
@@ -2395,6 +2395,7 @@ app.get("/logout", async (req, res) => {
   res.clearCookie("courseId");
   res.clearCookie("branch");
   res.clearCookie("user");
+  res.clearCookie("displayBuildit");
   res.redirect("/");
 });
 
@@ -3782,6 +3783,15 @@ app.get("/admin/emailSessions", async (req, res) => {
     });
   });
 });
+
+app.get("/sqlEditor", async (req, res) => {
+  res.render("sqlEditor");
+});
+
+app.get("/dbmsChallenges", async (req, res) => {
+  res.render("dbmsChallenges");
+});
+
 app.get("*", async (req, res) => {
   res.render("404page");
 });
