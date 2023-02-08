@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Admin menu</title>
+		<meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
+		<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" href="../../css/navadmin.css">
+		<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+		<script src="/adminjs/modernizr.custom.js"></script>
+		<style>
+            .entries{
+                width: fit-content;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .form-control{
+                margin-right: 10px;
+            }
+            .table-div{
+                width: 100%;
+                overflow: auto;
+            }
+            table input{
+                width: 160px !important;
+                margin: 0 10px !important;
+                padding: 6px 5px !important;
+                height: fit-content !important;
+                color: black !important;
+
+            }
+            table{
+                width: fit-content !important;
+            }
+            thead td{
+                font-weight: bold !important;
+                background: rgb(255,237,134) !important;
+            }
+            table td{
+                width: fit-content !important;
+            }
+        </style>
+        <link href="/plugins/bootstrap-5/css/bootstrap.min.css" rel="stylesheet" />
+	</head>
+	<body>
+        <script src="/plugins/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+		<div class="container">
+			<%- include ("../views/partials/adminpanel") -%>
+			<header>
+				<h1>Manage Questions<span style="color:white">Add Questions</span></h1>	
+			</header> 
+			<div class="main-block">
+			<form action="<%= data.serverurl %>/questionDBMS" method = "POST">
+				<h1>Add Question Manually</h1>
+				<h4>Question ID</h4>
+				<input name="questionId" type="text"/>
+				<h4>Question Name</h4>
+				<input name="questionName" type="text"/>
+				<h4>Contest ID</h4>
+				<input name="contestId" type="text"/>
+				<p class="comments">Description</p>
+				<textarea name="questionDescriptionText" rows="20"></textarea>
+				<p class="comments">Example Input:</p>
+                <div class="entries">
+                    <input type="number" id="rows" class="form-control" placeholder="Number of Rows">
+                    <input type="number" id="cols" class="form-control" placeholder="Number of Cols">
+                    <button type="button" class="btn btn-primary" id="entry-sub">Create</button>
+                </div>
+                <br>
+                <br>
+                <div class="table-div">
+                <table id="table" class="table table-bordered table-hover table-responsive">
+                </table>
+            </div>
+            <button type="button" class="btn btn-primary" id="set-vals">Set Values</button>
+            <textarea name="questionExampleInput" rows="10" style="display: none;" id="exinput"></textarea>
+                <script>
+                    document.getElementById("entry-sub").onclick=function(){
+                        let row = document.getElementById("rows")
+                        let col  =document.getElementById("cols")
+                        if (row.value<=0 || row.value.length==0 || col.value<=0 || col.value.length==0){
+                            alert("Row or Column values are inappropriate")
+                        }
+                        else{
+                            createTable(row.value, col.value)
+                        }
+                    }
+                    function createTable(rows, cols) {
+                        var table = document.getElementById("table");
+                        table.innerHTML = "";
+
+                        var header = table.createTHead();
+                        var headRow = header.insertRow();
+                        for (var j = 0; j < cols; j++) {
+                            var headCell = headRow.insertCell();
+                            headCell.innerHTML = '<input type="text" class="cell-val" placeholder="Column Name">';
+                        }
+
+                        var body = table.createTBody();
+                        for (var i = 0; i < rows-1; i++) {
+                            var row = body.insertRow();
+                            for (var j = 0; j < cols; j++) {
+                                var cell = row.insertCell();
+                                cell.innerHTML = '<input type="text" class="cell-val" placeholder="Value">';
+                            }
+                        }
+                    }
+                
+                    document.getElementById("set-vals").onclick=function(){
+                        var table = document.getElementById("table");
+                        let rows = table.rows.length;
+                        let cols = table.rows[0].cells.length;
+                        let vals = document.querySelectorAll(".cell-val");
+                        let k=0;
+                        for(var i=0;i<rows;i++){
+                            for(var j=0;j<cols;j++){
+                                table.rows[i].cells[j].innerText=vals[k].value
+                                k=k+1;
+                            }
+                        }
+                        document.getElementById("exinput").value=document.querySelector(".table-div").innerHTML;
+                    }
+                </script>
+				<p class="comments">Example Output:</p>
+				<textarea name="questionExampleOutput" rows="10" ></textarea>
+				<p class="comments">Hidden Output:</p>
+				<textarea name="questionHiddenOutput" rows="10"></textarea>
+				<p class="comments">Explanation</p>
+				<textarea name="questionExplanation" rows="20"></textarea>
+				<p class="comments">Score</p>
+				<textarea name="score" rows="2"></textarea>
+				<p class="comments"><b>Difficulty</b></p>
+				<input type="radio" name="difficulty" value="E"> Easy </input>
+				<input type="radio" name="difficulty" value="M"> Medium </input>
+				<input type="radio" name="difficulty" value="H"> Hard </input> 
+				<hr>
+				<textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
+
+				<button class= "submit" type="submit" href="/">Send</button>
+			</form>
+    	</div>
+		</div><!-- /container -->
+		<script src="/adminjs/classie.js"></script>
+		<script src="/adminjs/gnmenu.js"></script>
+		<script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
+		<script>
+			document.getElementById("token").value = "<%= token %>";
+			document.getElementById("token2").value = "<%= token %>";
+
+		</script>
+	</body>
+</html>

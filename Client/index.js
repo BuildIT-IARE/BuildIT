@@ -3784,16 +3784,183 @@ app.get("/admin/emailSessions", async (req, res) => {
   });
 });
 
-app.get("/sqlEditor/dbQuestionId", async (req, res) => {
-  res.render("sqlEditor");
+const dataCompare = (date, time) => {
+  let parts = date.split("-");
+  let odate = parts[1] + "-" + parts[0] + "-" + parts[2];
+  let split = time.slice(0, 2) + ":" + time.slice(2, 4);
+  return new Date(odate + " " + split) > new Date();
+};
+
+app.get("/sqlEditor/:dbQuestionId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/questionsDBMS/" + req.params.dbQuestionId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    if (body.success) {
+      let expired = true;
+      let contest = true;
+      if (body.data[0].contestId == "" || body.data[0].contestId.length == 0) {
+        contest = false;
+        res.render("sqlEditor", {
+          expired: false,
+          contest: contest,
+          data: body.data[0],
+          token: req.cookies.token,
+          username: req.cookies.username,
+        });
+      } else {
+        let options = {
+          url: serverRoute + "/dbSession/" + body.data[0].contestId,
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        request(options, (err, response, body1) => {
+          if (body1.success) {
+            expired = !dataCompare(
+              body1.data.dbSessionEndDay,
+              body1.data.dbSessionEndTime
+            );
+          }
+          res.render("sqlEditor", {
+            expired: expired,
+            contest: contest,
+            data: body.data[0],
+            token: req.cookies.token,
+            username: req.cookies.username,
+          });
+        });
+      }
+    } else {
+      res.redirect("/dbmsChallenges");
+    }
+  });
 });
 
-app.get("/dbmsChallenges", async (req, res) => {
-  res.render("dbmsChallenges");
+app.get("/dbmsChallenges", checkSignIn, async (req, res) => {
+  let options = {
+    url: serverRoute + "/questionsDBMS",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  //retrive practice db questions
+  request(options, (err, response, body) => {
+    let practice = [];
+    let expired = [];
+    let active = [];
+    if (body.success) {
+      body.data.shift();
+      body.data.forEach((question) => {
+        if (question.contestId == "" || question.contestId.length == 0) {
+          practice.push(question);
+        }
+      });
+    }
+    let options = {
+      url: serverRoute + "/dbSessions",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+    //retrive practice db sessions
+    request(options, (err, response, body) => {
+      if (body.success) {
+        for (var i = 0; i < body.data.length; i++) {
+          let bool = dataCompare(
+            body.data[i].dbSessionEndDay,
+            body.data[i].dbSessionEndTime
+          );
+          if (bool) {
+            active.push(body.data[i]);
+          } else {
+            expired.push(body.data[i]);
+          }
+        }
+      }
+      console.log(active, expired);
+      res.render("dbmsChallenges", {
+        practice: practice,
+        active: active,
+        expired: expired,
+      });
+    });
+  });
 });
 
-app.get("/dbmsChallenges/sessionId", async (req, res) => {
-  res.render("dbmsSessionChallenges");
+app.get("/dbmsChallenges/:sessionId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/questionsDBMS/contests/" + req.params.sessionId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    let options = {
+      url: serverRoute + "/dbSession/" + req.params.sessionId,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+    };
+    request(options, (err, response, body1) => {
+      let questions = [];
+      let expired = true;
+      if (body1.success) {
+        if (body.success) {
+          questions = body.data;
+        }
+        expired = !dataCompare(
+          body1.data.dbSessionEndDay,
+          body1.data.dbSessionEndTime
+        );
+      }
+      res.render("dbmsSessionChallenges", {
+        questions: questions,
+        expired: expired,
+        data: body1.data,
+      });
+    });
+  });
+});
+
+app.get("/admin/add/dbQuestion", async (req, res) => {
+  let url = {
+    url: clientRoute,
+    serverurl: serverRoute,
+  };
+
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.render("dbQuestionAdd", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
 });
 
 app.get("*", async (req, res) => {
