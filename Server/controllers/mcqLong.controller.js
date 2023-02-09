@@ -1,11 +1,5 @@
 const Mcqs = require("../models/mcq.model.js");
 const contestLong  = require("../models/mcqcontestLong.model.js")
-const inarray = require("inarray");
-const xlsx = require("xlsx");
-const fs = require("fs");
-const { findContentDevSolved } = require("./participationTut.controller.js");
-const { time } = require("console");
-const { stringify } = require("querystring");
 
 
 let createContest = async (req,res)=>{

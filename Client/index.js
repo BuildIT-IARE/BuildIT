@@ -2076,9 +2076,9 @@ app.get("/mcqLong/:contestId", checkSignIn, async (req, res, next) => {
               json: true,
             };
             // Get participation details
-            console.log("options3: ",options3)
+            // console.log("options3: ",options3)
             request(options3, function (err, response, bodytimer) {
-              console.log("bodytimer: ",bodytimer)
+              // console.log("bodytimer: ",bodytimer)
               // bodytimer={responses:[]}
               if (Array.isArray(bodytimer)) {
                 bodytimer = bodytimer[0];
@@ -2164,7 +2164,7 @@ app.post(
         };
         // get one MCQ
         request(options, (err, response, body) => {
-          console.log("body: ", body);
+          // console.log("body: ", body);
           if (!body.message) {
             res.cookie("contestId", req.params.contestId);
             let options3 = {
