@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title><%= data.questionName %></title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/codemirror@5.59.0/lib/codemirror.min.css"
@@ -181,6 +181,9 @@
       .qbody {
         text-align: justify;
       }
+      table thead td {
+        font-weight: bold;
+      }
       table,
       td,
       th {
@@ -203,6 +206,7 @@
         border-radius: 1mm;
         box-sizing: border-box;
         padding: 5px;
+        white-space: pre-line;
       }
       .bot-head {
         width: 100%;
@@ -316,16 +320,9 @@
   <body>
     <section class="main">
       <div class="left">
-        <div class="qhead">QUESTION NAME</div>
+        <div class="qhead"><%= data.questionName %></div>
         <div class="qbody">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui officia
-            vel nihil perspiciatis. Laborum nam inventore et quibusdam, minus
-            earum eligendi non magni possimus quae totam unde pariatur fugit
-            necessitatibus ratione a aspernatur enim beatae molestiae quas fuga
-            maxime quod? Minima quos ipsa fuga mollitia sit suscipit
-            reprehenderit eligendi voluptate.
-          </p>
+          <p><%= data.questionDescriptionText %></p>
           <table>
             <thead>
               <th>Column 1</th>
@@ -347,45 +344,15 @@
             </tbody>
           </table>
           <p class="label">Sample Input</p>
-          <table>
-            <thead>
-              <th>Column 1</th>
-              <th>Column 2</th>
-              <th>Column 3</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Value 1 Col 1</td>
-                <td>Value 1 Col 2</td>
-                <td>Value 1 Col 3</td>
-              </tr>
-              <tr>
-                <td>Value 2 Col 1</td>
-                <td>Value 2 Col 2</td>
-                <td>Value 2 Col 3</td>
-              </tr>
-              <tr>
-                <td>Value 3 Col 1</td>
-                <td>Value 3 Col 2</td>
-                <td>Value 3 Col 3</td>
-              </tr>
-              <tr>
-                <td>Value 4 Col 1</td>
-                <td>Value 4 Col 2</td>
-                <td>Value 4 Col 3</td>
-              </tr>
-            </tbody>
-          </table>
+          <div id="inputHtml"><%= data.questionExampleInput %></div>
+          <script>
+            let place = document.getElementById("inputHtml");
+            let s = place.innerText;
+            place.innerText = "";
+            place.innerHTML = s;
+          </script>
           <p class="label">Sample Output</p>
-          <div class="inout">
-            Lorem ipsum dolor sit amet.
-            <br />
-            Lorem ipsum dolor sit amet.
-            <br />
-            Lorem ipsum dolor sit amet.
-            <br />
-            Lorem ipsum dolor sit amet.
-          </div>
+          <div class="inout"><%= data.questionExampleOutput %></div>
         </div>
       </div>
       <div class="right">
@@ -421,6 +388,7 @@
               <div class="statusName">STATUS</div>
               <div class="statusVal">Success</div>
             </div>
+            <% if(!expired){ %>
             <div class="btns">
               <button type="button" onclick="retriveQuery()">
                 Run Query <span class="material-icons"> play_arrow </span>
@@ -432,6 +400,7 @@
                 </span>
               </button>
             </div>
+            <%}%>
           </div>
           <div class="bot-content">
             <div class="output">

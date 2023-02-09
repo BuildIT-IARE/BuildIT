@@ -386,53 +386,53 @@
       <div class="sections">
         <div class="total">
           <div class="section practice">
-            <% for(var i=0;i<11;i++){ %>
+            <% for(var i=0;i<practice.length;i++){ %>
             <div class="prac-ques card">
-              <div class="prac-title seTitle">Question Name <%= i+1 %></div>
-              <div class="prac-details">10pts<span>. M</span></div>
-              <a href="">Solve Challenge</a>
+              <div class="prac-title seTitle"><%= practice[i].questionName %></div>
+              <div class="prac-details"><%= practice[i].score %>pts<span>. M</span></div>
+              <a href="/sqlEditor/<%= practice[i].questionId %>">Solve Challenge</a>
             </div>
             <%}%>
           </div>
           <div class="section sessions">
             <div class="label">Active Contests</div>
             <div class="allSessions">
-              <% for(var i=0;i<9;i++){ %>
+              <% for(var i=0;i<active.length;i++){ %>
               <a
-                href=""
+                href="/dbmsChallenges/<%= active[i].dbSessionId %>"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="session card"
               >
                 <div class="ses-top">
                   <span>From</span>
-                  <span class="color">06.02.23 &nbsp00:00</span>
+                  <span class="color"><%= active[i].dbSessionStartDay.split('-').join('.') %> &nbsp <%= active[i].dbSessionStartTime.slice(0,2)+':'+active[i].dbSessionStartTime.slice(2,4) %></span>
                 </div>
-                <div class="ses-title seTitle">Session Name <%= i+1 %></div>
+                <div class="ses-title seTitle"><%= active[i].dbSessionName %></div>
                 <div class="ses-bottom">
-                  <span>To</span>
-                  <span class="color">07.02.23 &nbsp23:59</span>
+                  <span style="color: black;">To</span>
+                  <span class="color"><%= active[i].dbSessionEndDay.split('-').join('.') %> &nbsp <%= active[i].dbSessionEndTime.slice(0,2)+':'+active[i].dbSessionEndTime.slice(2,4) %></span>
                 </div>
               </a>
               <%}%>
             </div>
             <div class="label">Inactive Contests</div>
             <div class="allSessions">
-              <% for(var i=0;i<9;i++){ %>
+              <% for(var i=0;i<expired.length;i++){ %>
               <a
-                href=""
+                href="/dbmsChallenges/<%= expired[i].dbSessionId %>"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="session inactive card"
               >
                 <div class="ses-top">
                   <span>From</span>
-                  <span class="color">06.02.23 &nbsp00:00</span>
+                  <span class="color"><span class="color"><%= expired[i].dbSessionStartDay.split('-').join('.') %> &nbsp <%= expired[i].dbSessionStartTime.slice(0,2)+':'+expired[i].dbSessionStartTime.slice(2,4) %></span></span>
                 </div>
-                <div class="ses-title seTitle">Session Name <%= i+1 %></div>
+                <div class="ses-title seTitle"><%= expired[i].dbSessionName %></div>
                 <div class="ses-bottom">
                   <span>To</span>
-                  <span class="color">07.02.23 &nbsp23:59</span>
+                  <span class="color"><%= expired[i].dbSessionEndDay.split('-').join('.') %> &nbsp <%= expired[i].dbSessionEndTime.slice(0,2)+':'+expired[i].dbSessionEndTime.slice(2,4) %></span>
                 </div>
               </a>
               <%}%>

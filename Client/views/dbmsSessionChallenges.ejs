@@ -282,8 +282,14 @@
     </section>
     <section class="main">
       <div class="title">
-        <div class="big">Session Name</div>
-        <div class="small">07.02.23 00:00 to 08.02.23 23:59</div>
+        <div class="big"><%= data.dbSessionName %></div>
+        <div class="small">
+            <% if(expired){ %>
+                Expired
+            <%} else { %>
+                <%= data.dbSessionStartDay.split('-').join('.') %> <%= data.dbSessionStartTime.slice(0,2)+':'+data.dbSessionStartTime.slice(2,4) %>&nbsp to &nbsp<%= data.dbSessionEndDay.split('-').join('.') %>  <%= data.dbSessionEndTime.slice(0,2)+':'+data.dbSessionEndTime.slice(2,4) %>
+            <%}%>
+        </div>
       </div>
     </section>
     <div class="searchBox">
@@ -299,11 +305,11 @@
       <div class="sections">
         <div class="total">
           <div class="section practice">
-            <% for(var i=0;i<10;i++){ %>
+            <% for(var i=0;i<questions.length;i++){ %>
             <div class="prac-ques card">
-              <div class="prac-title seTitle">Question Name <%= i+1 %></div>
-              <div class="prac-details">10pts<span>. M</span></div>
-              <a href="">Solve Challenge</a>
+              <div class="prac-title seTitle"><%= questions[i].questionName %></div>
+              <div class="prac-details"><%= questions[i].score %>pts<span>. <%= questions[i].difficulty %></span></div>
+              <a href="/sqlEditor/<%= questions[i].questionId %>">Solve Challenge</a>
             </div>
             <%}%>
           </div>
