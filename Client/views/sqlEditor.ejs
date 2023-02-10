@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/codemirror@5.59.0/lib/codemirror.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/codemirror@5.59.0/theme/monokai.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/theme/material-darker.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/theme/seti.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.0/theme/neat.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.59.0/lib/codemirror.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.59.0/mode/sql/sql.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Silkscreen&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        color: rgb(37, 37, 37);
+        background: white;
+      }
+      .main {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .left {
+        flex-basis: 45%;
+        box-sizing: border-box;
+        padding: 20px;
+        font-family: poppins;
+        height: 100vh;
+        max-height: 100vh;
+        position: relative;
+        overflow: auto;
+        border-right: 0.5mm solid rgba(36, 36, 36, 0.171);
+      }
+      .right {
+        flex-basis: 55%;
+        box-sizing: border-box;
+        height: 100vh;
+        max-height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        overflow: auto;
+      }
+      .top {
+        width: 100%;
+        flex-grow: 1;
+        flex-basis: 55%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        overflow: auto;
+      }
+      .top-head {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        height: fit-content;
+        border-bottom: 0.5mm solid rgba(36, 36, 36, 0.171);
+      }
+      .top-title {
+        font-family: silkscreen;
+        font-size: x-large;
+      }
+      .top-setting {
+        width: fit-content;
+      }
+      .top-setting label {
+        font-family: poppins;
+        margin-left: 10px;
+        font-size: small;
+        font-weight: 500;
+      }
+      .top-setting select {
+        font-size: small;
+        font-family: poppins;
+        padding: 4px 0.875em;
+        padding-right: 2.4em;
+        border-radius: 1mm;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("https://assets.codepen.io/103108/arrow.svg");
+        background-repeat: no-repeat;
+        background-position: right 5px center;
+        background-size: 1em;
+      }
+      .edit {
+        flex-grow: 1;
+        width: 100%;
+        overflow: auto;
+      }
+      .CodeMirror {
+        height: 100% !important;
+      }
+      #code-input {
+        width: 100%;
+        height: 100%;
+        flex-grow: 1;
+      }
+      pre {
+        width: 100%;
+        flex-grow: 1;
+        height: 100%;
+      }
+      code {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .bottom {
+        width: 100%;
+        border-top: 0.5mm solid rgba(36, 36, 36, 0.171);
+        flex-grow: 1;
+        flex-basis: 45%;
+        box-sizing: border-box;
+        overflow: auto;
+      }
+      .qhead {
+        font-family: jost;
+        font-size: x-large;
+        word-wrap: break-word;
+        margin-bottom: 50px;
+      }
+      .qbody {
+        text-align: justify;
+      }
+      table,
+      td,
+      th {
+        border: 0.5mm solid rgba(36, 36, 36, 0.171);
+      }
+
+      table {
+        text-align: center;
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .label {
+        font-weight: 500;
+        text-decoration: underline;
+        margin-top: 40px;
+      }
+      .inout {
+        background: rgba(36, 36, 36, 0.03);
+        border: 0.5mm solid rgba(36, 36, 36, 0.171);
+        border-radius: 1mm;
+        box-sizing: border-box;
+        padding: 5px;
+      }
+      .bot-head {
+        width: 100%;
+        height: fit-content;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: poppins;
+        border-bottom: 0.5mm solid rgba(36, 36, 36, 0.171);
+      }
+      .status {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .statusName {
+        font-size: small;
+        margin-right: 10px;
+      }
+      .statusVal {
+        font-size: small;
+        font-weight: 600;
+        color: rgb(21, 172, 49);
+      }
+      .btns {
+        display: inline-flex;
+        align-items: center;
+      }
+      .btns button {
+        border: none;
+        font-size: small;
+        padding: 4px 8px;
+        border: 0.5mm solid rgb(39, 39, 39);
+        background: white;
+        outline: none;
+        cursor: pointer;
+        font-family: poppins;
+        color: black;
+        margin: 0 20px;
+        margin-right: 0;
+        transition: 0.25s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btns button span {
+        font-size: large;
+        margin-left: 5px;
+      }
+      .btns button:hover {
+        box-shadow: 5px 5px 0 rgb(81, 81, 81);
+      }
+      .output {
+        font-family: poppins;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+      .collapsible {
+        background-color: rgb(39, 39, 39);
+        color: white;
+        cursor: pointer;
+        padding: 8px 15px;
+        width: 95%;
+        margin: auto;
+        display: block;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        font-family: poppins;
+        border: 0.5mm solid rgba(36, 36, 36, 0.171);
+        border-radius: 1mm;
+      }
+
+      .active,
+      .collapsible:hover {
+        background-color: rgb(17, 17, 17);
+      }
+
+      .collapsible:after {
+        content: "\002B";
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+      }
+
+      .active:after {
+        content: "\2212";
+      }
+
+      .content {
+        width: 90%;
+        margin: auto;
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+        font-size: 14px;
+      }
+      .content table,
+      .content th,
+      .content td {
+        border: none !important;
+        text-align: left !important;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="main">
+      <div class="left">
+        <div class="qhead">QUESTION NAME</div>
+        <div class="qbody">
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui officia
+            vel nihil perspiciatis. Laborum nam inventore et quibusdam, minus
+            earum eligendi non magni possimus quae totam unde pariatur fugit
+            necessitatibus ratione a aspernatur enim beatae molestiae quas fuga
+            maxime quod? Minima quos ipsa fuga mollitia sit suscipit
+            reprehenderit eligendi voluptate.
+          </p>
+          <table>
+            <thead>
+              <th>Column 1</th>
+              <th>Column 2</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Value 1 Col 1</td>
+                <td>Value 1 Col 2</td>
+              </tr>
+              <tr>
+                <td>Value 2 Col 1</td>
+                <td>Value 2 Col 2</td>
+              </tr>
+              <tr>
+                <td>Value 3 Col 1</td>
+                <td>Value 3 Col 2</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="label">Sample Input</p>
+          <table>
+            <thead>
+              <th>Column 1</th>
+              <th>Column 2</th>
+              <th>Column 3</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Value 1 Col 1</td>
+                <td>Value 1 Col 2</td>
+                <td>Value 1 Col 3</td>
+              </tr>
+              <tr>
+                <td>Value 2 Col 1</td>
+                <td>Value 2 Col 2</td>
+                <td>Value 2 Col 3</td>
+              </tr>
+              <tr>
+                <td>Value 3 Col 1</td>
+                <td>Value 3 Col 2</td>
+                <td>Value 3 Col 3</td>
+              </tr>
+              <tr>
+                <td>Value 4 Col 1</td>
+                <td>Value 4 Col 2</td>
+                <td>Value 4 Col 3</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="label">Sample Output</p>
+          <div class="inout">
+            Lorem ipsum dolor sit amet.
+            <br />
+            Lorem ipsum dolor sit amet.
+            <br />
+            Lorem ipsum dolor sit amet.
+            <br />
+            Lorem ipsum dolor sit amet.
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="top">
+          <div class="top-head">
+            <div class="top-title">BuildIT SQL Editor</div>
+            <div class="top-setting">
+              <label for="theme">Theme</label>
+              <select id="theme">
+                <option value="neat">Light 1</option>
+                <option value="default">Light 2</option>
+                <option value="monokai">Dark 1</option>
+                <option value="material-darker">Dark 2</option>
+                <option value="seti">Dark 3</option>
+              </select>
+              <label for="size">Font Size</label>
+              <select id="size">
+                <option value="medium">Medium</option>
+                <option value="small">Small</option>
+                <option value="large">Large</option>
+                <option value="x-large">X-Large</option>
+                <option value="xx-large">XX-Large</option>
+              </select>
+            </div>
+          </div>
+          <div class="edit" id="edit">
+            <textarea id="code-input"></textarea>
+          </div>
+        </div>
+        <div class="bottom">
+          <div class="bot-head">
+            <div class="status">
+              <div class="statusName">STATUS</div>
+              <div class="statusVal">Success</div>
+            </div>
+            <div class="btns">
+              <button type="button" onclick="retriveQuery()">
+                Run Query <span class="material-icons"> play_arrow </span>
+              </button>
+              <button type="button">
+                Submit Query
+                <span class="material-icons">
+                  keyboard_double_arrow_right
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="bot-content">
+            <div class="output">
+              <button class="collapsible">Your Output</button>
+              <div class="content">
+                <table>
+                  <% for(var i=0;i<4;i++){ %>
+                  <tr>
+                    <td><%= i+1 %></td>
+                    <td>Lorem ipsum dolor sit amet.</td>
+                  </tr>
+                  <%}%>
+                </table>
+              </div>
+            </div>
+            <div class="output">
+              <button class="collapsible">Expected Output</button>
+              <div class="content">
+                <table>
+                  <table>
+                    <% for(var i=0;i<4;i++){ %>
+                    <tr>
+                      <td><%= i+1 %></td>
+                      <td>Lorem ipsum dolor sit amet.</td>
+                    </tr>
+                    <%}%>
+                  </table>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        var editor = CodeMirror.fromTextArea(
+          document.getElementById("code-input"),
+          {
+            lineNumbers: true,
+            mode: "text/x-sql",
+            theme: "neat",
+            lineWrapping: true,
+          }
+        );
+        let inout = document.querySelector(".inout");
+        let th = document.querySelectorAll("th");
+        let td = document.querySelectorAll("td");
+        let table = document.querySelectorAll("table");
+        let bottom = document.querySelector(".bottom");
+        let topHead = document.querySelector(".top-head");
+        let left = document.querySelector(".left");
+        let qhead = document.querySelector(".qhead");
+        let editorpart = document.querySelector(".CodeMirror-scroll");
+        let status = document.querySelector(".bot-head");
+        let content = document.querySelectorAll(".content");
+        document.getElementById("size").addEventListener("change", (e) => {
+          editorpart.style.fontSize = e.target.value;
+        });
+        document
+          .getElementById("theme")
+          .addEventListener("change", function (event) {
+            let str = event.target.value.toString();
+            editor.setOption("theme", str);
+            setCookie(str);
+            if (str == "monokai") {
+              status.style.borderColor = "rgba(255,255,255,0.1)";
+              document.body.style.background = "rgb(39,40,34)";
+              document.body.style.color = "rgb(245,245,245)";
+              qhead.style.color = "rgb(211,38,100)";
+              inout.style.borderColor = "rgba(255,255,255,0.1)";
+              inout.style.background = "rgba(255,255,255,0.2)";
+              bottom.style.borderColor = "rgba(255,255,255,0.1)";
+              topHead.style.borderColor = "rgba(255,255,255,0.1)";
+              left.style.borderColor = "rgba(255,255,255,0.1)";
+              th.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              td.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              table.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              content.forEach((item) => {
+                item.style.background = "rgb(85,85,85)";
+              });
+            } else if (str == "material-darker") {
+              qhead.style.color = "rgb(177,131,207)";
+              document.body.style.background = "rgb(33,33,33)";
+              document.body.style.color = "rgb(245,245,245)";
+              inout.style.borderColor = "rgba(255,255,255,0.1)";
+              inout.style.background = "rgba(255,255,255,0.2)";
+              bottom.style.borderColor = "rgba(255,255,255,0.1)";
+              topHead.style.borderColor = "rgba(255,255,255,0.1)";
+              left.style.borderColor = "rgba(255,255,255,0.1)";
+              th.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              td.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              table.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              content.forEach((item) => {
+                item.style.background = "rgb(85,85,85)";
+              });
+            } else if (str == "seti") {
+              status.style.borderColor = "rgba(255,255,255,0.1)";
+              qhead.style.color = "rgb(206,184,96)";
+              document.body.style.background = "rgb(21,23,24)";
+              document.body.style.color = "rgb(245,245,245)";
+              inout.style.borderColor = "rgba(255,255,255,0.1)";
+              inout.style.background = "rgba(255,255,255,0.2)";
+              bottom.style.borderColor = "rgba(255,255,255,0.1)";
+              topHead.style.borderColor = "rgba(255,255,255,0.1)";
+              left.style.borderColor = "rgba(255,255,255,0.1)";
+              th.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              td.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              table.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              content.forEach((item) => {
+                item.style.background = "rgb(85,85,85)";
+              });
+            } else {
+              status.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              document.body.style.background = "white";
+              document.body.style.color = "rgb(37, 37, 37)";
+              inout.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              inout.style.background = "rgba(36, 36, 36, 0.03)";
+              bottom.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              topHead.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              left.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              th.forEach((item) => {
+                item.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              });
+              td.forEach((item) => {
+                item.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              });
+              table.forEach((item) => {
+                item.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              });
+              content.forEach((item) => {
+                item.style.background = "#f1f1f1";
+              });
+            }
+            if (str == "default") {
+              qhead.style.color = "rgb(138,35,152)";
+            } else if (str == "neat") {
+              qhead.style.color = "rgb(37,37,37)";
+            }
+          });
+
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            }
+          });
+        }
+        function retriveQuery() {
+          let lines = document.querySelectorAll(".CodeMirror-line ");
+          let queries = [];
+          lines.forEach((line) => {
+            queries.push(line.innerText);
+          });
+          console.log(queries[0]);
+        }
+
+        function setCookie(theme) {
+          const d = new Date();
+          d.setTime(d.getTime() + 100 * 24 * 60 * 60 * 1000);
+          let expires = "expires=" + d.toUTCString();
+          document.cookie =
+            "displayBuildit =" + theme + ";" + expires + ";path=/";
+        }
+        function getCookie(cname) {
+          let name = cname + "=";
+          let decodedCookie = decodeURIComponent(document.cookie);
+          let ca = decodedCookie.split(";");
+          for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == " ") {
+              c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+            }
+          }
+          return "";
+        }
+        window.onload = function () {
+          setTimeout(() => {
+            let str = getCookie("displayBuildit");
+            editor.setOption("theme", str);
+            if (str == "monokai") {
+              status.style.borderColor = "rgba(255,255,255,0.1)";
+              document.body.style.background = "rgb(39,40,34)";
+              document.body.style.color = "rgb(245,245,245)";
+              qhead.style.color = "rgb(211,38,100)";
+              inout.style.borderColor = "rgba(255,255,255,0.1)";
+              inout.style.background = "rgba(255,255,255,0.2)";
+              bottom.style.borderColor = "rgba(255,255,255,0.1)";
+              topHead.style.borderColor = "rgba(255,255,255,0.1)";
+              left.style.borderColor = "rgba(255,255,255,0.1)";
+              th.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              td.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              table.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              content.forEach((item) => {
+                item.style.background = "rgb(85,85,85)";
+              });
+            } else if (str == "material-darker") {
+              qhead.style.color = "rgb(177,131,207)";
+              document.body.style.background = "rgb(33,33,33)";
+              document.body.style.color = "rgb(245,245,245)";
+              inout.style.borderColor = "rgba(255,255,255,0.1)";
+              inout.style.background = "rgba(255,255,255,0.2)";
+              bottom.style.borderColor = "rgba(255,255,255,0.1)";
+              topHead.style.borderColor = "rgba(255,255,255,0.1)";
+              left.style.borderColor = "rgba(255,255,255,0.1)";
+              th.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              td.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              table.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              content.forEach((item) => {
+                item.style.background = "rgb(85,85,85)";
+              });
+            } else if (str == "seti") {
+              status.style.borderColor = "rgba(255,255,255,0.1)";
+              qhead.style.color = "rgb(206,184,96)";
+              document.body.style.background = "rgb(21,23,24)";
+              document.body.style.color = "rgb(245,245,245)";
+              inout.style.borderColor = "rgba(255,255,255,0.1)";
+              inout.style.background = "rgba(255,255,255,0.2)";
+              bottom.style.borderColor = "rgba(255,255,255,0.1)";
+              topHead.style.borderColor = "rgba(255,255,255,0.1)";
+              left.style.borderColor = "rgba(255,255,255,0.1)";
+              th.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              td.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              table.forEach((item) => {
+                item.style.borderColor = "rgba(255,255,255,0.1)";
+              });
+              content.forEach((item) => {
+                item.style.background = "rgb(85,85,85)";
+              });
+            } else {
+              status.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              document.body.style.background = "white";
+              document.body.style.color = "rgb(37, 37, 37)";
+              inout.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              inout.style.background = "rgba(36, 36, 36, 0.03)";
+              bottom.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              topHead.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              left.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              th.forEach((item) => {
+                item.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              });
+              td.forEach((item) => {
+                item.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              });
+              table.forEach((item) => {
+                item.style.borderColor = "rgba(36, 36, 36, 0.171)";
+              });
+              content.forEach((item) => {
+                item.style.background = "#f1f1f1";
+              });
+            }
+            if (str == "default") {
+              qhead.style.color = "rgb(138,35,152)";
+            } else if (str == "neat") {
+              qhead.style.color = "rgb(37,37,37)";
+            }
+            if (str == "neat") {
+              $("#theme").prop("selectedIndex", 0);
+            } else if (str == "default") {
+              $("#theme").prop("selectedIndex", 1);
+            } else if (str == "monokai") {
+              $("#theme").prop("selectedIndex", 2);
+            } else if (str == "material-darker") {
+              $("#theme").prop("selectedIndex", 3);
+            } else {
+              $("#theme").prop("selectedIndex", 4);
+            }
+          }, 10);
+        };
+      </script>
+    </section>
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </body>
+</html>

@@ -524,6 +524,100 @@
         </div>
         <div class="line"></div>
         <%}%>
+        <% if(data.products.length>0){ %>
+          <div class="interns">
+          <div class="label2">Products</div>
+            <% for(var i=0;i<data.products.length-1;i++){ %>
+            <div class="internship" style="margin-bottom: 20px">
+              <p class="notdesc">
+                <strong><%= data.products[i][0]%></strong><a href="<%= data.products[i][1]%>"><span class="material-icons-outlined">
+                  open_in_new
+                  </span></a>
+              </p>
+            </div>
+            <%}%>
+            <% var n=data.products.length %>
+            <div class="internship">
+              <p class="notdesc">
+                <strong><%= data.products[n-1][0]%></strong><a href="<%= data.products[n-1][1]%>"><span class="material-icons-outlined">
+                  open_in_new
+                  </span></a>
+              </p>
+            </div>
+          </div>
+          <div class="line"></div>
+          <%}%>
+  
+          <% if(data.patents.length>0){ %>
+            <div class="interns">
+          <div class="label2">Patents</div>
+            <% for(var i=0;i<data.patents.length-1;i++){ %>
+            <div class="internship" style="margin-bottom: 20px">
+              <p class="notdesc">
+                <strong><%= data.patents[i][0]%></strong><a href="<%= data.patents[i][1]%>"><span class="material-icons-outlined">
+                  open_in_new
+                  </span></a>
+              </p>
+            </div>
+            <%}%>
+            <% var n=data.patents.length %>
+            <div class="internship">
+              <p class="notdesc">
+                <strong><%= data.patents[n-1][0]%></strong><a href="<%= data.patents[n-1][1]%>"><span class="material-icons-outlined">
+                  open_in_new
+                  </span></a>
+              </p>
+            </div>
+          </div>
+          <div class="line"></div>
+          <%}%>
+          <% if(data.industrialDesigns.length>0){ %>
+            <div class="interns">
+          <div class="label2">Industrial Designs</div>
+            <% for(var i=0;i<data.industrialDesigns.length-1;i++){ %>
+            <div class="internship" style="margin-bottom: 20px">
+              <p class="notdesc">
+                <strong><%= data.industrialDesigns[i][0]%></strong><a href="<%= data.industrialDesigns[i][1]%>"><span class="material-icons-outlined">
+                  open_in_new
+                  </span></a>
+              </p>
+            </div>
+            <%}%>
+            <% var n=data.industrialDesigns.length %>
+            <div class="internship">
+              <p class="notdesc">
+                <strong><%= data.industrialDesigns[n-1][0]%></strong><a href="<%= data.industrialDesigns[n-1][1]%>"><span class="material-icons-outlined">
+                  open_in_new
+                  </span></a>
+              </p>
+            </div>
+          </div>
+          <div class="line"></div>
+          <%}%>
+          <% if(data.publications.length>0){ %>
+            <div class="interns">
+          <div class="label2">Publications</div>
+            <% for(var i=0;i<data.publications.length-1;i++){ %>
+            <div class="internship" style="margin-bottom: 20px">
+              <p class="notdesc">
+                <strong><%= data.publications[i][0]%></strong><a href="<%= data.publications[i][1]%>"><span class="material-icons-outlined">
+                  open_in_new
+                  </span></a>
+              </p>
+            </div>
+            <%}%>
+            <% var n=data.publications.length %>
+            <div class="internship">
+              <p class="notdesc">
+                <strong><%= data.publications[n-1][0]%></strong><a href="<%= data.publications[n-1][1]%>"><span class="material-icons-outlined">
+                  open_in_new
+                  </span></a>
+              </p>
+            </div>
+          </div>
+          <div class="line"></div>
+          <%}%>
+
         <% if(data.achievements.length>0){ %>
         <div class="achievements">
           <div class="label2">Achievements</div>

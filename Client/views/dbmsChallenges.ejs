@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DBMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Silkscreen&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: rgb(247, 246, 242);
+        position: relative;
+        overflow-x: hidden;
+      }
+      .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 0.52mm solid black;
+      }
+      .head-left {
+        font-family: "old standard tt";
+        font-weight: 700;
+        font-size: x-large;
+        padding: 18px;
+      }
+      .head-right {
+        padding: 18px;
+      }
+      .head-right a {
+        text-decoration: none;
+        color: black;
+        font-family: poppins;
+        font-size: medium;
+        padding: 5px 10px;
+        border: 0.5mm solid black;
+        margin-left: 10px;
+        transition: 0.25s;
+        background: rgb(255, 195, 74);
+        box-shadow: 3px 3px 0 black;
+      }
+      .head-right a:hover {
+        box-shadow: 0px 0px 0 black;
+      }
+      .main {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .title {
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 0;
+      }
+      .big {
+        font-size: 80px;
+        font-family: silkscreen;
+      }
+      .small {
+        font-size: x-large;
+        font-family: poppins;
+        letter-spacing: 5px;
+      }
+      #back {
+        position: fixed;
+        top: 50%;
+        transform: translate(-30%, -50%);
+        width: 500px;
+      }
+      .lists {
+        width: 100%;
+        margin-top: 50px;
+      }
+      .section-names {
+        width: 380px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: auto;
+        margin-bottom: 30px;
+      }
+      .section-names button {
+        font-family: poppins;
+        font-size: medium;
+        background: none;
+        outline: none;
+        cursor: pointer;
+        border: none;
+        font-weight: 600;
+        transition: 0.25s;
+        border: 0.5mm solid transparent;
+      }
+      .section-names .active {
+        border: 0.5mm solid rgb(44, 44, 44);
+      }
+      .section-names button:hover {
+        border: 0.5mm solid rgb(44, 44, 44);
+      }
+      .sections {
+        width: 100vw;
+        min-width: 100vw;
+        overflow: hidden;
+        scroll-behavior: smooth;
+      }
+      .total {
+        width: 200vw;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        scroll-behavior: smooth;
+        transition: 0.25;
+      }
+      .section {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        height: fit-content;
+        padding: 15px;
+        box-sizing: border-box;
+        position: relative;
+      }
+      .practice {
+        width: 100vw;
+        min-width: 100vw;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .prac-ques {
+        margin: auto;
+        position: relative;
+        width: 65%;
+        min-width: 350px;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 10px 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      .prac-title {
+        font-family: jost;
+        font-size: x-large;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+      }
+      .prac-details span {
+        text-align: center;
+        margin-left: 3px;
+        font-size: small;
+        color: rgb(68, 68, 68);
+      }
+      .prac-details {
+        font-size: small;
+        font-family: poppins;
+        font-weight: 500;
+        color: rgb(5, 77, 172);
+        width: fit-content;
+        display: flex;
+        align-items: center;
+      }
+      .prac-ques a {
+        text-decoration: none;
+        width: fit-content;
+        padding: 7px 15px;
+        font-family: poppins;
+        font-size: medium;
+        background: rgb(40, 40, 40);
+        color: white;
+        display: block;
+        transition: 0.25s;
+      }
+      .prac-ques a:hover {
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+          rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+          rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+      }
+      .searchBox {
+        width: 60%;
+        margin: auto;
+        position: relative;
+        z-index: 1;
+        box-sizing: border-box;
+      }
+      .searchBox::before {
+        font-family: "Material Icons";
+        content: "search";
+        height: fit-content;
+        width: fit-content;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        right: 10px;
+        font-size: large;
+        z-index: 2;
+      }
+      #search {
+        width: 100%;
+        margin: auto;
+        display: block;
+        min-width: 350px;
+        outline: none;
+        font-family: poppins;
+        font-size: medium;
+        border: none;
+        border: 0.5mm solid rgb(44, 44, 44);
+        background: transparent;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        padding-right: 40px;
+        padding-left: 10px;
+        position: relative;
+        z-index: 1;
+        height: 50px;
+        transition: 0.25s;
+      }
+      #search:focus {
+        background: white;
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+          rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+          rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+      }
+      .sessions {
+        min-width: 100vw;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+      }
+      .label {
+        width: 90%;
+        margin: auto;
+        display: block;
+        font-size: x-large;
+        font-family: poppins;
+        font-weight: 600;
+        margin-bottom: 30px;
+        margin-top: 40px;
+      }
+      .allSessions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-evenly;
+      }
+      .session {
+        width: 360px;
+        padding: 15px;
+        box-sizing: border-box;
+        height: 120px;
+        display: flex;
+        flex-direction: column;
+        background: white;
+        text-decoration: none;
+        border: 0.5mm solid rgba(39, 39, 39, 0.326);
+        transition: 0.25s;
+        margin-bottom: 15px;
+      }
+      .session .ses-top {
+        color: black;
+        font-family: poppins;
+        font-size: small;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 5px;
+      }
+      .ses-bottom {
+        display: flex;
+        font-family: poppins;
+        font-size: small;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .session .ses-title {
+        font-family: poppins;
+        font-size: 14px;
+        font-weight: 500;
+        color: black;
+        flex-grow: 1;
+      }
+      .color {
+        color: rgb(5, 77, 172);
+      }
+      .session:hover {
+        box-shadow: 10px 10px 0 black;
+        border: 0.5mm solid black;
+        background: rgb(246, 255, 250);
+      }
+      .session:hover .ses-title {
+        text-decoration: underline;
+      }
+      .inactive:hover {
+        box-shadow: 10px 10px 0 black;
+        border: 0.5mm solid black;
+        background: rgb(255, 253, 246);
+      }
+    </style>
+  </head>
+  <body>
+    <img src="../images/dbmsBack.svg" alt="" id="back" />
+    <section class="header">
+      <div class="head-left">BuildIT - IARE</div>
+      <div class="head-right">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </section>
+    <section class="main">
+      <div class="title">
+        <div class="big">DBMS</div>
+        <div class="small">Challenges</div>
+      </div>
+    </section>
+    <div class="searchBox">
+      <input
+        type="search"
+        name=""
+        id="search"
+        placeholder="Search Challenges and Sessions"
+        onkeyup="search(this)"
+      />
+    </div>
+    <section class="lists">
+      <div class="section-names">
+        <button
+          type="button"
+          class="active"
+          onclick="scrollit('practice', this)"
+        >
+          Practice
+        </button>
+        <button type="button" class="" onclick="scrollit('sessions', this)">
+          Sessions
+        </button>
+      </div>
+      <div class="sections">
+        <div class="total">
+          <div class="section practice">
+            <% for(var i=0;i<11;i++){ %>
+            <div class="prac-ques card">
+              <div class="prac-title seTitle">Question Name <%= i+1 %></div>
+              <div class="prac-details">10pts<span>. M</span></div>
+              <a href="">Solve Challenge</a>
+            </div>
+            <%}%>
+          </div>
+          <div class="section sessions">
+            <div class="label">Active Contests</div>
+            <div class="allSessions">
+              <% for(var i=0;i<9;i++){ %>
+              <a
+                href=""
+                target="_blank"
+                rel="noopener noreferrer"
+                class="session card"
+              >
+                <div class="ses-top">
+                  <span>From</span>
+                  <span class="color">06.02.23 &nbsp00:00</span>
+                </div>
+                <div class="ses-title seTitle">Session Name <%= i+1 %></div>
+                <div class="ses-bottom">
+                  <span>To</span>
+                  <span class="color">07.02.23 &nbsp23:59</span>
+                </div>
+              </a>
+              <%}%>
+            </div>
+            <div class="label">Inactive Contests</div>
+            <div class="allSessions">
+              <% for(var i=0;i<9;i++){ %>
+              <a
+                href=""
+                target="_blank"
+                rel="noopener noreferrer"
+                class="session inactive card"
+              >
+                <div class="ses-top">
+                  <span>From</span>
+                  <span class="color">06.02.23 &nbsp00:00</span>
+                </div>
+                <div class="ses-title seTitle">Session Name <%= i+1 %></div>
+                <div class="ses-bottom">
+                  <span>To</span>
+                  <span class="color">07.02.23 &nbsp23:59</span>
+                </div>
+              </a>
+              <%}%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      function scrollit(name, btnid) {
+        name = "." + name;
+        document.querySelector(name).scrollIntoView();
+        document.querySelector(".active").className = "";
+        btnid.className = "active";
+      }
+
+      const search = (text) => {
+        text = text.value;
+        text = text.toUpperCase();
+        let names = document.querySelectorAll(".seTitle");
+        let cards = document.querySelectorAll(".card");
+        for (var i = 0; i < names.length; i++) {
+          let actual = names[i].innerText;
+          actual = actual.toUpperCase();
+          if (actual.indexOf(text) == -1) {
+            cards[i].style.display = "none";
+          } else {
+            cards[i].style.display = "flex";
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
