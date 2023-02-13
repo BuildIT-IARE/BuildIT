@@ -1,9 +1,14 @@
 var mysql = require("mysql");
+const dotenv = require("dotenv");
+
+dotenv.config({ path: "../Server/util/config.env" });
+
 var con = mysql.createConnection({
   host: "localhost", //your hostname
   user: "root", //your username
-  password: "Avivytla@01", //your password
-  database: "buildit", //your database name
+  password: process.env.MySQL_PASS, //your password
+  database: process.env.MySQL_DB, //your database name
+  multipleStatements: true
 });
 con.connect((error) => {
   if (!error) {

@@ -19,36 +19,59 @@ exports.create = (req, res) => {
           });
         });
       // Create a Question
-      const question = new Question({
-        questionId: req.body.questionId,
-        questionName: req.body.questionName,
-        contestId: req.body.contestId,
-        questionDescriptionText: req.body.questionDescriptionText,
-        questionInputText: req.body.questionInputText,
-        questionOutputText: req.body.questionOutputText,
-        questionExampleInput: req.body.questionExampleInput,
-        questionExampleOutput: req.body.questionExampleOutput,
-        questionHiddenOutput: req.body.questionHiddenOutput,
-        questionExplanation: req.body.questionExplanation,
-        score: req.body.score,
-        difficulty: req.body.difficulty,
-        tableName: req.body.tableName,
-        author: req.body.author,
-        editorial: req.body.editorial,
-      });
-      // Save Question in the database
-      question
-        .save()
-        .then((data) => {
-          res.send(data);
-        })
-        .catch((err) => {
-          res.status(500).send({
+      sql = "SELECT * FROM "+req.body.tableName;
+      sqlCon.query(sql, function (err, result) {
+        if (err){
+          return res.status(500).send({
             success: false,
             message:
-              err.message || "Some error occurred while creating the Question.",
+              err.message || "Some error occurred while retrieving table for the question." + req.body.questionId,
           });
-        });
+        }
+        sqlCon.query(req.body.questionSolution,function(err1,result1){
+          if (err1){
+            return res.status(500).send({
+              success: false,
+              message:
+                err1.message || "Some error occurred while retrieving solution table for the question." + req.body.questionId,
+              });
+            }
+            const question = new Question({
+              questionId: req.body.questionId,
+              questionName: req.body.questionName,
+              contestId: req.body.contestId,
+              questionDescriptionText: req.body.questionDescriptionText,
+              questionInputText: req.body.questionInputText,
+              questionOutputText: req.body.questionOutputText,
+              questionExampleInput: req.body.questionExampleInput,
+              questionExampleOutput: req.body.questionExampleOutput,
+              questionHiddenOutput: result1,
+              questionExplanation: req.body.questionExplanation,
+              score: req.body.score,
+              difficulty: req.body.difficulty,
+              tableName: req.body.tableName,
+              tableData: result,
+              author: req.body.author,
+              editorial: req.body.editorial,
+            });
+            // Save Question in the database
+            question
+              .save()
+              .then((data) => {
+                res.status(200).send({
+                  success: true,
+                  data : data,
+                });
+              })
+              .catch((err) => {
+                res.status(500).send({
+                  success: false,
+                  message:
+                    err.message || "Some error occurred while creating the Question.",
+                });
+              });
+        })
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -154,7 +177,7 @@ exports.update = (req, res) => {
         questionOutputText: req.body.questionOutputText,
         questionExampleInput: req.body.questionExampleInput,
         questionExampleOutput: req.body.questionExampleOutput,
-        questionHiddenOutput: req.body.questionHiddenOutput,
+        questionSolution: req.body.questionSolution,
         questionExplanation: req.body.questionExplanation,
         author: req.body.author,
         score: req.body.score,
@@ -256,7 +279,7 @@ exports.getTestCases = (req, callback) => {
       question = question[0];
       testcases = {
         contestId: question.contestId,
-        HO1: question.questionHiddenOutput,
+        HO1: question.questionSolution,
       };
       return res.status(200).send({
         success: true,

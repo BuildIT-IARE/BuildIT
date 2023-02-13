@@ -158,3 +158,43 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+// Find a single dbSession with a dbSessionId for checking duration
+exports.getDuration = (req, res) => {
+  DB.find({ dbSessionId: req.body.dbSessionId })
+    .then((dbSession) => {
+      if (!dbSession) {
+        return res.status(500).send({
+          success: false,
+          message: "Could not find dbSession with id " + req.body.dbSessionId,
+        });
+      }
+      dbSession = dbSession[0];
+      let durationData = {
+        startTime: dbSession.dbSessionStartTime,
+        endTime: dbSession.dbSessionEndTime,
+        duration: dbSession.dbSessionDuration,
+        date: dbSession.dbSessionDate,
+        mcq: dbSession.mcq,
+        sections: dbSession.sections,
+        dbSessionName: dbSession.dbSessionName,
+        coding: dbSession.coding,
+      };
+      res.status(200).send({
+        success: true,
+        data: durationData
+      });
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return res.status(500).send({
+          success: false,
+          message: "Could not find dbSession with id " + req.body.dbSessionId,
+        });
+      }
+      return res.status(400).send({
+        success: false,
+        message: "Could not find dbSession with id " + req.body.dbSessionId,
+      });
+    });
+};

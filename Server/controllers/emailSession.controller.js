@@ -16,29 +16,39 @@ exports.create = (req, res) => {
     });
   }
   // let encryptValue = encrypt.encrypt(req.body.facultyId);
-  const email = new Email({
-    emailId: req.body.emailId,
-    emailName: req.body.emailName,
-    emailDate: req.body.emailDate,
-    emailFaculty: req.body.emailFaculty,
-    facultyId: req.body.facultyId,
-    emailStartDay: req.body.emailStartDay,
-    emailEndDay: req.body.emailEndDay,
-    emailStartTime: req.body.emailStartTime,
-    emailEndTime: req.body.emailEndTime,
-    emailPassword: req.body.emailPassword,
-  });
-  email
-    .save()
-    .then((data) => {
-      res.status(200).send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        success: false,
-        message: err.message + " Some error occurred while creating the email.",
-      });
+  Email.find({})
+  .then((data) => {
+    var CountValue = data[0].CountValue;
+    const email = new Email({
+      emailId: "IARE "+CountValue,
+      emailName: req.body.emailName,
+      emailDate: req.body.emailDate,
+      emailFaculty: req.body.emailFaculty,
+      facultyId: req.body.facultyId,
+      emailStartDay: req.body.emailStartDay,
+      emailEndDay: req.body.emailEndDay,
+      emailStartTime: req.body.emailStartTime,
+      emailEndTime: req.body.emailEndTime,
+      emailPassword: req.body.emailPassword,
     });
+    email
+      .save()
+      .then((data) => {
+        res.status(200).send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          success: false,
+          message: err.message + " Some error occurred while creating the email.",
+        });
+      });
+  })
+  .catch((err) => {
+    res.status(500).send({
+      success: false,
+      message: err.message + " Some error occurred while creating the email.",
+    });
+  });
 };
 
 // Find a single  with a Id

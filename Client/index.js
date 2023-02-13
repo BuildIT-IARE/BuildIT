@@ -3793,7 +3793,7 @@ const dataCompare = (date, time) => {
 
 app.get("/sqlEditor/:dbQuestionId", async (req, res) => {
   let options = {
-    url: serverRoute + "/questionsDBMS/" + req.params.dbQuestionId,
+    url: serverRoute + "/dbQuestions/" + req.params.dbQuestionId,
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -3846,7 +3846,7 @@ app.get("/sqlEditor/:dbQuestionId", async (req, res) => {
 
 app.get("/dbmsChallenges", checkSignIn, async (req, res) => {
   let options = {
-    url: serverRoute + "/questionsDBMS",
+    url: serverRoute + "/dbQuestions",
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -3901,7 +3901,7 @@ app.get("/dbmsChallenges", checkSignIn, async (req, res) => {
 
 app.get("/dbmsChallenges/:sessionId", async (req, res) => {
   let options = {
-    url: serverRoute + "/questionsDBMS/contests/" + req.params.sessionId,
+    url: serverRoute + "/dbQuestions/contests/" + req.params.sessionId,
     method: "get",
     headers: {
       authorization: req.cookies.token,

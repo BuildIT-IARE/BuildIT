@@ -12,13 +12,14 @@ var dbQuestionSchema = new Schema({
   questionOutputText: String,
   questionExampleInput: String,
   questionExampleOutput: String,
-  questionHiddenOutput: String,
+  questionHiddenOutput: Object,
   questionExplanation: String,
   score: Number,
   difficulty: String,
   author: String,
   editorial: String,
   tableName: String,
+  tableData: Object,
   CountValue: Number,
 });
 

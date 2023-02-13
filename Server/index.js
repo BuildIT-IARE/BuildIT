@@ -80,7 +80,8 @@ mongoose
   })
   .then(() => {
     console.log("Successfully connected to the mongodb database");
-    sqlCon.query("SELECT * FROM students", function (err, result, fields) {
+    var sql = "SELECT * FROM students;"
+    sqlCon.query(sql, function (err, result, fields) {
       if (err) throw err;
       console.log(result);
     });
@@ -157,6 +158,8 @@ require("./routes/visitorAccess.route")(app);
 require("./routes/dbQuestion.route")(app);
 //Require dbSession routes
 require("./routes/dbSession.route")(app);
+//Require dbSubmission routes
+require("./routes/dbSubmission.route")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
@@ -913,6 +916,26 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
     });
   }
 });
+
+app.post('/validateSubmissionSQL', (req, res) => {
+  let options11 = {
+    method: "get",
+    json: true,
+    url: process.env.clientAddress + "/userSession/" + req.body.user,
+  };
+  request(options11, function(err, response, body) {
+      if (!body.status || err)
+          return res.status(404).send({
+              message: "user logged out!"
+          });
+  });
+  if (req.body.dbSessionId.length !== 0) {
+    
+  }
+  else{
+
+  }
+})
 
 app.get("/getScores", middleware.checkToken, async (req, res) => {
   let username = req.decoded.username;
