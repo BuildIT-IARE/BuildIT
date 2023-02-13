@@ -16,12 +16,13 @@ exports.create = (req, res) => {
     });
   }
   // let encryptValue = encrypt.encrypt(req.body.facultyId);
+  let facId = encrypt.decrypt(req.body.facultyId);
   const email = new Email({
     emailId: req.body.emailId,
     emailName: req.body.emailName,
     emailDate: req.body.emailDate,
     emailFaculty: req.body.emailFaculty,
-    facultyId: req.body.facultyId,
+    facultyId: facId,
     emailStartDay: req.body.emailStartDay,
     emailEndDay: req.body.emailEndDay,
     emailStartTime: req.body.emailStartTime,
