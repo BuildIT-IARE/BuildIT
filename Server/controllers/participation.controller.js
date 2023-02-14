@@ -1,9 +1,15 @@
 const Participate = require("../models/participation.model.js");
 const Participation = Participate.Participation;
+const contestLong  = require("../models/mcqcontestLong.model.js")
+const Contest = require("../models/contest.model.js")
 const McqParticipation = Participate.McqParticipation;
 const contests = require("./contest.controller.js");
+const contestLongCtrl = require("./mcqLong.controller.js");
 const mcqs = require("./mcq.controller.js");
 var moment = require("moment");
+
+
+
 // Create and Save a new participation
 exports.create = (req, res) => {
   req.body.username = req.decoded.username;
@@ -80,9 +86,12 @@ exports.create = (req, res) => {
 
 // Create and Save a new mcq participation
 exports.createMcq = (req, res) => {
+  // console.log("creating mcq participation")
+  // console.log(req.body)
   req.body.username = req.decoded.username;
   // Validate request
   if (!req.body.username) {
+    // console.log("user id empty")
     return res.status(400).send({
       success: false,
       message: "user Id can not be empty",
@@ -90,6 +99,7 @@ exports.createMcq = (req, res) => {
   }
 
   if (!req.body.contestId) {
+    // console.log("contest id empty")
     return res.status(400).send({
       success: false,
       message: "contest Id can not be empty",
@@ -99,56 +109,121 @@ exports.createMcq = (req, res) => {
   McqParticipation.find({
     participationId: req.body.username + req.body.contestId,
   })
-    .then((participation) => {
+    .then(async (participation) => {
       if (participation.length === 0) {
-        contests.getDuration(req, (err, duration) => {
-          if (err) {
-            res.send({ success: false, message: "Error occured" });
-          }
-
-          let date = moment();
-          let d = duration.duration;
-          let sections = duration.sections.map((e) => ({
-            section: e,
-            responses: [],
-          }));
-          if (duration.coding) {
-            duration.sections.push("Coding");
-          }
-          let endTime = moment(date, "HH:mm:ss").add(d, "minutes");
-          // Create a Participation
-          const participation = new McqParticipation({
-            participationId: req.body.username + req.body.contestId,
-            username: req.body.username,
-            contestId: req.body.contestId,
-            contestName: duration.contestName,
-            participationTime: date,
-            submissionResults: [],
-            totalSubmissionResultsScore: 0,
-            mcqResults: {},
-            validTill: endTime,
-            responses: sections,
-            sections: duration.sections,
-          });
-          // Save participation in the database
-          participation
-            .save()
-            .then((data) => {
-              res.send(data);
-            })
-            .catch((err) => {
-              res.status(500).send({
-                success: false,
-                message:
-                  err.message || "Some error occurred while Registering.",
-              });
+        const isContestPresent = await Contest.findOne({ contestId: req.body.contestId });
+        if (isContestPresent){
+          contests.getDuration(req, (err, duration) => {
+            if (err) {
+              res.send({ success: false, message: "Error occured" });
+            }
+  
+            let date = moment();
+            let d = duration.duration;
+            let sections = duration.sections.map((e) => ({
+              section: e,
+              responses: [],
+            }));
+            if (duration.coding) {
+              duration.sections.push("Coding");
+            }
+            let endTime = moment(date, "HH:mm:ss").add(d, "minutes");
+            // Create a Participation
+            const participation = new McqParticipation({
+              participationId: req.body.username + req.body.contestId,
+              username: req.body.username,
+              contestId: req.body.contestId,
+              contestName: duration.contestName,
+              participationTime: date,
+              submissionResults: [],
+              totalSubmissionResultsScore: 0,
+              mcqResults: {},
+              validTill: endTime,
+              responses: sections,
+              sections: duration.sections,
             });
-        });
+            // Save participation in the database
+            participation
+              .save()
+              .then((data) => {
+                res.send(data);
+              })
+              .catch((err) => {
+                res.status(500).send({
+                  success: false,
+                  message:
+                    err.message || "Some error occurred while Registering.",
+                });
+              });
+          });
+        }
+        const isLongContestPresent = await contestLong.findOne({ contestId: req.body.contestId });
+        // console.log(isLongContestPresent)
+        if (isLongContestPresent) {
+          // console.log("Long Contest")
+          contestLongCtrl.getDurationLong(req, (err, duration) => {
+            if (err) {
+              res.send({ success: false, message: "Error occured" });
+            }
+            // Create a Participation
+            let date = moment();
+            let sections = duration.sections.map((e) => ({
+              section: e,
+              responses: [],
+            }));
+            if (duration.coding) {
+              duration.sections.push("Coding");
+            }
+            let validTill = moment(date, "HH:mm:ss").add(duration.contestDuration, "minutes");
+            const participation = new McqParticipation({
+              participationId: req.body.username + req.body.contestId,
+              username: req.body.username,
+              branch: req.body.branch,
+              contestId: req.body.contestId,
+              participationTime: date,
+              submissionResults: [],
+              validTill: validTill,
+              responses: sections,
+              sections: duration.sections,
+              totalSubmissionResultsScore: 0,
+              mcqResults: {},
+            });
+            // const participation = new McqParticipation({
+            //   participationId: req.body.username + req.body.contestId,
+            //   username: req.body.username,
+            //   contestId: req.body.contestId,
+            //   contestName: duration.contestName,
+            //   participationTime: date,
+            //   submissionResults: [],
+            //   totalSubmissionResultsScore: 0,
+            //   mcqResults: {},
+            //   validTill: endTime,
+            //   responses: sections,
+            //   sections: duration.sections,
+            // });
+            // Save participation in the database
+            participation
+              .save()
+              .then((data) => {
+                res.send(data);
+              })
+              .catch((err) => {
+                res.status(500).send({
+                  success: false,
+                  message:
+                    err.message || "Some error occurred while Registering.",
+                });
+              });
+          });
+
+        }
+
       } else {
         res.send({ success: false, message: "User already participated" });
       }
     })
     .catch((err) => {
+      console.log(err)
       res.status(500).send({
         success: false,
         message:
@@ -172,7 +247,7 @@ exports.acceptSelection = (sub, callback) => {
             found = true;
 
             // Update selection
-            console.log("Came here");
+            // console.log("Came here");
             const query_field = `responses.${sub.section - 1}.responses.mcqId`;
             const field = `responses.${sub.section - 1}.responses.$.selection`;
             const value = sub.answer;
@@ -486,10 +561,13 @@ exports.findUser = (req, res) => {
 
 // Retrieve and return all participation details for user in contest.
 exports.findParticipation = (req, callback) => {
+  // console.log(req.decoded, req.params.contestId)
   Participation.find({
     participationId: req.decoded.username + req.params.contestId,
   })
     .then((participation) => {
+      // console.log("Participation: ",participation, participation.responses)
+      // console.log("1 Participation: ", participation, participation.responses)
       if (participation.length === 0) {
         return callback("participation not found ", null);
       }
@@ -598,13 +676,16 @@ exports.findUserTime = (result, callback) => {
 
 // Retrieve and return all participation details for user in contest.
 exports.findMcqParticipation = (req, res) => {
+  // console.log(req.decoded.username + req.params.contestId);
   McqParticipation.find({
     participationId: req.decoded.username + req.params.contestId,
   })
     .then((participation) => {
+      // console.log("2  Participation: ", participation, participation[0].responses)
       res.send(participation);
     })
     .catch((err) => {
+      console.log(err)
       res.status(500).send({
         success: false,
         message:
@@ -728,6 +809,7 @@ exports.saveResult = (req, res) => {
                     req.params.contestId,
                 });
               }
+              console.log(participations)
               let participation = participations.mcqResults._doc;
               participation.sections = participations.sections;
               participation.contestName = participations.contestName;
