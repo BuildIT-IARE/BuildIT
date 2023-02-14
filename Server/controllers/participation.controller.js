@@ -36,75 +36,41 @@ exports.create = (req, res) => {
   Participation.find({
     participationId: req.body.username + req.body.contestId,
   })
-    .then(async (participation) => {
+    .then((participation) => {
       if (participation.length === 0) {
-        const isContestPresent = await isContest(req, res);
-        // console.log(isContestPresent)
-        if (isContestPresent.success){
-          contests.getDuration(req, (err, duration) => {
-            if (err) {
-              res.send({ success: false, message: "Error occured" });
-            }
-  
-            let date = moment();
-            let d = duration.duration;
-            let endTime = moment(date, "HH:mm:ss").add(d, "minutes");
-  
-            // Create a Participation
-            const participation = new Participation({
-              participationId: req.body.username + req.body.contestId,
-              username: req.body.username,
-              branch: req.body.branch,
-              contestId: req.body.contestId,
-              participationTime: date,
-              submissionResults: [],
-              validTill: endTime,
-            });
-            // Save participation in the database
-            participation
-              .save()
-              .then((data) => {
-                res.send(data);
-              })
-              .catch((err) => {
-                res.status(500).send({
-                  success: false,
-                  message:
-                    err.message || "Some error occurred while Registering.",
-                });
-              });
+        contests.getDuration(req, (err, duration) => {
+          if (err) {
+            res.send({ success: false, message: "Error occured" });
+          }
+
+          let date = moment();
+          let d = duration.duration;
+          let endTime = moment(date, "HH:mm:ss").add(d, "minutes");
+
+          // Create a Participation
+          const participation = new Participation({
+            participationId: req.body.username + req.body.contestId,
+            username: req.body.username,
+            branch: req.body.branch,
+            contestId: req.body.contestId,
+            participationTime: date,
+            submissionResults: [],
+            validTill: endTime,
           });
-        }
-        if (isLongContest.success) {
-          contestLongCtrl.getDurationLong(req, (err, duration) => {
-            if (err) {
-              res.send({ success: false, message: "Error occured" });
-            }
-            // Create a Participation
-            const participation = new Participation({
-              participationId: req.body.username + req.body.contestId,
-              username: req.body.username,
-              branch: req.body.branch,
-              contestId: req.body.contestId,
-              participationTime: date,
-              submissionResults: [],
-              validTill: req.body.validTill,
-            });
-            // Save participation in the database
-            participation
-              .save()
-              .then((data) => {
-                res.send(data);
-              })
-              .catch((err) => {
-                res.status(500).send({
-                  success: false,
-                  message:
-                    err.message || "Some error occurred while Registering.",
-                });
+          // Save participation in the database
+          participation
+            .save()
+            .then((data) => {
+              res.send(data);
+            })
+            .catch((err) => {
+              res.status(500).send({
+                success: false,
+                message:
+                  err.message || "Some error occurred while Registering.",
               });
-          });
-        }
+            });
+        });
       } else {
         res.send({ success: false, message: "User already participated" });
       }
