@@ -3301,11 +3301,7 @@ app.get(
         let options = {
           url:
             serverRoute +
-            "/emailSubmission/" +
-            req.params.emailId +
-            req.params.emailQuestionId +
-            "/" +
-            req.cookies.username.toLowerCase(),
+            "/emailSubmissions/" +req.params.emailId+req.params.emailQuestionId+"/"+req.cookies.username.toUpperCase(),
           method: "get",
           headers: {
             authorization: req.cookies.token,
