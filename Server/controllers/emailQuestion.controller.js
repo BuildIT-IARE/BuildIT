@@ -1,26 +1,93 @@
 const EmailQuestion = require("../models/emailQuestion.model.js");
 
 exports.create = (req, res) => {
-  const question = new EmailQuestion({
-    emailId: req.body.emailId,
-    emailQuestionId: req.body.emailQuestionId,
-    emailQuestionName: req.body.emailQuestionName,
-    emailTopic: req.body.emailTopic,
-    emailScore: Number(req.body.emailScore),
-    emailGuidelines: req.body.emailGuidelines,
-  });
-
-  question
-    .save()
-    .then((data) => {
-      res.status(200).send({
-        success: true,
-        message: "Question Created Successfully",
-      });
-    })
+  EmailQuestion.find({})
+  .then((emailQuestions) => {
+    emailQuestions = emailQuestions[0];
+    console.log(emailQuestions);
+    EmailQuestion.findOneAndUpdate(
+      {emailQuestionId : emailQuestions.emailQuestionId},
+      {
+        $set: {
+          countValue : Number(emailQuestions.countValue) + 1
+        }
+      }
+    )
+    .then()
     .catch((err) => {
-      res.status(500).send(err.message || "Error Creating an Email Question");
+      return  res.status(500).send({
+        success: false,
+        message:
+          err.message || "First Reference emailQuestion missing(countValue)",
+      });
     });
+    const question = new EmailQuestion({
+      emailId: req.body.emailId,
+      emailQuestionId: "IARE_EQ"+emailQuestions.countValue + 1,
+      emailQuestionName: req.body.emailQuestionName,
+      emailTopic: req.body.emailTopic,
+      emailScore: Number(req.body.emailScore),
+      emailGuidelines: req.body.emailGuidelines,
+    });
+    question
+      .save()
+      .then((data) => {
+        res.status(200).send({
+          success: true,
+          message: "emailQuestion Created Successfully",
+        });
+      })
+      .catch((err) => {
+        res.status(500).send(err.message || "Error Creating an emailQuestion");
+      });
+  })
+  .catch((err) => {
+    res.status(500).send({
+      success: false,
+      message:
+        err.message || "Some error occurred while retrieving emailQuestions(create).",
+    });
+  });
+};
+
+exports.update = (req, res) => {
+  EmailQuestion.findOneAndUpdate(
+    {emailQuestionId: req.params.emailQuestionId},
+    {
+      $set : {
+        emailId: req.body.emailId,
+        emailQuestionName: req.body.emailQuestionName,
+        emailTopic: req.body.emailTopic,
+        emailScore: Number(req.body.emailScore),
+        emailGuidelines: req.body.emailGuidelines,
+      },
+    },
+    {new: true}
+  )
+  .then((email) => {
+    if (!email) {
+      return res.status(404).send({
+        success: false,
+        message: "emailQuestion not found with id " + req.params.emailId,
+      });
+    }
+    return res.status(200).send({
+      success: true,
+      message: "emailQuestion updated! " + req.params.emailId,
+    });
+  })
+  .catch((err) => {
+    if (err.kind === "ObjectId") {
+      return res.status(404).send({
+        success: false,
+        message: "emailQuestion not found with id " + req.params.emailId,
+      });
+    }
+    return res.status(500).send({
+      success: false,
+      message: "Error updating emailQuestion with id " + req.params.emailId,
+    });
+  });
 };
 
 //extract all questions
