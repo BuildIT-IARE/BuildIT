@@ -586,7 +586,15 @@ $(document).ready(function () {
   });
   $submitBtn = $("#submit-btn");
   $submitBtn.click(function (e) {
-    submit();
+    if ($submitBtn.hasClass("Waiting")) {
+      showError("Please wait 10 seconds before submitting again.", "Please Wait...!");
+    } else{
+      submit();
+      $submitBtn.addClass("Waiting");
+      setTimeout(function () {
+        $submitBtn.removeClass("Waiting");
+      }, 10000);
+    }
   });
 
   $statusLine = $("#status-line");

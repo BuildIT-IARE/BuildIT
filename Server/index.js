@@ -537,6 +537,7 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
                     if (err) {
                       res.status(404).send({ message: err });
                     }
+                    console.log(body);
                     result.token1 = body.token;
                     setTimeout(() => {
                       request(options2, function (err, response, body) {
