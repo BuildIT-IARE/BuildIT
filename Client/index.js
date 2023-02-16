@@ -3303,7 +3303,9 @@ app.get(
             serverRoute +
             "/emailSubmission/" +
             req.params.emailId +
-            req.params.emailQuestionId,
+            req.params.emailQuestionId +
+            "/" +
+            req.cookies.username.toLowerCase(),
           method: "get",
           headers: {
             authorization: req.cookies.token,
