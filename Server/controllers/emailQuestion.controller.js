@@ -98,7 +98,7 @@ exports.update = (req, res) => {
 exports.findAll = (req, res) => {
   EmailQuestion.find()
     .then((data) => {
-      data = data.shift();
+      data.shift();
       res.status(200).send(data);
     })
     .catch((err) => {
