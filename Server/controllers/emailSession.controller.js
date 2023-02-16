@@ -110,7 +110,7 @@ exports.findOne = (req, res) => {
 exports.findAllSession = (req, res) => {
   Email.find({})
     .then((emails) => {
-      emails = emails.shift();
+      emails.shift();
       res.status(200).send(emails);
     })
     .catch((err) => {
