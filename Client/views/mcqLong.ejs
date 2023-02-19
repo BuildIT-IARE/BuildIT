@@ -562,7 +562,9 @@
           <div class="statements">
             <div class="states" id="acstates">
               <% for(let i = data.length-1; i >= 0; i--){ %> <% if 
-                (data[i].contestStartDate <=new Date().toISOString().slice(0,10) && data[i].contestEndDate >=new Date().toISOString().slice(0,10) ) { %>
+              (new Date(data[i].contestEndDate + " " + data[i].contestEndTime.slice(0, 2) + ":" + data[i].contestEndTime.slice(2, 5) + ":00") - new Date()>0)
+                // (data[i].contestStartDate <=new Date().toISOString().slice(0,10) && data[i].contestEndDate >=new Date().toISOString().slice(0,10) )
+                 { %>
                   <a href="/mcqLong/<%=  data[i].contestId %>" class="state-box state-white">
                     <div class="sbicon">
                   <span class="material-icons-outlined"> texture </span>
@@ -577,12 +579,11 @@
                 </a>
                 <% } %> <% } %>
                     </div>
-    
-                
-            
             <div class="states" id="exstates">
               <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-                (data[i].contestStartDate > new Date().toISOString().slice(0,10) || data[i].contestEndDate <new Date().toISOString().slice(0,10) ) { %>
+                (new Date(data[i].contestEndDate + " " + data[i].contestEndTime.slice(0, 2) + ":" + data[i].contestEndTime.slice(2, 5) + ":00") - new Date()<=0)
+                // (data[i].contestStartDate > new Date().toISOString().slice(0,10) || data[i].contestEndDate <new Date().toISOString().slice(0,10) ) 
+                { %>
                   <a href="/mcqLong/<%=  data[i].contestId %>" class="state-box state-white">
                     <div class="sbicon">
                   <span class="material-icons-outlined"> texture </span>
