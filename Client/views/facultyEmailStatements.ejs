@@ -512,7 +512,7 @@
             </span>
             </span>
              <div id="add-guide" onclick="addGuide()">Add Guideline</div>
-            <button type="button" id="sub-btn" onclick="sendSession()">Submit</button>
+            <button type="button" id="sub-btn" onclick="sendStatement()">Submit</button>
         </div>
     </section>
     <script>
@@ -536,7 +536,7 @@
         document.getElementById("create").onclick=function(){
             document.getElementById("add-new").style.display="flex"
         }
-        function sendSession() {
+        function sendStatement() {
            let emailQuestionId= document.getElementById("emailQuestionId").value
            let emailQuestionName=document.getElementById("emailQuestionName").value
            let emailScore=document.getElementById("emailScore").value
