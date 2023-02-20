@@ -1514,7 +1514,7 @@ app.post("/admin/results/contest", async (req, res) => {
   };
 
   request(options, function (err, response, bodyparticipation) {
-    console.log(bodyparticipation);
+    // console.log(bodyparticipation);
     let options = {
       url: serverRoute + "/questions/contests/" + req.body.contestId,
       method: "get",
@@ -2226,7 +2226,7 @@ app.post(
 
     const addSelection = () => {
       return new Promise(() => {
-        console.log(req.body)
+        // console.log(req.body)
         let options = {
           url: serverRoute + "/validateMcq",
           method: "post",

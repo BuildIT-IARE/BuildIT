@@ -788,7 +788,7 @@ exports.saveResult = (req, res) => {
             statistics: score,
             answerKey: answer,
           };
-          console.log("came there");
+          console.log("came there",  participation[0]);
           McqParticipation.findOneAndUpdate(
             { participationId: participation[0].participationId },
             {
@@ -809,13 +809,13 @@ exports.saveResult = (req, res) => {
                     req.params.contestId,
                 });
               }
-              console.log(participations)
-              let participation = participations.mcqResults._doc;
-              participation.sections = participations.sections;
-              participation.contestName = participations.contestName;
-              participations.coding = participation[0].submissionResults;
-              // participation.coding = participations.submissionResults;
-              res.send(participation);
+              // console.log(participations)
+              let resParticipation = participations.mcqResults._doc;
+              resParticipation.sections = participations.sections;
+              resParticipation.contestName = participations.contestName;
+              resParticipation.coding = participation[0].submissionResults;
+              resParticipation.coding = participations.submissionResults;
+              res.send(resParticipation);
             })
             .catch((err) => {
               console.log(err);

@@ -6,7 +6,7 @@ const InternshipInfo = ResumeModels.InternshipInfo;
 const CodingProfilesInfo = ResumeModels.CodingProfiles;
 
 exports.create = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   //extracting all socials
   //socialsArray = [[social1,social1url]...]
   socialsArray = [];
