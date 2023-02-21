@@ -4,7 +4,7 @@ const xlsx = require("xlsx");
 
 // Create and Save a new contest
 exports.create = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   // Validate request
   if (!req.body.contestId) {
     return res.status(400).send({
@@ -189,7 +189,7 @@ exports.getDuration = (req, callback) => {
         contestName: contest.contestName,
         coding: contest.coding,
       };
-      console.log(durationData)
+      // console.log(durationData)
       return callback(null, durationData);
     })
     .catch((err) => {

@@ -162,7 +162,7 @@ app.get("/testGet", async (req, res) => {
 
 app.post("/testPost", async (req, res) => {
   console.log("request body");
-  console.log(req.body);
+  // console.log(req.body);
   res.json(req.body);
 });
 
@@ -537,7 +537,7 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
                     if (err) {
                       res.status(404).send({ message: err });
                     }
-                    console.log(body);
+                    // console.log(body);
                     result.token1 = body.token;
                     setTimeout(() => {
                       request(options2, function (err, response, body) {

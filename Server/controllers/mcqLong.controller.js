@@ -175,7 +175,7 @@ let getContest = async (req, res) => {
 let getAllContests = async (req, res) => {
     contestLong.find()
     .then((contests) => {
-        console.log(contests)
+        // console.log(contests)
         res.send(contests);
     })
     .catch((err) => {
@@ -253,7 +253,7 @@ let getDurationLong = (req, callback) => {
         if (!contest) {
           return callback("Contest not found ", null);
         }
-        console.log(contest);
+        // console.log(contest);
         contest = contest[0];
         let validTill = new Date(contest.contestEndDate + " " + contest.contestEndTime.slice(0, 2) + ":" + contest.contestEndTime.slice(2, 5) + ":00");
         // contestDuration = (new Date(contest.contestEndDate + " " + contest.contestEndTime.slice(0, 2) + ":" + contest.contestEndTime.slice(3, 5) + ":00") - new Date(contest.contestStartDate + " " + contest.contestStartTime.slice(0, 2) + ":" + contest.contestStartTime.slice(3, 5) + ":00" ))

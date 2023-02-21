@@ -9,6 +9,13 @@ module.exports = (app) => {
   // Get all emailQuestions
   app.get("/emailQuestions", middleware.checkToken, emailQuestion.findAll);
 
+  //update a emailQuestion
+  app.post(
+    "/emailQuestionUpdate/:emailQuestionId",
+    middleware.checkToken,
+    emailQuestion.update
+  );
+
   app.get(
     "/emailSessionQuestions/:emailId",
     middleware.checkToken,

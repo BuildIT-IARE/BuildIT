@@ -10,6 +10,7 @@ var emailQuestionSchema = new Schema({
   emailTopic: String,
   emailScore: Number,
   emailGuidelines: Array,
+  countValue : Number
 });
 
 module.exports = mongoose.model("EmailQuestion", emailQuestionSchema);
