@@ -18,7 +18,6 @@ exports.create = (req, res) => {
   const dbSession = new DB({
     dbSessionId: req.body.dbSessionId,
     dbSessionName: req.body.dbSessionName,
-    dbSessionDate: req.body.dbSessionDate,
     dbSessionStartDay: req.body.dbSessionStartDay,
     dbSessionEndDay: req.body.dbSessionEndDay,
     dbSessionStartTime: req.body.dbSessionStartTime,
@@ -98,9 +97,7 @@ exports.update = (req, res) => {
     { dbSessionId: req.params.dbSessionId },
     {
       $set: {
-        dbSessionId: req.body.dbSessionId,
         dbSessionName: req.body.dbSessionName,
-        dbSessionDate: req.body.dbSessionDate,
         dbSessionStartDay: req.body.dbSessionStartDay,
         dbSessionEndDay: req.body.dbSessionEndDay,
         dbSessionStartTime: req.body.dbSessionStartTime,
@@ -160,41 +157,29 @@ exports.delete = (req, res) => {
 };
 
 // Find a single dbSession with a dbSessionId for checking duration
-exports.getDuration = (req, res) => {
+exports.getDuration = (req, callback) => {
+  console.log("came here")
   DB.find({ dbSessionId: req.body.dbSessionId })
     .then((dbSession) => {
+      console.log(dbSession);
       if (!dbSession) {
-        return res.status(500).send({
-          success: false,
-          message: "Could not find dbSession with id " + req.body.dbSessionId,
-        });
+        return callback("dbSession not found ", null);
       }
       dbSession = dbSession[0];
       let durationData = {
         startTime: dbSession.dbSessionStartTime,
         endTime: dbSession.dbSessionEndTime,
+        startDate: dbSession.dbSessionStartDay,
+        endDate: dbSession.dbSessionEndDay,
         duration: dbSession.dbSessionDuration,
-        date: dbSession.dbSessionDate,
-        mcq: dbSession.mcq,
-        sections: dbSession.sections,
-        dbSessionName: dbSession.dbSessionName,
-        coding: dbSession.coding,
+        dbSessionName: dbSession.dbSessionName
       };
-      res.status(200).send({
-        success: true,
-        data: durationData
-      });
+      return callback(null, durationData);
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
-        return res.status(500).send({
-          success: false,
-          message: "Could not find dbSession with id " + req.body.dbSessionId,
-        });
+        return callback("dbSession not found", null);
       }
-      return res.status(400).send({
-        success: false,
-        message: "Could not find dbSession with id " + req.body.dbSessionId,
-      });
+      return callback("Error retrieving dbSession", null);
     });
 };

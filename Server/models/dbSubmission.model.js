@@ -11,6 +11,7 @@ var dbSubmissionSchema = new Schema({
     score: String,
     submissionTime: String,
     tableName: String,
+    color : String,
 });
 
 module.exports = mongoose.model("dbSubmission", dbSubmissionSchema);

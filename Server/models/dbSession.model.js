@@ -6,11 +6,11 @@ var Schema = mongoose.Schema;
 var dbSessionSchema = new Schema({
     dbSessionId: String,
     dbSessionName: String,
-    dbSessionDate: String,
     dbSessionStartDay : String,
     dbSessionEndDay : String,
     dbSessionStartTime: String,
     dbSessionEndTime: String,
+    dbDuration: String,
     dbSessionPassword: String,
 });
 

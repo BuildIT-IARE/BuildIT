@@ -39,7 +39,7 @@ exports.create = (req, res) => {
             const question = new Question({
               questionId: req.body.questionId,
               questionName: req.body.questionName,
-              contestId: req.body.contestId,
+              dbSessionId: req.body.dbSessionId,
               questionDescriptionText: req.body.questionDescriptionText,
               questionInputText: req.body.questionInputText,
               questionOutputText: req.body.questionOutputText,
@@ -171,7 +171,7 @@ exports.update = (req, res) => {
       $set: {
         questionId: req.body.questionId,
         questionName: req.body.questionName,
-        contestId: req.body.contestId,
+        dbSessionId: req.body.dbSessionId,
         questionDescriptionText: req.body.questionDescriptionText,
         questionInputText: req.body.questionInputText,
         questionOutputText: req.body.questionOutputText,
@@ -278,25 +278,17 @@ exports.getTestCases = (req, callback) => {
       }
       question = question[0];
       testcases = {
-        contestId: question.contestId,
-        HO1: question.questionSolution,
+        dbSessionId: question.dbSessionId,
+        tableName: question.tableName,
+        questionHiddenOutput: question.questionHiddenOutput,
       };
-      return res.status(200).send({
-        success: true,
-        testcases,
-      });
+      return callback(null, testcases);
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
-        return res.status(500).send({
-          success: false,
-          message: "Question not found with id " + req.params.questionId,
-        });
+        return callback("Couldn't find dbQuestion, caught exception", null);
       }
-      return res.status(400).send({
-        success: false,
-        message: "Error retrieving " + req.params.questionId,
-      });
+      return callback("Error retrieving data(dbQuestion getTestCases)", null);
     });
 };
 
