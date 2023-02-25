@@ -180,6 +180,6 @@ exports.getDuration = (req, callback) => {
       if (err.kind === "ObjectId") {
         return callback("dbSession not found", null);
       }
-      return callback("Error retrieving dbSession", null);
+      return callback("Error retrieving dbSession (getDuration)", null);
     });
 };

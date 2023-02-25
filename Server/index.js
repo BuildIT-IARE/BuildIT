@@ -941,19 +941,15 @@ app.post('/validateSubmissionDB', (req, res) => {
   if (req.body.dbSessionId.length !== 0) {
     dbSessions.getDuration(req,(err, duration) => {
       if (err) {
-        res.status(404).send({ message: err });
+        return res.status(404).send({ message: err });
+      } else {
+
       }
-      console.log("Came HEREE!")
       let date = new Date();
       let today = date.toLocaleDateString();
       if (today.length === 9) {
         today = "0" + today;
       }
-
-      // let day = today.slice(0, 2);
-      // let month = today.slice(3, 5);
-      
-      // let year = today.slice(6, 10);
       var accepted = false;
       let day = date.getDate();
       if (day < 10) {
@@ -964,7 +960,6 @@ app.post('/validateSubmissionDB', (req, res) => {
         month = "0" + String(month);
       }
       let year = date.getFullYear();
-
       if (!localServer) {
         today = `${year}-${day}-${month}`;
       } else {
@@ -985,7 +980,6 @@ app.post('/validateSubmissionDB', (req, res) => {
       currentTime = eval(currentTime);
       currentTime = moment().tz("Asia/Kolkata").format("HHmm");
       console.log(duration,"Hey");
-      console.log("213")
       if (
         duration.startDate.toString() <= today &&
         duration.endDate.toString() >= today &&
@@ -1000,80 +994,78 @@ app.post('/validateSubmissionDB', (req, res) => {
         accepted = true;
       }
       if(accepted){
-        dbQuestions.getTestCases(req, (err, questions) => {
+        dbQuestions.getTestCases(req, (err, testcases) => {
           if (err) {
-            res.status(404).send({
+            return res.status(404).send({
               message: "dbQuestion not found with id " + req.body.questionId,
             });
-          }
-          let options = {
-            method: "post",
-            body: {
+          } else {
+            let options = {
+              method: "post",
+              body: {
+                dbSessionId: testcases.dbSessionId,
+                source_code: req.body.source_code,
+                expected_output: testcases.questionHiddenOutput,
+                rollNumber: req.decoded.username,
+                tableName: testcases.tableName
+              },
+              json: true,
+              url: process.env.serverAddress + "/evaluateCode",
+            };
+            let result = {
               dbSessionId: testcases.dbSessionId,
-              source_code: req.body.source_code,
-              expected_output: testcases.questionHiddenOutput,
               rollNumber: req.decoded.username,
-              tableName: testcases.tableName
-            },
-            json: true,
-            url: process.env.serverAddress + "/evaluateCode",
-          };
-          let result = {
-            dbSessionId: testcases.dbSessionId,
-            rollNumber: req.decoded.username,
-            participationId: req.decoded.username + testcases.dbSessionId,
-            tableName: testcases.tableName,
-            source_code: req.body.source_code,
-          };
-          dbParticipations.findUserTime(req, (err, participations) => {
-            if (err) {
-              res.status(404).send({ message: err });
-            }
-            participation = participation[0];
-            let momentDate = new moment();
-            let validTime = participation.validTill;
-            if (momentDate.isBefore(participation.validTill) || req.decoded.admin) {
-              setTimeout(() => {
-                request(options,function (err, response, body) {
-                  if (err) {
-                    res.status(404).send({ message: err || "Error while evaluating DB Submission" });
-                  }
-                  let data = JSON.parse(body);
-                  result.score = data.score;
-                  result.participationId = req.decoded.username + result.dbSessionId;
-                  dbParticipations.acceptSubmission(result, (err, doc) => {
-                    if (err) {
-                      res.status(404).send({ message: err });
-                    }
-                    dbSubmissions.create(req, result, (err, sub) => {
+              participationId: req.decoded.username + testcases.dbSessionId,
+              tableName: testcases.tableName,
+              source_code: req.body.source_code,
+            };
+            dbParticipations.findUserTime(req, (err, participation) => {
+              if (err) {
+                return res.status(404).send({ message: err });
+              } else {
+                participation = participation[0];
+                let momentDate = new moment();
+                let validTime = participation.validTill;
+                if (momentDate.isBefore(participation.validTill) || req.decoded.admin) {
+                  setTimeout(() => {
+                    request(options,function (err, res, body) {
                       if (err) {
-                        res.status(404).send({
-                          message: err,
-                        });
+                        return res.status(404).send({ message: err || "Error while evaluating DB Submission" });
                       } else {
-                        res.send(sub);
+                        let data = JSON.parse(body);
+                        result.score = data.score;
+                        result.participationId = req.decoded.username + result.dbSessionId;
+                        dbParticipations.acceptSubmission(result, (err, doc) => {
+                          if (err) {
+                            res.status(404).send({ message: err });
+                          } else{
+                            dbSubmissions.create(req, result, (err, sub) => {
+                              if (err) {
+                                return res.status(404).send({
+                                  message: err,
+                                });
+                              } else {
+                                return res.send(sub);
+                              }
+                            });
+                          }
+                        });
                       }
                     });
-                  });
-                });
-              },timeOut);
-            } else {
-              res.status(500).send({
-                message:
-                  "Server is Busy, try again later! or check your code for any compilation errors, and try again.",
-              });
-            }
-          });
+                  },timeOut);
+                } else {
+                  res
+                    .status(403)
+                    .send({ message: "Your test duration has expired" });
+                }
+              } 
+            });
+          }
         });
       } else {
-        res.status(500).send({
-          message:
-            "Server is Busy, try again later! or check your code for any compilation errors, and try again.",
-        });
+        res.status(403).send({ message: "The contest window is not open" });
       }
     });
-  } else {
-    res.status(403).send({ message: "The contest window is not open" });
   }
 });
 

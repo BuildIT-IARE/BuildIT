@@ -215,7 +215,7 @@ exports.findParticipation = (req, callback) => {
         return callback(null, participation);
     })
     .catch((err) => {
-        return callback(err || "Error retrieving dbSession", null);
+        return callback(err || "Error retrieving dbSession (findPart)", null);
     });
 };
 
