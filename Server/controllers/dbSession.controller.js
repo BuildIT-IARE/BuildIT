@@ -158,10 +158,8 @@ exports.delete = (req, res) => {
 
 // Find a single dbSession with a dbSessionId for checking duration
 exports.getDuration = (req, callback) => {
-  console.log("came here")
   DB.find({ dbSessionId: req.body.dbSessionId })
     .then((dbSession) => {
-      console.log(dbSession);
       if (!dbSession) {
         return callback("dbSession not found ", null);
       }
@@ -171,7 +169,7 @@ exports.getDuration = (req, callback) => {
         endTime: dbSession.dbSessionEndTime,
         startDate: dbSession.dbSessionStartDay,
         endDate: dbSession.dbSessionEndDay,
-        duration: dbSession.dbSessionDuration,
+        duration: Number(dbSession.dbSessionDuration),
         dbSessionName: dbSession.dbSessionName
       };
       return callback(null, durationData);

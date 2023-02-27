@@ -376,7 +376,6 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
     if (!body.status || err)
       return res.status(404).send({ message: "user logged out!" });
   });
-  console.log(req.body,"THis is after validate sub");
   if (req.body.contestId.length !== 0) {
     contests.getDuration(req, (err, duration) => {
       if (err) {
@@ -939,12 +938,10 @@ app.post('/validateSubmissionDB', (req, res) => {
     }
   });
   if (req.body.dbSessionId.length !== 0) {
-    dbSessions.getDuration(req,(err, duration) => {
+    dbSessions.getDuration(req, (err, duration) => {
       if (err) {
-        return res.status(404).send({ message: err });
+        res.status(404).send({ message: err });
       } else {
-
-      }
       let date = new Date();
       let today = date.toLocaleDateString();
       if (today.length === 9) {
@@ -979,7 +976,7 @@ app.post('/validateSubmissionDB', (req, res) => {
       let currentTime = `${hours}${minutes}`;
       currentTime = eval(currentTime);
       currentTime = moment().tz("Asia/Kolkata").format("HHmm");
-      console.log(duration,"Hey");
+      console.log(duration,"Hey",accepted);
       if (
         duration.startDate.toString() <= today &&
         duration.endDate.toString() >= today &&
@@ -987,16 +984,17 @@ app.post('/validateSubmissionDB', (req, res) => {
         duration.endTime.toString() > currentTime
       ) {
         accepted = true;
+        
       } else {
         accepted = false;
       }
-      if (req.decoded.admin) {
-        accepted = true;
-      }
+      
+
       if(accepted){
         dbQuestions.getTestCases(req, (err, testcases) => {
+          console.log(req.body)
           if (err) {
-            return res.status(404).send({
+            res.status(404).send({
               message: "dbQuestion not found with id " + req.body.questionId,
             });
           } else {
@@ -1021,23 +1019,23 @@ app.post('/validateSubmissionDB', (req, res) => {
             };
             dbParticipations.findUserTime(req, (err, participation) => {
               if (err) {
-                return res.status(404).send({ message: err });
+                res.status(404).send({ message: err });
               } else {
                 participation = participation[0];
                 let momentDate = new moment();
                 let validTime = participation.validTill;
                 if (momentDate.isBefore(participation.validTill) || req.decoded.admin) {
                   setTimeout(() => {
-                    request(options,function (err, res, body) {
+                    request(options,function (err, response, body) {
                       if (err) {
-                        return res.status(404).send({ message: err || "Error while evaluating DB Submission" });
+                        res.status(404).send({ message: err || "Error while evaluating DB Submission" });
                       } else {
                         let data = JSON.parse(body);
                         result.score = data.score;
                         result.participationId = req.decoded.username + result.dbSessionId;
                         dbParticipations.acceptSubmission(result, (err, doc) => {
                           if (err) {
-                            res.status(404).send({ message: err });
+                            res.send({ message: err });
                           } else{
                             dbSubmissions.create(req, result, (err, sub) => {
                               if (err) {
@@ -1065,6 +1063,7 @@ app.post('/validateSubmissionDB', (req, res) => {
       } else {
         res.status(403).send({ message: "The contest window is not open" });
       }
+    }
     });
   }
 });

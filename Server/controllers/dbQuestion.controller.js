@@ -271,24 +271,25 @@ exports.getTestCases = (req, callback) => {
   Question.find({ questionId: req.body.questionId })
     .then((question) => {
       if (!question) {
-        return res.status(500).send({
-          success: false,
-          message: "Question not found with id " + req.params.questionId,
-        });
+        return callback("Couldn't find dbQuestion with id "+req.body.questionId, null);
+      } else {
+        question = question[0];
+        console.log(question)
+        testcases = {
+          dbSessionId: question.dbSessionId,
+          tableName: question.tableName,
+          questionHiddenOutput: question.questionHiddenOutput,
+        };
+        return callback(null, testcases);
       }
-      question = question[0];
-      testcases = {
-        dbSessionId: question.dbSessionId,
-        tableName: question.tableName,
-        questionHiddenOutput: question.questionHiddenOutput,
-      };
-      return callback(null, testcases);
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
         return callback("Couldn't find dbQuestion, caught exception", null);
       }
+      else{
       return callback("Error retrieving data(dbQuestion getTestCases)", null);
+    }
     });
 };
 
