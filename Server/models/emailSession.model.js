@@ -14,7 +14,7 @@ var emailSchema = new Schema({
     emailStartTime: String,
     emailEndTime: String,
     emailPassword: String,
-    countValue: Number
+    CountValue: Number
 });
 
 module.exports = mongoose.model("email", emailSchema);
