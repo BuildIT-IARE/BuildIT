@@ -16,6 +16,67 @@ exports.create = (req, res) => {
     });
   }
   // let encryptValue = encrypt.encrypt(req.body.facultyId);
+  let facId = encrypt.decrypt(req.body.facultyId);
+  Email.find({})
+    .then((emails) => {
+      if (!emails) {
+        return res.status(500).send({
+          success: false,
+          message: "No emails found(create)",
+        });
+      }
+      emails = emails[0];
+      Email.findOneAndUpdate(
+        { emailId: emails.emailId },
+        {
+          $set: {
+            CountValue: emails.CountValue + 1,
+          },
+        },
+        { new: true }
+      )
+        .then()
+        .catch((err) => {
+          return res.status(500).send({
+            success: false,
+            message:
+              err.message || "First Reference emailSession missing(CountValue)",
+          });
+        });
+      const email = new Email({
+        emailId: "IARE_ES" + emails.CountValue + 1,
+        emailName: req.body.emailName,
+        emailDate: req.body.emailDate,
+        emailFaculty: req.body.emailFaculty,
+        facultyId: facId,
+        emailStartDay: req.body.emailStartDay,
+        emailEndDay: req.body.emailEndDay,
+        emailStartTime: req.body.emailStartTime,
+        emailEndTime: req.body.emailEndTime,
+        emailPassword: req.body.emailPassword,
+      });
+      email
+        .save()
+        .then((data) => {
+          res.status(200).send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message +
+              " Some error occurred while creating the emailSession.",
+          });
+        });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        success: false,
+        message:
+          err.message ||
+          "Some error occurred while retrieving emaiSessions(create).",
+      });
+    });
   Email.find({})
   .then((data) => {
     var CountValue = data[0].CountValue;
@@ -82,6 +143,7 @@ exports.findOne = (req, res) => {
 exports.findAllSession = (req, res) => {
   Email.find({})
     .then((emails) => {
+      emails.shift();
       res.status(200).send(emails);
     })
     .catch((err) => {
