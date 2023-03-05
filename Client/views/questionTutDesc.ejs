@@ -62,6 +62,7 @@
       color: black;
       line-height: 25px;
       background: rgb(255, 255, 255);
+      position: relative;
     }
     .setback {
       background: white;
@@ -342,6 +343,61 @@
       float: right;
       transition: 0.25s;
     }
+    #status
+{
+  display:table;
+  width:fit-content;
+  height:fit-content;
+  border:1px solid black;
+  position: relative;
+}
+#status span
+{
+  vertical-align:middle;
+  text-align:center; 
+  margin:0 auto;
+  font-size:50px;
+  font-family:arial;
+  color:#ba3fa3;  
+  display:none;
+}
+
+#status.child .childWindow
+{
+  display:table-cell;
+}
+
+.mainWindow
+{
+  display: none;
+  background-color:#22d86e;
+}
+.childWindow
+{
+  background: rgba( 255, 255, 255, 0.15 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 11.5px );
+-webkit-backdrop-filter: blur( 11.5px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  line-height: 60px !important;
+  box-sizing: border-box !important;
+  padding: 120px;
+  font-family: poppins !important;
+  color: rgb(59, 196, 121) !important;
+  text-shadow: 2px 2px rgba(192, 192, 192, 0.42);
+  font-size: xx-large !important;
+}
+.childWindow .emoji{
+  font-size: 80px;
+  font-family: sans-serif;
+  margin-bottom: 40px;
+}
   </style>
   <body>
     <script>
@@ -587,5 +643,160 @@
         </div>
       </div>
     </footer>
+    <div id='status'> 
+      <span class='mainWindow'></span>
+      <span class='childWindow'>
+        <div class="emoji">¯\_(ツ)_/¯</div>
+        You have opened another question, please continue that question or close that tab </span>
+    </div>
+    <script>
+      var statusWindow = document.getElementById('status');
+
+(function (win)
+{
+    //Private variables
+    var _LOCALSTORAGE_KEY = 'WINDOW_VALIDATION';
+    var RECHECK_WINDOW_DELAY_MS = 100;
+    var _initialized = false;
+    var _isMainWindow = false;
+    var _unloaded = false;
+    var _windowArray;
+    var _windowId;
+    var _isNewWindowPromotedToMain = false;
+    var _onWindowUpdated;
+
+    
+    function WindowStateManager(isNewWindowPromotedToMain, onWindowUpdated)
+    {
+        //this.resetWindows();
+        _onWindowUpdated = onWindowUpdated;
+        _isNewWindowPromotedToMain = isNewWindowPromotedToMain;
+        _windowId = Date.now().toString();
+
+        bindUnload();
+
+        determineWindowState.call(this);
+
+        _initialized = true;
+
+        _onWindowUpdated.call(this);
+    }
+
+    //Determine the state of the window 
+    //If its a main or child window
+    function determineWindowState()
+    {
+        var self = this;
+        var _previousState = _isMainWindow;
+
+        _windowArray = localStorage.getItem(_LOCALSTORAGE_KEY);
+
+        if (_windowArray === null || _windowArray === "NaN")
+        {
+            _windowArray = [];
+        }
+        else
+        {
+            _windowArray = JSON.parse(_windowArray);
+        }
+
+        if (_initialized)
+        {
+            //Determine if this window should be promoted
+            if (_windowArray.length <= 1 ||
+               (_isNewWindowPromotedToMain ? _windowArray[_windowArray.length - 1] : _windowArray[0]) === _windowId)
+            {
+                _isMainWindow = true;
+            }
+            else
+            {
+                _isMainWindow = false;
+            }
+        }
+        else
+        {
+            if (_windowArray.length === 0)
+            {
+                _isMainWindow = true;
+                _windowArray[0] = _windowId;
+                localStorage.setItem(_LOCALSTORAGE_KEY, JSON.stringify(_windowArray));
+            }
+            else
+            {
+                _isMainWindow = false;
+                _windowArray.push(_windowId);
+                localStorage.setItem(_LOCALSTORAGE_KEY, JSON.stringify(_windowArray));
+            }
+        }
+
+        //If the window state has been updated invoke callback
+        if (_previousState !== _isMainWindow)
+        {
+            _onWindowUpdated.call(this);
+        }
+
+        //Perform a recheck of the window on a delay
+        setTimeout(function()
+                   {
+                     determineWindowState.call(self);
+                   }, RECHECK_WINDOW_DELAY_MS);
+    }
+
+    //Remove the window from the global count
+    function removeWindow()
+    {
+        var __windowArray = JSON.parse(localStorage.getItem(_LOCALSTORAGE_KEY));
+        for (var i = 0, length = __windowArray.length; i < length; i++)
+        {
+            if (__windowArray[i] === _windowId)
+            {
+                __windowArray.splice(i, 1);
+                break;
+            }
+        }
+        //Update the local storage with the new array
+        localStorage.setItem(_LOCALSTORAGE_KEY, JSON.stringify(__windowArray));
+    }
+
+    //Bind unloading events  
+    function bindUnload()
+    {
+        win.addEventListener('beforeunload', function ()
+        {
+            if (!_unloaded)
+            {
+                removeWindow();
+            }
+        });
+        win.addEventListener('unload', function ()
+        {
+            if (!_unloaded)
+            {
+                removeWindow();
+            }
+        });
+    }
+
+    WindowStateManager.prototype.isMainWindow = function ()
+    {
+        return _isMainWindow;
+    };
+
+    WindowStateManager.prototype.resetWindows = function ()
+    {
+        localStorage.removeItem(_LOCALSTORAGE_KEY);
+    };
+
+    win.WindowStateManager = WindowStateManager;
+})(window);
+
+var WindowStateManager = new WindowStateManager(false, windowUpdated);
+
+function windowUpdated()
+{
+    //"this" is a reference to the WindowStateManager
+    statusWindow.className = (this.isMainWindow() ? 'main' : 'child');
+}
+    </script>
   </body>
 </html>
