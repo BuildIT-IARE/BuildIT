@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visitor Pass | Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+        height: 0vh;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        background: white;
+      }
+      .header {
+        width: 100%;
+        font-family: "Space Mono";
+        padding: 5px 0;
+      }
+      .header .title {
+        font-size: x-large;
+        width: fit-content;
+        padding: 10px 15px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+      }
+      .header .title span {
+        margin-right: 10px;
+        font-size: xx-large;
+        color: rgb(0, 161, 75);
+      }
+      .form {
+        width: 100%;
+        min-height: calc(100vh - 120px);
+        border-radius: 4mm;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-direction: column;
+        scroll-behavior: smooth;
+        transition: 0.25s;
+      }
+      .form img {
+        position: absolute;
+        bottom: 5px;
+        right: 40px;
+        width: 120px;
+      }
+      #bigImg {
+        position: absolute;
+        left: -100px;
+        top: 20px;
+        width: 500px;
+      }
+      .form-data {
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 50px 0;
+        width: 373px;
+        box-sizing: content-box;
+        border-radius: 2mm;
+        position: relative;
+        margin-bottom: 40px;
+        overflow: hidden;
+        scroll-behavior: smooth !important;
+      }
+      .form-cover {
+        border: 0.5mm solid rgb(47, 47, 47);
+        position: relative;
+        width: fit-content;
+        border-radius: 2mm;
+      }
+      .split {
+        width: 373px;
+        min-width: 373px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        scroll-behavior: smooth !important;
+      }
+      .circle {
+        position: absolute;
+        width: 60px;
+        height: 30px;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        border: 0.5mm solid rgb(48, 48, 48);
+        background: white;
+        z-index: 9999;
+      }
+      .circle.left {
+        top: -2px;
+        border-bottom-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+        border-top: none;
+      }
+      .circle.right {
+        bottom: -2px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        border-bottom: none;
+      }
+      .inputf {
+        width: 300px;
+        box-sizing: border-box;
+        margin-bottom: 30px;
+        margin-left: 35px;
+        margin-right: 35px;
+      }
+      .inputf input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        height: 35px;
+        font-family: poppins;
+        font-size: 14px;
+        outline: none;
+        border: none;
+        border-bottom: 0.5mm solid rgba(54, 54, 54, 0.55);
+        transition: 0.25s;
+        background: transparent;
+      }
+      .inputf textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        height: 115px;
+        font-family: poppins;
+        font-size: 14px;
+        outline: none;
+        border: none;
+        border-bottom: 0.5mm solid rgba(54, 54, 54, 0.55);
+        transition: 0.25s;
+        background: transparent;
+      }
+      .inputf .label {
+        font-size: 12px;
+        font-weight: 500;
+        font-family: poppins;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+      }
+      .inputf input:focus::placeholder {
+        visibility: hidden;
+      }
+      .inputf input:focus {
+        outline: none;
+        border-bottom: 0.6mm solid rgb(139, 197, 63);
+      }
+      .btn {
+        width: 100%;
+        border-top: 0.55mm dashed rgb(27, 27, 27);
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+      .btn button {
+        margin: auto;
+        display: block;
+        margin-top: 30px;
+        width: 300px;
+        background: rgb(0, 161, 75);
+        color: white;
+        font-size: medium;
+        font-family: poppins;
+        outline: none;
+        padding: 7px 0;
+        border: none;
+        border-radius: 1mm;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn button:hover {
+        background: rgb(139, 197, 63);
+      }
+      .footer {
+        background: linear-gradient(
+          90deg,
+          rgb(0, 161, 75) 30%,
+          rgb(139, 197, 63) 100%
+        );
+        width: 100%;
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .footer a {
+        text-decoration: none;
+        font-size: x-large;
+        font-family: poppins;
+        color: white;
+        font-weight: 500;
+        margin: 15px 20px;
+      }
+      .footer p {
+        font-family: poppins;
+        font-size: medium;
+        color: rgba(255, 255, 255, 0.92);
+        font-weight: 400;
+        margin-right: 20px;
+      }
+      .small-title {
+        font-size: large;
+        font-family: raleway;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+      }
+      #video {
+        width: 150px;
+        height: 200px;
+        object-fit: cover;
+      }
+      #canvas {
+        height: 200px;
+        width: 150px;
+        overflow: hidden;
+        object-fit: contain;
+      }
+      #cam-btn {
+        width: 50px;
+        height: 50px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0.6mm solid rgba(50, 50, 50, 0.824);
+        background: white;
+        border-radius: 50%;
+        outline: none;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+      #cam-btn:hover {
+        border-color: rgb(139, 197, 63);
+      }
+      #cam-btn span {
+        font-size: 25px;
+        color: rgb(48, 48, 48);
+      }
+      .imagef {
+        font-family: poppins;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+      .image-capture {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 10px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+      .smallBtn button {
+        width: 40%;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="header">
+      <div class="title">
+        <span class="material-icons-round"> confirmation_number </span>
+        Visitor Pass | IARE
+      </div>
+    </section>
+    <section class="form">
+      <div class="small-title">Welcome to IARE</div>
+      <img src="../images/visitorPass.svg" alt="" id="bigImg" />
+      <div class="form-cover">
+        <div class="circle left"></div>
+        <div class="circle right"></div>
+        <form
+          class="form-data"
+          method="post"
+          action="<%= clientUrl %>/checkPhone"
+          id="myForm"
+        >
+          <span class="split">
+            <span class="inputf">
+              <span class="label">Phone Number*</span>
+              <input
+                type="text"
+                id="Phone"
+                placeholder="Phone Number"
+                required
+                minlength="10"
+                name="Phone"
+              />
+            </span>
+            <span class="inputf">
+              <span class="label">Purpose of Visit*</span>
+              <input
+                type="text"
+                id="Purpose"
+                placeholder="Purpose"
+                name="Purpose"
+                required
+                maxlength="25"
+              />
+            </span>
+            <span class="inputf">
+                <span class="label">Your Host*</span>
+                <input
+                  type="text"
+                  id="Host"
+                  placeholder="Your Host"
+                  required
+                  name="Host"
+                  value=""
+                />
+              </span>
+              <span class="btn smallBtn">
+                <button type="submit">Submit</button>
+              </span>
+          </span>
+          </span>
+        </form>
+      </div>
+    </section>
+    <section class="footer">
+      <a href="http://buildit.iare.ac.in/">BuildIT | IARE</a>
+      <p>
+        Copyright ©
+        <script>
+          var CurrentYear = new Date().getFullYear();
+          document.write(CurrentYear);
+        </script>
+      </p>
+    </section>
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </body>
+</html>
