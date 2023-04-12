@@ -1588,7 +1588,8 @@ app.get("/admin/solved", async (req, res) => {
     };
     res.render("solvedCount", {
       data: url,
-      solved: body,
+      solvedContest: body.userCollectionContests,
+      solvedTutorial: body.userCollectionTutorials,
     });
   });
 });
