@@ -5,6 +5,8 @@ module.exports = (app) => {
 
   app.post("/newVisitor", visitor.create);
 
+  app.get("/findOneVisitor/:phoneNumber", visitor.findOnePhone);
+
   app.get("/admin/getVisitorData", middleware.checkTokenWatch, visitor.findAll);
   //delete visitor
   app.get(

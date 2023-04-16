@@ -3302,7 +3302,11 @@ app.get(
         let options = {
           url:
             serverRoute +
-            "/emailSubmissions/" +req.params.emailId+req.params.emailQuestionId+"/"+req.cookies.username.toUpperCase(),
+            "/emailSubmissions/" +
+            req.params.emailId +
+            req.params.emailQuestionId +
+            "/" +
+            req.cookies.username.toUpperCase(),
           method: "get",
           headers: {
             authorization: req.cookies.token,
@@ -3601,6 +3605,26 @@ app.get(
 );
 
 app.get("/visitorPass", async (req, res) => {
+  res.render("phonePassCheck", { clientUrl: clientRoute });
+});
+
+app.post("/checkPhone", async (req, res) => {
+  let options = {
+    url: serverRoute + "/findOneVisitor/" + req.body.Phone,
+    method: "get",
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    console.log(body);
+    if (body.success) {
+      res.redirect(307, "/visitorOTP");
+    } else {
+      res.redirect("/visitorPass/newEntry");
+    }
+  });
+});
+
+app.get("/visitorPass/newEntry", async (req, res) => {
   res.render("gatePassForm", { clientUrl: clientRoute });
 });
 
