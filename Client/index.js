@@ -1594,6 +1594,16 @@ app.get("/admin/solved", async (req, res) => {
   });
 });
 
+function colorCheck(n) {
+  if (n <= 12) {
+    return "rgb(236,94,79)";
+  } else if (n <= 30) {
+    return "rgb(246,189,65)";
+  } else {
+    return "rgb(72,195,118)";
+  }
+}
+
 app.post("/admin/resultsTut/course", async (req, res) => {
   let options = {
     url: serverRoute + "/tparticipations/all",
@@ -1622,7 +1632,7 @@ app.post("/admin/resultsTut/course", async (req, res) => {
       let eCount = 0;
       let mCount = 0;
       let hCount = 0;
-      let cCount = 0;
+      let pCount = 0;
       for (let i = 0; i < body1.length; i++) {
         if (body1[i].difficulty === "level_0") {
           eCount++;
@@ -1630,8 +1640,11 @@ app.post("/admin/resultsTut/course", async (req, res) => {
           mCount++;
         } else if (body1[i].difficulty === "level_2") {
           hCount++;
-        } else if (body1[i].difficulty === "contest") {
-          cCount++;
+        } else if (
+          body1[i].difficulty === "topics" ||
+          body1[i].difficulty === "companies"
+        ) {
+          pCount++;
         }
       }
       let j = 0;
@@ -1643,21 +1656,33 @@ app.post("/admin/resultsTut/course", async (req, res) => {
         totalSolEasy = bodytimer[j].easySolved.length;
         totalSolMedium = bodytimer[j].mediumSolved.length;
         totalSolHard = bodytimer[j].hardSolved.length;
-        totalSolContest = bodytimer[j].contestSolved.length;
+        totalSolPractice = bodytimer[j].practiceSolved.length;
         bodytimer[j].easyPercentage = Math.ceil((totalSolEasy / eCount) * 100);
         bodytimer[j].mediumPercentage = Math.ceil(
           (totalSolMedium / mCount) * 100
         );
         bodytimer[j].hardPercentage = Math.ceil((totalSolHard / hCount) * 100);
-        bodytimer[j].contestPercentage = Math.ceil(
-          (totalSolContest / cCount) * 100
+        bodytimer[j].practicePercentage = Math.ceil(
+          (totalSolPractice / pCount) * 100
+        );
+        bodytimer[j].easyColor = colorCheck(bodytimer[j].easyPercentage);
+        bodytimer[j].mediumColor = colorCheck(bodytimer[j].mediumPercentage);
+        bodytimer[j].hardColor = colorCheck(bodytimer[j].hardPercentage);
+        bodytimer[j].practiceColor = colorCheck(
+          bodytimer[j].practicePercentage
         );
         bodytimer[j].clientRoute = clientRoute;
         bodytimer[j].serverRoute = serverRoute;
         j = j + 1;
       }
-
-      res.render("results1", { datac: course, data: bodytimer });
+      res.render("results1", {
+        datac: course,
+        data: bodytimer,
+        eCount: eCount,
+        mCount: mCount,
+        hCount: hCount,
+        pCount: pCount,
+      });
     });
   });
 });
