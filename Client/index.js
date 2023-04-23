@@ -2990,7 +2990,7 @@ app.post("/resume/:username", async (req, res) => {
         } else if (branch == "03") {
           body[i].branch = "ME";
         } else if (branch == "21") {
-          body[i].branch = "CSE";
+          body[i].branch = "AERO";
         } else if (branch == "66") {
           body[i].branch = "CSE AIML";
         } else if (branch == "67") {

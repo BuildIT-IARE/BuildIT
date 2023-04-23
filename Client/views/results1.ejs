@@ -185,6 +185,7 @@
       margin-right: 15px;
       display: flex;
       flex-direction: column;
+      text-decoration: none;
     }
 
     .date .label {
@@ -255,7 +256,8 @@
       background: rgb(43, 43, 43);
     }
 
-    #chartdiv, #chartdiv2 {
+    #chartdiv,
+    #chartdiv2 {
       width: 100%;
       height: 500px;
     }
@@ -273,6 +275,9 @@
 </head>
 
 <body>
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
   <%- include ("../views/partials/adminpanel") -%>
     <br /><br /><br /><br /><br />
     <div class="tables">
@@ -295,23 +300,34 @@
             <span class="label">Branch</span>
             <select name="branch" id="branch">
               <option value="">ALL</option>
-              <option value="CSE">CSE</option>
-              <option value="AIML">CSE-AIML</option>
-              <option value="CS">CSE-CS</option>
-              <option value="DS">CSE-DS</option>
-              <option value="ECE">ECE</option>
-              <option value="IT">IT</option>
-              <option value="MECH">MECH</option>
-              <option value="EEE">EEE</option>
-              <option value="AERO">AERO</option>
-              <option value="CE">CIVIL</option>
+              <option value="05">CSE</option>
+              <option value="66">CSE-AIML</option>
+              <option value="62">CSE-CS</option>
+              <option value="67">CSE-DS</option>
+              <option value="33">CSE-IT</option>
+              <option value="04">ECE</option>
+              <option value="12">IT</option>
+              <option value="03">MECH</option>
+              <option value="02">EEE</option>
+              <option value="21">AERO</option>
+              <option value="01">CIVIL</option>
             </select>
           </div>
           <div class="date">
             <span class="label">Year</span>
             <input type="number" name="year" id="year" placeholder="Ex 19" style="width: 60px" min="1" max="99" />
           </div>
-          <button type="button" class="sub1">View Results</button>
+          <div class="date">
+            <span class="label" style="text-decoration: none; margin-top: 15px;">Level</span>
+            <select name="level" id="level" style="text-decoration: none;">
+              <option value="" style="text-decoration: none;">ALL</option>
+              <option value="0" style="text-decoration: none;">Level_0</option>
+              <option value="1" style="text-decoration: none;">Level_1</option>
+              <option value="2" style="text-decoration: none;">Level_2</option>
+              <option value="3" style="text-decoration: none;">Practice</option>
+            </select>
+          </div>
+          <button type="button" class="sub1" onclick="asign()">View Results</button>
         </div>
         <div class="right-controls">
           <button onclick="exportTableToCSV('results.csv')" title="download CSV" type="button" class="sub2">
@@ -351,74 +367,76 @@
                 </span>
             </th>
           </tr>
-          <% for(let i=0; i < data.length; i++){ %>
-            <tr>
-              <td class="tname">
-                <%= data[i].username %>
-              </td>
-              <td class="flex">
-                <span class="wrap">
-                  <span class="wrap-text">
-                    <%= data[i].easySolved.length %>
-                  </span>
-                  <span class="bar">
-                    <span class="bar-front" style="
+          <tbody id="tabody">
+            <% for(let i=0; i < data.length; i++){ %>
+              <tr>
+                <td class="tname">
+                  <%= data[i].username %>
+                </td>
+                <td class="flex">
+                  <span class="wrap">
+                    <span class="wrap-text">
+                      <%= data[i].easySolved.length %>
+                    </span>
+                    <span class="bar">
+                      <span class="bar-front" style="
                       width: calc(60px * <%= data[i].easyPercentage %> / 100);
                       background: <%= data[i].easyColor %>;
                     "></span>
-                    <span class="bar-back"></span><span class="percent">
-                      <%= data[i].easyPercentage %>%
+                      <span class="bar-back"></span><span class="percent">
+                        <%= data[i].easyPercentage %>%
+                      </span>
                     </span>
                   </span>
-                </span>
-              </td>
-              <td>
-                <span class="wrap">
-                  <span class="wrap-text">
-                    <%= data[i].mediumSolved.length %>
-                  </span>
-                  <span class="bar"><span class="bar-front" style="
+                </td>
+                <td>
+                  <span class="wrap">
+                    <span class="wrap-text">
+                      <%= data[i].mediumSolved.length %>
+                    </span>
+                    <span class="bar"><span class="bar-front" style="
                       width: calc(60px * <%= data[i].mediumPercentage %> / 100);
                       background: <%= data[i].mediumColor %>;
                     "></span><span class="bar-back"></span>
-                    <span class="percent">
-                      <%= data[i].mediumPercentage %>%
+                      <span class="percent">
+                        <%= data[i].mediumPercentage %>%
+                      </span>
                     </span>
                   </span>
-                </span>
-              </td>
-              <td>
-                <span class="wrap">
-                  <span class="wrap-text">
-                    <%= data[i].hardSolved.length %>
-                  </span>
-                  <span class="bar"><span class="bar-front" style="
+                </td>
+                <td>
+                  <span class="wrap">
+                    <span class="wrap-text">
+                      <%= data[i].hardSolved.length %>
+                    </span>
+                    <span class="bar"><span class="bar-front" style="
                       width: calc(60px * <%= data[i].hardPercentage %> / 100);
                       background: <%= data[i].hardColor %>;
                     "></span><span class="bar-back"></span>
-                    <span class="percent">
-                      <%= data[i].hardPercentage %>%
+                      <span class="percent">
+                        <%= data[i].hardPercentage %>%
+                      </span>
+                    </span></span>
+                </td>
+                <td>
+                  <span class="wrap">
+                    <span class="wrap-text">
+                      <%= data[i].practiceSolved.length %>
                     </span>
-                  </span></span>
-              </td>
-              <td>
-                <span class="wrap">
-                  <span class="wrap-text">
-                    <%= data[i].practiceSolved.length %>
-                  </span>
-                  <span class="bar"><span class="bar-front" style="
+                    <span class="bar"><span class="bar-front" style="
                       width: calc(
                         60px * <%= data[i].practicePercentage %> / 100
                       );
                       background: <%= data[i].practiceColor %>;
                     "></span><span class="bar-back"></span>
-                    <span class="percent">
-                      <%= data[i].practicePercentage %>%
-                    </span>
-                  </span></span>
-              </td>
-            </tr>
-            <% } %>
+                      <span class="percent">
+                        <%= data[i].practicePercentage %>%
+                      </span>
+                    </span></span>
+                </td>
+              </tr>
+              <% } %>
+          </tbody>
         </table>
       </div>
       <br />
@@ -426,22 +444,283 @@
       <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
       <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
       <div class="charts">
-        <div class="chart-title">
-          Problems Solved data (From 12-12-2022 To 21-04-2023)
+        <div class="chart-title" id="ct1">
+          Problems Solved data
         </div>
         <div id="chartdiv">
         </div>
         <br>
         <hr>
-        <div class="chart-title">
-          CSE branch data (From 12-12-2022 To 21-04-2023)
+        <div class="chart-title" id="ct2">
         </div>
         <div id="chartdiv2">
         </div>
-        <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-        <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-        <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+        <script>
+          var body = '<%- JSON.stringify(data) %>';
+          body = JSON.parse(body)
+          var tabody = document.getElementById("tabody")
+          var bgdata = {}
+          bgdata["05"] = [0, 0, 0, 0]
+          bgdata["01"] = [0, 0, 0, 0]
+          bgdata["02"] = [0, 0, 0, 0]
+          bgdata["03"] = [0, 0, 0, 0]
+          bgdata["04"] = [0, 0, 0, 0]
+          bgdata["12"] = [0, 0, 0, 0]
+          bgdata["21"] = [0, 0, 0, 0]
+          bgdata["66"] = [0, 0, 0, 0]
+          bgdata["67"] = [0, 0, 0, 0]
+          bgdata["62"] = [0, 0, 0, 0]
+          bgdata["33"] = [0, 0, 0, 0]
+          var pbdata = []
+          body.forEach((item) => {
+            let cbranch = item.username
+            cbranch = cbranch.slice(6, 8)
+            a = item.easySolved.length
+            b = item.mediumSolved.length
+            c = item.hardSolved.length
+            d = item.practiceSolved.length
+            if (bgdata[cbranch]) {
+              bgdata[cbranch][0] += a
+              bgdata[cbranch][1] += b
+              bgdata[cbranch][2] += c
+              bgdata[cbranch][3] += d
+            }
+            else {
+              bgdata[cbranch] = [a, b, c, d]
+            }
+          })
+          function asign() {
+            bgdata["05"] = [0, 0, 0, 0]
+            bgdata["01"] = [0, 0, 0, 0]
+            bgdata["02"] = [0, 0, 0, 0]
+            bgdata["03"] = [0, 0, 0, 0]
+            bgdata["04"] = [0, 0, 0, 0]
+            bgdata["12"] = [0, 0, 0, 0]
+            bgdata["21"] = [0, 0, 0, 0]
+            bgdata["66"] = [0, 0, 0, 0]
+            bgdata["67"] = [0, 0, 0, 0]
+            bgdata["62"] = [0, 0, 0, 0]
+            bgdata["33"] = [0, 0, 0, 0]
+            pbdata = {}
+            let sdm = document.getElementById("sd").value
+            let edm = document.getElementById("ed").value
+            let csdm = Date.parse(sdm)
+            let cedm = Date.parse(edm)
+            document.getElementById("ct1").innerHTML = "Problems Solved data (From " + sdm + " To " + edm + ")"
+            if (sdm && edm && csdm <= cedm) {
+              tabody.innerHTML = ""
+              body.forEach((item) => {
+                let easy = 0
+                let medium = 0
+                let hard = 0
+                let practice = 0
+                let branch = document.getElementById("branch").value
+                let cbranch = item.username
+                let croll = cbranch.slice(0, 2)
+                let roll = document.getElementById("year").value
+                cbranch = cbranch.slice(6, 8)
+                let pbeasy = {}
+                let pbmedium = {}
+                let pbhard = {}
+                let pbpractice = {}
+                item.easySolvedTimeWise.forEach((value) => {
+                  let exd = new Date(value[1])
+                  let mon = Number(exd.getMonth() + 1)
+                  mon = mon.toString()
+                  if (mon.length == 1) {
+                    mon = "0" + mon
+                  }
+                  cd = exd.getFullYear() + "-" + mon + "-" + exd.getDate()
+                  let pdexd = cd
+                  cd = Date.parse(cd)
+                  sd = Date.parse(sdm)
+                  ed = Date.parse(edm)
+                  if (sd <= cd && ed >= cd) {
+                    easy += 1
+                  }
+                  if (pbeasy[pdexd]) {
+                    pbeasy[pdexd] += 1
+                  }
+                  else {
+                    pbeasy[pdexd] = 1
+                  }
+                })
+                item.mediumSolvedTimeWise.forEach((value) => {
+                  let exd = new Date(value[1])
+                  let mon = Number(exd.getMonth() + 1)
+                  mon = mon.toString()
+                  if (mon.length == 1) {
+                    mon = "0" + mon
+                  }
+                  cd = exd.getFullYear() + "-" + mon + "-" + exd.getDate()
+                  let pdexd = cd
+                  cd = Date.parse(cd)
+                  sd = Date.parse(sdm)
+                  ed = Date.parse(edm)
+                  if (sd <= cd && ed >= cd) {
+                    medium += 1
+                  }
+                  if (pbmedium[pdexd]) {
+                    pbmedium[pdexd] += 1
+                  }
+                  else {
+                    pbmedium[pdexd] = 1
+                  }
+                })
+                item.hardSolvedTimeWise.forEach((value) => {
+                  let exd = new Date(value[1])
+                  let mon = Number(exd.getMonth() + 1)
+                  mon = mon.toString()
+                  if (mon.length == 1) {
+                    mon = "0" + mon
+                  }
+                  cd = exd.getFullYear() + "-" + mon + "-" + exd.getDate()
+                  let pdexd = cd
+                  cd = Date.parse(cd)
+                  sd = Date.parse(sdm)
+                  ed = Date.parse(edm)
+                  if (sd <= cd && ed >= cd) {
+                    hard += 1
+                  }
+                  if (pbhard[pdexd]) {
+                    pbhard[pdexd] += 1
+                  }
+                  else {
+                    pbhard[pdexd] = 1
+                  }
+                })
+                item.practiceSolvedTimeWise.forEach((value) => {
+                  let exd = new Date(value[1])
+                  let mon = Number(exd.getMonth() + 1)
+                  mon = mon.toString()
+                  if (mon.length == 1) {
+                    mon = "0" + mon
+                  }
+                  cd = exd.getFullYear() + "-" + mon + "-" + exd.getDate()
+                  let pdexd = cd
+                  cd = Date.parse(cd)
+                  sd = Date.parse(sdm)
+                  ed = Date.parse(edm)
+                  if (sd <= cd && ed >= cd) {
+                    practice += 1
+                  }
+                  if (pbpractice[pdexd]) {
+                    pbpractice[pdexd] += 1
+                  }
+                  else {
+                    pbpractice[pdexd] = 1
+                  }
+                })
+
+                if ((branch == "" || cbranch == branch) && (roll == "" || roll == croll)) {
+                  let htmldata = '<tr><td>' + item.username + '</td><td>' + easy + '</td><td>' + medium + '</td><td>' + hard + '</td><td>' + practice + '</td></tr>'
+                  tabody.insertAdjacentHTML("beforeend", htmldata)
+                }
+                if (roll == "" || roll == croll) {
+                  if (bgdata[cbranch]) {
+                    bgdata[cbranch][0] += easy
+                    bgdata[cbranch][1] += medium
+                    bgdata[cbranch][2] += hard
+                    bgdata[cbranch][3] += practice
+                  }
+                  else {
+                    bgdata[cbranch] = [easy, medium, hard, practice]
+                  }
+                }
+                if (cbranch == branch && (roll == "" || roll == croll)) {
+                  let brval = document.getElementById("branch")
+                  brval = brval.options[brval.selectedIndex].text
+                  document.getElementById("ct2").innerHTML = brval+" branch solved data (From " + sdm + " To " + edm + ")"
+                  let level = document.getElementById("level").value
+                  if (level == "") {
+                    for (var i in pbeasy) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbeasy[i]
+                      }
+                      else {
+                        pbdata[i] = pbeasy[i]
+                      }
+                    }
+                    for (var i in pbmedium) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbmedium[i]
+                      }
+                      else {
+                        pbdata[i] = pbmedium[i]
+                      }
+                    }
+                    for (var i in pbhard) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbhard[i]
+                      }
+                      else {
+                        pbdata[i] = pbhard[i]
+                      }
+                    }
+                    for (var i in pbpractice) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbpractice[i]
+                      }
+                      else {
+                        pbdata[i] = pbpractice[i]
+                      }
+                    }
+                  }
+                  else if (level == 0 || level == "0") {
+                    for (var i in pbeasy) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbeasy[i]
+                      }
+                      else {
+                        pbdata[i] = pbeasy[i]
+                      }
+                    }
+                  }
+                  else if (level == 1 || level == "1") {
+                    for (var i in pbmedium) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbmedium[i]
+                      }
+                      else {
+                        pbdata[i] = pbmedium[i]
+                      }
+                    }
+                  }
+                  else if (level == 2 || level == "2") {
+                    for (var i in pbhard) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbhard[i]
+                      }
+                      else {
+                        pbdata[i] = pbhard[i]
+                      }
+                    }
+                  }
+                  else if (level == 3 || level == "3") {
+                    for (var i in pbpractice) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbpractice[i]
+                      }
+                      else {
+                        pbdata[i] = pbpractice[i]
+                      }
+                    }
+                  }
+                }
+              })
+              document.getElementById("gbtn1").click()
+              document.getElementById("gbtn2").click()
+              
+            }
+            else {
+              alert("Check the dates properly")
+            }
+          }
+        </script>
         <!---------Graph 1 Script--------->
+        <button type="button" id="gbtn1" style="display: none;">gbtn1</button>
+        <button type="button" id="gbtn2" style="display: none;">gbtn2</button>
         <script>
           am5.ready(function () {
 
@@ -479,67 +758,74 @@
             chart.set("scrollbarX", am5.Scrollbar.new(root, {
               orientation: "horizontal"
             }));
-
+            var series
+            var xAxis
             var data = [{
               "year": "CSE",
-              "Level_0": 10,
-              "Level_1": 5,
-              "Level_2": 3,
-              "Practice": 9,
+              "Level_0": bgdata["05"][0],
+              "Level_1": bgdata["05"][1],
+              "Level_2": bgdata["05"][2],
+              "Practice": bgdata["05"][3],
             }, {
               "year": "CSE_AIML",
-              "Level_0": 8,
-              "Level_1": 2,
-              "Level_2": 5,
-              "Practice": 11,
+              "Level_0": bgdata["66"][0],
+              "Level_1": bgdata["66"][1],
+              "Level_2": bgdata["66"][2],
+              "Practice": bgdata["66"][3],
             }, {
               "year": "CSE_CS",
-              "Level_0": 7,
-              "Level_1": 2,
-              "Level_2": 0,
-              "Practice": 2,
+              "Level_0": bgdata["62"][0],
+              "Level_1": bgdata["62"][1],
+              "Level_2": bgdata["62"][2],
+              "Practice": bgdata["62"][3],
+            }, {
+              "year": "CSE_IT",
+              "Level_0": bgdata["33"][0],
+              "Level_1": bgdata["33"][1],
+              "Level_2": bgdata["33"][2],
+              "Practice": bgdata["33"][3],
             }, {
               "year": "CSE_DS",
-              "Level_0": 11,
-              "Level_1": 0,
-              "Level_2": 0,
-              "Practice": 1,
+              "Level_0": bgdata["67"][0],
+              "Level_1": bgdata["67"][1],
+              "Level_2": bgdata["67"][2],
+              "Practice": bgdata["67"][3],
             }, {
               "year": "ECE",
-              "Level_0": 5,
-              "Level_1": 0,
-              "Level_2": 0,
-              "Practice": 2,
+              "Level_0": bgdata["04"][0],
+              "Level_1": bgdata["04"][1],
+              "Level_2": bgdata["04"][2],
+              "Practice": bgdata["04"][3],
             }, {
               "year": "IT",
-              "Level_0": 4,
-              "Level_1": 1,
-              "Level_2": 0,
-              "Practice": 1,
+              "Level_0": bgdata["12"][0],
+              "Level_1": bgdata["12"][1],
+              "Level_2": bgdata["12"][2],
+              "Practice": bgdata["12"][3],
             }, {
               "year": "MECH",
-              "Level_0": 5,
-              "Level_1": 0,
-              "Level_2": 1,
-              "Practice": 1,
+              "Level_0": bgdata["03"][0],
+              "Level_1": bgdata["03"][1],
+              "Level_2": bgdata["03"][2],
+              "Practice": bgdata["03"][3],
             }, {
               "year": "EEE",
-              "Level_0": 2,
-              "Level_1": 0,
-              "Level_2": 0,
-              "Practice": 2,
+              "Level_0": bgdata["02"][0],
+              "Level_1": bgdata["02"][1],
+              "Level_2": bgdata["02"][2],
+              "Practice": bgdata["02"][3],
             }, {
               "year": "AERO",
-              "Level_0": 5,
-              "Level_1": 0,
-              "Level_2": 0,
-              "Practice": 0,
+              "Level_0": bgdata["21"][0],
+              "Level_1": bgdata["21"][1],
+              "Level_2": bgdata["21"][2],
+              "Practice": bgdata["21"][3],
             }, {
               "year": "CIVIL",
-              "Level_0": 3,
-              "Level_1": 3,
-              "Level_2": 0,
-              "Practice": 2,
+              "Level_0": bgdata["01"][0],
+              "Level_1": bgdata["01"][1],
+              "Level_2": bgdata["01"][2],
+              "Practice": bgdata["01"][3],
             }]
 
 
@@ -548,7 +834,7 @@
             var xRenderer = am5xy.AxisRendererX.new(root, {
               minGridDistance: 50
             });
-            var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+            xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
               categoryField: "year",
               renderer: xRenderer,
               tooltip: am5.Tooltip.new(root, {}),
@@ -579,7 +865,7 @@
             // Add series
             // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
             function makeSeries(name, fieldName) {
-              var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+              series = chart.series.push(am5xy.ColumnSeries.new(root, {
                 name: name,
                 stacked: true,
                 xAxis: xAxis,
@@ -630,7 +916,94 @@
             makeSeries("Level_1", "Level_1");
             makeSeries("Level_2", "Level_2");
             makeSeries("Practice", "Practice");
-
+            document.getElementById("gbtn1").onclick = function () {
+              data = [{
+                "year": "CSE",
+                "Level_0": bgdata["05"][0],
+                "Level_1": bgdata["05"][1],
+                "Level_2": bgdata["05"][2],
+                "Practice": bgdata["05"][3],
+              }, {
+                "year": "CSE_AIML",
+                "Level_0": bgdata["66"][0],
+                "Level_1": bgdata["66"][1],
+                "Level_2": bgdata["66"][2],
+                "Practice": bgdata["66"][3],
+              }, {
+                "year": "CSE_CS",
+                "Level_0": bgdata["62"][0],
+                "Level_1": bgdata["62"][1],
+                "Level_2": bgdata["62"][2],
+                "Practice": bgdata["62"][3],
+              }, {
+                "year": "CSE_IT",
+                "Level_0": bgdata["33"][0],
+                "Level_1": bgdata["33"][1],
+                "Level_2": bgdata["33"][2],
+                "Practice": bgdata["33"][3],
+              }, {
+                "year": "CSE_DS",
+                "Level_0": bgdata["67"][0],
+                "Level_1": bgdata["67"][1],
+                "Level_2": bgdata["67"][2],
+                "Practice": bgdata["67"][3],
+              }, {
+                "year": "ECE",
+                "Level_0": bgdata["04"][0],
+                "Level_1": bgdata["04"][1],
+                "Level_2": bgdata["04"][2],
+                "Practice": bgdata["04"][3],
+              }, {
+                "year": "IT",
+                "Level_0": bgdata["12"][0],
+                "Level_1": bgdata["12"][1],
+                "Level_2": bgdata["12"][2],
+                "Practice": bgdata["12"][3],
+              }, {
+                "year": "MECH",
+                "Level_0": bgdata["03"][0],
+                "Level_1": bgdata["03"][1],
+                "Level_2": bgdata["03"][2],
+                "Practice": bgdata["03"][3],
+              }, {
+                "year": "EEE",
+                "Level_0": bgdata["02"][0],
+                "Level_1": bgdata["02"][1],
+                "Level_2": bgdata["02"][2],
+                "Practice": bgdata["02"][3],
+              }, {
+                "year": "AERO",
+                "Level_0": bgdata["21"][0],
+                "Level_1": bgdata["21"][1],
+                "Level_2": bgdata["21"][2],
+                "Practice": bgdata["21"][3],
+              }, {
+                "year": "CIVIL",
+                "Level_0": bgdata["01"][0],
+                "Level_1": bgdata["01"][1],
+                "Level_2": bgdata["01"][2],
+                "Practice": bgdata["01"][3],
+              }]
+              xAxis.data.setAll(data)
+              chart.series.pop()
+              chart.series.pop()
+              chart.series.pop()
+              chart.series.pop()
+              legend.data.pop()
+              legend.data.pop()
+              legend.data.pop()
+              legend.data.pop()
+              chart.get("colors").set("colors", [
+                am5.color(0x48c376),
+                am5.color(0xf6bd41),
+                am5.color(0xec5e4f),
+                am5.color(0x428bec)
+              ]);
+              makeSeries("Level_0", "Level_0");
+              makeSeries("Level_1", "Level_1");
+              makeSeries("Level_2", "Level_2");
+              makeSeries("Practice", "Practice");
+            }
 
             // Make stuff animate on load
             // https://www.amcharts.com/docs/v5/concepts/animations/
@@ -640,112 +1013,138 @@
         </script>
         <!---------Graph 2 Script--------->
         <script>
-          am5.ready(function() {
-          
-          // Create root element
-          // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-          var root = am5.Root.new("chartdiv2");
-          
-          
-          // Set themes
-          // https://www.amcharts.com/docs/v5/concepts/themes/
-          root.setThemes([
-            am5themes_Animated.new(root)
-          ]);
-          
-          
-          // Create chart
-          // https://www.amcharts.com/docs/v5/charts/xy-chart/
-          var chart = root.container.children.push(am5xy.XYChart.new(root, {
-            panX: true,
-            panY: true,
-            wheelX: "panX",
-            wheelY: "zoomX",
-            pinchZoomX:true
-          }));
-          
-          
-          // Add cursor
-          // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
-          var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
-            behavior: "none"
-          }));
-          cursor.lineY.set("visible", false);
-          
-          
-          // Generate random data
-          var date = new Date();
-          date.setHours(0, 0, 0, 0);
-          var value = 100;
-          
-          function generateData() {
-            value = Math.round((Math.random() * 10 - 5) + value);
-            am5.time.add(date, "day", 1);
-            return {
-              date: date.getTime(),
-              value: value
-            };
-          }
-          
-          function generateDatas(count) {
+          am5.ready(function () {
+
+            // Create root element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            var root = am5.Root.new("chartdiv2");
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root.setThemes([
+              am5themes_Animated.new(root)
+            ]);
+
+            root.dateFormatter.setAll({
+              dateFormat: "yyyy",
+              dateFields: ["valueX"]
+            });
+
             var data = [];
-            for (var i = 0; i < count; ++i) {
-              data.push(generateData());
+
+            // Create chart
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/
+            var chart = root.container.children.push(
+              am5xy.XYChart.new(root, {
+                focusable: true,
+                panX: true,
+                panY: true,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                pinchZoomX: true
+              })
+            );
+
+            var easing = am5.ease.linear;
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+            var xAxis = chart.xAxes.push(
+              am5xy.DateAxis.new(root, {
+                maxDeviation: 0.5,
+                groupData: false,
+                baseInterval: {
+                  timeUnit: "day",
+                  count: 1
+                },
+                renderer: am5xy.AxisRendererX.new(root, {
+                  pan: "zoom",
+                  minGridDistance: 50
+                }),
+                tooltip: am5.Tooltip.new(root, {})
+              })
+            );
+
+            var yAxis = chart.yAxes.push(
+              am5xy.ValueAxis.new(root, {
+                maxDeviation: 1,
+                renderer: am5xy.AxisRendererY.new(root, { pan: "zoom" })
+              })
+            );
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+            var series = chart.series.push(
+              am5xy.LineSeries.new(root, {
+                minBulletDistance: 10,
+                xAxis: xAxis,
+                yAxis: yAxis,
+                valueYField: "value",
+                valueXField: "date",
+                tooltip: am5.Tooltip.new(root, {
+                  pointerOrientation: "horizontal",
+                  labelText: "{valueY}"
+                })
+              })
+            );
+
+            // Set up data processor to parse string dates
+            // https://www.amcharts.com/docs/v5/concepts/data/#Pre_processing_data
+            series.data.processor = am5.DataProcessor.new(root, {
+              dateFormat: "yyyy-MM-dd",
+              dateFields: ["date"]
+            });
+
+            series.data.setAll(data);
+
+            series.bullets.push(function () {
+              var circle = am5.Circle.new(root, {
+                radius: 4,
+                fill: series.get("fill"),
+                stroke: root.interfaceColors.get("background"),
+                strokeWidth: 2
+              });
+
+              return am5.Bullet.new(root, {
+                sprite: circle
+              });
+            });
+            document.getElementById("gbtn2").onclick = function () {
+              data = []
+              for (var i in pbdata) {
+                data.push({ "date": i, "value": Number(pbdata[i]) })
+              }
+              console.log(data)
+              data = data.sort((a, b) => {
+                if (a.date < b.date) {
+                  return -1;
+                }
+              });
+              console.log(data)
+              series.data.setAll(data);
             }
-            return data;
-          }
-          
-          
-          // Create axes
-          // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-          var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-            maxDeviation: 0.2,
-            baseInterval: {
-              timeUnit: "day",
-              count: 1
-            },
-            renderer: am5xy.AxisRendererX.new(root, {}),
-            tooltip: am5.Tooltip.new(root, {})
-          }));
-          
-          var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-            renderer: am5xy.AxisRendererY.new(root, {})
-          }));
-          
-          
-          // Add series
-          // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-          var series = chart.series.push(am5xy.LineSeries.new(root, {
-            name: "Series",
-            xAxis: xAxis,
-            yAxis: yAxis,
-            valueYField: "value",
-            valueXField: "date",
-            tooltip: am5.Tooltip.new(root, {
-              labelText: "{valueY}"
-            })
-          }));
-          
-          
-          // Add scrollbar
-          // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-          chart.set("scrollbarX", am5.Scrollbar.new(root, {
-            orientation: "horizontal"
-          }));
-          
-          
-          // Set data
-          var data = generateDatas(1200);
-          series.data.setAll(data);
-          
-          
-          // Make stuff animate on load
-          // https://www.amcharts.com/docs/v5/concepts/animations/
-          series.appear(1000);
-          chart.appear(1000, 100);
-          
+
+
+
+            // Add cursor
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+            var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+              xAxis: xAxis
+            }));
+            cursor.lineY.set("visible", false);
+
+            // add scrollbar
+            chart.set("scrollbarX", am5.Scrollbar.new(root, {
+              orientation: "horizontal"
+            }));
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            series.appear(1000, 100);
+            chart.appear(1000, 100);
+
           }); // end am5.ready()
-          </script>
+        </script>
       </div>
     </div>
     <script src="/adminjs/classie.js"></script>
