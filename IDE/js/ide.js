@@ -858,6 +858,7 @@ https://ide.judge0.com/?kS_f\n\
 
 function insertUserCode(data) {
   currentLanguageId = parseInt(data);
+  console.log(sources[currentLanguageId]);
   sourceEditor.setValue(sources[currentLanguageId]);
   monaco.editor.setModelLanguage(
     sourceEditor.getModel(),
@@ -870,6 +871,7 @@ function getSubmission() {
   let windowUrl = window.location.href;
   let username = getCookie("username");
   let questionId = windowUrl.slice(serverUrl.length + 5, windowUrl.length);
+  courseId = getCookie("courseId");
   $.ajax({
     url:
       serverUrl +
@@ -885,11 +887,23 @@ function getSubmission() {
     },
     success: function (data) {
       if (data.length > 0) {
-        var a = data.length - 1;
-        currentLanguageId = parseInt(data[a].languageId);
-        sources[currentLanguageId] = data[a].sourceCode;
-        insertUserCode(data[a].languageId);
-      }
+        for (let i = 0; i < data.length; i++) {
+          currentLanguageId = parseInt(data[i].languageId);
+          sources[currentLanguageId] = data[i].sourceCode;  
+        }
+        if(courseId === "IARE_C"){
+          insertUserCode("4");
+        }
+        else if (courseId === "IARE_PY"){
+          insertUserCode("34")
+        }
+        else if (courseId === "IARE_CPP"){
+          insertUserCode("10")
+        }
+        else if (courseId === "IARE_JAVA") {
+          insertUserCode("26");
+        }
+      } 
     },
   });
 }
