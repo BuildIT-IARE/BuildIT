@@ -9,7 +9,7 @@ exports.create = (req, res) => {
         { emailQuestionId: emailQuestions.emailQuestionId },
         {
           $set: {
-            countValue: Number(emailQuestions.countValue) + 1,
+            CountValue: Number(emailQuestions.CountValue) + 1,
           },
         }
       )
@@ -19,12 +19,12 @@ exports.create = (req, res) => {
             success: false,
             message:
               err.message ||
-              "First Reference emailQuestion missing(countValue)",
+              "First Reference emailQuestion missing(CountValue)",
           });
         });
       const question = new EmailQuestion({
         emailId: req.body.emailId,
-        emailQuestionId: "IARE_EQ" + emailQuestions.countValue + 1,
+        emailQuestionId: "IARE_EQ" + emailQuestions.CountValue + 1,
         emailQuestionName: req.body.emailQuestionName,
         emailTopic: req.body.emailTopic,
         emailScore: Number(req.body.emailScore),

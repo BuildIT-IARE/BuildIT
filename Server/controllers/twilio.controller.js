@@ -42,7 +42,6 @@ exports.verifyOTP = (req, res) => {
         Visitor.find({ phoneNumber: phoneNumber, status: "allocated" })
           .then((checkVisitor) => {
             if (checkVisitor.length == 0) {
-              console.log(checkVisitor);
               Visitor.find({}).then((visitors) => {
                 let count = visitors[0].CountValue + 1;
                 Visitor.findOneAndUpdate(
@@ -51,36 +50,70 @@ exports.verifyOTP = (req, res) => {
                 ).then((data) => {
                   console.log(data);
                 });
-                const visitor = new Visitor({
-                  name: req.body.name,
-                  phoneNumber: req.body.phoneNumber,
-                  purpose: req.body.purpose,
-                  date: new Date(),
-                  personId: "IAREVISITOR" + count,
-                  allocatedId: "",
-                  photo: req.body.photo,
-                  status: "verified",
-                  host: req.body.host,
-                  address: req.body.address,
-                });
-                let pid = "IAREVISITOR" + count;
-                let spid = encrypt.encrypt(pid);
-                visitor
-                  .save()
-                  .then((data) => {
-                    res.send({
-                      success: true,
-                      data: spid,
-                    });
-                  })
-                  .catch((err) => {
-                    res.status(400).send({
-                      error: true,
-                    });
+                if (req.body.name) {
+                  const visitor = new Visitor({
+                    name: req.body.name,
+                    phoneNumber: req.body.phoneNumber,
+                    purpose: req.body.purpose,
+                    date: new Date(),
+                    personId: "IAREVISITOR" + count,
+                    allocatedId: "",
+                    photo: req.body.photo,
+                    status: "verified",
+                    host: req.body.host,
+                    address: req.body.address,
                   });
+                  let pid = "IAREVISITOR" + count;
+                  let spid = encrypt.encrypt(pid);
+                  visitor
+                    .save()
+                    .then((data) => {
+                      res.send({
+                        success: true,
+                        data: spid,
+                      });
+                    })
+                    .catch((err) => {
+                      res.status(400).send({
+                        error: true,
+                      });
+                    });
+                } else {
+                  Visitor.findOneAndUpdate(
+                    {
+                      phoneNumber: req.body.phoneNumber,
+                    },
+                    {
+                      $set: {
+                        purpose: req.body.purpose,
+                        host: req.body.host,
+                        status: "verified",
+                      },
+                    }
+                  )
+                    .then((visitor) => {
+                      if (visitor) {
+                        let pid = visitor.personId;
+                        let spid = encrypt.encrypt(pid);
+                        res.send({
+                          success: true,
+                          data: spid,
+                        });
+                      } else {
+                        res.status(400).send({
+                          error: true,
+                        });
+                      }
+                    })
+                    .catch((err) => {
+                      res.status(400).send({
+                        error: true,
+                      });
+                    });
+                }
               });
             } else {
-              console.log(checkVisitor, "djfksdfkjs");
+              console.log(checkVisitor, "Visitor already allocated");
               res.status(400).send({
                 error: true,
                 alert: true,
@@ -120,6 +153,7 @@ exports.allocateVisitor = async (req, res) => {
       to: phoneNumber,
     })
     .then((message) => {
+      console.log(message);
       Visitor.find({})
         .then((visitors) => {
           let data = visitors[1].visitorAllocatedId;

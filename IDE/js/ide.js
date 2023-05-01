@@ -787,7 +787,8 @@ var crystalSource = 'puts "hello, world"\n';
 
 var elixirSource = 'IO.puts "hello, world"\n';
 
-var erlangSource = '\
+var erlangSource =
+  '\
 main(_) ->\n\
     io:fwrite("hello, world\\n").\n';
 
@@ -803,7 +804,8 @@ func main() {\n\
 
 var haskellSource = 'main = putStrLn "hello, world"\n';
 
-var insectSource = "\
+var insectSource =
+  "\
 2 min + 30 s\n\
 40 kg * 9.8 m/s^2 * 150 cm\n\
 sin(30°)\n";
@@ -833,7 +835,8 @@ var pythonSource = "#Code goes here!\n";
 
 var rubySource = 'puts "hello, world"\n';
 
-var rustSource = '\
+var rustSource =
+  '\
 fn main() {\n\
     println!("hello, world");\n\
 }\n';

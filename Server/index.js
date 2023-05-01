@@ -1156,14 +1156,15 @@ app.post("/updateLeaderboard", middleware.checkTokenAdmin, async (req, res) => {
 
 app.get("/getSolvedCount", middleware.checkTokenAdmin, async (req, res) => {
   let users = await User.find();
-  let userCollection = {};
+  let userCollectionContests = {};
+  let userCollectionTutorials = {};
   for (const user of users) {
-    userCollection[user.username] = 0;
+    userCollectionContests[user.username] = 0;
+    userCollectionTutorials[user.username] = 0;
   }
 
   let userParticipations = await Participation.find();
   let tutorialParticipations = await ParticipationTut.find();
-  userParticipations = userParticipations.concat(tutorialParticipations);
 
   for (const uPart of userParticipations) {
     let incVal = 0;
@@ -1172,11 +1173,23 @@ app.get("/getSolvedCount", middleware.checkTokenAdmin, async (req, res) => {
         incVal = incVal + 1;
       }
     }
-    if (uPart.username in userCollection) {
-      userCollection[uPart.username] += incVal;
+    if (uPart.username in userCollectionContests) {
+      userCollectionContests[uPart.username] += incVal;
     }
   }
-  res.send(userCollection);
+  for (const uPart of tutorialParticipations) {
+    let incVal = 0;
+    incVal += uPart.easySolved.length;
+    incVal += uPart.mediumSolved.length;
+    incVal += uPart.hardSolved.length;
+    if (uPart.username in userCollectionTutorials) {
+      userCollectionTutorials[uPart.username] += incVal;
+    }
+  }
+  res.send({
+    userCollectionContests,
+    userCollectionTutorials
+  });
 });
 
 // get latest plag report
