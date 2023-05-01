@@ -109,14 +109,25 @@
       </h2>
       <br />
       <hr />
+      <div style="float: right; margin-right: 20px">   
+        <label for="branch">Filter by Branch:</label>
+        <select name="branch" id="branchSelector" onchange="filterBranch()">
+          <option value="select">Select Branch</option>
+          <option value="ECE">ECE</option>
+          <option value="CSE">CSE</option>
+          <option value="EEE">EEE</option>
+        </select>
+      </div>
       <table class="w3-table w3-striped">
         <tr>
+          <th>S.No</th>
           <th>Roll No</th>
           <th>Total Score</th>
           <th>Branch</th>
         </tr>
         <% for(let i=0; i < datap.length; i++){ %>
-        <tr>
+        <tr branch="<%= datap[i].branch.toLowerCase() %>" class="leaderboardEntry">
+          <td><%= i+1 %></td>
           <td><%= datap[i].username %></td>
           <% let k = 0; %> <% if (datap[i].submissionResults.length !== 0){ %>
           <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %> <%
@@ -133,4 +144,17 @@
     <script src="/adminjs/classie.js"></script>
     <script src="/adminjs/gnmenu.js"></script>
   </body>
+  <script>
+    function filterBranch(){
+      let branch = document.getElementById("branchSelector").value; 
+      let rows = document.getElementsByClassName("leaderboardEntry");
+      for(let i=0; i<rows.length; i++){
+        if(rows[i].getAttribute("branch") === branch.toLowerCase() || branch.toLowerCase() === "select"){
+          rows[i].style.display = "";
+        }else{
+          rows[i].style.display = "none";
+        }
+      }
+    }
+  </script>
 </html>
