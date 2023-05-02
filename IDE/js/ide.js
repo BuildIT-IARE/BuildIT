@@ -879,28 +879,30 @@ function getSubmission() {
     },
     success: function (data) {
       if (data.length > 0) {
-        for (let i = 0; i < data.length; i++) {
+        var requiredLanguageId = course_language[courseId];
+
+        for (let i = data.length-1; i >= 0; i--) {
           currentLanguageId = parseInt(data[i].languageId);
-          sources[currentLanguageId] = data[i].sourceCode;  
+          sources[currentLanguageId] = data[i].sourceCode;
+          console.log(currentLanguageId);
+          if(currentLanguageId === requiredLanguageId){
+            insertUserCode(requiredLanguageId);
+            break;
+          }
         }
-        if(courseId === "IARE_C"){
-          insertUserCode("4");
-        }
-        else if (courseId === "IARE_PY"){
-          insertUserCode("34")
-        }
-        else if (courseId === "IARE_CPP"){
-          insertUserCode("10")
-        }
-        else if (courseId === "IARE_JAVA") {
-          insertUserCode("26");
-        }
-      } 
+      }
     },
   });
 }
 
 getSubmission();
+
+var course_language = {
+  "IARE_C": 4,
+  "IARE_CPP": 10,
+  "IARE_JAVA": 26,
+  "IARE_PY": 34,
+}
 
 var sources = {
   1: bashSource,
