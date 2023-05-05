@@ -850,7 +850,6 @@ https://ide.judge0.com/?kS_f\n\
 
 function insertUserCode(data) {
   currentLanguageId = parseInt(data);
-  console.log(sources[currentLanguageId]);
   sourceEditor.setValue(sources[currentLanguageId]);
   monaco.editor.setModelLanguage(
     sourceEditor.getModel(),
@@ -884,7 +883,6 @@ function getSubmission() {
         for (let i = data.length-1; i >= 0; i--) {
           currentLanguageId = parseInt(data[i].languageId);
           sources[currentLanguageId] = data[i].sourceCode;
-          console.log(currentLanguageId);
           if(currentLanguageId === requiredLanguageId){
             insertUserCode(requiredLanguageId);
             break;
