@@ -862,6 +862,7 @@ function getSubmission() {
   let windowUrl = window.location.href;
   let username = getCookie("username");
   let questionId = windowUrl.slice(serverUrl.length + 5, windowUrl.length);
+  courseId = getCookie("courseId");
   $.ajax({
     url:
       serverUrl +
@@ -877,16 +878,29 @@ function getSubmission() {
     },
     success: function (data) {
       if (data.length > 0) {
-        var a = data.length - 1;
-        currentLanguageId = parseInt(data[a].languageId);
-        sources[currentLanguageId] = data[a].sourceCode;
-        insertUserCode(data[a].languageId);
+        var requiredLanguageId = course_language[courseId];
+
+        for (let i = data.length-1; i >= 0; i--) {
+          currentLanguageId = parseInt(data[i].languageId);
+          sources[currentLanguageId] = data[i].sourceCode;
+          if(currentLanguageId === requiredLanguageId){
+            insertUserCode(requiredLanguageId);
+            break;
+          }
+        }
       }
     },
   });
 }
 
 getSubmission();
+
+var course_language = {
+  "IARE_C": 4,
+  "IARE_CPP": 10,
+  "IARE_JAVA": 26,
+  "IARE_PY": 34,
+}
 
 var sources = {
   1: bashSource,
