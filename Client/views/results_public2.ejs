@@ -88,11 +88,49 @@
       padding: 4px;
       border-width: 3px;
     }
+    .leaderboardEntry:hover {
+    transform: scale(1.1);
+    background-color: #f5f5f5;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Animate the header row */
+  th {
+    background-color: #2196f3;
+    color: white;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Animate the table when it first appears */
+  table {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s ease-in-out;
+  }
+  
+  /* Show the table after the animation is finished */
+  table.show {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  .leaderboard-heading {
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+  color: #333;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
   </style>
   <script>
     function close_window() {
       close();
     }
+    
   </script>
   <body>
     <p></p>
@@ -104,27 +142,63 @@
     ><br /><br />
 
     <div class="w3-container" style="background: white">
-      <h2 style="text-align: center">
-        Leaderboards: <%= datap[0].contestId %>
-      </h2>
+      <h2 class="leaderboard-heading">Leaderboards: <%= datap[0].contestId %></h2>
+
       <br />
       <hr />
+      <div class="controls" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="left-controls" style="display: flex; align-items: center;">
+          <div class="roll-no" style="display: flex; align-items: center; margin-right: 30px;">
+            <label for="user-id" style="margin-right: 10px; font-weight: bold; font-size: 1.2rem;">Enter User ID:</label>
+            <input type="text" id="user-id" style="margin-right: 10px; padding: 5px; border-radius: 5px; border: 1px solid #ddd;">
+            <button onclick="filterRollNumber()" style="background-color: #4CAF50; color: white; padding: 10px; border-radius: 5px; border: none;">Search</button>
+          </div>
+          <div class="date" style="display: flex; align-items: center; margin-right: 30px;">
+            <label for="select-box" style="margin-right: 10px; font-weight: bold; font-size: 1.2rem;">Select Entries:</label>
+            <select id="select-top" style="margin-right: 10px; padding: 5px; border-radius: 5px; border: 1px solid #ddd;" onchange="filterTop()">
+              <option value="all">All</option>
+              <option value="1">Top 10</option>
+              <option value="2">Top 50</option>
+              <option value="3">Top 100</option>
+            </select>
+          </div>
+          <div class="date" style="display: flex; align-items: center;">
+            <label for="branch" style="margin-right: 10px; font-weight: bold; font-size: 1.2rem;">Filter by Branch:</label>
+            <select name="branch" id="branchSelector" onchange="filterBranch()" style="margin-right: 10px; padding: 5px; border-radius: 5px; border: 1px solid #ddd;">
+              <option value="select">All branch</option>
+              <option value="ECE">ECE</option>
+              <option value="CSE">CSE</option>
+              <option value="EEE">EEE</option>
+              <option value="AI-ML">AI-ML</option>
+              <option value="DATA-SCIENCE">DATA-SCIENCE</option>
+              <option value="CYBER-SECURITY">CYBER-SECURITY</option>
+              <option value="CS-IT">CS-IT</option>
+              <option value="AERO">AERO</option>
+              <option value="CIVIL">CIVIL</option>
+              <option value="AERO">AERO</option>
+              <option value="MECH">MECH</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
       <table class="w3-table w3-striped">
         <tr>
+          <th>S.No</th>
           <th>Roll No</th>
           <th>Total Score</th>
           <th>Branch</th>
         </tr>
         <% for(let i=0; i < datap.length; i++){ %>
-        <tr>
-          <td><%= datap[i].username %></td>
           <% let k = 0; %> <% if (datap[i].submissionResults.length !== 0){ %>
-          <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %> <%
-          k = k + datap[i].submissionResults[j].score %> <% } %> <% } %>
-
-          <td><%= k %></td>
-          <td><%= datap[i].branch %></td>
-        </tr>
+            <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %> <%
+            k = k + datap[i].submissionResults[j].score %> <% } %> <% } %>
+          <tr branch="<%= datap[i].branch.toLowerCase() %>" rollNo ="<%= datap[i].username.toLowerCase() %>" top = "<%= k %>" class="leaderboardEntry">
+            <td><%= i+1 %></td>
+            <td><%= datap[i].username %></td>
+            <td><%= k %></td>
+            <td><%= datap[i].branch %></td>
+          </tr>
         <% } %>
       </table>
       <br />
@@ -132,5 +206,94 @@
     </div>
     <script src="/adminjs/classie.js"></script>
     <script src="/adminjs/gnmenu.js"></script>
+    <script>
+      function filterBranch(){
+        let branch = document.getElementById("branchSelector").value; 
+        let rows = document.getElementsByClassName("leaderboardEntry");
+        for(let i=0; i<rows.length; i++){
+          if(rows[i].getAttribute("branch") === branch.toLowerCase() || branch.toLowerCase() === "select"){
+            rows[i].style.display = "";
+          }else{
+            rows[i].style.display = "none";
+          }
+        }
+        
+      }
+      function filterRollNumber() {
+  const roll = document.getElementById("user-id").value.toLowerCase();
+  const rows = document.getElementsByClassName("leaderboardEntry");
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    if (row.getAttribute("rollNo") === roll) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  }
+}
+
+function filterTop() {
+  const roll = document.getElementById("select-top").value;
+  const branch = document.getElementById("branchSelector").value;
+  const rows = document.getElementsByClassName("leaderboardEntry");
+  const tops = [];
+
+  for (let i = 0; i < rows.length; i++) {
+    if (branch === "select" || rows[i].getAttribute("branch") === branch.toLowerCase()) {
+      tops.push(parseInt(rows[i].getAttribute("top"), 10));
+    }
+  }
+  tops.sort((a, b) => b - a);
+  
+  let threshold = -1;
+  switch (roll) {
+    case "all":
+      threshold = Number.NEGATIVE_INFINITY;
+      break;
+    case "1":
+      if (tops.length >= 10) {
+        threshold = tops[9];
+      } else {
+        threshold = Number.NEGATIVE_INFINITY;
+      }
+      break;
+    case "2":
+      if (tops.length >= 50) {
+        threshold = tops[49];
+      } else {
+        threshold = Number.NEGATIVE_INFINITY;
+      }
+      break;
+    case "3":
+      if (tops.length >= 100) {
+        threshold = tops[99];
+      } else {
+        threshold = Number.NEGATIVE_INFINITY;
+      }
+      break;
+    default:
+      break;
+  }
+
+  // Sort the rows based on their top attribute value
+  const sortedRows = Array.from(rows).sort((a, b) => parseInt(b.getAttribute("top"), 10) - parseInt(a.getAttribute("top"), 10));
+
+  for (let i = 0; i < sortedRows.length; i++) {
+    const row = sortedRows[i];
+    const top = parseInt(row.getAttribute("top"), 10);
+    if ((branch === "select" || row.getAttribute("branch") === branch.toLowerCase()) && top >= threshold) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  }
+}
+
+
+window.onload = function() {
+    document.querySelector("table").classList.add("show");
+  }
+
+    </script>
   </body>
 </html>
