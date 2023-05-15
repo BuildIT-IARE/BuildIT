@@ -97,7 +97,7 @@ function close_window() {
 </script>        
 <body>
     <p></p><br>
-    <a href="javascript:close_window();"><button onclick="close()" class = "button1" ><span style="color: #ffffff" >Close</span></button></a><br><br>
+    <a href="javascript:close_window();" ><button onclick="close()" class = "button1" > <span style="color: white;">Close</span></button></a><br><br>
 
     <div class="w3-container" style="background: white;">
         <h2 style="text-align: center">BuildIT Complaints</h2>
@@ -109,13 +109,16 @@ function close_window() {
   <th> QuestionId</th>
 <th> Username</th>
   <th> Complain Subject</th>
+  <th> Date</th>
 </tr>
 <% for(let i=0; i < data.length; i++){ %>
+  <% console.log(data[i]); %>
 <tr>
     <td><%= i+1 %></td>
 <td><%= data[i].questionId %></td>
     <td><%= data[i].username %></td> 
-    <td><%= data[i].complainSubject %></td> 		
+    <td><%= data[i].complainSubject %></td>	
+    <td><%= new Date(data[i].createdAt).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric",}) %></td>	
 </tr>  
 <% } %>
 

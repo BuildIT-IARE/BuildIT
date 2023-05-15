@@ -53,15 +53,22 @@ exports.create = (req, res) => {
 // Retrieve and return all Complains from the database.
 exports.findAll = (req, res) => {
   Complain.find()
-    .then((complains) => {
-      res.send(complains);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving complains.",
-      });
+  .then((complains) => {
+    var newComplains = []
+    for(let i = 0;i<complains.length;i++){
+      var newComplain = {...complains[i]._doc}
+      newComplain.createdAt = newComplain._id.getTimestamp()
+      newComplains.push(newComplain)
+    }
+    res.send(newComplains);
+  })
+  .catch((err) => {
+    res.status(500).send({
+      success: false,
+      message:
+        err.message || "Some error occurred while retrieving complains.",
     });
+  })
 };
 // delete w/ questionId
 exports.delete = (req, res) => {
