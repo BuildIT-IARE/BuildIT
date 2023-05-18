@@ -17,7 +17,7 @@
     <h2 style="text-align: center">BuildIT Complaints</h2>
 
 	<br><hr>
-  <table class="w3-table w3-striped">
+  <table class="w3-table w3-striped w3-responsive w3-small">
     <tr>
     <th>S.No.</th>
 	  <th> QuestionId</th>
@@ -25,6 +25,8 @@
 	  <th> Complain Subject</th>
     <th> Complain Description</th>
     <th> Resolve</th>
+    <th>Resolution Remarks</th>
+    <th> Delete</th>
     </tr>
 <% for(let i=0; i < data.length; i++){ %>
     <tr>
@@ -33,7 +35,9 @@
 		<td><%= data[i].username %></td> 
 		<td><%= data[i].complainSubject %></td> 		
     <td><%= data[i].complainDesc %></td>
-    <td><a href = "<%= data[i].url %>/admin/deletecomplain/<%= data[i].questionId %>">Solved</a></td>
+    <td><% if(!data[i].resolutionStatus) { %><a href = "<%= data[i].url %>/admin/resolveComplain/<%= data[i].complainId %>">Resolve Complain</a> <% } else { %> Resolved <% } %></td>
+    <td><%= data[i].resolutionRemarks || "-" %></td>
+    <td><a href = "<%= data[i].url %>/admin/deletecomplain/<%= data[i].complainId %>">Delete</a></td>
 	</tr>  
 <% } %>
  

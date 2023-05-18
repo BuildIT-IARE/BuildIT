@@ -103,22 +103,25 @@ function close_window() {
         <h2 style="text-align: center">BuildIT Complaints</h2>
 
 <br><hr>
-<table class="w3-table w3-striped">
+<table class="w3-table w3-striped w3-responsive w3-small">
 <tr>
 <th>S.No.</th>
   <th> QuestionId</th>
 <th> Username</th>
   <th> Complain Subject</th>
   <th>Complain Date</th>
+  <th>Status</th>
+  <th>Remarks</th>
 </tr>
 <% for(let i=0; i < data.length; i++){ %>
-  <% console.log(data[i]); %>
 <tr>
     <td><%= i+1 %></td>
 <td><%= data[i].questionId %></td>
     <td><%= data[i].username %></td> 
     <td><%= data[i].complainSubject %></td>	
-    <td><%= new Date(data[i].createdAt).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric",}) %></td>	
+    <td><%= new Date(data[i].createdAt).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric",}) %></td>
+    <td><%= data[i].resolutionStatus ? "Resolved" : "Yet to be Resolved" %></td>
+    <td><%= data[i].resolutionRemarks || "-" %></td>
 </tr>  
 <% } %>
 

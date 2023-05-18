@@ -1406,9 +1406,46 @@ app.get("/admin/deleteuser/:username", async (req, res) => {
   });
 });
 
-app.get("/admin/deletecomplain/:questionId", async (req, res) => {
+app.get("/admin/resolveComplain/:complainId", async (req, res) => {
   let options = {
-    url: serverRoute + "/complains/" + req.params.questionId,
+    url: serverRoute + "/complains/" + req.params.complainId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    if (response.statusCode == 200) {
+      body.url = clientRoute;
+      body.serverurl = serverRoute;
+      res.render("complainResolve", { data: body });
+    }
+    else{
+      body.message = "Complain Already Resolved!"
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.post("/admin/resolveComplain/:complainId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/complains/" + req.params.complainId,
+    method: "put",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: req.body,
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.redirect("/admin/complaints")
+  });
+});
+
+app.get("/admin/deletecomplain/:complainId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/complains/" + req.params.complainId,
     method: "delete",
     headers: {
       authorization: req.cookies.token,

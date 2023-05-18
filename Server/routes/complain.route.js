@@ -9,9 +9,17 @@ module.exports = (app) => {
   // Retrieve all complains
   app.get("/complains", middleware.checkToken, complains.findAll);
 
+  app.get("/complains/:complainId", middleware.checkToken, complains.findOne);
+
   app.delete(
-    "/complains/:questionId",
+    "/complains/:complainId",
     middleware.checkTokenAdmin,
     complains.delete
   );
+
+  app.put(
+    "/complains/:complainId",
+    middleware.checkTokenAdmin,
+    complains.update
+  )
 };
