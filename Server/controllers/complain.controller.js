@@ -54,13 +54,10 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   Complain.find()
   .then((complains) => {
-    var newComplains = []
     for(let i = 0;i<complains.length;i++){
-      var newComplain = {...complains[i]._doc}
-      newComplain.createdAt = newComplain._id.getTimestamp()
-      newComplains.push(newComplain)
+      complains[i]._doc.createdAt = complains[i]._id.getTimestamp()
     }
-    res.send(newComplains);
+    res.send(complains);
   })
   .catch((err) => {
     res.status(500).send({
