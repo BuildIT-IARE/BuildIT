@@ -24,8 +24,9 @@
     <th> Username</th>
 	  <th> Complain Subject</th>
     <th> Complain Description</th>
+    <th> Complain Date</th>
     <th> Resolve</th>
-    <th>Resolution Remarks</th>
+    <th> Remarks</th>
     <th> Delete</th>
     </tr>
 <% for(let i=0; i < data.length; i++){ %>
@@ -35,6 +36,7 @@
 		<td><%= data[i].username %></td> 
 		<td><%= data[i].complainSubject %></td> 		
     <td><%= data[i].complainDesc %></td>
+    <td><%= new Date(data[i].createdAt).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric",}) %></td>
     <td><% if(!data[i].resolutionStatus) { %><a href = "<%= data[i].url %>/admin/resolveComplain/<%= data[i].complainId %>">Resolve Complain</a> <% } else { %> Resolved <% } %></td>
     <td><%= data[i].resolutionRemarks || "-" %></td>
     <td><a href = "<%= data[i].url %>/admin/deletecomplain/<%= data[i].complainId %>">Delete</a></td>
