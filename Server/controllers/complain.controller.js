@@ -95,9 +95,16 @@ exports.delete = (req, res) => {
 
 // update w/ questionId
 exports.update = (req, res) => {
+  if (req.body.resolutionStatus === "true") {
+    req.body.resolutionDate = Date.now();
+  }
+  else{
+    req.body.resolutionDate = null;
+  }
   Complain.findOneAndUpdate(
     { complainId: req.params.complainId },
     {
+      resolutionDate: req.body.resolutionDate,
       resolutionStatus: req.body.resolutionStatus,
       resolutionRemarks: req.body.resolutionRemarks,
     }

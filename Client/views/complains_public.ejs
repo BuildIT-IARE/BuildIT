@@ -111,6 +111,7 @@ function close_window() {
   <th> Complain Subject</th>
   <th>Complain Date</th>
   <th>Status</th>
+  <th>Resolved Date</th>
   <th>Remarks</th>
 </tr>
 <% for(var i=data.length-1; i>=0; i--) { %>
@@ -121,6 +122,7 @@ function close_window() {
     <td><%= data[i].complainSubject %></td>	
     <td><%= new Date(data[i].createdAt).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric",}) %></td>
     <td><%= data[i].resolutionStatus ? "Resolved" : "Yet to be Resolved" %></td>
+    <td><%= data[i].resolutionDate ? new Date(data[i].resolutionDate).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric",}) : "-" %></td>
     <td><%= data[i].resolutionRemarks || "-" %></td>
 </tr>  
 <% } %>

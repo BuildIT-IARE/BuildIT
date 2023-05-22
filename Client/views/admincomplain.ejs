@@ -25,6 +25,7 @@
 	  <th> Complain Subject</th>
     <th> Complain Description</th>
     <th> Complain Date</th>
+    <th> Resolved Date</th>
     <th> Resolve</th>
     <th> Remarks</th>
     <th> Delete</th>
@@ -37,6 +38,7 @@
 		<td><%= data[i].complainSubject %></td> 		
     <td><%= data[i].complainDesc %></td>
     <td><%= new Date(data[i].createdAt).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric",}) %></td>
+    <td><%= data[i].resolutionDate ? new Date(data[i].createdAt).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric",}) : "-" %></td>
     <td><% if(!data[i].resolutionStatus) { %><a href = "<%= data[i].url %>/admin/resolveComplain/<%= data[i].complainId %>">Resolve Complain</a> <% } else { %> Resolved <% } %></td>
     <td><%= data[i].resolutionRemarks || "-" %></td>
     <td><a href = "<%= data[i].url %>/admin/deletecomplain/<%= data[i].complainId %>">Delete</a></td>
