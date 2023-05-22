@@ -55,9 +55,7 @@ exports.findAll = (req, res) => {
   Complain.find()
     .then((complains) => {
       for (let i = 0; i < complains.length; i++) {
-        if (!complains[i]._doc.createdAt) {
           complains[i]._doc.createdAt = complains[i]._id.getTimestamp();
-        }
       }
       res.send(complains);
     })
@@ -147,9 +145,7 @@ exports.findOne = (req, res) => {
         message: "complain already resolved",
       })
     }else{
-      if (!complain._doc.createdAt) {
         complain._doc.createdAt = complain._id.getTimestamp();
-      }
       res.send(complain);
     }
   })
