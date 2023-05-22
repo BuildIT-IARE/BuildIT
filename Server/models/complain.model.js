@@ -10,6 +10,9 @@ var complainSchema = new Schema({
   complainDesc: String,
   questionId: String,
   questionName: String,
+  createdAt: { type: Date, default: Date.now },
+  resolutionStatus: { type: Boolean, default: false },
+  resolutionRemarks: String,
 });
 
 module.exports = mongoose.model("Complain", complainSchema);
