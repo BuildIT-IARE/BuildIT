@@ -55,9 +55,7 @@ exports.findAll = (req, res) => {
   Complain.find()
     .then((complains) => {
       for (let i = 0; i < complains.length; i++) {
-        if (!complains[i]._doc.createdAt) {
           complains[i]._doc.createdAt = complains[i]._id.getTimestamp();
-        }
       }
       res.send(complains);
     })
@@ -97,9 +95,16 @@ exports.delete = (req, res) => {
 
 // update w/ questionId
 exports.update = (req, res) => {
+  if (req.body.resolutionStatus === "true") {
+    req.body.resolutionDate = Date.now();
+  }
+  else{
+    req.body.resolutionDate = null;
+  }
   Complain.findOneAndUpdate(
     { complainId: req.params.complainId },
     {
+      resolutionDate: req.body.resolutionDate,
       resolutionStatus: req.body.resolutionStatus,
       resolutionRemarks: req.body.resolutionRemarks,
     }
@@ -147,9 +152,7 @@ exports.findOne = (req, res) => {
         message: "complain already resolved",
       })
     }else{
-      if (!complain._doc.createdAt) {
         complain._doc.createdAt = complain._id.getTimestamp();
-      }
       res.send(complain);
     }
   })

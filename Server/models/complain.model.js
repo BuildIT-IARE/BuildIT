@@ -10,7 +10,7 @@ var complainSchema = new Schema({
   complainDesc: String,
   questionId: String,
   questionName: String,
-  createdAt: { type: Date, default: Date.now },
+  resolutionDate: { type: Date },
   resolutionStatus: { type: Boolean, default: false },
   resolutionRemarks: String,
 });
