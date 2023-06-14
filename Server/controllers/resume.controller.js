@@ -256,6 +256,7 @@ exports.create = (req, res) => {
           patents: patentsArray,
           products: productsArray,
           industrialDesigns: industrialDesignArray,
+          updatedAt: Date.now(),
         },
       },
       {
@@ -285,11 +286,19 @@ exports.findAll = (req, res) => {
             resumes[i].resumeId.slice(0, 2) == req.body.year &&
             resumes[i].resumeId.slice(6, 8) == req.body.branch
           ) {
+            if(resumes[i]._doc.updatedAt == undefined){
+              resumes[i]._doc.updatedAt = resumes[i]._id.getTimestamp();
+            }
             myArr.push(resumes[i]);
           }
         }
         res.send(myArr);
       } else {
+        for(var i = 0;i < resumes.length;i++){
+          if(resumes[i]._doc.updatedAt == undefined){
+            resumes[i]._doc.updatedAt = resumes[i]._id.getTimestamp();
+          }
+        }
         res.send(resumes);
       }
     })
@@ -306,6 +315,9 @@ exports.findOne = (req, res) => {
     resumeId: req.params.username,
   })
     .then((resume) => {
+      if (resume._doc.updatedAt == undefined) {
+        resume._doc.updatedAt = resume._id.getTimestamp();
+      }
       res.send({
         success: true,
         data: resume,
