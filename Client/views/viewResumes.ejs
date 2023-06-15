@@ -218,6 +218,7 @@
               <th>Branch</th>
               <th>View</th>
               <th>Delete</th>
+              <th>Last Update At</th>
             </tr>
           </thead>
           <tbody>
@@ -240,6 +241,7 @@
                   <a onclick="document.getElementById('resumedel').submit();">Delete Resume</a>
                 </form>
               </td>
+              <td><%= new Date(data[i].updatedAt).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric", hour: "numeric", minute: "numeric"}) %></td>
             </tr>
             <% } %> <% } %>
           </tbody>
@@ -252,6 +254,7 @@
               <th>Branch</th>
               <th>View</th>
               <th>Delete</th>
+              <th>Last Updated At</th>
             </tr>
           </tfoot>
         </table>
