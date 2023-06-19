@@ -69,11 +69,17 @@ exports.insertDifficultyWise = (sub, callback) => {
       participation = participation[0];
       // console.log(participation);
       // console.log(sub);
+      let date = new Date()
       if (sub.difficulty === "level_0") {
         if (sub.score === 100) {
           let exists = inarray(participation.easySolved, sub.questionId);
           if (!exists) {
             participation.easySolved.push(sub.questionId);
+            let exists1 = inarray(participation.easySolvedTimeWise, sub.questionId);
+            if(!exists1)
+            {
+              participation.easySolvedTimeWise.push([sub.questionId,new Date()]);
+            }
             participation.submissionResults.push(sub.questionId);
             participation.save();
           } else {
@@ -89,6 +95,11 @@ exports.insertDifficultyWise = (sub, callback) => {
           let exists = inarray(participation.mediumSolved, sub.questionId);
           if (!exists) {
             participation.mediumSolved.push(sub.questionId);
+            let exists1 = inarray(participation.mediumSolvedTimeWise, sub.questionId);
+            if(!exists1)
+            {
+              participation.mediumSolvedTimeWise.push([sub.questionId,new Date()]);
+            }
             participation.submissionResults.push(sub.questionId);
             participation.save();
           } else {
@@ -103,6 +114,11 @@ exports.insertDifficultyWise = (sub, callback) => {
           let exists = inarray(participation.hardSolved, sub.questionId);
           if (!exists) {
             participation.hardSolved.push(sub.questionId);
+            let exists1 = inarray(participation.hardSolvedTimeWise, sub.questionId);
+            if(!exists1)
+            {
+              participation.hardSolvedTimeWise.push([sub.questionId,new Date()]);
+            }
             participation.submissionResults.push(sub.questionId);
             participation.save();
           } else {
@@ -117,6 +133,11 @@ exports.insertDifficultyWise = (sub, callback) => {
           let exists = inarray(participation.contestSolved, sub.questionId);
           if (!exists) {
             participation.contestSolved.push(sub.questionId);
+            let exists1 = inarray(participation.contestSolvedTimeWise, sub.questionId);
+            if(!exists1)
+            {
+              participation.contestSolvedTimeWise.push([sub.questionId,new Date()]);
+            }
             participation.submissionResults.push(sub.questionId);
             participation.save();
           } else {
@@ -131,6 +152,11 @@ exports.insertDifficultyWise = (sub, callback) => {
           let exists = inarray(participation.contestSolved, sub.questionId);
           if (!exists) {
             participation.practiceSolved.push(sub.questionId);
+            let exists1 = inarray(participation.practiceSolvedTimeWise, sub.questionId);
+            if(!exists1)
+            {
+              participation.practiceSolvedTimeWise.push([sub.questionId,new Date()]);
+            }
             participation.submissionResults.push(sub.questionId);
             participation.save();
           } else {

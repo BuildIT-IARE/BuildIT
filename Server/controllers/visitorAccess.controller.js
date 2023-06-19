@@ -53,6 +53,29 @@ exports.findAll = async (req, res) => {
     });
 };
 
+exports.findOnePhone = async (req, res) => {
+  console.log(331233123);
+  Visitor.find({ phoneNumber: req.params.phoneNumber })
+    .then((visitors) => {
+      console.log(visitors, req.params.phoneNumber);
+      if (visitors.length > 0) {
+        res.send({
+          success: true,
+          data: visitors[0],
+        });
+      } else {
+        res.send({
+          success: false,
+        });
+      }
+    })
+    .catch((err) => {
+      res.send({
+        success: false,
+      });
+    });
+};
+
 exports.deleteVisitor = async (req, res) => {
   Visitor.deleteOne({ personId: req.params.personId })
     .then(() => {

@@ -19,15 +19,18 @@ exports.create = (req, res) => {
     .then((questions) => {
       var currQuestions = questions[0].CountValue + 1;
       req.body.questionId = "IARE" + currQuestions.toString();
-      Question.findOneAndUpdate({questionId:questions[0].questionId},{$set:{CountValue:currQuestions}})
-      .then()
-      .catch((err) => {
-        res.status(500).send({
-          success: false,
-          message:
-            err.message || "Some error occurred while retrieving questions.",
+      Question.findOneAndUpdate(
+        { questionId: questions[0].questionId },
+        { $set: { CountValue: currQuestions } }
+      )
+        .then()
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message || "Some error occurred while retrieving questions.",
+          });
         });
-      })
       // Create a Question
       const question = new Question({
         questionId: req.body.questionId,
@@ -257,22 +260,22 @@ exports.addSetGivenQIdArray = (req, res) => {
       Question.updateMany(
         { questionId: { $in: questionIds } },
         {
-          $set:{
-            contestId : req.body.contestId
-          }
+          $set: {
+            contestId: req.body.contestId,
+          },
         }
-        )
-      .then((questions) => {
-        let set = question.map((e) => e.questionId);
-        updateSet(set);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          success: false,
-          message:
-            err.message || "Some error occurred while retrieving questions.",
+      )
+        .then((questions) => {
+          let set = question.map((e) => e.questionId);
+          updateSet(set);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message || "Some error occurred while retrieving questions.",
+          });
         });
-      })
     })
     .catch((err) => {
       res.status(500).send({
@@ -302,6 +305,7 @@ exports.addSetGivenQIdArray = (req, res) => {
 };
 
 exports.createTutorials = (req, res) => {
+  console.log(req.body);
   // Validate request
   if (!req.body.questionName) {
     return res.status(400).send({
@@ -354,7 +358,7 @@ exports.createTutorials = (req, res) => {
         questionExplanation: req.body.questionExplanation,
         company: companies,
         topic: topics,
-        difficulty: isTopicBased ? "topics" : req.body.level,
+        difficulty: isTopicBased ? "topics" : req.body.difficulty,
         author: isTopicBased ? "" : req.body.author,
         editorial: isTopicBased ? "" : req.body.editorial,
         language: isTopicBased ? "" : req.body.language,
@@ -422,7 +426,9 @@ exports.createTutorialsExcel = (req, res) => {
               }
 
               question = new Question({
-                questionId: data[i].contentDevId? data[i].contentDevId: ("IARE" + (currQuestions + (i + 1)).toString()),
+                questionId: data[i].contentDevId
+                  ? data[i].contentDevId
+                  : "IARE" + (currQuestions + (i + 1)).toString(),
                 questionName: data[i].questionName,
                 contestId: data[i].contestId,
                 questionDescriptionText: data[i].questionDescriptionText,
@@ -604,7 +610,7 @@ exports.update = (req, res) => {
   ];
   qid = qid.slice(0, 3);
   userSlice = username.slice(7);
-  userSlice = userSlice.toUpperCase()
+  userSlice = userSlice.toUpperCase();
   if (req.decoded.admin) {
     qid = "admin";
     username = "admin";
@@ -701,10 +707,10 @@ exports.delete = (req, res) => {
 // Delete questions with the specified questionIds in the request
 exports.deleteMultiple = (req, res) => {
   questionIds = req.params.questionIds
-  .split(",")
-  .filter((item) => !item.includes("-"))
-  .map((item) => item.trim());
-  Question.deleteMany({ questionId: {$in: questionIds }})
+    .split(",")
+    .filter((item) => !item.includes("-"))
+    .map((item) => item.trim());
+  Question.deleteMany({ questionId: { $in: questionIds } })
     .then((question) => {
       if (!question) {
         return res.status(404).send({
@@ -758,7 +764,10 @@ exports.findAllContest = async (req, res) => {
           questionIds,
           async (err, participation) => {
             if (err) {
-              return res.send({ success: false, message: err || "Error occured" });
+              return res.send({
+                success: false,
+                message: err || "Error occured",
+              });
             }
             let result = await findSet(questionIds);
             return result;
@@ -876,7 +885,7 @@ exports.findAllCourseDifficulty = (req, res) => {
 };
 
 exports.findAllCourseTopicWise = (req, res) => {
-  let param = req.params.title === "Topics" ? "topic": "company";
+  let param = req.params.title === "Topics" ? "topic" : "company";
   Question.find({
     courseId: req.params.courseId,
     [param]: req.params.name,

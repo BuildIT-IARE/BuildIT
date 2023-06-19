@@ -30,7 +30,7 @@ exports.create = (req, res) => {
         { emailId: emails.emailId },
         {
           $set: {
-            countValue: emails.countValue + 1,
+            CountValue: emails.CountValue + 1,
           },
         },
         { new: true }
@@ -40,11 +40,11 @@ exports.create = (req, res) => {
           return res.status(500).send({
             success: false,
             message:
-              err.message || "First Reference emailSession missing(countValue)",
+              err.message || "First Reference emailSession missing(CountValue)",
           });
         });
       const email = new Email({
-        emailId: "IARE_ES" + emails.countValue + 1,
+        emailId: "IARE_ES" + emails.CountValue + 1,
         emailName: req.body.emailName,
         emailDate: req.body.emailDate,
         emailFaculty: req.body.emailFaculty,

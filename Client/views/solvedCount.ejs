@@ -20,21 +20,27 @@
         <thead>
           <tr>
             <th>Username</th>
-            <th>Questions Solved</th>
+            <th>Tutorial Questions Solved</th>
+            <th>Contest Questions Solved</th>
+            <th>Total Questions Solved</th>
           </tr>
         </thead>
         <tbody>
-          <% for ( const user in solved){ %>
+          <% for ( const user in solvedContest){ %>
           <tr>
             <td><%= user %></td>
-            <td><%= solved[user] %></td>
+            <td><%= solvedContest[user] %></td>
+            <td><%= solvedTutorial[user] %></td>
+            <td><%= solvedTutorial[user]+solvedContest[user] %></td>
           </tr>
           <% } %>
         </tbody>
         <tfoot>
           <tr>
             <th>Username</th>
-            <th>Questions Solved</th>
+            <th>Tutorial Questions Solved</th>
+            <th>Contest Questions Solved</th>
+            <th>Total Questions Solved</th>
           </tr>
         </tfoot>
       </table>

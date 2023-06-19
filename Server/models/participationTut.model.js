@@ -10,10 +10,15 @@ var participationTutSchema = new Schema({
   courseId: String,
   submissionResults: Array,
   easySolved: Array,
+  easySolvedTimeWise : Array,
   mediumSolved: Array,
+  mediumSolvedTimeWise : Array,
   hardSolved: Array,
+  hardSolvedTimeWise : Array,
   contestSolved: Array,
+  contestSolvedTimeWise : Array,
   practiceSolved: Array,
+  practiceSolvedTimeWise : Array,
 });
 
 module.exports = mongoose.model(

@@ -1406,9 +1406,46 @@ app.get("/admin/deleteuser/:username", async (req, res) => {
   });
 });
 
-app.get("/admin/deletecomplain/:questionId", async (req, res) => {
+app.get("/admin/resolveComplain/:complainId", async (req, res) => {
   let options = {
-    url: serverRoute + "/complains/" + req.params.questionId,
+    url: serverRoute + "/complains/" + req.params.complainId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    if (response.statusCode == 200) {
+      body.url = clientRoute;
+      body.serverurl = serverRoute;
+      res.render("complainResolve", { data: body });
+    }
+    else{
+      body.message = "Complain Already Resolved!"
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.post("/admin/resolveComplain/:complainId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/complains/" + req.params.complainId,
+    method: "put",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: req.body,
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.redirect("/admin/complaints")
+  });
+});
+
+app.get("/admin/deletecomplain/:complainId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/complains/" + req.params.complainId,
     method: "delete",
     headers: {
       authorization: req.cookies.token,
@@ -1588,10 +1625,21 @@ app.get("/admin/solved", async (req, res) => {
     };
     res.render("solvedCount", {
       data: url,
-      solved: body,
+      solvedContest: body.userCollectionContests,
+      solvedTutorial: body.userCollectionTutorials,
     });
   });
 });
+
+function colorCheck(n) {
+  if (n <= 12) {
+    return "rgb(236,94,79)";
+  } else if (n <= 30) {
+    return "rgb(246,189,65)";
+  } else {
+    return "rgb(72,195,118)";
+  }
+}
 
 app.post("/admin/resultsTut/course", async (req, res) => {
   let options = {
@@ -1621,7 +1669,7 @@ app.post("/admin/resultsTut/course", async (req, res) => {
       let eCount = 0;
       let mCount = 0;
       let hCount = 0;
-      let cCount = 0;
+      let pCount = 0;
       for (let i = 0; i < body1.length; i++) {
         if (body1[i].difficulty === "level_0") {
           eCount++;
@@ -1629,8 +1677,11 @@ app.post("/admin/resultsTut/course", async (req, res) => {
           mCount++;
         } else if (body1[i].difficulty === "level_2") {
           hCount++;
-        } else if (body1[i].difficulty === "contest") {
-          cCount++;
+        } else if (
+          body1[i].difficulty === "topics" ||
+          body1[i].difficulty === "companies"
+        ) {
+          pCount++;
         }
       }
       let j = 0;
@@ -1642,21 +1693,33 @@ app.post("/admin/resultsTut/course", async (req, res) => {
         totalSolEasy = bodytimer[j].easySolved.length;
         totalSolMedium = bodytimer[j].mediumSolved.length;
         totalSolHard = bodytimer[j].hardSolved.length;
-        totalSolContest = bodytimer[j].contestSolved.length;
+        totalSolPractice = bodytimer[j].practiceSolved.length;
         bodytimer[j].easyPercentage = Math.ceil((totalSolEasy / eCount) * 100);
         bodytimer[j].mediumPercentage = Math.ceil(
           (totalSolMedium / mCount) * 100
         );
         bodytimer[j].hardPercentage = Math.ceil((totalSolHard / hCount) * 100);
-        bodytimer[j].contestPercentage = Math.ceil(
-          (totalSolContest / cCount) * 100
+        bodytimer[j].practicePercentage = Math.ceil(
+          (totalSolPractice / pCount) * 100
+        );
+        bodytimer[j].easyColor = colorCheck(bodytimer[j].easyPercentage);
+        bodytimer[j].mediumColor = colorCheck(bodytimer[j].mediumPercentage);
+        bodytimer[j].hardColor = colorCheck(bodytimer[j].hardPercentage);
+        bodytimer[j].practiceColor = colorCheck(
+          bodytimer[j].practicePercentage
         );
         bodytimer[j].clientRoute = clientRoute;
         bodytimer[j].serverRoute = serverRoute;
         j = j + 1;
       }
-
-      res.render("results1", { datac: course, data: bodytimer });
+      res.render("results1", {
+        datac: course,
+        data: bodytimer,
+        eCount: eCount,
+        mCount: mCount,
+        hCount: hCount,
+        pCount: pCount,
+      });
     });
   });
 });
@@ -3065,7 +3128,7 @@ app.post("/resume/:username", async (req, res) => {
         } else if (branch == "03") {
           body[i].branch = "ME";
         } else if (branch == "21") {
-          body[i].branch = "CSE";
+          body[i].branch = "AERO";
         } else if (branch == "66") {
           body[i].branch = "CSE AIML";
         } else if (branch == "67") {
@@ -3402,7 +3465,11 @@ app.get(
         let options = {
           url:
             serverRoute +
-            "/emailSubmissions/" +req.params.emailId+req.params.emailQuestionId+"/"+req.cookies.username.toUpperCase(),
+            "/emailSubmissions/" +
+            req.params.emailId +
+            req.params.emailQuestionId +
+            "/" +
+            req.cookies.username.toUpperCase(),
           method: "get",
           headers: {
             authorization: req.cookies.token,
@@ -3762,6 +3829,26 @@ app.get(
 );
 
 app.get("/visitorPass", async (req, res) => {
+  res.render("phonePassCheck", { clientUrl: clientRoute });
+});
+
+app.post("/checkPhone", async (req, res) => {
+  let options = {
+    url: serverRoute + "/findOneVisitor/" + req.body.Phone,
+    method: "get",
+    json: true,
+  };
+  request(options, (err, response, body) => {
+    console.log(body);
+    if (body.success) {
+      res.redirect(307, "/visitorOTP");
+    } else {
+      res.redirect("/visitorPass/newEntry");
+    }
+  });
+});
+
+app.get("/visitorPass/newEntry", async (req, res) => {
   res.render("gatePassForm", { clientUrl: clientRoute });
 });
 

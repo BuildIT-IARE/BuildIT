@@ -787,7 +787,8 @@ var crystalSource = 'puts "hello, world"\n';
 
 var elixirSource = 'IO.puts "hello, world"\n';
 
-var erlangSource = '\
+var erlangSource =
+  '\
 main(_) ->\n\
     io:fwrite("hello, world\\n").\n';
 
@@ -803,7 +804,8 @@ func main() {\n\
 
 var haskellSource = 'main = putStrLn "hello, world"\n';
 
-var insectSource = "\
+var insectSource =
+  "\
 2 min + 30 s\n\
 40 kg * 9.8 m/s^2 * 150 cm\n\
 sin(30°)\n";
@@ -833,7 +835,8 @@ var pythonSource = "#Code goes here!\n";
 
 var rubySource = 'puts "hello, world"\n';
 
-var rustSource = '\
+var rustSource =
+  '\
 fn main() {\n\
     println!("hello, world");\n\
 }\n';
@@ -867,6 +870,7 @@ function getSubmission() {
   let windowUrl = window.location.href;
   let username = getCookie("username");
   let questionId = windowUrl.slice(serverUrl.length + 5, windowUrl.length);
+  courseId = getCookie("courseId");
   $.ajax({
     url:
       serverUrl +
@@ -882,16 +886,29 @@ function getSubmission() {
     },
     success: function (data) {
       if (data.length > 0) {
-        var a = data.length - 1;
-        currentLanguageId = parseInt(data[a].languageId);
-        sources[currentLanguageId] = data[a].sourceCode;
-        insertUserCode(data[a].languageId);
+        var requiredLanguageId = course_language[courseId];
+
+        for (let i = data.length-1; i >= 0; i--) {
+          currentLanguageId = parseInt(data[i].languageId);
+          sources[currentLanguageId] = data[i].sourceCode;
+          if(currentLanguageId === requiredLanguageId){
+            insertUserCode(requiredLanguageId);
+            break;
+          }
+        }
       }
     },
   });
 }
 
 getSubmission();
+
+var course_language = {
+  "IARE_C": 4,
+  "IARE_CPP": 10,
+  "IARE_JAVA": 26,
+  "IARE_PY": 34,
+}
 
 var sources = {
   1: bashSource,

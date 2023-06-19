@@ -1,82 +1,1263 @@
 <!DOCTYPE html>
 <html>
 <title>Submissions Table</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../css/navadmin.css">
-<link rel="stylesheet" href="../css/w3.css">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="../css/navadmin.css" />
+<link rel="stylesheet" href="../css/w3.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+  rel="stylesheet" />
+<link
+  href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+  rel="stylesheet" />
+
 <head>
-    <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+  <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+  <style>
+    html {
+      background: rgb(245, 247, 251);
+    }
+
+    body {
+      background: rgb(245, 247, 251);
+    }
+
+    #myTable {
+      font-family: poppins;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #myTable td,
+    #myTable th {
+      padding: 8px;
+      border-bottom: 0.35mm solid rgba(0, 0, 0, 0.075);
+    }
+
+    #myTable tr:hover {
+      background-color: #ddd;
+    }
+
+    #myTable th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: center;
+      background-color: white;
+      color: rgb(157, 157, 157);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      width: fit-content;
+      white-space: nowrap;
+    }
+
+    th span {
+      font-size: small !important;
+      margin-left: 3px;
+    }
+
+    .tables {
+      width: 100%;
+    }
+
+    .tableit {
+      position: relative;
+      width: 96%;
+      margin: auto;
+      display: block;
+      background: white;
+      box-sizing: border-box;
+      padding: 22px;
+      border-radius: 2mm;
+      overflow: auto;
+      max-height: 95vh;
+      box-shadow: rgba(0, 0, 0, 0.071) 0px 1px 3px 0px,
+        rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;
+    }
+
+    h2 {
+      font-family: "major mono display";
+      color: black;
+    }
+
+    .bar {
+      display: block;
+      height: 6px;
+      border-radius: 4mm;
+      max-width: 60px;
+      position: relative;
+      width: 60px;
+      margin-left: 10px;
+    }
+
+    .bar-front {
+      position: absolute;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 6px;
+      border-radius: 4mm;
+      z-index: 1;
+    }
+
+    .bar-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 6px;
+      border-radius: 4mm;
+      background: rgb(228, 228, 228);
+      z-index: 0;
+    }
+
+    .wrap {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .wrap-text {
+      min-width: 40px;
+      width: 40px;
+      text-align: right;
+    }
+
+    .percent {
+      display: block;
+      position: absolute;
+      right: 0;
+      top: -15px;
+      font-size: 11px;
+    }
+
+    .tableit button {
+      background: none;
+      outline: none;
+      border: none;
+      width: fit-content;
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      left: 5px;
+    }
+
+    .tableit button span {
+      color: black;
+      font-size: 18px;
+    }
+
+    .controls {
+      width: 96%;
+      margin: auto;
+      background: white;
+      box-shadow: rgba(0, 0, 0, 0.071) 0px 1px 3px 0px,
+        rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-radius: 2mm;
+      margin-bottom: 25px;
+      padding: 15px 20px;
+      box-sizing: border-box;
+      overflow-x: auto;
+    }
+
+    .left-controls {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .right-controls {
+      padding-left: 60px;
+      display: flex;
+      align-items: flex-end;
+      height: 100%;
+    }
+
+    .date {
+      width: fit-content;
+      margin-right: 15px;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+    }
+
+    .date .label {
+      font-family: poppins;
+      font-size: small;
+      font-weight: 600;
+      color: rgb(66, 139, 236);
+      margin-bottom: 5px;
+    }
+
+    .date input,
+    .date select {
+      font-family: poppins;
+      font-size: 14px;
+      outline: none;
+      background: rgb(235, 235, 235);
+      border: none;
+      border-radius: 2mm;
+    }
+
+    .date select {
+      height: 33px;
+      padding: 0 10px;
+    }
+
+    .sub1 {
+      font-family: poppins;
+      font-size: medium;
+      background: rgb(14, 104, 222);
+      color: white;
+      border: none;
+      outline: none;
+      border-radius: 1mm;
+      padding: 7px 12px;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px,
+        rgba(0, 0, 0, 0.1) 0px 7px 13px -3px,
+        rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+      white-space: nowrap;
+    }
+
+    .sub1:hover {
+      background: rgb(52, 113, 192);
+    }
+
+    .sub2 {
+      font-family: poppins;
+      font-size: medium;
+      background: rgb(75, 75, 75);
+      color: white;
+      border: none;
+      outline: none;
+      border-radius: 1mm;
+      padding: 7px 12px;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px,
+        rgba(0, 0, 0, 0.1) 0px 7px 13px -3px,
+        rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+
+    .sub2 span {
+      font-size: medium;
+    }
+
+    .sub2:hover {
+      background: rgb(43, 43, 43);
+    }
+
+    #chartdiv,
+    #chartdiv2 {
+      width: 100%;
+      height: 500px;
+    }
+
+    .chart-title {
+      width: 96%;
+      margin: auto;
+      font-family: poppins;
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: underline;
+    }
+  </style>
+  </style>
 </head>
 
-
 <body>
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
   <%- include ("../views/partials/adminpanel") -%>
-      <br><br><br><br><br>
-    <div class="w3-container" style="background: white;">
-  <h2 style="text-align: center">Course Id - <%= datac.course %> </h2>
-  <button onclick="exportTableToCSV('results.csv')">Download Results</button>
-  <br><hr>
-  <table class="w3-table w3-striped">
-    <tr>
-        <th>Username</th>
-        <th>Level 0</th>
-        <th>Level 1</th>
-        <th>Level 2</th>
-        <th>Contest</th>
-    </tr>
-    <% for(let i=0; i < data.length; i++){ %>
-        <tr>
-            <td><%= data[i].username %></td>
-            <td><%= data[i].easyPercentage %>%</td>
-            <td><%= data[i].mediumPercentage %>%</td>
-            <td><%= data[i].hardPercentage %>%</td>
-            <td><%= data[i].contestPercentage %>%</td>
-        </tr>
-    <% } %>
-    </table>
-  <br>
-  <br>
-</div>
-<script src="/adminjs/classie.js"></script>
-<script src="/adminjs/gnmenu.js"></script>
-<script>
-  new gnMenu( document.getElementById( 'gn-menu' ) );
-</script>
-<script>
-  function downloadCSV(csv, filename) {
-  var csvFile;
-  var downloadLink;
+    <br /><br /><br /><br /><br />
+    <div class="tables">
+      <h2 style="text-align: center">Course Id - <%= datac.course %>
+      </h2>
+      <br />
+      <hr />
 
-  csvFile = new Blob([csv], {type: "text/csv"});
+      <div class="controls">
+        <div class="left-controls">
+          <div class="date">
+            <span class="label">Start Date</span>
+            <input type="date" name="startDate" id="sd" />
+          </div>
+          <div class="date">
+            <span class="label">End Date</span>
+            <input type="date" name="endDate" id="ed" />
+          </div>
+          <div class="date">
+            <span class="label">Branch</span>
+            <select name="branch" id="branch">
+              <option value="">ALL</option>
+              <option value="05">CSE</option>
+              <option value="66">CSE-AIML</option>
+              <option value="62">CSE-CS</option>
+              <option value="67">CSE-DS</option>
+              <option value="33">CSE-IT</option>
+              <option value="04">ECE</option>
+              <option value="12">IT</option>
+              <option value="03">MECH</option>
+              <option value="02">EEE</option>
+              <option value="21">AERO</option>
+              <option value="01">CIVIL</option>
+            </select>
+          </div>
+          <div class="date">
+            <span class="label">Year</span>
+            <input type="number" name="year" id="year" placeholder="Ex 19" style="width: 60px" min="1" max="99" />
+          </div>
+          <div class="date">
+            <span class="label" style="text-decoration: none; margin-top: 15px;">Level</span>
+            <select name="level" id="level" style="text-decoration: none;">
+              <option value="" style="text-decoration: none;">ALL</option>
+              <option value="0" style="text-decoration: none;">Level_0</option>
+              <option value="1" style="text-decoration: none;">Level_1</option>
+              <option value="2" style="text-decoration: none;">Level_2</option>
+              <option value="3" style="text-decoration: none;">Practice</option>
+            </select>
+          </div>
+          <button type="button" class="sub1" onclick="asign()">View Results</button>
+        </div>
+        <div class="right-controls">
+          <button onclick="exportTableToCSV('results.csv')" title="download CSV" type="button" class="sub2">
+            Download Excel
+            <span class="material-icons"> download </span>
+          </button>
+        </div>
+      </div>
 
-  downloadLink = document.createElement("a");
+      <div class="tableit">
+        <button onclick="exportTableToCSV('results.csv')" title="download CSV">
+          <span class="material-icons"> download </span>
+        </button>
+        <table id="myTable">
+          <tr>
+            <th onclick="sortTable(0)">
+              Username<span class="material-icons-outlined sicon"> sort </span>
+            </th>
+            <th onclick="sortTable(1)">
+              Level 0 (<%= eCount %>)<span class="material-icons-outlined sicon">
+                  sort
+                </span>
+            </th>
+            <th onclick="sortTable(2)">
+              Level 1 (<%= mCount %>)<span class="material-icons-outlined sicon">
+                  sort
+                </span>
+            </th>
+            <th onclick="sortTable(3)">
+              Level 2 (<%= hCount %>)<span class="material-icons-outlined sicon">
+                  sort
+                </span>
+            </th>
+            <th onclick="sortTable(4)">
+              Practice (<%= pCount %>)<span class="material-icons-outlined sicon">
+                  sort
+                </span>
+            </th>
+          </tr>
+          <tbody id="tabody">
+            <% for(let i=0; i < data.length; i++){ %>
+              <tr>
+                <td class="tname">
+                  <%= data[i].username %>
+                </td>
+                <td class="flex">
+                  <span class="wrap">
+                    <span class="wrap-text">
+                      <%= data[i].easySolved.length %>
+                    </span>
+                    <span class="bar">
+                      <span class="bar-front" style="
+                      width: calc(60px * <%= data[i].easyPercentage %> / 100);
+                      background: <%= data[i].easyColor %>;
+                    "></span>
+                      <span class="bar-back"></span><span class="percent">
+                        <%= data[i].easyPercentage %>%
+                      </span>
+                    </span>
+                  </span>
+                </td>
+                <td>
+                  <span class="wrap">
+                    <span class="wrap-text">
+                      <%= data[i].mediumSolved.length %>
+                    </span>
+                    <span class="bar"><span class="bar-front" style="
+                      width: calc(60px * <%= data[i].mediumPercentage %> / 100);
+                      background: <%= data[i].mediumColor %>;
+                    "></span><span class="bar-back"></span>
+                      <span class="percent">
+                        <%= data[i].mediumPercentage %>%
+                      </span>
+                    </span>
+                  </span>
+                </td>
+                <td>
+                  <span class="wrap">
+                    <span class="wrap-text">
+                      <%= data[i].hardSolved.length %>
+                    </span>
+                    <span class="bar"><span class="bar-front" style="
+                      width: calc(60px * <%= data[i].hardPercentage %> / 100);
+                      background: <%= data[i].hardColor %>;
+                    "></span><span class="bar-back"></span>
+                      <span class="percent">
+                        <%= data[i].hardPercentage %>%
+                      </span>
+                    </span></span>
+                </td>
+                <td>
+                  <span class="wrap">
+                    <span class="wrap-text">
+                      <%= data[i].practiceSolved.length %>
+                    </span>
+                    <span class="bar"><span class="bar-front" style="
+                      width: calc(
+                        60px * <%= data[i].practicePercentage %> / 100
+                      );
+                      background: <%= data[i].practiceColor %>;
+                    "></span><span class="bar-back"></span>
+                      <span class="percent">
+                        <%= data[i].practicePercentage %>%
+                      </span>
+                    </span></span>
+                </td>
+              </tr>
+              <% } %>
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <br />
+      <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+      <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+      <div class="charts">
+        <div class="chart-title" id="ct1">
+          Problems Solved data
+        </div>
+        <div id="chartdiv">
+        </div>
+        <br>
+        <hr>
+        <div class="chart-title" id="ct2">
+        </div>
+        <div id="chartdiv2">
+        </div>
 
-  downloadLink.download = filename;
+        <script>
+          var body = '<%- JSON.stringify(data) %>';
+          body = JSON.parse(body)
+          var tabody = document.getElementById("tabody")
+          var bgdata = {}
+          bgdata["05"] = [0, 0, 0, 0]
+          bgdata["01"] = [0, 0, 0, 0]
+          bgdata["02"] = [0, 0, 0, 0]
+          bgdata["03"] = [0, 0, 0, 0]
+          bgdata["04"] = [0, 0, 0, 0]
+          bgdata["12"] = [0, 0, 0, 0]
+          bgdata["21"] = [0, 0, 0, 0]
+          bgdata["66"] = [0, 0, 0, 0]
+          bgdata["67"] = [0, 0, 0, 0]
+          bgdata["62"] = [0, 0, 0, 0]
+          bgdata["33"] = [0, 0, 0, 0]
+          var pbdata = []
+          body.forEach((item) => {
+            let cbranch = item.username
+            cbranch = cbranch.slice(6, 8)
+            a = item.easySolved.length
+            b = item.mediumSolved.length
+            c = item.hardSolved.length
+            d = item.practiceSolved.length
+            if (bgdata[cbranch]) {
+              bgdata[cbranch][0] += a
+              bgdata[cbranch][1] += b
+              bgdata[cbranch][2] += c
+              bgdata[cbranch][3] += d
+            }
+            else {
+              bgdata[cbranch] = [a, b, c, d]
+            }
+          })
+          function asign() {
+            bgdata["05"] = [0, 0, 0, 0]
+            bgdata["01"] = [0, 0, 0, 0]
+            bgdata["02"] = [0, 0, 0, 0]
+            bgdata["03"] = [0, 0, 0, 0]
+            bgdata["04"] = [0, 0, 0, 0]
+            bgdata["12"] = [0, 0, 0, 0]
+            bgdata["21"] = [0, 0, 0, 0]
+            bgdata["66"] = [0, 0, 0, 0]
+            bgdata["67"] = [0, 0, 0, 0]
+            bgdata["62"] = [0, 0, 0, 0]
+            bgdata["33"] = [0, 0, 0, 0]
+            pbdata = {}
+            let sdm = document.getElementById("sd").value
+            let edm = document.getElementById("ed").value
+            let csdm = Date.parse(sdm)
+            let cedm = Date.parse(edm)
+            document.getElementById("ct1").innerHTML = "Problems Solved data (From " + sdm + " To " + edm + ")"
+            if (sdm && edm && csdm <= cedm) {
+              tabody.innerHTML = ""
+              body.forEach((item) => {
+                let easy = 0
+                let medium = 0
+                let hard = 0
+                let practice = 0
+                let branch = document.getElementById("branch").value
+                let cbranch = item.username
+                let croll = cbranch.slice(0, 2)
+                let roll = document.getElementById("year").value
+                cbranch = cbranch.slice(6, 8)
+                let pbeasy = {}
+                let pbmedium = {}
+                let pbhard = {}
+                let pbpractice = {}
+                item.easySolvedTimeWise.forEach((value) => {
+                  let exd = new Date(value[1])
+                  let mon = Number(exd.getMonth() + 1)
+                  mon = mon.toString()
+                  if (mon.length == 1) {
+                    mon = "0" + mon
+                  }
+                  cd = exd.getFullYear() + "-" + mon + "-" + exd.getDate()
+                  let pdexd = cd
+                  cd = Date.parse(cd)
+                  sd = Date.parse(sdm)
+                  ed = Date.parse(edm)
+                  if (sd <= cd && ed >= cd) {
+                    easy += 1
+                  }
+                  if (pbeasy[pdexd]) {
+                    pbeasy[pdexd] += 1
+                  }
+                  else {
+                    pbeasy[pdexd] = 1
+                  }
+                })
+                item.mediumSolvedTimeWise.forEach((value) => {
+                  let exd = new Date(value[1])
+                  let mon = Number(exd.getMonth() + 1)
+                  mon = mon.toString()
+                  if (mon.length == 1) {
+                    mon = "0" + mon
+                  }
+                  cd = exd.getFullYear() + "-" + mon + "-" + exd.getDate()
+                  let pdexd = cd
+                  cd = Date.parse(cd)
+                  sd = Date.parse(sdm)
+                  ed = Date.parse(edm)
+                  if (sd <= cd && ed >= cd) {
+                    medium += 1
+                  }
+                  if (pbmedium[pdexd]) {
+                    pbmedium[pdexd] += 1
+                  }
+                  else {
+                    pbmedium[pdexd] = 1
+                  }
+                })
+                item.hardSolvedTimeWise.forEach((value) => {
+                  let exd = new Date(value[1])
+                  let mon = Number(exd.getMonth() + 1)
+                  mon = mon.toString()
+                  if (mon.length == 1) {
+                    mon = "0" + mon
+                  }
+                  cd = exd.getFullYear() + "-" + mon + "-" + exd.getDate()
+                  let pdexd = cd
+                  cd = Date.parse(cd)
+                  sd = Date.parse(sdm)
+                  ed = Date.parse(edm)
+                  if (sd <= cd && ed >= cd) {
+                    hard += 1
+                  }
+                  if (pbhard[pdexd]) {
+                    pbhard[pdexd] += 1
+                  }
+                  else {
+                    pbhard[pdexd] = 1
+                  }
+                })
+                item.practiceSolvedTimeWise.forEach((value) => {
+                  let exd = new Date(value[1])
+                  let mon = Number(exd.getMonth() + 1)
+                  mon = mon.toString()
+                  if (mon.length == 1) {
+                    mon = "0" + mon
+                  }
+                  cd = exd.getFullYear() + "-" + mon + "-" + exd.getDate()
+                  let pdexd = cd
+                  cd = Date.parse(cd)
+                  sd = Date.parse(sdm)
+                  ed = Date.parse(edm)
+                  if (sd <= cd && ed >= cd) {
+                    practice += 1
+                  }
+                  if (pbpractice[pdexd]) {
+                    pbpractice[pdexd] += 1
+                  }
+                  else {
+                    pbpractice[pdexd] = 1
+                  }
+                })
 
-  downloadLink.href = window.URL.createObjectURL(csvFile);
+                if ((branch == "" || cbranch == branch) && (roll == "" || roll == croll)) {
+                  let htmldata = '<tr><td>' + item.username + '</td><td>' + easy + '</td><td>' + medium + '</td><td>' + hard + '</td><td>' + practice + '</td></tr>'
+                  tabody.insertAdjacentHTML("beforeend", htmldata)
+                }
+                if (roll == "" || roll == croll) {
+                  if (bgdata[cbranch]) {
+                    bgdata[cbranch][0] += easy
+                    bgdata[cbranch][1] += medium
+                    bgdata[cbranch][2] += hard
+                    bgdata[cbranch][3] += practice
+                  }
+                  else {
+                    bgdata[cbranch] = [easy, medium, hard, practice]
+                  }
+                }
+                if (cbranch == branch && (roll == "" || roll == croll)) {
+                  let brval = document.getElementById("branch")
+                  brval = brval.options[brval.selectedIndex].text
+                  document.getElementById("ct2").innerHTML = brval+" branch solved data (From " + sdm + " To " + edm + ")"
+                  let level = document.getElementById("level").value
+                  if (level == "") {
+                    for (var i in pbeasy) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbeasy[i]
+                      }
+                      else {
+                        pbdata[i] = pbeasy[i]
+                      }
+                    }
+                    for (var i in pbmedium) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbmedium[i]
+                      }
+                      else {
+                        pbdata[i] = pbmedium[i]
+                      }
+                    }
+                    for (var i in pbhard) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbhard[i]
+                      }
+                      else {
+                        pbdata[i] = pbhard[i]
+                      }
+                    }
+                    for (var i in pbpractice) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbpractice[i]
+                      }
+                      else {
+                        pbdata[i] = pbpractice[i]
+                      }
+                    }
+                  }
+                  else if (level == 0 || level == "0") {
+                    for (var i in pbeasy) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbeasy[i]
+                      }
+                      else {
+                        pbdata[i] = pbeasy[i]
+                      }
+                    }
+                  }
+                  else if (level == 1 || level == "1") {
+                    for (var i in pbmedium) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbmedium[i]
+                      }
+                      else {
+                        pbdata[i] = pbmedium[i]
+                      }
+                    }
+                  }
+                  else if (level == 2 || level == "2") {
+                    for (var i in pbhard) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbhard[i]
+                      }
+                      else {
+                        pbdata[i] = pbhard[i]
+                      }
+                    }
+                  }
+                  else if (level == 3 || level == "3") {
+                    for (var i in pbpractice) {
+                      if (i in pbdata) {
+                        pbdata[i] += pbpractice[i]
+                      }
+                      else {
+                        pbdata[i] = pbpractice[i]
+                      }
+                    }
+                  }
+                }
+              })
+              document.getElementById("gbtn1").click()
+              document.getElementById("gbtn2").click()
+              
+            }
+            else {
+              alert("Check the dates properly")
+            }
+          }
+        </script>
+        <!---------Graph 1 Script--------->
+        <button type="button" id="gbtn1" style="display: none;">gbtn1</button>
+        <button type="button" id="gbtn2" style="display: none;">gbtn2</button>
+        <script>
+          am5.ready(function () {
 
-  downloadLink.style.display = "none";
+            // Create root element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            var root = am5.Root.new("chartdiv");
 
-  document.body.appendChild(downloadLink);
 
-  downloadLink.click();
-}
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root.setThemes([
+              am5themes_Animated.new(root)
+            ]);
 
-function exportTableToCSV(filename) {
-  var csv = [];
-  var rows = document.querySelectorAll("table tr");
-  
-  for (var i = 0; i < rows.length; i++) {
-      var row = [], cols = rows[i].querySelectorAll("td, th");
-      
-      for (var j = 0; j < cols.length; j++) 
-          row.push(cols[j].innerText);
-      
-      csv.push(row.join(","));        
-  }
 
-  downloadCSV(csv.join("\n"), filename);
-}
-  </script>
+            // Create chart
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/
+            var chart = root.container.children.push(am5xy.XYChart.new(root, {
+              panX: true,
+              panY: true,
+              wheelX: "panX",
+              wheelY: "zoomY",
+              layout: root.verticalLayout
+            }));
+
+            chart.get("colors").set("colors", [
+              am5.color(0x48c376),
+              am5.color(0xf6bd41),
+              am5.color(0xec5e4f),
+              am5.color(0x428bec)
+            ]);
+
+            // Add scrollbar
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
+            chart.set("scrollbarX", am5.Scrollbar.new(root, {
+              orientation: "horizontal"
+            }));
+            var series
+            var xAxis
+            var data = [{
+              "year": "CSE",
+              "Level_0": bgdata["05"][0],
+              "Level_1": bgdata["05"][1],
+              "Level_2": bgdata["05"][2],
+              "Practice": bgdata["05"][3],
+            }, {
+              "year": "CSE_AIML",
+              "Level_0": bgdata["66"][0],
+              "Level_1": bgdata["66"][1],
+              "Level_2": bgdata["66"][2],
+              "Practice": bgdata["66"][3],
+            }, {
+              "year": "CSE_CS",
+              "Level_0": bgdata["62"][0],
+              "Level_1": bgdata["62"][1],
+              "Level_2": bgdata["62"][2],
+              "Practice": bgdata["62"][3],
+            }, {
+              "year": "CSE_IT",
+              "Level_0": bgdata["33"][0],
+              "Level_1": bgdata["33"][1],
+              "Level_2": bgdata["33"][2],
+              "Practice": bgdata["33"][3],
+            }, {
+              "year": "CSE_DS",
+              "Level_0": bgdata["67"][0],
+              "Level_1": bgdata["67"][1],
+              "Level_2": bgdata["67"][2],
+              "Practice": bgdata["67"][3],
+            }, {
+              "year": "ECE",
+              "Level_0": bgdata["04"][0],
+              "Level_1": bgdata["04"][1],
+              "Level_2": bgdata["04"][2],
+              "Practice": bgdata["04"][3],
+            }, {
+              "year": "IT",
+              "Level_0": bgdata["12"][0],
+              "Level_1": bgdata["12"][1],
+              "Level_2": bgdata["12"][2],
+              "Practice": bgdata["12"][3],
+            }, {
+              "year": "MECH",
+              "Level_0": bgdata["03"][0],
+              "Level_1": bgdata["03"][1],
+              "Level_2": bgdata["03"][2],
+              "Practice": bgdata["03"][3],
+            }, {
+              "year": "EEE",
+              "Level_0": bgdata["02"][0],
+              "Level_1": bgdata["02"][1],
+              "Level_2": bgdata["02"][2],
+              "Practice": bgdata["02"][3],
+            }, {
+              "year": "AERO",
+              "Level_0": bgdata["21"][0],
+              "Level_1": bgdata["21"][1],
+              "Level_2": bgdata["21"][2],
+              "Practice": bgdata["21"][3],
+            }, {
+              "year": "CIVIL",
+              "Level_0": bgdata["01"][0],
+              "Level_1": bgdata["01"][1],
+              "Level_2": bgdata["01"][2],
+              "Practice": bgdata["01"][3],
+            }]
+
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+            var xRenderer = am5xy.AxisRendererX.new(root, {
+              minGridDistance: 50
+            });
+            xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+              categoryField: "year",
+              renderer: xRenderer,
+              tooltip: am5.Tooltip.new(root, {}),
+            }));
+
+            xRenderer.grid.template.setAll({
+              location: 1,
+            })
+
+            xAxis.data.setAll(data);
+
+            var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+              min: 0,
+              calculateTotals: true,
+              renderer: am5xy.AxisRendererY.new(root, {
+                strokeOpacity: 0.1
+              })
+            }));
+
+            // Add legend
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+            var legend = chart.children.push(am5.Legend.new(root, {
+              centerX: am5.p50,
+              x: am5.p50
+            }));
+
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+            function makeSeries(name, fieldName) {
+              series = chart.series.push(am5xy.ColumnSeries.new(root, {
+                name: name,
+                stacked: true,
+                xAxis: xAxis,
+                yAxis: yAxis,
+                valueYField: fieldName,
+                categoryXField: "year"
+              }));
+
+              series.columns.template.setAll({
+                tooltipText: "{name}, {categoryX}: {valueY}",
+                tooltipY: am5.percent(10),
+                strokeWidth: 1,
+                width: am5.percent(40),
+              });
+              series.data.setAll(data);
+
+              // Make stuff animate on load
+              // https://www.amcharts.com/docs/v5/concepts/animations/
+              series.appear();
+
+              series.columns.template.onPrivate("height", function (height, target) {
+                am5.array.each(target.dataItem.bullets, function (bullet) {
+                  if (height > 1) {
+                    bullet.get("sprite").show();
+                  }
+                  else {
+                    bullet.get("sprite").hide();
+                  }
+                });
+              });
+
+              series.bullets.push(function () {
+                return am5.Bullet.new(root, {
+                  sprite: am5.Label.new(root, {
+                    text: "{valueY}",
+                    fill: root.interfaceColors.get("alternativeText"),
+                    centerY: am5.p50,
+                    centerX: am5.p50,
+                    populateText: true
+                  })
+                });
+              });
+
+              legend.data.push(series);
+            }
+
+            makeSeries("Level_0", "Level_0");
+            makeSeries("Level_1", "Level_1");
+            makeSeries("Level_2", "Level_2");
+            makeSeries("Practice", "Practice");
+            document.getElementById("gbtn1").onclick = function () {
+              data = [{
+                "year": "CSE",
+                "Level_0": bgdata["05"][0],
+                "Level_1": bgdata["05"][1],
+                "Level_2": bgdata["05"][2],
+                "Practice": bgdata["05"][3],
+              }, {
+                "year": "CSE_AIML",
+                "Level_0": bgdata["66"][0],
+                "Level_1": bgdata["66"][1],
+                "Level_2": bgdata["66"][2],
+                "Practice": bgdata["66"][3],
+              }, {
+                "year": "CSE_CS",
+                "Level_0": bgdata["62"][0],
+                "Level_1": bgdata["62"][1],
+                "Level_2": bgdata["62"][2],
+                "Practice": bgdata["62"][3],
+              }, {
+                "year": "CSE_IT",
+                "Level_0": bgdata["33"][0],
+                "Level_1": bgdata["33"][1],
+                "Level_2": bgdata["33"][2],
+                "Practice": bgdata["33"][3],
+              }, {
+                "year": "CSE_DS",
+                "Level_0": bgdata["67"][0],
+                "Level_1": bgdata["67"][1],
+                "Level_2": bgdata["67"][2],
+                "Practice": bgdata["67"][3],
+              }, {
+                "year": "ECE",
+                "Level_0": bgdata["04"][0],
+                "Level_1": bgdata["04"][1],
+                "Level_2": bgdata["04"][2],
+                "Practice": bgdata["04"][3],
+              }, {
+                "year": "IT",
+                "Level_0": bgdata["12"][0],
+                "Level_1": bgdata["12"][1],
+                "Level_2": bgdata["12"][2],
+                "Practice": bgdata["12"][3],
+              }, {
+                "year": "MECH",
+                "Level_0": bgdata["03"][0],
+                "Level_1": bgdata["03"][1],
+                "Level_2": bgdata["03"][2],
+                "Practice": bgdata["03"][3],
+              }, {
+                "year": "EEE",
+                "Level_0": bgdata["02"][0],
+                "Level_1": bgdata["02"][1],
+                "Level_2": bgdata["02"][2],
+                "Practice": bgdata["02"][3],
+              }, {
+                "year": "AERO",
+                "Level_0": bgdata["21"][0],
+                "Level_1": bgdata["21"][1],
+                "Level_2": bgdata["21"][2],
+                "Practice": bgdata["21"][3],
+              }, {
+                "year": "CIVIL",
+                "Level_0": bgdata["01"][0],
+                "Level_1": bgdata["01"][1],
+                "Level_2": bgdata["01"][2],
+                "Practice": bgdata["01"][3],
+              }]
+              xAxis.data.setAll(data)
+              chart.series.pop()
+              chart.series.pop()
+              chart.series.pop()
+              chart.series.pop()
+              legend.data.pop()
+              legend.data.pop()
+              legend.data.pop()
+              legend.data.pop()
+              chart.get("colors").set("colors", [
+                am5.color(0x48c376),
+                am5.color(0xf6bd41),
+                am5.color(0xec5e4f),
+                am5.color(0x428bec)
+              ]);
+              makeSeries("Level_0", "Level_0");
+              makeSeries("Level_1", "Level_1");
+              makeSeries("Level_2", "Level_2");
+              makeSeries("Practice", "Practice");
+            }
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            chart.appear(1000, 100);
+
+          }); // end am5.ready()
+        </script>
+        <!---------Graph 2 Script--------->
+        <script>
+          am5.ready(function () {
+
+            // Create root element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            var root = am5.Root.new("chartdiv2");
+
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root.setThemes([
+              am5themes_Animated.new(root)
+            ]);
+
+            root.dateFormatter.setAll({
+              dateFormat: "yyyy",
+              dateFields: ["valueX"]
+            });
+
+            var data = [];
+
+            // Create chart
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/
+            var chart = root.container.children.push(
+              am5xy.XYChart.new(root, {
+                focusable: true,
+                panX: true,
+                panY: true,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                pinchZoomX: true
+              })
+            );
+
+            var easing = am5.ease.linear;
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+            var xAxis = chart.xAxes.push(
+              am5xy.DateAxis.new(root, {
+                maxDeviation: 0.5,
+                groupData: false,
+                baseInterval: {
+                  timeUnit: "day",
+                  count: 1
+                },
+                renderer: am5xy.AxisRendererX.new(root, {
+                  pan: "zoom",
+                  minGridDistance: 50
+                }),
+                tooltip: am5.Tooltip.new(root, {})
+              })
+            );
+
+            var yAxis = chart.yAxes.push(
+              am5xy.ValueAxis.new(root, {
+                maxDeviation: 1,
+                renderer: am5xy.AxisRendererY.new(root, { pan: "zoom" })
+              })
+            );
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+            var series = chart.series.push(
+              am5xy.LineSeries.new(root, {
+                minBulletDistance: 10,
+                xAxis: xAxis,
+                yAxis: yAxis,
+                valueYField: "value",
+                valueXField: "date",
+                tooltip: am5.Tooltip.new(root, {
+                  pointerOrientation: "horizontal",
+                  labelText: "{valueY}"
+                })
+              })
+            );
+
+            // Set up data processor to parse string dates
+            // https://www.amcharts.com/docs/v5/concepts/data/#Pre_processing_data
+            series.data.processor = am5.DataProcessor.new(root, {
+              dateFormat: "yyyy-MM-dd",
+              dateFields: ["date"]
+            });
+
+            series.data.setAll(data);
+
+            series.bullets.push(function () {
+              var circle = am5.Circle.new(root, {
+                radius: 4,
+                fill: series.get("fill"),
+                stroke: root.interfaceColors.get("background"),
+                strokeWidth: 2
+              });
+
+              return am5.Bullet.new(root, {
+                sprite: circle
+              });
+            });
+            document.getElementById("gbtn2").onclick = function () {
+              data = []
+              for (var i in pbdata) {
+                data.push({ "date": i, "value": Number(pbdata[i]) })
+              }
+              console.log(data)
+              data = data.sort((a, b) => {
+                if (a.date < b.date) {
+                  return -1;
+                }
+              });
+              console.log(data)
+              series.data.setAll(data);
+            }
+
+
+
+            // Add cursor
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+            var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+              xAxis: xAxis
+            }));
+            cursor.lineY.set("visible", false);
+
+            // add scrollbar
+            chart.set("scrollbarX", am5.Scrollbar.new(root, {
+              orientation: "horizontal"
+            }));
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            series.appear(1000, 100);
+            chart.appear(1000, 100);
+
+          }); // end am5.ready()
+        </script>
+      </div>
+    </div>
+    <script src="/adminjs/classie.js"></script>
+    <script src="/adminjs/gnmenu.js"></script>
+    <script>
+      new gnMenu(document.getElementById("gn-menu"));
+    </script>
+    <script>
+      function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+
+        csvFile = new Blob([csv], { type: "text/csv" });
+
+        downloadLink = document.createElement("a");
+
+        downloadLink.download = filename;
+
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+
+        downloadLink.style.display = "none";
+
+        document.body.appendChild(downloadLink);
+
+        downloadLink.click();
+      }
+
+      function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+          var row = [],
+            cols = rows[i].querySelectorAll(".tname, .wrap-text, th");
+
+          for (var j = 0; j < cols.length; j++) row.push(cols[j].innerText);
+
+          csv.push(row.join(","));
+        }
+
+        downloadCSV(csv.join("\n"), filename);
+      }
+    </script>
+
+    <script>
+      function sortTable(n) {
+        let icons = document.querySelectorAll(".sicon");
+        icons.forEach((icon) => {
+          icon.style.color = "rgb(157, 157, 157)";
+        });
+        icons[n].style.color = "rgb(66,139,236)";
+        var table,
+          rows,
+          switching,
+          i,
+          x,
+          y,
+          shouldSwitch,
+          dir,
+          switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc";
+        /*Make a loop that will continue until
+    no switching has been done:*/
+        while (switching) {
+          //start by saying: no switching is done:
+          switching = false;
+          rows = table.rows;
+          /*Loop through all table rows (except the
+      first, which contains table headers):*/
+          for (i = 1; i < rows.length - 1; i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+        one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /*check if the two rows should switch place,
+        based on the direction, asc or desc:*/
+            if (dir == "asc") {
+              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir == "desc") {
+              if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+              }
+            }
+          }
+          if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+        and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount++;
+          } else {
+            /*If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+              dir = "desc";
+              switching = true;
+            }
+          }
+        }
+      }
+    </script>
 </body>
+
 </html>
