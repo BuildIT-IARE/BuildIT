@@ -4,7 +4,7 @@ const xlsx = require("xlsx");
 
 // Create and Save a new contest
 exports.create = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   // Validate request
   if (!req.body.contestId) {
     return res.status(400).send({
@@ -189,6 +189,7 @@ exports.getDuration = (req, callback) => {
         contestName: contest.contestName,
         coding: contest.coding,
       };
+      // console.log(durationData)
       return callback(null, durationData);
     })
     .catch((err) => {
@@ -344,3 +345,36 @@ exports.checkContestPassword = (req, res) => {
     });
   }
 };
+
+
+exports.isContest = (req, res) => {
+  if (!req.body.contestId) {
+    return res.status(400).send({
+      success: false,
+      message: "contestId can not be empty",
+    });
+  }
+  Contest.findOne({ contestId: req.body.contestId })
+    .then((contest) => {
+      if (!contest) {
+        return res.status(404).send({
+          success: false,
+          message: "Contest not found with id " + req.body.contestId,
+        });
+      }
+      res.send(contest);
+    }
+    )
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          success: false,
+          message: "Contest not found with id " + req.body.contestId,
+        });
+      }
+      return res.status(500).send({
+        success: false,
+        message: "Error retrieving Contest with id " + req.body.contestId,
+      });
+    });
+}
