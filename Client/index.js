@@ -3424,6 +3424,91 @@ app.get(
   }
 );
 
+app.get("/mcqSessions", checkSignIn, async (req, res, next) => {
+    let options = {
+      url: serverRoute + "/mcqLongContests",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      body: {
+        mcq: true,
+      },
+      json: true,
+    };
+
+    let options1 = {
+      url: serverRoute + "/contests",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      body: {
+        mcq: true,
+      },
+      json: true,
+    };
+  
+    request(options, function (err, response, body) {
+      request(options1, function (err, response, body1) {
+        const merged = []
+        for (let i = 0;i < body.length; i++){
+          merged.push(body[i])
+        }
+        for (let i = 0; i < body1.length; i++) {
+          console.log(new Date(body1.contestEndDate), new Date('2023-06-21'), new Date(body1.contestEndDate) < new Date('2023-06-21'))
+          if(new Date(body1.contestEndDate) < new Date('2023-06-21')){
+            merged.push(body1[i])
+          }
+        }
+        res.clearCookie("courseId");
+      
+        res.render("mcqLong", {
+          imgUsername: req.cookies.username,
+          data: merged,
+        });
+      });
+    });
+  });
+
+app.get("/admin/adventures/mcqContest", async (req, res) => {
+  res.render("mcqLongContestAdd", {
+    token: req.cookies.token,
+    data: {
+      serverurl: serverRoute, 
+    }
+  })
+})
+
+app.post("/admin/advnetures/mcqContest", async (req, res) => {
+  console.log(req.body)
+  let options = {
+    url: serverRoute + "/mcqLong",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+    body: req.body
+  }
+
+  request(options, (err, response, body) => {
+    res.send(body)
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
+
+app.get("/admin/adventuers/addmcq", async (req, res) => {
+  res.render("mcqLongAddQuestion", {
+    data: {
+      serverurl: serverRoute,
+    },
+    token: req.cookies.token,
+  })
+})
+
 app.get("/facultyValidSessions", checkSignIn, async (req, res) => {
   let options = {
     url: serverRoute + "/isFaculty",
