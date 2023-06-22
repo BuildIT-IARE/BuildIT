@@ -3456,13 +3456,11 @@ app.get("/mcqSessions", checkSignIn, async (req, res, next) => {
           merged.push(body[i])
         }
         for (let i = 0; i < body1.length; i++) {
-          console.log(new Date(body1.contestEndDate), new Date('2023-06-21'), new Date(body1.contestEndDate) < new Date('2023-06-21'))
-          if(new Date(body1.contestEndDate) < new Date('2023-06-21')){
-            merged.push(body1[i])
+          if(new Date('2023-06-22') > new Date(body1[i].contestDate)){
+            merged.push({...body1[i], ...{contestStartDate: body1[i].contestDate, contestEndDate: body1[i].contestDate}})
           }
         }
         res.clearCookie("courseId");
-      
         res.render("mcqLong", {
           imgUsername: req.cookies.username,
           data: merged,
