@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin menu</title>
+    <meta
+      name="description"
+      content="A sidebar menu as seen on the Google Nexus 7 website"
+    />
+    <meta
+      name="keywords"
+      content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu"
+    />
+    <meta name="author" content="Codrops" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../../css/navadmin.css" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+    <script src="/adminjs/modernizr.custom.js"></script>
+    <style>
+      .new {
+        color: black;
+      }
+      input[type="radio"] {
+        width: fit-content;
+        margin-left: 5%;
+        color: black;
+      }
+      .button{
+        font-size: 16px;
+        text-align: center;
+        width: 150px;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <%- include ("../views/partials/adminpanel") -%>
+      <header>
+        <h1>
+          Manage Multiple Choice Questions<span style="color: white"
+            >Add MCQ's</span
+          >
+        </h1>
+      </header>
+      <div class="main-block">
+        <form
+          action="<%= data.serverurl %>/mcqsExcel"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <h1>Upload Excel File Here</h1>
+          <a href="./images/sample-mcq.xlsx">Sample CSV</a><br>
+          <input type="file" name="upfile" value="" />
+          <textarea
+            type="hidden"
+            name="token"
+            id="token2"
+            value="<%= token %>"
+            style="display: none"
+          ></textarea>
+
+          <div class="btn-block">
+            <button class="submit" type="submit" href="/">Send</button>
+          </div>
+        </form>
+        <hr />
+        <br />
+      </div>
+      <div class="main-block">
+        <form
+          action="<%= data.serverurl %>/mcq"
+          method="POST"
+          enctype="multipart/form-data"
+          id="form"
+          onsubmit="return window.verifyImage()"
+        >
+          <h1>Add Question Manually</h1>
+          <br />
+          <h4>Contest ID</h4>
+          <input name="contestId" id="get_sections" type="text" required />
+          <p class="button" onclick="getSection()">Show Sections</p>
+          <br>
+
+          <p class="comments"><b>Section</b></p>
+          <div class="new" id="sectionInput">
+          </div>
+          <h4>Add Picture</h4>
+          <div class="wrapper" style="margin: 0">
+            <input type="file" name="photo" id="input-files" accept="image/*"/>
+          </div>
+          <!-- <h4>Contest ID</h4> -->
+          <!-- <input name="contestId2" type="text" /> -->
+          <p class="comments">Description</p>
+          <textarea name="questionDescriptionText" rows="30" required></textarea>
+          <p class="comments">Option 1</p>
+          <textarea name="op1" rows="4" required></textarea>
+          <p class="comments">Option 2</p>
+          <textarea name="op2" rows="4" required></textarea>
+          <p class="comments">Option 3</p>
+          <textarea name="op3" rows="4" required></textarea>
+          <p class="comments">Option 4</p>
+          <textarea name="op4" rows="4" required></textarea>
+          <p class="comments"><b>Answer</b></p>
+          <div class="new">
+            <input type="radio" name="answer" value="1" id="1" required />
+            <label for="1">&emsp;ONE</label>
+            <input type="radio" name="answer" value="2" id="2" required />
+            <label for="2">&emsp;TWO</label>
+            <input type="radio" name="answer" value="3" id="3" required />
+            <label for="3">&emsp;THREE</label>
+            <input type="radio" name="answer" value="4" id="4" required />
+            <label for="4">&emsp;FOUR</label>
+          </div>
+          <br />
+          <hr />
+          <textarea
+            type="hidden"
+            name="token"
+            id="token"
+            value="<%= token %>"
+            style="display: none"
+          ></textarea>
+
+          <button class="submit" type="submit" href="/">Send</button>
+        </form>
+      </div>
+    </div>
+    <!-- /container -->
+    <script src="/adminjs/classie.js"></script>
+    <script src="/adminjs/gnmenu.js"></script>
+    <script src="/plugins/jQuery/jquery.min.js"></script>
+    <script>
+      new gnMenu(document.getElementById("gn-menu"));
+    </script>
+    <script>
+      document.getElementById("token").value = "<%= token %>";
+      document.getElementById("token2").value = "<%= token %>";
+    </script>
+    <script>
+      function verifyImage() {
+        var input = document.getElementById('input-files');
+        var oFile = input.files[0];
+        if( !oFile.type.includes('image') ) // Allowed Extensions
+        {
+          window.alert("Allowed Extensions are : *.jpeg,*.jpg,*.png");
+          return false;
+        }
+        
+        if (oFile.size > 204800 ) // 200 KiB for bytes.
+        {
+          window.alert("File size must be under 200KiB!");
+          return false;
+        }
+
+        return true;
+      }
+    </script>
+    <script>
+      function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      const getSection = () => {
+        var url = '<%= data.serverurl %>/mcqLong/getSections/' + document.getElementById("get_sections").value;
+        console.log(url);
+        $.ajax({
+          url: url,
+          headers: {"Authorization": getCookie("token")},
+          type: "GET",
+          success: function (data) {
+            // var x = JSON.stringify(data);
+            console.log(data)
+            var sections = data.sections;
+            console.log(sections);
+            var tex = document.getElementById("sectionInput");
+            let str = "";
+
+            for(let i=0; i<sections.length; i++) {
+              str +=
+              `
+              <input type="radio" name="section" value="${i+1}" id="${11+i}" required/>
+              <label for="${11+i}">&emsp;${sections[i]}</label>
+              `;
+            }
+            tex.innerHTML = str;
+          },
+          error: function (error) {
+              console.log(`Error ${error}`);
+          }
+        });
+        return false;
+      }
+    </script>
+    <script>
+      
+    </script>
+    
+  </body>
+</html>

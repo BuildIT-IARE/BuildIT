@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<title>BuildIT Complaints</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../css/navadmin.css">
+<link rel="stylesheet" href="../css/w3.css">
+<head>
+<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+</head>
+<body>
+
+    <%- include ("../views/partials/adminpanel") -%>
+    <br><br><br><br>
+
+    <div class="w3-container" style="background: white;">
+
+        <h2 style="text-align: center">Complaint Information: </h2>
+            <div class="w3-container">
+                <p>Complaint Subject: <%= data.complainSubject %></p>
+                <p>Username: <%= data.username %></p>
+                <p>Complaint Description: <%= data.complainDesc %></p>
+                <p>Complaint Question ID: <%= data.questionId %></p>
+                <p>Complaint Created At: <%= new Date(data.createdAt).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric",}) %></p>
+                <% if (data.resolutionRemarks) { %>
+                    <p>Complaint Previous Remarks: <%= data.resolutionRemarks %></p>
+                <% } %>
+            </div>
+                
+    </div>
+<form action="/admin/resolveComplain/<%= data.complainId %>" method="post">
+    <label for="resolutionStatus">Complain Resolution Status: </label>
+    <input type="radio" id="resolved" name="resolutionStatus" value="true">
+    <label for="resolved">Resolved</label>
+    <input type="radio" id="unresolved" name="resolutionStatus" value="false">
+    <label for="unresolved">Unresolved</label>
+    <br>
+    <br>
+    <label for="resolutionRemarks">Resolution Remarks: </label>
+    <textarea id="resolutionRemarks" name="resolutionRemarks" rows="4" cols="50"><%= data.resolutionRemarks %></textarea>
+    <br>
+    <br>
+    <input type="submit" value="Submit">
+
+</form>
+</body>
+</html>

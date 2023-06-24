@@ -1406,9 +1406,46 @@ app.get("/admin/deleteuser/:username", async (req, res) => {
   });
 });
 
-app.get("/admin/deletecomplain/:questionId", async (req, res) => {
+app.get("/admin/resolveComplain/:complainId", async (req, res) => {
   let options = {
-    url: serverRoute + "/complains/" + req.params.questionId,
+    url: serverRoute + "/complains/" + req.params.complainId,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    if (response.statusCode == 200) {
+      body.url = clientRoute;
+      body.serverurl = serverRoute;
+      res.render("complainResolve", { data: body });
+    }
+    else{
+      body.message = "Complain Already Resolved!"
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+app.post("/admin/resolveComplain/:complainId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/complains/" + req.params.complainId,
+    method: "put",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: req.body,
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    res.redirect("/admin/complaints")
+  });
+});
+
+app.get("/admin/deletecomplain/:complainId", async (req, res) => {
+  let options = {
+    url: serverRoute + "/complains/" + req.params.complainId,
     method: "delete",
     headers: {
       authorization: req.cookies.token,
@@ -1514,7 +1551,7 @@ app.post("/admin/results/contest", async (req, res) => {
   };
 
   request(options, function (err, response, bodyparticipation) {
-    console.log(bodyparticipation);
+    // console.log(bodyparticipation);
     let options = {
       url: serverRoute + "/questions/contests/" + req.body.contestId,
       method: "get",
@@ -2052,6 +2089,105 @@ app.get("/qualifier_test/:contestId", checkSignIn, async (req, res, next) => {
   });
 });
 
+app.get("/mcqLong/:contestId", checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/isOngoingMcqLong",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      contestId: req.params.contestId,
+    },
+    json: true,
+  };
+  // Check if contest is open
+  request(options, function (err, response, body) {
+    if (body.success) {
+      let options1 = {
+        url: serverRoute + "/mcqParticipations", // MCQ participation
+        method: "post",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        body: {
+          contestId: req.params.contestId,
+        },
+        json: true,
+      };
+      // Add participation
+      request(options1, function (err, response, body) {
+        let option2 = {
+          url: serverRoute + "/mcqFirst/" + req.params.contestId, // First MCQ
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        // Get mcq for contest
+        request(option2, function (err, response, body) {
+          // console.log(body)
+          if (!body.message) {
+            res.cookie("contestId", req.params.contestId);
+            let options3 = {
+              url: serverRoute + "/mcqParticipations/" + req.params.contestId, // Time and score
+              method: "get",
+              headers: {
+                authorization: req.cookies.token,
+              },
+              json: true,
+            };
+            // Get participation details
+            // console.log("options3: ",options3)
+            request(options3, function (err, response, bodytimer) {
+              // console.log("bodytimer: ",bodytimer)
+              // bodytimer={responses:[]}
+              if (Array.isArray(bodytimer)) {
+                bodytimer = bodytimer[0];
+                bodytimer.responses =
+                  bodytimer.responses[body.section - 1].responses;
+
+                let currSection = bodytimer.responses;
+                currSection = currSection.map((v) => v.questionNum);
+                let index = currSection.indexOf(body.questionNum);
+                if (index !== -1) currSection.splice(index, 1);
+
+                bodytimer.selection =
+                  index === -1 ? 0 : bodytimer.responses[index].selection;
+                bodytimer.questionNums = currSection;
+                bodytimer.submissionResults = null;
+                bodytimer.responses = null;
+
+                // bodytimer.open = bodytimer.validTill>currentDatenTime;
+                res.render("mcqs", {
+                  imgUsername: req.cookies.username,
+                  imgBranch: req.cookies.branch,
+                  data: body,
+                  datatimer: bodytimer,
+                });
+              } else {
+                res.render("error", {
+                  data: body,
+                  imgUsername: req.cookies.username,
+                });
+              }
+            });
+          } else {
+            res.render("error", {
+              data: body,
+              imgUsername: req.cookies.username,
+            });
+          }
+        });
+      });
+    } else {
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
+
 app.post(
   "/qualifier_test/:contestId/mcq",
   checkSignIn,
@@ -2091,6 +2227,7 @@ app.post(
         };
         // get one MCQ
         request(options, (err, response, body) => {
+          // console.log("body: ", body);
           if (!body.message) {
             res.cookie("contestId", req.params.contestId);
             let options3 = {
@@ -2152,6 +2289,7 @@ app.post(
 
     const addSelection = () => {
       return new Promise(() => {
+        // console.log(req.body)
         let options = {
           url: serverRoute + "/validateMcq",
           method: "post",
@@ -3082,6 +3220,7 @@ app.post("/getAllResumes", async (req, res) => {
     body: {
       year: req.body.Year,
       branch: req.body.Branch,
+   
     },
     method: "post",
     headers: {
@@ -3386,6 +3525,89 @@ app.get(
     });
   }
 );
+
+app.get("/mcqSessions", checkSignIn, async (req, res, next) => {
+    let options = {
+      url: serverRoute + "/mcqLongContests",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      body: {
+        mcq: true,
+      },
+      json: true,
+    };
+
+    let options1 = {
+      url: serverRoute + "/contests",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      body: {
+        mcq: true,
+      },
+      json: true,
+    };
+  
+    request(options, function (err, response, body) {
+      request(options1, function (err, response, body1) {
+        const merged = []
+        for (let i = 0;i < body.length; i++){
+          merged.push(body[i])
+        }
+        for (let i = 0; i < body1.length; i++) {
+          if(new Date('2023-06-22') > new Date(body1[i].contestDate)){
+            merged.push({...body1[i], ...{contestStartDate: body1[i].contestDate, contestEndDate: body1[i].contestDate}})
+          }
+        }
+        res.clearCookie("courseId");
+        res.render("mcqLong", {
+          imgUsername: req.cookies.username,
+          data: merged,
+        });
+      });
+    });
+  });
+
+app.get("/admin/adventures/mcqContest", async (req, res) => {
+  res.render("mcqLongContestAdd", {
+    token: req.cookies.token,
+    data: {
+      serverurl: serverRoute, 
+    }
+  })
+})
+
+app.post("/admin/advnetures/mcqContest", async (req, res) => {
+  console.log(req.body)
+  let options = {
+    url: serverRoute + "/mcqLong",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+    body: req.body
+  }
+
+  request(options, (err, response, body) => {
+    res.send(body)
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
+
+app.get("/admin/adventuers/addmcq", async (req, res) => {
+  res.render("mcqLongAddQuestion", {
+    data: {
+      serverurl: serverRoute,
+    },
+    token: req.cookies.token,
+  })
+})
 
 app.get("/facultyValidSessions", checkSignIn, async (req, res) => {
   let options = {

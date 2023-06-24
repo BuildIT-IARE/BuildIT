@@ -90,6 +90,7 @@ var resumeSchema = new Schema ({
     products : Array,
     industrialDesigns : Array,
     themeId : String,
+    updatedAt: Date,
 });
 
 module.exports = {

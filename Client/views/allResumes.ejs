@@ -122,20 +122,20 @@ input:checked + .slider:before {
     <% for(var i=0;i<resumes.length;i++) {%>
         <% var data=resumes[i] %>
         <% if(data.themeId=="theme1"){ %>
-        <% include ../views/ResumeTemplates/theme1 %>
+        <% ("include ../views/ResumeTemplates/theme1") %>
         <%}%>
         <% if(data.themeId=="theme2"){ %>
-            <% include ../views/ResumeTemplates/theme2 %>
+            <% ("include ../views/ResumeTemplates/theme2") %>
             <%}%>
             <% if(data.themeId=="theme3"){ %>
-                <% include ../views/ResumeTemplates/theme3 %>
+                <% ("include ../views/ResumeTemplates/theme3") %>
                 <%}%>  
                 <% if(data.themeId=="theme4"){ %>
-                    <% include ../views/ResumeTemplates/theme4 %>
+                    <% ("include ../views/ResumeTemplates/theme4") %>
                     <%}%>
                     <% if(data.themeId=="theme5"){ %>
-                    <% include ../views/ResumeTemplates/theme5 %>
-                    <%}%>
+                    <% include ("../views/ResumeTemplates/theme5") %>
+          <%}%>
     <%}%>
 </body>
 </html>

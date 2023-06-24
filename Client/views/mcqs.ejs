@@ -700,7 +700,7 @@
         var distance = countDownDate - now;
 
         // Time calculations for days, hours, minutes and seconds
-
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor(
           (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
         );
@@ -708,8 +708,13 @@
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         // Output the result in an element with id="demo"
-        document.getElementById("labelTime").innerHTML =
+        if ( days == 0 ){
+          document.getElementById("labelTime").innerHTML =
           hours + ":" + minutes + ":" + seconds;
+        }
+        else{
+          document.getElementById("labelTime").innerHTML = days + ":" + hours + ":" + minutes + ":" + seconds;
+        }
 
         // If the count down is over, write some text
         if (distance < 0) {
