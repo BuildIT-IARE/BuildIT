@@ -57,7 +57,7 @@
         font-family: Roboto Slab;
         display: block;
       }
-      .main-container {
+      .resume {
         margin: 0 auto;
         width: 960px;
         height: fit-content;
@@ -186,7 +186,7 @@
     </style>
   </head>
   <body>
-    <div class="main-container">
+    <div class="resume" id="resume">
       <div class="section">
         <div class="label">Personal Information</div>
         <div class="details">
@@ -473,7 +473,6 @@
       <br>
       <%}%>
     </div>
-    <div class="pagebreak"> </div>
-    <button type="button" id="print" onclick="window.print()">Print</button>
+    <%- include('print_resume') %>
   </body>
 </html>
