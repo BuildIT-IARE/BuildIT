@@ -16,7 +16,7 @@
     />
     <title>Theme 2</title>
     <style>
-      .main-container2 {
+      .resume {
         background: white;
         width: 960px;
         height: 1353px;
@@ -218,7 +218,7 @@
     </style>
   </head>
   <body>
-    <div class="main-container2">
+    <div class="resume" id="resume">
       <div class="rollnumber2">
         <%= data.resumeId %>
       </div>
@@ -514,7 +514,6 @@
         </div>
       </div>
     </div>
-    <div class="pagebreak"> </div>
-    <button type="button" id="print" onclick="window.print()">Print</button>
+    <%- include('print_resume') %>
   </body>
 </html>

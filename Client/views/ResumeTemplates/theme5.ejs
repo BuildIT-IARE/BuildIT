@@ -19,7 +19,7 @@
       body {
         display: block;
       }
-      .main-container5 {
+      .resume {
         background: rgb(255, 255, 255);
         width: 960px;
         height: 1353px;
@@ -228,7 +228,7 @@
     </style>
   </head>
   <body>
-    <div class="main-container5">
+    <div class="resume" id="resume">
         <div class="rollnumber5">
             <%= data.resumeId %>
         </div>
@@ -489,7 +489,6 @@
         </div>
       </div>
     </div>
-    <div class="pagebreak"> </div>
-    <button type="button" id="print5" onclick="window.print()">Print</button>
+    <%- include('print_resume') %>
   </body>
 </html>
