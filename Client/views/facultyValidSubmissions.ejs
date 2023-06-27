@@ -332,13 +332,15 @@
             <th>Roll Number</th>
             <th>Submission</th>
             <th>Evaluated</th>
+            <th>Score</th>
         </thead>
-        <% for(var i=0;i<data.length;i++){ %>
+        <% for(var i=0;i<data.length;i++){ %>       
         <tr>
             <td><%= i+1 %></td>
             <td><%= data[i].rollNumber %></td>
             <td><a href="/facultyEmailReport/<%= emailId %>/<%= emailQuestionId %>/<%= data[i].rollNumber %>">View Submission</a></td>
             <td><%= data[i].evaluated %></td>
+            <td><%=data[i].score[4]%></td>
         </tr>
         <%}%>
         </table>
