@@ -144,7 +144,7 @@
         margin-top: 50px;
         border-bottom: none;
       }
-      table {
+      /* table {
         width: 98%;
         border-collapse: separate;
         border-spacing: 0 0.7em;
@@ -182,7 +182,71 @@
       }
       .colour {
         background: rgba(255, 217, 0, 0.703);
+      } */
+      table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    th {
+      background-color: #3a86ff;
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    td {
+      background-color: #f7f7f7; /* Light gray background for cells */
+      color: #333;
+    }
+
+    /* Beautiful Color Combination for Rows */
+    tr:nth-child(even) {
+      background-color: #f2f2f2; /* Slightly lighter shade for even rows */
+    }
+
+    /* Animation Styles */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
       }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-20px);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    /* Apply Animations */
+    tr {
+      animation: fadeIn 1s ease;
+    }
+
+    tbody tr {
+      animation: slideIn 0.5s ease;
+    }
+
+    /* Hover Effect */
+    tr:hover td {
+      background-color: #f0f0f0; /* Slightly darker shade on hover */
+    }
     </style>
   </head>
 
