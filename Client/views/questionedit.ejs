@@ -1,88 +1,152 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-		<title>Admin menu</title>
-		<meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
-		<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
-		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" href="../../css/navadmin.css">
-		<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
-		<script src="/adminjs/modernizr.custom.js"></script>
-		
-	</head>
-	<body>
-		<div class="container">
-			<%- include ("../views/partials/adminpanel") -%>
-			<header>
-				<h1>Manage Questions<span style="color:white">Edit Questions</span></h1>	
-			</header> 
-			<div class="main-block">
-			<form action="<%= data.serverurl %>/questions/<%= data.questionId %>" method = "POST">
-				<h1>Add Question Manually</h1>
-				<h4>Question ID</h4>
-				<input name="questionId" type="text" value="<%= data.questionId %>"/>
-				<h4>Question Name</h4>
-				<input name="questionName" type="text" value="<%= data.questionName %>"/>
-				<h4>Contest ID</h4>
-				<input name="contestId" type="text" value="<%= data.contestId %>"/>
-				<p class="comments">Description</p>
-				<textarea name="questionDescriptionText" rows="30" id="0"><%= data.questionDescriptionText %></textarea>
-				<p class="comments">Input</p>
-				<textarea name="questionInputText" rows="10" id="1"><%= data.questionInputText %></textarea>
-				<p class="comments">Output</p>
-				<textarea name="questionOutputText" rows="10" id="2"><%= data.questionOutputText %></textarea>
-				<p class="comments">Example Input 1:</p>
-				<textarea name="questionExampleInput1" rows="10" id="3"><%= data.questionExampleInput1 %></textarea>
-				<p class="comments">Example Output 1:</p>
-				<textarea name="questionExampleOutput1" rows="10" id="4"><%= data.questionExampleOutput1 %></textarea>
-				<p class="comments">Example Input 2:</p>
-				<textarea name="questionExampleInput2" rows="10" id="5"><%= data.questionExampleInput2 %></textarea>
-				<p class="comments">Example Output 2:</p>
-				<textarea name="questionExampleOutput2" rows="10" id="6"><%= data.questionExampleOutput2 %></textarea>
-				<p class="comments">Example Input 3:</p>
-				<textarea name="questionExampleInput3" rows="10" id="7"><%= data.questionExampleInput3 %></textarea>
-				<p class="comments">Example Output 3:</p>
-				<textarea name="questionExampleOutput3" rows="10" id="8"><%= data.questionExampleOutput2 %></textarea>
-				<p class="comments">Hidden Input 1:</p>
-				<textarea name="questionHiddenInput1" rows="10" id="9"><%= data.questionHiddenInput1 %></textarea>
-				<p class="comments">Hidden Output 1:</p>
-				<textarea name="questionHiddenOutput1" rows="10" id="10"><%= data.questionHiddenOutput1 %></textarea>
-				<p class="comments">Hidden Input 2:</p>
-				<textarea name="questionHiddenInput2" rows="10" id="11"><%= data.questionHiddenInput2 %></textarea>
-				<p class="comments">Hidden Output 2:</p>
-				<textarea name="questionHiddenOutput2" rows="10" id="12"><%= data.questionHiddenOutput2 %></textarea>
-				<p class="comments">Hidden Input 3:</p>
-				<textarea name="questionHiddenInput3" rows="10" id="13"><%= data.questionHiddenInput3 %></textarea>
-				<p class="comments">Hidden Output 3:</p>
-				<textarea name="questionHiddenOutput3" rows="10" id="14"><%= data.questionHiddenOutput3 %></textarea>
-				<p class="comments">Explanation</p>
-				<textarea name="questionExplanation" rows="30" id="questionExplanation"><%= data.questionExplanation %></textarea>
-				<p class="comments">Author:</p>
-				<textarea name="author" rows="10" id="author"><%= data.author %></textarea>
-				<p class="comments">Editorial:</p>
-				<textarea name="editorial" rows="10" id="editorial"><%= data.editorial %></textarea>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin menu</title>
+    <meta
+      name="description"
+      content="A sidebar menu as seen on the Google Nexus 7 website"
+    />
+    <meta
+      name="keywords"
+      content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu"
+    />
+    <meta name="author" content="Codrops" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../../css/navadmin.css" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+    <script src="/adminjs/modernizr.custom.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <%- include ("../views/partials/adminpanel") -%>
+      <header>
+        <h1>
+          Manage Questions<span style="color: white">Edit Questions</span>
+        </h1>
+      </header>
+      <div class="main-block">
+        <form
+          action="<%= data.serverurl %>/questions/<%= data.questionId %>"
+          method="POST"
+        >
+          <h1>Add Question Manually</h1>
+          <h4>Question ID</h4>
+          <input name="questionId" type="text" value="<%= data.questionId %>" />
+          <h4>Question Name</h4>
+          <input
+            name="questionName"
+            type="text"
+            value="<%= data.questionName %>"
+          />
+          <h4>Contest ID</h4>
+          <input name="contestId" type="text" value="<%= data.contestId %>" />
+          <p class="comments">Description</p>
+          <textarea name="questionDescriptionText" rows="30" id="0">
+<%= data.questionDescriptionText %></textarea
+          >
+          <p class="comments">Input</p>
+          <textarea name="questionInputText" rows="10" id="1">
+<%= data.questionInputText %></textarea
+          >
+          <p class="comments">Output</p>
+          <textarea name="questionOutputText" rows="10" id="2">
+<%= data.questionOutputText %></textarea
+          >
+          <p class="comments">Example Input 1:</p>
+          <textarea name="questionExampleInput1" rows="10" id="3">
+<%= data.questionExampleInput1 %></textarea
+          >
+          <p class="comments">Example Output 1:</p>
+          <textarea name="questionExampleOutput1" rows="10" id="4">
+<%= data.questionExampleOutput1 %></textarea
+          >
+          <p class="comments">Example Input 2:</p>
+          <textarea name="questionExampleInput2" rows="10" id="5">
+<%= data.questionExampleInput2 %></textarea
+          >
+          <p class="comments">Example Output 2:</p>
+          <textarea name="questionExampleOutput2" rows="10" id="6">
+<%= data.questionExampleOutput2 %></textarea
+          >
+          <p class="comments">Example Input 3:</p>
+          <textarea name="questionExampleInput3" rows="10" id="7">
+<%= data.questionExampleInput3 %></textarea
+          >
+          <p class="comments">Example Output 3:</p>
+          <textarea name="questionExampleOutput3" rows="10" id="8">
+<%= data.questionExampleOutput2 %></textarea
+          >
+          <p class="comments">Hidden Input 1:</p>
+          <textarea name="questionHiddenInput1" rows="10" id="9">
+<%= data.questionHiddenInput1 %></textarea
+          >
+          <p class="comments">Hidden Output 1:</p>
+          <textarea name="questionHiddenOutput1" rows="10" id="10">
+<%= data.questionHiddenOutput1 %></textarea
+          >
+          <p class="comments">Hidden Input 2:</p>
+          <textarea name="questionHiddenInput2" rows="10" id="11">
+<%= data.questionHiddenInput2 %></textarea
+          >
+          <p class="comments">Hidden Output 2:</p>
+          <textarea name="questionHiddenOutput2" rows="10" id="12">
+<%= data.questionHiddenOutput2 %></textarea
+          >
+          <p class="comments">Hidden Input 3:</p>
+          <textarea name="questionHiddenInput3" rows="10" id="13">
+<%= data.questionHiddenInput3 %></textarea
+          >
+          <p class="comments">Hidden Output 3:</p>
+          <textarea name="questionHiddenOutput3" rows="10" id="14">
+<%= data.questionHiddenOutput3 %></textarea
+          >
+          <p class="comments">Explanation</p>
+          <textarea
+            name="questionExplanation"
+            rows="30"
+            id="questionExplanation"
+          >
+<%= data.questionExplanation %></textarea
+          >
+          <p class="comments">Author:</p>
+          <textarea name="author" rows="10" id="author">
+<%= data.author %></textarea
+          >
+          <p class="comments">Editorial:</p>
+          <textarea name="editorial" rows="10" id="editorial">
+<%= data.editorial %></textarea
+          >
+          <!--
 				<p class="comments"><b>Difficulty</b></p>
 				<input type="radio" name="difficulty" value="Easy"> Easy </input>
 				<input type="radio" name="difficulty" value="Medium"> Medium </input>
-				<input type="radio" name="difficulty" value="Hard"> Hard </input> 
-				<hr>
-				<textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"><%= token %></textarea>
+				<input type="radio" name="difficulty" value="Hard"> Hard </input> -->
+          <hr />
+          <textarea
+            type="hidden"
+            name="token"
+            id="token"
+            value="<%= token %>"
+            style="display: none"
+          >
+<%= token %></textarea
+          >
 
-				<button class= "submit" type="submit" href="/">Send</button>
-			</form>
-    	</div>
-		</div><!-- /container -->
-		<script src="/adminjs/classie.js"></script>
-		<script src="/adminjs/gnmenu.js"></script>
-		<script>
-			new gnMenu( document.getElementById( 'gn-menu' ) );
-		</script>
-		<script>
-			document.getElementById("token").value = "<%= token %>";
-		</script>
-	</body>
+          <button class="submit" type="submit" href="/">Send</button>
+        </form>
+      </div>
+    </div>
+    <!-- /container -->
+    <script src="/adminjs/classie.js"></script>
+    <script src="/adminjs/gnmenu.js"></script>
+    <script>
+      new gnMenu(document.getElementById("gn-menu"));
+    </script>
+    <script>
+      document.getElementById("token").value = "<%= token %>";
+    </script>
+  </body>
 </html>
