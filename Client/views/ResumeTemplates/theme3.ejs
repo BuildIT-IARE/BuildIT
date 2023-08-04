@@ -23,7 +23,7 @@
       body {
         display: block;
       }
-      .main-container3 {
+      .resume {
         width: 960px;
         height: 1353px;
         display: flex;
@@ -285,7 +285,7 @@
     </style>
   </head>
   <body>
-    <div class="main-container3">
+    <div class="resume" id="resume">
       <div class="rollnumber3">
         <%= data.resumeId %>
       </div>
@@ -637,7 +637,6 @@ expand_more
                                 <%}%>
       </div>
     </div>
-    <div class="pagebreak"> </div>
-    <button type="button" id="print" onclick="window.print()">Print</button>
+    <%- include('print_resume') %>
   </body>
 </html>
