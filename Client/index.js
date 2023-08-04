@@ -3538,13 +3538,35 @@ app.get("/mcqSessions", checkSignIn, async (req, res, next) => {
       },
       json: true,
     };
+
+    let options1 = {
+      url: serverRoute + "/contests",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      body: {
+        mcq: true,
+      },
+      json: true,
+    };
   
     request(options, function (err, response, body) {
-      res.clearCookie("courseId");
-      // console.log(body)
-      res.render("mcqLong", {
-        imgUsername: req.cookies.username,
-        data: body,
+      request(options1, function (err, response, body1) {
+        const merged = []
+        for (let i = 0;i < body.length; i++){
+          merged.push(body[i])
+        }
+        for (let i = 0; i < body1.length; i++) {
+          if(new Date('2023-06-22') > new Date(body1[i].contestDate)){
+            merged.push({...body1[i], ...{contestStartDate: body1[i].contestDate, contestEndDate: body1[i].contestDate}})
+          }
+        }
+        res.clearCookie("courseId");
+        res.render("mcqLong", {
+          imgUsername: req.cookies.username,
+          data: merged,
+        });
       });
     });
   });
