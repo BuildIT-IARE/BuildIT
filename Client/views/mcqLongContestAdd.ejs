@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin menu</title>
+    <meta
+      name="description"
+      content="A sidebar menu as seen on the Google Nexus 7 website"
+    />
+    <meta
+      name="keywords"
+      content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu"
+    />
+    <meta name="author" content="Codrops" />
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../../css/navadmin.css" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+    <script src="/adminjs/modernizr.custom.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <%- include ("../views/partials/adminpanel") -%>
+      <header>
+        <h1>
+          Manage Long Mcq Contests<span style="color: white"
+            >Add Long Mcq Contests</span
+          >
+        </h1>
+      </header>
+      <div class="main-block">
+        <form
+          action="<%= data.serverurl %>/mcqLong"
+          enctype="multipart/form-data"
+          onsubmit="return handleSubmit()"
+          method="POST"
+        >
+          <h4>Exam ID</h4>
+          <textarea name="contestId" rows="5" required></textarea>
+          <p class="comments">Exam Name</p>
+          <textarea name="contestName" rows="5" required></textarea>
+          <p class="comments">Exam Start Date</p>
+          <input name="contestStartDate" type="date" required />
+          <p class="comments">Exam End Date</p>
+          <input name="contestEndDate" type="date" required />
+          <p class="comments">Exam Start Time</p>
+          <textarea
+            placeholder="24 Hours HHMM format"
+            name="contestStartTime"
+            rows="5"
+            required
+          ></textarea>
+          <p class="comments">Exam End Time</p>
+          <textarea
+            placeholder="24 Hours HHMM format"
+            name="contestEndTime"
+            rows="5"
+            required
+          ></textarea>
+          <p class="comments">Exam Sections</p>
+          <textarea
+            required
+            name="contestSections"
+            rows="5"
+            placeholder="Enter Section Names Separated By Comma -
+
+Eg : Numeral, Reasoning, Verbal, Programming"
+            required
+          ></textarea>
+          <!-- <label for="coding">Coding</label>
+          <input
+            type="checkbox"
+            name="coding"
+            id="coding"
+            style="width: fit-content; margin: 20px 0"
+          /> -->
+          <br />
+          <hr />
+          <textarea
+            type="hidden"
+            name="token"
+            id="token"
+            value="<%= token %>"
+            style="display: none"
+          ></textarea>
+          <div class="btn-block">
+            <button class="submit" type="submit">Send</button>
+          </div>
+        </form>
+        <script>
+          function handleSubmit() {
+            var coding = document.getElementById("coding");
+            if (coding.value == "on") {
+              coding.value = true;
+            } else {
+              coding.value = false;
+            }
+            return true;
+          }
+        </script>
+      </div>
+    </div>
+    <!-- /container -->
+    <script src="/adminjs/classie.js"></script>
+    <script src="/adminjs/gnmenu.js"></script>
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script>
+      new gnMenu(document.getElementById("gn-menu"));
+    </script>
+    <script>
+      document.getElementById("token").value = "<%= token %>";
+    </script>
+  </body>
+</html>

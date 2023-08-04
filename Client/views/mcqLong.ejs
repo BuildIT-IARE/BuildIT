@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Long Mcq</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+     <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+    <!-- slick slider -->
+    <link rel="stylesheet" href="plugins/slick/slick.css" />
+    <!-- themefy-icon -->
+    <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css" />
+
+    <!-- Main Stylesheet -->
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style2.css" />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      ::-webkit-scrollbar {
+        width: 0.65vw;
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgb(155, 155, 155);
+        border-radius: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(110, 110, 110);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: rgb(247, 246, 242);
+        overflow-x: hidden;
+      }
+      .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 0.52mm solid black;
+      }
+      .head-left {
+        font-family: "old standard tt";
+        font-weight: 700;
+        font-size: x-large;
+        padding: 18px;
+      }
+      .head-right {
+        padding: 18px;
+      }
+      .head-right a {
+        text-decoration: none;
+        color: black;
+        font-family: poppins;
+        font-size: medium;
+        padding: 5px 10px;
+        border: 0.5mm solid black;
+        margin-left: 10px;
+        transition: 0.25s;
+        background: rgb(255, 195, 74);
+        box-shadow: 3px 3px 0 black;
+      }
+      .head-right a:hover {
+        box-shadow: 0px 0px 0 black;
+      }
+      .split {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .sleft,
+      .sright {
+        box-sizing: border-box;
+        min-height: calc(100vh - 70px);
+        height: calc(100vh - 70px);
+        position: relative;
+      }
+      .sright {
+        flex: 0.34;
+        overflow-y: auto;
+      }
+      .sleft {
+        flex: 1;
+      }
+      .stitle {
+        font-family: poppins;
+        font-size: 45px;
+        font-weight: 600;
+        margin-top: 10px;
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 10px;
+      }
+      .stitle span {
+        box-sizing: border-box;
+        margin-left: 20px;
+      }
+      .sleft {
+        border-right: 0.5mm solid black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: baseline;
+        overflow: auto;
+      }
+      .statement-box {
+        flex-grow: 1;
+        width: 90%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        position: relative;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+      .statements {
+        flex-grow: 1;
+        width: 200%;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+      }
+      .state-nav {
+        width: fit-content;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+      .snav-btn {
+        background: white;
+        outline: none;
+        border: 0.5mm solid rgb(53, 53, 53);
+        box-shadow: 3px 3px 0 rgb(41, 41, 41);
+        font-family: poppins;
+        font-size: medium;
+        padding: 3px 8px;
+        margin-right: 15px;
+        box-sizing: border-box;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+      .snav-btn:hover {
+        box-shadow: none;
+      }
+      .active {
+        background: rgb(81, 218, 133);
+      }
+      .states {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+      }
+      .state-box {
+        width: 200px;
+        height: 200px;
+        box-sizing: border-box;
+        border: 0.5mm solid black;
+        padding: 10px;
+        text-decoration: none;
+        font-family: poppins;
+        color: black;
+        text-align: justify;
+        position: relative;
+        transition: 0.25s;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        margin-bottom: 25px;
+      }
+      .state-box::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "";
+        display: block;
+        background: transparent;
+        width: 200px;
+        height: 200px;
+        border: 0.3mm solid black;
+        transform: translate(5px, 5px);
+        z-index: -1;
+        padding: 0;
+      }
+      .state-box:hover {
+        box-shadow: 8px 8px 0 rgb(30, 30, 30);
+      }
+      .state-box::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        transition: 0.25s;
+      }
+      .state-box:hover::before {
+        width: 198px;
+        height: 198px;
+      }
+      .state-box:hover::after {
+        display: none;
+      }
+      .state-white::before {
+        background: rgb(185, 211, 255);
+      }
+      .state-white {
+        background: white;
+      }
+      .sbtitle {
+        position: relative;
+      }
+      .sbicon {
+        width: 100%;
+        text-align: left;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .sbicon span {
+        font-size: 28px;
+        color: black;
+      }
+      .sbtitle {
+        width: 100%;
+        flex-grow: 1;
+        padding: 4px 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .sbmain-title {
+        font-size: medium;
+        font-weight: 600;
+        margin-bottom: 3px;
+      }
+      .sbsubtitle {
+        font-size: small;
+      }
+      .sbbutton {
+        width: 100%;
+        text-align: left;
+        position: relative;
+        text-decoration: underline;
+      }
+      .state-red {
+        background: rgb(242, 158, 125);
+      }
+      .mini {
+        font-size: x-large;
+      }
+      .progress{
+        background: url(../images/emailProgress.svg);
+        background-size:contain;
+        background-attachment:fixed;
+        width: 95%;
+        margin: auto;
+        border-radius: 4mm;
+        margin-bottom: 10px;
+        border: 0.4mm solid black;
+        overflow: hidden;
+      }
+      .pro-box {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding-bottom: 0;
+      }
+      .pro-box .percent {
+        position: relative;
+        width: 180px;
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgb(255,208,114);
+      }
+      .pro-box .percent svg {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        transform-origin: center;
+        transform: rotateZ(-90deg);
+      }
+      .pro-box .percent svg circle:nth-child(1) {
+        stroke-dashoffset: 0;
+        stroke: white;
+      }
+      .pro-box .percent svg circle:nth-child(2) {
+        
+        stroke: rgb(36, 36, 36);
+        animation: load forwards 2s;
+      }
+      @keyframes load{
+        from{
+          stroke-dashoffset: 439.1124267578125;
+        }
+      }
+      .pro-box .percent svg circle {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        fill: none;
+        stroke-width: 5;
+        stroke: black;
+        transform: translate(5px, 5px);
+        stroke-dasharray: 439.1124267578125;
+        stroke-dashoffset: 439.1124267578125;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 1s ease;
+      }
+      .pro-box .percent .pro-num {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 134px;
+        height: 134px;
+        border-radius: 50%;
+        background: repeating-linear-gradient(
+          transparent,
+          transparent 5%,
+          rgba(0, 0, 0, 0.4) 5%,
+          rgba(0, 0, 0, 0.4) 5.5%
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 5%,
+          rgba(0, 0, 0, 0.4) 5%,
+          rgba(0, 0, 0, 0.4) 5.5%
+        );;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .pro-num .info{
+        color: rgb(255, 255, 255);
+        font-size: x-large;
+        font-family: poppins;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgb(37, 37, 37);
+        animation: flip ease-in-out 1s;
+      }
+      @keyframes flip {
+        0%{
+          transform: rotateY(90deg);
+        }
+        100%{
+          transform: rotateY(0deg);
+        }
+      }
+      .pro-box .percent .pro-num span {
+        font-size: small;
+        font-family: poppins;
+      }
+      .pro-stars {
+        width: 100%;
+        display: flex;
+        margin: auto;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        background: rgb(255,208,114);
+      }
+      .pro-stars span {
+        font-size: x-large;
+        margin: 1px;
+        color: rgb(0, 0, 0);
+        text-shadow: 2px 2px rgb(255, 255, 255);
+      }
+      .recents {
+        width: 96%;
+        height: fit-content;
+        padding: 20px 0;
+        margin-top: 5px;
+        border: 0.5mm solid black;
+        background: white;
+        border-radius: 4mm;
+        margin: auto;
+      }
+      .submissions {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: baseline;
+        margin: auto;
+        margin-top: 20px;
+      }
+      .submission {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        font-family: poppins;
+        border-bottom: 0.5mm solid rgba(0, 0, 0, 0.107);
+        padding-bottom: 4px;
+        margin-bottom: 10px;
+      }
+      .subm-title {
+        font-size: medium;
+        font-weight: 500;
+        flex-basis: 50%;
+      }
+      .subm-title a {
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+        font-weight: 600;
+        padding: 0 4px;
+        border-radius: 5mm;
+        color: rgb(2, 102, 202);
+      }
+      .subm-status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-basis: 20%;
+      }
+      .subm-status span {
+        font-size: x-large;
+        color: rgb(41, 117, 70);
+      }
+      .subm-points {
+        flex-basis: 30%;
+        text-align: right;
+      }
+      .subm-points span {
+        font-size: small;
+      }
+      .sb-titles {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: auto;
+        font-family: poppins;
+        position: sticky;
+        top: 0;
+        left: auto;
+        background: white;
+      }
+      .sb-titles span {
+        font-size: small;
+      }
+      .sb-titles span:nth-child(1) {
+        flex-basis: 50%;
+      }
+      .sb-titles span:nth-child(2) {
+        flex-basis: 20%;
+        text-align: center;
+      }
+      .sb-titles span:nth-child(3) {
+        flex-basis: 30%;
+        text-align: right;
+      }
+      .time-date {
+        font-size: small;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        position: relative;
+      }
+      .from {
+        font-size: small;
+      }
+      @keyframes animate {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+    </style>
+  </head>
+  <body>
+    <section class="header">
+      <div class="head-left">BuildIT - IARE</div>
+      <div class="head-right">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </section>
+    <div class="header_1">
+    <section class="split">
+      <div class="sleft">
+        <div class="stitle">
+          <span>Sessions</span>
+          <div class="state-nav">
+            <button
+              onclick="scrolldiv('acstates', this)"
+              class="snav-btn active"
+              id="btn1"
+            >
+              Active
+            </button>
+            <button
+              onclick="scrolldiv('exstates', this)"
+              class="snav-btn"
+              id="btn2"
+            >
+              Expired
+            </button>
+          </div>
+        </div>
+        <div class="statement-box">
+          <div class="statements">
+            <div class="states" id="acstates">
+              <% for(let i = data.length-1; i >= 0; i--){ %> <% if 
+              (new Date(data[i].contestEndDate + " " + data[i].contestEndTime.slice(0, 2) + ":" + data[i].contestEndTime.slice(2, 5) + ":00") - new Date()>0)
+                // (data[i].contestStartDate <=new Date().toISOString().slice(0,10) && data[i].contestEndDate >=new Date().toISOString().slice(0,10) )
+                 { %>
+                  <a href="/mcqLong/<%=  data[i].contestId %>" class="state-box state-white">
+                    <div class="sbicon">
+                  <span class="material-icons-outlined"> texture </span>
+                  <div class="from"><%= data[i].contestStartDate %> <%= data[i].contestStartTime.slice(0,-2)+':'+data[i].contestStartTime.slice(-2) %></div>
+                </div>
+                <div class="sbtitle">
+                  <div class="sbmain-title"><%= data[i].contestName %></div>
+                </div>
+                <div class="time-date">
+                  <div class="to"><%= data[i].contestEndDate %> <%= data[i].contestEndTime.slice(0,-2)+':'+data[i].contestEndTime.slice(-2) %></div>
+                </div>
+                </a>
+                <% } %> <% } %>
+                    </div>
+            <div class="states" id="exstates">
+              <% for(let i = data.length-1; i >= 0; i--){ %> <% if
+                (new Date(data[i].contestEndDate + " " + data[i].contestEndTime.slice(0, 2) + ":" + data[i].contestEndTime.slice(2, 5) + ":00") - new Date()<=0)
+                // (data[i].contestStartDate > new Date().toISOString().slice(0,10) || data[i].contestEndDate <new Date().toISOString().slice(0,10) ) 
+                { %>
+                  <a href="/mcqLong/<%=  data[i].contestId %>" class="state-box state-white">
+                    <div class="sbicon">
+                  <span class="material-icons-outlined"> texture </span>
+                  <div class="from"><%= data[i].contestStartDate %> <%= data[i].contestStartTime.slice(0,-2)+':'+data[i].contestStartTime.slice(-2) %></div>
+                </div>
+                <div class="sbtitle">
+                  <div class="sbmain-title"><%= data[i].contestName %></div>
+                </div>
+                <div class="time-date">
+                  <div class="to"><%= data[i].contestEndDate %> <%= data[i].contestEndTime.slice(0,-2)+':'+data[i].contestEndTime.slice(-2) %></div>
+                </div>
+                </a>
+                <% } %> <% } %>
+              </div>
+              
+          </div>
+          
+            </div>
+          </div>
+          </div>
+        
+      
+    </section>
+  
+    <script>
+      function scrolldiv(ele, btn) {
+        var elem = document.getElementById(ele);
+        elem.scrollIntoView();
+        document.getElementById("btn1").className = "snav-btn";
+        document.getElementById("btn2").className = "snav-btn";
+        btn.className = "snav-btn active";
+      }
+    </script>
+  
+  </body>
+</html>
