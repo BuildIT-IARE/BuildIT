@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+    <title>Tutorials</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+  <!-- slick slider -->
+  <link rel="stylesheet" href="plugins/slick/slick.css">
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
+  <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+
+  <!-- Main Stylesheet -->
+  <link href="/css/dist/jquery.flipster.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  
+  <!--Favicon-->
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+  <style>
+    .green {
+      color: green;
+    }
+    .red {
+      color: red;
+    }
+    .orange {
+      color: orange;
+    }
+    .black {
+      color: black;
+    }
+
+    .button1 {
+  border-radius: 4px;
+  background-color: #454fd4;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size:  15px;
+  padding: 5px;
+  width: 110px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button1 span {
+  cursor: pointer;
+  display: inline-block;
+  transition: 1s;
+}
+
+.button1 span:after {
+  content: '\21B6';
+  opacity: 0;
+  top: 50px;
+  right: 20px;
+  transition: 0.3s;
+}
+
+.button1:hover span {
+  padding-right: 20px;
+}
+
+.button1:hover span:after {
+  opacity: 1;
+  right: 0;
+  padding-bottom:20px;  
+}
+p{
+  font-size: 130%;
+}
+.button {
+  border-radius: 4px;
+  background-color: #454fd4;
+  border: none;
+  color: white;
+  /* text-align: center; */
+  font-size:  px;
+  padding: 20px;
+  width: 160px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 1s;
+}
+.button span:after {
+  content: '\00bb';
+  position: "relative";
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.button:hover span {
+  padding-left: 25px;
+}
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+div .border {
+  border-color: red;
+  margin: 4px;
+  padding: 4px;
+  border-width: 3px;
+}
+</style>
+<style>
+#chartdiv {
+  width: 100%;
+  height: 400px;
+  position: initial;
+  bottom: 0;
+  right: 500;
+}
+#practice1,#practice2{
+  text-decoration: none;
+  width: 300px;
+  height: 300px;
+  color: white;
+  min-width: 300px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 45px;
+  font-weight: bold;
+}
+#practice1{
+  background: rgb(255, 70, 70);
+}
+#practice2{
+  background: rgb(8, 209, 25);
+}
+</style>
+<link
+href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+rel="stylesheet">
+<link rel="stylesheet" href="../css/style2.css">
+</head>
+
+<body>
+
+  <%- include ("../views/partials/header2") -%>
+
+<!-- page title -->
+<section class="page-title bg-primary position-relative">
+  <center><h2 class="text-white font-tertiary" ><%= data.courseName %></h2></center>
+  <br>
+</section>
+<!-- /page title -->
+
+<section class="section">
+  <div class="container">
+    <h3 class="font-tertiary mb-5" style="text-align: center; color: green;">Select Level</h3>
+    <li data-flip-title="Topics" data-flip-category="Practice">
+        <a href = "<%= data.clientRoute %>/tutorials/<%= data.courseId %>/Topics" id="practice1">
+          Topics
+        </a>
+      </li>
+    
+  <br><br>
+  <hr>
+</section>
+<%- include("../views/partials/aboutfooter") %>
+
+<!-- jQuery -->
+<script src="plugins/jQuery/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+<!-- slick slider -->
+<script src="plugins/slick/slick.min.js"></script>
+<!-- filter -->
+<script src="plugins/shuffle/shuffle.min.js"></script>
+
+<!-- Main Script -->
+<script src="js/script.js"></script>
+<script src="/css/dist/jquery.flipster.min.js"></script>
+<script>
+  $("#carousel").flipster({
+    style: 'carousel',
+    spacing: -0.5,
+    nav: true,
+    buttons: true,
+});
+</script>
+</body>
+</html>
