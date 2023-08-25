@@ -512,7 +512,7 @@ $(document).ready(function () {
   if (getCookie("courseId")) {
     $("#tutorials").text("Practicing");
     courseId = getCookie("courseId");
-    if (courseId === "IARE_PY") {
+    if (courseId === "IARE_PY" || courseId === "IARE_EPSL" || courseId === "IARE_JL") {
       $("#select-language").append(
         `<option mode = "python" value="34"> Python (3.6.0) </option>`
       );
