@@ -226,6 +226,13 @@
       border-radius: 3mm;
       position: relative;
     }
+    .d-item7 {
+      grid-area: item7;
+      background: rgb(230, 244, 227);
+      min-height: 200px;
+      box-shadow: inset -0.5mm -0.5mm 0 black;
+      border-radius: 3mm;
+    }
     .d-item2 {
       grid-area: item2;
       background:rgb(253, 253, 253) ;
@@ -668,6 +675,19 @@
             Verified
           </div>
         </div>
+        <div style="display: flex; justify-content: center;">
+          <% for (var i = 0; i < partCount.length; i++) { %>
+            <% if (partCount[i] === "IARE_EPSL") { %>
+              <div style="display: inline-block; background-color: #FF5733; color: white; padding: 5px 10px; margin-right: 10px;">
+                <span>ESPL</span>
+                <span style="margin-left: 5px;"><%= labCount %></span>
+              </div>
+            <% } %>
+          <% } %>
+        </div>
+        
+        
+        
         </div>
         <div class="card-back">
           <div class="p-top">
@@ -912,11 +932,16 @@
               <div class="d1-val"><%= "0"+partCount.length%></div>
               <div class="d1-courses">
                 <% for(var i=0;i<partCount.length;i++){ %>
+                  <% if(partCount[i]=="IARE_EPSL") {%>
+                    <span><%= partCount[i]  %></span>
+
+                  <% } else {%>
                   <span><%= partCount[i] %></span>
-                <%}%>
+                <%}}%>
               </div>
               <a href="/tutorials" class="bottom-link" id="b1">Checkout all the courses</a>
             </div>
+            
           </div>
           <div class="d-item2">
             <div class="d-item-title">
@@ -1030,6 +1055,7 @@
                 <a href="/ResumeBuilder" class="bottom-link" id="b3">Update your resume</a>
             </div>
           </div>
+          
           <div class="d-item5">
             <div class="d-item-title">
               <span class="material-icons-outlined"> wifi </span>
@@ -1038,6 +1064,7 @@
             <div class="d-item5-main" id="item5-main">
 
             </div>
+            
             <script>
                 fetch("https://api.ipify.org/?format=json")
                 .then(results=>results.json())
@@ -1047,6 +1074,11 @@
                   })
             </script>
           </div>
+          <div class="d-item6">
+              
+            
+          </div>
+          
           <div class="d-item6">
             <div class="d-item-title">
               <span class="material-icons-outlined"> insights </span>

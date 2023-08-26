@@ -366,6 +366,33 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
           },
           json: true,
         };
+        
+        let options = {
+          url: serverRoute + "/questions/courses/" + "IARE_EPSL",
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+      
+        request(options, function (err, response, body9) {
+          let options9 = {
+            url: serverRoute + "/tparticipations/" + "IARE_EPSL",
+            method: "get",
+            headers: {
+              authorization: req.cookies.token,
+            },
+            json: true,
+          };
+            request(options9, function (err, response, bodytimer) {
+              bodytimer = bodytimer[0];
+              function countUniqueElements(arr) {
+                const uniqueSet = new Set(arr);
+                return uniqueSet.size;
+              }
+              const uniqueCount = countUniqueElements(bodytimer.practiceSolved);
+              console.log("bbbbbbbbbbbbbbbbbbb",uniqueCount);
         // get participation details
         request(options3, function (err, response, bodytimer) {
           bodytimer = bodytimer[0];
@@ -451,6 +478,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       partCount: partCount,
                       progress: body3,
                       contestCount: body4.count,
+                      labCount :uniqueCount,
                       resumeStatus: body5.success,
                       skillups: body6,
                       token: req.cookies.token,
@@ -465,6 +493,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       partCount: partCount,
                       progress: body3,
                       contestCount: body4.count,
+                      labCount :uniqueCount,
                       resumeStatus: body5.success,
                       token: req.cookies.token,
                       serverUrl: serverRoute,
@@ -478,7 +507,9 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
         });
       });
     });
+    });
   });
+});
 });
 
 app.post("/editProfile", async (req, res) => {
