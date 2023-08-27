@@ -393,6 +393,34 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
               }
               const uniqueCount = countUniqueElements(bodytimer.practiceSolved);
               console.log("bbbbbbbbbbbbbbbbbbb",uniqueCount);
+         
+          
+              let options = {
+                url: serverRoute + "/questions/courses/" + "IARE_JL",
+                method: "get",
+                headers: {
+                  authorization: req.cookies.token,
+                },
+                json: true,
+              };
+            
+              request(options, function (err, response, body10) {
+                let options10 = {
+                  url: serverRoute + "/tparticipations/" + "IARE_JL",
+                  method: "get",
+                  headers: {
+                    authorization: req.cookies.token,
+                  },
+                  json: true,
+                };
+                  request(options10, function (err, response, bodytimer) {
+                    bodytimer = bodytimer[0];
+                    function countUniqueElements1(arr) {
+                      const uniqueSet = new Set(arr);
+                      return uniqueSet.size;
+                    }
+                    const uniqueCount1 = countUniqueElements1(bodytimer.practiceSolved);
+                    console.log("bbbbbbbbbbbbbbbbbbb",uniqueCount1);
         // get participation details
         request(options3, function (err, response, bodytimer) {
           bodytimer = bodytimer[0];
@@ -479,6 +507,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       progress: body3,
                       contestCount: body4.count,
                       labCount :uniqueCount,
+                      labCount1 :uniqueCount1,
                       resumeStatus: body5.success,
                       skillups: body6,
                       token: req.cookies.token,
@@ -494,6 +523,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       progress: body3,
                       contestCount: body4.count,
                       labCount :uniqueCount,
+                      labCount1 :uniqueCount1,
                       resumeStatus: body5.success,
                       token: req.cookies.token,
                       serverUrl: serverRoute,
@@ -507,6 +537,8 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
         });
       });
     });
+  });
+});
     });
   });
 });
@@ -2822,6 +2854,13 @@ app.get(
           data: body,
             });
           }
+          else if (req.params.courseId === "IARE_JL"){
+            res.render("labTopic1", {
+              imgUsername: req.cookies.username,
+          title: difficulty,
+          data: body,
+            });
+          }
       
         res.render("practiceTutList", {
           imgUsername: req.cookies.username,
@@ -2868,7 +2907,10 @@ app.get(
           } else if (req.params.courseId === "IARE_EPSL") {
             body.courseName = "EPSL";
             body.courseId = "IARE_EPSL";
-          }else {
+          } else if (req.params.courseId === "IARE_JL") {
+            body.courseName = "JL";
+            body.courseId = "IARE_JL";
+          } else {
             body.courseName = "Invalid Course";
           }
           // console.log(body, "\n ____________________________________________________________________");
@@ -2938,11 +2980,20 @@ app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
         } else if (req.params.courseId === "IARE_EPSL") {
           body.courseName = "EPSL";
           body.courseId = "IARE_EPSL";
+        }else if (req.params.courseId === "IARE_JL") {
+          body.courseName = "JL";
+          body.courseId = "IARE_JL";
         } else {
           body.courseName = "Invalid Course";
         }
         if (req.params.courseId === "IARE_EPSL"){
           res.render("labQuestionsTut", {
+            imgUsername: req.cookies.username,
+            data: body,
+            datatimer: bodytimer,
+          });
+        } else if (req.params.courseId === "IARE_JL"){
+          res.render("labQuestionsTut1", {
             imgUsername: req.cookies.username,
             data: body,
             datatimer: bodytimer,
@@ -3278,6 +3329,10 @@ app.get("/labs", checkSignIn, async (req, res) => {
 
 app.get("/labTut", checkSignIn, async (req, res) => {
   res.render("labTut", { clientRoute : clientRoute, imgUsername: req.cookies.username });
+});
+
+app.get("/labTut1", checkSignIn, async (req, res) => {
+  res.render("labTut1", { clientRoute : clientRoute, imgUsername: req.cookies.username });
 });
 
 app.get("/pragnya", checkSignIn, async (req, res) => {

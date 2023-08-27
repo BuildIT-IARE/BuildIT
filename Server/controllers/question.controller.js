@@ -314,7 +314,7 @@ exports.createTutorials = (req, res) => {
     });
   }
   console.log("djsfkjlkdjslkaf",req.body.courseId);
-  if (req.body.courseId == "IARE_JL"){
+  if (req.body.courseId == "IARE_JL" ){
     Question.find()
     .then((questions) => {
       let isTopicBased = req.body.company || req.body.topic ? true : false;
@@ -364,7 +364,82 @@ exports.createTutorials = (req, res) => {
         editorial: isTopicBased ? "" : req.body.editorial,
         language: isTopicBased ? "" : req.body.language,
         conceptLevel: isTopicBased ? "" : req.body.sublevel,
-        courseId: ["IARE_EPSL","IARE_JL"]
+        courseId: ["IARE_JL"]
+      });
+
+      // Save Question in the database
+      question
+        .save()
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message || "Some error occurred while creating the Question.",
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message:
+          err.message || "Some error occurred while retrieving questions.",
+      });
+    });
+  }
+  else if (req.body.courseId == "IARE_EPSL" ){
+    Question.find()
+    .then((questions) => {
+      let isTopicBased = req.body.company || req.body.topic ? true : false;
+      let companies = [];
+      let topics = [];
+      if (req.body.company) {
+        companies = req.body.company
+          .split(",")
+          .filter((item) => !item.includes("-"))
+          .map((item) => item.trim());
+      }
+      if (req.body.topic) {
+        topics = req.body.topic
+          .split(",")
+          .filter((item) => !item.includes("-"))
+          .map((item) => item.trim());
+      }
+
+      let currQuestions = questions.length + 1;
+      req.body.questionId = "IARE" + currQuestions.toString();
+
+      // Create a Question
+      const question = new Question({
+        questionId: req.body.questionId,
+        questionName: req.body.questionName,
+        contestId: req.body.contestId,
+        questionDescriptionText: req.body.questionDescriptionText,
+        questionInputText: req.body.questionInputText,
+        questionOutputText: req.body.questionOutputText,
+        questionExampleInput1: req.body.questionExampleInput1,
+        questionExampleOutput1: req.body.questionExampleOutput1,
+        questionExampleInput2: req.body.questionExampleInput2,
+        questionExampleOutput2: req.body.questionExampleOutput2,
+        questionExampleInput3: req.body.questionExampleInput3,
+        questionExampleOutput3: req.body.questionExampleOutput3,
+        questionHiddenInput1: req.body.questionHiddenInput1,
+        questionHiddenInput2: req.body.questionHiddenInput2,
+        questionHiddenInput3: req.body.questionHiddenInput3,
+        questionHiddenOutput1: req.body.questionHiddenOutput1,
+        questionHiddenOutput2: req.body.questionHiddenOutput2,
+        questionHiddenOutput3: req.body.questionHiddenOutput3,
+        questionExplanation: req.body.questionExplanation,
+        company: companies,
+        topic: topics,
+        difficulty: isTopicBased ? "topics" : req.body.difficulty,
+        author: isTopicBased ? "" : req.body.author,
+        editorial: isTopicBased ? "" : req.body.editorial,
+        language: isTopicBased ? "" : req.body.language,
+        conceptLevel: isTopicBased ? "" : req.body.sublevel,
+        courseId: ["IARE_EPSL"]
       });
 
       // Save Question in the database
