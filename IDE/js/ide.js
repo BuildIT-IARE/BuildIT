@@ -1,5 +1,5 @@
 var apiUrl = localStorageGetItem("api-url") || "http://13.234.234.30:3000";
-var serverUrl = "http://13.234.234.30:5000";
+var serverUrl = "http://localhost:5000";
 var wait = localStorageGetItem("wait") || false;
 var pbUrl = "https://pb.judge0.com";
 var check_timeout = 200;
@@ -512,11 +512,11 @@ $(document).ready(function () {
   if (getCookie("courseId")) {
     $("#tutorials").text("Practicing");
     courseId = getCookie("courseId");
-    if (courseId === "IARE_PY") {
+    if (courseId === "IARE_PY" || courseId === "IARE_EPSL" || courseId === "IARE_JL") {
       $("#select-language").append(
         `<option mode = "python" value="34"> Python (3.6.0) </option>`
       );
-    } else if (courseId === "IARE_C") {
+    } else if (courseId === "IARE_C" ) {
       $("#select-language").append(
         `<option mode = "c" value="4"> C (gcc 7.2.0) </option>`
       );

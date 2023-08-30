@@ -366,6 +366,61 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
           },
           json: true,
         };
+        
+        let options = {
+          url: serverRoute + "/questions/courses/" + "IARE_EPSL",
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+      
+        request(options, function (err, response, body9) {
+          let options9 = {
+            url: serverRoute + "/tparticipations/" + "IARE_EPSL",
+            method: "get",
+            headers: {
+              authorization: req.cookies.token,
+            },
+            json: true,
+          };
+            request(options9, function (err, response, bodytimer) {
+              bodytimer = bodytimer[0];
+              function countUniqueElements(arr) {
+                const uniqueSet = new Set(arr);
+                return uniqueSet.size;
+              }
+              const uniqueCount = countUniqueElements(bodytimer.practiceSolved);
+              console.log("bbbbbbbbbbbbbbbbbbb",uniqueCount);
+         
+          
+              let options = {
+                url: serverRoute + "/questions/courses/" + "IARE_JL",
+                method: "get",
+                headers: {
+                  authorization: req.cookies.token,
+                },
+                json: true,
+              };
+            
+              request(options, function (err, response, body10) {
+                let options10 = {
+                  url: serverRoute + "/tparticipations/" + "IARE_JL",
+                  method: "get",
+                  headers: {
+                    authorization: req.cookies.token,
+                  },
+                  json: true,
+                };
+                  request(options10, function (err, response, bodytimer) {
+                    bodytimer = bodytimer[0];
+                    function countUniqueElements1(arr) {
+                      const uniqueSet = new Set(arr);
+                      return uniqueSet.size;
+                    }
+                    const uniqueCount1 = countUniqueElements1(bodytimer.practiceSolved);
+                    console.log("bbbbbbbbbbbbbbbbbbb",uniqueCount1);
         // get participation details
         request(options3, function (err, response, bodytimer) {
           bodytimer = bodytimer[0];
@@ -451,6 +506,8 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       partCount: partCount,
                       progress: body3,
                       contestCount: body4.count,
+                      labCount :uniqueCount,
+                      labCount1 :uniqueCount1,
                       resumeStatus: body5.success,
                       skillups: body6,
                       token: req.cookies.token,
@@ -465,6 +522,8 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       partCount: partCount,
                       progress: body3,
                       contestCount: body4.count,
+                      labCount :uniqueCount,
+                      labCount1 :uniqueCount1,
                       resumeStatus: body5.success,
                       token: req.cookies.token,
                       serverUrl: serverRoute,
@@ -479,6 +538,10 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
       });
     });
   });
+});
+    });
+  });
+});
 });
 
 app.post("/editProfile", async (req, res) => {
@@ -2773,7 +2836,7 @@ app.get(
 
     request(options, function (err, response, body) {
       if (ifTopicsOrCompanies) {
-        let courseIds = ["IARE_PY", "IARE_C", "IARE_JAVA", "IARE_CPP"];
+        let courseIds = ["IARE_PY", "IARE_C", "IARE_JAVA", "IARE_CPP","IARE_EPSL","IARE_JL"];
         let isCourseValid = courseIds.includes(req.params.courseId);
         let ifTopics = difficulty === "Topics";
 
@@ -2784,6 +2847,21 @@ app.get(
             : "Select a company"
           : "Invalid Course";
 
+          if (req.params.courseId === "IARE_EPSL"){
+            res.render("labTopic", {
+              imgUsername: req.cookies.username,
+          title: difficulty,
+          data: body,
+            });
+          }
+          else if (req.params.courseId === "IARE_JL"){
+            res.render("labTopic1", {
+              imgUsername: req.cookies.username,
+          title: difficulty,
+          data: body,
+            });
+          }
+      
         res.render("practiceTutList", {
           imgUsername: req.cookies.username,
           title: difficulty,
@@ -2826,6 +2904,12 @@ app.get(
           } else if (req.params.courseId === "IARE_CPP") {
             body.courseName = "C++ Proficiency";
             body.courseId = "IARE_CPP";
+          } else if (req.params.courseId === "IARE_EPSL") {
+            body.courseName = "EPSL";
+            body.courseId = "IARE_EPSL";
+          } else if (req.params.courseId === "IARE_JL") {
+            body.courseName = "JL";
+            body.courseId = "IARE_JL";
           } else {
             body.courseName = "Invalid Course";
           }
@@ -2893,8 +2977,27 @@ app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
         } else if (req.params.courseId === "IARE_CPP") {
           body.courseName = "C++ Proficiency";
           body.courseId = "IARE_CPP";
+        } else if (req.params.courseId === "IARE_EPSL") {
+          body.courseName = "EPSL";
+          body.courseId = "IARE_EPSL";
+        }else if (req.params.courseId === "IARE_JL") {
+          body.courseName = "JL";
+          body.courseId = "IARE_JL";
         } else {
           body.courseName = "Invalid Course";
+        }
+        if (req.params.courseId === "IARE_EPSL"){
+          res.render("labQuestionsTut", {
+            imgUsername: req.cookies.username,
+            data: body,
+            datatimer: bodytimer,
+          });
+        } else if (req.params.courseId === "IARE_JL"){
+          res.render("labQuestionsTut1", {
+            imgUsername: req.cookies.username,
+            data: body,
+            datatimer: bodytimer,
+          });
         }
         res.render("questionsTut", {
           imgUsername: req.cookies.username,
@@ -2943,6 +3046,8 @@ app.get("/certificate", async (req, res) => {
     });
   });
 });
+
+
 
 app.get("/codechef-iare-chapter", async (req, res, next) => {
   let options = {
@@ -3216,6 +3321,18 @@ app.get("/skillCertificate", checkSignIn, async (req, res) => {
       });
     }
   });
+});
+
+app.get("/labs", checkSignIn, async (req, res) => {
+  res.render("labs");
+});
+
+app.get("/labTut", checkSignIn, async (req, res) => {
+  res.render("labTut", { clientRoute : clientRoute, imgUsername: req.cookies.username });
+});
+
+app.get("/labTut1", checkSignIn, async (req, res) => {
+  res.render("labTut1", { clientRoute : clientRoute, imgUsername: req.cookies.username });
 });
 
 app.get("/pragnya", checkSignIn, async (req, res) => {
