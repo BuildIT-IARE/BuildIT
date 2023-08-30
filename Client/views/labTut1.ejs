@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <title>BuildIT Tutorials</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css">
+  <!-- slick slider -->
+  <link rel="stylesheet" href="/plugins/slick/slick.css">
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css">
+
+  <!-- Main Stylesheet -->
+  <!-- <link href="/css/demo.css" rel="stylesheet"> -->
+
+  <link href="/css/dist/jquery.flipster.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+
+  
+  <!--Favicon-->
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel = "icon" type = "/image/png" href = "../../images/logo-backup2.png">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet">
+  <link rel="stylesheet" href="../css/style2.css">
+
+</head>
+
+<body>
+  
+<%- include ("../views/partials/header2") -%>
+
+<!-- page title -->
+<section class="page-title bg-primary position-relative">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="text-white font-tertiary">Tutorials</h1>
+      </div>
+    </div>
+  </div>
+
+</section>
+<!-- /page title -->
+
+<!-- blog -->
+<section class="section">
+  <div class="container">
+      <h3 id = "login" class="font-tertiary mb-5" style="text-align: center; color: green;">Proficiency Courses</h3>
+    <div class="row1wa">
+      <!-- <h5 id = "login"></h5> -->
+      <center>
+        <div id="flat">
+
+        </div>
+  </center>
+</section>
+
+<script>
+    function getCookie(name) {
+      var dc = document.cookie;
+      var prefix = name + "=";
+      var begin = dc.indexOf("; " + prefix);
+      if (begin == -1) {
+          begin = dc.indexOf(prefix);
+          if (begin != 0) return null;
+      }
+      else
+      {
+          begin += 2;
+          var end = document.cookie.indexOf(";", begin);
+          if (end == -1) {
+          end = dc.length;
+          }
+      }
+      // because unescape has been deprecated, replaced with decodeURI
+      //return unescape(dc.substring(begin + prefix.length, end));
+      return decodeURI(dc.substring(begin + prefix.length, end));
+  } 
+  
+  function doSomething() {
+      var myCookie = getCookie("token");
+  
+      if (myCookie == null) {
+          // do cookie doesn't exist stuff;
+        document.getElementById("login").innerHTML = "Login to view courses";
+      } else {
+        document.getElementById('flat').innerHTML = `<ul>
+                <li data-flip-title="C">
+                  <a href = "<% clientRoute %>/tutorials/IARE_JL">
+                    <img width="300px" height="300px" src="/images/IARE_C.png">
+                  </a>
+                </li>
+                <li data-flip-title="C++">
+                  <a href = "<% clientRoute %>/tutorials/IARE_JL">
+                    <img width="300px" height="300px" src="/images/IARE_CPP.png">
+                  </a>
+                 </li>
+                <li data-flip-title="Python">
+                  <a href = "<% clientRoute %>/tutorials/IARE_JL">
+                    <img width="300px" height="300px" src="/images/IARE_PY.png">
+                  </a>
+                </li>
+                <li data-flip-title="Java">
+                  <a href = "<% clientRoute %>/tutorials/IARE_JL">
+                    <img width="300px" height="300px" src="/images/IARE_JAVA.png">
+                  </a>
+                </li>
+            </ul>`;
+      }
+  }
+  doSomething()
+</script>
+
+<%- include("../views/partials/aboutfooter") %>
+
+<!-- jQuery -->
+<script src="/plugins/jQuery/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/plugins/bootstrap/bootstrap.min.js"></script>
+<!-- slick slider -->
+<script src="/plugins/slick/slick.min.js"></script>
+<!-- filter -->
+<script src="/plugins/shuffle/shuffle.min.js"></script>
+
+<!-- Main Script -->
+<script src="/js/script.js"></script>
+<script src="/css/dist/jquery.flipster.min.js"></script>
+<script>
+  var flat = $("#flat").flipster({
+      style: 'flat',
+      spacing: -0.25
+  });
+</script>
+</body>
+</html>
