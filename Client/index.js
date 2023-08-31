@@ -392,7 +392,6 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                 return uniqueSet.size;
               }
               const uniqueCount = countUniqueElements(bodytimer.practiceSolved);
-              console.log("bbbbbbbbbbbbbbbbbbb",uniqueCount);
          
           
               let options = {
@@ -871,7 +870,6 @@ app.get("/admin/add/contest", async (req, res) => {
       res.render("contestadd", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
-      console.log("token " + req.cookies.token);
       res.render("error", {
         data: body,
         imgUsername: req.cookies.username,
@@ -1614,7 +1612,6 @@ app.post("/admin/results/contest", async (req, res) => {
   };
 
   request(options, function (err, response, bodyparticipation) {
-    console.log(bodyparticipation);
     let options = {
       url: serverRoute + "/questions/contests/" + req.body.contestId,
       method: "get",
@@ -2471,7 +2468,6 @@ app.post("/login_", async (req, res) => {
         unlink("./store.txt", (err) => {
           if (err) console.log("error: delete file");
         });
-        console.log("error occurred");
         return res.redirect("/logout");
       }
       if (body.admin) {
@@ -2918,8 +2914,6 @@ app.get(
           } else {
             body.courseName = "Invalid Course";
           }
-          // console.log(body, "\n ____________________________________________________________________");
-          // console.log(bodytimer);
           res.render("displayTutQuestions", {
             imgUsername: req.cookies.username,
             data: body,
@@ -2965,8 +2959,6 @@ app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
         },
         json: true,
       };
-      // console.log(options3.url);
-      // get participation details
       request(options3, function (err, response, bodytimer) {
         bodytimer = bodytimer[0];
 
