@@ -324,6 +324,7 @@ exports.checkContestPassword = (req, res) => {
           res.status(200).send({
             success: true,
             contestId: req.body.contestId,
+            mcq: data.mcq,
           });
         } else {
           res.status(200).send({

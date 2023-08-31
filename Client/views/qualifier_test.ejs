@@ -87,11 +87,19 @@
                   data[i].contestEndTime %> <% } %>
                 </p>
                 <br />
+                <% if (data[i].contestPassword === "") { %>
                 <a
                   href="/qualifier_test/<%= data[i].contestId %>"
                   class="btn btn-xs btn-primary"
-                  >Participate</a
+                  >Practice</a
                 >
+                <% } else { %>
+                <a
+                  href="/contestPassWord/<%= data[i].contestId %>"
+                  class="btn btn-xs btn-primary"
+                  >Practice</a
+                >
+                <% } %>
               </div>
             </article>
           </div>

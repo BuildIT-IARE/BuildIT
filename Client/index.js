@@ -1895,7 +1895,12 @@ app.post("/checkContestPassword", checkSignIn, async (req, res) => {
   };
   request(options, function (err, response, body) {
     if (body.success) {
+      if (body.mcq === true) {
+        a = "/qualifier_test" + "/" + body.contestId;
+      }
+      else {
       a = "/contests/" + body.contestId;
+      }
       res.redirect(a);
     } else {
       res.redirect("/contest");
