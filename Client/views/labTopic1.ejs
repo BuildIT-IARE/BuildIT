@@ -103,15 +103,17 @@
           <% myList = myList.concat(data[i].company);%>
       <% } } %>
       <%var myArr = new Set(myList) %>
-      <% myArr.forEach(i=>{ %>
-      <a
-        href="<%= data.clientRoute %>/tutorials/<%= data.courseId %>/<%= title%>-<%=i %>"
-        class="practiceItem"
-      >
-      <span class="material-icons play">play_arrow</span>
-      <%= i %>
-      </a>
-      <% }) %>
+      <% myArr = [...myArr] %>
+      <% for( let i = 0; i < myArr.length; i++ ) { %>
+        <a
+          href="<%= data.clientRoute %>/tutorials/<%= data.courseId %>/<%= title %>-<%= myArr[i] %>"
+          class="practiceItem"
+        >
+        <%= myArr[i] %>
+        <span class="material-icons play">play_arrow</span>
+        <span style="position:absolute; bottom: 5px; right: 25px; font-size: large;">Week <%= i+1 %></span>        
+        </a>
+      <% } %>
     </section>
     <%- include("../views/partials/aboutfooter") %>
     <script src="../plugins/jQuery/jquery.min.js"></script>
