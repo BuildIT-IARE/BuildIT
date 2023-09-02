@@ -305,7 +305,6 @@ exports.addSetGivenQIdArray = (req, res) => {
 };
 
 exports.createTutorials = (req, res) => {
-  console.log(req.body);
   // Validate request
   if (!req.body.questionName) {
     return res.status(400).send({
@@ -313,7 +312,6 @@ exports.createTutorials = (req, res) => {
       message: "Question name can not be empty",
     });
   }
-  console.log("djsfkjlkdjslkaf",req.body.courseId);
   if (req.body.courseId == "IARE_JL" ){
     Question.find()
     .then((questions) => {

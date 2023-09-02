@@ -419,7 +419,6 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       return uniqueSet.size;
                     }
                     const uniqueCount1 = countUniqueElements1(bodytimer.practiceSolved);
-                    console.log("bbbbbbbbbbbbbbbbbbb",uniqueCount1);
         // get participation details
         request(options3, function (err, response, bodytimer) {
           bodytimer = bodytimer[0];
@@ -897,7 +896,6 @@ app.get("/admin/add/qualifier_test", async (req, res) => {
       res.render("qualifier_test_add", { data: url, token: req.cookies.token });
     } else {
       body.message = "Unauthorized access";
-      console.log("token " + req.cookies.token);
       res.render("error", {
         data: body,
         imgUsername: req.cookies.username,
@@ -2844,30 +2842,30 @@ app.get(
         body.courseId = req.params.courseId;
         body.courseName = isCourseValid
           ? ifTopics
-            ? "Select a topic"
-            : "Select a company"
+            ? "Select a Topic"
+            : "Select a Company"
           : "Invalid Course";
-
-          if (req.params.courseId === "IARE_EPSL"){
-            res.render("labTopic", {
-              imgUsername: req.cookies.username,
-          title: difficulty,
-          data: body,
-            });
-          }
-          else if (req.params.courseId === "IARE_JL"){
-            res.render("labTopic1", {
-              imgUsername: req.cookies.username,
-          title: difficulty,
-          data: body,
-            });
-          }
-      
-        res.render("practiceTutList", {
-          imgUsername: req.cookies.username,
-          title: difficulty,
-          data: body,
-        });
+        if (req.params.courseId === "IARE_EPSL"){
+          res.render("labTopic", {
+            imgUsername: req.cookies.username,
+        title: difficulty,
+        data: body,
+          });
+        }
+        else if (req.params.courseId === "IARE_JL"){
+          res.render("labTopic1", {
+            imgUsername: req.cookies.username,
+        title: difficulty,
+        data: body,
+          });
+        }
+        else{ 
+          res.render("practiceTutList", {
+            imgUsername: req.cookies.username,
+            title: difficulty,
+            data: body,
+          });
+        }        
       } else {
         let options3 = {
           url: serverRoute + "/tparticipations/" + req.params.courseId,
@@ -2975,10 +2973,10 @@ app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
           body.courseName = "C++ Proficiency";
           body.courseId = "IARE_CPP";
         } else if (req.params.courseId === "IARE_EPSL") {
-          body.courseName = "EPSL";
+          body.courseName = "Essential Problem Solving Lab";
           body.courseId = "IARE_EPSL";
         }else if (req.params.courseId === "IARE_JL") {
-          body.courseName = "JL";
+          body.courseName = "OOPS With Java";
           body.courseId = "IARE_JL";
         } else {
           body.courseName = "Invalid Course";
@@ -2996,11 +2994,13 @@ app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
             datatimer: bodytimer,
           });
         }
-        res.render("questionsTut", {
-          imgUsername: req.cookies.username,
-          data: body,
-          datatimer: bodytimer,
-        });
+        else {
+          res.render("questionsTut", {
+            imgUsername: req.cookies.username,
+            data: body,
+            datatimer: bodytimer,
+          });
+        }
       });
     });
   });
@@ -3791,7 +3791,7 @@ app.post("/checkPhone", async (req, res) => {
     json: true,
   };
   request(options, (err, response, body) => {
-    console.log(body);
+    // console.log(body);
     if (body.success) {
       res.redirect(307, "/visitorOTP");
     } else {
