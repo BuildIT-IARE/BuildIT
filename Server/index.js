@@ -239,11 +239,12 @@ app.post("/isOngoing", middleware.checkToken, async (req, res) => {
   });
 });
 
-
 app.post("/validateMcq", middleware.checkToken, async (req, res) => {
   if (req.body.contestId) {
-    const isContestPresent = await Contest.findOne({ contestId: req.body.contestId }) 
-    if (isContestPresent){
+    const isContestPresent = await Contest.findOne({
+      contestId: req.body.contestId,
+    });
+    if (isContestPresent) {
       contests.getDuration(req, (err, duration) => {
         if (err) {
           res.status(404).send({ message: err });
@@ -253,7 +254,7 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
         if (today.length === 9) {
           today = "0" + today;
         }
-  
+
         let day = date.getDate();
         if (day < 10) {
           day = "0" + String(day);
@@ -263,23 +264,23 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
           month = "0" + String(month);
         }
         let year = date.getFullYear();
-  
+
         if (!localServer) {
           today = `${year}-${day}-${month}`;
         } else {
           today = `${year}-${month}-${day}`;
         }
-  
+
         let minutes = date.getMinutes();
         let hours = date.getHours();
         if (hours < 10) {
           hours = "0" + String(hours);
         }
-  
+
         if (minutes < 10) {
           minutes = "0" + String(minutes);
         }
-  
+
         let currentTime = `${hours}${minutes}`;
         currentTime = eval(currentTime);
         currentTime = moment().tz("Asia/Kolkata").format("HHmm");
@@ -313,7 +314,7 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
             participation = participation[0];
             let momentDate = new moment();
             let validTime = participation.validTill;
-  
+
             if (
               momentDate.isBefore(participation.validTill) ||
               req.decoded.admin
@@ -326,7 +327,9 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
                 }
               });
             } else {
-              res.status(403).send({ message: "Your test duration has expired" });
+              res
+                .status(403)
+                .send({ message: "Your test duration has expired" });
             }
           });
         } else {
@@ -334,16 +337,21 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
         }
       });
     }
-    const isContestLongPresent = await contestLong({ contestId: req.body.contestId })
-    if (isContestLongPresent){
+    const isContestLongPresent = await contestLong({
+      contestId: req.body.contestId,
+    });
+    if (isContestLongPresent) {
       contestLongCtrl.getDurationLong(req, (err, duration) => {
-        if (err){
-          res.status(404).send({message:err});
+        if (err) {
+          res.status(404).send({ message: err });
         }
         currentTime = moment().tz("Asia/Kolkata").format("HHmm");
-        if (duration.startTime.toString() < currentTime && duration.endTime.toString() > currentTime){
+        if (
+          duration.startTime.toString() < currentTime &&
+          duration.endTime.toString() > currentTime
+        ) {
           accepted = true;
-        }else{
+        } else {
           accepted = false;
         }
         if (req.decoded.admin) {
@@ -367,7 +375,7 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
             }
             participation = participation[0];
             let momentDate = new moment();
-  
+
             if (
               momentDate.isBefore(participation.validTill) ||
               req.decoded.admin
@@ -380,16 +388,64 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
                 }
               });
             } else {
-              res.status(403).send({ message: "Your test duration has expired" });
+              res
+                .status(403)
+                .send({ message: "Your test duration has expired" });
             }
           });
         } else {
           res.status(403).send({ message: "The contest window is not open" });
         }
-      })
+      });
     }
   }
 });
+
+const generateTokens = async (options) => {
+  let tokens = [];
+  try {
+    const promises = Object.values(options).map((option) => {
+      return new Promise((resolve, reject) => {
+        request(option, (err, resp, body) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(body.token);
+          }
+        });
+      });
+    });
+
+    tokens = await Promise.all(promises);
+    return tokens;
+  } catch (err) {
+    console.error("Error fetching tokens:", err);
+    return tokens; // Return whatever tokens were successfully fetched
+  }
+};
+
+const generateResults = async (options) => {
+  let responses = [];
+  try {
+    const promises = Object.values(options).map((option) => {
+      return new Promise((resolve, reject) => {
+        request(option, (err, resp, body) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(JSON.parse(body));
+          }
+        });
+      });
+    });
+
+    responses = await Promise.all(promises);
+    return responses;
+  } catch (err) {
+    console.error("Error fetching responses:", err);
+    return responses; // Return whatever tokens were successfully fetched
+  }
+};
 
 app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
   let options11 = {
@@ -790,156 +846,136 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
               participationId: req.decoded.username + req.body.courseId,
               courseId: req.body.courseId,
             };
-            participationsTut.findUserPart(result, (err, participation) => {
-              if (err) {
-                res.status(404).send({ message: err });
-              }
-              participation = participation[0];
+            participationsTut.findUserPart(
+              result,
+              async (err, participation) => {
+                let options = [options1, options2, options3];
+                let tokens = await generateTokens(options);
+                if (err) {
+                  res.status(404).send({ message: err });
+                }
+                participation = participation[0];
 
-              setTimeout(() => {
-                request(options1, (err, resp, body) => {
-                  if (err) {
-                    res.status(404).send({ message: err });
-                  }
-                  result.token1 = body.token;
+                result.token1 = tokens[0];
+                result.token2 = tokens[1];
+                result.token3 = tokens[2];
+                if (result.token1 && result.token2 && result.token3) {
+                  option1 = {
+                    url: apiAddress + "/submissions/" + result.token1,
+                    method: "get",
+                  };
+                  option2 = {
+                    url: apiAddress + "/submissions/" + result.token2,
+                    method: "get",
+                  };
+                  option3 = {
+                    url: apiAddress + "/submissions/" + result.token3,
+                    method: "get",
+                  };
+
+                  options = [option1, option2, option3];
+                  let responses = await generateResults(options);
+                  resp1 = responses[0].status.description;
+                  resp2 = responses[1].status.description;
+                  resp3 = responses[2].status.description;
+                  console.log(resp1, resp2, resp3);
+
                   setTimeout(() => {
-                    request(options2, (err, resp, body) => {
+                    request(option1, (err, response, body) => {
                       if (err) {
                         res.status(404).send({ message: err });
                       }
-                      result.token2 = body.token;
+                      let data = JSON.parse(body);
+
+                      let resp = data.status.description;
+                      result.response1 = resp;
                       setTimeout(() => {
-                        request(options3, (err, resp, body) => {
+                        request(option2, (err, response, body) => {
                           if (err) {
                             res.status(404).send({ message: err });
                           }
-                          result.token3 = body.token;
-                          if (result.token1 && result.token2 && result.token3) {
-                            option1 = {
-                              url: apiAddress + "/submissions/" + result.token1,
-                              method: "get",
-                            };
-                            option2 = {
-                              url: apiAddress + "/submissions/" + result.token2,
-                              method: "get",
-                            };
-                            option3 = {
-                              url: apiAddress + "/submissions/" + result.token3,
-                              method: "get",
-                            };
-                            setTimeout(() => {
-                              request(option1, (err, response, body) => {
-                                if (err) {
-                                  res.status(404).send({ message: err });
-                                }
-                                let data = JSON.parse(body);
+                          let data = JSON.parse(body);
 
-                                let resp = data.status.description;
-                                result.response1 = resp;
-                                setTimeout(() => {
-                                  request(option2, (err, response, body) => {
-                                    if (err) {
-                                      res.status(404).send({ message: err });
+                          let resp = data.status.description;
+                          result.response2 = resp;
+                          setTimeout(() => {
+                            request(option3, (err, response, body) => {
+                              if (err) {
+                                res.status(404).send({ message: err });
+                              }
+                              let data = JSON.parse(body);
+
+                              let resp = data.status.description;
+                              result.response3 = resp;
+
+                              result.languageId = req.body.language_id;
+                              result.questionId = req.body.questionId;
+                              result.username = req.decoded.username;
+                              result.sourceCode = req.body.source_code;
+                              result.submissionToken = [
+                                result.token1,
+                                result.token2,
+                                result.token3,
+                              ];
+                              result.result = [
+                                result.response1,
+                                result.response2,
+                                result.response3,
+                              ];
+                              var testcasesPassed = 0;
+                              if (result.response1 === "Accepted") {
+                                testcasesPassed += 1;
+                              }
+                              if (result.response2 === "Accepted") {
+                                testcasesPassed += 1;
+                              }
+                              if (result.response3 === "Accepted") {
+                                testcasesPassed += 1;
+                              }
+                              if (testcasesPassed === 3) {
+                                result.score = 100;
+                              } else if (testcasesPassed === 2) {
+                                result.score = 50;
+                              } else if (testcasesPassed === 1) {
+                                result.score = 25;
+                              } else {
+                                result.score = 0;
+                              }
+
+                              // Add score to profile
+                              participationsTut.insertDifficultyWise(
+                                result,
+                                (err, doc) => {
+                                  if (err) {
+                                    res.status(404).send({ message: err });
+                                  }
+                                  // Create a submission
+                                  submissions.create(
+                                    req,
+                                    result,
+                                    (err, sub) => {
+                                      if (err) {
+                                        res.status(404).send({ message: err });
+                                      }
+                                      res.send(sub);
                                     }
-                                    let data = JSON.parse(body);
-
-                                    let resp = data.status.description;
-                                    result.response2 = resp;
-                                    setTimeout(() => {
-                                      request(
-                                        option3,
-                                        (err, response, body) => {
-                                          if (err) {
-                                            res
-                                              .status(404)
-                                              .send({ message: err });
-                                          }
-                                          let data = JSON.parse(body);
-
-                                          let resp = data.status.description;
-                                          result.response3 = resp;
-
-                                          result.languageId =
-                                            req.body.language_id;
-                                          result.questionId =
-                                            req.body.questionId;
-                                          result.username =
-                                            req.decoded.username;
-                                          result.sourceCode =
-                                            req.body.source_code;
-                                          result.submissionToken = [
-                                            result.token1,
-                                            result.token2,
-                                            result.token3,
-                                          ];
-                                          result.result = [
-                                            result.response1,
-                                            result.response2,
-                                            result.response3,
-                                          ];
-                                          var testcasesPassed = 0;
-                                          if (result.response1 === "Accepted") {
-                                            testcasesPassed += 1;
-                                          }
-                                          if (result.response2 === "Accepted") {
-                                            testcasesPassed += 1;
-                                          }
-                                          if (result.response3 === "Accepted") {
-                                            testcasesPassed += 1;
-                                          }
-                                          if (testcasesPassed === 3) {
-                                            result.score = 100;
-                                          } else if (testcasesPassed === 2) {
-                                            result.score = 50;
-                                          } else if (testcasesPassed === 1) {
-                                            result.score = 25;
-                                          } else {
-                                            result.score = 0;
-                                          }
-                                          // Add score to profile
-                                          participationsTut.insertDifficultyWise(
-                                            result,
-                                            (err, doc) => {
-                                              if (err) {
-                                                res
-                                                  .status(404)
-                                                  .send({ message: err });
-                                              }
-                                              // Create a submission
-                                              submissions.create(
-                                                req,
-                                                result,
-                                                (err, sub) => {
-                                                  if (err) {
-                                                    res
-                                                      .status(404)
-                                                      .send({ message: err });
-                                                  }
-                                                  res.send(sub);
-                                                }
-                                              );
-                                            }
-                                          );
-                                        }
-                                      );
-                                    }, timeOut);
-                                  });
-                                }, timeOut);
-                              });
-                            }, timeOut);
-                          } else {
-                            res.status(500).send({
-                              message:
-                                "Server is Busy, try again later! or check your code for any compilation errors and try again.",
+                                  );
+                                }
+                              );
                             });
-                          }
+                          }, timeOut);
                         });
                       }, timeOut);
                     });
                   }, timeOut);
-                });
-              }, timeOut);
-            });
+                } else {
+                  res.status(500).send({
+                    message:
+                      "Server is Busy, try again later! or check your code for any compilation errors and try again.",
+                  });
+                }
+              }
+            );
           }
         });
       } else {
@@ -1188,7 +1224,7 @@ app.get("/getSolvedCount", middleware.checkTokenAdmin, async (req, res) => {
   }
   res.send({
     userCollectionContests,
-    userCollectionTutorials
+    userCollectionTutorials,
   });
 });
 

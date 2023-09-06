@@ -1,5 +1,5 @@
 var apiUrl = localStorageGetItem("api-url") || "http://13.234.234.30:3000";
-var serverUrl = "http://13.234.234.30:5000";
+var serverUrl = "http://localhost:5000";
 var wait = localStorageGetItem("wait") || false;
 var pbUrl = "https://pb.judge0.com";
 var check_timeout = 200;
@@ -587,8 +587,11 @@ $(document).ready(function () {
   $submitBtn = $("#submit-btn");
   $submitBtn.click(function (e) {
     if ($submitBtn.hasClass("Waiting")) {
-      showError("Please wait 10 seconds before submitting again.", "Please Wait...!");
-    } else{
+      showError(
+        "Please wait 10 seconds before submitting again.",
+        "Please Wait...!"
+      );
+    } else {
       submit();
       $submitBtn.addClass("Waiting");
       setTimeout(function () {
@@ -888,10 +891,10 @@ function getSubmission() {
       if (data.length > 0) {
         var requiredLanguageId = course_language[courseId];
 
-        for (let i = data.length-1; i >= 0; i--) {
+        for (let i = data.length - 1; i >= 0; i--) {
           currentLanguageId = parseInt(data[i].languageId);
           sources[currentLanguageId] = data[i].sourceCode;
-          if(currentLanguageId === requiredLanguageId){
+          if (currentLanguageId === requiredLanguageId) {
             insertUserCode(requiredLanguageId);
             break;
           }
@@ -904,11 +907,11 @@ function getSubmission() {
 getSubmission();
 
 var course_language = {
-  "IARE_C": 4,
-  "IARE_CPP": 10,
-  "IARE_JAVA": 26,
-  "IARE_PY": 34,
-}
+  IARE_C: 4,
+  IARE_CPP: 10,
+  IARE_JAVA: 26,
+  IARE_PY: 34,
+};
 
 var sources = {
   1: bashSource,
