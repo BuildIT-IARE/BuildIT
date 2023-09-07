@@ -55,7 +55,7 @@ function getLeetCodeScore(leetCodeId) {
           leetCodeScores[3].count * 15;
         resolve(leetCodeScore);
       } else {
-        reject(err);
+        resolve(leetCodeScore)
       }
     });
   });
@@ -75,7 +75,7 @@ function getCodeChefScore(codeChefId) {
       resolve(codeChefScore);
     })
     .catch((err) => {
-      reject(err);
+      resolve(codeChefScore)
     })
   })
 }
@@ -92,7 +92,7 @@ function getInterviewBitScore(interviewBitId) {
             resolve(interviewBitScore);
         })
         .catch((err) => {
-            reject(err);
+            resolve(interviewBitScore)
         })
     })
 }
@@ -109,7 +109,7 @@ function getHackerRankAlgoScore(hackerRankId) {
         resolve(hackerRankAlgoScore);
       })
       .catch((err) => {
-        reject(err);
+        resolve(hackerRankAlgoScore)
       });
   });
 }
@@ -126,7 +126,7 @@ function getHackerRankDsScore(hackerRankId) {
         resolve(hackerRankDsScore);
       })
       .catch((err) => {
-        reject(err);
+        resolve(hackerRankDsScore)
       });
   });
 }
@@ -143,7 +143,7 @@ function getSpojScore(spojId) {
         resolve(spojScore);
       })
       .catch((err) => {
-        reject(err);
+        resolve(spojScore)
       });
   });
 }
@@ -160,7 +160,7 @@ function getGeeksForGeeksScore(geeksForGeeksId) {
         resolve(geeksForGeeksScore);
       })
       .catch((err) => {
-        reject(err);
+        resolve(geeksForGeeksScore)
       });
   });
 }
@@ -177,7 +177,7 @@ function getCodeForcesScore(codeForcesId) {
         resolve(codeForcesScore);
       })
       .catch((err) => {
-        reject(err);
+        resolve(codeForcesScore)
       });
   });
 }

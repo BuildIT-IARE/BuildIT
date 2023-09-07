@@ -13,7 +13,7 @@ const updateScore = (data) => {
             })
             worker.once('error', (err) => {
                 console.log(`Worker [${worker.threadId}]: Failed and Throws ${err}`)
-                reject(err);
+                resolve(err);
             })
         })
     }
@@ -37,14 +37,17 @@ function createPromises(skillUps, n){
 const main = async () => {
     try {
         const skillUps = await SkillUpModel.find()
+        console.log("Updating Skill Up " + skillUps.length)
         var make_8 = parseInt(skillUps.length / 8);
         var remaining_of_8 = skillUps.length % 8;
         for (var i = 0; i < make_8; i++){
-            createPromises(skillUps.slice(i * 8, (i + 1) * 8), 8);
+            await Promise.all(createPromises(skillUps.slice(i * 8, (i + 1) * 8), 8))
+            console.log(`Done With batch ${i+1}`);
         }
         for (var i = 0;i < remaining_of_8; i++){
-            createPromises(skillUps.slice(make_8 * 8, make_8 * 8 + remaining_of_8), remaining_of_8);
-        } 
+            await Promise.all(createPromises(skillUps.slice(make_8 * 8, make_8 * 8 + remaining_of_8), remaining_of_8))
+        }
+        console.log("Done Updating Skill Up")
     }
     catch (err) {
         console.log(err);
