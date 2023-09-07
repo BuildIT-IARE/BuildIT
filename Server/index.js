@@ -1195,7 +1195,7 @@ schedule.scheduleJob("59 23 * * 0", async function () {
   );
 });
 
-schedule.scheduleJob("* * * * *", async function () {
+schedule.scheduleJob("59 23 * * *", async function () {
   main();
 });
 
