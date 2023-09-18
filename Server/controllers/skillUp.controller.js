@@ -139,7 +139,8 @@ exports.create = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score_card_value");
             a = Number(a[0].textContent);
-            geeksForGeeksScore += Math.round(a);
+            geeksForGeeksScore = Math.round(a);
+            totalScore += geeksForGeeksScore;
             return a;
           })
           .catch((err) => {
@@ -386,7 +387,8 @@ exports.update = (req, res) => {
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".score_card_value");
             a = Number(a[0].textContent);
-            geeksForGeeksScore += Math.round(a);
+            geeksForGeeksScore = Math.round(a);
+            totalScore += geeksForGeeksScore;
             return a;
           })
           .catch((err) => {
