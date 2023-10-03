@@ -113,9 +113,9 @@ function loginCounts(req, res) {
     if (body.success) {
       res.render("home", {
         imgUsername: req.cookies.username,
-        dayCount: body.data[0].day,
-        weeklyCount: body.data[0].week,
-        totalCount: body.data[0].total,
+        dayCount: 1 || body.data[0].day,
+        weeklyCount: 1 || body.data[0].week,
+        totalCount: 1 || body.data[0].total,
         googleSheetsApi,
       });
     } else {
@@ -1420,9 +1420,8 @@ app.get("/admin/resolveComplain/:complainId", async (req, res) => {
       body.url = clientRoute;
       body.serverurl = serverRoute;
       res.render("complainResolve", { data: body });
-    }
-    else{
-      body.message = "Complain Already Resolved!"
+    } else {
+      body.message = "Complain Already Resolved!";
       res.render("error", { data: body, imgUsername: req.cookies.username });
     }
   });
@@ -1439,7 +1438,7 @@ app.post("/admin/resolveComplain/:complainId", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    res.redirect("/admin/complaints")
+    res.redirect("/admin/complaints");
   });
 });
 
@@ -2186,7 +2185,6 @@ app.get("/mcqLong/:contestId", checkSignIn, async (req, res, next) => {
     }
   });
 });
-
 
 app.post(
   "/qualifier_test/:contestId/mcq",
@@ -3220,7 +3218,6 @@ app.post("/getAllResumes", async (req, res) => {
     body: {
       year: req.body.Year,
       branch: req.body.Branch,
-   
     },
     method: "post",
     headers: {
@@ -3527,39 +3524,39 @@ app.get(
 );
 
 app.get("/mcqSessions", checkSignIn, async (req, res, next) => {
-    let options = {
-      url: serverRoute + "/mcqLongContests",
-      method: "get",
-      headers: {
-        authorization: req.cookies.token,
-      },
-      body: {
-        mcq: true,
-      },
-      json: true,
-    };
-  
-    request(options, function (err, response, body) {
-      res.clearCookie("courseId");
-      // console.log(body)
-      res.render("mcqLong", {
-        imgUsername: req.cookies.username,
-        data: body,
-      });
+  let options = {
+    url: serverRoute + "/mcqLongContests",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: true,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.clearCookie("courseId");
+    // console.log(body)
+    res.render("mcqLong", {
+      imgUsername: req.cookies.username,
+      data: body,
     });
   });
+});
 
 app.get("/admin/adventures/mcqContest", async (req, res) => {
   res.render("mcqLongContestAdd", {
     token: req.cookies.token,
     data: {
-      serverurl: serverRoute, 
-    }
-  })
-})
+      serverurl: serverRoute,
+    },
+  });
+});
 
 app.post("/admin/advnetures/mcqContest", async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   let options = {
     url: serverRoute + "/mcqLong",
     method: "post",
@@ -3567,16 +3564,16 @@ app.post("/admin/advnetures/mcqContest", async (req, res) => {
       authorization: req.cookies.token,
     },
     json: true,
-    body: req.body
-  }
+    body: req.body,
+  };
 
   request(options, (err, response, body) => {
-    res.send(body)
+    res.send(body);
     if (err) {
-      res.status(500).send(err)
+      res.status(500).send(err);
     }
-  })
-})
+  });
+});
 
 app.get("/admin/adventuers/addmcq", async (req, res) => {
   res.render("mcqLongAddQuestion", {
@@ -3584,8 +3581,8 @@ app.get("/admin/adventuers/addmcq", async (req, res) => {
       serverurl: serverRoute,
     },
     token: req.cookies.token,
-  })
-})
+  });
+});
 
 app.get("/facultyValidSessions", checkSignIn, async (req, res) => {
   let options = {

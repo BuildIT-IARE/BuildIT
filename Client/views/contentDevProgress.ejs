@@ -20,7 +20,7 @@
     <link href="/datatables/dataTables.min.css" rel="stylesheet" />
 
     <style>
-      form{
+      form {
         border-radius: 2mm;
         display: flex;
         align-items: center;
@@ -107,7 +107,7 @@
       }
 
       body {
-        background: #41228e;
+        background: white;
         overflow-x: auto;
       }
 
@@ -197,7 +197,7 @@
           >Enter the Roll Number:</label
         >
         <input
-          style="width: 75%;"
+          style="width: 75%"
           type="text"
           id="username"
           name="username"
@@ -228,37 +228,45 @@
         </button>
       </form>
     </section>
-    <% if(data2.length>0){ %>
-        <% uniqueId = new Set(data2) %>
-        <div style="background: white; text-align: center; font-size: x-large;">This user has submitted <%= uniqueId.size %> questions successfully</div>
-    <section class="section py-5 bg-white" style="padding-top: 1rem" id="questionTable">
-        <div class="container d-flex flex-column align-items-center">
-          <table id="leaderboard" class="table table-striped table-bordered dt-center" style="width: 100%">
-            <thead>
-              <tr>
-                <!-- headers -->
-                <th>Question ID</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% uniqueId.forEach( i=>{ %>
-              <tr>
-                <td><%= i %></td>
-              </tr>
-              <% }) %>
-            </tbody>
-            <tfoot>
-              <tr>
-                <!-- headers -->
-                <th>Question ID</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </section>
-      <% } %>
-    <script>
-    </script>
+    <% if(data2.length>0){ %> <% uniqueId = new Set(data2) %>
+    <div style="background: white; text-align: center; font-size: x-large">
+      This user has submitted <%= uniqueId.size %> questions successfully
+    </div>
+    <section
+      class="section py-5 bg-white"
+      style="padding-top: 1rem"
+      id="questionTable"
+    >
+      <div class="container d-flex flex-column align-items-center">
+        <table
+          id="leaderboard"
+          class="table table-striped table-bordered dt-center"
+          style="width: 100%"
+        >
+          <thead>
+            <tr>
+              <!-- headers -->
+              <th>Question ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% uniqueId.forEach( i=>{ %>
+            <tr>
+              <td><%= i %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <!-- headers -->
+              <th>Question ID</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+    <% } %>
+    <script></script>
     <br />
     <br />
     <script src="/adminjs/classie.js"></script>

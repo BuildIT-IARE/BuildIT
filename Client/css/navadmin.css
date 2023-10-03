@@ -212,7 +212,7 @@ table {
 }
 
 body {
-  background: #41228e;
+  background: white;
 }
 
 .container > header,
@@ -700,7 +700,7 @@ input.gn-search:focus {
 }
 
 body {
-  background: #41228e;
+  background: white;
 }
 .span-color {
   color: white;

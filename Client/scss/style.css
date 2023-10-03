@@ -23,54 +23,69 @@ body {
   color: #4c4c4c;
 }
 
-p, .paragraph {
+p,
+.paragraph {
   font-weight: 400;
   color: #4c4c4c;
   font-size: 15px;
   line-height: 1.8;
   font-family: "Roboto", sans-serif;
 }
-p-lg, .paragraph-lg {
+p-lg,
+.paragraph-lg {
   font-size: 22px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #000;
   font-family: "Playfair Display", serif;
   line-height: 1.2;
 }
 
-h1, .h1 {
+h1,
+.h1 {
   font-size: 80px;
 }
 @media (max-width: 991px) {
-  h1, .h1 {
+  h1,
+  .h1 {
     font-size: 65px;
   }
 }
 
-h2, .h2 {
+h2,
+.h2 {
   font-size: 60px;
 }
 @media (max-width: 991px) {
-  h2, .h2 {
+  h2,
+  .h2 {
     font-size: 50px;
   }
 }
 
-h3, .h3 {
+h3,
+.h3 {
   font-size: 40px;
 }
 
-h4, .h4 {
+h4,
+.h4 {
   font-size: 22px;
 }
 
-h5, .h5 {
+h5,
+.h5 {
   font-size: 18px;
 }
 
-h6, .h6 {
+h6,
+.h6 {
   font-size: 14px;
 }
 
@@ -104,7 +119,7 @@ h6, .h6 {
 }
 
 .btn-primary {
-  background: #41228e;
+  background: white;
   color: #fff;
 }
 .btn-primary:active {
@@ -113,18 +128,20 @@ h6, .h6 {
 .btn-primary:hover {
   background: #542cb7;
 }
-.btn-primary.focus, .btn-primary.active {
+.btn-primary.focus,
+.btn-primary.active {
   background: #542cb7 !important;
   box-shadow: none !important;
 }
 
 .btn-transparent {
   background: transparent;
-  color: #41228e;
+  color: white;
   font-weight: bold;
 }
-.btn-transparent:active, .btn-transparent:hover {
-  color: #41228e;
+.btn-transparent:active,
+.btn-transparent:hover {
+  color: white;
 }
 
 body {
@@ -186,11 +203,11 @@ select:focus {
 }
 
 a.text-dark:hover {
-  color: #41228e !important;
+  color: white !important;
 }
 
 a:hover {
-  color: #41228e;
+  color: white;
 }
 
 .slick-slide {
@@ -236,7 +253,7 @@ a:hover {
 }
 
 .bg-primary {
-  background: #41228e !important;
+  background: white !important;
 }
 
 .bg-gray {
@@ -244,7 +261,7 @@ a:hover {
 }
 
 .text-primary {
-  color: #41228e !important;
+  color: white !important;
 }
 
 .text-color {
@@ -377,7 +394,7 @@ a:hover {
   height: 60px;
 }
 .form-control:focus {
-  border-color: #41228e;
+  border-color: white;
   outline: 0;
   box-shadow: none !important;
 }
@@ -404,7 +421,7 @@ textarea.form-control {
   transition: 0.3s ease;
 }
 .navigation.nav-bg {
-  background-color: #A62232;
+  background-color: #a62232;
   padding: 15px 100px;
 }
 @media (max-width: 991px) {
@@ -415,7 +432,7 @@ textarea.form-control {
 @media (max-width: 991px) {
   .navigation {
     padding: 20px;
-    background: #A62232;
+    background: #a62232;
   }
 }
 
@@ -433,12 +450,14 @@ textarea.form-control {
 }
 
 .hero-area {
-  padding: 300px 0 200px;
+  height: calc(100vh - 90px);
+  padding: 110px 0 50px 0;
   position: relative;
 }
 @media (max-width: 767px) {
   .hero-area {
-    padding: 250px 0 150px;
+    height: calc(100vh - 90px);
+    padding: 110px 0 50px 0;
     overflow: hidden;
   }
 }
@@ -514,7 +533,8 @@ textarea.form-control {
   width: 100%;
   height: 100%;
 }
-.wave::before, .wave::after {
+.wave::before,
+.wave::after {
   content: "";
   position: absolute;
   width: 800px;
@@ -525,7 +545,7 @@ textarea.form-control {
   border-radius: 45%;
   transform: translateX(-50%) rotate(0);
   -webkit-animation: rotate 6s linear infinite;
-          animation: rotate 6s linear infinite;
+  animation: rotate 6s linear infinite;
   z-index: 10;
 }
 .wave::after {
@@ -533,7 +553,7 @@ textarea.form-control {
   background-color: rgba(255, 255, 255, 0.9);
   transform: translateX(-50%) rotate(0);
   -webkit-animation: rotate 10s linear -5s infinite;
-          animation: rotate 10s linear -5s infinite;
+  animation: rotate 10s linear -5s infinite;
   z-index: 20;
 }
 
@@ -569,7 +589,7 @@ textarea.form-control {
   transition: 0.3s ease;
 }
 .hover-bg-primary:hover {
-  background: #41228e;
+  background: white;
 }
 .hover-bg-primary:hover * {
   color: #fff;
@@ -577,7 +597,7 @@ textarea.form-control {
 
 .active-bg-primary {
   transition: 0.3s ease;
-  background: #41228e;
+  background: white;
 }
 .active-bg-primary * {
   color: #fff;
@@ -711,7 +731,7 @@ blockquote {
   display: inline-block;
   padding: 10px 20px;
   background: #eaeaea;
-  border-left: 2px solid #41228e;
+  border-left: 2px solid white;
   font-style: italic;
   font-size: 22px;
 }
@@ -831,4 +851,4 @@ blockquote {
 }
 .filter-controls li.active {
   font-weight: bold;
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */

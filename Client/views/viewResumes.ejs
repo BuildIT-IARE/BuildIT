@@ -17,7 +17,7 @@
 
     <style>
       /* Three columns side by side */
-      .part2{
+      .part2 {
         width: 90%;
         display: flex;
         align-items: center;
@@ -25,11 +25,10 @@
         flex-direction: column;
         margin-left: 5%;
       }
-      .part2 form{
+      .part2 form {
         width: 300px;
       }
-      #resumedel
-      {
+      #resumedel {
         padding: 0;
         background: none;
         border: none;
@@ -41,11 +40,10 @@
         box-shadow: none;
         color: red;
       }
-      #resumedel a{
+      #resumedel a {
         text-decoration: none;
-
       }
-      #resumedel:hover{
+      #resumedel:hover {
         color: rgb(176, 0, 0);
       }
       .column {
@@ -126,7 +124,7 @@
       }
 
       body {
-        background: #41228e;
+        background: white;
         overflow-x: auto;
       }
 
@@ -227,7 +225,7 @@
             <tr style="background: <%= data[i].color %>">
               <td><%= i+1 %></td>
               <td><%= data[i].resumeId %></td>
-              <td><%= data[i].firstName  %> <%= data[i].lastName  %></td>
+              <td><%= data[i].firstName %> <%= data[i].lastName %></td>
               <td><%= data[i].branch %></td>
               <td>
                 <a
@@ -237,11 +235,21 @@
                 >
               </td>
               <td>
-                <form id="resumedel" action="<%= data[i].url %>/resume/<%= data[i].resumeId %>" method="post">
-                  <a onclick="document.getElementById('resumedel').submit();">Delete Resume</a>
+                <form
+                  id="resumedel"
+                  action="<%= data[i].url %>/resume/<%= data[i].resumeId %>"
+                  method="post"
+                >
+                  <a onclick="document.getElementById('resumedel').submit();"
+                    >Delete Resume</a
+                  >
                 </form>
               </td>
-              <td><%= new Date(data[i].updatedAt).toLocaleDateString("en-US", options = {year: "numeric",month: "long",day: "numeric", hour: "numeric", minute: "numeric"}) %></td>
+              <td>
+                <%= new Date(data[i].updatedAt).toLocaleDateString("en-US",
+                options = {year: "numeric",month: "long",day: "numeric", hour:
+                "numeric", minute: "numeric"}) %>
+              </td>
             </tr>
             <% } %> <% } %>
           </tbody>
@@ -260,35 +268,35 @@
         </table>
       </div>
       <div class="part2">
-        <br>
-        <br>
-      <h3>Print all resumes Branch-wise</h3>
-      <br>
-      <form action="/getAllResumes" method="POST">
-        <select name="Branch" id="" required>
-          <option value="05">CSE</option>
-          <option value="12">IT</option>
-          <option value="04">ECE</option>
-          <option value="01">CIV</option>
-          <option value="02">EEE</option>
-          <option value="03">ME</option>
-          <option value="21">AE</option>
-          <option value="66">CSE AIML</option>
-          <option value="67">CSE DS</option>
-          <option value="62">CSE CS</option>
-          <option value="33">CSE IT</option>
-        </select>
-        <br>
-        <br>
-        <select name="Year" id="" required>
-          <option value="18">18 series</option>
-          <option value="19">19 series</option>
-          <option value="20">20 series</option>
-          <option value="21">21 series</option>
-        </select>
-        <input type="submit" value="Submit">
-      </form>
-    </div>
+        <br />
+        <br />
+        <h3>Print all resumes Branch-wise</h3>
+        <br />
+        <form action="/getAllResumes" method="POST">
+          <select name="Branch" id="" required>
+            <option value="05">CSE</option>
+            <option value="12">IT</option>
+            <option value="04">ECE</option>
+            <option value="01">CIV</option>
+            <option value="02">EEE</option>
+            <option value="03">ME</option>
+            <option value="21">AE</option>
+            <option value="66">CSE AIML</option>
+            <option value="67">CSE DS</option>
+            <option value="62">CSE CS</option>
+            <option value="33">CSE IT</option>
+          </select>
+          <br />
+          <br />
+          <select name="Year" id="" required>
+            <option value="18">18 series</option>
+            <option value="19">19 series</option>
+            <option value="20">20 series</option>
+            <option value="21">21 series</option>
+          </select>
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     </section>
     <br />
     <br />

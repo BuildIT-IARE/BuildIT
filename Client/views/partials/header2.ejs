@@ -3,7 +3,7 @@
     </style>
     <section class="chapter-navigation">
       <div class="nav-chapter-logo2">
-        <img src="../../images/iare_header_logo.png" alt="iare-logo">
+        BuildIT | IARE
       </div>
       <div class="chapter-nav-btn">
         <button class="nav-btn"><a href="/">Home</a></button>
@@ -12,7 +12,7 @@
         <button class="nav-btn"><a href="/codechef-iare-chapter">CodeChef Chapter</a></button>
         <%}%>
         <button class="nav-btn"><form action="/skill" method="POST">
-            <a class="nav-link" onclick="this.parentNode.submit();" style="color: white;">SkillUP365</a>
+            <a class="nav-link" onclick="this.parentNode.submit();" >SkillUP365</a>
           </form></button>
         <% if(imgUsername){ %>
           <button class="nav-btn"><a href="/contest">BuildIT Lab</a></button>
@@ -120,7 +120,7 @@
       var navigation = document.querySelector(".chapter-navigation");
       var th = document.body.scrollHeight - window.innerHeight;
       var ij = 0;
-      navigation.style.background = "#41228e";
+      navigation.style.background = "white";
       window.onscroll = function () {
         let p =
           (window.pageYOffset /
@@ -128,10 +128,8 @@
           100;
         if (p > 5) {
           navigation.style.transition = "all 0.25s";
-          navigation.style.boxShadow = "0 0 10px rgba(0,0,0,0)";
         } else {
           navigation.style.transition = "all 0.25s";
-          navigation.style.boxShadow = "0 0 0px rgba(0,0,0,0)";
         }
         if (p > ij && p > 15) {
           navigation.style.transform = "translateY(-100px)";
@@ -140,9 +138,9 @@
         }
         ij = p;
         if (p > 10) {
-          navigation.style.background = "rgb(166,34,50)";
+          navigation.style.background = "White";
         } else {
-          navigation.style.background = "#41228e";
+          navigation.style.background = "white";
         }
       };
     </script>

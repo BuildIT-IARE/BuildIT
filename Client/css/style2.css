@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Codystar:wght@300;400&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 html {
   scroll-behavior: smooth;
 }
@@ -26,20 +26,21 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 90px;
+  height: 70px;
   z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  background: #41228e;
+  background: white;
 }
 .nav-chapter-logo2 {
   width: fit-content;
-  margin-left: 1vw;
-}
-.nav-chapter-logo2 img {
-  width: 250px;
+  margin-left: 20px;
+  font-family: poppins;
+  font-size: 22px;
+  font-weight: 600;
+  color: rgb(2, 111, 220);
 }
 .chapter-nav-btn {
   width: fit-content;
@@ -60,19 +61,19 @@ body {
   text-decoration: none;
   font-family: poppins;
   cursor: pointer;
-  font-size: medium;
-  color: rgb(255, 255, 255);
+  font-size: 16px;
+  color: rgb(96, 100, 108);
   padding: 7px 10px;
   border-radius: 2mm;
   width: 100%;
   height: 100%;
-  font-weight: bold;
+  font-weight: 500;
 }
 .nav-btn a:hover {
-  background: rgba(211, 211, 211, 0.137);
+  background: rgba(211, 211, 211, 0.4);
 }
-.nav-btn .nav-link{
-  color: white;
+.nav-btn .nav-link {
+  color: rgb(96, 100, 108) !important;
 }
 .nav-dots {
   position: relative;
@@ -95,9 +96,8 @@ body {
 }
 .nav-dots .threedots:hover > span {
   color: rgb(176, 255, 176);
-
 }
-.nav-dots .threedots:hover{
+.nav-dots .threedots:hover {
   background: rgb(82, 82, 82);
 }
 .nav-dots .threedots span {
@@ -234,7 +234,7 @@ body {
 #menu-open:hover {
   color: dodgerblue;
 }
-#menu-open{
+#menu-open {
   color: white;
 }
 .bg-light {
