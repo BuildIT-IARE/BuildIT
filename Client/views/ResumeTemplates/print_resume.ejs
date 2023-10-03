@@ -1,0 +1,30 @@
+<style>
+    #print {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+
+<div class="pagebreak"> </div>
+<button type="button" id="print" onclick="printDiv('resume')">Print</button>
+
+<script>
+
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        console.log(printContents)
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>

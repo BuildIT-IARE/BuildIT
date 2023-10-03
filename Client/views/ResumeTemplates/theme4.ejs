@@ -22,7 +22,7 @@
         body{
             display: block;
         }
-        .main-con{
+        .resume{
         width: 960px;
         min-height: 1353px;
         margin: auto;
@@ -168,7 +168,7 @@
     </style>
 </head>
 <body>
-    <div class="main-con">
+    <div class="resume" id="resume">
         <div class="rollnumber4">
             <%= data.resumeId %>
           </div>
@@ -482,7 +482,7 @@
             <%}%>
             <button type="button" id="print" onclick="window.print()">Print</button>
     </div>
-    <div class="pagebreak"> </div>
+    <%- include('print_resume') %>
     
 </body>
 </html>

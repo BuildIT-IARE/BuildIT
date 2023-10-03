@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab</title>
+  <style>
+    /* Reset some default styles */
+    body, h1, h2, h3, p, ul, li {
+      margin: 0;
+      padding: 0;
+    }
+    .title-area {
+        width: 100%;
+        height: calc(100vh - 70px);
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        flex-wrap: wrap;
+        justify-content: center;
+        background: url(../images/extrasBack.svg);
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    /* Set background and text colors */
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+    /* Header styles */
+    .header {
+      background-color: #007bff;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .header-logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .header-nav a {
+      color: white;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .header-nav a:hover {
+      color: #0056b3;
+    }
+    /* Hero section styles */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4rem 0;
+    }
+    .hero-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    .hero-content {
+      flex: 1;
+      padding: 10rem;
+    
+  
+    }
+    .hero-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      color: #333;
+    }
+    .hero-description {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: #555;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 0.7rem 2rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .cta-button:hover {
+      background-color: #0056b3;
+    }
+    
+    /* Footer styles */
+    .footer {
+      background-color: #333;
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+    }
+    .footer-logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .footer-nav a {
+      color: white;
+      margin: 0 1.5rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .footer-nav a:hover {
+      color: #007bff;
+    }
+    .footer-text {
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+  </style>
+  <style>
+    /* Additional styles for animated background */
+    body {
+      
+      background-size: cover;
+      animation: gradientAnimation 10s ease infinite;
+    }
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .features-container {
+      background-color: #f5f5f5;
+      padding: 4rem 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .feature-box {
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-around;
+    }
+    .feature-card {
+      width: 300px;
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.2);
+    }
+    .feature-card img {
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto 1rem;
+    }
+    .feature-title {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    .feature-description {
+      font-size: 1.1rem;
+      color: #555;
+    }
+    .feature-link {
+      margin-top: 1rem;
+      padding: 0.5rem 1.8rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .feature-link:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-logo">BuildIT - IARE</div>
+    <nav class="header-nav">
+      <a href="/">Home</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <section class="title-area">
+      <img src="../images/extras.svg" alt="Hero Image">
+    <div class="hero-content">
+      <h1 class="hero-title">Welcome to LAB</h1>
+      <p class="hero-description">Enhance your skills and knowledge with our interactive challenges.</p>
+      <a href="#features" class="cta-button">Get Started</a>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="features-container">
+      <div class="feature-box" id="feature-box">
+        <!-- Content will be added dynamically with JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Your footer and jQuery script -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Define feature data
+    const features = [
+      {
+        imgSrc: '../images/image-removebg-preview.png',
+        title: 'OBJECT ORIENTED PROGRAMMING',
+        description: '',
+        link: '/labTut1',
+        bgColor: '#e8f5ff'
+      },
+      {
+        imgSrc: '../images/problem-solving-outline-icon-free-vector-removebg-preview.png',
+        title: ' PROBLEM SOLVING',
+        description: '',
+        link: '/labTut',
+        bgColor: '#fef2f2'
+      }
+      // Add more feature objects here
+    ];
+    // Populate feature cards using jQuery
+    $(document).ready(function() {
+      const featureBox = $('#feature-box');
+      features.forEach(feature => {
+        const featureCard = $('<div>', {
+          class: 'feature-card',
+          style: `background-color: ${feature.bgColor};`
+        });
+        featureCard.append($('<img>', { src: feature.imgSrc, alt: '' }));
+        featureCard.append($('<h2>', { class: 'feature-title', text: feature.title }));
+        featureCard.append($('<p>', { class: 'feature-description', text: feature.description }));
+        featureCard.append($('<a>', { class: 'feature-link', href: feature.link, text: 'View More' }));
+        featureBox.append(featureCard);
+      });
+    });
+  </script>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">Build-IT</div>
+      <nav class="footer-nav">
+        <a href="https://www.iare.ac.in" target="_blank">IARE</a>
+        <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank">Feedback</a>
+      </nav>
+    </div>
+    <p class="footer-text">© <script>document.write(new Date().getFullYear());</script> All rights reserved.</p>
+  </footer>
+
+  <!-- jQuery library -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // jQuery script for smooth scrolling
+    $(document).ready(function() {
+      $('a[href^="#"]').on('click', function(event) {
+        var target = $(this.getAttribute('href'));
+        if (target.length) {
+          event.preventDefault();
+          $('html, body').stop().animate({
+            scrollTop: target.offset().top
+          }, 1000);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

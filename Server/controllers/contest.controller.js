@@ -264,6 +264,7 @@ exports.update = (req, res) => {
         contestDuration: req.body.contestDuration,
         contestStartTime: req.body.contestStartTime,
         contestEndTime: req.body.contestEndTime,
+        contestPassword: req.body.contestPassword,
       },
     },
     { new: true }
@@ -325,6 +326,7 @@ exports.checkContestPassword = (req, res) => {
           res.status(200).send({
             success: true,
             contestId: req.body.contestId,
+            mcq: data.mcq,
           });
         } else {
           res.status(200).send({

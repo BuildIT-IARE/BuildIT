@@ -512,11 +512,17 @@ $(document).ready(function () {
   if (getCookie("courseId")) {
     $("#tutorials").text("Practicing");
     courseId = getCookie("courseId");
-    if (courseId === "IARE_PY") {
+    if (courseId === "IARE_PY" ) {
       $("#select-language").append(
         `<option mode = "python" value="34"> Python (3.6.0) </option>`
       );
-    } else if (courseId === "IARE_C") {
+    }
+    else if ( courseId === "IARE_JL" || courseId === "IARE_ESPL" ) {
+      $("#select-language").append(
+        `<option mode = "java" value="26"> Java (OpenJDK 9 with Eclipse OpenJ9) </option>`
+      );
+    }
+    else if (courseId === "IARE_C" ) {
       $("#select-language").append(
         `<option mode = "c" value="4"> C (gcc 7.2.0) </option>`
       );

@@ -15,8 +15,12 @@ const schedule = require("node-schedule");
 const Count = require("./models/count.model.js");
 const SkillUp = require("./controllers/skillUp.controller.js");
 dotenv.config({ path: "../Server/util/config.env" });
+<<<<<<< HEAD
 // const isContest = require("./controllers/contest.controller.js");
 // const isContestLong = require("./controllers/mcqLong.controller.js");
+=======
+// const SkillUpdate = require("./controllers/SkillUpUpdate/index.js");
+>>>>>>> 67606645eb4eb8a4aca5544a06a07c0325ecd0e5
 
 let middleware = require("./util/middleware.js");
 
@@ -107,6 +111,7 @@ const skillUp = require("../Server/controllers/skillUp.controller.js");
 const discussion = require("../Server/controllers/discussion.controller.js");
 const emailSession = require("../Server/controllers/emailSession.controller.js");
 const visitors = require("../Server/controllers/visitorAccess.controller.js");
+const main = require("./controllers/SkillUpUpdate/index.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -1277,14 +1282,9 @@ schedule.scheduleJob("59 23 * * 0", async function () {
   );
 });
 
-schedule.scheduleJob("59 23 * * 0", async function () {
-  await SkillUp.findAll(async (err, skillUps) => {
-    skillUps.forEach(async (skillUp) => {
-      await SkillUp.update(skillUp, (err, res) => {
-        console.log("Updated!");
-      });
-    });
-    // await SkillUp.update(skil)
-  });
+schedule.scheduleJob("59 23 * * *", async function () {
+  console.log("Starting SkillUp Update Process !!!");
+  main();
 });
+
 app.listen(port, () => console.log("Server @ port", port));

@@ -19,7 +19,7 @@
       body {
         display: block;
       }
-      .main-container {
+      .resume {
         margin: 0 auto;
         width: 960px;
         height: 1353px;
@@ -302,7 +302,7 @@
     </style>
   </head>
   <body>
-    <div class="main-container">
+    <div class="resume" id="resume">
       <div class="rollnumber">
         <%= data.resumeId %>
       </div>
@@ -640,7 +640,6 @@
         <%}%>
       </div>
     </div>
-    <div class="pagebreak"> </div>
-    <button type="button" id="print" onclick="window.print()">Print</button>
+    <%- include('print_resume') %>
   </body>
 </html>
