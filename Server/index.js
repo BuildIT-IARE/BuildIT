@@ -15,12 +15,7 @@ const schedule = require("node-schedule");
 const Count = require("./models/count.model.js");
 const SkillUp = require("./controllers/skillUp.controller.js");
 dotenv.config({ path: "../Server/util/config.env" });
-<<<<<<< HEAD
-// const isContest = require("./controllers/contest.controller.js");
-// const isContestLong = require("./controllers/mcqLong.controller.js");
-=======
 // const SkillUpdate = require("./controllers/SkillUpUpdate/index.js");
->>>>>>> 67606645eb4eb8a4aca5544a06a07c0325ecd0e5
 
 let middleware = require("./util/middleware.js");
 
