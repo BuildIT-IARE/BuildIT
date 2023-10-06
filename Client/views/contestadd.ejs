@@ -65,7 +65,12 @@
 				  <p class="comments">Contest End Time</p>
 				  <textarea placeholder="24 Hours HHMM format" name="contestEndTime" rows="5"></textarea>
 				  <p class="comments">Contest Password</p>
-				<textarea name="contestPassword" id="" rows="5" placeholder="Enter Password"></textarea>
+				  <textarea name="contestPassword" id="" rows="5" placeholder="Enter Password"></textarea>
+				  <div id="multipleAttempts" style="display: flex;flex-direction: row; align-items: center; max-width: 35%;">
+					<p id="multipleAttempts" style="flex: 1;">Multiple Attempts Possible ?&emsp;</p>
+					<input type="checkbox" name="multipleAttempts" name="multipleAttempts" style="flex: 1;">
+					<p style="flex: 1;">Yes</p>
+				  </div>	
 					<div class="question">
 						<p class="comments">Is Roll Number Specific?&emsp;</p>
 						<input class="is_specific" type="checkbox" name="is_specific" value="1" onchange="valueChanged()"/>

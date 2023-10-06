@@ -1992,15 +1992,38 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
               }
             }
             imageUrl = imageRetrive(req, res);
-            body.contestId = req.params.contestId;
-            res.render("questions", {
-              imgUsername: req.cookies.username,
-              data: body,
-              datatimer: bodytimer,
-              imgUrl: imageUrl,
-              serverUrl: serverRoute,
-              token: req.cookies.token,
-            });
+            
+            // check Full Screen Contest
+            let getContestOptions = {
+              url : serverRoute + "/contests/" + req.params.contestId,  
+              method: "get",
+              headers: {
+                authorization: req.cookies.token,
+              }
+            }
+
+            
+            request(getContestOptions, function (err, response, contestBody){
+              let multipleAttempts = false;
+              contestBody = JSON.parse(contestBody)
+              if (contestBody.length == 1){
+                multipleAttempts = contestBody[0].multipleAttempts;
+              }
+              else{
+                multipleAttempts = false;
+              }
+              body.contestId = req.params.contestId;
+              console.log(bodytimer);
+              res.render("questions", {
+                imgUsername: req.cookies.username,
+                multipleAttempts: multipleAttempts,
+                data: body,
+                datatimer: bodytimer,
+                imgUrl: imageUrl,
+                serverUrl: serverRoute,
+                token: req.cookies.token,
+              });
+            })
           });
         });
       });
