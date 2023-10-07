@@ -592,7 +592,18 @@ $(document).ready(function () {
   });
   $submitBtn = $("#submit-btn");
   $submitBtn.click(function (e) {
-    submit();
+    if ($submitBtn.hasClass("Waiting")) {
+      showError(
+        "Please wait 10 seconds before submitting again.",
+        "Please Wait...!"
+      );
+    } else {
+      submit();
+      $submitBtn.addClass("Waiting");
+      setTimeout(function () {
+        $submitBtn.removeClass("Waiting");
+      }, 10000);
+    }
   });
 
   $statusLine = $("#status-line");
@@ -886,10 +897,10 @@ function getSubmission() {
       if (data.length > 0) {
         var requiredLanguageId = course_language[courseId];
 
-        for (let i = data.length-1; i >= 0; i--) {
+        for (let i = data.length - 1; i >= 0; i--) {
           currentLanguageId = parseInt(data[i].languageId);
           sources[currentLanguageId] = data[i].sourceCode;
-          if(currentLanguageId === requiredLanguageId){
+          if (currentLanguageId === requiredLanguageId) {
             insertUserCode(requiredLanguageId);
             break;
           }
@@ -902,11 +913,11 @@ function getSubmission() {
 getSubmission();
 
 var course_language = {
-  "IARE_C": 4,
-  "IARE_CPP": 10,
-  "IARE_JAVA": 26,
-  "IARE_PY": 34,
-}
+  IARE_C: 4,
+  IARE_CPP: 10,
+  IARE_JAVA: 26,
+  IARE_PY: 34,
+};
 
 var sources = {
   1: bashSource,

@@ -64,6 +64,129 @@
       font-weight: 400;
       text-shadow:inset 1px 1px rgba(0, 18, 76, 0.2);
     }
+    .hero-area{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .font-tertiary{
+      font-size: 120px;
+      color: white;
+      mix-blend-mode: difference;
+      z-index: 1;
+    }
+    .font-sub{
+      color: white;
+      mix-blend-mode: difference;
+      z-index: 1;
+    }
+    .code-block{
+      width: 100%;
+      max-width: 600px;
+      height: 85vh;
+      max-height: 600px;
+      position: absolute;
+      right: 10px;
+      top: 30%;
+      background: rgb(30, 30, 30);
+      border-radius: 12mm;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+    .code-block::before{
+      position: absolute;
+      content: "format_align_right";
+      font-family: "Material Icons";
+      font-size: 250px;
+      width: 100%;
+      height: 100%;
+      text-align: right;
+      left: 10px;
+      line-height: 300px;
+      color: rgba(36, 145, 255, 0.1);
+    }
+    .dots{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      position: relative;
+      border-bottom: 0.5mm solid rgb(79, 79, 79);
+      padding-bottom: 15px;
+      z-index: 0;
+    }
+    .dots span{
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      margin: 5px;
+    }
+    .dots span:nth-child(1){
+      background: #FF5757;
+    }
+    .dots span:nth-child(2){
+      background: #FFDE59;
+    }
+    .dots span:nth-child(3){
+      background: #7ED957;
+    }
+    .dot-text{
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translate(0, -50%);
+      font-family: poppins;
+      font-size: 16px;
+      color: white;
+      background: none;
+      width: fit-content;
+      height: fit-content;
+    }
+    .bottom-border{
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+    }
+    .border-line{
+      flex-grow: 1;
+      width: 100%;
+      height: 2px;
+      background: rgba(90, 90, 90, 0.5);
+      border-radius: 1mm;
+    }
+    .bottom-border span{
+      display: block;
+      width: 45px;
+      height: 45px;
+      min-width: 45px;
+      min-height: 45px;
+      background: rgb(2, 111, 220);
+      border-radius: 50%;
+      line-height: 45px;
+      text-align: center;
+      color: white;
+      font-size: 32px;
+      margin: 0 5px;
+    }
+    .icon{
+      font-size: 100px;
+      color: rgb(52,168,83);
+    }
+    @media screen and (max-width: 450px) {
+      .font-tertiary{
+        font-size: 70px;
+      }
+    }
   </style>
 </head>
 
@@ -75,27 +198,28 @@
 <!-- hero area -->
 
 <section class="hero-area bg-primary" id="parallax">
-  
+  <div class="code-block">
+    <div class="dots">
+      <span></span>
+      <span></span>
+      <span></span>
+      <div class="dot-text">BuildIT.txt</div>
+    </div>
+  </div>
   <div class="container">
     <div class="row">
 
-      <div class="col-lg-11 mx-auto"><br><br><br><br><br>
-        <h1 class="text-white font-tertiary">Welcome to<br>BuildIT<br>By Go-Labs</h1>
+      <div class="col-lg-11 mx-auto text-center">
+        <div class="font-sub">Welcome To</div>
+        <h1 class="text-white font-tertiary">BuildIT</h1>
       </div>
     </div>
   </div>
-  <!-- <div class="layer-bg w-100">
-    <img class="img-fluid w-100" src="images/illustrations/leaf-bg.png" alt="bg-shape">
-  </div> -->
- 
-  <!-- social icon -->
-  <!-- <ul class="list-unstyled ml-5 mt-3 position-relative zindex-1">
-    <li class="mb-3"><a class="text-white" href="#"><i class="ti-facebook"></i></a></li>
-    <li class="mb-3"><a class="text-white" href="#"><i class="ti-instagram"></i></a></li>
-    <li class="mb-3"><a class="text-white" href="#"><i class="ti-dribbble"></i></a></li>
-    <li class="mb-3"><a class="text-white" href="#"><i class="ti-twitter"></i></a></li>
-  </ul> -->
-  <!-- /social icon -->
+  <div class="bottom-border">
+    <div class="border-line"></div>
+    <span class="material-icons-round">code</span>
+    <div class="border-line"></div>
+  </div>
 </section>
 <!-- /hero area -->
 
@@ -103,12 +227,26 @@
 <section class="section">
   <div class="container">
     <div class="row">
-      <div class="col-lg-10 mx-auto text-center">
-        <p class="font-secondary paragraph-lg text-dark">At IARE we believe education is an ocean and one should sink in to find  <br><b>Success</b>. <br><br>Institute of Aeronautical Engineering (IARE), Hyderabad was established in the year 2000 and is run by Maruthi Educational Society founded by a devoted group of eminent professional and industrialists having a long and outstanding experience in educational system with a mission ‘Education for Liberation’. It is the first institute to start B.Tech program in Aeronautical Engineering in the state of Telangana and has gradually transformed itself into an integrated multi-disciplinary technological institute.
+      <div class="col-lg-10 mx-auto" style="text-align: center;">
+        <span class="material-icons-round icon" >
+          school
+          </span>
+      </div>
+      <div class="col-lg-10 mx-auto">
+        <p class="font-sub paragraph-lg text-dark" style="mix-blend-mode: normal; color: black;">At IARE we believe education is an ocean and one should sink in to find Success. </p>
+        <p class="font-secondary paragraph-lg text-dark" style="text-align: justify;">
+        <br>Institute of Aeronautical Engineering (IARE), Hyderabad was established in the year 2000 and is run by Maruthi Educational Society founded by a devoted group of eminent professional and industrialists having a long and outstanding experience in educational system with a mission ‘Education for Liberation’. It is the first institute to start B.Tech program in Aeronautical Engineering in the state of Telangana and has gradually transformed itself into an integrated multi-disciplinary technological institute.
           IARE is a prestigious Autonomous engineering college offering seven B.Tech programs (CSE, IT, ECE, EEE, Aeronautical, Mechanical and Civil Engineering) and six M.Tech programs in engineering and MBA with 18 years of rich standing in the educational sphere. </b></p>
         <a href="about" class="btn btn-transparent">know more</a>
         <p class="font-secondary paragraph-lg text-dark"><b>
             
+      </div>
+    </div>
+    <div class="row">
+      <div class="counters">
+        <p class="counter" id="total"><span>Total Views</span> <%=totalCount%></p>
+        <p class="counter" id="weekly"><span>Daily Views</span><%= dayCount%></p>
+        <p class="counter" id="counter"><span>Weekly Views</span><%= weeklyCount%></p>
       </div>
     </div>
   </div>
@@ -132,11 +270,7 @@
   </div>
 </footer> -->
 <!-- /footer -->
-<div class="counters">
-  <p class="counter" id="total"><span>Total Views</span> <%=totalCount%></p>
-  <p class="counter" id="weekly"><span>Daily Views</span><%= dayCount%></p>
-  <p class="counter" id="counter"><span>Weekly Views</span><%= weeklyCount%></p>
-</div>
+
 <%- include ("../views/partials/footer") -%>
 
 <!-- jQuery -->

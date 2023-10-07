@@ -15,6 +15,7 @@ const schedule = require("node-schedule");
 const Count = require("./models/count.model.js");
 const SkillUp = require("./controllers/skillUp.controller.js");
 dotenv.config({ path: "../Server/util/config.env" });
+// const SkillUpdate = require("./controllers/SkillUpUpdate/index.js");
 
 let middleware = require("./util/middleware.js");
 
@@ -23,6 +24,9 @@ const Participation = require("./models/participation.model").Participation;
 const McqParticipation =
   require("./models/participation.model").McqParticipation;
 const ParticipationTut = require("./models/participationTut.model");
+const contestLong = require("./models/mcqcontestLong.model.js");
+const Contest = require("./models/contest.model.js");
+const contestLongCtrl = require("./controllers/mcqLong.controller.js");
 
 // API Address
 const localServer = process.env.localServer;
@@ -102,6 +106,7 @@ const skillUp = require("../Server/controllers/skillUp.controller.js");
 const discussion = require("../Server/controllers/discussion.controller.js");
 const emailSession = require("../Server/controllers/emailSession.controller.js");
 const visitors = require("../Server/controllers/visitorAccess.controller.js");
+const main = require("./controllers/SkillUpUpdate/index.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -146,6 +151,8 @@ require("./routes/emailSubmission.route")(app);
 require("./routes/twilio.route")(app);
 //Require visitor routes
 require("./routes/visitorAccess.route")(app);
+// Require adventure routes
+require("./routes/mcqLong.route")(app);
 
 // Examples
 app.get("/testGet", async (req, res) => {
@@ -155,7 +162,7 @@ app.get("/testGet", async (req, res) => {
 
 app.post("/testPost", async (req, res) => {
   console.log("request body");
-  console.log(req.body);
+  // console.log(req.body);
   res.json(req.body);
 });
 
@@ -234,115 +241,211 @@ app.post("/isOngoing", middleware.checkToken, async (req, res) => {
 
 app.post("/validateMcq", middleware.checkToken, async (req, res) => {
   if (req.body.contestId) {
-    contests.getDuration(req, (err, duration) => {
-      if (err) {
-        res.status(404).send({ message: err });
-      }
-      let date = new Date();
-      let today = date.toLocaleDateString();
-      if (today.length === 9) {
-        today = "0" + today;
-      }
-
-      let day = date.getDate();
-      if (day < 10) {
-        day = "0" + String(day);
-      }
-      let month = date.getMonth() + 1;
-      if (month < 10) {
-        month = "0" + String(month);
-      }
-      let year = date.getFullYear();
-
-      if (!localServer) {
-        today = `${year}-${day}-${month}`;
-      } else {
-        today = `${year}-${month}-${day}`;
-      }
-
-      let minutes = date.getMinutes();
-      let hours = date.getHours();
-      if (hours < 10) {
-        hours = "0" + String(hours);
-      }
-
-      if (minutes < 10) {
-        minutes = "0" + String(minutes);
-      }
-
-      let currentTime = `${hours}${minutes}`;
-      currentTime = eval(currentTime);
-      currentTime = moment().tz("Asia/Kolkata").format("HHmm");
-      if (
-        duration.date.toString() === today &&
-        duration.startTime.toString() < currentTime &&
-        duration.endTime.toString() > currentTime
-      ) {
-        accepted = true;
-      } else {
-        accepted = false;
-      }
-      if (req.decoded.admin) {
-        accepted = true;
-      }
-      if (accepted) {
-        let result = {
-          contestId: req.body.contestId,
-          participationId: req.decoded.username + req.body.contestId,
-          mcqId: req.body.mcqId,
-          questionNum: req.body.questionNum,
-          answer: req.body.answer,
-          section: req.body.section,
-          check: true,
-        };
-        // check user time left
-        participations.findUserTime(result, (err, participation) => {
-          if (err) {
-            res.status(404).send({ message: err });
-          }
-          participation = participation[0];
-          let momentDate = new moment();
-          let validTime = participation.validTill;
-
-          if (
-            momentDate.isBefore(participation.validTill) ||
-            req.decoded.admin
-          ) {
-            participations.acceptSelection(result, (err, doc) => {
-              if (err) {
-                res.status(404).send({ message: err });
-              } else {
-                res.send(doc);
-              }
-            });
-            // .catch((err)=>{
-            //   res.status(500).send({
-            //     message:
-            //       "Server is Busy, try again later! or check your code for any compilation errors, and try again.",
-            //   });
-            // });
-          } else {
-            res.status(403).send({ message: "Your test duration has expired" });
-          }
-        });
-        // .catch((err)=>{
-        //   res.status(500).send({
-        //     message:
-        //       "Some error occurred while retrieving user time.",
-        //   });
-        // });
-      } else {
-        res.status(403).send({ message: "The contest window is not open" });
-      }
+    const isContestPresent = await Contest.findOne({
+      contestId: req.body.contestId,
     });
-    // .catch((err)=>{
-    //   res.status(500).send({
-    //     message:
-    //       "Some error occurred while retrieving contest duration.",
-    //   });
-    // });
+    if (isContestPresent) {
+      contests.getDuration(req, (err, duration) => {
+        if (err) {
+          res.status(404).send({ message: err });
+        }
+        let date = new Date();
+        let today = date.toLocaleDateString();
+        if (today.length === 9) {
+          today = "0" + today;
+        }
+
+        let day = date.getDate();
+        if (day < 10) {
+          day = "0" + String(day);
+        }
+        let month = date.getMonth() + 1;
+        if (month < 10) {
+          month = "0" + String(month);
+        }
+        let year = date.getFullYear();
+
+        if (!localServer) {
+          today = `${year}-${day}-${month}`;
+        } else {
+          today = `${year}-${month}-${day}`;
+        }
+
+        let minutes = date.getMinutes();
+        let hours = date.getHours();
+        if (hours < 10) {
+          hours = "0" + String(hours);
+        }
+
+        if (minutes < 10) {
+          minutes = "0" + String(minutes);
+        }
+
+        let currentTime = `${hours}${minutes}`;
+        currentTime = eval(currentTime);
+        currentTime = moment().tz("Asia/Kolkata").format("HHmm");
+        if (
+          duration.date.toString() === today &&
+          duration.startTime.toString() < currentTime &&
+          duration.endTime.toString() > currentTime
+        ) {
+          accepted = true;
+        } else {
+          accepted = false;
+        }
+        if (req.decoded.admin) {
+          accepted = true;
+        }
+        if (accepted) {
+          let result = {
+            contestId: req.body.contestId,
+            participationId: req.decoded.username + req.body.contestId,
+            mcqId: req.body.mcqId,
+            questionNum: req.body.questionNum,
+            answer: req.body.answer,
+            section: req.body.section,
+            check: true,
+          };
+          // check user time left
+          participations.findUserTime(result, (err, participation) => {
+            if (err) {
+              res.status(404).send({ message: err });
+            }
+            participation = participation[0];
+            let momentDate = new moment();
+            let validTime = participation.validTill;
+
+            if (
+              momentDate.isBefore(participation.validTill) ||
+              req.decoded.admin
+            ) {
+              participations.acceptSelection(result, (err, doc) => {
+                if (err) {
+                  res.status(404).send({ message: err });
+                } else {
+                  res.send(doc);
+                }
+              });
+            } else {
+              res
+                .status(403)
+                .send({ message: "Your test duration has expired" });
+            }
+          });
+        } else {
+          res.status(403).send({ message: "The contest window is not open" });
+        }
+      });
+    }
+    const isContestLongPresent = await contestLong({
+      contestId: req.body.contestId,
+    });
+    if (isContestLongPresent) {
+      contestLongCtrl.getDurationLong(req, (err, duration) => {
+        if (err) {
+          res.status(404).send({ message: err });
+        }
+        currentTime = moment().tz("Asia/Kolkata").format("HHmm");
+        if (
+          duration.startTime.toString() < currentTime &&
+          duration.endTime.toString() > currentTime
+        ) {
+          accepted = true;
+        } else {
+          accepted = false;
+        }
+        if (req.decoded.admin) {
+          accepted = true;
+        }
+
+        if (accepted) {
+          let result = {
+            contestId: req.body.contestId,
+            participationId: req.decoded.username + req.body.contestId,
+            mcqId: req.body.mcqId,
+            questionNum: req.body.questionNum,
+            answer: req.body.answer,
+            section: req.body.section,
+            check: true,
+          };
+          // check user time left
+          participations.findUserTime(result, (err, participation) => {
+            if (err) {
+              res.status(404).send({ message: err });
+            }
+            participation = participation[0];
+            let momentDate = new moment();
+
+            if (
+              momentDate.isBefore(participation.validTill) ||
+              req.decoded.admin
+            ) {
+              participations.acceptSelection(result, (err, doc) => {
+                if (err) {
+                  res.status(404).send({ message: err });
+                } else {
+                  res.send(doc);
+                }
+              });
+            } else {
+              res
+                .status(403)
+                .send({ message: "Your test duration has expired" });
+            }
+          });
+        } else {
+          res.status(403).send({ message: "The contest window is not open" });
+        }
+      });
+    }
   }
 });
+
+const generateTokens = async (options) => {
+  let tokens = [];
+  try {
+    const promises = Object.values(options).map((option) => {
+      return new Promise((resolve, reject) => {
+        request(option, (err, resp, body) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(body.token);
+          }
+        });
+      });
+    });
+
+    tokens = await Promise.all(promises);
+    return tokens;
+  } catch (err) {
+    console.error("Error fetching tokens:", err);
+    return tokens; // Return whatever tokens were successfully fetched
+  }
+};
+
+const generateResults = async (options) => {
+  let responses = [];
+  try {
+    const promises = Object.values(options).map((option) => {
+      return new Promise((resolve, reject) => {
+        request(option, (err, resp, body) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(JSON.parse(body));
+          }
+        });
+      });
+    });
+
+    responses = await Promise.all(promises);
+    return responses;
+  } catch (err) {
+    console.error("Error fetching responses:", err);
+    return responses; // Return whatever tokens were successfully fetched
+  }
+};
 
 app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
   let options11 = {
@@ -490,6 +593,7 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
                     if (err) {
                       res.status(404).send({ message: err });
                     }
+                    // console.log(body);
                     result.token1 = body.token;
                     setTimeout(() => {
                       request(options2, function (err, response, body) {
@@ -742,156 +846,136 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
               participationId: req.decoded.username + req.body.courseId,
               courseId: req.body.courseId,
             };
-            participationsTut.findUserPart(result, (err, participation) => {
-              if (err) {
-                res.status(404).send({ message: err });
-              }
-              participation = participation[0];
+            participationsTut.findUserPart(
+              result,
+              async (err, participation) => {
+                let options = [options1, options2, options3];
+                let tokens = await generateTokens(options);
+                if (err) {
+                  res.status(404).send({ message: err });
+                }
+                participation = participation[0];
 
-              setTimeout(() => {
-                request(options1, (err, resp, body) => {
-                  if (err) {
-                    res.status(404).send({ message: err });
-                  }
-                  result.token1 = body.token;
+                result.token1 = tokens[0];
+                result.token2 = tokens[1];
+                result.token3 = tokens[2];
+                if (result.token1 && result.token2 && result.token3) {
+                  option1 = {
+                    url: apiAddress + "/submissions/" + result.token1,
+                    method: "get",
+                  };
+                  option2 = {
+                    url: apiAddress + "/submissions/" + result.token2,
+                    method: "get",
+                  };
+                  option3 = {
+                    url: apiAddress + "/submissions/" + result.token3,
+                    method: "get",
+                  };
+
+                  options = [option1, option2, option3];
+                  let responses = await generateResults(options);
+                  resp1 = responses[0].status.description;
+                  resp2 = responses[1].status.description;
+                  resp3 = responses[2].status.description;
+                  console.log(resp1, resp2, resp3);
+
                   setTimeout(() => {
-                    request(options2, (err, resp, body) => {
+                    request(option1, (err, response, body) => {
                       if (err) {
                         res.status(404).send({ message: err });
                       }
-                      result.token2 = body.token;
+                      let data = JSON.parse(body);
+
+                      let resp = data.status.description;
+                      result.response1 = resp;
                       setTimeout(() => {
-                        request(options3, (err, resp, body) => {
+                        request(option2, (err, response, body) => {
                           if (err) {
                             res.status(404).send({ message: err });
                           }
-                          result.token3 = body.token;
-                          if (result.token1 && result.token2 && result.token3) {
-                            option1 = {
-                              url: apiAddress + "/submissions/" + result.token1,
-                              method: "get",
-                            };
-                            option2 = {
-                              url: apiAddress + "/submissions/" + result.token2,
-                              method: "get",
-                            };
-                            option3 = {
-                              url: apiAddress + "/submissions/" + result.token3,
-                              method: "get",
-                            };
-                            setTimeout(() => {
-                              request(option1, (err, response, body) => {
-                                if (err) {
-                                  res.status(404).send({ message: err });
-                                }
-                                let data = JSON.parse(body);
+                          let data = JSON.parse(body);
 
-                                let resp = data.status.description;
-                                result.response1 = resp;
-                                setTimeout(() => {
-                                  request(option2, (err, response, body) => {
-                                    if (err) {
-                                      res.status(404).send({ message: err });
+                          let resp = data.status.description;
+                          result.response2 = resp;
+                          setTimeout(() => {
+                            request(option3, (err, response, body) => {
+                              if (err) {
+                                res.status(404).send({ message: err });
+                              }
+                              let data = JSON.parse(body);
+
+                              let resp = data.status.description;
+                              result.response3 = resp;
+
+                              result.languageId = req.body.language_id;
+                              result.questionId = req.body.questionId;
+                              result.username = req.decoded.username;
+                              result.sourceCode = req.body.source_code;
+                              result.submissionToken = [
+                                result.token1,
+                                result.token2,
+                                result.token3,
+                              ];
+                              result.result = [
+                                result.response1,
+                                result.response2,
+                                result.response3,
+                              ];
+                              var testcasesPassed = 0;
+                              if (result.response1 === "Accepted") {
+                                testcasesPassed += 1;
+                              }
+                              if (result.response2 === "Accepted") {
+                                testcasesPassed += 1;
+                              }
+                              if (result.response3 === "Accepted") {
+                                testcasesPassed += 1;
+                              }
+                              if (testcasesPassed === 3) {
+                                result.score = 100;
+                              } else if (testcasesPassed === 2) {
+                                result.score = 50;
+                              } else if (testcasesPassed === 1) {
+                                result.score = 25;
+                              } else {
+                                result.score = 0;
+                              }
+
+                              // Add score to profile
+                              participationsTut.insertDifficultyWise(
+                                result,
+                                (err, doc) => {
+                                  if (err) {
+                                    res.status(404).send({ message: err });
+                                  }
+                                  // Create a submission
+                                  submissions.create(
+                                    req,
+                                    result,
+                                    (err, sub) => {
+                                      if (err) {
+                                        res.status(404).send({ message: err });
+                                      }
+                                      res.send(sub);
                                     }
-                                    let data = JSON.parse(body);
-
-                                    let resp = data.status.description;
-                                    result.response2 = resp;
-                                    setTimeout(() => {
-                                      request(
-                                        option3,
-                                        (err, response, body) => {
-                                          if (err) {
-                                            res
-                                              .status(404)
-                                              .send({ message: err });
-                                          }
-                                          let data = JSON.parse(body);
-
-                                          let resp = data.status.description;
-                                          result.response3 = resp;
-
-                                          result.languageId =
-                                            req.body.language_id;
-                                          result.questionId =
-                                            req.body.questionId;
-                                          result.username =
-                                            req.decoded.username;
-                                          result.sourceCode =
-                                            req.body.source_code;
-                                          result.submissionToken = [
-                                            result.token1,
-                                            result.token2,
-                                            result.token3,
-                                          ];
-                                          result.result = [
-                                            result.response1,
-                                            result.response2,
-                                            result.response3,
-                                          ];
-                                          var testcasesPassed = 0;
-                                          if (result.response1 === "Accepted") {
-                                            testcasesPassed += 1;
-                                          }
-                                          if (result.response2 === "Accepted") {
-                                            testcasesPassed += 1;
-                                          }
-                                          if (result.response3 === "Accepted") {
-                                            testcasesPassed += 1;
-                                          }
-                                          if (testcasesPassed === 3) {
-                                            result.score = 100;
-                                          } else if (testcasesPassed === 2) {
-                                            result.score = 50;
-                                          } else if (testcasesPassed === 1) {
-                                            result.score = 25;
-                                          } else {
-                                            result.score = 0;
-                                          }
-                                          // Add score to profile
-                                          participationsTut.insertDifficultyWise(
-                                            result,
-                                            (err, doc) => {
-                                              if (err) {
-                                                res
-                                                  .status(404)
-                                                  .send({ message: err });
-                                              }
-                                              // Create a submission
-                                              submissions.create(
-                                                req,
-                                                result,
-                                                (err, sub) => {
-                                                  if (err) {
-                                                    res
-                                                      .status(404)
-                                                      .send({ message: err });
-                                                  }
-                                                  res.send(sub);
-                                                }
-                                              );
-                                            }
-                                          );
-                                        }
-                                      );
-                                    }, timeOut);
-                                  });
-                                }, timeOut);
-                              });
-                            }, timeOut);
-                          } else {
-                            res.status(500).send({
-                              message:
-                                "Server is Busy, try again later! or check your code for any compilation errors and try again.",
+                                  );
+                                }
+                              );
                             });
-                          }
+                          }, timeOut);
                         });
                       }, timeOut);
                     });
                   }, timeOut);
-                });
-              }, timeOut);
-            });
+                } else {
+                  res.status(500).send({
+                    message:
+                      "Server is Busy, try again later! or check your code for any compilation errors and try again.",
+                  });
+                }
+              }
+            );
           }
         });
       } else {
@@ -1140,7 +1224,7 @@ app.get("/getSolvedCount", middleware.checkTokenAdmin, async (req, res) => {
   }
   res.send({
     userCollectionContests,
-    userCollectionTutorials
+    userCollectionTutorials,
   });
 });
 
@@ -1193,14 +1277,9 @@ schedule.scheduleJob("59 23 * * 0", async function () {
   );
 });
 
-schedule.scheduleJob("59 23 * * 0", async function () {
-  await SkillUp.findAll(async (err, skillUps) => {
-    skillUps.forEach(async (skillUp) => {
-      await SkillUp.update(skillUp, (err, res) => {
-        console.log("Updated!");
-      });
-    });
-    // await SkillUp.update(skil)
-  });
+schedule.scheduleJob("59 23 * * *", async function () {
+  console.log("Starting SkillUp Update Process !!!");
+  main();
 });
+
 app.listen(port, () => console.log("Server @ port", port));

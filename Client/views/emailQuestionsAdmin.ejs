@@ -100,7 +100,7 @@
       }
 
       body {
-        background: #41228e;
+        background: white;
         overflow-x: auto;
       }
 
@@ -185,8 +185,8 @@
           <thead>
             <tr>
               <!-- headers -->
-              <th>No</th>              
-              <th>Session ID</th>              
+              <th>No</th>
+              <th>Session ID</th>
               <th>Question ID</th>
               <th>Question Name</th>
               <th>Question Topic</th>
@@ -196,8 +196,7 @@
             </tr>
           </thead>
           <tbody>
-            <% for (let i=0; i < data.length; i++ ){
-            %>
+            <% for (let i=0; i < data.length; i++ ){ %>
             <tr>
               <td><%= i+1 %></td>
               <td><%= data[i].emailId %></td>

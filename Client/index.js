@@ -113,9 +113,9 @@ function loginCounts(req, res) {
     if (body.success) {
       res.render("home", {
         imgUsername: req.cookies.username,
-        dayCount: body.data[0].day,
-        weeklyCount: body.data[0].week,
-        totalCount: body.data[0].total,
+        dayCount: 1 || body.data[0].day,
+        weeklyCount: 1 || body.data[0].week,
+        totalCount: 1 || body.data[0].total,
         googleSheetsApi,
       });
     } else {
@@ -366,7 +366,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
           },
           json: true,
         };
-        
+
         let options = {
           url: serverRoute + "/questions/courses/" + "IARE_EPSL",
           method: "get",
@@ -375,7 +375,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
           },
           json: true,
         };
-      
+
         request(options, function (err, response, body9) {
           let options9 = {
             url: serverRoute + "/tparticipations/" + "IARE_EPSL",
@@ -385,149 +385,164 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
             },
             json: true,
           };
-            request(options9, function (err, response, bodytimer) {
-              bodytimer = bodytimer[0];
-              function countUniqueElements(arr) {
-                const uniqueSet = new Set(arr);
-                return uniqueSet.size;
-              }
-              const uniqueCount = countUniqueElements(bodytimer.practiceSolved);
-         
-          
-              let options = {
-                url: serverRoute + "/questions/courses/" + "IARE_JL",
-                method: "get",
-                headers: {
-                  authorization: req.cookies.token,
-                },
-                json: true,
-              };
-            
-              request(options, function (err, response, body10) {
-                let options10 = {
-                  url: serverRoute + "/tparticipations/" + "IARE_JL",
-                  method: "get",
-                  headers: {
-                    authorization: req.cookies.token,
-                  },
-                  json: true,
-                };
-                  request(options10, function (err, response, bodytimer) {
-                    bodytimer = bodytimer[0];
-                    function countUniqueElements1(arr) {
-                      const uniqueSet = new Set(arr);
-                      return uniqueSet.size;
-                    }
-                    const uniqueCount1 = countUniqueElements1(bodytimer.practiceSolved);
-        // get participation details
-        request(options3, function (err, response, bodytimer) {
-          bodytimer = bodytimer[0];
-          let totalSolEasy = 0;
-          let totalSolMedium = 0;
-          let totalSolHard = 0;
-          let totalSolContest = 0;
-          let eCount = 0;
-          let mCount = 0;
-          let hCount = 0;
-          let cCount = 0;
-          if (bodytimer) {
-            for (let i = 0; i < body3.length; i++) {
-              if (body3[i].difficulty === "level_0") {
-                eCount++;
-              } else if (body3[i].difficulty === "level_1") {
-                mCount++;
-              } else if (body3[i].difficulty === "level_2") {
-                hCount++;
-              } else if (body3[i].difficulty === "contest") {
-                cCount++;
-              }
+          request(options9, function (err, response, bodytimer) {
+            bodytimer = bodytimer[0];
+            function countUniqueElements(arr) {
+              const uniqueSet = new Set(arr);
+              return uniqueSet.size;
             }
+            const uniqueCount = countUniqueElements(bodytimer.practiceSolved);
 
-            totalSolEasy = bodytimer.easySolved.length;
-            totalSolMedium = bodytimer.mediumSolved.length;
-            totalSolHard = bodytimer.hardSolved.length;
-            totalSolContest = bodytimer.contestSolved.length;
-            req.params.courseId = req.params.courseId;
-          } else {
-            eCount = 1;
-            mCount = 1;
-            hCount = 1;
-            cCount = 1;
-          }
-          body3.easyPercentage = Math.ceil((totalSolEasy / eCount) * 100);
-          body3.mediumPercentage = Math.ceil((totalSolMedium / mCount) * 100);
-          body3.hardPercentage = Math.ceil((totalSolHard / hCount) * 100);
-          body3.contestPercentage = Math.ceil((totalSolContest / cCount) * 100);
-
-          let options = {
-            url: serverRoute + "/findAllContestsUser",
-            method: "get",
-            headers: {
-              authorization: req.cookies.token,
-            },
-            body: {
-              username: req.cookies.username.toLowerCase(),
-            },
-            json: true,
-          };
-
-          request(options, function (err, response, body4) {
             let options = {
-              url:
-                serverRoute + "/resume/" + req.cookies.username.toLowerCase(),
+              url: serverRoute + "/questions/courses/" + "IARE_JL",
               method: "get",
               headers: {
                 authorization: req.cookies.token,
               },
               json: true,
             };
-            request(options, function (err, response, body5) {
-              let options = {
-                url: serverRoute + "/skillUp",
+
+            request(options, function (err, response, body10) {
+              let options10 = {
+                url: serverRoute + "/tparticipations/" + "IARE_JL",
                 method: "get",
                 headers: {
                   authorization: req.cookies.token,
                 },
-                body: {
-                  rollNumber: req.cookies.username.toUpperCase(),
-                },
                 json: true,
               };
-              request(options, function (err, response, body6) {
-                urlExists(testUrl, function (err, exists) {
-                  if (exists) {
-                    body.imgUrl = testUrl;
-                    body.serverUrl = serverRoute;
-                    res.render("editProfile", {
-                      data: body,
-                      imgUsername: req.cookies.username,
-                      partCount: partCount,
-                      progress: body3,
-                      contestCount: body4.count,
-                      labCount :uniqueCount,
-                      labCount1 :uniqueCount1,
-                      resumeStatus: body5.success,
-                      skillups: body6,
-                      token: req.cookies.token,
-                      serverUrl: serverRoute,
-                    });
+              request(options10, function (err, response, bodytimer) {
+                bodytimer = bodytimer[0];
+                function countUniqueElements1(arr) {
+                  const uniqueSet = new Set(arr);
+                  return uniqueSet.size;
+                }
+                const uniqueCount1 = countUniqueElements1(
+                  bodytimer.practiceSolved
+                );
+                // get participation details
+                request(options3, function (err, response, bodytimer) {
+                  bodytimer = bodytimer[0];
+                  let totalSolEasy = 0;
+                  let totalSolMedium = 0;
+                  let totalSolHard = 0;
+                  let totalSolContest = 0;
+                  let eCount = 0;
+                  let mCount = 0;
+                  let hCount = 0;
+                  let cCount = 0;
+                  if (bodytimer) {
+                    for (let i = 0; i < body3.length; i++) {
+                      if (body3[i].difficulty === "level_0") {
+                        eCount++;
+                      } else if (body3[i].difficulty === "level_1") {
+                        mCount++;
+                      } else if (body3[i].difficulty === "level_2") {
+                        hCount++;
+                      } else if (body3[i].difficulty === "contest") {
+                        cCount++;
+                      }
+                    }
+
+                    totalSolEasy = bodytimer.easySolved.length;
+                    totalSolMedium = bodytimer.mediumSolved.length;
+                    totalSolHard = bodytimer.hardSolved.length;
+                    totalSolContest = bodytimer.contestSolved.length;
+                    req.params.courseId = req.params.courseId;
                   } else {
-                    body.imgUrl = "./images/defaultuser.png";
-                    body.serverUrl = serverRoute;
-                    res.render("editProfile", {
-                      data: body,
-                      imgUsername: req.cookies.username,
-                      partCount: partCount,
-                      progress: body3,
-                      contestCount: body4.count,
-                      labCount :uniqueCount,
-                      labCount1 :uniqueCount1,
-                      resumeStatus: body5.success,
-                      token: req.cookies.token,
-                      serverUrl: serverRoute,
-                      skillups: body6,
-                    });
+                    eCount = 1;
+                    mCount = 1;
+                    hCount = 1;
+                    cCount = 1;
                   }
+                  body3.easyPercentage = Math.ceil(
+                    (totalSolEasy / eCount) * 100
+                  );
+                  body3.mediumPercentage = Math.ceil(
+                    (totalSolMedium / mCount) * 100
+                  );
+                  body3.hardPercentage = Math.ceil(
+                    (totalSolHard / hCount) * 100
+                  );
+                  body3.contestPercentage = Math.ceil(
+                    (totalSolContest / cCount) * 100
+                  );
+
+                  let options = {
+                    url: serverRoute + "/findAllContestsUser",
+                    method: "get",
+                    headers: {
+                      authorization: req.cookies.token,
+                    },
+                    body: {
+                      username: req.cookies.username.toLowerCase(),
+                    },
+                    json: true,
+                  };
+
+                  request(options, function (err, response, body4) {
+                    let options = {
+                      url:
+                        serverRoute +
+                        "/resume/" +
+                        req.cookies.username.toLowerCase(),
+                      method: "get",
+                      headers: {
+                        authorization: req.cookies.token,
+                      },
+                      json: true,
+                    };
+                    request(options, function (err, response, body5) {
+                      let options = {
+                        url: serverRoute + "/skillUp",
+                        method: "get",
+                        headers: {
+                          authorization: req.cookies.token,
+                        },
+                        body: {
+                          rollNumber: req.cookies.username.toUpperCase(),
+                        },
+                        json: true,
+                      };
+                      request(options, function (err, response, body6) {
+                        urlExists(testUrl, function (err, exists) {
+                          if (exists) {
+                            body.imgUrl = testUrl;
+                            body.serverUrl = serverRoute;
+                            res.render("editProfile", {
+                              data: body,
+                              imgUsername: req.cookies.username,
+                              partCount: partCount,
+                              progress: body3,
+                              contestCount: body4.count,
+                              labCount: uniqueCount,
+                              labCount1: uniqueCount1,
+                              resumeStatus: body5.success,
+                              skillups: body6,
+                              token: req.cookies.token,
+                              serverUrl: serverRoute,
+                            });
+                          } else {
+                            body.imgUrl = "./images/defaultuser.png";
+                            body.serverUrl = serverRoute;
+                            res.render("editProfile", {
+                              data: body,
+                              imgUsername: req.cookies.username,
+                              partCount: partCount,
+                              progress: body3,
+                              contestCount: body4.count,
+                              labCount: uniqueCount,
+                              labCount1: uniqueCount1,
+                              resumeStatus: body5.success,
+                              token: req.cookies.token,
+                              serverUrl: serverRoute,
+                              skillups: body6,
+                            });
+                          }
+                        });
+                      });
+                    });
+                  });
                 });
               });
             });
@@ -536,10 +551,6 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
       });
     });
   });
-});
-    });
-  });
-});
 });
 
 app.post("/editProfile", async (req, res) => {
@@ -1479,9 +1490,8 @@ app.get("/admin/resolveComplain/:complainId", async (req, res) => {
       body.url = clientRoute;
       body.serverurl = serverRoute;
       res.render("complainResolve", { data: body });
-    }
-    else{
-      body.message = "Complain Already Resolved!"
+    } else {
+      body.message = "Complain Already Resolved!";
       res.render("error", { data: body, imgUsername: req.cookies.username });
     }
   });
@@ -1498,7 +1508,7 @@ app.post("/admin/resolveComplain/:complainId", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    res.redirect("/admin/complaints")
+    res.redirect("/admin/complaints");
   });
 });
 
@@ -1892,9 +1902,8 @@ app.post("/checkContestPassword", checkSignIn, async (req, res) => {
     if (body.success) {
       if (body.mcq === true) {
         a = "/qualifier_test" + "/" + body.contestId;
-      }
-      else {
-      a = "/contests/" + body.contestId;
+      } else {
+        a = "/contests/" + body.contestId;
       }
       res.redirect(a);
     } else {
@@ -2152,6 +2161,104 @@ app.get("/qualifier_test/:contestId", checkSignIn, async (req, res, next) => {
   });
 });
 
+app.get("/mcqLong/:contestId", checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/isOngoingMcqLong",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      contestId: req.params.contestId,
+    },
+    json: true,
+  };
+  // Check if contest is open
+  request(options, function (err, response, body) {
+    if (body.success) {
+      let options1 = {
+        url: serverRoute + "/mcqParticipations", // MCQ participation
+        method: "post",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        body: {
+          contestId: req.params.contestId,
+        },
+        json: true,
+      };
+      // Add participation
+      request(options1, function (err, response, body) {
+        let option2 = {
+          url: serverRoute + "/mcqFirst/" + req.params.contestId, // First MCQ
+          method: "get",
+          headers: {
+            authorization: req.cookies.token,
+          },
+          json: true,
+        };
+        // Get mcq for contest
+        request(option2, function (err, response, body) {
+          // console.log(body)
+          if (!body.message) {
+            res.cookie("contestId", req.params.contestId);
+            let options3 = {
+              url: serverRoute + "/mcqParticipations/" + req.params.contestId, // Time and score
+              method: "get",
+              headers: {
+                authorization: req.cookies.token,
+              },
+              json: true,
+            };
+            // Get participation details
+            // console.log("options3: ",options3)
+            request(options3, function (err, response, bodytimer) {
+              // console.log("bodytimer: ",bodytimer)
+              // bodytimer={responses:[]}
+              if (Array.isArray(bodytimer)) {
+                bodytimer = bodytimer[0];
+                bodytimer.responses =
+                  bodytimer.responses[body.section - 1].responses;
+
+                let currSection = bodytimer.responses;
+                currSection = currSection.map((v) => v.questionNum);
+                let index = currSection.indexOf(body.questionNum);
+                if (index !== -1) currSection.splice(index, 1);
+
+                bodytimer.selection =
+                  index === -1 ? 0 : bodytimer.responses[index].selection;
+                bodytimer.questionNums = currSection;
+                bodytimer.submissionResults = null;
+                bodytimer.responses = null;
+
+                // bodytimer.open = bodytimer.validTill>currentDatenTime;
+                res.render("mcqs", {
+                  imgUsername: req.cookies.username,
+                  imgBranch: req.cookies.branch,
+                  data: body,
+                  datatimer: bodytimer,
+                });
+              } else {
+                res.render("error", {
+                  data: body,
+                  imgUsername: req.cookies.username,
+                });
+              }
+            });
+          } else {
+            res.render("error", {
+              data: body,
+              imgUsername: req.cookies.username,
+            });
+          }
+        });
+      });
+    } else {
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+});
+
 app.post(
   "/qualifier_test/:contestId/mcq",
   checkSignIn,
@@ -2191,6 +2298,7 @@ app.post(
         };
         // get one MCQ
         request(options, (err, response, body) => {
+          // console.log("body: ", body);
           if (!body.message) {
             res.cookie("contestId", req.params.contestId);
             let options3 = {
@@ -2252,6 +2360,7 @@ app.post(
 
     const addSelection = () => {
       return new Promise(() => {
+        // console.log(req.body)
         let options = {
           url: serverRoute + "/validateMcq",
           method: "post",
@@ -2835,7 +2944,14 @@ app.get(
 
     request(options, function (err, response, body) {
       if (ifTopicsOrCompanies) {
-        let courseIds = ["IARE_PY", "IARE_C", "IARE_JAVA", "IARE_CPP","IARE_EPSL","IARE_JL"];
+        let courseIds = [
+          "IARE_PY",
+          "IARE_C",
+          "IARE_JAVA",
+          "IARE_CPP",
+          "IARE_EPSL",
+          "IARE_JL",
+        ];
         let isCourseValid = courseIds.includes(req.params.courseId);
         let ifTopics = difficulty === "Topics";
 
@@ -2845,27 +2961,25 @@ app.get(
             ? "Select a Topic"
             : "Select a Company"
           : "Invalid Course";
-        if (req.params.courseId === "IARE_EPSL"){
+        if (req.params.courseId === "IARE_EPSL") {
           res.render("labTopic", {
             imgUsername: req.cookies.username,
-        title: difficulty,
-        data: body,
+            title: difficulty,
+            data: body,
           });
-        }
-        else if (req.params.courseId === "IARE_JL"){
+        } else if (req.params.courseId === "IARE_JL") {
           res.render("labTopic1", {
             imgUsername: req.cookies.username,
-        title: difficulty,
-        data: body,
+            title: difficulty,
+            data: body,
           });
-        }
-        else{ 
+        } else {
           res.render("practiceTutList", {
             imgUsername: req.cookies.username,
             title: difficulty,
             data: body,
           });
-        }        
+        }
       } else {
         let options3 = {
           url: serverRoute + "/tparticipations/" + req.params.courseId,
@@ -2975,26 +3089,25 @@ app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
         } else if (req.params.courseId === "IARE_EPSL") {
           body.courseName = "Essential Problem Solving Lab";
           body.courseId = "IARE_EPSL";
-        }else if (req.params.courseId === "IARE_JL") {
+        } else if (req.params.courseId === "IARE_JL") {
           body.courseName = "OOPS With Java";
           body.courseId = "IARE_JL";
         } else {
           body.courseName = "Invalid Course";
         }
-        if (req.params.courseId === "IARE_EPSL"){
+        if (req.params.courseId === "IARE_EPSL") {
           res.render("labQuestionsTut", {
             imgUsername: req.cookies.username,
             data: body,
             datatimer: bodytimer,
           });
-        } else if (req.params.courseId === "IARE_JL"){
+        } else if (req.params.courseId === "IARE_JL") {
           res.render("labQuestionsTut1", {
             imgUsername: req.cookies.username,
             data: body,
             datatimer: bodytimer,
           });
-        }
-        else {
+        } else {
           res.render("questionsTut", {
             imgUsername: req.cookies.username,
             data: body,
@@ -3043,8 +3156,6 @@ app.get("/certificate", async (req, res) => {
     });
   });
 });
-
-
 
 app.get("/codechef-iare-chapter", async (req, res, next) => {
   let options = {
@@ -3325,11 +3436,17 @@ app.get("/labs", checkSignIn, async (req, res) => {
 });
 
 app.get("/labTut", checkSignIn, async (req, res) => {
-  res.render("labTut", { clientRoute : clientRoute, imgUsername: req.cookies.username });
+  res.render("labTut", {
+    clientRoute: clientRoute,
+    imgUsername: req.cookies.username,
+  });
 });
 
 app.get("/labTut1", checkSignIn, async (req, res) => {
-  res.render("labTut1", { clientRoute : clientRoute, imgUsername: req.cookies.username });
+  res.render("labTut1", {
+    clientRoute: clientRoute,
+    imgUsername: req.cookies.username,
+  });
 });
 
 app.get("/pragnya", checkSignIn, async (req, res) => {
@@ -3537,6 +3654,67 @@ app.get(
     });
   }
 );
+
+app.get("/mcqSessions", checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/mcqLongContests",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: true,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.clearCookie("courseId");
+    // console.log(body)
+    res.render("mcqLong", {
+      imgUsername: req.cookies.username,
+      data: body,
+    });
+  });
+});
+
+app.get("/admin/adventures/mcqContest", async (req, res) => {
+  res.render("mcqLongContestAdd", {
+    token: req.cookies.token,
+    data: {
+      serverurl: serverRoute,
+    },
+  });
+});
+
+app.post("/admin/advnetures/mcqContest", async (req, res) => {
+  console.log(req.body);
+  let options = {
+    url: serverRoute + "/mcqLong",
+    method: "post",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+    body: req.body,
+  };
+
+  request(options, (err, response, body) => {
+    res.send(body);
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
+
+app.get("/admin/adventuers/addmcq", async (req, res) => {
+  res.render("mcqLongAddQuestion", {
+    data: {
+      serverurl: serverRoute,
+    },
+    token: req.cookies.token,
+  });
+});
 
 app.get("/facultyValidSessions", checkSignIn, async (req, res) => {
   let options = {

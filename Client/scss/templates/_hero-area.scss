@@ -1,11 +1,12 @@
 .hero-area {
-  padding: 300px 0 200px;
+  height: calc(100vh - 90px);
+  padding: 110px 0 50px 0;
   position: relative;
   @include tablet {
     padding: 250px 0 150px;
     overflow: hidden;
   }
-  h1{
+  h1 {
     position: relative;
     z-index: 2;
   }
