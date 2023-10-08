@@ -60,6 +60,7 @@ exports.create = (req, res) => {
       sections: sections,
       coding: req.body.coding,
       contestPassword: req.body.contestPassword,
+      multipleAttempts: req.body.multipleAttempts == "on" ? true : false,
     });
 
     // SaveContest in the database
