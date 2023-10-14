@@ -1,4 +1,5 @@
 const Participate = require("../models/participation.model.js");
+const User = require("../models/user.model.js")
 const Participation = Participate.Participation;
 const McqParticipation = Participate.McqParticipation;
 const contests = require("./contest.controller.js");
@@ -527,12 +528,21 @@ exports.updateParticipation = (req, questions, callback) => {
       return callback("Error retrieving contest", null);
     });
 };
+async function findUserName(participation) {
+  for (let i = 0;i < participation.length;i++) {
+    let userbody = await User.find({ username: participation[i].username })
+    participation[i]._doc.name = userbody[0].name
+  }
+  return participation
+}
+
 
 // Retrieve and return all participation details.
 exports.findContestPart = (req, res) => {
   Participation.find({ contestId: req.body.contestId })
-    .then((participation) => {
-      res.send(participation);
+    .then(async (participation) => {
+      participation = await findUserName(participation)
+      res.send(participation)
     })
     .catch((err) => {
       res.status(500).send({
@@ -546,7 +556,13 @@ exports.findContestPart = (req, res) => {
 exports.findQualContestPart = (req, res) => {
   McqParticipation.find({ contestId: req.body.contestId })
     .then((participation) => {
-      res.send(participation);
+      console.log("HHHHEHHEEHEHEJEJEN")
+      // participation.forEach(async (part) => {
+      //   userbody = await User.find({ username: part.username })
+      //   part.name = userbody[0].name
+      // })
+      // console.log(participation[0])
+      res.send(participation[0]);
     })
     .catch((err) => {
       res.status(500).send({

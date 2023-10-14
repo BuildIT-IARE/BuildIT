@@ -20,14 +20,21 @@
       <hr />
       <table class="w3-table w3-striped" id="results">
         <tr>
-          <th>Username</th>
+          <th>Roll Number</th>
+          <th>Student Name</th>
           <th>Contest ID</th>
           <th>Participation Time</th>
           <th>Score</th>
         </tr>
+
         <% for(let i=0; i < datap.length; i++){ %>
         <tr>
           <td><%= datap[i].username %></td>
+          <% if(datap[i].name){ %>
+            <td><%= datap[i].name %></td>
+            <% }else{ %>
+              <td>Not available</td>
+            <% } %>
           <td><%= datap[0].contestId %></td>
           <td>
             <%= datap[i].participationTime.slice(0,
