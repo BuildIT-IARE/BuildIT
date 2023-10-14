@@ -1610,24 +1610,12 @@ app.post("/admin/results/contest", async (req, res) => {
   };
 
   request(options, function (err, response, bodyparticipation) {
-    let options = {
-      url: serverRoute + "/questions/contests/" + req.body.contestId,
-      method: "get",
-      headers: {
-        authorization: req.cookies.token,
-      },
-      json: true,
+    let url = {
+      url: clientRoute,
     };
-
-    request(options, function (err, response, bodyquestion) {
-      let url = {
-        url: clientRoute,
-      };
-      res.render("results", {
-        data: url,
-        datap: bodyparticipation,
-        dataq: bodyquestion,
-      });
+    res.render("results", {
+      data: url,
+      datap: bodyparticipation,
     });
   });
 });
