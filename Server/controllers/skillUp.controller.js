@@ -59,12 +59,26 @@ exports.create = (req, res) => {
         got(codeChefLink + req.body.codeChefId)
           .then((response) => {
             const dom = new JSDOM(response.body);
-            a = dom.window.document.querySelectorAll("h5")[0].textContent;
+            c = dom.window.document.querySelectorAll("h3")[4].textContent;
+            if (c == "Submissions") {
+              a = dom.window.document.querySelectorAll("h3")[5].textContent;
+              b = dom.window.document.querySelectorAll("h3")[6].textContent;
+            }
+            else {
+              a = dom.window.document.querySelectorAll("h3")[4].textContent;
+              b = dom.window.document.querySelectorAll("h3")[5].textContent;
+            }
             a = a.split("(");
             a = a[1];
             a = a.split(")");
             a = a[0];
             a = Number(a);
+            b = b.split("(");
+            b = b[1];
+            b = b.split(")");
+            b = b[0];
+            b = Number(b);
+            a = a + 2*b;
             totalScore += Math.round(a*10);
             codeChefScore += Math.round(a*10);
             return Math.round(a * 10);
