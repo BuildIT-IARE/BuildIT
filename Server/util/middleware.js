@@ -167,7 +167,7 @@ let checkTokenWatch = (req, res, next) => {
 };
 
 
-let redirect = (res, req, next)=>{
+let redirect = (req, res, next)=>{
   console.log("Redirecting")
   let ip = req.connection.remoteAddress;
   ip = ip.split(":")[3]

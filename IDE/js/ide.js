@@ -906,6 +906,8 @@ var course_language = {
   "IARE_CPP": 10,
   "IARE_JAVA": 26,
   "IARE_PY": 34,
+  "IARE_JAVA_LAB": 26,
+  "IARE_JL": 26
 }
 
 var sources = {
