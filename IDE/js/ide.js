@@ -409,11 +409,23 @@ function submit() {
       // console.log(data);
       // handleResult2(data);
       if (data.score === 100) {
-        data.message = "All testcases satisfied, Score: 100";
+        data.message = `All testcases satisfied, Score: 100
+                        1st Test Case ${data.result[0] === "Accepted" ? " Passed ✅" : " Failed ❌"}
+                        2nd Test Case ${data.result[1] === "Accepted" ? " Passed ✅" : " Failed ❌"}
+                        3rd Test Case ${data.result[2] === "Accepted" ? " Passed ✅" : " Failed ❌"} 
+                        `;
       } else if (data.score === 50) {
-        data.message = "Only 2 Test Cases Passed, Score: 50";
+        data.message = `Only 2 Test Cases Passed, Score: 50
+                        1st Test Case ${data.result[0] === "Accepted" ? " Passed ✅" : " Failed ❌"}
+                        2nd Test Case ${data.result[1] === "Accepted" ? " Passed ✅" : " Failed ❌"}
+                        3rd Test Case ${data.result[2] === "Accepted" ? " Passed ✅" : " Failed ❌"}
+                        `;
       } else if (data.score === 25) {
-        data.message = "Only 1 Test Case Passed, Score: 25";
+        data.message = `Only 1 Test Cases Passed, Score: 25
+        1st Test Case ${data.result[0] === "Accepted" ? " Passed ✅" : " Failed ❌"}
+        2nd Test Case ${data.result[1] === "Accepted" ? " Passed ✅" : " Failed ❌"}
+        3rd Test Case ${data.result[2] === "Accepted" ? " Passed ✅" : " Failed ❌"}
+        `;
       } else if (data.score === 0) {
         data.message = "No testcases were satisfied, Score: 0";
       } else {
