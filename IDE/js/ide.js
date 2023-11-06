@@ -409,13 +409,13 @@ function submit() {
       // console.log(data);
       // handleResult2(data);
       if (data.score === 100) {
-        data.message = "All testcases satisfied, score: 100";
+        data.message = "All testcases satisfied, Score: 100";
       } else if (data.score === 50) {
-        data.message = "Not all testcases were satisfied, score: 50";
+        data.message = "Only 2 Test Cases Passed, Score: 50";
       } else if (data.score === 25) {
-        data.message = "Not all testcases were satisfied, score: 25";
+        data.message = "Only 1 Test Case Passed, Score: 25";
       } else if (data.score === 0) {
-        data.message = "No testcases were satisfied, score: 0";
+        data.message = "No testcases were satisfied, Score: 0";
       } else {
         data.message = "An error occured, have you logged in?";
       }
