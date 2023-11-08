@@ -14,7 +14,6 @@ const dotenv = require("dotenv");
 const { cookie } = require("request");
 const { response } = require("express");
 const e = require("express");
-const { redirect } = require("../Server/util/middleware");
 
 // Load config
 dotenv.config({ path: "../Server/util/config.env" });
@@ -35,7 +34,6 @@ app.use(bodyParser.json());
 app.use(cors());
 app.set("view engine", "ejs");
 app.use(cookieParser());
-
 app.use("/", express.static(__dirname + "/"));
 app.use("/ide", express.static(path.resolve("../IDE")));
 
@@ -132,10 +130,10 @@ function loginCounts(req, res) {
 }
 
 
-app.get("/", redirect, async (req, res) => {
+app.get("/", async (req, res) => {
   loginCounts(req, res);
 });
-app.get("/index",redirect, async (req, res) => {
+app.get("/index", async (req, res) => {
   loginCounts(req, res);
 });
 app.get("/home", checkSignIn, async (req, res, next) => {

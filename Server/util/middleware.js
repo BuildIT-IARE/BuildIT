@@ -168,7 +168,6 @@ let checkTokenWatch = (req, res, next) => {
 
 
 
-
 module.exports = {
   checkToken,
   checkTokenAdmin,
