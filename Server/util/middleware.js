@@ -167,22 +167,11 @@ let checkTokenWatch = (req, res, next) => {
 };
 
 
-let redirect = (req, res, next)=>{
-  console.log("Redirecting")
-  let ip = req.connection.remoteAddress;
-  ip = ip.split(":")[3]
-  if (ip == '103.44.2.218' || ip == "119.235.51.254"){
-    res.redirect('http://172.16.1.33:4000/');
-  }
-  else{
-    next();
-  }
-}
+
 
 module.exports = {
   checkToken,
   checkTokenAdmin,
   checkTokenFaculty,
   checkTokenWatch,
-  redirect,
 };

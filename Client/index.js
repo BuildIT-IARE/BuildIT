@@ -35,9 +35,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.set("view engine", "ejs");
 app.use(cookieParser());
-// app.use((req, res, next) => {
-//   redirect(req, res, next);
-// });
+
 app.use("/", express.static(__dirname + "/"));
 app.use("/ide", express.static(path.resolve("../IDE")));
 
