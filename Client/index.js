@@ -972,6 +972,9 @@ app.get("/admin/edit/question", async (req, res) => {
     res.render("search", { data: body });
   });
 });
+
+
+
 app.get("/admin/edit/contest", async (req, res) => {
   let options = {
     url: serverRoute + "/contests",
@@ -1008,6 +1011,7 @@ app.post("/questionEdit", async (req, res) => {
   request(options, function (err, response, body) {
     let user = req.cookies.username;
     let userArr = [
+      "admin",
       "19951A0579",
       "19951A12B5",
       "19951A05M7",
@@ -1034,13 +1038,21 @@ app.post("/questionEdit", async (req, res) => {
       };
 
       request(options, function (err, response, body) {
-        if (!("success" in body)) {
+        if (body.length>=1) {
           body[0].serverurl = serverRoute;
           res.render("questionedit", {
             data: body[0],
             token: req.cookies.token,
           });
-        } else {
+        } 
+        else if(body.length==0){
+          body.message = "Question Id Not Found";
+          res.render("error", {
+            data: body,
+            imgUsername: req.cookies.username,
+          });
+        }
+        else {
           body.message = "Unauthorized access";
           res.render("error", {
             data: body,
