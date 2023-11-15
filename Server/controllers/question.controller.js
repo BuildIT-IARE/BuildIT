@@ -18,61 +18,71 @@ exports.create = (req, res) => {
   Question.find()
     .then((questions) => {
       var currQuestions = questions[0].CountValue + 1;
-      req.body.questionId = "IARE" + currQuestions.toString();
-      Question.findOneAndUpdate(
-        { questionId: questions[0].questionId },
-        { $set: { CountValue: currQuestions } }
-      )
-        .then()
-        .catch((err) => {
-          res.status(500).send({
-            success: false,
-            message:
-              err.message || "Some error occurred while retrieving questions.",
-          });
-        });
-      // Create a Question
-      const question = new Question({
-        questionId: req.body.questionId,
-        questionName: req.body.questionName,
-        contestId: req.body.contestId,
-        questionDescriptionText: req.body.questionDescriptionText,
-        questionInputText: req.body.questionInputText,
-        questionOutputText: req.body.questionOutputText,
-        questionExampleInput1: req.body.questionExampleInput1,
-        questionExampleOutput1: req.body.questionExampleOutput1,
-        questionExampleInput2: req.body.questionExampleInput2,
-        questionExampleOutput2: req.body.questionExampleOutput2,
-        questionExampleInput3: req.body.questionExampleInput3,
-        questionExampleOutput3: req.body.questionExampleOutput3,
-        questionHiddenInput1: req.body.questionHiddenInput1,
-        questionHiddenInput2: req.body.questionHiddenInput2,
-        questionHiddenInput3: req.body.questionHiddenInput3,
-        questionHiddenOutput1: req.body.questionHiddenOutput1,
-        questionHiddenOutput2: req.body.questionHiddenOutput2,
-        questionHiddenOutput3: req.body.questionHiddenOutput3,
-        questionExplanation: req.body.questionExplanation,
-        author: req.body.author,
-        editorial: req.body.editorial,
-        difficulty: req.body.difficulty,
-        language: req.body.language,
-        conceptLevel: req.body.conceptLevel,
-      });
+      if (!req.body.questionId){
+        req.body.questionId = "IARE" + currQuestions.toString();
+      }
+      Question.find({questionId:req.body.questionId})
+      .then((questions2) =>{
+          if (questions2.length>=1){
+            req.body.questionId = "IARE" + currQuestions.toString();
+          }
 
-      // Save Question in the database
-      question
-        .save()
-        .then((data) => {
-          res.send(data);
-        })
-        .catch((err) => {
-          res.status(500).send({
-            success: false,
-            message:
-              err.message || "Some error occurred while creating the Question.",
+          Question.findOneAndUpdate(
+            { questionId: questions[0].questionId },
+            { $set: { CountValue: currQuestions } }
+          )
+            .then()
+            .catch((err) => {
+              res.status(500).send({
+                success: false,
+                message:
+                  err.message || "Some error occurred while retrieving questions.",
+              });
+            });
+          // Create a Question
+          const question = new Question({
+            questionId: req.body.questionId,
+            questionName: req.body.questionName,
+            contestId: req.body.contestId,
+            questionDescriptionText: req.body.questionDescriptionText,
+            questionInputText: req.body.questionInputText,
+            questionOutputText: req.body.questionOutputText,
+            questionExampleInput1: req.body.questionExampleInput1,
+            questionExampleOutput1: req.body.questionExampleOutput1,
+            questionExampleInput2: req.body.questionExampleInput2,
+            questionExampleOutput2: req.body.questionExampleOutput2,
+            questionExampleInput3: req.body.questionExampleInput3,
+            questionExampleOutput3: req.body.questionExampleOutput3,
+            questionHiddenInput1: req.body.questionHiddenInput1,
+            questionHiddenInput2: req.body.questionHiddenInput2,
+            questionHiddenInput3: req.body.questionHiddenInput3,
+            questionHiddenOutput1: req.body.questionHiddenOutput1,
+            questionHiddenOutput2: req.body.questionHiddenOutput2,
+            questionHiddenOutput3: req.body.questionHiddenOutput3,
+            questionExplanation: req.body.questionExplanation,
+            author: req.body.author,
+            editorial: req.body.editorial,
+            difficulty: req.body.difficulty,
+            language: req.body.language,
+            conceptLevel: req.body.conceptLevel,
           });
-        });
-    })
+    
+          // Save Question in the database
+          question
+            .save()
+            .then((data) => {
+              res.send(data);
+            })
+            .catch((err) => {
+              res.status(500).send({
+                success: false,
+                message:
+                  err.message || "Some error occurred while creating the Question.",
+              });
+            });
+        })
+      })
+
     .catch((err) => {
       res.status(500).send({
         success: false,
@@ -331,8 +341,23 @@ exports.createTutorials = (req, res) => {
           .map((item) => item.trim());
       }
 
-      let currQuestions = questions.length + 1;
+
+      var currQuestions = questions[0].CountValue + 1;
+
       req.body.questionId = "IARE" + currQuestions.toString();
+
+      Question.findOneAndUpdate(
+        { questionId: questions[0].questionId },
+        { $set: { CountValue: currQuestions } }
+      )
+        .then()
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message || "Some error occurred while retrieving questions.",
+          });
+        });
 
       // Create a Question
       const question = new Question({
@@ -406,8 +431,22 @@ exports.createTutorials = (req, res) => {
           .map((item) => item.trim());
       }
 
-      let currQuestions = questions.length + 1;
+      var currQuestions = questions[0].CountValue + 1;
+
       req.body.questionId = "IARE" + currQuestions.toString();
+
+      Question.findOneAndUpdate(
+        { questionId: questions[0].questionId },
+        { $set: { CountValue: currQuestions } }
+      )
+        .then()
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message || "Some error occurred while retrieving questions.",
+          });
+        });
 
       // Create a Question
       const question = new Question({
@@ -482,8 +521,22 @@ exports.createTutorials = (req, res) => {
           .map((item) => item.trim());
       }
 
-      let currQuestions = questions.length + 1;
+      let currQuestions = questions[0].CountValue + 1;
+
       req.body.questionId = "IARE" + currQuestions.toString();
+
+      Question.findOneAndUpdate(
+        { questionId: questions[0].questionId },
+        { $set: { CountValue: currQuestions } }
+      )
+        .then()
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message:
+              err.message || "Some error occurred while retrieving questions.",
+          });
+        });
 
       // Create a Question
       const question = new Question({
@@ -732,6 +785,8 @@ exports.getTestCases = (req, callback) => {
 
 // Update a question identified by the questionId in the request
 exports.update = (req, res) => {
+
+  //checking whether the questionid is empty
   if (!req.body.questionId) {
     return res.status(400).send({
       success: false,
@@ -772,61 +827,137 @@ exports.update = (req, res) => {
       message: "Unauthorized access!",
     });
   }
-  // Find question and update it with the request body
-  Question.findOneAndUpdate(
-    { questionId: req.params.questionId },
-    {
-      $set: {
-        questionId: req.body.questionId,
-        questionName: req.body.questionName,
-        contestId: req.body.contestId,
-        questionDescriptionText: req.body.questionDescriptionText,
-        questionInputText: req.body.questionInputText,
-        questionOutputText: req.body.questionOutputText,
-        questionExampleInput1: req.body.questionExampleInput1,
-        questionExampleOutput1: req.body.questionExampleOutput1,
-        questionExampleInput2: req.body.questionExampleInput2,
-        questionExampleOutput2: req.body.questionExampleOutput2,
-        questionExampleInput3: req.body.questionExampleInput3,
-        questionExampleOutput3: req.body.questionExampleOutput3,
-        questionHiddenInput1: req.body.questionHiddenInput1,
-        questionHiddenInput2: req.body.questionHiddenInput2,
-        questionHiddenInput3: req.body.questionHiddenInput3,
-        questionHiddenOutput1: req.body.questionHiddenOutput1,
-        questionHiddenOutput2: req.body.questionHiddenOutput2,
-        questionHiddenOutput3: req.body.questionHiddenOutput3,
-        questionExplanation: req.body.questionExplanation,
-        author: req.body.author,
-        editorial: req.body.editorial,
-        difficulty: req.body.difficulty,
-        language: req.body.language,
-        conceptLevel: req.body.conceptLevel,
-      },
-    },
-    { new: true }
-  )
-    .then((question) => {
-      if (!question) {
-        return res.status(404).send({
-          success: false,
-          message: "Question not found with id " + req.params.questionId,
-        });
+
+
+    //update the question id if id is changed and  new id dosent exists befor
+
+
+      if (req.body.questionId != req.params.questionId){
+      Question.find({questionId:req.body.questionId})
+      .then((questions2) =>{
+          if (questions2.length>=1){
+            req.body.questionId = req.params.questionId;
+          }
+
+            Question.findOneAndUpdate(
+              { questionId: req.params.questionId },
+              {
+                $set: {
+                  questionId: req.body.questionId,
+                  questionName: req.body.questionName,
+                  contestId: req.body.contestId,
+                  questionDescriptionText: req.body.questionDescriptionText,
+                  questionInputText: req.body.questionInputText,
+                  questionOutputText: req.body.questionOutputText,
+                  questionExampleInput1: req.body.questionExampleInput1,
+                  questionExampleOutput1: req.body.questionExampleOutput1,
+                  questionExampleInput2: req.body.questionExampleInput2,
+                  questionExampleOutput2: req.body.questionExampleOutput2,
+                  questionExampleInput3: req.body.questionExampleInput3,
+                  questionExampleOutput3: req.body.questionExampleOutput3,
+                  questionHiddenInput1: req.body.questionHiddenInput1,
+                  questionHiddenInput2: req.body.questionHiddenInput2,
+                  questionHiddenInput3: req.body.questionHiddenInput3,
+                  questionHiddenOutput1: req.body.questionHiddenOutput1,
+                  questionHiddenOutput2: req.body.questionHiddenOutput2,
+                  questionHiddenOutput3: req.body.questionHiddenOutput3,
+                  questionExplanation: req.body.questionExplanation,
+                  author: req.body.author,
+                  editorial: req.body.editorial,
+                  difficulty: req.body.difficulty,
+                  language: req.body.language,
+                  conceptLevel: req.body.conceptLevel,
+                },
+              },
+              { new: true }
+            )
+              .then((question) => {
+                if (!question) {
+                  return res.status(404).send({
+                    success: false,
+                    message: "Question not found with id " + req.params.questionId,
+                  });
+                }
+
+                res.send("Updated Successfully, Go Back");
+              })
+              .catch((err) => {
+                if (err.kind === "ObjectId") {
+                  return res.status(404).send({
+                    success: false,
+                    message: "Question not found with id " + req.params.questionId,
+                  });
+                }
+                return res.status(500).send({
+                  success: false,
+                  message: "Error updating Question with id " + req.params.questionId,
+                });
+              });
+          })
+          .catch((err) => {
+              return res.status(404).send({
+                success: false,
+                message: "error while finding questions from databse",
+              });
+          });
       }
-      res.send("Updated Successfully, Go Back");
-    })
-    .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          success: false,
-          message: "Question not found with id " + req.params.questionId,
-        });
+      else{
+        Question.findOneAndUpdate(
+          { questionId: req.params.questionId },
+          {
+            $set: {
+              questionId: req.body.questionId,
+              questionName: req.body.questionName,
+              contestId: req.body.contestId,
+              questionDescriptionText: req.body.questionDescriptionText,
+              questionInputText: req.body.questionInputText,
+              questionOutputText: req.body.questionOutputText,
+              questionExampleInput1: req.body.questionExampleInput1,
+              questionExampleOutput1: req.body.questionExampleOutput1,
+              questionExampleInput2: req.body.questionExampleInput2,
+              questionExampleOutput2: req.body.questionExampleOutput2,
+              questionExampleInput3: req.body.questionExampleInput3,
+              questionExampleOutput3: req.body.questionExampleOutput3,
+              questionHiddenInput1: req.body.questionHiddenInput1,
+              questionHiddenInput2: req.body.questionHiddenInput2,
+              questionHiddenInput3: req.body.questionHiddenInput3,
+              questionHiddenOutput1: req.body.questionHiddenOutput1,
+              questionHiddenOutput2: req.body.questionHiddenOutput2,
+              questionHiddenOutput3: req.body.questionHiddenOutput3,
+              questionExplanation: req.body.questionExplanation,
+              author: req.body.author,
+              editorial: req.body.editorial,
+              difficulty: req.body.difficulty,
+              language: req.body.language,
+              conceptLevel: req.body.conceptLevel,
+            },
+          },
+          { new: true }
+        )
+          .then((question) => {
+            if (!question) {
+              return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.params.questionId,
+              });
+            }
+            res.send("Updated Successfully, Go Back");
+          })
+          .catch((err) => {
+            if (err.kind === "ObjectId") {
+              return res.status(404).send({
+                success: false,
+                message: "Question not found with id " + req.params.questionId,
+              });
+            }
+            return res.status(500).send({
+              success: false,
+              message: "Error updating Question with id " + req.params.questionId,
+            });
+          });
       }
-      return res.status(500).send({
-        success: false,
-        message: "Error updating Question with id " + req.params.questionId,
-      });
-    });
-};
+
+}
 
 // Delete a question with the specified questionId in the request
 exports.delete = (req, res) => {
