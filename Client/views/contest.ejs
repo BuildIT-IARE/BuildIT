@@ -171,7 +171,7 @@
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
           (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
 
-          <%  if ((data[i].contestStartTime <=  curr_time)  &&  (curr_time <= data[i].contestEndTime )) {  %>
+          
 
           <div class="col-lg-4 col-sm-6 mb-4">
             <a <% if(data[i].contestPassword){ %>
@@ -197,7 +197,9 @@
                     data[i].contestEndTime %> <% } %>
                   </span>
                 </div>
-                <div class="participate">Participate</div>
+                <%  if ((data[i].contestStartTime <=  curr_time)  &&  (curr_time <= data[i].contestEndTime )) {  %> 
+                  <div class="participate">Participate</div> 
+                <% } %>
               </div>
             </a>
 
@@ -237,7 +239,7 @@
               </div>
             </article>-->
           </div>
-          <% } %> <% } %> <% } %>
+       <% } %> <% } %>
         </div>
       </div>
       <div class="container">
