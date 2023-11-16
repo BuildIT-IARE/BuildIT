@@ -141,43 +141,27 @@
         <h3 class="font-tertiary mb-5" style="color: green">Active Contests</h3>
         <div class="row">
           <h5 id="login"></h5>
-          <% let date = new Date() %>
-          <%let today = date.toLocaleDateString() %>
 
-          <% let minutes = date.getMinutes() %>
-
-          <% let hours = date.getHours() %>
-
-          <% if (hours<10){ %>
-
-          <%  hours = '0'+String(hours) %>
-
-          <% }  %>
-
-          <% if (minutes<10){ %>
-
-            <%  minutes = '0'+String(minutes) %>
-  
-            <% }  %>
-
-          <% console.log(hours,minutes) %>
-
+          <%let date = new Date() 
+            let today = date.toLocaleDateString()
+            let minutes = date.getMinutes() 
+            let hours = date.getHours() 
+          %>
+          <% if (hours<10) hours = '0'+String(hours) %>
+          <% if (minutes<10) minutes = '0'+String(minutes) %>
           <%  let curr_time = Number(String(hours)+String(minutes)) %>
-
-  
-
 
 
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
           (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
-
-          
-
+          <%  if ((data[i].contestStartTime <=  curr_time)  &&  (curr_time <= data[i].contestEndTime )) {  %>
           <div class="col-lg-4 col-sm-6 mb-4">
-            <a <% if(data[i].contestPassword){ %>
-              href="contestPassword/<%= data[i].contestId %>" <%} else{%>
-              href="contests/<%= data[i].contestId %>" <%}%> target="_blank"
-              class="cardy active" >
+            <a <% if (data[i].contestPassword) { %>
+              href="contestPassword/<%= data[i].contestId %>"
+          <% } else { %>
+              href="contests/<%= data[i].contestId %>" 
+          <% } %> target="_blank" class="cardy active">
+       
               <div class="card-content">
                 <div class="title"><%= data[i].contestName %></div>
                 <div class="details">
@@ -196,52 +180,42 @@
                     <b>Timing: </b><%= data[i].contestStartTime %> to <%=
                     data[i].contestEndTime %> <% } %>
                   </span>
-                </div>
-                <%  if ((data[i].contestStartTime <=  curr_time)  &&  (curr_time <= data[i].contestEndTime )) {  %> 
+                </div> 
                   <div class="participate">Participate</div> 
-                <% } %>
               </div>
             </a>
-
-
-            <!--<article class="card shadow">
-               <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>">
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a
-                    style="white-space: pre-line"
-                    class="text-dark"
-                    href="contests/<%= data[i].contestId %>"
-                    ><%= data[i].contestName %></a
-                  >
-                </h4>
-
-                <p>
-                  <% if (data[i].contestDuration) { %>
-                  <b>Duration: </b><%= data[i].contestDuration %> Mins <% } %>
-                </p>
-                <p>
-                  <% if (data[i].contestDate) { %>
-                  <b>Date: </b><%= data[i].contestDate %> <% } %>
-                </p>
-                <p>
-                  <% if (data[i].contestStartTime && data[i].contestEndTime) {
-                  %>
-                  <b>Timing: </b><%= data[i].contestStartTime %> to <%=
-                  data[i].contestEndTime %> <% } %>
-                </p>
-                <br />
-                <a
-                  href="contests/<%= data[i].contestId %>"
-                  class="btn btn-xs btn-primary"
-                  >Participate</a
-                >
-              </div>
-            </article>-->
           </div>
+            <% }  else { %>
+           <div class="col-lg-4 col-sm-6 mb-4">
+                <a class="cardy" >
+                  <div class="card-content">
+                    <div class="title"><%= data[i].contestName %></div>
+                    <div class="details">
+                      <span class="material-icons icon"> watch_later </span>
+                      <span>
+                        <% if (data[i].contestDuration) { %>
+                        <b>Duration: </b><%= data[i].contestDuration %> Mins <% } %>
+                      </span>
+                      <span>
+                        <% if (data[i].contestDate) { %>
+                        <b>Date: </b><%= data[i].contestDate %> <% } %>
+                      </span>
+                      <span>
+                        <% if (data[i].contestStartTime && data[i].contestEndTime) {
+                        %>
+                        <b>Timing: </b><%= data[i].contestStartTime %> to <%=
+                        data[i].contestEndTime %> <% } %>
+                      </span>
+                    </div> 
+                      <div class="participate" style="background-color: gray;">Participate</div> 
+                  </div>
+                </a>
+          </div>
+          <% } %>
        <% } %> <% } %>
         </div>
-      </div>
+    </div>
+    
       <div class="container">
         <h3 class="font-tertiary mb-5" style="color: grey">
           Inactive Contests
@@ -278,39 +252,6 @@
                 <div class="participate">Participate</div>
               </div>
             </a>
-            <!--<article class="card">
-               <img class="rounded card-img-top" src="images/contests/<%= data[i].contestId %>.jpg" alt="<%= data[i].contestId %>"> 
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a
-                    style="white-space: pre-line"
-                    class="text-dark"
-                    href="contests/<%= data[i].contestId %>"
-                    ><%= data[i].contestName %></a
-                  >
-                </h4>
-                <p>
-                  <% if (data[i].contestDuration) { %>
-                  <b>Duration: </b><%= data[i].contestDuration %> Mins <% } %>
-                </p>
-                <p>
-                  <% if (data[i].contestDate) { %>
-                  <b>Date: </b><%= data[i].contestDate %> <% } %>
-                </p>
-                <p>
-                  <% if (data[i].contestStartTime && data[i].contestEndTime) {
-                  %>
-                  <b>Timing: </b><%= data[i].contestStartTime %> to <%=
-                  data[i].contestEndTime %> <% } %>
-                </p>
-                <br />
-                <a
-                  href="contests/<%= data[i].contestId %>"
-                  class="btn btn-xs btn-primary"
-                  >Participate</a
-                >
-              </div>
-            </article>-->
           </div>
           <% } %> <% } %>
         </div>
@@ -349,36 +290,7 @@
       doSomething();
     </script>
 
-    <!-- footer -->
-    <!--<footer class="bg-dark footer-section">
-  <div class="section">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <h5 class="text-light">Email</h5>
-          <p class="text-white paragraph-lg font-secondary">steve.fruits@email.com</p>
-        </div>
-        <div class="col-md-4">
-          <h5 class="text-light">Phone</h5>
-          <p class="text-white paragraph-lg font-secondary">+880 2544 658 256</p>
-        </div>
-        <div class="col-md-4">
-          <h5 class="text-light">Address</h5>
-          <p class="text-white paragraph-lg font-secondary">125/A, CA Commercial Area, California, USA</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="border-top text-center border-dark py-5">
-    <p class="mb-0 text-light">Copyright ©<script>
-        var CurrentYear = new Date().getFullYear()
-        document.write(CurrentYear)
-      </script> a theme by <a href="themefisher.com">themefisher.com</a></p>
-  </div>
-------footer------->
-    <!-- /footer -->
-    <%- include("../views/partials/aboutfooter") %> <%-
-    include("../views/partials/aboutfooter") %>
+    <%- include("../views/partials/aboutfooter") %> 
 
     <!-- jQuery -->
     <script src="plugins/jQuery/jquery.min.js"></script>
