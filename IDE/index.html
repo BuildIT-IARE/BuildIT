@@ -135,6 +135,7 @@
           width="90px"
           height="90px"
           src="images/defaultuser.png"
+          alt="profile_img"
         />
       </div>
     </div>
@@ -206,16 +207,12 @@
     $(document).ready(function () {
       let branch = getCookie("branch");
       let username = getCookie("username");
+      let imgurl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/"+username.toUpperCase() +"/"+username.toUpperCase()+".jpg"
       if (branch) {
         $("#userImage").attr(
           "src",
-          "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/" +
-            branch +
-            "/" +
-            username +
-            ".jpg"
-        );
-        document.getElementById("username").innerHTML = username;
+          imgurl)
+           document.getElementById("username").innerHTML = username;
       }
     });
   </script>

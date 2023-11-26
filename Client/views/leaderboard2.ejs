@@ -202,11 +202,12 @@
         </div>
         <div id="image">
           <p id="username"><%= imgUsername %>&emsp;</p>
+          <% let imgUsername2 = imgUsername.toUpperCase() %>
           <img
             id="img"
             alt="No Image"
             width="50"
-            src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/<%= imgBranch %>/<%= imgUsername %>.jpg"
+            src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/<%= imgUsername2 %>/<%= imgUsername2%>.jpg"
           />
         </div>
       </div>
@@ -269,6 +270,7 @@
       }
 
       function duplicate(position, username, username2, name, branch, score) {
+        username3 = username2.toUpperCase();
         var item = document.createElement("tr");
         if (rollnumbervalue === username2) {
           item.classList.add("colour");
@@ -277,7 +279,7 @@
         item.innerHTML = `
 <td><p class="position">${position}</p></td>
 <td class="image">
-	<img src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/${branch}/${username2}.jpg" alt="">
+	<img src="src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/${username3}/${username3}.jpg"" alt="">
 </td>
 <td><p class="name">${name}</p></td>
 <td><p class="username">${username}</p></td>

@@ -105,8 +105,8 @@ exports.findBranch = (req, res) => {
       }
       user = user[0];
       let imgUrl =
-        "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/" +
-        user.branch +
+        "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/"+
+        user.username.toUpperCase()
         "/" +
         user.username.toUpperCase() +
         ".jpg";
