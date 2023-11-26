@@ -373,7 +373,7 @@ function submit() {
   compileOutputEditor.setValue("");
   sandboxMessageEditor.setValue("");
 
-  // var sourceValue = encode(sourceEditor.getValue());
+// var sourceValue = encode(sourceEditor.getValue());
   // var stdinValue = encode(stdinEditor.getValue());
   var sourceValue = sourceEditor.getValue();
   var stdinValue = stdinEditor.getValue();
@@ -394,7 +394,7 @@ function submit() {
     questionId: windowUrl.slice(serverUrl.length + 5, windowUrl.length),
   };
 
-  // console.log(data);
+// console.log(data);
   timeStart = performance.now();
   $.ajax({
     url: serverUrl + "/validateSubmission",
@@ -431,11 +431,27 @@ function submit() {
       } else {
         data.message = "An error occured, have you logged in?";
       }
+
+      data.message += "\n\nThe submit button will be enabled after one minute ⏳";
+
+
+
       handleMyResult(data);
+
+      // disable the submit btn
+      $submitBtn.prop("disabled", true);
+
+      //enable the btn after timeout
+      setTimeout(function () {
+        // enable the submit btn
+        $submitBtn.prop("disabled", false);
+
+      }, 60000);
     },
     error: handleRunError2,
   });
 }
+
 function fetchSubmission(submission_token) {
   $.ajax({
     url: apiUrl + "/submissions/" + submission_token + "?base64_encoded=true",
