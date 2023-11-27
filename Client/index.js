@@ -95,7 +95,7 @@ function imageRetrive(req, res) {
   let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
   let rollno = req.cookies.username;
   let branch = req.cookies.branch;
-  var testUrl = imageUrl + branch + "/" + rollno + ".jpg";
+  var testUrl = imageUrl + "/STUDENTS/"+ rollno.toUpperCase() + rollno.toUpperCase() + ".jpg";
   return testUrl;
 }
 
@@ -330,7 +330,8 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
     body.branchCaps = body.branch.toUpperCase();
     let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS";
     let rollno = req.cookies.username;
-    let testUrl = imageUrl +"/" + rollno + "/" + rollno + ".jpg";
+    let testUrl = imageUrl + "STUDENTS" + "/" + rollno.toUpperCase() + "/" + rollno.toUpperCase() + ".jpg";
+
     let options = {
       url: serverRoute + "/tparticipations/findUserCourses",
       method: "get",

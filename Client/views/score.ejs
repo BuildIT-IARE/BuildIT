@@ -279,11 +279,12 @@ east
         </div>
         <div id="image">
           <h4 id="username"><%= imgUsername %>&emsp;</h4>
+          <% let imgUsername = imgUsername.toUpperCase() %>
           <img
             id="img"
             alt="No Image"
             width="50"
-            src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/<%= imgBranch %>/<%= imgUsername %>.jpg"
+            src="https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/<%= imgUsername %>/<%= imgUsername %>.jpg"
           />
         </div>
       </div>
