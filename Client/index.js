@@ -328,10 +328,10 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
   };
   request(options, function (err, response, body) {
     body.branchCaps = body.branch.toUpperCase();
-    let branch = body.branch;
-    let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
+    let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS";
     let rollno = req.cookies.username;
     let testUrl = imageUrl + "STUDENTS" + "/" + rollno.toUpperCase() + "/" + rollno.toUpperCase() + ".jpg";
+
     let options = {
       url: serverRoute + "/tparticipations/findUserCourses",
       method: "get",
@@ -391,7 +391,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                 const uniqueSet = new Set(arr);
                 return uniqueSet.size;
               }
-              const uniqueCount = countUniqueElements(bodytimer.practiceSolved);
+              
          
           
               let options = {
@@ -418,7 +418,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       const uniqueSet = new Set(arr);
                       return uniqueSet.size;
                     }
-                    const uniqueCount1 = countUniqueElements1(bodytimer.practiceSolved);
+
         // get participation details
         request(options3, function (err, response, bodytimer) {
           bodytimer = bodytimer[0];
@@ -504,8 +504,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       partCount: partCount,
                       progress: body3,
                       contestCount: body4.count,
-                      labCount :uniqueCount,
-                      labCount1 :uniqueCount1,
+                      
                       resumeStatus: body5.success,
                       skillups: body6,
                       token: req.cookies.token,
@@ -520,8 +519,6 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
                       partCount: partCount,
                       progress: body3,
                       contestCount: body4.count,
-                      labCount :uniqueCount,
-                      labCount1 :uniqueCount1,
                       resumeStatus: body5.success,
                       token: req.cookies.token,
                       serverUrl: serverRoute,
