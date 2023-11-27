@@ -446,7 +446,7 @@ function submit() {
         // enable the submit btn
         $submitBtn.prop("disabled", false);
 
-      }, 60000);
+      }, 30000);
     },
     error: handleRunError2,
   });
