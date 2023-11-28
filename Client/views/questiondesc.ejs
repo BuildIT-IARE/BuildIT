@@ -209,11 +209,14 @@
       text-align: center;
     }
   </style>
-  <body>
+  <body id="no-context-menu">
     <script>
       function close_window() {
         close();
       }
+
+      const contextMenuDisable = document.getElementById('no-context-menu');
+      contextMenuDisable.addEventListener('contextmenu', (e) => { e.preventDefault() })
     </script>
     <!-- about -->
     <section class="section-top">

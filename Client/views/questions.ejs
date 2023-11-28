@@ -478,7 +478,7 @@
     <link rel="stylesheet" href="../css/style2.css" />
   </head>
 
-  <body>
+  <body id="no-context-menu">
     <section class="top-nav">
       <div class="top-name">BuildIT | IARE</div>
       <div class="time">
@@ -696,9 +696,12 @@
       </section>
       <iframe src="" frameborder="0" name="display-frame" id="frame"></iframe>
       <script>
+        document.getElementById("frame").addEventListener("contextmenu", (e) => {e.preventDefault()});
         var a = window.height - 80;
         document.getElementById("frame").style.height = a + "px";
         document.querySelector(".main").style.height = a + "px";
+
+        
       </script>
     </section>
     <!-- jQuery -->
@@ -782,6 +785,7 @@
         console.log(err);
       }
 
+
       document.addEventListener(
         "fullscreenchange",
         function () {
@@ -815,5 +819,33 @@
         document.querySelector(".startbutton").style.display = "none";
       }
     });
+
+    const contextMenuDisable = document.getElementById('no-context-menu');
+    contextMenuDisable.addEventListener('contextmenu', (e) => {e.preventDefault()});
+
+    // const test = document.getElementsByName('display-frame')[0];
+    // console.log(test);
+    // test.addEventListener('contextmenu', (e) => {e.preventDefault()})
+
+    document.addEventListener('DOMContentLoaded', function () {
+  var iframe = document.getElementById('frame');
+
+  iframe.addEventListener('load', function () {
+    // Check if the iframe source is about:blank
+    if (iframe.contentWindow.location.href === 'about:blank') {
+      // Add an event listener to the iframe's document
+      iframe.contentDocument.addEventListener('contextmenu', function (event) {
+        // Prevent the default context menu behavior
+        event.preventDefault();
+      });
+    }
+  });
+
+  // Set the iframe source
+  iframe.src = 'about:blank';
+});
+    
+    
+    
   </script>
 </html>
