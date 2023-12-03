@@ -90,14 +90,6 @@ let checkSignIn = async (req, res, next) => {
   }
 };
 
-var imageUrl = "";
-function imageRetrive(req, res) {
-  let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
-  let rollno = req.cookies.username;
-  let branch = req.cookies.branch;
-  var testUrl = imageUrl + branch + "/" + rollno + ".jpg";
-  return testUrl;
-}
 
 function loginCounts(req, res) {
   let options = {
@@ -328,10 +320,7 @@ app.get("/profile", checkSignIn, async (req, res, next) => {
   };
   request(options, function (err, response, body) {
     body.branchCaps = body.branch.toUpperCase();
-    let branch = body.branch;
-    let imageUrl = "https://iare-data.s3.ap-south-1.amazonaws.com/uploads/";
-    let rollno = req.cookies.username;
-    let testUrl = imageUrl + branch + "/" + rollno + ".jpg";
+    let testUrl = `https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/${req.cookies.username.toUpperCase()}/${req.cookies.username.toUpperCase()}.jpg`;
     let options = {
       url: serverRoute + "/tparticipations/findUserCourses",
       method: "get",
@@ -1986,12 +1975,12 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
               } else if (body[i].score === 50) {
                 body[i].color = "orange";
               } else if (body[i].score === 25) {
-                body[i].color = "red";
+                body[i].color = "red"
               } else {
                 body[i].color = "black";
               }
             }
-            imageUrl = imageRetrive(req, res);
+            imageUrl = `https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/${req.cookies.username.toUpperCase()}/${req.cookies.username.toUpperCase()}.jpg`;
             
             // check Full Screen Contest
             let getContestOptions = {
