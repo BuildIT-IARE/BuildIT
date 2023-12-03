@@ -356,6 +356,16 @@ function getCookie(cname) {
 }
 
 function submit() {
+  if (document.getElementById('submit-btn').classList.contains("disable")) {
+    showError("Error", "Please Wait 10 Seconds before submitting again!");
+    return;
+  }
+  else{
+    document.getElementById('submit-btn').classList.add("disable");
+    setTimeout(function(){
+      document.getElementById('submit-btn').classList.remove("disable");
+    }, 10000);
+  }
   if (sourceEditor.getValue().trim() === "") {
     showError("Error", "Source code can't be empty!");
     return;
