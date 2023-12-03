@@ -209,7 +209,7 @@
       text-align: center;
     }
   </style>
-  <body>
+  <body oncontextmenu="return false;">
     <script>
       function close_window() {
         close();
@@ -279,10 +279,24 @@
         </div>
       </div>
     </section>
+    <script>
+      function disableKeys(e) {
+          const unwantedKeys = ['c', 'v', 'n', 'a', 'p', "C", "V", "N", "A", "P"]
+          if (e.ctrlKey && unwantedKeys.includes(e.key)) {
+            e.preventDefault();
+          }
+          if (e.ctrlKey && e.shiftKey && ['i', 'c', 'I', 'i'].includes(e.key)) {
+            e.preventDefault();
+          }
+        }
+      if (window.location.href.split('?')[1].split('=')[1] == 1){
+        window.addEventListener("keydown", disableKeys);
+      }
+    </script>
     <section class="section pt-8" style="padding-top: 0">
       <div class="row">
         <iframe
-          src="/ide/<%=data[0].questionId %>"
+          src="/ide/<%=data[0].questionId %>?fullScreen=1"
           frameborder="0"
           class="code-ide"
           id="ide"
