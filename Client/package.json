@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index",
-    "scss": "node-sass scss/ -o css/"
+    "scss": "node-sass scss/ -o css/",
+    "dev": "nodemon -e js,ejs,html,css"
   },
   "author": "Tayeeb, Krishna, Abubakar",
   "license": "ISC",
