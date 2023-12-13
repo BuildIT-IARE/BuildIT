@@ -1,5 +1,10 @@
     <style>
       @import url('../../css/style2.css');
+      
+      .chapter-nav-button {
+        margin-right: 2em;
+      }
+
     </style>
     <section class="chapter-navigation">
       <div class="nav-chapter-logo2">
@@ -9,7 +14,8 @@
         <button class="nav-btn"><a href="/">Home</a></button>
         <button class="nav-btn"><a href="/about">About</a></button>
         <% if(!imgUsername){ %>
-        <button class="nav-btn"><a href="/codechef-iare-chapter">CodeChef Chapter</a></button>
+        <!-- <button class="nav-btn"><a href="/codechef-iare-chapter">CodeChef Chapter</a></button> -->
+
         <%}%>
         <button class="nav-btn"><form action="/skill" method="POST">
             <a class="nav-link" onclick="this.parentNode.submit();" style="color: white;">SkillUP365</a>
@@ -23,12 +29,14 @@
           <button type="button" class="threedots"><span class="material-icons">more_vert</span></button>
           <div class="dots-nav">
             <a href="/tutorials" class="nav-btn4">Tutorials</a>
-            <a href="/qualifier_tests" class="nav-btn4">Qualifier Test</a>
-            <a href="/pragnya" class="nav-btn4">Pragnya</a>
-            <a href="/labs" class="nav-btn4">I SEM Lab</a>
+            <a href="/qualifier_tests" class="nav-btn4">Medha Qualifier Test</a>
+            <!-- <a href="/pragnya" class="nav-btn4">Pragnya</a> -->
+            <!-- <a href="/labs" class="nav-btn4">I SEM Lab</a> -->
+
             <a href="/resume/<%= imgUsername%>" class="nav-btn4">My Resume</a>
-            <a href="/potdReport" class="nav-btn4">POTD Report</a>
-            <a href="/codechef-iare-chapter" class="nav-btn4">CodeChef Chapter</a>
+            <!-- <a href="/potdReport" class="nav-btn4">POTD Report</a> -->
+            <!-- <a href="/codechef-iare-chapter" class="nav-btn4">CodeChef Chapter</a> -->
+
             <a href="/profile" class="nav-btn4">Profile</a>
             <a href="/logout" class="nav-btn4">Logout</a>
           </div>
@@ -73,19 +81,21 @@
       <div class="chapter-nav-btn2">
         <button class="nav-btn2" onclick="navslide()"><a href="#">Home <span class="material-icons">arrow_forward<span></a></button>
         <button class="nav-btn2" onclick="navslide()"><a href="#">About <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="#">CodeChef Chapter <span class="material-icons">arrow_forward<span></span></a></button>
+        <!-- <button class="nav-btn2" onclick="navslide()"><a href="#">CodeChef Chapter <span class="material-icons">arrow_forward<span></span></a></button> -->
+        
         <button class="nav-btn2" onclick="navslide()"><form action="/skill" method="POST">
             <a class="nav-link" onclick="this.parentNode.submit();" style="padding: 0;">SkillUP365 <span class="material-icons">arrow_forward<span></span></a>
           </form></button>
           <% if (imgUsername){ %>
         <button class="nav-btn2" onclick="navslide()"><a href="/contest">BuildIT Lab <span class="material-icons">arrow_forward<span></span></a></button>
         <button class="nav-btn2" onclick="navslide()"><a href="/tutorials">Tutorials <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="/qualifier_tests">Qualifier Test <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="/labs">lab <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="/pragnya">Pragnya <span class="material-icons">arrow_forward<span></span></a></button>
+        <button class="nav-btn2" onclick="navslide()"><a href="/qualifier_tests">Medha Qualifier Test <span class="material-icons">arrow_forward<span></span></a></button>
+        <!-- <button class="nav-btn2" onclick="navslide()"><a href="/labs">lab <span class="material-icons">arrow_forward<span></span></a></button> -->
+        <!-- <button class="nav-btn2" onclick="navslide()"><a href="/pragnya">Pragnya <span class="material-icons">arrow_forward<span></span></a></button> -->
+        
         <button class="nav-btn2" onclick="navslide()"><a href="/ResumeBuilder">Resume Builder <span class="material-icons">arrow_forward<span></span></a></button>
         <button class="nav-btn2" onclick="navslide()"><a href="/resume/<%= imgUsername%>">My Resume <span class="material-icons">arrow_forward<span></span></a></button>
-        <button class="nav-btn2" onclick="navslide()"><a href="/potdReport">POTD Report <span class="material-icons">arrow_forward<span></span></a></button>
+        <!-- <button class="nav-btn2" onclick="navslide()"><a href="/potdReport">POTD Report <span class="material-icons">arrow_forward<span></span></a></button> -->
         <button class="nav-btn2" onclick="navslide()"><a href="/profile">Profile <span class="material-icons">arrow_forward<span></span></a></button>
         <button class="nav-btn2" onclick="navslide()"><a href="/logout">Logout <span class="material-icons">arrow_forward<span></span></a></button>
         <% } else { %>
@@ -148,3 +158,5 @@
         }
       };
     </script>
+
+    

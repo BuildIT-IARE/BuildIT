@@ -1,19 +1,48 @@
 <!-- footer -->
+<style>
+  .phn {
+    display: flex;
+    flex-direction: column;
+    gap: 0em;
+    
+  }
+
+  .phn p {
+    margin-bottom: 0;
+  }
+
+  .mail-link {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .mail-link:hover {
+    color: gray;
+  }
+</style>
 <footer class="bg-dark footer-section">
     <div class="section">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
             <h5 class="text-light">Email</h5>
-            <p class="text-white paragraph-lg font-primary">info@iare.ac.in</p>
+            <div class="phn">
+              <p class="text-white paragraph-lg font-primary"><a class="mail-link" href="mailto:info@iare.ac.in">info@iare.ac.in</a></p>
+            <p class="text-white paragraph-lg font-primary"><a class="mail-link" href="mailto:support@iare.ac.in">support@iare.ac.in</a></p>
+            </div>
           </div>
           <div class="col-md-4">
             <h5 class="text-light">Phone</h5>
-            <p class="text-white paragraph-lg font-primary">040-29705852</p>
+            <div class="phn">
+              <p class="text-white paragraph-lg font-primary">8886234501</p>
+              <p class="text-white paragraph-lg font-primary">8886234502</p>
+                <p class="text-white paragraph-lg font-primary">040-29705852</p>
+            </div>
           </div>
           <div class="col-md-4">
             <h5 class="text-light">Address</h5>
-            <p class="text-white paragraph-lg font-primary">Dundigal, Telangana , 500043</p>
+            <p class="text-white paragraph-lg font-primary">Dundigal, Hyderabad - 500 043,
+              Telangana, India.</p>
           </div>
         </div>
       </div>
@@ -23,6 +52,6 @@
         <script>
           var CurrentYear = new Date().getFullYear()
           document.write(CurrentYear)
-        </script> <a href="https://www.iare.ac.in" target="_blank">Institute of Aeronautical Engineering</a></p> | <a href="https://forms.gle/J6rtgiSRx4msuuQT6">Share Feedback </a>|
+        </script> <a href="https://www.iare.ac.in" target="_blank">Institute of Aeronautical Engineering</a></p> | <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank">Share Feedback </a>|
     </div>
   </footer>
