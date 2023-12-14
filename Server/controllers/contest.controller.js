@@ -200,6 +200,30 @@ exports.getDuration = (req, callback) => {
     });
 };
 
+// Modified GetDuration to return durationData
+exports.getDurationOfContest = async (contestId) => {
+  console.log(contestId);
+  try{
+    let contest = await Contest.find({ contestId: contestId });
+    contest = contest[0];
+    let durationData = {
+      startTime: contest.contestStartTime,
+      endTime: contest.contestEndTime,
+      duration: contest.contestDuration,
+      date: contest.contestDate,
+      mcq: contest.mcq,
+      sections: contest.sections,
+      contestName: contest.contestName,
+      coding: contest.coding,
+    };
+    return durationData;
+  }
+  catch(err){
+    console.log(err)
+    return null;
+  } 
+};
+
 // Find a single contest with a contestId for checking multiset
 exports.findOneSet = async (req, callback) => {
   Contest.find({ contestId: req.params.contestId })

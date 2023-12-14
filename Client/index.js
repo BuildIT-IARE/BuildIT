@@ -2805,6 +2805,7 @@ app.get(
         } else if (req.params.concept === "fn") {
           body.courseName = body.courseName + " - Functions";
         }
+        console.log(body);
         res.render("displayTutQuestions", {
           imgUsername: req.cookies.username,
           data: body,

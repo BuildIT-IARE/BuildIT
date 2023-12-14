@@ -749,38 +749,34 @@ exports.getQuestionName = (req, res) => {
     });
 };
 // Find testcases with questionId
-exports.getTestCases = (req, callback) => {
-  Question.find({ questionId: req.body.questionId })
-    .then((question) => {
-      if (!question) {
-        return callback("Couldn't find question", null);
-      }
-      question = question[0];
-      // let h1 = question.questionHiddenInput1.toString();
-      // console.log("h1");
-      // console.log(h1);
-      // h2 = Base64.encode(h1);
-      testcases = {
-        contestId: question.contestId,
-        HI1: question.questionHiddenInput1,
-        HI2: question.questionHiddenInput2,
-        HI3: question.questionHiddenInput3,
-        HO1: question.questionHiddenOutput1,
-        HO2: question.questionHiddenOutput2,
-        HO3: question.questionHiddenOutput3,
-        difficulty: question.difficulty,
-        language: question.language,
-        courseId: question.courseId,
-        conceptLevel: question.conceptLevel,
-      };
-      return callback(null, testcases);
-    })
-    .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return callback("Couldn't find question, caught exception", null);
-      }
-      return callback("Error retrieving data", null);
-    });
+exports.getTestCasesOfQuestion = async (questionId) => {
+  try{
+    let question = await Question.find({ questionId: questionId });
+    question = question[0];
+    let testcases = {
+      contestId: question.contestId,
+      case1: {
+        input: question.questionHiddenInput1,
+        output: question.questionHiddenOutput1
+      },
+      case2: {
+        input: question.questionHiddenInput2,
+        output: question.questionHiddenOutput2
+      },
+      case3: {
+        input: question.questionHiddenInput3,
+        output: question.questionHiddenOutput3
+      },
+      difficulty: question.difficulty,
+      language: question.language,
+      courseId: question.courseId,
+      conceptLevel: question.conceptLevel,
+    };
+    return testcases;
+  }
+  catch(err){
+    return null;
+  }
 };
 
 // Update a question identified by the questionId in the request
