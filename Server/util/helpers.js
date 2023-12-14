@@ -51,7 +51,18 @@ let checkTestcase = async (testcase, postUrl, source_code, language_id, apiAddre
     }
 }
 
+let checkUserLoggedIn = async (sessionId, clientAddress) => {
+    let user = await axios.get(`${clientAddress}/userSession/${sessionId}`)
+    if (user.status === 200){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 module.exports = {
     isContestOnGoing,
-    checkTestcase
+    checkTestcase,
+    checkUserLoggedIn
 }
