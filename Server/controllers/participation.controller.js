@@ -612,6 +612,22 @@ exports.findUserTime = (result, callback) => {
   }
 };
 
+// Modified retrive user participation time
+exports.findUserTimeOfContest = async (mcq, participationId) => {
+  const model = mcq ? McqParticipation : Participation;
+  try{
+    const participation = await model.find({ participationId: participationId });
+    if (!participation) {
+      return null;
+    }
+    return participation[0];
+  }
+  catch(err){
+    return null;
+  }
+};
+
+
 // Retrieve and return all participation details for user in contest.
 exports.findMcqParticipation = (req, res) => {
   McqParticipation.find({
