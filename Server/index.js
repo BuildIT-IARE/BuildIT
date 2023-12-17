@@ -103,6 +103,7 @@ const skillUp = require("../Server/controllers/skillUp.controller.js");
 const discussion = require("../Server/controllers/discussion.controller.js");
 const emailSession = require("../Server/controllers/emailSession.controller.js");
 const visitors = require("../Server/controllers/visitorAccess.controller.js");
+const facultyDashboard = require("./controllers/facultyDetails.controller.js");
 
 // Require contest routes
 require("./routes/contest.route.js")(app);
@@ -147,6 +148,10 @@ require("./routes/emailSubmission.route")(app);
 require("./routes/twilio.route")(app);
 //Require visitor routes
 require("./routes/visitorAccess.route")(app);
+
+require("./routes/facultyDetails.route.js")(app);
+
+
 
 // Examples
 app.get("/testGet", async (req, res) => {
@@ -732,6 +737,10 @@ app.get("/getSolvedCount", middleware.checkTokenAdmin, async (req, res) => {
     userCollectionTutorials
   });
 });
+
+
+
+
 
 // get latest plag report
 app.get("/plagreport/:languageId/:questionId", async (req, res) => {
