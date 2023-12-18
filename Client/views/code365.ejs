@@ -50,11 +50,27 @@
       .card {
         width: fit-content;
         height: fit-content;
-        background-color: rgba(18, 5, 52, 0.974);
+        background-color: rgb(255,255,255);
         border-radius: 8px;
         margin-bottom: 20px;
         z-index: 1;
         border-radius: 20px;
+        border: 2px solid black;
+      }
+
+      .card-inactive {
+        width: fit-content;
+        height: fit-content;
+        background-color: rgb(255,255,255);
+        border-radius: 8px;
+        margin-bottom: 20px;
+        z-index: 1;
+        border-radius: 20px;
+        border: 2px solid black;
+      }
+
+      .card-inactive:hover {
+        box-shadow: 4px 4px rgba(132, 130, 130, 0.426);
       }
 
       .tools {
@@ -91,26 +107,27 @@
       .cardy {
         text-decoration: none;
         font-family: Inconsolata;
-        border: 0.3mm solid rgb(37, 37, 37);
+        border: 2px solid rgb(255, 255, 255);
         padding: 50px;
         min-height: 260px;
         border-radius: 20px;
         display: block;
         padding-top: 15px;
       }
-      .cardy:hover {
-        box-shadow: 4px 4px rgba(65, 34, 142, 0.219);
-      }
+      /* .cardy:hover {
+        box-shadow: 4px 4px rgba(132, 130, 130, 0.426);
+      } */
       .card-content {
         width: 250px;
         min-height: 220px;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
+        z-index: -1;
       }
       .title {
         font-size: 22.75px;
-        color: rgb(55, 55, 55);
+        color: rgb(0, 0, 0);
         font-weight: 700;
         line-height: 30px;
       }
@@ -156,7 +173,7 @@
       .active .participate {
         background: rgb(64, 181, 107);
       }
-      .active:hover {
+      .card:hover {
         box-shadow: 4px 4px rgba(72, 195, 117, 0.235);
       }
       .active-contests-grid {
@@ -188,7 +205,7 @@
         box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.4),
           0 0 9px 3px rgba(27, 253, 156, 0.1);
         width: 100%;
-        color: white;
+        color: black;
         font-size: larger;
         padding: 5px 0;
         border-radius: 1mm;
@@ -218,7 +235,7 @@
         box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.4),
           0 0 9px 3px rgba(27, 253, 156, 0.1);
         width: 100%;
-        color: white;
+        color: black;
         font-size: larger;
         padding: 5px 0;
         border-radius: 1mm;
@@ -244,7 +261,7 @@
           rgba(27, 253, 156, 0.1) 100%
         );
         width: 100%;
-        color: white;
+        color: black;
         font-size: larger;
         padding: 5px 0;
         border-radius: 1mm;
@@ -363,8 +380,8 @@
                 href="contests/<%= data[i].contestId %>" <%}%> target="_blank"
                 class="cardy active" >
                 <div class="card-content">
-                  <div class="title" style="color: azure">
-                    <%= data[i].contestId %>(<%= data[i].contestName %>)
+                  <div class="title" style="color: black">
+                    <%=data[i].contestId%>: <%= data[i].contestName%>
                   </div>
                   <div class="details">
                     <span class="material-icons icon"> watch_later </span>
@@ -400,8 +417,8 @@
         <div class="active-contests-grid" style="margin-top: 1rem;" >
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-          (data[i].contestDate !== new Date().toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() == "CODE365") { %>
-          <div class="card">
+          (data[i].contestDate < new Date().toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() == "CODE365") { %>
+          <div class="card-inactive">
             <div class="tools">
               <div class="circle">
                 <span class="red box"></span>
@@ -420,7 +437,7 @@
               class="cardy"
             >
               <div class="card-content">
-                <div class="title" style=" color: azure"><%= data[i].contestId %>(<%= data[i].contestName %>)</div>
+                <div class="title" style=" color: black"><%= data[i].contestId %>: <%= data[i].contestName %></div>
                 <div class="details">
                   <span class="material-icons icon"> watch_later </span>
                   <span>
