@@ -47,6 +47,12 @@ app.use(
   express.static(__dirname + "/")
 );
 
+
+const facultyDashboard = require("../Server/routes/facultyDetails.route.js");
+const { CLIENT_RENEG_LIMIT } = require("tls");
+// app.use("/facultyDashboard", express.static(__dirname + "/"));
+
+
 app.use("/contests/questions", express.static(__dirname + "/"));
 app.use("/tutorials/questions", express.static(__dirname + "/"));
 
@@ -1811,6 +1817,7 @@ app.get(
 );
 
 app.get("/admin", checkSignIn, async (req, res, next) => {
+  console.log(req.cookies.token)
   let options = {
     url: serverRoute + "/isAdmin",
     method: "get",
@@ -3994,6 +4001,280 @@ app.get("/admin/emailSessions", async (req, res) => {
       },
     });
   });
+});
+
+// faculty dashboard
+
+app.get('/facultyAdd',  (req,res) => {
+  data = {
+    url: clientRoute,
+  }
+  let requestBody = {
+    body: {},
+    url: serverRoute + "/checkPage",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(requestBody, function(err,response, body) {
+    console.log(body)
+    if (body.success == false) {
+      res.render("error", {
+        data: { message: "Unauthorised access" },
+        imgUsername: req.cookies.username,
+      });1
+    }
+    else {
+      res.render('facultyAdd', {data, token: req.cookies.token})
+    }
+  })
+
+
+
+})
+
+app.get('/facultyDelete', (req,res) => {
+  // data = {
+  //   url: clientRoute,
+  // }
+  // res.render('facultyDelete', {data, token: req.cookies.token})
+
+  data = {
+    url: clientRoute,
+  }
+  let requestBody = {
+    body: {},
+    url: serverRoute + "/checkPage",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(requestBody, function(err,response, body) {
+    console.log(body)
+    if (body.success == false) {
+      res.render("error", {
+        data: { message: "Unauthorised access" },
+        imgUsername: req.cookies.username,
+      });
+    }
+    else {
+      res.render('facultyDelete', {data, token: req.cookies.token})
+    }
+  })
+})
+
+app.get('/facultyUpdate', (req,res) => {
+  data = {
+    url: clientRoute,
+  }
+  let requestBody = {
+    body: {},
+    url: serverRoute + "/checkPage",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(requestBody, function(err,response, body) {
+    console.log(body)
+    if (body.success == false) {
+      res.render("error", {
+        data: { message: "Unauthorised access" },
+        imgUsername: req.cookies.username,
+      });
+    }
+    else {
+      res.render('facultyUpdate', {data, token: req.cookies.token})
+    }
+  })
+
+})
+
+app.get('/facultyView', async (req,res) => {
+
+  data = {
+    url: clientRoute,
+  }
+  let requestBody = {
+    body: {},
+    url: serverRoute + "/checkPage",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(requestBody, function(err,response, body) {
+    console.log(body)
+    if (body.success == false) {
+      res.render("error", {
+        data: { message: "Unauthorised access" },
+        imgUsername: req.cookies.username,
+      });
+    }
+    else {
+      let requestBody = {
+        body: {},
+        url: serverRoute + "/facultyDashboard/",
+        method: "get",
+        headers: {
+          authorization: req.cookies.token,
+        },
+        json: true,
+      };
+    
+      request(requestBody, function(err,response, body) {
+        res.render("facultyView", {body});
+      })
+    }
+  })
+});
+
+
+// get one (use to find some item in search) (search by id/name)
+app.get('/facultyDashboard/:id', async (req,res) => {
+  let requestBody = {
+      body: req.body,
+      url: serverRoute + "/facultyDashboard/" + req.params.id,
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+  };
+  // console.log(requestBody);
+  request(requestBody, function(err, response, body) {
+    if(body) {
+      res.send(body);
+    }
+  })
+});
+
+// get all (display)
+app.get('/facultyDashboard', async (req,res) => {
+  let requestBody = {
+      body: req.body,
+      url: serverRoute + "/facultyDashboard",
+      method: "get",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+  };
+  // console.log(requestBody);
+  request(requestBody, function(err, response, body) {
+    console.log(body)
+    if(body) {
+      res.send(body);
+    }
+  })
+});
+
+// create item
+app.post('/facultyDashboard', async (req,res) => {
+  let requestBody = {
+      body: {
+        title: req.body.title,
+        id: req.body.id,
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        image: "https://www.iare.ac.in/sites/default/files/" + req.body.id + ".jpg",
+        status: req.body.status,
+        department: req.body.department,
+        designation: req.body.designation,
+        token: req.body.token
+      },
+      url: serverRoute + "/facultyDashboard",
+      method: "post",
+      headers: {
+        authorization: req.body.token,
+      },
+      json: true,
+  };
+  request(requestBody, function(err, response, body) {
+    if(body) {
+      res.send(body);
+    }
+  })
+});
+
+// delete item
+app.post('/facultyDelete', async (req,res) => {
+  let requestBody = {
+      body: req.body,
+      url: serverRoute + "/facultyDashboard/" + req.body.id,
+      method: "delete",
+      headers: {
+        authorization: req.cookies.token,
+      },
+      json: true,
+  };
+  // console.log(requestBody);
+  request(requestBody, function(err, response, body) {
+    if(body) {
+      res.send(body);
+    }
+  })
+});
+
+// request update
+app.post('/facultyUpdateMenu', async (req,res) => {
+  console.log(req.body.id);
+  let requestBody = {
+    body: req.body,
+    url: serverRoute + "/facultyDashboard/" + req.body.id,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(requestBody, function(err, response, body) {
+    console.log(body);
+    let data = {
+      url: clientRoute,
+    }
+    if(body) {
+      res.render("facultyUpdateMenu", { data, body, token: req.cookies.token });
+    }
+    else {
+      res.send("data not found, check if id is correct");
+    }
+    
+  })
+});
+
+
+
+
+//update item
+app.post('/facultyUpdateSend', async (req,res) => {
+  let requestBody = {
+    body: req.body,
+    url: serverRoute + "/facultyDashboard/" + req.body.id,
+    method: "put",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  console.log(req.body);
+  request(requestBody, function(err, response, body) {
+    if(body) {
+      res.send("item has been updated successfully");
+    }
+    
+  })
 });
 
 app.get("/sqlEditor/dbQuestionId", async (req, res) => {

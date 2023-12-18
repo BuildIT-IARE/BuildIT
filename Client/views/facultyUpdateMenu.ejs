@@ -1,0 +1,141 @@
+<!-- menu for updating faculty -->
+
+<!-- add faculty to faculty dashboard-->
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Admin menu</title>
+		<meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
+		<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" href="../../css/navadmin.css">
+		<link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+		<script src="/adminjs/modernizr.custom.js"></script>
+		<style>
+			.new {
+				font-family: sans-serif;
+				font-size: 18px;
+				color: black;
+				line-height: normal;
+				clear: both;
+			}
+			#mcq, #coding {
+				width: fit-content;
+				border: 1px solid #c4c4c4;
+				border-radius: 5px;
+				box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+			}
+			/* #coding {
+				margin-left: 10%;
+			} */
+			#mcq {
+				margin-left: 50px;
+			}
+			.answer {
+				display: none;
+			}
+			.is_specific {
+				width: fit-content;
+			}
+			.question > .comments{
+				display: inline;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<%- include ("../views/partials/adminpanel.ejs") -%>
+			<header>
+				<h1>Add faculty<span style="color:white">Enter details</span></h1>	
+			</header> 
+			<div class="main-block">
+				<form action="/facultyUpdateSend" method="POST">
+                  <!-- title -->
+                    <h4>Enter title</h4>
+                  <select id="title" name="title">
+                    <option value="" disabled >Select a title</option>
+                    <option value="Dr." <%= body.title === "Dr." ? "selected" : "" %> >Dr.</option>
+                    <option value="Mr." <%= body.title === "Mr." ? "selected" : "" %> >Mr.</option>
+                    <option value="Ms." <%= body.title === "Ms." ? "selected" : "" %> >Ms.</option>
+                    <option value="Mrs."<%= body.title === "Mrs." ? "selected" : "" %> >Mrs.</option>
+                  </select>  
+                  <!-- title -->
+				  <h4>Enter Name</h4>
+                  <input type="text" name="name" rows="5" value="<%= body.name %>">
+                  <!-- id -->
+				  <h4>Enter id</h4>
+                  <input type="text" name="id" rows="5" value="<%= body.id %>">
+                  <!-- email -->
+                  <h4>Enter email</h4>
+                  <input type="text" name="email" rows="5" value="<%= body.email %>">
+                  <!-- phone -->
+                  <h4>Enter phone</h4>
+                  <input type="text" name="phone" rows="5" value="<%= body.phone %>">
+                  <!-- status -->
+                  <h4>Enter status</h4>
+                  <select id="status" name="status" value="<%= body.status %>">
+                    <option value="" disabled>Select a title</option>
+                    <option value="0" <%= body.status === 0 ? "selected" : "" %> >Active</option>
+                    <option value="1" <%= body.status === 1 ? "selected" : "" %> >Inactive</option>
+                  </select>  
+                  <!-- department -->
+                  <h4>Enter department</h4>
+                  <input type="text" name="department" rows="5" value="<%= body.department %>">
+                  <!-- designation -->
+                  <h4>Enter designation</h4>
+                  <input type="text" name="designation" rows="5" value="<%= body.designation %>">
+
+                  <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
+                  <div class="btn-block">
+                    <button class="submit" type="submit">Send</button>
+                  </div>
+                </form>
+			</div>	
+					
+			
+		</div>
+		<script src="/adminjs/classie.js"></script>
+		<script src="/adminjs/gnmenu.js"></script>
+		<script src="plugins/jQuery/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
+		<script>
+			document.getElementById("token").value = "<%= token %>";
+		</script>
+		<script>
+			function valueChanged() {
+				if ($('.is_specific').is(":checked"))
+					$(".answer").show();
+				else
+					$(".answer").hide();
+			};
+
+			const isNumeric = (value) => /^\d\d$/.test(value);
+
+			function handleSubmit() {
+				let is_specific = document.querySelector(".is_specific").checked;
+
+				if (is_specific === true) {
+					let roll_no_format = document.getElementById("roll_no_format").value;
+
+					let year = roll_no_format.substr(0, 2);
+					let branch = roll_no_format.substr(6, 8);
+					let isValid = roll_no_format.length === 8 && isNumeric(year) && isNumeric(branch);
+					if (!isValid) {
+						window.alert("Invalid format!");
+						return false;
+					}
+				}
+
+				return true;
+			}
+		</script>
+	</body>
+</html>
