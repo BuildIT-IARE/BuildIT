@@ -142,7 +142,41 @@
           k = k + datap[i].submissionResults[j].score %> <% } %> <% } %>
 
           <td><%= k %></td>
-          <td><%= datap[i].branch %></td>
+          <!-- <td><%= datap[i].branch %></td> -->
+          <td><% if (datap[i].branch === 'cse') { %>
+            <%= "CSE" %>
+          <% } %>
+          <%  if (datap[i].branch === 'data-science') { %>
+            <%= "CSE-DS" %>
+          <% } %>
+          <%  if (datap[i].branch === 'cyber-security') { %>
+            <%= "CSE-CS" %>
+          <% } %>
+          <%  if (datap[i].branch === 'ai-ml') { %>
+            <%= "CSE-AI/ML" %>
+          <% } %>
+          <%  if (datap[i].branch === 'ece') { %>
+            <%= "ECE" %>
+          <% } %>
+          <%  if (datap[i].branch === 'eee') { %>
+            <%= "EEE" %>
+          <% } %>
+          <%  if (datap[i].branch === 'cs-it') { %>
+            <%= "CSIT" %>
+          <% } %>
+          <%  if (datap[i].branch === 'it') { %>
+            <%= "IT" %>
+          <% } %>
+          <%  if (datap[i].branch === 'aero') { %>
+            <%= "AERO" %>
+          <% } %>
+          <%  if (datap[i].branch === 'civil') { %>
+            <%= "CIVIL" %>
+          <% } %>
+          <%  if (datap[i].branch === 'mech') { %>
+            <%= "MECH" %>
+          <% } %>
+          </td>
         </tr>
         <% } %>
       </table>
@@ -159,7 +193,7 @@
       for(let i=0; i<rows.length; i++){
         if(rows[i].getAttribute("branch") === branch.toLowerCase() || branch.toLowerCase() === "select"){
           rows[i].style.display = "";
-        }else{
+        }{
           rows[i].style.display = "none";
         }
       }
