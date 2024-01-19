@@ -87,10 +87,15 @@
         <input type="radio" name="conceptLevel" value="2"> Arrays/Lists </input>
         <input type="radio" name="conceptLevel" value="3"> Pointers/Objects </input>
         <input type="radio" name="conceptLevel" value="4"> Structures/Objects </input> 
-        <hr>
+        <hr><p class="comments"><b>Difficulty</b></p>
+				<input type="radio" name="difficultyL" value="Easy"> Easy </input>
+				<input type="radio" name="difficultyL" value="Medium"> Medium </input>
+				<input type="radio" name="difficultyL" value="Hard"> Hard </input> 
+				<p class="comments">Estimated Time to solve questions (in HH:MM)</p>
+				<textarea name="estimate" id="estimateTime"  rows="10"></textarea>
 				<textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
-
         <button class= "submit" type="submit" href="/">Send</button>
+        
       </form>
     </div>
 		</div><!-- /container -->

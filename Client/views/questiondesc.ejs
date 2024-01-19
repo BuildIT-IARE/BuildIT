@@ -1,345 +1,443 @@
 <!DOCTYPE html>
 <html lang="zxx">
-  <head>
-    <meta charset="utf-8" />
-    <title><%= data[0].questionName %></title>
 
-    <!-- mobile responsive meta -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1"
-    />
+<head>
+  <meta charset="utf-8" />
+  <title>
+    <%= data[0].questionName %>
+  </title>
 
-    <!-- ** Plugins Needed for the Project ** -->
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
-    <!-- slick slider -->
-    <link rel="stylesheet" href="plugins/slick/slick.css" />
-    <!-- themefy-icon -->
-    <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css" />
-    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-    <!-- Main Stylesheet -->
-    <link href="css/style.css" rel="stylesheet" />
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+  <!-- slick slider -->
+  <link rel="stylesheet" href="plugins/slick/slick.css" />
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css" />
+  <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
 
-    <!--Favicon-->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <style>
-    html {
-      scroll-behavior: smooth;
+  <!-- Main Stylesheet -->
+  <link href="css/style.css" rel="stylesheet" />
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+</head>
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.65vw;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(155, 155, 155);
+    border-radius: 0.5vw;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(110, 110, 110);
+  }
+
+  body {
+    font-family: poppins;
+    font-size: 18px;
+    font-weight: 400;
+    color: black;
+    line-height: 25px;
+    background: rgb(255, 255, 255);
+  }
+
+  .setback {
+    background: white;
+  }
+
+  .cover {
+    padding: 30px;
+  }
+
+  h3 {
+    font-weight: bold;
+  }
+
+  .questiondesc {
+    text-align: justify;
+  }
+
+  .inoutformat {
+    text-align: justify;
+  }
+
+  label,
+  .questiondesc,
+  .sampleinout,
+  .questionexplain {
+    white-space: pre-line;
+  }
+
+  .questionlabel {
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+
+  .sampleinout {
+    background: rgb(241, 241, 241);
+    width: 100%;
+    padding: 0 3%;
+    border-radius: 2mm;
+    border: 0.5mm solid rgb(7, 48, 66);
+  }
+
+  .questionexplain {
+    border-bottom: 0.5mm solid rgb(7, 48, 66);
+    padding-bottom: 35px;
+  }
+
+  .code-ide {
+    width: 97%;
+    height: 97vh;
+    margin: auto;
+    margin-bottom: 20px;
+  }
+
+  .section-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 22px 0;
+    border-bottom: 0.6mm solid rgb(7, 48, 66);
+    margin-bottom: 25px;
+  }
+
+  .heading {
+    font-size: 25px;
+    font-weight: 600;
+  }
+
+  .container-top {
+    margin: auto;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .container-top .icon {
+    color: rgb(246, 189, 65);
+  }
+
+  .container-top .button {
+    text-decoration: none;
+    background: rgb(246, 189, 65);
+    border: 0.5mm solid rgb(7, 48, 66);
+    color: black;
+    padding: 7px 10px;
+    border-radius: 1mm;
+    font-size: medium;
+    margin: 0 2px;
+  }
+
+  .button:hover {
+    background: rgb(61, 220, 132);
+    color: black;
+  }
+
+  .button1,
+  .button2 {
+    text-decoration: none;
+    background: rgb(254, 254, 254);
+    border: 0.5mm solid rgb(7, 48, 66);
+    color: black;
+    padding: 7px 10px;
+    border-radius: 1mm;
+    font-size: medium;
+    margin: 0 2px;
+  }
+
+  .button1:hover {
+    background: rgb(236, 94, 79);
+    color: black;
+  }
+
+  .button2:hover {
+    background: rgb(61, 220, 132);
+    color: black;
+  }
+
+  .footer-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .bg-dark2 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 0.6mm solid rgb(7, 48, 66);
+    background-color: rgb(255, 255, 255);
+  }
+
+  .footer-section a:hover {
+    color: rgb(34, 34, 34);
+  }
+
+  .footer-left {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+  }
+
+  .footer-right {
+    width: 20%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-left-titles a {
+    text-decoration: none;
+    font-family: poppins;
+    font-size: x-large;
+    color: rgb(54, 54, 54);
+    font-weight: 600;
+  }
+
+  .footer-left-links a {
+    text-decoration: none;
+    font-family: poppins;
+    font-size: 14px;
+    color: rgb(97, 97, 97);
+  }
+
+  .footer-right p {
+    font-family: poppins;
+    font-size: 14px;
+    color: rgb(97, 97, 97);
+    width: 100%;
+    text-align: center;
+  }
+
+  .info-tag-icon {
+    max-height: 1em;
+    max-width: 1em;
+    min-width: 1em;
+    min-height: 1em;
+  }
+
+  .info-tag-text-time {
+    margin: 0;
+  }
+
+
+
+  .info-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
+    padding: 0.25em 0.5em;
+
+    background-color: #3c3c3c12;
+    border-radius: 0.25em;
+    margin-right: 0.45em;
+  }
+
+  .easy,
+  .medium,
+  .hard {
+    margin: 0;
+    text-decoration-style: solid;
+    font-weight: 800;
+  }
+
+  .easy {
+    color: #09a477;
+  }
+
+  .medium {
+    color: #cc9918;
+  }
+
+  .hard {
+    color: #ca2b33
+  }
+
+  .invisible {
+    display: flex;
+    opacity: 0;
+  }
+</style>
+
+<body oncontextmenu="return false;">
+  <script>
+    function close_window() {
+      close();
     }
-    ::-webkit-scrollbar {
-      width: 0.65vw;
-    }
-    ::-webkit-scrollbar-track {
-      border-radius: 10px;
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgb(155, 155, 155);
-      border-radius: 0.5vw;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgb(110, 110, 110);
-    }
-    body {
-      font-family: poppins;
-      font-size: 18px;
-      font-weight: 400;
-      color: black;
-      line-height: 25px;
-      background: rgb(255, 255, 255);
-    }
-    .setback {
-      background: white;
-    }
-    .cover {
-      padding: 30px;
-    }
-    h3 {
-      font-weight: bold;
-    }
-    .questiondesc {
-      text-align: justify;
-    }
-    .inoutformat {
-      text-align: justify;
-    }
-    label,
-    .questiondesc,
-    .sampleinout,
-    .questionexplain {
-      white-space: pre-line;
-    }
-    .questionlabel {
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-    .sampleinout {
-      background: rgb(241, 241, 241);
-      width: 100%;
-      padding: 0 3%;
-      border-radius: 2mm;
-      border: 0.5mm solid rgb(7, 48, 66);
-    }
-    .questionexplain {
-      border-bottom: 0.5mm solid rgb(7, 48, 66);
-      padding-bottom: 35px;
-    }
-    .code-ide {
-      width: 97%;
-      height: 97vh;
-      margin: auto;
-      margin-bottom: 20px;
-    }
-    .section-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      padding: 22px 0;
-      border-bottom: 0.6mm solid rgb(7, 48, 66);
-      margin-bottom: 25px;
-    }
-    .heading {
-      font-size: 25px;
-      font-weight: 600;
-    }
-    .container-top {
-      margin: auto;
-      height: fit-content;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .container-top .icon {
-      color: rgb(246, 189, 65);
-    }
-    .container-top .button {
-      text-decoration: none;
-      background: rgb(246, 189, 65);
-      border: 0.5mm solid rgb(7, 48, 66);
-      color: black;
-      padding: 7px 10px;
-      border-radius: 1mm;
-      font-size: medium;
-      margin: 0 2px;
-    }
-    .button:hover {
-      background: rgb(61, 220, 132);
-      color: black;
-    }
-    .button1,
-    .button2 {
-      text-decoration: none;
-      background: rgb(254, 254, 254);
-      border: 0.5mm solid rgb(7, 48, 66);
-      color: black;
-      padding: 7px 10px;
-      border-radius: 1mm;
-      font-size: medium;
-      margin: 0 2px;
-    }
-    .button1:hover {
-      background: rgb(236, 94, 79);
-      color: black;
-    }
-    .button2:hover {
-      background: rgb(61, 220, 132);
-      color: black;
-    }
-    .footer-section {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    .bg-dark2 {
-      padding-top: 20px;
-      padding-bottom: 20px;
-      border-top: 0.6mm solid rgb(7, 48, 66);
-      background-color: rgb(255, 255, 255);
-    }
-    .footer-section a:hover {
-      color: rgb(34, 34, 34);
-    }
-    .footer-left {
-      width: 30%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 30px;
-    }
-    .footer-right {
-      width: 20%;
-      align-items: center;
-      justify-content: center;
-    }
-    .footer-left-titles a {
-      text-decoration: none;
-      font-family: poppins;
-      font-size: x-large;
-      color: rgb(54, 54, 54);
-      font-weight: 600;
-    }
-    .footer-left-links a {
-      text-decoration: none;
-      font-family: poppins;
-      font-size: 14px;
-      color: rgb(97, 97, 97);
-    }
-    .footer-right p {
-      font-family: poppins;
-      font-size: 14px;
-      color: rgb(97, 97, 97);
-      width: 100%;
-      text-align: center;
-    }
-  </style>
-  <body oncontextmenu="return false;">
-    <script>
-      function close_window() {
-        close();
-      }
-    </script>
-    <!-- about -->
-    <section class="section-top">
-      <div class="container-top">
-        <span class="material-icons-round icon"> star </span>
-        <span style="font-family: poppins" class="heading">
-          <%= data[0].questionName %> #<%= data[0].questionId %>
-        </span>
+  </script>
+  <!-- about -->
+  <section class="section-top">
+    <div class="container-top">
+      <span class="material-icons-round icon"> star </span>
+      <span style="font-family: poppins" class="heading">
+        <%= data[0].questionName %> #<%= data[0].questionId %>
+      </span>
+    </div>
+    <div class="container-top">
+
+      <div class="info-tag <%(data[0].estimateTime == "") ? "invisible" : "" %>">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-1 h-1 info-tag-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <p class="info-tag-text-time">
+          <%= data[0].estimateTime%>
+        </p>
       </div>
-      <div class="container-top">
-        <a href="#ide" class="button">Online Editor</a>
-        <a
-          href="<%= data.url %>/registerComplaint/<%= data[0].questionId %>"
-          target="_blank"
-          class="button2"
-          >Report Issue</a
-        >
-        <a
-          href="<%= data.url %>/complaints_public"
-          class="button2"
-          target="_blank"
-          >Existing Complaints</a
-        >
+      <div class="info-tag <%(data[0].difficulty == "") ? " invisible" : "" %>" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-1 h-1 info-tag-icon">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+        <% if (data[0].difficulty==='Easy' ) { %>
+          <p class="easy">Easy</p>
+          <% } else if (data[0].difficulty==='Medium' ) {%>
+            <p class="medium">Medium</p>
+            <% } else { %>
+              <p class="hard">Hard</p>
+              <% } %>
       </div>
-    </section>
-    <section class="section pt-8" style="padding-top: 0; padding-bottom: 20px">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 setback">
-            <div class="cover">
-              <div class="questiondesc">
-                <%= data[0].questionDescriptionText %>
-              </div>
-              <br />
-              <div class="questionlabel">Input Format</div>
-              <div class="inoutformat"><%= data[0].questionInputText %></div>
-              <br />
-              <div class="questionlabel">Output Format</div>
-              <div class="inoutformat"><%= data[0].questionOutputText %></div>
-              <br />
-              <div class="questionlabel">Sample Input</div>
-              <div class="sampleinout">
-                <%_ %><%= data[0].questionExampleInput1 %>
-                <span></span>
-              </div>
-              <br />
-              <div class="questionlabel">Sample Output</div>
-              <div class="sampleinout">
-                <%_ %><%= data[0].questionExampleOutput1 %>
-                <span></span>
-              </div>
-              <br />
-              <div class="questionlabel" style="margin-bottom: 0">
-                Explanation
-              </div>
-              <div class="questionexplain">
-                <%_ %><%= data[0].questionExplanation %>
-              </div>
-              <br />
-              <br />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <script>
-      function disableKeys(e) {
-          const unwantedKeys = ['c', 'v', 'n', 'a', 'p', "C", "V", "N", "A", "P", "u", "U"]
-          if (e.ctrlKey && unwantedKeys.includes(e.key)) {
-            e.preventDefault();
-          }
-          if (e.ctrlKey && e.shiftKey && ['i', 'c', 'I', 'i'].includes(e.key)) {
-            e.preventDefault();
-          }
-        }
-      if (window.location.href.split('?')[1].split('=')[1] == 1){
-        window.addEventListener("keydown", disableKeys);
-      }
-    </script>
-    <section class="section pt-8" style="padding-top: 0">
+
+    </div>
+    <div class="container-top">
+      <a href="#ide" class="button">Online Editor</a>
+      <a href="<%= data.url %>/registerComplaint/<%= data[0].questionId %>" target="_blank" class="button2">Report
+        Issue</a>
+    </div>
+  </section>
+  <section class="section pt-8" style="padding-top: 0; padding-bottom: 20px">
+    <div class="container">
       <div class="row">
-        <iframe
-          src="/ide/<%=data[0].questionId %>"
-          frameborder="0"
-          class="code-ide"
-          id="ide"
-        ></iframe>
-      </div>
-    </section>
-
-    <!-- jQuery -->
-    <script src="plugins/jQuery/jquery.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="plugins/bootstrap/bootstrap.min.js"></script>
-    <!-- slick slider -->
-    <script src="plugins/slick/slick.min.js"></script>
-    <!-- filter -->
-    <script src="plugins/shuffle/shuffle.min.js"></script>
-
-    <!-- Main Script -->
-    <script src="js/script.js"></script>
-    <footer class="bg-dark2" id="footers">
-      <div class="footer-section">
-        <div class="footer-left">
-          <div class="footer-left-titles">
-            <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
-          </div>
-          <div class="footer-left-links">
-            <a href="https://www.iare.ac.in" target="_blank">IARE</a>
-          </div>
-          <div class="footer-left-links">
-            <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank"
-              >Feedback</a
-            >
+        <div class="col-md-12 setback">
+          <div class="cover">
+            <div class="questiondesc">
+              <%= data[0].questionDescriptionText %>
+            </div>
+            <br />
+            <div class="questionlabel">Input Format</div>
+            <div class="inoutformat">
+              <%= data[0].questionInputText %>
+            </div>
+            <br />
+            <div class="questionlabel">Output Format</div>
+            <div class="inoutformat">
+              <%= data[0].questionOutputText %>
+            </div>
+            <br />
+            <div class="questionlabel">Sample Input</div>
+            <div class="sampleinout">
+              <%_ %>
+                <%= data[0].questionExampleInput1 %>
+                  <span></span>
+            </div>
+            <br />
+            <div class="questionlabel">Sample Output</div>
+            <div class="sampleinout">
+              <%_ %>
+                <%= data[0].questionExampleOutput1 %>
+                  <span></span>
+            </div>
+            <br />
+            <div class="questionlabel" style="margin-bottom: 0">
+              Explanation
+            </div>
+            <div class="questionexplain">
+              <%_ %>
+                <%= data[0].questionExplanation %>
+            </div>
+            <br />
+            <br />
           </div>
         </div>
-        <div class="footer-right">
-          <p>
-            Copyright ©
-            <script>
-              var CurrentYear = new Date().getFullYear();
-              document.write(CurrentYear);
-            </script>
-          </p>
+      </div>
+    </div>
+  </section>
+  <script>
+    function disableKeys(e) {
+      const unwantedKeys = ['c', 'v', 'n', 'a', 'p', "C", "V", "N", "A", "P", "u", "U"]
+      if (e.ctrlKey && unwantedKeys.includes(e.key)) {
+        e.preventDefault();
+      }
+      if (e.ctrlKey && e.shiftKey && ['i', 'c', 'I', 'i'].includes(e.key)) {
+        e.preventDefault();
+      }
+    }
+    if (window.location.href.split('?')[1].split('=')[1] == 1) {
+      window.addEventListener("keydown", disableKeys);
+    }
+  </script>
+  <section class="section pt-8" style="padding-top: 0">
+    <div class="row">
+      <iframe src="/ide/<%=data[0].questionId %>" frameborder="0" class="code-ide" id="ide"></iframe>
+    </div>
+  </section>
+
+  <!-- jQuery -->
+  <script src="plugins/jQuery/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="plugins/bootstrap/bootstrap.min.js"></script>
+  <!-- slick slider -->
+  <script src="plugins/slick/slick.min.js"></script>
+  <!-- filter -->
+  <script src="plugins/shuffle/shuffle.min.js"></script>
+
+  <!-- Main Script -->
+  <script src="js/script.js"></script>
+  <footer class="bg-dark2" id="footers">
+    <div class="footer-section">
+      <div class="footer-left">
+        <div class="footer-left-titles">
+          <a href="http://buildit.iare.ac.in/" target="_blank">Build-IT</a>
+        </div>
+        <div class="footer-left-links">
+          <a href="https://www.iare.ac.in" target="_blank">IARE</a>
+        </div>
+        <div class="footer-left-links">
+          <a href="https://forms.gle/J6rtgiSRx4msuuQT6" target="_blank">Feedback</a>
         </div>
       </div>
-    </footer>
-  </body>
+      <div class="footer-right">
+        <p>
+          Copyright ©
+          <script>
+            var CurrentYear = new Date().getFullYear();
+            document.write(CurrentYear);
+          </script>
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+
 </html>

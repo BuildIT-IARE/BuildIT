@@ -26,6 +26,7 @@ var questionSchema = new Schema({
   author: String,
   editorial: String,
   difficulty: String,
+  estimateTime: String,
   language: String,
   courseId: Array,
   conceptLevel: String,
