@@ -53,6 +53,7 @@ exports.create = (req, res) => {
 // Retrieve and return all Complains from the database.
 exports.findAll = (req, res) => {
   Complain.find()
+    .sort({ complainId: -1 })
     .then((complains) => {
       for (let i = 0; i < complains.length; i++) {
           complains[i]._doc.createdAt = complains[i]._id.getTimestamp();
