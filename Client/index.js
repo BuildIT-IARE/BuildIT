@@ -1452,7 +1452,7 @@ app.get("/complaints_public", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    body.url = clientRoute;
+    body.url = process.env.clientAddress;
     body.serverurl = serverRoute;
     res.render("complains_public", { data: body });
   });
