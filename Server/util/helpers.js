@@ -29,9 +29,7 @@ let checkTestcase = async (testcase, postUrl, source_code, language_id, apiAddre
         expected_output: testcase.output,
     });
     testcase_token = testcase_token.data.token;
-    console.log(testcase_token);
     let result = await axios.get(apiAddress + "/submissions/" + testcase_token);
-    console.log(result.data);
     if (result.data.status.id === 3){
         return {
             points: 1,

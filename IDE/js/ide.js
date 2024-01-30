@@ -1,5 +1,5 @@
 var apiUrl = localStorageGetItem("api-url") || "http://13.234.234.30:3000";
-var serverUrl = "http://13.234.234.30:5000";
+var serverUrl = `http://${window.location.hostname}:5000`
 var wait = localStorageGetItem("wait") || false;
 var pbUrl = "https://pb.judge0.com";
 var check_timeout = 200;
@@ -917,8 +917,47 @@ function getSubmission() {
           }
         }
       }
+      else{
+        var requiredLanguageId = course_language[courseId] || 34;
+        getSampleCode();
+        insertUserCode(requiredLanguageId);
+      }
     },
+    failure: function (data) {
+      var requiredLanguageId = course_language[courseId] || 34;
+      getSampleCode();
+      insertUserCode(requiredLanguageId);
+    }
   });
+}
+
+
+function getSampleCode() {
+  let windowUrl = window.location.href;
+  let questionId = windowUrl.slice(serverUrl.length + 5, windowUrl.length);
+  $.ajax({
+    url: serverUrl + "/questions/" + questionId,
+    type: "GET",
+    async: true,
+    headers: {
+      authorization: getCookie("token"),
+    },
+    success: function (data) {
+      data = data[0];
+      if (data.code_py) {
+        sources[languageIds["PYTHON"]] = data.code_py;
+      }
+      if (data.code_java) {
+        sources[languageIds["JAVA"]] = data.code_java;
+      }
+      if (data.code_c) {
+        sources[languageIds["C"]] = data.code_c;
+      }
+      if (data.code_cpp) {
+        sources[languageIds["CPP"]] = data.code_cpp;
+      }
+    }
+  })
 }
 
 getSubmission();
@@ -930,6 +969,13 @@ var course_language = {
   "IARE_PY": 34,
   "IARE_JAVA_LAB": 26,
   "IARE_JL": 26
+}
+
+var languageIds = {
+  "PYTHON": 34,
+  "JAVA": 26,
+  "C": 4,
+  "CPP": 10,
 }
 
 var sources = {

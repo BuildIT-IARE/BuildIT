@@ -2028,7 +2028,6 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
                 multipleAttempts = false;
               }
               body.contestId = req.params.contestId;
-              console.log(bodytimer);
               res.render("questions", {
                 imgUsername: req.cookies.username,
                 multipleAttempts: multipleAttempts,
@@ -2831,7 +2830,6 @@ app.get(
         } else if (req.params.concept === "fn") {
           body.courseName = body.courseName + " - Functions";
         }
-        console.log(body);
         res.render("displayTutQuestions", {
           imgUsername: req.cookies.username,
           data: body,
@@ -4039,7 +4037,6 @@ app.get('/facultyAdd',  (req,res) => {
   };
 
   request(requestBody, function(err,response, body) {
-    console.log(body)
     if (body.success == false) {
       res.render("error", {
         data: { message: "Unauthorised access" },
@@ -4075,7 +4072,6 @@ app.get('/facultyDelete', (req,res) => {
   };
 
   request(requestBody, function(err,response, body) {
-    console.log(body)
     if (body.success == false) {
       res.render("error", {
         data: { message: "Unauthorised access" },
@@ -4103,7 +4099,6 @@ app.get('/facultyUpdate', (req,res) => {
   };
 
   request(requestBody, function(err,response, body) {
-    console.log(body)
     if (body.success == false) {
       res.render("error", {
         data: { message: "Unauthorised access" },
@@ -4133,7 +4128,6 @@ app.get('/facultyView', async (req,res) => {
   };
 
   request(requestBody, function(err,response, body) {
-    console.log(body)
     if (body.success == false) {
       res.render("error", {
         data: { message: "Unauthorised access" },
@@ -4191,7 +4185,6 @@ app.get('/facultyDashboard', async (req,res) => {
   };
   // console.log(requestBody);
   request(requestBody, function(err, response, body) {
-    console.log(body)
     if(body) {
       res.send(body);
     }
@@ -4248,7 +4241,6 @@ app.post('/facultyDelete', async (req,res) => {
 
 // request update
 app.post('/facultyUpdateMenu', async (req,res) => {
-  console.log(req.body.id);
   let requestBody = {
     body: req.body,
     url: serverRoute + "/facultyDashboard/" + req.body.id,
@@ -4259,7 +4251,6 @@ app.post('/facultyUpdateMenu', async (req,res) => {
     json: true,
   };
   request(requestBody, function(err, response, body) {
-    console.log(body);
     let data = {
       url: clientRoute,
     }
@@ -4287,7 +4278,6 @@ app.post('/facultyUpdateSend', async (req,res) => {
     },
     json: true,
   };
-  console.log(req.body);
   request(requestBody, function(err, response, body) {
     if(body) {
       res.send("item has been updated successfully");
