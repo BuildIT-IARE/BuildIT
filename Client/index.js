@@ -1868,6 +1868,25 @@ app.get("/code365", checkSignIn, async (req, res, next) => {
   });
 });
 
+app.get("/seepractical", checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/contests/user/" + req.cookies.username.toLowerCase(),
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: false,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.clearCookie("courseId");
+    res.render("SEEPractical", { imgUsername: req.cookies.username, data: body });
+  });
+});
+
 app.get("/contestPassword/:contestId", checkSignIn, async (req, res) => {
   res.render("contestPassword", {
     imgUsername: req.cookies.username,
