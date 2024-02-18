@@ -202,7 +202,7 @@ exports.getDuration = (req, callback) => {
 
 // Modified GetDuration to return durationData
 exports.getDurationOfContest = async (contestId) => {
-  console.log(contestId);
+  // console.log(contestId);
   try{
     let contest = await Contest.find({ contestId: contestId });
     contest = contest[0];

@@ -1793,24 +1793,8 @@ app.get(
       json: true,
     };
     request(options, function (err, response, bodyparticipation) {
-      let options = {
-        url: serverRoute + "/questions/contests/" + req.params.contestId,
-        method: "get",
-        headers: {
-          authorization: req.cookies.token,
-        },
-        json: true,
-      };
-
-      request(options, function (err, response, bodyquestion) {
-        let url = {
-          url: clientRoute,
-        };
-        res.render("results_public2", {
-          data: url,
-          datap: bodyparticipation,
-          dataq: bodyquestion,
-        });
+      res.render("results_public2", {
+        datap: bodyparticipation,
       });
     });
   }
