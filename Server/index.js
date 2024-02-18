@@ -17,7 +17,7 @@ const SkillUp = require("./controllers/skillUp.controller.js");
 dotenv.config({ path: "../Server/util/config.env" });
 
 let middleware = require("./util/middleware.js");
-let helper = require("./util/helpers.js");
+let helper = require("./helpers/contest.js")
 
 const User = require("./models/user.model");
 const Participation = require("./models/participation.model").Participation;
@@ -29,7 +29,6 @@ const ParticipationTut = require("./models/participationTut.model");
 const localServer = process.env.localServer;
 const port = process.env.PORT || 5000;
 let apiAddress = process.env.apiAddress;
-let timeOut = 3000;
 
 if (localServer) {
   apiAddress = process.env.localAPI;
@@ -161,7 +160,7 @@ app.get("/testGet", async (req, res) => {
 
 app.post("/testPost", async (req, res) => {
   console.log("request body");
-  console.log(req.body);
+   (req.body);
   res.json(req.body);
 });
 
@@ -240,7 +239,8 @@ app.post("/isOngoing", middleware.checkToken, async (req, res) => {
 
 app.post("/validateMcq", middleware.checkToken, async (req, res) => {
   if (req.body.contestId) {
-    contests.getDuration(req, (err, duration) => {
+    contests.getDura
+    tion(req, (err, duration) => {
       if (err) {
         res.status(404).send({ message: err });
       }

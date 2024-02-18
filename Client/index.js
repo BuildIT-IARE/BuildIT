@@ -1793,24 +1793,8 @@ app.get(
       json: true,
     };
     request(options, function (err, response, bodyparticipation) {
-      let options = {
-        url: serverRoute + "/questions/contests/" + req.params.contestId,
-        method: "get",
-        headers: {
-          authorization: req.cookies.token,
-        },
-        json: true,
-      };
-
-      request(options, function (err, response, bodyquestion) {
-        let url = {
-          url: clientRoute,
-        };
-        res.render("results_public2", {
-          data: url,
-          datap: bodyparticipation,
-          dataq: bodyquestion,
-        });
+      res.render("results_public2", {
+        datap: bodyparticipation,
       });
     });
   }
@@ -1881,6 +1865,25 @@ app.get("/code365", checkSignIn, async (req, res, next) => {
   request(options, function (err, response, body) {
     res.clearCookie("courseId");
     res.render("code365", { imgUsername: req.cookies.username, data: body });
+  });
+});
+
+app.get("/seepractical", checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/contests/user/" + req.cookies.username.toLowerCase(),
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: false,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.clearCookie("courseId");
+    res.render("SEEPractical", { imgUsername: req.cookies.username, data: body });
   });
 });
 
