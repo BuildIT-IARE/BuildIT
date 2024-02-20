@@ -31,13 +31,8 @@ const parseDateTime = (date, time) => {
 }
 
 const utc_to_local = (date) => {
-    const offset = -330 * 60000;
-    if (offset > 0){
-        return new Date(date.valueOf() + offset);
-    }
-    else{
-        return new Date(date.valueOf() - offset);
-    }
+    const offset = new Date().getTimezoneOffset() * 60000;
+    return new Date(date.valueOf() - offset);
 }
 
 module.exports = {

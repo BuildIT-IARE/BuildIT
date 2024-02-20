@@ -142,7 +142,7 @@
         <div class="row">
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-          (data[i].contestDate == new Date(new Date().valueOf() + (330 * 60000)).toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() != "CODE365" && !data[i].contestId.startsWith("SEE")) { %>
+          (data[i].contestDate == new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() != "CODE365" && !data[i].contestId.startsWith("SEE")) { %>
           <div class="col-lg-4 col-sm-6 mb-4">
             <a <% if(data[i].contestPassword){ %>
               href="contestPassword/<%= data[i].contestId %>" <%} else{%>
@@ -215,7 +215,7 @@
         <div class="row">
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-          (data[i].contestDate != new Date(new Date().valueOf() + (330 * 60000)).toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() != "CODE365" && !data[i].contestId.startsWith("SEE")) { %>
+          (data[i].contestDate != new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() != "CODE365" && !data[i].contestId.startsWith("SEE")) { %>
           <div class="col-lg-4 col-sm-6 mb-4">
             <a
               href="contests/<%= data[i].contestId %>"
@@ -337,7 +337,7 @@
   </div>
   <div class="border-top text-center border-dark py-5">
     <p class="mb-0 text-light">Copyright ©<script>
-        var CurrentYear = new Date(new Date().valueOf() + (330 * 60000)).getFullYear()
+        var CurrentYear = new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).getFullYear()
         document.write(CurrentYear)
       </script> a theme by <a href="themefisher.com">themefisher.com</a></p>
   </div>
