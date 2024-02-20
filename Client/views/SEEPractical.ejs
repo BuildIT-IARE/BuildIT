@@ -436,7 +436,7 @@
         <div class="active-contests-grid">
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-          (data[i].contestDate == new Date(new Date().valueOf() + (330 * 60000)).toISOString().slice(0,10) && data[i].contestId.startsWith("SEE")) { %>
+          (data[i].contestDate == new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.startsWith("SEE")) { %>
           <div class="card">
             <div class="tools">
               <div class="circle">
@@ -493,7 +493,7 @@
         <div class="active-contests-grid" style="margin-top: 1rem;" >
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-          (data[i].contestDate != new Date(new Date().valueOf() + (330 * 60000)).toISOString().slice(0,10) && data[i].contestId.startsWith("SEE")) { %>
+          (data[i].contestDate != new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.startsWith("SEE")) { %>
           <div class="card-inactive">
             <div class="tools">
               <div class="circle">
