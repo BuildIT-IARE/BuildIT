@@ -7,7 +7,7 @@ let isContestOnGoing = async (contestId, getDurationOfContest, isAdmin) => {
         let now = time.now();
         let start = time.parseDateTime(durationData.date, durationData.startTime);
         let end = time.parseDateTime(durationData.date, durationData.endTime);
-        if ((now >= start && start <= end) || isAdmin) {
+        if ((now >= start && now <= end) || isAdmin) {
             return [true, durationData.mcq];
         }
         else{
