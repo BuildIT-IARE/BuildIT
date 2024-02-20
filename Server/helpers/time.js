@@ -31,7 +31,7 @@ const parseDateTime = (date, time) => {
 }
 
 const utc_to_local = (date) => {
-    const offset = new Date().getTimezoneOffset() * 60000;
+    const offset = -330 * 60000;
     if (offset > 0){
         return new Date(date.valueOf() + offset);
     }
