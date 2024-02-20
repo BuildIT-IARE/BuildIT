@@ -166,75 +166,80 @@ app.post("/testPost", async (req, res) => {
 
 // Main Routes
 app.post("/isOngoing", middleware.checkToken, async (req, res) => {
-  contests.getDuration(req, (err, duration) => {
-    if (err) {
-      res.status(404).send({ message: err });
-    }
+  const [isOngoing, mcq] = await helper.isContestOnGoing(req.body.contestId, contests.getDurationOfContest, req.decoded.admin);
+  res.send({
+    success: isOngoing,
+    message: "Contest window isn't open!",
+  })
+  // contests.getDuration(req, (err, duration) => {
+  //   if (err) {
+  //     res.status(404).send({ message: err });
+  //   }
 
-    let date = new Date();
-    let today = date.toLocaleDateString();
-    if (today.length === 9) {
-      today = "0" + today;
-    }
+  //   let date = new Date();
+  //   let today = date.toLocaleDateString();
+  //   if (today.length === 9) {
+  //     today = "0" + today;
+  //   }
 
-    // let day = today.slice(0, 2);
+  //   // let day = today.slice(0, 2);
 
-    // let month = today.slice(3, 5);
+  //   // let month = today.slice(3, 5);
 
-    // let year = today.slice(6, 10);
+  //   // let year = today.slice(6, 10);
 
-    let day = date.getDate();
-    if (day < 10) {
-      day = "0" + String(day);
-    }
-    let month = date.getMonth() + 1;
-    if (month < 10) {
-      month = "0" + String(month);
-    }
-    let year = date.getFullYear();
+  //   let day = date.getDate();
+  //   if (day < 10) {
+  //     day = "0" + String(day);
+  //   }
+  //   let month = date.getMonth() + 1;
+  //   if (month < 10) {
+  //     month = "0" + String(month);
+  //   }
+  //   let year = date.getFullYear();
 
-    if (!localServer) {
-      today = `${year}-${day}-${month}`;
-    } else {
-      today = `${year}-${month}-${day}`;
-    }
-    let minutes = date.getMinutes();
-    let hours = date.getHours();
-    minutes = minutes + 30;
-    hours = hours + 5;
-    if (hours < 10) {
-      hours = "0" + String(hours);
-    }
+  //   if (!localServer) {
+  //     today = `${year}-${day}-${month}`;
+  //   } else {
+  //     today = `${year}-${month}-${day}`;
+  //   }
+  //   let minutes = date.getMinutes();
+  //   let hours = date.getHours();
+  //   minutes = minutes + 30;
+  //   hours = hours + 5;
+  //   if (hours < 10) {
+  //     hours = "0" + String(hours);
+  //   }
 
-    if (minutes < 10) {
-      minutes = "0" + String(minutes);
-    }
+  //   if (minutes < 10) {
+  //     minutes = "0" + String(minutes);
+  //   }
 
-    let currentTime = `${hours}${minutes}`;
-    currentTime = eval(currentTime);
-    currentTime = moment().tz("Asia/Kolkata").format("HHmm");
-    // console.log(currentTime);
-    if (
-      duration.date.toString() === today &&
-      duration.startTime.toString() < currentTime &&
-      duration.endTime.toString() > currentTime
-    ) {
-      accepted = true;
-    } else {
-      accepted = false;
-    }
-    // accepted = true;
-    if (req.decoded.admin) {
-      accepted = true;
-    }
-    if (moment(today).isAfter(duration.date.toString())) {
-      accepted = true;
-    }
-    res.send({
-      success: accepted,
-      message: "Contest window isn't open!",
-    });
-  });
+  //   let currentTime = `${hours}${minutes}`;
+  //   currentTime = eval(currentTime);
+  //   currentTime = moment().tz("Asia/Kolkata").format("HHmm");
+  //   // console.log(currentTime);
+  //   if (
+  //     duration.date.toString() === today &&
+  //     duration.startTime.toString() < currentTime &&
+  //     duration.endTime.toString() > currentTime
+  //   ) {
+  //     accepted = true;
+  //   } else {
+  //     accepted = false;
+  //   }
+  //   // accepted = true;
+  //   if (req.decoded.admin) {
+  //     accepted = true;
+  //   }
+  //   if (moment(today).isAfter(duration.date.toString())) {
+  //     accepted = true;
+  //   }
+  //   res.send({
+  //     success: accepted,
+  //     message: "Contest window isn't open!",
+  //   });
+  // });
 });
 
 app.post("/validateMcq", middleware.checkToken, async (req, res) => {
