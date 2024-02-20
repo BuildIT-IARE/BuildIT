@@ -25,6 +25,9 @@ const SEEPracticalEvaluation = async (contestId) => {
                     submissions[1].score = scoring_for_2_questions[submissions[1].score];
     
                     submissions[2].score = scoring_for_3rd_question[submissions[2].score];
+                    for (let i = 3; i < submissions.length; i++){
+                        submissions[i].score = 0;
+                    }
                 }
                 else if (submissions.length == 2){
                     submissions[0].score = scoring_for_2_questions[submissions[0].score];
