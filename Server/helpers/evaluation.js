@@ -21,7 +21,7 @@ const SEEPracticalEvaluation = async (contestId) => {
                 let submissions = participation.submissionResults;
             
                 submissions.sort((a, b) => {
-                    b.score - a.score;
+                    return b.score - a.score;
                 });
     
                 const scoring_for_2_questions = {100: 25, 50: 13, 25: 7}
