@@ -436,7 +436,7 @@
         <div class="active-contests-grid">
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-          (data[i].contestDate === new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 6000).toISOString().slice(0,10) && data[i].contestId.startsWith("SEE")) { %>
+          (data[i].contestDate === new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.startsWith("SEE")) { %>
           <div class="card">
             <div class="tools">
               <div class="circle">
