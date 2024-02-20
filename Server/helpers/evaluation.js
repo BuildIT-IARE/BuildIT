@@ -1,5 +1,6 @@
 const Participate = require("../models/participation.model.js");
 const Participation = Participate.Participation;
+const time = require("./time.js");
 
 const Contest = require("../models/contest.model.js");
 
@@ -7,15 +8,8 @@ const SEEPracticalEvaluation = async (contestId) => {
     try {
         let contest = await Contest.findOne({contestId: contestId })
         let participations = await Participation.find({ contestId: contestId })
-        let endTime = {
-            hour: contest.contestEndTime.slice(0, 2),
-            minute: contest.contestEndTime.slice(2, 4),
-            year: contest.contestDate.slice(0, 4),
-            month: contest.contestDate.slice(5, 7),
-            date: contest.contestDate.slice(8, 10)
-        }
-        let contestEndTime = new Date(endTime.year, endTime.month-1, endTime.date, endTime.hour, endTime.minute, 0, 0);
-        let now = new Date(new Date().valueOf() + 5.5*60*60*1000);
+        let contestEndTime = time.parseDateTime(contest.contestDate, contest.contestEndTime);
+        let now = time.now();
         if (!contest.evaluation && contestId.startsWith("SEE") && now >= contestEndTime){
             for ( let participation of participations ){
                 let submissions = participation.submissionResults;

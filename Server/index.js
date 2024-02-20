@@ -239,8 +239,7 @@ app.post("/isOngoing", middleware.checkToken, async (req, res) => {
 
 app.post("/validateMcq", middleware.checkToken, async (req, res) => {
   if (req.body.contestId) {
-    contests.getDura
-    tion(req, (err, duration) => {
+    contests.getDuration(req, (err, duration) => {
       if (err) {
         res.status(404).send({ message: err });
       }
@@ -351,16 +350,6 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
 });
 
 app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
-  // let options11 = {
-  //   method: "get",
-  //   json: true,
-  //   url: process.env.clientAddress + "/userSession/" + req.body.user,
-  // };
-  // request(options11, function (err, response, body) {
-  //   if (!body.status || err)
-  //     console.log("Error in getting user session status");
-  //     return res.status(404).send({ message: "user logged out!" });
-  // });
   if (!helper.checkUserLoggedIn(req.body.user, process.env.clientAddress)) {
     res.status(404).send({ message: "user logged out!" });
   }
