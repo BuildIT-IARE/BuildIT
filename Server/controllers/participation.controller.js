@@ -536,7 +536,7 @@ exports.updateParticipation = (req, questions, callback) => {
 // Fetching user first and last name for Admin Report
 async function findUserName(participation) {
   for (let i = 0;i < participation.length;i++) {
-    let userbody = await User.find({ username: participation[i].username })
+    let userbody = await User.find({ username: participation[i].username.toLowerCase() })
     participation[i]._doc.name = userbody[0].name
   }
   return participation
@@ -551,7 +551,6 @@ exports.findContestPart = async (req, res) => {
     }
     else{
       participation = await Participation.find({ contestId: req.body.contestId });
-    
     }
     participation = await findUserName(participation);
     res.send(participation);

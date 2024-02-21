@@ -24,6 +24,7 @@ const Participation = require("./models/participation.model").Participation;
 const McqParticipation =
   require("./models/participation.model").McqParticipation;
 const ParticipationTut = require("./models/participationTut.model");
+const Submission = require("./models/submission.model");
 
 // API Address
 const localServer = process.env.localServer;
@@ -663,6 +664,37 @@ app.get("/getSolvedCount", middleware.checkTokenAdmin, async (req, res) => {
   });
 });
 
+
+app.get("/api/submission/:contestId/:username", async (req, res) => {
+  let contestId = req.params.contestId;
+  let username = req.params.username.toLowerCase();
+  let participation = await Participation.findOne({ participationId: username + contestId });
+  if (!participation){
+    res.send({
+      message: "No submission found"
+    });
+  }
+  else{
+    let questions = participation.submissionResults.map(submission => submission.questionId);
+    let submissionsCodes = []
+    for (question of questions){
+      let submissions = await Submission.find({ username: username, questionId: question });
+      submission = submissions.sort((a, b) => b.score - a.score)[0];
+      if (!submission){
+        continue;
+      }
+      submissionsCodes.push({
+        questionId: question,
+        sourceCode: submission.sourceCode,
+        score: submission.score,
+        testcaseResults: submission.result
+      })
+    }
+    res.send({
+      submissionsCodes
+    });
+  }
+})
 
 
 
