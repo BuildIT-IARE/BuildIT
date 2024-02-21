@@ -130,6 +130,7 @@
         <tr>
           <th>S.No</th>
           <th>Roll No</th>
+          <th>Student Name</th>
           <th>Total Score</th>
           <th>Branch</th>
         </tr>
@@ -137,6 +138,7 @@
         <tr branch="<%= datap[i].branch.toLowerCase() %>" class="leaderboardEntry">
           <td><%= i+1 %></td>
           <td><%= datap[i].username %></td>
+          <td><%= datap[i].name %></td>
           <% let k = 0; %> <% if (datap[i].submissionResults.length !== 0){ %>
           <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %> <%
           k = k + datap[i].submissionResults[j].score %> <% } %> <% } %>
