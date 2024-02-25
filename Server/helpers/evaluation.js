@@ -18,23 +18,22 @@ const SEEPracticalEvaluation = async (contestId) => {
                     return b.score - a.score;
                 });
     
-                const scoring_for_2_questions = {100: 25, 50: 13, 25: 7}
-                const scoring_for_3rd_question = {100: 10, 50: 5, 25: 3}
+                const scoring = {100: 10, 50: 7, 25: 5};
                 if (submissions.length >= 3){
-                    submissions[0].score = scoring_for_2_questions[submissions[0].score];
-                    submissions[1].score = scoring_for_2_questions[submissions[1].score];
+                    submissions[0].score = scoring[submissions[0].score];
+                    submissions[1].score = scoring[submissions[1].score];
     
-                    submissions[2].score = scoring_for_3rd_question[submissions[2].score];
+                    submissions[2].score = scoring[submissions[2].score];
                     for (let i = 3; i < submissions.length; i++){
                         submissions[i].score = 0;
                     }
                 }
                 else if (submissions.length == 2){
-                    submissions[0].score = scoring_for_2_questions[submissions[0].score];
-                    submissions[1].score = scoring_for_2_questions[submissions[1].score];
+                    submissions[0].score = scoring[submissions[0].score];
+                    submissions[1].score = scoring[submissions[1].score];
                 }
                 else if (submissions.length == 1){
-                    submissions[0].score = scoring_for_2_questions[submissions[0].score];
+                    submissions[0].score = scoring[submissions[0].score];
                 }
     
                 let UpdatedParticipation = new Participation(participation);

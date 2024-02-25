@@ -1622,7 +1622,8 @@ app.post("/admin/results/contest", async (req, res) => {
     };
     res.render("results", {
       data: url,
-      datap: bodyparticipation,
+      datap: bodyparticipation.participation,
+      questionLen: bodyparticipation.questionLen,
     });
   });
 });
@@ -1792,9 +1793,10 @@ app.get(
       },
       json: true,
     };
-    request(options, function (err, response, bodyparticipation) {
+    request(options, function (err, response, body) {
       res.render("results_public2", {
-        datap: bodyparticipation,
+        datap: body.participation,
+        questionLen: body.questionLen,
       });
     });
   }

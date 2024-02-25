@@ -3,6 +3,7 @@ const inarray = require("inarray");
 const xlsx = require("xlsx");
 const contests = require("./contest.controller.js");
 const participations = require("./participation.controller.js");
+const Contest = require("../models/contest.model.js");
 // const Base64 = require('js-base64').Base64;
 // Create and Save a new question
 exports.create = (req, res) => {
@@ -1302,3 +1303,15 @@ exports.merge = (req, res) => {
       });
     });
 };
+
+
+exports.getNumberOfQuestionsInContest = async (contestId) => {
+  let contest = await Contest.findOne({ contestId: contestId })
+  if (contest.multiset === true){
+    return contest.sets.length
+  }
+  else{
+    let questions = await Question.find({ contestId: contestId })
+    return questions.length
+  }
+}
