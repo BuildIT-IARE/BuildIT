@@ -6,7 +6,8 @@ const contests = require("./contest.controller.js");
 const mcqs = require("./mcq.controller.js");
 var moment = require("moment");
 
-var evaluation = require("../helpers/evaluation.js")
+var evaluation = require("../helpers/evaluation.js");
+const questions = require("./question.controller.js");
 
 
 // Create and Save a new participation
@@ -553,7 +554,11 @@ exports.findContestPart = async (req, res) => {
       participation = await Participation.find({ contestId: req.body.contestId });
     }
     participation = await findUserName(participation);
-    res.send(participation);
+    let numberOfQuestions = await questions.getNumberOfQuestionsInContest(req.body.contestId)
+    res.send({
+      participation: participation,
+      questionLen: numberOfQuestions
+    });
   }
   catch(err){
     console.log(err)
