@@ -151,6 +151,8 @@ require("./routes/visitorAccess.route")(app);
 
 require("./routes/facultyDetails.route.js")(app);
 
+require("./routes/practice.route.js")(app);
+
 
 
 // Examples

@@ -1889,6 +1889,29 @@ app.get("/seepractical", checkSignIn, async (req, res, next) => {
   });
 });
 
+
+// practice 
+
+app.get('/practice', checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/practice",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: false,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    console.log(body)
+    res.render("practice", { data: body });
+  });
+})
+
+
 app.get("/contestPassword/:contestId", checkSignIn, async (req, res) => {
   res.render("contestPassword", {
     imgUsername: req.cookies.username,
