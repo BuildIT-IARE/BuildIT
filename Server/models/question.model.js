@@ -37,6 +37,7 @@ var questionSchema = new Schema({
   company: Array,
   topic: Array,
   CountValue:Number,
+  tags: Array,
 });
 
 module.exports = mongoose.model("Question", questionSchema);

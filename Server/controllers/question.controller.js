@@ -71,6 +71,7 @@ exports.create = (req, res) => {
             estimateTime: req.body.estimateTime,
             language: req.body.language,
             conceptLevel: req.body.conceptLevel,
+            tags: req.body.tags.split(", ")
           });
     
           // Save Question in the database

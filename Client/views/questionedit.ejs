@@ -99,12 +99,14 @@
           <textarea name="editorial" rows="10" id="editorial">
 <%= data.editorial %></textarea>
           <p class="comments"><b>Difficulty</b></p>
-          <input type="radio" name="difficulty" value="Easy"> Easy </input>
-          <input type="radio" name="difficulty" value="Medium"> Medium </input>
-          <input type="radio" name="difficulty" value="Hard"> Hard </input>
+          <input type="radio" name="difficulty" value="Easy" <%= (data.difficulty) === 'Easy' ? 'checked' : "" %> > Easy </input>
+          <input type="radio" name="difficulty" value="Medium" <%= (data.difficulty) === 'Medium' ? 'checked' : "" %> > Medium </input>
+          <input type="radio" name="difficulty" value="Hard" <%= (data.difficulty) === 'Hard' ? 'checked' : "" %> > Hard </input>
           <hr />
           <p class="comments">Estimated Time to solve questions (in HH:MM)</p>
-          <textarea name="estimateTime" id="estimateTime" rows="10"></textarea>
+          <textarea name="estimateTime" id="estimateTime" rows="10"><%= data.estimateTime %></textarea>
+          <p class="comments">Question Tags</p>
+          <textarea name="tags" id="tags" rows="10"><%= data.tags.slice(0, -1).join(", ") + ", " + data.tags[data.tags.length - 1] %></textarea>
 
           <textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none">
 <%= token %></textarea>
