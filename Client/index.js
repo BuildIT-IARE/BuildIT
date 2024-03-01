@@ -4314,6 +4314,31 @@ app.post('/facultyUpdateSend', async (req,res) => {
   })
 });
 
+app.get("/practice/:id", async (req, res) => {
+  let requestBody = {
+    body: req.body,
+    url: serverRoute + "/practice/" + req.params.id,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(requestBody, function(err, response, body) {
+    if(body) {
+      res.render("questiondesc", {
+        imgUsername: req.cookies.username,
+        data: [body],
+      });
+    }
+    else {
+      res.send('something went wrong')
+    }
+    
+  })
+})
+
 app.get("/sqlEditor/dbQuestionId", async (req, res) => {
   res.render("sqlEditor");
 });
