@@ -117,6 +117,50 @@
       .active:hover {
         box-shadow: 4px 4px rgba(72, 195, 117, 0.235);
       }
+      .warning-container {
+            font: "Inconsolata", sans-serif;
+            margin: auto;
+            margin-top: 3em;
+            display: flex;
+            flex-direction: row;
+            border-radius: 1em;
+            align-items: center;
+            border: 4px dashed #434343; /* Set a dotted border */
+            background-color: rgb(245, 245, 192); /* Set a very faint yellow background */
+            padding: 20px;
+            max-width: fit-content; /* Adjust the maximum width as per your design */
+        }
+
+        .caution-symbol {
+            min-width: 50px;
+            min-height: 50px;
+            background-color: #ffcc00;
+            color: #333;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 45px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            cursor: pointer;
+            margin-bottom: 15px;
+            margin: 1em ;
+
+        }
+
+        .warning-text {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 2px;
+            
+        }
+
+        .warning-text p {
+            margin-bottom: 1px;
+        }
+        .warning-text a {
+          text: "Inconsolata", sans-serif;
+        }
     </style>
   </head>
 
@@ -134,6 +178,23 @@
       </div>
     </section>
     <!-- /page title -->
+
+    <section class="warning-container">
+      <div class="caution-symbol">!</div>
+      <div class="warning-content">
+        <div class="warning-header">
+          <p><strong>In case of any errors during AAT please contact us here:</strong></p>
+        </div>
+        <div class="warning-text">
+          <!-- <p><strong>Contact if any Problems: </strong></p> -->
+          <p>&emsp;⦿<a href="tel:+917901010930"><strong>&nbsp;+91 790 101 0930</strong></a></p>
+          <p>&emsp;⦿<a href="tel:+919441615167"><strong>&nbsp;+91 944 161 5167</strong></a></p>
+          <p>&emsp;⦿<a href="tel:+917416577443"><strong>&nbsp;+91 741 657 7443</strong></a></p>
+          <p>&emsp;⦿<a href="tel:+916281669588"><strong>&nbsp;+91 628 166 9588</strong></a></p>
+          <br>
+        </div>
+      </div>
+    </section>
 
     <!-- blog -->
     <section class="section">
