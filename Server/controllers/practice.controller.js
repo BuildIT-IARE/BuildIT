@@ -18,7 +18,6 @@ const servePracticePage = async (req, res) => {
         // }
 
         // Send the modified questions as the response
-		console.log(questions)
         res.send(questions);
     } catch (err) {
         // Handle errors
@@ -27,15 +26,15 @@ const servePracticePage = async (req, res) => {
 }
 
 const sendQuestion = async (req, res) => {
-	console.log('aaa')
-	try {
-		const data = await Question.findOne({ questionId: req.params.id });
-		console.log('aaa'+data)
-		res.send(data)
-	}
-	catch (err){
-		res.send('something went wrong' + err);
-	}
+    console.log('aaa')
+    try {
+        const data = await Question.findOne({ questionId: req.params.id });
+        console.log('aaa' + data)
+        res.send(data)
+    }
+    catch (err) {
+        res.send('something went wrong' + err);
+    }
 }
 
 module.exports = { servePracticePage, sendQuestion }

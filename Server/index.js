@@ -288,11 +288,75 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
   }
 });
 
+
+/*
+* docstring - validate submission
+* process 
+* 1. checks if logged in
+* 2. checks if submission belongs to a contest
+*   - seperation of post url based on local server or cloud instance
+*   - if participant still has time left in contest then evaluate test cases
+* 3. if the submission is not a contest then it is tutorial 
+* 4. similar process of evaluating is followed for tutorials 
+*/
+
+
 app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
   if (!helper.checkUserLoggedIn(req.body.user, process.env.clientAddress)) {
     res.status(404).send({ message: "user logged out!" });
   }
-  if (req.body.contestId.length !== 0) {
+
+  if (req.body.questionId.startsWith('PRACTICE')) {
+
+    if (localServer) {
+      postUrl = apiAddress + "/submissions/?wait=true";
+    } else {
+      postUrl = apiAddress + "/submissions";
+    }
+
+    const testcases = await questions.getTestCasesOfQuestion(req.body.questionId);
+
+    const tc1 = await helper.checkTestcase(testcases.case1, postUrl, req.body.source_code, req.body.language_id, apiAddress);
+    const tc2 = await helper.checkTestcase(testcases.case2, postUrl, req.body.source_code, req.body.language_id, apiAddress);
+    const tc3 = await helper.checkTestcase(testcases.case3, postUrl, req.body.source_code, req.body.language_id, apiAddress);
+    let score = tc1.points + tc2.points + tc3.points;
+    score = score * 25
+    if (score == 75){
+      score = 100;
+    }
+    const result = {
+      difficulty: testcases.difficulty,
+      language: testcases.language,
+      participationId: req.decoded.username + req.body.courseId,
+      courseId: req.body.courseId,
+      languageId: req.body.language_id,
+      questionId: req.body.questionId,
+      username: req.decoded.username,
+      sourceCode: req.body.source_code,
+      submissionToken: [tc1.token, tc2.token, tc3.token],
+      result: [tc1.description, tc2.description, tc3.description],
+      score: score,
+    };
+
+    
+    submissions.create(
+      req,
+      result,
+      (err, sub) => {
+        if (err) {
+          res
+            .status(404)
+            .send({ message: err });
+        }
+        res.send(sub);
+      }
+    );
+
+ 
+
+
+  }
+  else if (req.body.contestId.length !== 0) {
     const [isOngoing, mcq] = await helper.isContestOnGoing(req.body.contestId, contests.getDurationOfContest, req.decoded.admin);
     if (isOngoing){
       const testcases = await questions.getTestCasesOfQuestion(req.body.questionId);
@@ -352,7 +416,10 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
     else{
       res.status(403).send({ message: "The contest window is not open" });
     }
-  } else {
+  } 
+  
+ 
+  else {
     // Course Validation
     const course = await courses.findCourseLanguage(req.body.courseId);
     if (!course) {
