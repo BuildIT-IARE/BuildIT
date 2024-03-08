@@ -1901,6 +1901,7 @@ app.get('/practice', checkSignIn, async (req, res, next) => {
     },
     body: {
       mcq: false,
+      username: req.cookies.username
     },
     json: true,
   };
