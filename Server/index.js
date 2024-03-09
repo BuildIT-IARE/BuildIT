@@ -292,12 +292,15 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
 /*
 * docstring - validate submission
 * process 
-* 1. checks if logged in
-* 2. checks if submission belongs to a contest
+* 1. checks if logged in; if not returns error
+* 2. checks if question to be evaluated is from practice module
 *   - seperation of post url based on local server or cloud instance
-*   - if participant still has time left in contest then evaluate test cases
-* 3. if the submission is not a contest then it is tutorial 
-* 4. similar process of evaluating is followed for tutorials 
+*   - evaulate test cases and make submission to db
+* 3. checks if submission belongs to a contest
+*   - seperation of post url based on local server or cloud instance
+*   - if participant still has time left in contest then evaluate test cases and make submission to db
+* 4. if the submission is not a contest then it is tutorial (most likely will be depreceated)
+*   - evaluate for tutorials based on programming language
 */
 
 
