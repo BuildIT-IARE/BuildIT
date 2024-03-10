@@ -565,7 +565,16 @@ $(document).ready(function () {
         <option value="26" mode="java">Java (OpenJDK 9 with Eclipse OpenJ9)</option>
         <option value="34" mode="python">Python (3.6.0)</option>`);
   } else {
-    $("#tutorials").text("*");
+    $("#tutorials").text("Practice");
+    $("#select-language")
+      .append(`<option value="4" mode="c">C (gcc 7.2.0)</option>
+        <option value="10" mode="cpp">C++ (g++ 7.2.0)</option>
+        <option value="26" mode="java">Java (OpenJDK 9 with Eclipse OpenJ9)</option>
+        <option value="34" mode="python">Python (3.6.0)</option>
+        <option value="22" mode="go">Go (1.9)</option>
+        <option value="29" mode="javascript">JavaScript (nodejs 8.5.0)</option>
+        <option value="42" mode="rust">Rust (1.20.0)</option>`);
+
   }
 
   $selectLanguage = $("#select-language");
