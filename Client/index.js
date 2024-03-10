@@ -1907,7 +1907,6 @@ app.get('/practice', checkSignIn, async (req, res, next) => {
   };
 
   request(options, function (err, response, body) {
-    console.log(body)
     res.render("practice", { data: body });
   });
 })

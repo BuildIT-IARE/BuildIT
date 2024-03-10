@@ -13,6 +13,8 @@
       rel="stylesheet"
     />
 
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+
     <!-- Custom scrollbar  -->
     <style>
 
@@ -134,10 +136,7 @@
         </div>
       </div>
 
-      <!-- Sample Tags for tag selector -->
-      <% const Tags = ['Recursion', 'Arrays','Searching', 'Hash','Mathematical', 'Strings','Sorting','Binary Search', 'Bit Magic', 'Matrix','Sliding Window','Greedy','Cakewalk','Implementation','Dynamic Progrmming','Memoization'] %>
-
-      <!-- Tag Selector Functionality -->
+    
       <div class=" px-2 pt-2 pb-4 bg-white border border-gray-200 rounded-lg shadow mt-4">
         <div class="mx-auto w-full max-w-md rounded-2xl bg-white ">
           <div class="mt-2 mb-0">
@@ -161,11 +160,11 @@
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                   </svg>
               </div>
-              <input type="search" id="default-search" class="w-full pl-10 pr-12 px-3 py-3 mr-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-200 " placeholder="Search Questions or Topics" onkeyup="searchQuestion()"/>
-              <button type="submit" class="mr-2 text-purple-100 absolute right-2.5 bg-purple-700 hover:bg-purple-900 focus:ring-4 focus:outline-none focus:ring-1 focus:ring-purple-100  font-medium rounded-md text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-				Search
-				  
-			</button>
+              <input  id="default-search" class="w-full pl-10 pr-12 px-3 py-3 mr-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-200 " placeholder="Search Questions or Topics" onkeyup="searchQuestion()" onchange="searchQuestion()"/>
+              <button disabled class="mr-2 text-purple-100 absolute right-2.5 bg-purple-700 hover:bg-purple-900 focus:ring-4 focus:outline-none focus:ring-1 focus:ring-purple-100  font-medium rounded-md text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Search
+        
+              </button>
           </form>
           </div>
  
@@ -238,12 +237,10 @@
           hard.querySelector("svg").classList.add('hidden')
 
           Array.from(questions).forEach((question) => {
-            console.log(question.innerHTML)
             question.classList.remove('hidden')
           })
 
           Array.from(questions).forEach((question) => {
-            console.log(question.innerHTML)
             if (!question.innerHTML.includes("Easy")) {
               question.classList.add('hidden')
             }
@@ -253,7 +250,6 @@
         else {
           easy.querySelector("svg").classList.add('hidden')
           Array.from(questions).forEach((question) => {
-            console.log(question.innerHTML)
             if (!question.innerHTML.includes("Easy")) {
               question.classList.remove('hidden')
             }
@@ -268,12 +264,10 @@
           hard.querySelector("svg").classList.add('hidden')
 
           Array.from(questions).forEach((question) => {
-            console.log(question.innerHTML)
             question.classList.remove('hidden')
           })
 
           Array.from(questions).forEach((question) => {
-            console.log(question.innerHTML)
             if (!question.innerHTML.includes("Medium")) {
               question.classList.add('hidden')
             }
@@ -283,7 +277,6 @@
         else {
           med.querySelector("svg").classList.add('hidden')
           Array.from(questions).forEach((question) => {
-            console.log(question.innerHTML)
             if (!question.innerHTML.includes("Medium")) {
               question.classList.remove('hidden')
             }
@@ -299,12 +292,10 @@
           hard.querySelector("svg").classList.remove('hidden')
 
           Array.from(questions).forEach((question) => {
-            console.log(question.innerHTML)
             question.classList.remove('hidden')
           })
 
           Array.from(questions).forEach((question) => {
-            console.log(question.innerHTML)
             if (!question.innerHTML.includes("Hard")) {
               question.classList.add('hidden')
             }
@@ -315,7 +306,6 @@
           hard.querySelector("svg").classList.add('hidden')
 
           Array.from(questions).forEach((question) => {
-            console.log(question.innerHTML)
             if (!question.innerHTML.includes("Hard")) {
               question.classList.remove('hidden')
             }
@@ -328,7 +318,6 @@
 
       tagSelectors.forEach((tag) => {
         tag.addEventListener('click', () => {
-          console.log('prpepe')
           let inp = document.getElementById("default-search")
           inp += tag.innerHTML.toLowerCase()
           document.getElementById("default-search").value = inp
@@ -339,7 +328,6 @@
                 let input = document.getElementById("default-search").value.toLowerCase()
                 let elements= document.getElementsByClassName("questionInst");
                
-                console.log(input)
 
                 for (let i = 0; i < elements.length; i++) {
                     if(!elements[i].innerHTML.toLowerCase().includes(input)) {

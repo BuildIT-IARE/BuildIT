@@ -330,8 +330,6 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
     const result = {
       difficulty: testcases.difficulty,
       language: testcases.language,
-      participationId: req.decoded.username + req.body.courseId,
-      courseId: req.body.courseId,
       languageId: req.body.language_id,
       questionId: req.body.questionId,
       username: req.decoded.username,

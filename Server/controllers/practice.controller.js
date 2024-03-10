@@ -13,9 +13,6 @@ const servePracticePage = async (req, res) => {
             "username": { "$regex": regExpPattern },
         });
 
-
-        console.log(userSubmissions)
-
         let userSubmissionsMap = {}
         
         userSubmissions.forEach((submission) => {
