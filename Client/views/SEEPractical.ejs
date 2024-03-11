@@ -371,13 +371,12 @@
         .warning-text {
             font-weight: bold;
             font-size: 18px;
-            margin-bottom: 10px;
+            margin-bottom: 2px;
             
         }
 
         .warning-text p {
-            margin-bottom: 15px;
-            line-height: 20px;
+            margin-bottom: 1px;
         }
 
         
@@ -393,7 +392,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12 text-center">
-            <h1 class="text-white font-tertiary">Code365</h1>
+            <h1 class="text-white font-tertiary">SEE Practical Examination</h1>
           </div>
         </div>
       </div>
@@ -408,11 +407,16 @@
         </div>
         <div class="warning-text">
           
+
+
+          <p>⦿ <strong>Do not exit fullscreen mode:</strong> Ensure that you do not exit fullscreen mode during the examination. Exiting fullscreen mode will result in the immediate termination of the examination.</p>
+<br>
+          <p><strong>Scoring Criteria:</strong></p>
           
-          <p>1. Ensure to remain in Full Screen mode throughout the duration of the contest; exiting it prematurely will result in contest termination.</p>
-          <p>2. If you accidentally exit the window, your contest session will automatically terminate.</p>
-          <p>3. In the event of any technical issues or exceptions, promptly send an email explaining your situation along with screenshots to <strong><a style="color: inherit;" href="mailto:buildit@iare.ac.in">buildit@iare.ac.in</a></strong>.</p>
-              
+          <p>&emsp;⦿ There are a total of 5 questions in the exam.</p>
+          <p>&emsp;⦿ The top 3 questions with the highest scores will be considered for the final scoring.</p><br>
+          <p><strong>Final scoring is out of 30 marks:</strong></p>
+          <p>&emsp;&emsp;⦿ Each question will be have a weightage of 10 marks.</p>
         </div>
       </div>
     </section>
@@ -420,11 +424,11 @@
     <!-- blog -->
     <section class="section">
       <div class="container">
-        <h3 class="font-tertiary mb-5" style="color: green; text-align: center">Problem of The Day</h3>
+        <h3 class="font-tertiary mb-5" style="color: green; text-align: center">Active Practicals</h3>
         <div class="active-contests-grid">
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-          (data[i].contestDate == new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() == "CODE365") { %>
+          (data[i].contestDate == new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.startsWith("SEE")) { %>
           <div class="card">
             <div class="tools">
               <div class="circle">
@@ -465,7 +469,7 @@
                       data[i].contestEndTime %> <% } %>
                     </span>
                   </div>
-                  <div class=""><button class="participate-btn">Participate</button></div>
+                  <div class=""><button class="participate-btn">Start Practical</button></div>
                 </div>
               </a>
               <!-- orginal div -->
@@ -477,11 +481,11 @@
 
 
       <div class="container" style="border-top: 1px solid rgb(0, 0, 0); margin:1rem auto;">
-        <h3 class="font-tertiary mb-5" style="color: grey; text-align: center; margin-top: 10px;">Previous Problems</h3>
+        <h3 class="font-tertiary mb-5" style="color: grey; text-align: center; margin-top: 10px;">Previous Practicals</h3>
         <div class="active-contests-grid" style="margin-top: 1rem;" >
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-          (data[i].contestDate != new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() == "CODE365") { %>
+          (data[i].contestDate != new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.startsWith("SEE")) { %>
           <div class="card-inactive">
             <div class="tools">
               <div class="circle">
@@ -519,7 +523,7 @@
                     data[i].contestEndTime %> <% } %>
                   </span>
                 </div>
-                <div class=""><button class="participate-btn-inactive">Participate</button></div>
+                <div class=""><button class="participate-btn-inactive">Start Practical</button></div>
               </div>
             </a>
             </div>

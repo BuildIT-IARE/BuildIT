@@ -117,6 +117,50 @@
       .active:hover {
         box-shadow: 4px 4px rgba(72, 195, 117, 0.235);
       }
+      .warning-container {
+            font: "Inconsolata", sans-serif;
+            margin: auto;
+            margin-top: 3em;
+            display: flex;
+            flex-direction: row;
+            border-radius: 1em;
+            align-items: center;
+            border: 4px dashed #434343; /* Set a dotted border */
+            background-color: rgb(245, 245, 192); /* Set a very faint yellow background */
+            padding: 20px;
+            max-width: fit-content; /* Adjust the maximum width as per your design */
+        }
+
+        .caution-symbol {
+            min-width: 50px;
+            min-height: 50px;
+            background-color: #ffcc00;
+            color: #333;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 45px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            cursor: pointer;
+            margin-bottom: 15px;
+            margin: 1em ;
+
+        }
+
+        .warning-text {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 2px;
+            
+        }
+
+        .warning-text p {
+            margin-bottom: 1px;
+        }
+        .warning-text a {
+          text: "Inconsolata", sans-serif;
+        }
     </style>
   </head>
 
@@ -135,6 +179,8 @@
     </section>
     <!-- /page title -->
 
+    
+
     <!-- blog -->
     <section class="section">
       <div class="container">
@@ -142,7 +188,7 @@
         <div class="row">
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-          (data[i].contestDate === new Date().toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() != "CODE365") { %>
+          (data[i].contestDate == new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() != "CODE365" && !data[i].contestId.startsWith("SEE")) { %>
           <div class="col-lg-4 col-sm-6 mb-4">
             <a <% if(data[i].contestPassword){ %>
               href="contestPassword/<%= data[i].contestId %>" <%} else{%>
@@ -215,7 +261,7 @@
         <div class="row">
           <h5 id="login"></h5>
           <% for(let i = data.length-1; i >= 0; i--){ %> <% if
-          (data[i].contestDate !== new Date().toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() != "CODE365") { %>
+          (data[i].contestDate != new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) && data[i].contestId.slice(0,7).toUpperCase() != "CODE365" && !data[i].contestId.startsWith("SEE")) { %>
           <div class="col-lg-4 col-sm-6 mb-4">
             <a
               href="contests/<%= data[i].contestId %>"
@@ -337,7 +383,7 @@
   </div>
   <div class="border-top text-center border-dark py-5">
     <p class="mb-0 text-light">Copyright ©<script>
-        var CurrentYear = new Date().getFullYear()
+        var CurrentYear = new Date(new Date().valueOf() - new Date().getTimezoneOffset() * 60000).getFullYear()
         document.write(CurrentYear)
       </script> a theme by <a href="themefisher.com">themefisher.com</a></p>
   </div>

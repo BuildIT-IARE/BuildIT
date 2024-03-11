@@ -5,6 +5,11 @@ const McqParticipation = Participate.McqParticipation;
 const contests = require("./contest.controller.js");
 const mcqs = require("./mcq.controller.js");
 var moment = require("moment");
+
+var evaluation = require("../helpers/evaluation.js");
+const questions = require("./question.controller.js");
+
+
 // Create and Save a new participation
 exports.create = (req, res) => {
   req.body.username = req.decoded.username;
@@ -528,9 +533,11 @@ exports.updateParticipation = (req, questions, callback) => {
       return callback("Error retrieving contest", null);
     });
 };
+
+// Fetching user first and last name for Admin Report
 async function findUserName(participation) {
   for (let i = 0;i < participation.length;i++) {
-    let userbody = await User.find({ username: participation[i].username })
+    let userbody = await User.find({ username: participation[i].username.toLowerCase() })
     participation[i]._doc.name = userbody[0].name
   }
   return participation
@@ -538,19 +545,29 @@ async function findUserName(participation) {
 
 
 // Retrieve and return all participation details.
-exports.findContestPart = (req, res) => {
-  Participation.find({ contestId: req.body.contestId })
-    .then(async (participation) => {
-      participation = await findUserName(participation)
-      res.send(participation)
-    })
-    .catch((err) => {
-      res.status(500).send({
-        success: false,
-        message:
-          err.message || "Some error occurred while retrieving participation.",
-      });
+exports.findContestPart = async (req, res) => {
+  try{
+    if (req.body.contestId.startsWith("SEE")) {
+      participation = evaluation.SEEPracticalEvaluation(req.body.contestId);
+    }
+    else{
+      participation = await Participation.find({ contestId: req.body.contestId });
+    }
+    participation = await findUserName(participation);
+    let numberOfQuestions = await questions.getNumberOfQuestionsInContest(req.body.contestId)
+    res.send({
+      participation: participation,
+      questionLen: numberOfQuestions
     });
+  }
+  catch(err){
+    console.log(err)
+    res.status(500).send({
+      success: false,
+      message:
+        err.message || "Some error occurred while retrieving participation.",
+    });
+  }
 };
 // Retrieve and return all mcqParticipation details.
 exports.findQualContestPart = (req, res) => {

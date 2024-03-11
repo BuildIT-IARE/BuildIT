@@ -3,6 +3,7 @@ const inarray = require("inarray");
 const xlsx = require("xlsx");
 const contests = require("./contest.controller.js");
 const participations = require("./participation.controller.js");
+const Contest = require("../models/contest.model.js");
 // const Base64 = require('js-base64').Base64;
 // Create and Save a new question
 exports.create = (req, res) => {
@@ -60,11 +61,17 @@ exports.create = (req, res) => {
             questionHiddenOutput2: req.body.questionHiddenOutput2,
             questionHiddenOutput3: req.body.questionHiddenOutput3,
             questionExplanation: req.body.questionExplanation,
+            code_py: req.body.code_py,
+            code_java: req.body.code_java,
+            code_c: req.body.code_c,
+            code_cpp: req.body.code_cpp,
             author: req.body.author,
             editorial: req.body.editorial,
             difficulty: req.body.difficulty,
+            estimateTime: req.body.estimateTime,
             language: req.body.language,
             conceptLevel: req.body.conceptLevel,
+            tags: req.body.tags.split(", ")
           });
     
           // Save Question in the database
@@ -131,6 +138,10 @@ exports.createExcel = (req, res) => {
                 questionHiddenOutput2: data[i].questionHiddenOutput2,
                 questionHiddenOutput3: data[i].questionHiddenOutput3,
                 questionExplanation: data[i].questionExplanation,
+                code_py: req.body.code_py,
+                code_java: req.body.code_java,
+                code_c: req.body.code_c,
+                code_cpp: req.body.code_cpp,
                 author: data[i].author,
                 editorial: data[i].editorial,
                 difficulty: data[i].level,
@@ -198,6 +209,10 @@ exports.createSet = (req, res) => {
                 questionHiddenOutput2: data[i].questionHiddenOutput2,
                 questionHiddenOutput3: data[i].questionHiddenOutput3,
                 questionExplanation: data[i].questionExplanation,
+                code_py: req.body.code_py,
+                code_java: req.body.code_java,
+                code_c: req.body.code_c,
+                code_cpp: req.body.code_cpp,
                 author: data[i].author,
                 editorial: data[i].editorial,
                 difficulty: data[i].level,
@@ -341,7 +356,7 @@ exports.createTutorials = (req, res) => {
           .map((item) => item.trim());
       }
 
-
+      
       var currQuestions = questions[0].CountValue + 1;
 
       req.body.questionId = "IARE" + currQuestions.toString();
@@ -380,9 +395,14 @@ exports.createTutorials = (req, res) => {
         questionHiddenOutput2: req.body.questionHiddenOutput2,
         questionHiddenOutput3: req.body.questionHiddenOutput3,
         questionExplanation: req.body.questionExplanation,
+        code_py: req.body.code_py,
+        code_java: req.body.code_java,
+        code_c: req.body.code_c,
+        code_cpp: req.body.code_cpp,
         company: companies,
         topic: topics,
-        difficulty: isTopicBased ? "topics" : req.body.difficulty,
+        difficulty: req.body.difficultyL,
+        estimateTime: req.body.estimateTime,
         author: isTopicBased ? "" : req.body.author,
         editorial: isTopicBased ? "" : req.body.editorial,
         language: isTopicBased ? "" : req.body.language,
@@ -469,6 +489,10 @@ exports.createTutorials = (req, res) => {
         questionHiddenOutput2: req.body.questionHiddenOutput2,
         questionHiddenOutput3: req.body.questionHiddenOutput3,
         questionExplanation: req.body.questionExplanation,
+        code_py: req.body.code_py,
+        code_java: req.body.code_java,
+        code_c: req.body.code_c,
+        code_cpp: req.body.code_cpp,
         company: companies,
         topic: topics,
         difficulty: isTopicBased ? "topics" : req.body.difficulty,
@@ -559,9 +583,14 @@ exports.createTutorials = (req, res) => {
         questionHiddenOutput2: req.body.questionHiddenOutput2,
         questionHiddenOutput3: req.body.questionHiddenOutput3,
         questionExplanation: req.body.questionExplanation,
+        code_py: req.body.code_py,
+        code_java: req.body.code_java,
+        code_c: req.body.code_c,
+        code_cpp: req.body.code_cpp,
         company: companies,
         topic: topics,
-        difficulty: isTopicBased ? "topics" : req.body.difficulty,
+        difficulty: req.body.difficultyL,
+        estimateTime: req.body.estimateTime,
         author: isTopicBased ? "" : req.body.author,
         editorial: isTopicBased ? "" : req.body.editorial,
         language: isTopicBased ? "" : req.body.language,
@@ -650,6 +679,10 @@ exports.createTutorialsExcel = (req, res) => {
                 questionHiddenOutput2: data[i].questionHiddenOutput2,
                 questionHiddenOutput3: data[i].questionHiddenOutput3,
                 questionExplanation: data[i].questionExplanation,
+                code_py: req.body.code_py,
+                code_java: req.body.code_java,
+                code_c: req.body.code_c,
+                code_cpp: req.body.code_cpp,
                 company: companies,
                 topic: topics,
                 difficulty: isTopicBased ? "topics" : data[i].level,
@@ -858,11 +891,17 @@ exports.update = (req, res) => {
                   questionHiddenOutput2: req.body.questionHiddenOutput2,
                   questionHiddenOutput3: req.body.questionHiddenOutput3,
                   questionExplanation: req.body.questionExplanation,
+                  code_py: req.body.code_py,
+                  code_java: req.body.code_java,
+                  code_c: req.body.code_c,
+                  code_cpp: req.body.code_cpp,
                   author: req.body.author,
                   editorial: req.body.editorial,
                   difficulty: req.body.difficulty,
+                  estimateTime: req.body.estimateTime,
                   language: req.body.language,
                   conceptLevel: req.body.conceptLevel,
+                  tags: req.body.tags.split(", ")
                 },
               },
               { new: true }
@@ -921,11 +960,17 @@ exports.update = (req, res) => {
               questionHiddenOutput2: req.body.questionHiddenOutput2,
               questionHiddenOutput3: req.body.questionHiddenOutput3,
               questionExplanation: req.body.questionExplanation,
+              code_py: req.body.code_py,
+              code_java: req.body.code_java,
+              code_c: req.body.code_c,
+              code_cpp: req.body.code_cpp,
               author: req.body.author,
               editorial: req.body.editorial,
               difficulty: req.body.difficulty,
+              estimateTime: req.body.estimateTime,
               language: req.body.language,
               conceptLevel: req.body.conceptLevel,
+              tags: req.body.tags.split(", ")
             },
           },
           { new: true }
@@ -1263,3 +1308,15 @@ exports.merge = (req, res) => {
       });
     });
 };
+
+
+exports.getNumberOfQuestionsInContest = async (contestId) => {
+  let contest = await Contest.findOne({ contestId: contestId })
+  if (contest.multiset === true){
+    return contest.sets.length
+  }
+  else{
+    let questions = await Question.find({ contestId: contestId })
+    return questions.length
+  }
+}

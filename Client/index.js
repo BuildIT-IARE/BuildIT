@@ -1454,7 +1454,7 @@ app.get("/complaints_public", async (req, res) => {
     json: true,
   };
   request(options, function (err, response, body) {
-    body.url = clientRoute;
+    body.url = process.env.clientAddress;
     body.serverurl = serverRoute;
     res.render("complains_public", { data: body });
   });
@@ -1624,7 +1624,8 @@ app.post("/admin/results/contest", async (req, res) => {
     };
     res.render("results", {
       data: url,
-      datap: bodyparticipation,
+      datap: bodyparticipation.participation,
+      questionLen: bodyparticipation.questionLen,
     });
   });
 });
@@ -1794,25 +1795,10 @@ app.get(
       },
       json: true,
     };
-    request(options, function (err, response, bodyparticipation) {
-      let options = {
-        url: serverRoute + "/questions/contests/" + req.params.contestId,
-        method: "get",
-        headers: {
-          authorization: req.cookies.token,
-        },
-        json: true,
-      };
-
-      request(options, function (err, response, bodyquestion) {
-        let url = {
-          url: clientRoute,
-        };
-        res.render("results_public2", {
-          data: url,
-          datap: bodyparticipation,
-          dataq: bodyquestion,
-        });
+    request(options, function (err, response, body) {
+      res.render("results_public2", {
+        datap: body.participation,
+        questionLen: body.questionLen,
       });
     });
   }
@@ -1885,6 +1871,48 @@ app.get("/code365", checkSignIn, async (req, res, next) => {
     res.render("code365", { imgUsername: req.cookies.username, data: body });
   });
 });
+
+app.get("/seepractical", checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/contests/user/" + req.cookies.username.toLowerCase(),
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: false,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.clearCookie("courseId");
+    res.render("SEEPractical", { imgUsername: req.cookies.username, data: body });
+  });
+});
+
+
+// practice 
+
+app.get('/practice', checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/practice",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: false,
+      username: req.cookies.username
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.render("practice", { data: body });
+  });
+})
+
 
 app.get("/contestPassword/:contestId", checkSignIn, async (req, res) => {
   res.render("contestPassword", {
@@ -2030,7 +2058,6 @@ app.get("/contests/:contestId", checkSignIn, async (req, res, next) => {
                 multipleAttempts = false;
               }
               body.contestId = req.params.contestId;
-              console.log(bodytimer);
               res.render("questions", {
                 imgUsername: req.cookies.username,
                 multipleAttempts: multipleAttempts,
@@ -2833,7 +2860,6 @@ app.get(
         } else if (req.params.concept === "fn") {
           body.courseName = body.courseName + " - Functions";
         }
-        console.log(body);
         res.render("displayTutQuestions", {
           imgUsername: req.cookies.username,
           data: body,
@@ -4041,7 +4067,6 @@ app.get('/facultyAdd',  (req,res) => {
   };
 
   request(requestBody, function(err,response, body) {
-    console.log(body)
     if (body.success == false) {
       res.render("error", {
         data: { message: "Unauthorised access" },
@@ -4077,7 +4102,6 @@ app.get('/facultyDelete', (req,res) => {
   };
 
   request(requestBody, function(err,response, body) {
-    console.log(body)
     if (body.success == false) {
       res.render("error", {
         data: { message: "Unauthorised access" },
@@ -4105,7 +4129,6 @@ app.get('/facultyUpdate', (req,res) => {
   };
 
   request(requestBody, function(err,response, body) {
-    console.log(body)
     if (body.success == false) {
       res.render("error", {
         data: { message: "Unauthorised access" },
@@ -4135,7 +4158,6 @@ app.get('/facultyView', async (req,res) => {
   };
 
   request(requestBody, function(err,response, body) {
-    console.log(body)
     if (body.success == false) {
       res.render("error", {
         data: { message: "Unauthorised access" },
@@ -4193,7 +4215,6 @@ app.get('/facultyDashboard', async (req,res) => {
   };
   // console.log(requestBody);
   request(requestBody, function(err, response, body) {
-    console.log(body)
     if(body) {
       res.send(body);
     }
@@ -4250,7 +4271,6 @@ app.post('/facultyDelete', async (req,res) => {
 
 // request update
 app.post('/facultyUpdateMenu', async (req,res) => {
-  console.log(req.body.id);
   let requestBody = {
     body: req.body,
     url: serverRoute + "/facultyDashboard/" + req.body.id,
@@ -4261,7 +4281,6 @@ app.post('/facultyUpdateMenu', async (req,res) => {
     json: true,
   };
   request(requestBody, function(err, response, body) {
-    console.log(body);
     let data = {
       url: clientRoute,
     }
@@ -4289,7 +4308,6 @@ app.post('/facultyUpdateSend', async (req,res) => {
     },
     json: true,
   };
-  console.log(req.body);
   request(requestBody, function(err, response, body) {
     if(body) {
       res.send("item has been updated successfully");
@@ -4297,6 +4315,31 @@ app.post('/facultyUpdateSend', async (req,res) => {
     
   })
 });
+
+app.get("/practice/:id", async (req, res) => {
+  let requestBody = {
+    body: req.body,
+    url: serverRoute + "/practice/" + req.params.id,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(requestBody, function(err, response, body) {
+    if(body) {
+      res.render("questiondesc", {
+        imgUsername: req.cookies.username,
+        data: [body],
+      });
+    }
+    else {
+      res.send('something went wrong')
+    }
+    
+  })
+})
 
 app.get("/sqlEditor/dbQuestionId", async (req, res) => {
   res.render("sqlEditor");

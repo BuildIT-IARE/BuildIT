@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+
+    <!-- Tailwind CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+
+    <!-- Custom scrollbar  -->
+    <style>
+
+	  @import url('../../css/style2.css');
+      #question-container::-webkit-scrollbar {
+        width: 8px;
+      }
+    
+      #question-container::-webkit-scrollbar-track {
+        background-color: #f1f1f1; /* Light gray */
+      }
+    
+      #question-container::-webkit-scrollbar-thumb {
+        background-color: #6e45d4; /* Darker purple */
+        border-radius: 4px;
+        width: 4px; /* Thinner scrollbar */
+      }
+
+      #question-container::-webkit-scrollbar-thumb:hover {
+      background-color: #7058d1; /* Even darker purple on hover */
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="bg-gradient-to-r from-purple-900 to-purple-500">
+      <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between">
+          <div class="flex items-center">
+            <div class="nav-chapter-logo2">
+				<a href="/"><img src="../../images/iare_header_logo.png" alt="iare-logo"></a>
+			  </div>
+          </div>
+          <div class="flex flex-1 justify-center pr-2 ">
+            <a href="/practice" class=" text-white rounded-md px-3 py-2 text-xl font-bold">Practice</a>
+          </div>
+          <div class="flex">
+            <a class="flex hover:bg-purple-600 text-white font-bold p-2 rounded-md" href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+            <p>Go Back</p> </a>         
+          </div>
+        </div>
+        
+      </div>
+    </nav>
+    
+    <div class="grid grid-cols-1 md:grid-cols-4 m-6 mt-4 gap-3">
+      <div class="col-span-full md:col-start-1 md:col-end-2">
+
+        <!-- Difficulty Selection -->
+        <div
+        class="block max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+      >
+        <h5
+          class="mb-1 text-md font-medium tracking-tight text-gray-900 dark:text-white"
+        >
+          Difficulty
+        </h5>
+        <div class="mt-2 flex flex-col gap-2 ">
+          
+          <button
+            class="diff-easy difficulty-btn font-medium text-sm bg-green-100  hover:bg-green-200 text-green-600 px-2 py-2 pl-5 rounded-lg flex-grow flex-shrink-0 flex items-center"
+          >
+            Easy
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="3"
+              stroke="currentColor"
+              class="w-6 h-4 ml-2 hidden"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m4.5 12.75 6 6 9-13.5"
+              />
+            </svg>
+          </button>
+          <button
+            class="diff-med difficulty-btn font-medium text-sm bg-yellow-100 hover:bg-yellow-200 text-yellow-600 px-2 py-2 pl-5 rounded-lg flex-grow flex-shrink-0 flex items-center"
+          >
+            Medium
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="3"
+              stroke="currentColor"
+              class="w-6 h-4 ml-2 hidden"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m4.5 12.75 6 6 9-13.5"
+              />
+            </svg>
+          </button>
+          <button
+            class="diff-hard difficulty-btn font-medium text-sm bg-red-100 hover:bg-red-200 text-red-600 px-2 py-2 pl-5 rounded-lg flex-grow flex-shrink-0 flex items-center"
+          >
+            Hard
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="3"
+              stroke="currentColor"
+              class="w-6 h-4 ml-2 hidden"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m4.5 12.75 6 6 9-13.5"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    
+      <div class=" px-2 pt-2 pb-4 bg-white border border-gray-200 rounded-lg shadow mt-4">
+        <div class="mx-auto w-full max-w-md rounded-2xl bg-white ">
+          <div class="mt-2 mb-0">
+            <a href="" class="bg-purple-300  hover:bg-purple-400 p-2 rounded-md flex justify-center gap-1 random"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672Zm-7.518-.267A8.25 8.25 0 1 1 20.25 10.5M8.288 14.212A5.25 5.25 0 1 1 17.25 10.5" />
+            </svg>
+             Pick Random Question</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      <div class="bg-white  rounded-lg pt-0 p-2 md:col-span-3 col-span-full md:col-start-2 md:col-end-5 rounded">
+        <div class="mx-auto">
+          
+          <div class="grid grid-cols-1">
+            <form class="relative flex items-center">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <svg class="w-6 h-6 text-purple-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                  </svg>
+              </div>
+              <input  id="default-search" class="w-full pl-10 pr-12 px-3 py-3 mr-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-200 " placeholder="Search Questions or Topics" onkeyup="searchQuestion()" onchange="searchQuestion()"/>
+              <button disabled class="mr-2 text-purple-100 absolute right-2.5 bg-purple-700 hover:bg-purple-900 focus:ring-4 focus:outline-none focus:ring-1 focus:ring-purple-100  font-medium rounded-md text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Search
+        
+              </button>
+          </form>
+          </div>
+ 
+          <!-- Question Card -->
+          <div id="question-container" class="flex flex-col mx-auto items-center p-2 mt-2 mr-2 rounded-lg text-center bg-gray-50 overflow-y-auto"  style="max-height: calc(112vh - 150px);">
+            <% data.forEach((question) => { %>
+              <a href="#" class="w-full ">
+				<div class="w-full questionInst transform rounded-2xl p-4 text-left shadow transition-all mb-2 <%= question.status === 'Solved' ? 'hover:bg-green-300 bg-green-200 ' : 'hover:bg-gray-400 bg-gradient-to-r from-gray-100 to-gray-200' %>">
+                <div>
+                  <div class="flex items-center justify-between mx-8">
+                    <h3 class="text-md font-bold leading-6 text-gray-900 "><%= question.questionName %></h3>
+					<div class="mt-2 flex gap-3">
+						<p class="text-sm  font-medium text-gray-500">
+						  Difficulty: <span class="<%= question.difficulty === 'Easy' ? 'text-green-600' : question.difficulty === 'Medium' ? 'text-yellow-500' : 'text-red-600' %>">
+							<%= question.difficulty %>
+						  </span>
+						</p>
+						<p class="flex text-sm text-gray-900 font-medium ">
+						  <span class="align-middle"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mt-0.5 mr-1">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+						  </svg></span>
+						  <%= question.estimateTime %> 
+						</p>
+						<p class="text-sm  font-medium text-gray-500">
+						  Status:  <span class="text-gray-700">
+							<%= question.status %> 
+						  </span>
+						</p>
+					  </div>
+                  </div>
+                </div>
+                <div class="flex justify-between mx-8 mt-2">
+					<div class="mt-2 flex space-x-2 ">
+						<% question.tags.forEach((tag) => { %>
+						  <div class="inline-block px-2 py-1 bg-gray-300 text-sm font-medium text-gray-900 rounded">
+							<%= tag %>
+						  </div>
+						<% }) %>
+					  </div>
+					  <a  href="/practice/<%= question.questionId %>" class="inline-flex justify-center rounded-md border border-transparent bg-purple-200 px-2 py-1 text-sm font-medium text-purple-900 hover:bg-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"><%= question.status === 'Solved' ? "View" : "Solve" %></a>
+				</div>
+                
+              </div>
+			  </a>
+            <% }) %>
+          </div>
+      </div>
+    </div>
+    
+
+    
+  
+    <!-- For the difficulty selection -->
+    <script>
+      
+      const easy = document.getElementsByClassName('diff-easy')[0]
+      const med = document.getElementsByClassName('diff-med')[0]
+      const hard = document.getElementsByClassName('diff-hard')[0]
+
+      const questions = document.getElementsByClassName('questionInst')
+
+      let random = document.getElementsByClassName('random')[0]
+      const randomNo = Math.floor(Math.random() * (questions.length)) + 1;
+      random.setAttribute('href', '/practice/PRACTICE' + randomNo);
+
+      easy.addEventListener("click", () => {
+        if(easy.querySelector("svg").classList.contains('hidden')) {
+          easy.querySelector("svg").classList.remove('hidden')
+          med.querySelector("svg").classList.add('hidden')
+          hard.querySelector("svg").classList.add('hidden')
+
+          Array.from(questions).forEach((question) => {
+            question.classList.remove('hidden')
+          })
+
+          Array.from(questions).forEach((question) => {
+            if (!question.innerHTML.includes("Easy")) {
+              question.classList.add('hidden')
+            }
+          })
+
+        }
+        else {
+          easy.querySelector("svg").classList.add('hidden')
+          Array.from(questions).forEach((question) => {
+            if (!question.innerHTML.includes("Easy")) {
+              question.classList.remove('hidden')
+            }
+          })
+        }
+      })
+
+      med.addEventListener("click", () => {
+        if(med.querySelector("svg").classList.contains('hidden')) {
+          easy.querySelector("svg").classList.add('hidden')
+          med.querySelector("svg").classList.remove('hidden')
+          hard.querySelector("svg").classList.add('hidden')
+
+          Array.from(questions).forEach((question) => {
+            question.classList.remove('hidden')
+          })
+
+          Array.from(questions).forEach((question) => {
+            if (!question.innerHTML.includes("Medium")) {
+              question.classList.add('hidden')
+            }
+          })
+
+        }
+        else {
+          med.querySelector("svg").classList.add('hidden')
+          Array.from(questions).forEach((question) => {
+            if (!question.innerHTML.includes("Medium")) {
+              question.classList.remove('hidden')
+            }
+          })
+          
+        }
+      })
+
+      hard.addEventListener("click", () => {
+        if(hard.querySelector("svg").classList.contains('hidden')) {
+          easy.querySelector("svg").classList.add('hidden')
+          med.querySelector("svg").classList.add('hidden')
+          hard.querySelector("svg").classList.remove('hidden')
+
+          Array.from(questions).forEach((question) => {
+            question.classList.remove('hidden')
+          })
+
+          Array.from(questions).forEach((question) => {
+            if (!question.innerHTML.includes("Hard")) {
+              question.classList.add('hidden')
+            }
+          })
+
+        }
+        else {
+          hard.querySelector("svg").classList.add('hidden')
+
+          Array.from(questions).forEach((question) => {
+            if (!question.innerHTML.includes("Hard")) {
+              question.classList.remove('hidden')
+            }
+          })
+          
+        }
+      })
+
+      const tagSelectors = document.querySelectorAll('tags-select')
+
+      tagSelectors.forEach((tag) => {
+        tag.addEventListener('click', () => {
+          let inp = document.getElementById("default-search")
+          inp += tag.innerHTML.toLowerCase()
+          document.getElementById("default-search").value = inp
+        })
+      })
+
+      function searchQuestion() {
+                let input = document.getElementById("default-search").value.toLowerCase()
+                let elements= document.getElementsByClassName("questionInst");
+               
+
+                for (let i = 0; i < elements.length; i++) {
+                    if(!elements[i].innerHTML.toLowerCase().includes(input)) {
+                        elements[i].classList.add("hidden")
+                    }
+
+                    else {
+                        elements[i].classList.remove("hidden")
+                    }
+    
+                }
+
+                Array.from(questions).forEach((question) => {
+                  if(!question.innerHTML.toLowerCase().includes(input)) {
+                    question.classList.add('hidden')
+                  }
+                  else {
+                    question.classList.remove('hidden')
+                  }
+                })
+            }    
+    </script>
+  </body>
+</html>

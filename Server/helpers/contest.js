@@ -1,14 +1,13 @@
 const axios = require('axios');
+const time = require('./time.js');
 
 let isContestOnGoing = async (contestId, getDurationOfContest, isAdmin) => {
     const durationData = await getDurationOfContest(contestId);
     if (durationData){
-        let today = new Date().setHours(0, 0, 0, 0);
-        let date = new Date(durationData.date).setHours(0, 0, 0, 0);
-        let time_now = new Date().getTime();
-        let start_time = new Date().setHours(durationData.startTime.slice(0, 2), durationData.startTime.slice(2), 0, 0);
-        let end_time = new Date().setHours(durationData.endTime.slice(0, 2), durationData.endTime.slice(2), 0, 0);
-        if ((today === date && time_now >= start_time && time_now <= end_time) || isAdmin) {
+        let now = time.now();
+        let start = time.parseDateTime(durationData.date, durationData.startTime);
+        let end = time.parseDateTime(durationData.date, durationData.endTime);
+        if ((now >= start && now <= end) || isAdmin) {
             return [true, durationData.mcq];
         }
         else{
@@ -29,7 +28,9 @@ let checkTestcase = async (testcase, postUrl, source_code, language_id, apiAddre
         expected_output: testcase.output,
     });
     testcase_token = testcase_token.data.token;
+    // console.log(testcase_token);
     let result = await axios.get(apiAddress + "/submissions/" + testcase_token);
+    // console.log(result.data);
     if (result.data.status.id === 3){
         return {
             points: 1,

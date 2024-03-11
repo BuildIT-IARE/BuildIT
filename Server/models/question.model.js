@@ -23,15 +23,21 @@ var questionSchema = new Schema({
   questionHiddenOutput2: String,
   questionHiddenOutput3: String,
   questionExplanation: String,
+  code_py: String,
+  code_java: String,
+  code_c: String,
+  code_cpp: String,
   author: String,
   editorial: String,
   difficulty: String,
+  estimateTime: String,
   language: String,
   courseId: Array,
   conceptLevel: String,
   company: Array,
   topic: Array,
   CountValue:Number,
+  tags: Array,
 });
 
 module.exports = mongoose.model("Question", questionSchema);

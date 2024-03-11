@@ -43,9 +43,17 @@
 				<input name="contestId" type="text"/>
 				<p class="comments">Description</p>
 				<textarea name="questionDescriptionText" rows="30"></textarea>
-				<p class="comments">Input</p>
+				<p class="comments">Sample Python Code (Please Enter Well Formated Code)</p>
+				<textarea name="code_py" rows="30"></textarea>
+				<p class="comments">Sample C++ Code (Please Enter Well Formated Code)</p>
+				<textarea name="code_cpp" rows="30"></textarea>
+				<p class="comments">Sample Java Code (Please Enter Well Formated Code)</p>
+				<textarea name="code_java" rows="30"></textarea>
+				<p class="comments">Sample C Code (Please Enter Well Formated Code)</p>
+				<textarea name="code_c" rows="30"></textarea>
+				<p class="comments">Input Format</p>
 				<textarea name="questionInputText" rows="10"></textarea>
-				<p class="comments">Output</p>
+				<p class="comments">Output Format</p>
 				<textarea name="questionOutputText" rows="10"></textarea>
 				<p class="comments">Example Input 1:</p>
 				<textarea name="questionExampleInput1" rows="10"></textarea>
@@ -81,6 +89,11 @@
 				<input type="radio" name="difficulty" value="Easy"> Easy </input>
 				<input type="radio" name="difficulty" value="Medium"> Medium </input>
 				<input type="radio" name="difficulty" value="Hard"> Hard </input> 
+				<p class="comments">Estimated Time to solve questions (in MM mins)</p>
+				<textarea name="estimateTime" id="estimateTime"  rows="10"></textarea>
+				<p class="comments">Add relevant topic tags to the question</p>
+				<textarea name="tags" id="tags" cols="30" rows="10"></textarea>
+				
 				<hr>
 				<textarea type="hidden" name="token" id="token" value="<%= token %>" style="display: none;"></textarea>
 

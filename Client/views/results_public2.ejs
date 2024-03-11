@@ -127,22 +127,42 @@
         </select>
       </div>
       <table class="w3-table w3-striped">
-        <tr>
-          <th>S.No</th>
-          <th>Roll No</th>
-          <th>Total Score</th>
-          <th>Branch</th>
-        </tr>
+        <thead>
+          <tr>
+            <th rowspan="2">S.No</th>
+            <th rowspan="2">Roll No</th>
+            <th rowspan="2">Student Name</th>
+            <th colspan="<%= questionLen %>" >Question Scores</th>
+            <th rowspan="2">Total Score</th>
+            <th rowspan="2">Branch</th>
+          </tr>
+          <tr>
+            <% for(let i=0; i < questionLen; i++){ %>
+            <th>Question <%= i+1 %></th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
         <% for(let i=0; i < datap.length; i++){ %>
         <tr branch="<%= datap[i].branch.toLowerCase() %>" class="leaderboardEntry">
           <td><%= i+1 %></td>
           <td><%= datap[i].username %></td>
-          <% let k = 0; %> <% if (datap[i].submissionResults.length !== 0){ %>
-          <% for (let j = 0; j < datap[i].submissionResults.length; j++ ){ %> <%
-          k = k + datap[i].submissionResults[j].score %> <% } %> <% } %>
+          <td><%= datap[i].name %></td>
 
-          <td><%= k %></td>
-          <!-- <td><%= datap[i].branch %></td> -->
+          <% for(let j=0; j < questionLen; j++){ %>
+          <td><%= datap[i].submissionResults[j] ? datap[i].submissionResults[j].score : 0 %></td>
+          <% } %>
+        
+          
+          <% var totalScore = 0; %>
+          <% if (datap[i].submissionResults.length !== 0){ %>
+          <% for (let j = 0;j < datap[i].submissionResults.length ; j++ ){ %>
+          <% totalScore += datap[i].submissionResults[j] ? datap[i].submissionResults[j].score : 0 %>
+          <% } %>
+          <% } %>
+          
+          <td><%= totalScore %></td>
+
           <td><% if (datap[i].branch === 'cse') { %>
             <%= "CSE" %>
           <% } %>
@@ -176,9 +196,14 @@
           <%  if (datap[i].branch === 'mech') { %>
             <%= "MECH" %>
           <% } %>
+
+          <% if (!datap[i].branch) { %>
+            <%= "Not available" %>
+          <% } %>
           </td>
         </tr>
         <% } %>
+      </tbody>
       </table>
       <br />
       <br />

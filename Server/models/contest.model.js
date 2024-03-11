@@ -22,6 +22,10 @@ var contestSchema = new Schema({
   coding: { type: Boolean, default: false },
   contestPassword: String,
   multipleAttempts: { type: Boolean, default: false },
+  evaluation: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = mongoose.model("Contest", contestSchema);

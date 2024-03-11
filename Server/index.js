@@ -17,19 +17,19 @@ const SkillUp = require("./controllers/skillUp.controller.js");
 dotenv.config({ path: "../Server/util/config.env" });
 
 let middleware = require("./util/middleware.js");
-let helper = require("./util/helpers.js");
+let helper = require("./helpers/contest.js")
 
 const User = require("./models/user.model");
 const Participation = require("./models/participation.model").Participation;
 const McqParticipation =
   require("./models/participation.model").McqParticipation;
 const ParticipationTut = require("./models/participationTut.model");
+const Submission = require("./models/submission.model");
 
 // API Address
 const localServer = process.env.localServer;
 const port = process.env.PORT || 5000;
 let apiAddress = process.env.apiAddress;
-let timeOut = 3000;
 
 if (localServer) {
   apiAddress = process.env.localAPI;
@@ -151,6 +151,8 @@ require("./routes/visitorAccess.route")(app);
 
 require("./routes/facultyDetails.route.js")(app);
 
+require("./routes/practice.route.js")(app);
+
 
 
 // Examples
@@ -161,81 +163,17 @@ app.get("/testGet", async (req, res) => {
 
 app.post("/testPost", async (req, res) => {
   console.log("request body");
-  console.log(req.body);
+   (req.body);
   res.json(req.body);
 });
 
 // Main Routes
 app.post("/isOngoing", middleware.checkToken, async (req, res) => {
-  contests.getDuration(req, (err, duration) => {
-    if (err) {
-      res.status(404).send({ message: err });
-    }
-
-    let date = new Date();
-    let today = date.toLocaleDateString();
-    if (today.length === 9) {
-      today = "0" + today;
-    }
-
-    // let day = today.slice(0, 2);
-
-    // let month = today.slice(3, 5);
-
-    // let year = today.slice(6, 10);
-
-    let day = date.getDate();
-    if (day < 10) {
-      day = "0" + String(day);
-    }
-    let month = date.getMonth() + 1;
-    if (month < 10) {
-      month = "0" + String(month);
-    }
-    let year = date.getFullYear();
-
-    if (!localServer) {
-      today = `${year}-${day}-${month}`;
-    } else {
-      today = `${year}-${month}-${day}`;
-    }
-    let minutes = date.getMinutes();
-    let hours = date.getHours();
-    minutes = minutes + 30;
-    hours = hours + 5;
-    if (hours < 10) {
-      hours = "0" + String(hours);
-    }
-
-    if (minutes < 10) {
-      minutes = "0" + String(minutes);
-    }
-
-    let currentTime = `${hours}${minutes}`;
-    currentTime = eval(currentTime);
-    currentTime = moment().tz("Asia/Kolkata").format("HHmm");
-    // console.log(currentTime);
-    if (
-      duration.date.toString() === today &&
-      duration.startTime.toString() < currentTime &&
-      duration.endTime.toString() > currentTime
-    ) {
-      accepted = true;
-    } else {
-      accepted = false;
-    }
-    // accepted = true;
-    if (req.decoded.admin) {
-      accepted = true;
-    }
-    if (moment(today).isAfter(duration.date.toString())) {
-      accepted = true;
-    }
-    res.send({
-      success: accepted,
-      message: "Contest window isn't open!",
-    });
-  });
+  const [isOngoing, mcq] = await helper.isContestOnGoing(req.body.contestId, contests.getDurationOfContest, req.decoded.admin);
+  res.send({
+    success: isOngoing,
+    message: "Contest window isn't open!",
+  })
 });
 
 app.post("/validateMcq", middleware.checkToken, async (req, res) => {
@@ -350,21 +288,76 @@ app.post("/validateMcq", middleware.checkToken, async (req, res) => {
   }
 });
 
+
+/*
+* docstring - validate submission
+* process 
+* 1. checks if logged in; if not returns error
+* 2. checks if question to be evaluated is from practice module
+*   - seperation of post url based on local server or cloud instance
+*   - evaulate test cases and make submission to db
+* 3. checks if submission belongs to a contest
+*   - seperation of post url based on local server or cloud instance
+*   - if participant still has time left in contest then evaluate test cases and make submission to db
+* 4. if the submission is not a contest then it is tutorial (most likely will be depreceated)
+*   - evaluate for tutorials based on programming language
+*/
+
+
 app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
-  // let options11 = {
-  //   method: "get",
-  //   json: true,
-  //   url: process.env.clientAddress + "/userSession/" + req.body.user,
-  // };
-  // request(options11, function (err, response, body) {
-  //   if (!body.status || err)
-  //     console.log("Error in getting user session status");
-  //     return res.status(404).send({ message: "user logged out!" });
-  // });
   if (!helper.checkUserLoggedIn(req.body.user, process.env.clientAddress)) {
     res.status(404).send({ message: "user logged out!" });
   }
-  if (req.body.contestId.length !== 0) {
+
+  if (req.body.questionId.startsWith('PRACTICE')) {
+
+    if (localServer) {
+      postUrl = apiAddress + "/submissions/?wait=true";
+    } else {
+      postUrl = apiAddress + "/submissions";
+    }
+
+    const testcases = await questions.getTestCasesOfQuestion(req.body.questionId);
+
+    const tc1 = await helper.checkTestcase(testcases.case1, postUrl, req.body.source_code, req.body.language_id, apiAddress);
+    const tc2 = await helper.checkTestcase(testcases.case2, postUrl, req.body.source_code, req.body.language_id, apiAddress);
+    const tc3 = await helper.checkTestcase(testcases.case3, postUrl, req.body.source_code, req.body.language_id, apiAddress);
+    let score = tc1.points + tc2.points + tc3.points;
+    score = score * 25
+    if (score == 75){
+      score = 100;
+    }
+    const result = {
+      difficulty: testcases.difficulty,
+      language: testcases.language,
+      languageId: req.body.language_id,
+      questionId: req.body.questionId,
+      username: req.decoded.username,
+      sourceCode: req.body.source_code,
+      submissionToken: [tc1.token, tc2.token, tc3.token],
+      result: [tc1.description, tc2.description, tc3.description],
+      score: score,
+    };
+
+    
+    submissions.create(
+      req,
+      result,
+      (err, sub) => {
+        if (err) {
+          res
+            .status(404)
+            .send({ message: err });
+        }
+        res.send(sub);
+      }
+    );
+
+ 
+
+
+  }
+  else if (req.body.contestId.length !== 0) {
     const [isOngoing, mcq] = await helper.isContestOnGoing(req.body.contestId, contests.getDurationOfContest, req.decoded.admin);
     if (isOngoing){
       const testcases = await questions.getTestCasesOfQuestion(req.body.questionId);
@@ -424,7 +417,10 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
     else{
       res.status(403).send({ message: "The contest window is not open" });
     }
-  } else {
+  } 
+  
+ 
+  else {
     // Course Validation
     const course = await courses.findCourseLanguage(req.body.courseId);
     if (!course) {
@@ -738,6 +734,37 @@ app.get("/getSolvedCount", middleware.checkTokenAdmin, async (req, res) => {
   });
 });
 
+
+app.get("/api/submission/:contestId/:username", async (req, res) => {
+  let contestId = req.params.contestId;
+  let username = req.params.username.toLowerCase();
+  let participation = await Participation.findOne({ participationId: username + contestId });
+  if (!participation){
+    res.send({
+      message: "No submission found"
+    });
+  }
+  else{
+    let questions = participation.submissionResults.map(submission => submission.questionId);
+    let submissionsCodes = []
+    for (question of questions){
+      let submissions = await Submission.find({ username: username, questionId: question });
+      submission = submissions.sort((a, b) => b.score - a.score)[0];
+      if (!submission){
+        continue;
+      }
+      submissionsCodes.push({
+        questionId: question,
+        sourceCode: submission.sourceCode,
+        score: submission.score,
+        testcaseResults: submission.result
+      })
+    }
+    res.send({
+      submissionsCodes
+    });
+  }
+})
 
 
 
