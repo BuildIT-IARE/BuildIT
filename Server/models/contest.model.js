@@ -13,6 +13,10 @@ var contestSchema = new Schema({
   multiset: { type: Boolean, default: false },
   sets: Array,
   mcq: { type: Boolean, default: false },
+  normalquiz:{
+    type: Boolean,
+    default: false
+  },
   usernames: [String],
   sections: [String],
   coding: { type: Boolean, default: false },
