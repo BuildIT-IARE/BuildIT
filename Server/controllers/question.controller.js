@@ -356,7 +356,7 @@ exports.createTutorials = (req, res) => {
           .map((item) => item.trim());
       }
 
-
+      
       var currQuestions = questions[0].CountValue + 1;
 
       req.body.questionId = "IARE" + currQuestions.toString();
@@ -898,8 +898,10 @@ exports.update = (req, res) => {
                   author: req.body.author,
                   editorial: req.body.editorial,
                   difficulty: req.body.difficulty,
+                  estimateTime: req.body.estimateTime,
                   language: req.body.language,
                   conceptLevel: req.body.conceptLevel,
+                  tags: req.body.tags.split(", ")
                 },
               },
               { new: true }
@@ -965,8 +967,10 @@ exports.update = (req, res) => {
               author: req.body.author,
               editorial: req.body.editorial,
               difficulty: req.body.difficulty,
+              estimateTime: req.body.estimateTime,
               language: req.body.language,
               conceptLevel: req.body.conceptLevel,
+              tags: req.body.tags.split(", ")
             },
           },
           { new: true }
