@@ -103,7 +103,7 @@
           <input type="radio" name="difficulty" value="Medium" <%= (data.difficulty) === 'Medium' ? 'checked' : "" %> > Medium </input>
           <input type="radio" name="difficulty" value="Hard" <%= (data.difficulty) === 'Hard' ? 'checked' : "" %> > Hard </input>
           <hr />
-          <p class="comments">Estimated Time to solve questions (in HH:MM)</p>
+          <p class="comments">Estimated Time to solve questions (in MM mins)</p>
           <textarea name="estimateTime" id="estimateTime" rows="10"><%= data.estimateTime %></textarea>
           <p class="comments">Question Tags</p>
           <textarea name="tags" id="tags" rows="10"><%= data.tags.slice(0, -1).join(", ") + ", " + data.tags[data.tags.length - 1] %></textarea>
