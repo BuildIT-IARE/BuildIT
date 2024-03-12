@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+  <meta charset="utf-8" />
+  <title>BuildIT Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+  <!-- Main Stylesheet -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!--Favicon-->
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <style>
+    /* Additional CSS */
+    .card {
+      background-color: #e6e6e7;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+    }
+    .btn {
+      padding: 5px 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <%- include ("../views/partials/header2") -%>
+  <!-- page title -->
+  <section class="page-title bg-primary position-relative text-center">
+    <div class="container">
+      <h1 class="text-white font-tertiary">PAT ASSIGNMENTS</h1>
+    </div>
+  </section>
+  <!-- /page title -->
+  <!-- blog -->
+  <section class="section">
+    <div class="container">
+      <h2 class="font-tertiary mb-4 text-center" style="color: green">Today Quiz</h2>
+      <div class="row justify-content-center">
+        <% for(let i = data.length-1; i >= 0; i--) { %>
+          <% if (data[i].contestDate === new Date().toISOString().slice(0,10)) { %>
+            <div class="col-lg-4 col-sm-6 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h4 class="card-title"><a class="text-dark" href="/qualifier_test/<%= data[i].contestId %>"><%= data[i].contestName %></a></h4>
+                  <p><b>Duration:</b> <%= data[i].contestDuration %> Mins</p>
+                  <p><b>Date:</b> <%= data[i].contestDate %></p>
+                  <p><b>Timing:</b> <%= data[i].contestStartTime %> to <%= data[i].contestEndTime %></p>
+                  <a href="/qualifier_test/<%= data[i].contestId %>" class="btn btn-primary btn-block">Practice</a>
+                </div>
+              </div>
+            </div>
+          <% } %>
+        <% } %>
+      </div>
+    </div>
+    <div class="container mt-5">
+      <h2 class="font-tertiary mb-4 text-center" style="color: grey">Past Quizes</h2>
+      <div class="row justify-content-center">
+        <% for(let i = data.length-1; i >= 0; i--) { %>
+          <% if (data[i].contestDate < new Date().toISOString().slice(0,10)) { %>
+            <div class="col-lg-4 col-sm-6 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h4 class="card-title"><a class="text-dark" href="/qualifier_test/<%= data[i].contestId %>"><%= data[i].contestName %></a></h4>
+                  <p><b>Duration:</b> <%= data[i].contestDuration %> Mins</p>
+                  <p><b>Date:</b> <%= data[i].contestDate %></p>
+                  <p><b>Timing:</b> <%= data[i].contestStartTime %> to <%= data[i].contestEndTime %></p>
+                  <a href="/qualifier_test/<%= data[i].contestId %>" class="btn btn-primary btn-block">Practice</a>
+                  <a href="/qualifier_tests/leaderboard/<%= data[i].contestId %>" class="btn btn-secondary btn-block">Leader Board</a>
+                </div>
+              </div>
+            </div>
+          <% } %>
+        <% } %>
+      </div>
+    </div>
+  </section>
+  <script>
+    function getCookie(name) {
+      var dc = document.cookie;
+      var prefix = name + "=";
+      var begin = dc.indexOf("; " + prefix);
+      if (begin == -1) {
+        begin = dc.indexOf(prefix);
+        if (begin != 0) return null;
+      } else {
+        begin += 2;
+        var end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+          end = dc.length;
+        }
+      }
+      return decodeURI(dc.substring(begin + prefix.length, end));
+    }
+    function doSomething() {
+      var myCookie = getCookie("token");
+      if (myCookie == null) {
+        console.log("came");
+        document.getElementById("login").innerHTML = "Login to view contests";
+      }
+    }
+    doSomething();
+  </script>
+  <!-- /footer -->
+  <%- include("../views/partials/aboutfooter") %>
+  <!-- jQuery -->
+  <script src="plugins/jQuery/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="plugins/bootstrap/bootstrap.min.js"></script>
+  <!-- slick slider -->
+  <script src="plugins/slick/slick.min.js"></script>
+  <!-- filter -->
+  <script src="plugins/shuffle/shuffle.min.js"></script>
+  <!-- Main Script -->
+  <script src="js/script.js"></script>
+</body>
+</html>

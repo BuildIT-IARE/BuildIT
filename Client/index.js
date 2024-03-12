@@ -15,6 +15,8 @@ const { cookie } = require("request");
 const { response } = require("express");
 const e = require("express");
 
+const pat_rolls =  require("./patrolls.js");
+
 // Load config
 dotenv.config({ path: "../Server/util/config.env" });
 
@@ -2103,7 +2105,7 @@ app.post("/endContest/:contestId", async (req, res) => {
 
 app.get("/qualifier_tests", checkSignIn, async (req, res, next) => {
   let options = {
-    url: serverRoute + "/contests",
+    url: serverRoute + "/qualContests",
     method: "get",
     headers: {
       authorization: req.cookies.token,
@@ -4349,6 +4351,74 @@ app.get("/dbmsChallenges", async (req, res) => {
 
 app.get("/dbmsChallenges/sessionId", async (req, res) => {
   res.render("dbmsSessionChallenges");
+});
+
+app.get("/admin/add/quiz", async (req, res) => {
+  let options = {
+    url: serverRoute + "/isAdmin",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    let url = {
+      url: clientRoute,
+      serverurl: serverRoute,
+    };
+    if (body.success) {
+      res.render("add_quiz", { data: url, token: req.cookies.token });
+    } else {
+      body.message = "Unauthorized access";
+      res.render("error", {
+        data: body,
+        imgUsername: req.cookies.username,
+      });
+    }
+  });
+});
+
+
+app.get("/pat", checkSignIn, async (req, res, next) => {
+
+
+  let patusername = req.cookies.username;
+
+  patusername = patusername.toUpperCase().trim();
+  
+  
+  if (!pat_rolls.includes(patusername)) {
+      
+    return res.render("error", {
+      data:{
+        message: "You don't have access to  this Assignments"
+      },
+      imgUsername: req.cookies.username,
+    });
+  }
+
+
+  let options = {
+    url: serverRoute + "/normalquiz",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: true,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.clearCookie("courseId");
+    res.render("pat", {
+      imgUsername: req.cookies.username,
+      data: body,
+    });
+  });
 });
 
 app.get("*", async (req, res) => {
