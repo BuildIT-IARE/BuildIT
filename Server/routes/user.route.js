@@ -9,6 +9,9 @@ module.exports = (app) => {
   // Retrieve all users
   app.get("/admin/users", middleware.checkTokenAdmin, users.findAll);
 
+  // Retrieve all PAT Users
+  app.get("/admin/pat/users", middleware.checkTokenAdmin, users.findPatUsers);
+
   // Retrieve a single user with userId
   app.get("/admin/users/:username", middleware.checkTokenAdmin, users.findOne);
 
