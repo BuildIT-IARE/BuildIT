@@ -1913,6 +1913,29 @@ app.get("/seepractical", checkSignIn, async (req, res, next) => {
   });
 });
 
+
+// practice 
+
+app.get('/practice', checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/practice",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: false,
+      username: req.cookies.username
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.render("practice", { data: body });
+  });
+})
+
+
 app.get("/contestPassword/:contestId", checkSignIn, async (req, res) => {
   res.render("contestPassword", {
     imgUsername: req.cookies.username,
@@ -4314,6 +4337,31 @@ app.post('/facultyUpdateSend', async (req,res) => {
     
   })
 });
+
+app.get("/practice/:id", async (req, res) => {
+  let requestBody = {
+    body: req.body,
+    url: serverRoute + "/practice/" + req.params.id,
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(requestBody, function(err, response, body) {
+    if(body) {
+      res.render("questiondesc", {
+        imgUsername: req.cookies.username,
+        data: [body],
+      });
+    }
+    else {
+      res.send('something went wrong')
+    }
+    
+  })
+})
 
 app.get("/sqlEditor/dbQuestionId", async (req, res) => {
   res.render("sqlEditor");
