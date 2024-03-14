@@ -981,3 +981,26 @@ exports.makeVerify = (req, res) => {
       });
     });
 };
+
+// Find Only Pat Users.
+exports.findPatUsers = async (req, res) => {
+  try{
+    let users = await User.find({$or: [{ pat: 'SkillBridge' }, { pat: 'SkillUp' }]});
+    let batches = await User.distinct('batch');
+    let pat = await User.distinct('pat');
+    let pat_batch = await User.distinct('pat_batch');
+    res.send({
+      success: true,
+      users: users,
+      batches: batches,
+      pat: pat,
+      pat_batches: pat_batch
+    });
+  }
+  catch (err){
+    res.send({
+      success: false,
+      message: "Some error occurred"
+    })
+  }
+}

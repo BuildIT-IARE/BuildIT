@@ -1872,6 +1872,30 @@ app.get("/code365", checkSignIn, async (req, res, next) => {
   });
 });
 
+
+app.get("/assessments", checkSignIn, async (req, res, next) => {
+  res.render("assessments", { imgUsername: req.cookies.username });
+})
+
+app.get("/admin/patdata", async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/admin/pat/users",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+  request(options, function (err, response, body) {
+    if (body.success) {
+      res.render("patusers", { data: { url: clientRoute, serverurl: serverRoute}, users: body.users, batches: body.batches, pat: body.pat, pat_batches: body.pat_batches });
+    }
+    else{
+      res.render("error", { data: body, imgUsername: req.cookies.username });
+    }
+  });
+})
+
 app.get("/seepractical", checkSignIn, async (req, res, next) => {
   let options = {
     url: serverRoute + "/contests/user/" + req.cookies.username.toLowerCase(),

@@ -35,6 +35,13 @@ var userSchema = new Schema({
   },
   admin: String,
   branch: String,
+  batch: String,
+  pat: {
+    type: String,
+    enum: ["Not Assigned", "SkillBridge", "SkillUp"],
+    default: "Not Assigned"
+  },
+  pat_batch: String,
   totalScore: {
     type: Number,
     default: 0
