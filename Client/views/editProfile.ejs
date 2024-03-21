@@ -943,12 +943,8 @@
               <div class="d1-val"><%= "0"+partCount.length%></div>
               <div class="d1-courses">
                 <% for(var i=0;i<partCount.length;i++){ %>
-                  <% if(partCount[i]=="IARE_EPSL") {%>
                     <span><%= partCount[i]  %></span>
-
-                  <% } else {%>
-                  <span><%= partCount[i] %></span>
-                <%}}%>
+                <%}%>
               </div>
               <a href="/tutorials" class="bottom-link" id="b1">Checkout all the courses</a>
             </div>

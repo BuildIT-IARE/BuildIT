@@ -315,6 +315,12 @@ exports.findOne = (req, res) => {
     resumeId: req.params.username,
   })
     .then((resume) => {
+      if (!resume) {
+        return res.status(200).send({
+          success: false,
+          message: "Resume not found with id " + req.params.username,
+        });
+      }
       if (resume._doc.updatedAt == undefined) {
         resume._doc.updatedAt = resume._id.getTimestamp();
       }

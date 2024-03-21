@@ -17,6 +17,8 @@ const e = require("express");
 
 const pat_rolls =  require("./patrolls.js");
 
+const axios = require("axios");
+
 // Load config
 dotenv.config({ path: "../Server/util/config.env" });
 
@@ -317,226 +319,43 @@ app.get("/admin/addUser", async (req, res) => {
   });
 });
 
-app.get("/profile", checkSignIn, async (req, res, next) => {
-  let options = {
-    url: serverRoute + "/users/" + req.cookies.username.toLowerCase(),
-    method: "get",
-    headers: {
-      authorization: req.cookies.token,
-    },
-    json: true,
-  };
-  request(options, function (err, response, body) {
-    body.branchCaps = body.branch.toUpperCase();
-    let testUrl = `https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/${req.cookies.username.toUpperCase()}/${req.cookies.username.toUpperCase()}.jpg`;
-    let options = {
-      url: serverRoute + "/tparticipations/findUserCourses",
-      method: "get",
-      headers: {
-        authorization: req.cookies.token,
-      },
-      body: {
-        username: req.cookies.username.toLowerCase(),
-      },
-      json: true,
-    };
-    request(options, function (err, response, body2) {
-      let partCount = [];
-      if (body2.success) {
-        partCount = body2.data;
-      }
-      let options = {
-        url: serverRoute + "/questions/courses/" + "IARE_PY",
-        method: "get",
-        headers: {
-          authorization: req.cookies.token,
-        },
-        json: true,
-      };
-      // Get questions for contest
-      request(options, function (err, response, body3) {
-        let options3 = {
-          url: serverRoute + "/tparticipations/" + "IARE_PY",
-          method: "get",
-          headers: {
-            authorization: req.cookies.token,
-          },
-          json: true,
-        };
-        
-        let options = {
-          url: serverRoute + "/questions/courses/" + "IARE_EPSL",
-          method: "get",
-          headers: {
-            authorization: req.cookies.token,
-          },
-          json: true,
-        };
-      
-        request(options, function (err, response, body9) {
-          let options9 = {
-            url: serverRoute + "/tparticipations/" + "IARE_EPSL",
-            method: "get",
-            headers: {
-              authorization: req.cookies.token,
-            },
-            json: true,
-          };
-            request(options9, function (err, response, bodytimer) {
-              bodytimer = bodytimer[0];
-              function countUniqueElements(arr) {
-                const uniqueSet = new Set(arr);
-                return uniqueSet.size;
-              }
-              const uniqueCount = countUniqueElements(bodytimer.practiceSolved);
-         
-          
-              let options = {
-                url: serverRoute + "/questions/courses/" + "IARE_JL",
-                method: "get",
-                headers: {
-                  authorization: req.cookies.token,
-                },
-                json: true,
-              };
-            
-              request(options, function (err, response, body10) {
-                let options10 = {
-                  url: serverRoute + "/tparticipations/" + "IARE_JL",
-                  method: "get",
-                  headers: {
-                    authorization: req.cookies.token,
-                  },
-                  json: true,
-                };
-                  request(options10, function (err, response, bodytimer) {
-                    bodytimer = bodytimer[0];
-                    function countUniqueElements1(arr) {
-                      const uniqueSet = new Set(arr);
-                      return uniqueSet.size;
-                    }
-                    const uniqueCount1 = countUniqueElements1(bodytimer.practiceSolved);
-        // get participation details
-        request(options3, function (err, response, bodytimer) {
-          bodytimer = bodytimer[0];
-          let totalSolEasy = 0;
-          let totalSolMedium = 0;
-          let totalSolHard = 0;
-          let totalSolContest = 0;
-          let eCount = 0;
-          let mCount = 0;
-          let hCount = 0;
-          let cCount = 0;
-          if (bodytimer) {
-            for (let i = 0; i < body3.length; i++) {
-              if (body3[i].difficulty === "level_0") {
-                eCount++;
-              } else if (body3[i].difficulty === "level_1") {
-                mCount++;
-              } else if (body3[i].difficulty === "level_2") {
-                hCount++;
-              } else if (body3[i].difficulty === "contest") {
-                cCount++;
-              }
-            }
+app.get('/profile', checkSignIn, async (req, res, next) => {
+  let user = await axios.get(`${serverRoute}/users/${req.cookies.username.toLowerCase()}`, { headers: { authorization: req.cookies.token } });
+  let userCourses = await axios.get(`${serverRoute}/tparticipations/findUserCourses`, { headers: { authorization: req.cookies.token }, body: { username: req.cookies.username.toLowerCase() } });
+  let image_url = `https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/${req.cookies.username.toUpperCase()}/${req.cookies.username.toUpperCase()}.jpg`;
+  
+  let partCount = [];
+  partCount = userCourses.data.data
+  
+  let resumeStatus = await axios.get(`${serverRoute}/resume/${req.cookies.username.toLowerCase()}`, { headers: { authorization: req.cookies.token } });
+  let contestCount = await axios.get(`${serverRoute}/findAllContestsUser`, { headers: { authorization: req.cookies.token }, body: { username: req.cookies.username.toLowerCase() } });
+  let skillUp = await axios.get(`${serverRoute}/skillUp`, { headers: { authorization: req.cookies.token }, body: { rollNumber: req.cookies.username.toUpperCase() } });
 
-            totalSolEasy = bodytimer.easySolved.length;
-            totalSolMedium = bodytimer.mediumSolved.length;
-            totalSolHard = bodytimer.hardSolved.length;
-            totalSolContest = bodytimer.contestSolved.length;
-            req.params.courseId = req.params.courseId;
-          } else {
-            eCount = 1;
-            mCount = 1;
-            hCount = 1;
-            cCount = 1;
-          }
-          body3.easyPercentage = Math.ceil((totalSolEasy / eCount) * 100);
-          body3.mediumPercentage = Math.ceil((totalSolMedium / mCount) * 100);
-          body3.hardPercentage = Math.ceil((totalSolHard / hCount) * 100);
-          body3.contestPercentage = Math.ceil((totalSolContest / cCount) * 100);
+  let labCount = await axios.get(`${serverRoute}/tparticipations/IARE_EPSL`, { headers: { authorization: req.cookies.token } });
+  labCount = labCount.data[0];
+  labCount = new Set(labCount.practiceSolved).size;
 
-          let options = {
-            url: serverRoute + "/findAllContestsUser",
-            method: "get",
-            headers: {
-              authorization: req.cookies.token,
-            },
-            body: {
-              username: req.cookies.username.toLowerCase(),
-            },
-            json: true,
-          };
+  let labCount1 = await axios.get(`${serverRoute}/tparticipations/IARE_JL`, { headers: { authorization: req.cookies.token } });
+  labCount1 = labCount1.data[0];
+  labCount1 = new Set(labCount1.practiceSolved).size;
 
-          request(options, function (err, response, body4) {
-            let options = {
-              url:
-                serverRoute + "/resume/" + req.cookies.username.toLowerCase(),
-              method: "get",
-              headers: {
-                authorization: req.cookies.token,
-              },
-              json: true,
-            };
-            request(options, function (err, response, body5) {
-              let options = {
-                url: serverRoute + "/skillUp",
-                method: "get",
-                headers: {
-                  authorization: req.cookies.token,
-                },
-                body: {
-                  rollNumber: req.cookies.username.toUpperCase(),
-                },
-                json: true,
-              };
-              request(options, function (err, response, body6) {
-                urlExists(testUrl, function (err, exists) {
-                  if (exists) {
-                    body.imgUrl = testUrl;
-                    body.serverUrl = serverRoute;
-                    res.render("editProfile", {
-                      data: body,
-                      imgUsername: req.cookies.username,
-                      partCount: partCount,
-                      progress: body3,
-                      contestCount: body4.count,
-                      labCount :uniqueCount,
-                      labCount1 :uniqueCount1,
-                      resumeStatus: body5.success,
-                      skillups: body6,
-                      token: req.cookies.token,
-                      serverUrl: serverRoute,
-                    });
-                  } else {
-                    body.imgUrl = "./images/defaultuser.png";
-                    body.serverUrl = serverRoute;
-                    res.render("editProfile", {
-                      data: body,
-                      imgUsername: req.cookies.username,
-                      partCount: partCount,
-                      progress: body3,
-                      contestCount: body4.count,
-                      labCount :uniqueCount,
-                      labCount1 :uniqueCount1,
-                      resumeStatus: body5.success,
-                      token: req.cookies.token,
-                      serverUrl: serverRoute,
-                      skillups: body6,
-                    });
-                  }
-                });
-              });
-            });
-          });
-        });
-      });
-    });
-  });
-});
-    });
-  });
-});
+  // let pdetails = await axios.get(`${serverRoute}/findAllContestsUser`, { headers: { authorization: req.cookies.token }, body: { username: req.cookies.username.toLowerCase() } });
+
+  user.data.serverUrl = serverRoute;
+  user.data.imgUrl = image_url;
+  res.render('editProfile', {
+    data: user.data,
+    imgUsername: req.cookies.username,
+    partCount: partCount || 0,
+    contestCount: contestCount.data.count || 0,
+    labCount: labCount,
+    labCount1: labCount1,
+    resumeStatus: resumeStatus.data.success,
+    token: req.cookies.token,
+    serverUrl: serverRoute,
+    skillups: skillUp.data,
+    progress: {}
+  })
 });
 
 app.post("/editProfile", async (req, res) => {
