@@ -331,13 +331,13 @@ app.get('/profile', checkSignIn, async (req, res, next) => {
   let contestCount = await axios.get(`${serverRoute}/findAllContestsUser`, { headers: { authorization: req.cookies.token }, body: { username: req.cookies.username.toLowerCase() } });
   let skillUp = await axios.get(`${serverRoute}/skillUp`, { headers: { authorization: req.cookies.token }, body: { rollNumber: req.cookies.username.toUpperCase() } });
 
-  let labCount = await axios.get(`${serverRoute}/tparticipations/IARE_EPSL`, { headers: { authorization: req.cookies.token } });
-  labCount = labCount.data[0];
-  labCount = new Set(labCount.practiceSolved).size;
+  // let labCount = await axios.get(`${serverRoute}/tparticipations/IARE_EPSL`, { headers: { authorization: req.cookies.token } });
+  // labCount = labCount.data[0];
+  // labCount = new Set(labCount.practiceSolved).size;
 
-  let labCount1 = await axios.get(`${serverRoute}/tparticipations/IARE_JL`, { headers: { authorization: req.cookies.token } });
-  labCount1 = labCount1.data[0];
-  labCount1 = new Set(labCount1.practiceSolved).size;
+  // let labCount1 = await axios.get(`${serverRoute}/tparticipations/IARE_JL`, { headers: { authorization: req.cookies.token } });
+  // labCount1 = labCount1.data[0];
+  // labCount1 = new Set(labCount1.practiceSolved).size;
 
   // let pdetails = await axios.get(`${serverRoute}/findAllContestsUser`, { headers: { authorization: req.cookies.token }, body: { username: req.cookies.username.toLowerCase() } });
 
@@ -348,8 +348,8 @@ app.get('/profile', checkSignIn, async (req, res, next) => {
     imgUsername: req.cookies.username,
     partCount: partCount || 0,
     contestCount: contestCount.data.count || 0,
-    labCount: labCount,
-    labCount1: labCount1,
+    // labCount: labCount,
+    // labCount1: labCount1,
     resumeStatus: resumeStatus.data.success,
     token: req.cookies.token,
     serverUrl: serverRoute,
@@ -1691,9 +1691,48 @@ app.get("/code365", checkSignIn, async (req, res, next) => {
   });
 });
 
+app.get("/coding-assignment", checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/contests/user/" + req.cookies.username.toLowerCase(),
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: false,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.clearCookie("courseId");
+    res.render("coding-assignment", { imgUsername: req.cookies.username, data: body });
+  });
+});
+
 
 app.get("/assessments", checkSignIn, async (req, res, next) => {
-  res.render("assessments", { imgUsername: req.cookies.username });
+  let patusername = req.cookies.username;
+
+  patusername = patusername.toUpperCase().trim();
+  
+  
+  if (!pat_rolls.includes(patusername)) {
+      
+    return res.render("error", {
+      data:{
+        message: "You don't have access to  this Assignments"
+      },
+      imgUsername: req.cookies.username,
+    });
+  }
+
+  res.render("assessments", { imgUsername: req.cookies.username});
+
+
+
+
+
 })
 
 app.get("/admin/patdata", async (req, res, next) => {

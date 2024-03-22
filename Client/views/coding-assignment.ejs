@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	<meta charset="utf-8" />
+	<title>BuildIT Lab</title>
+
+	<!-- mobile responsive meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+	<!-- ** Plugins Needed for the Project ** -->
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+	<!-- slick slider -->
+	<link rel="stylesheet" href="plugins/slick/slick.css" />
+	<!-- themefy-icon -->
+	<link rel="stylesheet" href="plugins/themify-icons/themify-icons.css" />
+
+	<!-- Main Stylesheet -->
+	<link href="css/style.css" rel="stylesheet" />
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<link rel="icon" type="image/png" href="../../images/logo-backup2.png" />
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+
+	<link
+		href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+		rel="stylesheet" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;600;700&display=swap"
+		rel="stylesheet" />
+	<link rel="stylesheet" href="../css/style2.css" />
+	<style>
+		.card {
+			width: fit-content;
+			height: fit-content;
+			background-color: rgb(255, 255, 255);
+			border-radius: 8px;
+			margin-bottom: 20px;
+			z-index: 1;
+			border-radius: 20px;
+			border: 1px solid black;
+		}
+
+		.card-inactive {
+			width: fit-content;
+			height: fit-content;
+			background-color: rgb(255, 255, 255);
+			border-radius: 8px;
+			margin-bottom: 20px;
+			z-index: 1;
+			border-radius: 20px;
+			border: 1px solid black;
+		}
+
+		.card-inactive:hover {
+			box-shadow: 4px 4px rgba(132, 130, 130, 0.426);
+		}
+
+		.tools {
+			display: flex;
+			align-items: center;
+			padding: 12px;
+		}
+
+		.circle {
+			padding: 0 4px;
+		}
+
+		.box {
+			display: inline-block;
+			align-items: center;
+			width: 10px;
+			height: 10px;
+			padding: 1px;
+			border-radius: 50%;
+		}
+
+		.red {
+			background-color: #ff605c;
+			display: none;
+		}
+
+		.yellow {
+			background-color: #ffbd44;
+			display: none;
+		}
+
+		.green {
+			background-color: #00ca4e;
+			display: none;
+		}
+
+		.cardy {
+			text-decoration: none;
+			font-family: Inconsolata;
+			border: 2px solid rgb(255, 255, 255);
+			padding: 50px;
+			min-height: 260px;
+			border-radius: 20px;
+			display: block;
+			padding-top: 15px;
+		}
+
+		/* .cardy:hover {
+        box-shadow: 4px 4px rgba(132, 130, 130, 0.426);
+      } */
+		.card-content {
+			width: 250px;
+			min-height: 220px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			z-index: -1;
+		}
+
+		.title {
+			font-size: 22.75px;
+			color: rgb(0, 0, 0);
+			font-weight: 700;
+			line-height: 30px;
+		}
+
+		.details {
+			display: flex;
+			flex-direction: column;
+			background: rgb(236, 236, 236);
+			font-size: large;
+			border-radius: 2mm;
+			padding: 20px 25px;
+			color: rgb(27, 15, 55);
+			position: relative;
+			justify-content: center;
+			align-items: center;
+			text-align: justify;
+			margin: 5px 0;
+		}
+
+		.icon {
+			position: absolute;
+			top: -3px;
+			left: -3px;
+			font-size: medium;
+			color: rgb(95, 95, 95);
+			width: 25px;
+			height: 25px;
+			background: white;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 25px;
+		}
+
+		.participate {
+			width: 100%;
+			background: rgb(65, 34, 142);
+			color: white;
+			font-size: larger;
+			padding: 5px 0;
+			border-radius: 1mm;
+			text-align: center;
+		}
+
+		.active .details {
+			background: rgb(241, 250, 245);
+		}
+
+		.active .participate {
+			background: rgb(64, 181, 107);
+		}
+
+		.card:hover {
+			box-shadow: 4px 4px rgba(54, 195, 106, 0.235);
+		}
+
+		.active-contests-grid {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 10px
+		}
+
+		.participate-btn-inactive-contest {
+			font-size: 15px;
+			padding: 0.7em 2.7em;
+			letter-spacing: 0.06em;
+			position: relative;
+			font-family: inherit;
+			border-radius: 0.6em;
+			overflow: hidden;
+			transition: all 0.3s;
+			line-height: 1.4em;
+			border: 2px solid tomato;
+			background: linear-gradient(to right,
+					rgba(215, 46, 46, 0.392) 1%,
+					transparent 40%,
+					transparent 60%,
+					rgba(240, 36, 36, 0.1) 50%);
+			color: rgb(16, 137, 85);
+			box-shadow: inset 0 0 10px rgba(26, 233, 143, 0.4),
+				0 0 9px 3px rgba(27, 253, 156, 0.1);
+			width: 100%;
+			color: black;
+			font-size: larger;
+			padding: 5px 0;
+			border-radius: 1mm;
+			text-align: center;
+		}
+
+		.participate-btn {
+			--green: #1bfd9c;
+			font-size: 15px;
+			padding: 0.7em 2.7em;
+			letter-spacing: 0.06em;
+			position: relative;
+			font-family: inherit;
+			border-radius: 0.6em;
+			overflow: hidden;
+			transition: all 0.3s;
+			line-height: 1.4em;
+			border: 2px solid var(--green);
+			background: linear-gradient(to right,
+					rgba(27, 253, 156, 0.1) 1%,
+					transparent 40%,
+					transparent 60%,
+					rgba(27, 253, 156, 0.1) 100%);
+			color: var(--green);
+			box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.4),
+				0 0 9px 3px rgba(27, 253, 156, 0.1);
+			width: 100%;
+			color: black;
+			font-size: larger;
+			padding: 5px 0;
+			border-radius: 1mm;
+			text-align: center;
+		}
+
+		.participate-btn-inactive {
+			font-size: 15px;
+			padding: 0.7em 2.7em;
+			letter-spacing: 0.06em;
+			position: relative;
+			font-family: inherit;
+			border-radius: 0.6em;
+			overflow: hidden;
+			transition: all 0.3s;
+			line-height: 1.4em;
+			border: 2px solid #fff;
+			background: linear-gradient(to right,
+					rgba(27, 253, 156, 0.1) 1%,
+					transparent 40%,
+					transparent 60%,
+					rgba(27, 253, 156, 0.1) 100%);
+			width: 100%;
+			color: black;
+			font-size: larger;
+			padding: 5px 0;
+			border-radius: 1mm;
+			text-align: center;
+		}
+
+
+
+		.inactive-btn {
+			font-size: 15px;
+			padding: 0.7em 2.7em;
+			letter-spacing: 0.06em;
+			position: relative;
+			font-family: inherit;
+			border-radius: 0.6em;
+			overflow: hidden;
+			transition: all 0.3s;
+			line-height: 1.4em;
+			border: 2px solid grey;
+			background-color: rgb(0, 0, 0);
+			color: var(--green);
+			box-shadow: inset 0 0 10px rgba(63, 72, 69, 0.4),
+				0 0 9px 3px rgba(47, 52, 50, 0.1);
+			width: 100%;
+			color: rgb(255, 255, 255);
+			font-size: larger;
+			padding: 5px 0;
+			border-radius: 1mm;
+			text-align: center;
+		}
+
+
+
+		.participate-btn:hover {
+			color: #82ffc9;
+			box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.6),
+				0 0 9px 3px rgba(27, 253, 156, 0.2);
+		}
+
+		.inactive-btn:hover {
+			color: #000000;
+			box-shadow: inset 0 0 10px rgba(48, 51, 50, 0.6),
+				0 0 9px 3px rgba(50, 52, 51, 0.2);
+		}
+
+		.participate-btn:before {
+			content: "";
+			position: absolute;
+			left: -4em;
+			width: 4em;
+			height: 100%;
+			top: 0;
+			transition: transform 0.4s ease-in-out;
+			background: linear-gradient(to right,
+					transparent 1%,
+					rgba(27, 253, 156, 0.1) 40%,
+					rgba(27, 253, 156, 0.1) 60%,
+					transparent 100%);
+		}
+
+		.participate-btn:hover:before {
+			transform: translateX(15em);
+		}
+
+		.active-btn {
+			color: rgb(0, 0, 0);
+			background-color: rgb(27, 253, 155);
+			font-weight: 900;
+
+		}
+
+		.warning-container {
+			font: "Inconsolata", sans-serif;
+			margin: auto;
+			margin-top: 3em;
+			display: flex;
+			flex-direction: row;
+			border-radius: 1em;
+			align-items: center;
+			border: 4px dashed #434343;
+			/* Set a dotted border */
+			background-color: rgb(245, 245, 192);
+			/* Set a very faint yellow background */
+			padding: 20px;
+			max-width: fit-content;
+			/* Adjust the maximum width as per your design */
+		}
+
+		.caution-symbol {
+			min-width: 50px;
+			min-height: 50px;
+			background-color: #ffcc00;
+			color: #333;
+			font-size: 30px;
+			font-weight: bold;
+			text-align: center;
+			line-height: 45px;
+			border-radius: 50%;
+			border: 2px solid #333;
+			cursor: pointer;
+			margin-bottom: 15px;
+			margin: 1em;
+
+		}
+
+		.warning-text {
+			font-weight: bold;
+			font-size: 18px;
+			margin-bottom: 10px;
+
+		}
+
+		.warning-text p {
+			margin-bottom: 15px;
+			line-height: 20px;
+		}
+	</style>
+</head>
+
+<body style="background-color: rgb(251, 251, 251);">
+	<%- include("../views/partials/header2.ejs") -%>
+
+		<!-- page title -->
+		<section class="page-title position-relative" style="background-color: rgb(65, 34, 142);">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center">
+						<h1 class="text-white font-tertiary">Coding Assignments</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /page title -->
+
+		<section class="warning-container">
+			<div class="caution-symbol">!</div>
+			<div class="warning-content">
+				<div class="warning-header">
+					<p><strong>Important Guidelines:</strong></p>
+				</div>
+				<div class="warning-text">
+
+
+					<p>1. Ensure to remain in Full Screen mode throughout the duration of the contest; exiting it
+						prematurely will result in contest termination.</p>
+					<p>2. If you accidentally exit the window, your contest session will automatically terminate.</p>
+					<p>3. In the event of any technical issues or exceptions, promptly send an email explaining your
+						situation along with screenshots to <strong><a style="color: inherit;"
+								href="mailto:buildit@iare.ac.in">buildit@iare.ac.in</a></strong>.</p>
+
+				</div>
+			</div>
+		</section>
+
+		<section class="section">
+			<div class="container">
+				<h3 class="font-tertiary mb-5" style="color: green; text-align: center">Today's Contest</h3>
+				<div class="active-contests-grid">
+					<h5 id="login"></h5>
+					<% for(let i=data.length-1; i>= 0; i--){ %> <% if (data[i].contestDate==new Date(new
+							Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) &&
+							data[i].contestId.startsWith("ASSESSMENT") ) { %>
+							<div class="card">
+								<div class="tools">
+									<div class="circle">
+										<span class="red box"></span>
+									</div>
+									<div class="circle">
+										<span class="yellow box"></span>
+									</div>
+									<div class="circle">
+										<span class="green box"></span>
+									</div>
+								</div>
+								<div class="card__content">
+									<!-- <div class="col-lg-4 col-sm-6 mb-4"> orginal div -->
+									<a <% if(data[i].contestPassword){ %>
+										href="contestPassword/<%= data[i].contestId %>" <%} else{%>
+												href="contests/<%= data[i].contestId %>" <%}%> target="_blank"
+														class="cardy active" >
+														<div class="card-content">
+															<div class="title" style="color: black">
+																<%=data[i].contestId%>: <%= data[i].contestName%>
+															</div>
+															<div class="details">
+																<span class="material-icons icon"> watch_later </span>
+																<span>
+																	<% if (data[i].contestDuration) { %>
+																		<b>Duration: </b>
+																		<%= data[i].contestDuration %> Mins <% } %>
+																</span>
+																<span>
+																	<% if (data[i].contestDate) { %>
+																		<b>Date: </b>
+																		<%= data[i].contestDate %>
+																			<% } %>
+																</span>
+																<span>
+																	<% if (data[i].contestStartTime &&
+																		data[i].contestEndTime) { %>
+																		<b>Timing: </b>
+																		<%= data[i].contestStartTime %> to <%=
+																				data[i].contestEndTime %>
+																				<% } %>
+																</span>
+															</div>
+															<div class=""><button
+																	class="participate-btn">Participate</button></div>
+														</div>
+									</a>
+									<!-- orginal div -->
+								</div>
+							</div>
+							<% } %>
+								<% } %>
+				</div>
+			</div>
+
+
+			<div class="container" style="border-top: 1px solid rgb(0, 0, 0); margin:1rem auto;">
+				<h3 class="font-tertiary mb-5" style="color: grey; text-align: center; margin-top: 10px;">Previous
+					Problems</h3>
+				<div class="active-contests-grid" style="margin-top: 1rem;">
+					<h5 id="login"></h5>
+					<% for(let i=data.length-1; i>= 0; i--){ %> <% if (data[i].contestDate !=new Date(new
+							Date().valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0,10) &&
+							data[i].contestId.startsWith("ASSESSMENT") ) { %>
+							<div class="card-inactive">
+								<div class="tools">
+									<div class="circle">
+										<span class="red box"></span>
+									</div>
+									<div class="circle">
+										<span class="yellow box"></span>
+									</div>
+									<div class="circle">
+										<span class="green box"></span>
+									</div>
+								</div>
+								<div class="card__content">
+									<a href="contests/<%= data[i].contestId %>" target="_blank" class="cardy">
+										<div class="card-content">
+											<div class="title" style=" color: black">
+												<%= data[i].contestId %>: <%= data[i].contestName %>
+											</div>
+											<div class="details">
+												<span class="material-icons icon"> watch_later </span>
+												<span>
+													<% if (data[i].contestDuration) { %>
+														<b>Duration: </b>
+														<%= data[i].contestDuration %> Mins <% } %>
+												</span>
+												<span>
+													<% if (data[i].contestDate) { %>
+														<b>Date: </b>
+														<%= data[i].contestDate %>
+															<% } %>
+												</span>
+												<span>
+													<% if (data[i].contestStartTime && data[i].contestEndTime) { %>
+														<b>Timing: </b>
+														<%= data[i].contestStartTime %> to <%= data[i].contestEndTime %>
+																<% } %>
+												</span>
+											</div>
+											<div class=""><button class="participate-btn-inactive">Participate</button>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<% } %>
+								<% } %>
+				</div>
+			</div>
+		</section>
+
+		<script>
+			function getCookie(name) {
+				var dc = document.cookie;
+				var prefix = name + "=";
+				var begin = dc.indexOf("; " + prefix);
+				if (begin == -1) {
+					begin = dc.indexOf(prefix);
+					if (begin != 0) return null;
+				} else {
+					begin += 2;
+					var end = document.cookie.indexOf(";", begin);
+					if (end == -1) {
+						end = dc.length;
+					}
+				}
+				// because unescape has been deprecated, replaced with decodeURI
+				//return unescape(dc.substring(begin + prefix.length, end));
+				return decodeURI(dc.substring(begin + prefix.length, end));
+			}
+
+			function doSomething() {
+				var myCookie = getCookie("token");
+
+				if (myCookie == null) {
+					// do cookie doesn't exist stuff;
+					console.log("came");
+					document.getElementById("login").innerHTML = "Login to view contests";
+				}
+			}
+			doSomething();
+		</script>
+		<%- include("../views/partials/aboutfooter") %>
+
+			<!-- jQuery -->
+			<script src="plugins/jQuery/jquery.min.js"></script>
+			<!-- Bootstrap JS -->
+			<script src="plugins/bootstrap/bootstrap.min.js"></script>
+			<!-- slick slider -->
+			<script src="plugins/slick/slick.min.js"></script>
+			<!-- filter -->
+			<script src="plugins/shuffle/shuffle.min.js"></script>
+
+			<!-- Main Script -->
+			<script src="js/script.js"></script>
+</body>
+
+</html>
