@@ -3273,6 +3273,10 @@ app.get("/labs", checkSignIn, async (req, res) => {
   res.render("labs");
 });
 
+app.get("/labs1", checkSignIn, async (req, res) => {
+  res.render("labs1");
+});
+
 app.get("/labTut", checkSignIn, async (req, res) => {
   res.render("labTut", { clientRoute : clientRoute, imgUsername: req.cookies.username });
 });

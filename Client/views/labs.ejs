@@ -18,7 +18,7 @@
         flex-direction: row-reverse;
         flex-wrap: wrap;
         justify-content: center;
-        background: url(../images/extrasBack.svg);
+        /* background: url(../images/extrasBack.svg); */
         background-attachment: fixed;
         background-size: cover;
         background-repeat: no-repeat;
@@ -26,17 +26,19 @@
     /* Set background and text colors */
     body {
       background-color: #f5f5f5;
-      font-family: Arial, sans-serif;
+      font-family: "poppins";
       color: #333;
+
     }
     /* Header styles */
     .header {
-      background-color: #007bff;
+      background-color:#805ad5;;
       color: white;
       padding: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-weight: 600;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     }
     .header-logo {
@@ -67,9 +69,11 @@
     }
     .hero-content {
       flex: 1;
-      padding: 10rem;
-    
-  
+      padding: 2rem;
+      text-align: center; /* Center-align the content */
+      background-color: #ffffff; /* Purple background color */
+      color: white; /* White text color for contrast *
+      margin: 0 auto; /* Center the content horizontally */
     }
     .hero-title {
       font-size: 2.5rem;
@@ -140,6 +144,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      margin: 0 auto; /* Center the container and touch the margins */
     }
     .feature-box {
       background-color: #ffffff;
@@ -148,6 +153,7 @@
       padding: 1.5rem;
       display: flex;
       justify-content: space-around;
+      /* justify-content: space-between; */
     }
     .feature-card {
       width: 300px;
@@ -157,19 +163,27 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      margin: 10px;
+      border-radius: 10px; 
     }
     .feature-card:hover {
       transform: translateY(-5px);
       box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.2);
     }
     .feature-card img {
-      max-width: 100%;
+      max-width: 50%;
       height: auto;
       margin: 0 auto 1rem;
     }
     .feature-title {
-      font-size: 1.8rem;
+      font-size: 1.3rem;
       margin-bottom: 0.5rem;
+      color: #333;
+      font-weight: 500;
+    }
+    .feature-sem {
+      font-size: 1.6rem;
+      margin-bottom: 0.2rem;
       color: #333;
     }
     .feature-description {
@@ -200,15 +214,19 @@
       <a href="/logout">Logout</a>
     </nav>
   </header>
+<div class="hero-content">
+  <h1 class="hero-title">Welcome to LAB</h1>
+  <p class="hero-description">Enhance your skills and knowledge with our interactive challenges.</p>
+</div>
 
-  <section class="title-area">
-      <img src="../images/extras.svg" alt="Hero Image">
+  <!-- <section class="title-area">
+    <img src="../images/extras.svg" alt="Hero Image">
     <div class="hero-content">
       <h1 class="hero-title">Welcome to LAB</h1>
       <p class="hero-description">Enhance your skills and knowledge with our interactive challenges.</p>
       <a href="#features" class="cta-button">Get Started</a>
     </div>
-  </section>
+  </section> -->
 
   <section class="features" id="features">
     <div class="features-container">
@@ -225,16 +243,18 @@
     const features = [
       {
         imgSrc: '../images/image-removebg-preview.png',
-        title: 'OBJECT ORIENTED PROGRAMMING',
+        sem:'I SEM lABORATORY',
+        title: 'Object Oriented Programming',
         description: '',
         link: '/labTut1',
         bgColor: '#e8f5ff'
       },
       {
         imgSrc: '../images/problem-solving-outline-icon-free-vector-removebg-preview.png',
-        title: ' PROBLEM SOLVING',
+        sem:'II SEM lABORATORY',
+        title: 'Exercises for Essentials of Problem Solving Laboratory',
         description: '',
-        link: '/labTut',
+        link: '/Tutorials/IARE_EPSL/Topics',
         bgColor: '#fef2f2'
       }
       // Add more feature objects here
@@ -247,15 +267,16 @@
           class: 'feature-card',
           style: `background-color: ${feature.bgColor};`
         });
-        featureCard.append($('<img>', { src: feature.imgSrc, alt: '' }));
-        featureCard.append($('<h2>', { class: 'feature-title', text: feature.title }));
+        featureCard.append($('<img>', { src: feature.imgSrc, alt: ''  }));
+        featureCard.append($('<h5>', { class: 'feature-sem', text: feature.sem }));
+        featureCard.append($('<p>', { class: 'feature-title', text: feature.title }));
         featureCard.append($('<p>', { class: 'feature-description', text: feature.description }));
         featureCard.append($('<a>', { class: 'feature-link', href: feature.link, text: 'View More' }));
         featureBox.append(featureCard);
       });
     });
   </script>
-  <footer class="footer">
+  <!-- <footer class="footer">
     <div class="footer-content">
       <div class="footer-logo">Build-IT</div>
       <nav class="footer-nav">
@@ -264,7 +285,7 @@
       </nav>
     </div>
     <p class="footer-text">© <script>document.write(new Date().getFullYear());</script> All rights reserved.</p>
-  </footer>
+  </footer> -->
 
   <!-- jQuery library -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
