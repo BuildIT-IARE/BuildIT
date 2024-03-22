@@ -89,7 +89,6 @@ exports.create = (req, res) => {
         //interviewBit
         got(interviewBitLink + req.body.interviewBitId)
           .then((response) => {
-            console.log(interviewBitLink + req.body.interviewBitId);
             const dom = new JSDOM(response.body);
             a = dom.window.document.querySelectorAll(".txt")[1];
             a = a.textContent;

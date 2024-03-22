@@ -32,7 +32,7 @@
     }
     /* Header styles */
     .header {
-      background-color:#805ad5;;
+      background-color:#7d48df;
       color: white;
       padding: 1rem;
       display: flex;
@@ -52,7 +52,10 @@
       transition: color 0.3s ease;
     }
     .header-nav a:hover {
-      color: #0056b3;
+      color: white;
+      background-color: #6629d6; 
+      border-radius: 10px; 
+      padding: 10px;
     }
     /* Hero section styles */
     .hero {
@@ -70,10 +73,10 @@
     .hero-content {
       flex: 1;
       padding: 2rem;
-      text-align: center; /* Center-align the content */
-      background-color: #ffffff; /* Purple background color */
-      color: white; /* White text color for contrast *
-      margin: 0 auto; /* Center the content horizontally */
+      text-align: center; 
+      background-color: #ffffff; 
+      color: white; 
+      margin: 0 auto;
     }
     .hero-title {
       font-size: 2.5rem;
@@ -86,7 +89,7 @@
       margin-bottom: 1.5rem;
       color: #555;
     }
-    .cta-button {
+    /* .cta-button {
       display: inline-block;
       padding: 0.7rem 2rem;
       background-color: #007bff;
@@ -99,7 +102,7 @@
     }
     .cta-button:hover {
       background-color: #0056b3;
-    }
+    } */
     
     /* Footer styles */
     .footer {
@@ -145,15 +148,16 @@
       justify-content: center;
       align-items: center;
       margin: 0 auto; /* Center the container and touch the margins */
+      flex-grow: 1;
     }
     .feature-box {
       background-color: #ffffff;
       border-radius: 15px;
       box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-      padding: 1.5rem;
+      padding: 1.5rem 1rem; 
+      margin: 0; 
       display: flex;
       justify-content: space-around;
-      /* justify-content: space-between; */
     }
     .feature-card {
       width: 300px;
@@ -204,6 +208,7 @@
     .feature-link:hover {
       background-color: #0056b3;
     }
+
   </style>
 </head>
 <body>
