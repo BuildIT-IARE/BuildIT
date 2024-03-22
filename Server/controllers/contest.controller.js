@@ -61,6 +61,7 @@ exports.create = (req, res) => {
       coding: req.body.coding,
       contestPassword: req.body.contestPassword,
       multipleAttempts: req.body.multipleAttempts == "on" ? true : false,
+      normalquiz:req.body.normalquiz == "true" ? true : false,
     });
 
     // SaveContest in the database
@@ -114,7 +115,10 @@ exports.findAll = (req, res) => {
 
 // Retrieve and return all contests from the database.
 exports.findAllQual = (req, res) => {
-  Contest.find({ mcq: true })
+  Contest.find({
+    mcq: true,
+    normalquiz: { $in: [false, null] },
+  })
   .then((contests) => {
     res.send(contests);
   })
@@ -126,6 +130,22 @@ exports.findAllQual = (req, res) => {
   });
 };
 
+
+exports.findAllQuiz = (req, res) => {
+  Contest.find({
+    mcq: true,
+    normalquiz: true,
+  })
+  .then((contests) => {
+    res.send(contests);
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving contests.",
+    });
+  });
+};
 
 // Retrieve and return all contests from the database.
 exports.findAllUser = (req, res) => {
