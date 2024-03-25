@@ -539,7 +539,7 @@ $(document).ready(function () {
         `<option mode = "python" value="34"> Python (3.6.0) </option>`
       );
     }
-    else if ( courseId === "IARE_JL" || courseId === "IARE_ESPL" ) {
+    else if ( courseId === "IARE_JL" || courseId === "IARE_EPSL" ) {
       $("#select-language").append(
         `<option mode = "java" value="26"> Java (OpenJDK 9 with Eclipse OpenJ9) </option>`
       );
@@ -557,7 +557,7 @@ $(document).ready(function () {
         `<option mode = "java" value="26"> Java (OpenJDK 9 with Eclipse OpenJ9) </option>`
       );
     }
-  } else if (getCookie("contestId")) {
+  } else if (getCookie("contestId")  ) {
     $("#tutorials").text("Contest Ongoing");
     $("#select-language")
       .append(`<option value="4" mode="c">C (gcc 7.2.0)</option>
@@ -947,7 +947,8 @@ var course_language = {
   "IARE_JAVA": 26,
   "IARE_PY": 34,
   "IARE_JAVA_LAB": 26,
-  "IARE_JL": 26
+  "IARE_JL": 26,
+  "IARE_EPSL":26
 }
 
 var languageIds = {

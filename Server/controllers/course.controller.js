@@ -78,17 +78,22 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.findCourseLanguage = async (courseId) => {
-  try{
-    const course = await Course.find({ courseId: courseId });
-    if (!course) {
-      return null;
-    }
-    return course[0];
-  }
-  catch(err){
-    return null;
-  }
+
+
+exports.findCourseLanguage = (req, callback) => {
+  Course.find({ courseId: req.body.courseId })
+    .then((course) => {
+      if (!course) {
+        return callback("Couldn't find course", null);
+      }
+      return callback(null, course);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return callback("Couldn't find course, caught exception", null);
+      }
+      return callback("Error retrieving data", null);
+    });
 };
 
 // Update a course identified by the courseId in the request
