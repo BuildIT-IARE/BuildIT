@@ -539,7 +539,7 @@ $(document).ready(function () {
         `<option mode = "python" value="34"> Python (3.6.0) </option>`
       );
     }
-    else if ( courseId === "IARE_JL" || courseId === "IARE_ESPL" ) {
+    else if ( courseId === "IARE_JL") {
       $("#select-language").append(
         `<option mode = "java" value="26"> Java (OpenJDK 9 with Eclipse OpenJ9) </option>`
       );
@@ -555,6 +555,14 @@ $(document).ready(function () {
     } else if (courseId === "IARE_JAVA") {
       $("#select-language").append(
         `<option mode = "java" value="26"> Java (OpenJDK 9 with Eclipse OpenJ9) </option>`
+      );
+    }
+    else if (courseId === "IARE_EPSL") {
+      $("#select-language").append(
+        `<option mode = "java" value="26"> Java (OpenJDK 9 with Eclipse OpenJ9) </option>
+        <option mode = "python" value="34"> Python (3.6.0) </option>
+        <option mode = "c" value="4"> C (gcc 7.2.0) </option>
+        <option value="10" mode="cpp">C++ (g++ 7.2.0)</option>`
       );
     }
   } else if (getCookie("contestId")) {
@@ -574,7 +582,6 @@ $(document).ready(function () {
         <option value="22" mode="go">Go (1.9)</option>
         <option value="29" mode="javascript">JavaScript (nodejs 8.5.0)</option>
         <option value="42" mode="rust">Rust (1.20.0)</option>`);
-
   }
 
   $selectLanguage = $("#select-language");

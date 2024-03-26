@@ -2755,6 +2755,8 @@ app.get(
   "/tutorials/:courseId/:difficulty",
   checkSignIn,
   async (req, res, next) => {
+    res.clearCookie("contestId");
+    res.cookie("courseId", req.params.courseId);
     let difficulty = req.params.difficulty;
     let categoryBased = difficulty.includes("-");
     let ifTopicsOrCompanies =
