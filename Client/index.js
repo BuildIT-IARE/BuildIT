@@ -1795,6 +1795,25 @@ app.get('/practice', checkSignIn, async (req, res, next) => {
   });
 })
 
+app.get("/aat", checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/contests/user/" + req.cookies.username.toLowerCase(),
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: false,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.clearCookie("courseId");
+    res.render("aat", { imgUsername: req.cookies.username, data: body });
+  });
+});
+
 
 app.get("/contestPassword/:contestId", checkSignIn, async (req, res) => {
   res.render("contestPassword", {
