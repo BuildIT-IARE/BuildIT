@@ -2952,11 +2952,12 @@ app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
           body.courseName = "Invalid Course";
         }
         if (req.params.courseId === "IARE_EPSL"){
-          res.render("labQuestionsTut", {
-            imgUsername: req.cookies.username,
-            data: body,
-            datatimer: bodytimer,
-          });
+          // res.render("labQuestionsTut", {
+          //   imgUsername: req.cookies.username,
+          //   data: body,
+          //   datatimer: bodytimer,
+          // });
+          res.redirect("Topics")
         } else if (req.params.courseId === "IARE_JL"){
           res.render("labQuestionsTut1", {
             imgUsername: req.cookies.username,
@@ -2965,7 +2966,8 @@ app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
           });
         }
         else {
-          res.render("questionsTut", {
+          
+          res.render("questionsTut", {  
             imgUsername: req.cookies.username,
             data: body,
             datatimer: bodytimer,
