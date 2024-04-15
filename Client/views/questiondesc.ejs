@@ -286,6 +286,35 @@
     display: flex;
     opacity: 0;
   }
+
+  .questiondesc > pre, code, .questionexplain > pre, code  {
+    background-color: rgb(232, 232, 232);
+  }
+
+  .questiondesc > pre {
+    padding: 1em;
+  }
+
+  .questionexplain > pre {
+    padding: 1em;
+    border-radius: 1em;
+  }
+
+  .questiondesc > p {
+    line-height: 2em;
+  }
+
+  .questiondesc > p > code, .inoutformat > p > code {
+    border-radius: 0.35em;
+    padding: 0.25em;
+  }
+
+  img {
+    height: 60%;
+    width: 60%;
+  }
+
+
 </style>
 
 <body oncontextmenu="return false;">
@@ -342,17 +371,17 @@
         <div class="col-md-12 setback">
           <div class="cover">
             <div class="questiondesc">
-              <%= data[0].questionDescriptionText %>
+              <%- data[0].questionDescriptionText %>
             </div>
             <br />
             <div class="questionlabel">Input Format</div>
             <div class="inoutformat">
-              <%= data[0].questionInputText %>
+              <%- data[0].questionInputText %>
             </div>
             <br />
             <div class="questionlabel">Output Format</div>
             <div class="inoutformat">
-              <%= data[0].questionOutputText %>
+              <%- data[0].questionOutputText %>
             </div>
             <br />
             <div class="questionlabel">Sample Input</div>
@@ -374,7 +403,7 @@
             </div>
             <div class="questionexplain">
               <%_ %>
-                <%= data[0].questionExplanation %>
+                <%- data[0].questionExplanation %>
             </div>
             <br />
             <br />

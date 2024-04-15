@@ -4,6 +4,8 @@ const xlsx = require("xlsx");
 const contests = require("./contest.controller.js");
 const participations = require("./participation.controller.js");
 const Contest = require("../models/contest.model.js");
+const { marked } = require('marked')
+
 // const Base64 = require('js-base64').Base64;
 // Create and Save a new question
 exports.create = (req, res) => {
@@ -45,9 +47,9 @@ exports.create = (req, res) => {
             questionId: req.body.questionId,
             questionName: req.body.questionName,
             contestId: req.body.contestId,
-            questionDescriptionText: req.body.questionDescriptionText,
-            questionInputText: req.body.questionInputText,
-            questionOutputText: req.body.questionOutputText,
+            questionDescriptionText: marked.parse(req.body.questionDescriptionText),
+            questionInputText: marked.parse(req.body.questionInputText),
+            questionOutputText: marked.parse(req.body.questionOutputText),
             questionExampleInput1: req.body.questionExampleInput1,
             questionExampleOutput1: req.body.questionExampleOutput1,
             questionExampleInput2: req.body.questionExampleInput2,
@@ -60,13 +62,13 @@ exports.create = (req, res) => {
             questionHiddenOutput1: req.body.questionHiddenOutput1,
             questionHiddenOutput2: req.body.questionHiddenOutput2,
             questionHiddenOutput3: req.body.questionHiddenOutput3,
-            questionExplanation: req.body.questionExplanation,
+            questionExplanation: marked.parse(req.body.questionExplanation),
             code_py: req.body.code_py,
             code_java: req.body.code_java,
             code_c: req.body.code_c,
             code_cpp: req.body.code_cpp,
             author: req.body.author,
-            editorial: req.body.editorial,
+            editorial: marked.parse(req.body.editorial),
             difficulty: req.body.difficulty,
             estimateTime: req.body.estimateTime,
             language: req.body.language,

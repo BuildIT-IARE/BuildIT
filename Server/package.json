@@ -26,6 +26,7 @@
     "js-base64": "^2.5.1",
     "jsdom": "^16.7.0",
     "jsonwebtoken": "^9.0.0",
+    "marked": "^12.0.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "mongoose": "^6.8.2",
