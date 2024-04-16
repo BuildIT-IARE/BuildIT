@@ -2965,7 +2965,8 @@ app.get("/tutorials/:courseId", checkSignIn, async (req, res, next) => {
           });
         }
         else {
-          res.render("questionsTut", {
+          
+          res.render("questionsTut", {  
             imgUsername: req.cookies.username,
             data: body,
             datatimer: bodytimer,
