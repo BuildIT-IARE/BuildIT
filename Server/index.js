@@ -796,6 +796,9 @@ app.get("/plagreport/:languageId/:questionId", async (req, res) => {
     .catch(res.send("Failed"));
 });
 
+
+app.get("/laboratory/secondsem",questions.findAllSecondSEM );
+
 schedule.scheduleJob("59 23 * * *", async function () {
   await Count.findOneAndUpdate(
     {},

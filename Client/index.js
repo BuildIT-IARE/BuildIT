@@ -4307,6 +4307,24 @@ app.get("/pat", checkSignIn, async (req, res, next) => {
   });
 });
 
+
+app.get("/laboratory/secondsem", checkSignIn, async (req, res, next) => {
+
+ let requestBody = {
+    url: serverRoute + "/laboratory/secondsem",
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    json: true,
+  };
+
+  request(requestBody, function(err, response, body) {
+    res.render("secondsemlab", { data: body });
+  })
+ });
+
+
 app.get("*", async (req, res) => {
   res.render("404page");
 });
