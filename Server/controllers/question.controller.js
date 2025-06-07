@@ -1322,3 +1322,19 @@ exports.getNumberOfQuestionsInContest = async (contestId) => {
     return questions.length
   }
 }
+
+//get  all the questions with the id starting with SSEM
+
+exports.findAllSecondSEM = (req, res) => {
+  Question.find({ questionId: { $regex: /^SSEM/ } })
+    .then((questions) => {
+      res.send(questions);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        success: false,
+        message:
+          err.message || "Some error occurred while retrieving questions.",
+      });
+    });
+};

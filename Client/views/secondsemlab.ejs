@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week Blocks</title>
+    <style>
+        .week-block {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+            margin: 10px;
+            text-align: center;
+            line-height: 100px;
+            cursor: pointer;
+        }
+        .week-block:hover {
+            background-color: skyblue;
+        }
+        .questions {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <% let maxWeek = 0; %>
+    <% for(let obj of data) { %>
+        <% const weekNumber = parseInt(obj.id.slice(4, 6)); %>
+        <% if (weekNumber > maxWeek) { %>
+            <% maxWeek = weekNumber; %>
+        <% } %>
+    <% } %>
+
+    <% for(let i = 1; i <= maxWeek; i++) { %>
+        <div class="week-block" onclick="toggleQuestions('week<%= i %>')">
+            Week <%= i %>
+        </div>
+        <div id="week<%= i %>-questions" class="questions">
+            <% for(let obj of data) { %>
+                <% const weekNumber = parseInt(obj.id.slice(4, 6)); %>
+                <% if (weekNumber === i) { %>
+                    <div><%= obj.id %></div>
+                <% } %>
+            <% } %>
+        </div>
+    <% } %>
+
+    <script>
+        function toggleQuestions(weekId) {
+            var questionsDiv = document.getElementById(weekId + '-questions');
+            questionsDiv.style.display = (questionsDiv.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
