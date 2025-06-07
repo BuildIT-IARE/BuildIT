@@ -428,7 +428,7 @@ app.post("/validateSubmission", middleware.checkToken, async (req, res) => {
         .status(404)
         .send({ message: "Course not found with id " + req.body.courseId });
     }
-    if (course.languageId === req.body.language_id) {
+    if ( !course.languageId || course.languageId === req.body.language_id) {
       let testcases = await questions.getTestCasesOfQuestion(req.body.questionId);
       if (!testcases) {
         res

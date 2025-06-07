@@ -44,7 +44,9 @@
       <div class="container">
         <div class="row">
           <div class="col-12 text-center">
-            <h2 class="text-white font-tertiary"><%= data[0].topic.length > 0 ? data[0].topic[0] : data.courseName %></h2>
+            <%if (data[0] && data[0].topic){%>
+              <h2 class="text-white font-tertiary"><%= data[0].topic.length > 0 ? data[0].topic[0] : data.courseName %></h2>
+              <%}%>
             <br />
           </div>
         </div>

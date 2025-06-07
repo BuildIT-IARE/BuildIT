@@ -1795,6 +1795,25 @@ app.get('/practice', checkSignIn, async (req, res, next) => {
   });
 })
 
+app.get("/aat", checkSignIn, async (req, res, next) => {
+  let options = {
+    url: serverRoute + "/contests/user/" + req.cookies.username.toLowerCase(),
+    method: "get",
+    headers: {
+      authorization: req.cookies.token,
+    },
+    body: {
+      mcq: false,
+    },
+    json: true,
+  };
+
+  request(options, function (err, response, body) {
+    res.clearCookie("courseId");
+    res.render("aat", { imgUsername: req.cookies.username, data: body });
+  });
+});
+
 
 app.get("/contestPassword/:contestId", checkSignIn, async (req, res) => {
   res.render("contestPassword", {
@@ -2755,6 +2774,8 @@ app.get(
   "/tutorials/:courseId/:difficulty",
   checkSignIn,
   async (req, res, next) => {
+    res.clearCookie("contestId");
+    res.cookie("courseId", req.params.courseId);
     let difficulty = req.params.difficulty;
     let categoryBased = difficulty.includes("-");
     let ifTopicsOrCompanies =
@@ -3271,10 +3292,6 @@ app.get("/skillCertificate", checkSignIn, async (req, res) => {
 
 app.get("/labs", checkSignIn, async (req, res) => {
   res.render("labs");
-});
-
-app.get("/labs1", checkSignIn, async (req, res) => {
-  res.render("labs1");
 });
 
 app.get("/labTut", checkSignIn, async (req, res) => {
