@@ -11,8 +11,11 @@
 		<meta name="author" content="Codrops" />
 		<link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../../css/navadmin.css">
-    <link rel = "icon" type = "image/png" href = "../../images/logo-backup2.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link rel="icon" type="image/png" href="../../images/logo-backup2.png">
 		<script src="/adminjs/modernizr.custom.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
   </head>
   <body>
       <div class="container">
@@ -21,35 +24,71 @@
             <h1><%= data.title ? data.title : "Results" %><span style="color: white"><%= data.subtitle ? data.subtitle : "Contests" %></span></h1>	
 		  </header> 
 
+        <div class="b">
+          <h3 style="color:white">Select <%= data.subtitle ? data.subtitle : "Contests" %></h3>
+          <form action="<%= data.posturl %>" method="<%= data.method %>">
+          
+                <select id="contestId"  name="<%= data.subtitle ? 'questionId' : 'contestId' %>">
+                  <% for (let i = 0; i < data.length; i++) { %>
+                    <% if (data.subtitle) { %>
+                      <% if (data.subtitle[0] === 'M') { %>
+                        <option value="<%= data[i].mcqId %>"><%= data[i].mcqId %> - <%= data[i].mcqName %></option>
+                      <% } else { %>
+                        <option value="<%= data[i].questionId %>"><%= data[i].questionId %> - <%= data[i].questionName %></option>
+                      <% } %>
+                    <% } else { %>
+                      <option value="<%= data[i].contestId %>"><%= data[i].contestName %></option>
+                    <% } %>
+                  <% } %>
+                </select>
+              
+            <input type="submit" class="<%= data.class ? data.class : null %>" value="Submit">
+          </form>
+        </div>
 
-<div class = "b">
-		<h3 style="color:white">Select <%= data.subtitle ? data.subtitle : "Contests" %></h3>
-  <form action="<%= data.posturl %>" method = "<%= data.method %>">
-    <% if (data.subtitle){ %>
-      <select id="contestId" name="questionId">
-    <% } else {%>
-      <select id="contestId" name="contestId">
-    <% } %>
-  <% for (let i = 0; i < data.length; i++){ %>
-    <% if (data.subtitle){ %>
-      <% if (data.subtitle[0]==='M'){ %>
-        <option value="<%= data[i].mcqId %>"><%= data[i].mcqId %> - <%= data[i].mcqName %></option>
-      <% } else {%>
-        <option value="<%= data[i].questionId %>"><%= data[i].questionId %> - <%= data[i].questionName %></option>
-      <% } %>
-    <% } else {%>
-      <option value="<%= data[i].contestId %>"><%= data[i].contestName %></option>
-    <% } %>
-	<% } %>
-    </select>
-  
-  <input type="submit" class = "<%= data.class ? data.class : null %>"value="Submit">
-  </form>
-</div>
+       
 		<script src="/adminjs/classie.js"></script>
 		<script src="/adminjs/gnmenu.js"></script>
 		<script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
+
+      function filterOptions() {
+        var input, filter, options, i, txtValue;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        options = document.querySelectorAll('#contestId option, #anotherSelect option');
+
+        options.forEach(function(option) {
+          txtValue = option.textContent || option.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            option.style.display = '';
+          } else {
+            option.style.display = 'none';
+          }
+        });
+
+        // Automatically select the first visible option
+        var firstVisibleOption = document.querySelector('#contestId option[style=""], #anotherSelect option[style=""]');
+        if (firstVisibleOption) {
+          firstVisibleOption.selected = true;
+        }
+      }
+
+      $(document).ready(function() {
+        // Initialize Select2 for the existing dropdowns
+        $("#contestId, #anotherSelect").select2();
+
+        // Set default value for the existing dropdowns
+        $("#contestId").val("default_value").trigger("change");
+        $("#anotherSelect").val("default_value").trigger("change");
+
+        // Read selected option for the existing dropdowns
+        $('#but_read').click(function() {
+          var username = $('#SelExample option:selected').text();
+          var userid = $('#SelExample').val();
+          $('#result').text("id : " + userid + ", name : " + username);
+        });
+      });
 		</script>
   </body>
 </html>
